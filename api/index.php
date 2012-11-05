@@ -126,6 +126,7 @@ $app->get('/l3ByStream/:id', 'getL3ByStream');
 
 $app->get('/historyById/:id', 'getQuizzesHistory');
 
+
 function getL1ByStream($id) {
 	$sql = "select * from section_l1 where streamId=:id";
 	//$sql = "SELECT * from section_l1 where streamId=:id";
