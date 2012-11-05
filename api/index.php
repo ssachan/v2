@@ -759,15 +759,6 @@ function getL2() {
 	}
 }
 
-
-function getConnection() {
-	$dbhost = "localhost";
-	$dbuser = "root";
-	$dbpass = "trial";
-	$dbname = "nero";
-	$dbh = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser, $dbpass);
-	$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	return $dbh;
-}
+include 'xkcd.php';
 
 $app->run();
