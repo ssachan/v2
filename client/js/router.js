@@ -14,7 +14,9 @@ var streamId = activeStream.get('id');
 var account = new Account({
 	id : '1',
 	firstName : 'Shikhar',
-	lastName : 'Sachan'
+	lastName : 'Sachan',
+	streamId : '1',
+	quizzesAttempted : '1|:2|:3'
 });
 
 var id = account.get('id')+'|'+activeStream.get('id');
@@ -37,7 +39,7 @@ var AppRouter = Backbone.Router.extend({
 		"quizLibrary" : "quizLibrary",
 		"facDirectory" : "facDirectory",
 		"quizResults/:id" : "quizResults",
-		"quizDetailedView/:id" : "quizDetailedView",
+		"quizDetails/:id" : "quizDetails",
 		"quiz/:id" : "startQuiz",
 		"fac/:id":"fac"
 	},
@@ -107,7 +109,16 @@ var AppRouter = Backbone.Router.extend({
 	},
 	
 	quizDetails : function(id) {
-		// make a call to the quiz view
+		if(id==null){
+			// completed the quiz now. 
+			new QuizView({
+				model : activeQuiz,
+				el : $('#content')
+			});
+		}else{
+			// pick from history
+			Manager.getQuizDataForStart(quizHistory.get(id));
+		}	
 	},
 
 });

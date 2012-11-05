@@ -45,6 +45,9 @@ window.QuizView = Backbone.View.extend({
 	onPreviousClick : function() {
 		this.question.get('closeTimeStamps').push(new Date().getTime());
 		this.index--;
+		if(this.index<0){
+			return;
+		}
 		this.renderQuestion();
 		$('#previous').show();
 		$('#next').show();
@@ -56,6 +59,9 @@ window.QuizView = Backbone.View.extend({
 	onNextClick : function() {
 		this.question.get('closeTimeStamps').push(new Date().getTime());
 		this.index++;
+		if(this.index>=this.totalQuestions){
+			return;
+		}
 		this.renderQuestion();
 		$('#previous').show();
 		$('#next').show();

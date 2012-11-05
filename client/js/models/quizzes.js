@@ -93,6 +93,7 @@ window.Quiz = Backbone.Model.extend({
 		var response = new Response({
 			accountId : account.get('id'),
 			quizId : this.get('id'),
+			score : JSON.stringify([this.get('totalCorrect'),this.get('totalIncorrectCorrect')]),
 			selectedAnswers : JSON.stringify(this.getSelectedAnswers()),
 			timePerQuestion : JSON.stringify(this.getTimeTakenPerQuestion()),
 		});

@@ -1,11 +1,11 @@
 /**
- * The dashboard view
+ * The modal view
  * 
  * @author ssachan
  * 
  */
 
-var ModalView = Backbone.View.extend({
+window.ModalView = Backbone.View.extend({
 	
 	initialize : function() {
 	},
