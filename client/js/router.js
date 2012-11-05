@@ -105,5 +105,9 @@ var AppRouter = Backbone.Router.extend({
 			Manager.getQuizDataForResults(quizHistory.get(id));
 		}
 	},
+	
+	quizDetails : function(id) {
+		// make a call to the quiz view
+	},
 
 });
