@@ -10,7 +10,17 @@ window.Manager = {
 	getStreams : function() {
 
 	},
-
+	
+	getAccount : function(id) {
+		return $.ajax({
+			url : Config.serverUrl + 'getAccount/' + id,
+			dataType : "json",
+			success : function(data) {
+				account.set(data);
+			}
+		});
+	},
+	
 	getL1ByStreamId : function(id) {
 		return $.ajax({
 			url : Config.serverUrl + 'l1ByStream/' + id,
@@ -84,6 +94,7 @@ window.Manager = {
 	},
 
 	getDashboardData : function() {
+		this.getAccount('"shikhar"|'+streamId);
 		var dfd = [];
 		// ensure that by this time you have all the global data available
 		if (sectionL1.length == 0 || sectionL2.length == 0) {
@@ -173,12 +184,12 @@ window.Manager = {
 			}
 		}
 		$.when.apply(null, dfd).then(function(data) {
-			new QuizView({
+			var quizView = new QuizView({
 				model : quiz,
 				index : 0,
 				el : $('#content'),
-				timer : timer
 			});
+			quizView.startQuiz();
 		});
 	},
 
@@ -202,10 +213,12 @@ window.Manager = {
 			}
 		}
 		$.when.apply(null, dfd).then(function(data) {
-			new QuizResultsView({
+			var quizView = new QuizView({
 				model : quiz,
-				el : $('#content')
+				index : 0,
+				el : $('#content'),
 			});
+			quizView.renderResults();
 		});
 	},
 

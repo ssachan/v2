@@ -126,6 +126,28 @@ $app->get('/l3ByStream/:id', 'getL3ByStream');
 
 $app->get('/historyById/:id', 'getQuizzesHistory');
 
+$app->get('/getAccount/:id', 'getAccount');
+
+function getAccount($id){
+	$ids = explode("|", $id);
+    $sql = "select a.id as id,a.userName, a.firstName,a.lastName,a.email,s.* from accounts a, students s where a.id= s.accountId and s.streamId=:streamId and a.userName=:userName";
+    try {
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("userName", $ids[0]);
+        $stmt->bindParam("streamId", $ids[1]);
+        $stmt->execute();
+        $account = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $db = null;
+        if (!isset($_GET['callback'])) {
+            echo json_encode($account);
+        } else {
+            echo $_GET['callback'] . '(' . json_encode($account) . ');';
+        }
+    } catch (PDOException $e) {
+        echo '{"error":{"text":' . $e->getMessage() . '}}';
+    }
+}
 
 function getL1ByStream($id) {
 	$sql = "select * from section_l1 where streamId=:id";
@@ -269,6 +291,20 @@ function getFacByStreamId($id) {
 	}
 }
 
+function getFacById($id) {
+    $sql = "select * from faculty where id=:id";
+    try {
+        $db = getConnection();
+        $stmt = $db->query($sql);
+        $stmt->execute();
+        $quizzes = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $db = null;
+        echo json_encode($quizzes);
+    } catch (PDOException $e) {
+        echo '{"error":{"text":' . $e->getMessage() . '}}';
+    }
+}
+
 function getQuestionByQuizId($id) {
 	$sql = "select * from questions where id IN(1,2,3,4,5,6,7,8,9)";
 	try {
@@ -307,23 +343,20 @@ function getLastSync($timestamp) {
 /**
  * some dummy logic to update the scores. 
  */
-function updateScores(){
-    $sql = "SELECT quizId,optionsSelected,timeTaken from quizzes_pushed where accountId='1' and syncTimeStamp >"
-            . $timestamp . " ; ";
-    try {
-        $db = getConnection();
-        $stmt = $db->query($sql);
-        $projects = $stmt->fetchAll(PDO::FETCH_OBJ);
-        $db = null;
-        // Include support for JSONP requests
-        if (!isset($_GET['callback'])) {
-            echo json_encode($projects);
-        } else {
-            echo $_GET['callback'] . '(' . json_encode($projects) . ');';
-        }
-    } catch (PDOException $e) {
-        echo '{"error":{"text":' . $e->getMessage() . '}}';
-    }
+function updateScores($accId, $streamId){
+	$sql2 = "UPDATE students SET ascoreL1=ascoreL1+1 where accountId=:accountId and streamId=:streamId";	
+	try {
+	    $db = getConnection();
+		$stmt = $db->prepare($sql2);
+		$stmt->bindParam("accountId", $accId);
+		$stmt->bindParam("streamId", $streamId);
+		$stmt->execute();	    
+		$db = null;
+		$response->id = $db->lastInsertId();
+	    echo json_encode($response->id);
+	} catch(PDOException $e) {
+	    echo '{"error":{"text":'. $e->getMessage() .'}}';
+	}
 }
 
 function addResponse() {
@@ -331,49 +364,53 @@ function addResponse() {
 	$request = Slim::getInstance()->request();
 	$response = json_decode($request->getBody());
 	$date = date("Y-m-d H:i:s", time());
-	$sql = "INSERT INTO results (accountId, quizId, selectedAnswers, timePerQuestion, timestamp) VALUES (:accountId, :quizId, :selectedAnswers, :timePerQuestion, :timeStamp)";
+	$ids = explode("|", $response->accountId);
+	$sql = "INSERT INTO results (accountId, quizId, selectedAnswers, score, timePerQuestion, timestamp) VALUES (:accountId, :quizId, :selectedAnswers, :score, :timePerQuestion, :timeStamp)";
 	try {
 		$db = getConnection();
 		$stmt = $db->prepare($sql);
-		$stmt->bindParam("accountId", $response->accountId);
+		$stmt->bindParam("accountId", $ids[0]);
 		$stmt->bindParam("quizId", $response->quizId);
 		//$stmt->bindParam("questionId", $response->questionId);
 		$stmt->bindParam("selectedAnswers", $response->selectedAnswers);
+		$stmt->bindParam("score", $response->score);
 		$stmt->bindParam("timePerQuestion", $response->timePerQuestion);
 		$stmt->bindParam("timeStamp", $date);
 		$stmt->execute();
 		$response->id = $db->lastInsertId();
 		$db = null;
-		echo json_encode($response);
+		//echo json_encode($response);
 	} catch (PDOException $e) {
 		error_log($e->getMessage(), 3, '/var/tmp/php.log');
-		echo '{"error":{"text":' . $e->getMessage() . '}}';
+		//echo '{"error":{"text":' . $e->getMessage() . '}}';
 	}
 
-	$qIds = explode("|:", $response->questionIds);
-	$os = explode("|:", $response->optionsSelected);
-	$tt = explode("|:", $response->timeTaken);
-	$len = sizeof($qIds);
-	for ($i = 0; $i < $len; $i++) {
-
-		$sql = "INSERT INTO responses (accountId, quizId, questionId, optionSelected, timeTaken) VALUES (:accountId, :quizId, :questionId, :optionSelected, :timeTaken)";
-		try {
-			$db = getConnection();
-			$stmt = $db->prepare($sql);
-			$stmt->bindParam("accountId", $response->accountId);
-			$stmt->bindParam("quizId", $response->quizId);
-			$stmt->bindParam("questionId", $qIds[$i]);
-			$stmt->bindParam("optionSelected", $os[$i]);
-			$stmt->bindParam("timeTaken", $os[$i]);
-			$stmt->execute();
-			$response->id = $db->lastInsertId();
-			$db = null;
-			echo json_encode($response);
-		} catch (PDOException $e) {
-			error_log($e->getMessage(), 3, '/var/tmp/php.log');
-			echo '{"error":{"text":' . $e->getMessage() . '}}';
-		}
+	$sql2 = "UPDATE quizzes SET totalAttempts=totalAttempts+1 where id=:quizId";	
+	try {
+	    $db = getConnection();
+		$stmt = $db->prepare($sql2);
+		$stmt->bindParam("quizId", $response->quizId);
+		$stmt->execute();	    
+		$db = null;
+		$response->id = $db->lastInsertId();
+	    //echo json_encode($response->id);
+	} catch(PDOException $e) {
+	    //echo '{"error":{"text":'. $e->getMessage() .'}}';
 	}
+	
+    /*$sql3 = "UPDATE students SET ascoreL1=ascoreL1+1 where accountId=:accountId and streamId=:streamId";	
+	try {
+	    $db = getConnection();
+		$stmt = $db->prepare($sql3);
+		$stmt->bindParam("accountId", $ids[0]);
+		$stmt->bindParam("streamId", $ids[1]);
+		$stmt->execute();	    
+		$db = null;
+		///$response->id = $db->lastInsertId();
+	    echo json_encode($response);
+	} catch(PDOException $e) {
+	    echo '{"error":{"text":'. $e->getMessage() .'}}';
+	}*/
 }
 
 function getQuizzesHistory($id){

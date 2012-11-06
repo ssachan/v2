@@ -30,10 +30,16 @@ window.Quiz = Backbone.Model.extend({
     	 }
     	 if(this.get('selectedAnswers')!=null){
  			this.get('selectedAnswersArray').push.apply(this.get('selectedAnswersArray'), JSON.parse(this.get('selectedAnswers')));
+			this.set('hasAttempted',true);
     	 }
     	 if(this.get('timePerQuestion')!=null){
     		this.get('timePerQuestionArray').push.apply(this.get('timePerQuestionArray'), JSON.parse(this.get('timePerQuestion')));
      	 }
+    	 if(this.get('score')!=null){
+    		 var score = JSON.parse(this.get('score'));
+    		 this.set('totalCorrect',score[0]);
+    		 this.set('totalIncorrect',score[1]);
+    	 }	 
     },
 
     defaults: {
@@ -55,13 +61,14 @@ window.Quiz = Backbone.Model.extend({
 			for(var i=0; i<len; i++ )
 			{
 				var question = quizQuestions.get(qIds[i]);
-				if(question.isOptionSelectedCorrect()==true){
+				var answer = question.get('optionSelected');
+				if(question.isOptionSelectedCorrect(answer)==true){
 					this.set('totalCorrect', this.get('totalCorrect')+1);
-				}else if (question.isOptionSelectedCorrect()==false){
+				}else if (question.isOptionSelectedCorrect(answer)==false){
 					this.set('totalIncorrect', this.get('totalIncorrect')+1);
 				}
-				this.getSelectedAnswers().push(parseInt(question.get('optionSelected')));
-				this.getTimeTakenPerQuestion().push(parseInt(question.get('timeTaken')));
+				this.getSelectedAnswers().push(answer);
+				this.getTimeTakenPerQuestion().push(question.get('timeTaken'));
 			}
 			this.set('hasAttempted',true);
 		}
@@ -90,10 +97,11 @@ window.Quiz = Backbone.Model.extend({
 	
 	submitResults : function(quiz) {
 		//var questionIds = JSON.stringify(this.getQuestionIds()); // .join(SEPARATOR);
+		var score = [parseInt(this.get('totalCorrect')),parseInt(this.get('totalIncorrect'))];
 		var response = new Response({
-			accountId : account.get('id'),
+			accountId : id,
 			quizId : this.get('id'),
-			score : JSON.stringify([this.get('totalCorrect'),this.get('totalIncorrectCorrect')]),
+			score : JSON.stringify(score),
 			selectedAnswers : JSON.stringify(this.getSelectedAnswers()),
 			timePerQuestion : JSON.stringify(this.getTimeTakenPerQuestion()),
 		});

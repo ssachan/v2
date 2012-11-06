@@ -35,8 +35,9 @@ window.Question = Backbone.Model.extend({
      **/
 	isOptionSelectedCorrect : function (selectedOption){
 		var isCorrect = null; 
+		var answer = this.get('correctAnswer');
 		if(selectedOption && selectedOption!=null){
- 	      isCorrect = (selectedOption==this.get('correctAnswer'))?true:false;
+			isCorrect = (selectedOption==answer)?true:false;
 		}
 		return isCorrect; 
 	},

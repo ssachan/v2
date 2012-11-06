@@ -81,7 +81,7 @@ window.drawTimeChart = function (quiz) {
                     color: incorrectCode
                 });
 
-            } else if (question.isOptionSelectedCorrect() == null) {
+            } else if (question.isOptionSelectedCorrect(answers[i]) == null) {
                 series.data.push({
                     x: i + 1,
                     y: parseFloat(timeTaken),

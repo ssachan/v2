@@ -39,9 +39,9 @@ var AppRouter = Backbone.Router.extend({
 		"quizLibrary" : "quizLibrary",
 		"facDirectory" : "facDirectory",
 		"quizResults/:id" : "quizResults",
-		"quizDetails/:id" : "quizDetails",
+		"quizDetails/:id/p:qno" : "quizDetails",
 		"quiz/:id" : "startQuiz",
-		"fac/:id":"fac"
+		"fac/:id":"fac",
 	},
 
 	initialize : function() {
@@ -86,39 +86,16 @@ var AppRouter = Backbone.Router.extend({
 		activeQuiz = quizLibrary.get(id); // active quiz initialized for the first time
 		Manager.getQuizDataForStart(activeQuiz);
 	},
-
-	stopQuiz : function(timeTaken) {
-		activeQuiz.set('timeTaken', timeTaken);
-		activeQuiz.calculateScores();
-		activeQuiz.submitResults();
-		//Manager.submitQuizResults(activeQuiz);
-		this.quizResults(null);
-	},
 	
 	quizResults : function(id) {
-		if(id==null){
-			// completed the quiz now. 
-			new QuizResultsView({
-				model : activeQuiz,
-				el : $('#content')
-			});
-		}else{
 			// pick from history
-			Manager.getQuizDataForResults(quizHistory.get(id));
+		var quiz = quizHistory.get(id);
+		if(quiz){
+			Manager.getQuizDataForResults(quiz);
+		}else{
+			alert('access denied');
 		}
 	},
 	
-	quizDetails : function(id) {
-		if(id==null){
-			// completed the quiz now. 
-			new QuizView({
-				model : activeQuiz,
-				el : $('#content')
-			});
-		}else{
-			// pick from history
-			Manager.getQuizDataForStart(quizHistory.get(id));
-		}	
-	},
 
 });
