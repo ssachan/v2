@@ -30,6 +30,11 @@
                 </div>
             </div>
         </div>
+        <div class="row-fluid box" id="video-container">
+            <video id="analysis_video" class="video-js vjs-default-skin" controls preload="none" width="640" height="264" poster="<%= videoPoster %>" data-setup="{}">
+                <source src="<%= videoSrc %>" type='video/mp4' />
+            </video>
+        </div>
         <div class="row-fluid box">
             <ul class="nav nav-pills">
                 <li class="active"><a id="time" class="insightItem">Time</a></li>

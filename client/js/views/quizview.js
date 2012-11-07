@@ -40,7 +40,7 @@ window.QuizView = Backbone.View.extend({
 		if(this.currentView==''){
 			this.currentView = view;
 			$('#'+this.currentView+'-div').show();
-			return
+			return;
 		}
 		$('#'+this.currentView+'-div').hide();
 		this.currentView = view;
@@ -223,6 +223,15 @@ window.QuizQuestionView = Backbone.View
 				$('#solution')
 						.append(
 								'<br><div class="stats"><span class="green bold">Average Accuracy</span> : 50 % <span class="green bold"> Average Time</span> : 1 min <span class="green bold">Top 20% Time</span> : 30 sec <span class="badge badge-success">2012 CAT</span></div>');
+				//code to add video here.
+				
+				/*
+					<video id="analysis_video" class="video-js vjs-default-skin" controls preload="none" width="640" height="264" poster="<%= this.model.get('videoData').poster %>" data-setup="{}">
+                			<source src="<%= this.model.get('videoData').src %>" type='video/mp4' />
+            			</video>
+				*/
+
+
 				$('#time').html(this.model.get('timeTaken'));
 				$('#submit').hide();
 			}
@@ -247,6 +256,33 @@ window.QuizResultsView = Backbone.View.extend({
 		$('#' + this.activeInsights).parent().addClass('active');
 	},
 
+
+	calculateVideoArray : function(options){
+
+		var videoResults = {
+			analysisVideo : {
+				el : 'video-analysis',
+				poster : 'img/ProfTanuj.jpg',
+				src : 'videos/video1.mp4'
+			}
+		};
+
+		//a video object has el,src,poster
+
+		//this is an implementation to select one of 6 possible videos.
+		//if we're not editing those 6 videos, I will need a series of clips and
+		//add a handler to the _V_("video-analysis").addEvent("ended",handler)
+		//will have to add an indicator to let people know video remaining.
+
+		//Currently assuming we have those, let's get down to the dirty work
+
+		//I need to know marks. 
+
+
+		return videoResults;
+
+	},
+
 	render : function() {
 		// var questionIds = this.model.getQuestionIds();
 		var length = quizQuestions.length;
@@ -258,6 +294,10 @@ window.QuizResultsView = Backbone.View.extend({
 		var difficultyInsights = insights.difficultyLevelInsights(this.model);
 		var strategicInsights = insights.strategicInsights(this.model);
 		var historyInsights = 'they come here';
+		
+		//video array containing all data for all questions and analysis
+		var videoResults = this.calculateVideoArray();
+		
 		$(this.el).html(this.template({
 			'id' : this.model.get('id'),
 			'totalQuestions' : length,
@@ -270,7 +310,9 @@ window.QuizResultsView = Backbone.View.extend({
 			'accuracyInsights' : accuracyInsights,
 			'strategicInsights' : strategicInsights,
 			'historyInsights' : historyInsights,
-			'difficultyInsights' : difficultyInsights
+			'difficultyInsights' : difficultyInsights,
+			'videoPoster' : videoResults.analysisVideo.poster,
+			'videoSrc' : videoResults.analysisVideo.src
 		}));
 		drawTimeChart(this.model);
 		drawDifficultyChart(this.model);
