@@ -21,7 +21,7 @@ window.SubmitQuestion = Backbone.View.extend({
         this.render();
     },
     
-events:{
+    events:{
 			
 	},
      

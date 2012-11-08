@@ -1,27 +1,28 @@
-<div id="modal" class="modal hide fade" tabindex="-1" role="dialog"
-    aria-labelledby="modalLabel" aria-hidden="true">
+<div id="modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+    aria-hidden="true">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
         <h3 id="modalLabel">
-        <div class="media">
-        <a class="pull-left" href="#fac/<%=id %>"> 
-    <img class="media-object" src="http://placehold.it/80x80">
-</a>
-<div class="media-body">
-    <h4 class="media-heading"><%= firstName%> <%= lastName%></h4>
-</div>
-</div>
+            <div class="media">
+                <a class="pull-left" href="#fac/<%=id %>"> <img class="media-object"
+                    src="http://placehold.it/80x80">
+                </a>
+                <div class="media-body">
+                    <h4 class="media-heading"><%= firstName%> <%= lastName%></h4>
+                </div>
+            </div>
         </h3>
     </div>
     <div class="modal-body">
-    <p>
-    <img src="img/128.gif" height="200" width="185" alt="">
-    <h5><%= name %></h5>
-    <p> <%= description %></p>
-    <%= difficulty %> | <%= ratings %> | <%= tags %> 
-    </p>
+        <p>
+            <img src="img/128.gif" height="200" width="185" alt="">
+        <h5><%= name %></h5>
+        <p><%= description %></p>
+        <%= difficulty %> | <%= ratings %> | <%= tags %>
+        </p>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-primary" id="start-quiz">Redeem your package and take the quiz</button>
+        <button class="btn btn-primary" id="start-quiz">Redeem your package and take the
+            quiz</button>
     </div>
 </div>
