@@ -100,7 +100,7 @@ window.Quiz = Backbone.Model.extend({
 	
 	submitResults : function(quiz) {
 		//var questionIds = JSON.stringify(this.getQuestionIds()); // .join(SEPARATOR);
-		var score = [parseInt(this.get('totalCorrect')),parseInt(this.get('totalIncorrect'))];
+		var score = [parseInt(this.get('totalCorrect')),parseInt(this.get('totalIncorrect'))]; //shouldn't this be calculated?
 		var response = new Response({
 			accountId : id,
 			quizId : this.get('id'),
