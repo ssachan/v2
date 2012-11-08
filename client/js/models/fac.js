@@ -6,6 +6,7 @@
 window.Fac = Backbone.Model.extend({
 	urlRoot: Config.serverUrl+'fac/',
 	initialize: function () {},
+
 });
 
 window.FacCollection = Backbone.Collection.extend({
@@ -14,3 +15,4 @@ window.FacCollection = Backbone.Collection.extend({
 });
 
 var facDirectory = new FacCollection();
+var facQuizzes = new QuizCollection();

@@ -15,68 +15,22 @@ window.QuizView = Backbone.View.extend({
 		this.questionIds = this.model.getQuestionIds();
 		this.totalQuestions = this.questionIds.length;
 		this.hasAttempted = this.model.get('hasAttempted');
-		if(this.hasAttempted){
-			this.setUp();
-		}
 		timer.setUpdateFunction(context.updateQuizTimer, [ context ]);
-		this.currentView = '';
-		this.render();
-	},
-	
-
-	setUp : function(){
-		this.answersSelected = this.model.getSelectedAnswers();
-		this.getTimeTakenPerQuestion = this.model.getTimeTakenPerQuestion();
-		for(var i=0;i<this.totalQuestions;i++){
-			var question = quizQuestions.get(this.questionIds[i]);
-			if(question.get('timeTaken')==null){
-				question.set('timeTaken', this.answersSelected[i]);
-				question.set('optionSelected',this.answersSelected[i]);
-			}
-		}
-	},
-	
-	switchView : function(view){
-		if(this.currentView==''){
-			this.currentView = view;
-			$('#'+this.currentView+'-div').show();
-			return
-		}
-		$('#'+this.currentView+'-div').hide();
-		this.currentView = view;
-		$('#'+this.currentView+'-div').show();
 	},
 	
 	events : {
 		'click #previous' : 'onPreviousClick',
 		'click #next' : 'onNextClick',
 		'click .qnolist' : 'onQNoClick',
-		'click #submit' : 'submitQuiz',
-		'click #analytics' : 'switchAnalytics'
+		'click #submit' : 'submitQuiz'
 	},
 
-	switchAnalytics : function(){
-		this.switchView('results');
-	},
-	
 	startQuiz: function (){
-		this.renderQuestion();
-		if (!this.hasAttempted) {
+		this.render();
+		if (this.hasAttempted) {
 			timer.reset();
 			timer.start();
 		}
-		this.switchView('quiz');
-	},
-	
-	submitQuiz : function() {
-		timer.stop();
-		this.model.set('timeTaken', timer.count);
-		this.model.calculateScores();
-		this.hasAttempted=true;
-		this.model.submitResults();
-		$('#results-div').hide();
-		$('#quiz-div').show();
-		this.renderResults();
 	},
 	
 	updateQuizTimer : function(context) {
@@ -85,15 +39,14 @@ window.QuizView = Backbone.View.extend({
 		qtimer++;
 		context.question.set('timeTaken', qtimer);
 		if (timer.count == context.model.get('allotedTime')) {
+			timer.stop();
 			alert('time up');
-			this.submitQuiz();
+			app.stopQuiz(context.model.get('allotedTime'));
 		}
 	},
 
 	onPreviousClick : function() {
-		if(!this.hasAttempted){
-			this.question.get('closeTimeStamps').push(new Date().getTime());
-		}
+		this.question.get('closeTimeStamps').push(new Date().getTime());
 		this.index--;
 		if (this.index < 0) {
 			return;
@@ -103,15 +56,11 @@ window.QuizView = Backbone.View.extend({
 		$('#next').show();
 		if (this.index == 0) {
 			$('#previous').hide();
-		}else{
-			$('#previous').show();
 		}
 	},
 
 	onNextClick : function() {
-		if(!this.hasAttempted){
-			this.question.get('closeTimeStamps').push(new Date().getTime());
-		}
+		this.question.get('closeTimeStamps').push(new Date().getTime());
 		this.index++;
 		if (this.index >= this.totalQuestions) {
 			return;
@@ -121,31 +70,28 @@ window.QuizView = Backbone.View.extend({
 		$('#next').show();
 		if (this.index == (this.totalQuestions - 1)) {
 			$('#next').hide();
-		}else{
-			$('#next').show();
 		}
 	},
 
 	onQNoClick : function(e) {
 		this.index = e.target.getAttribute('id'); // .split('-')[1];
-		if(!this.hasAttempted){
-			this.question.get('closeTimeStamps').push(new Date().getTime());
-		}
-		this.switchView('quiz');
+		this.question.get('closeTimeStamps').push(new Date().getTime());
 		this.renderQuestion();
 	},
 
 	render : function() {
 		$(this.el).html(this.template({
-			'totalQuestions' : this.totalQuestions,
-			'hasAttempted' :this.hasAttempted,
+			'totalQuestions' : this.totalQuestions
 		}));
-		$('#quiz-view').hide();
-		$('#results-view').hide();
+		this.renderQuestion();
 		return this;
 	},
-	
-	
+
+	submitQuiz : function() {
+		timer.stop();
+		app.stopQuiz(timer.count);
+	},
+
 	renderQuestion : function() {
 		this.question = quizQuestions.get(this.questionIds[this.index]);
 		if (this.question.get('timeTaken') == null) {
@@ -158,6 +104,11 @@ window.QuizView = Backbone.View.extend({
 		}
 		this.questionView.model = this.question;
 		this.questionView.hasAttempted = this.hasAttempted;
+		if (this.hasAttempted && this.answersSelected.length > 0) {
+			this.question.set('timeTaken', this.answersSelected[this.index]);
+			this.question.set('optionSelected',
+					this.answersSelected[this.index]);
+		}
 		this.questionView.render();
 		$("#qnum").html((parseInt(this.index) + 1));
 		$("#qtotal").html((this.totalQuestions));
@@ -166,10 +117,9 @@ window.QuizView = Backbone.View.extend({
 	},
 	
 	renderResults : function (){
-		this.switchView('results');
 		new QuizResultsView({
 			model : this.model,
-			el : $('#results-div')
+			el : $('#content')
 		});
 	}
 });
@@ -216,7 +166,7 @@ window.QuizQuestionView = Backbone.View
 				$('#solution').show();
 				$('#solution').html(
 						'<span class="green bold">Correct Answer</span> : '
-								+ this.model.get('correctAnswer'));
+								+ this.model.get('correctOption'));
 				$('#solution').append(
 						'<br><div class="sol"><span class="green bold">Solution</span> : '
 								+ this.model.get('explanation') + '</div>');
@@ -236,7 +186,7 @@ window.QuizResultsView = Backbone.View.extend({
 	},
 
 	events : {
-		'click .insightItem' : 'onInsightClick',
+		'click .insightItem' : 'onInsightClick'
 	},
 
 	onInsightClick : function(e) {
@@ -249,7 +199,6 @@ window.QuizResultsView = Backbone.View.extend({
 
 	render : function() {
 		// var questionIds = this.model.getQuestionIds();
-		var score = this.model.get('totalScore');
 		var length = quizQuestions.length;
 		var correct = this.model.get('totalCorrect');
 		var incorrect = this.model.get('totalIncorrect');
@@ -260,9 +209,7 @@ window.QuizResultsView = Backbone.View.extend({
 		var strategicInsights = insights.strategicInsights(this.model);
 		var historyInsights = 'they come here';
 		$(this.el).html(this.template({
-			'id' : this.model.get('id'),
 			'totalQuestions' : length,
-			'score':score,
 			'correct' : correct,
 			'incorrect' : incorrect,
 			'unattempted' : unattempted,

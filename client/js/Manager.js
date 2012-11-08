@@ -148,6 +148,36 @@ window.Manager = {
 		});
 	},
 
+	getFacById : function(id) {
+		var url = Config.serverUrl + 'fac/' + id;
+		return $.ajax({
+			url : url,
+			dataType : "json",
+			success : function(data) {
+				console.log("faculty fetched: " + data.length);
+				var faculty = new fac(data);//facDirectory.reset(data);
+				new FacView({
+					model : faculty,
+					el : '#content'
+				});
+			}
+		});
+	},
+	
+	getQuizzesByFac : function(id) {
+		var url = Config.serverUrl + 'quizzesByFac/' + id+'|'+streamId;
+		return $.ajax({
+			url : url,
+			dataType : "json",
+			success : function(data) {
+				console.log("faculty fetched: " + data.length);
+			}
+		});
+	},
+	
+	getFaculty : function(facId, streamId){
+		this.getFacById();
+	},
 	/**
 	 * @param id
 	 * @returns

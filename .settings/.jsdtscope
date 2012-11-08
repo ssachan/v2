@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry excluding="js/utils/|js/views/|js/models/|js/|js/auth/|js/lib/" kind="src" path="client"/>
+	<classpathentry excluding="utils/|views/|models/|auth/|lib/" kind="src" path="client/js"/>
+	<classpathentry kind="src" path="client/js/auth"/>
+	<classpathentry kind="src" path="client/js/lib"/>
+	<classpathentry kind="src" path="client/js/models"/>
+	<classpathentry kind="src" path="client/js/utils"/>
+	<classpathentry kind="src" path="client/js/views"/>
+	<classpathentry kind="con" path="org.eclipse.wst.jsdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path=""/>
+</classpath>

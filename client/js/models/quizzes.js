@@ -48,7 +48,8 @@ window.Quiz = Backbone.Model.extend({
         'totalIncorrect' : 0,
         'timeTaken' : 0,  
         'selectedAnswers':null,
-        'timePerQuestion':null	
+        'timePerQuestion':null,
+        'totalScore' : 0,
     },
     
 	/**
@@ -64,8 +65,10 @@ window.Quiz = Backbone.Model.extend({
 				var answer = question.get('optionSelected');
 				if(question.isOptionSelectedCorrect(answer)==true){
 					this.set('totalCorrect', this.get('totalCorrect')+1);
+					this.set('totalScore', this.get('totalScore')+parseInt(question.get('correctScore')));
 				}else if (question.isOptionSelectedCorrect(answer)==false){
 					this.set('totalIncorrect', this.get('totalIncorrect')+1);
+					this.set('totalScore', this.get('totalScore')-parseInt(question.get('incorrectScore')));
 				}
 				this.getSelectedAnswers().push(answer);
 				this.getTimeTakenPerQuestion().push(question.get('timeTaken'));

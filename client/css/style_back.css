@@ -1,6 +1,3 @@
-/*
-*{border: thin dotted}*/
-
 /* Common
 -------------------------------------------------- */
 html, body, #content, .container{
@@ -32,57 +29,33 @@ body {
 	text-align: center;
 }
 
-.left {
-text-align: left;}
-
 .margin-0 {
 	margin-left: 0px;
 }
 
-h1,h2,h3,h4 {
-	font-weight: bold;
-}
-
-h5 {
+h1,h2,h3,h4,h5 {
 	font-weight: normal;
 }
 
-
-
-
 h1 {
-	font-size: 25px;
+	font-size: 35px;
 }
 
 h2 {
-	font-size: 22px;
+	font-size: 30px;
 }
 
 h3 {
-	font-size: 18px;
+	font-size: 25px;
 }
 
 h4 {
-	font-size: 14px;
+	font-size: 20px;
 }
 
 h5 {
-	font-size: 11px;
+	font-size: 15px;
 }
-
-.font-h3 {
-	font-size: 18px;
-	font-weight: bold;
-}
-
-.font-h4 {
-	font-size: 14px;
-}
-
-.font-h5 {
-	font-size: 11px;
-}
-
 
 .fac{
     width:80%;	
@@ -102,9 +75,6 @@ hr.soften {
 	border: 0;
 }
 
-/*Define the bold font */
-
-
 /* Define the color palette */
 .green {
 	color: #06947A;
@@ -118,10 +88,6 @@ hr.soften {
 	color: #C6264C
 }
 
-.maroon {
-color: #C0504D
-}
-
 .gold {
 	color: #A8A38D
 }
@@ -133,10 +99,8 @@ color: #C0504D
 .box{
     background-color: white;
     box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
-	
     -moz-box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4);
     -webkit-box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
-
     -webkit-border-radius: 0px;
     -moz-border-radius: 0px;
     border-radius: 0px;
@@ -149,15 +113,6 @@ color: #C0504D
 	padding:10px;
 	margin-top:10px;
 }
-
-.credits{
-
-background:#C0504D;
-color: white;
-margin-top: -20px;
-padding-top: 5px;
-padding-bottom: 5px;
-text-align: center;}
 
 /* Detail unit
 -------------------------------------------------- */
@@ -231,65 +186,12 @@ text-align: center;}
 /* Dashboard
 -------------------------------------------------- */
 .dashboard {
-    width: 70%;
+    width: 80%;
 }
-
-.das-update {
-    position: relative;
-	bottom: 3px;}
-
-
-
-
-	
-.das-personal-info{
-padding-top: 10px;
-padding-left: 125px;}
-
-.das-history-head{
-padding-top: 10px;}
-
-.das-hist-graph{
-position: relative;
-left: 20px;
-top:20px;}
-
-.das-sec2{
-margin-bottom: 15px;}
-
-
-
-.das-sec3{
-margin-top: 15px;
-
-margin-bottom: 15px;}
-
-.das-sec3 h3{
-margin-top: 10px;
-padding-left: 10px;
-background: #dee;
-}
-
-.das-sec4{
-margin-top: 15px;
-padding-bottom: 15px;
-margin-bottom: 15px;}
-
-.das-sec4 h3{
-margin-top: 10px;
-padding-left: 10px;
-background: #dee;
-}
-
-.das-sec4 ul{
-text-align: left;
-}
-
 
 /* Quiz Library
 -------------------------------------------------- */
 .quiz-library{
-width: 70%;
 }
 
 .quiz-library .box{
@@ -299,66 +201,6 @@ width: 70%;
 .quiz-library .box:hover{
     cursor:pointer;
 }
-
-.quiz-lib-heading{
-
-margin: -15px 0px 10px 20px;}
-
-.quiz-lib-sec1{
-padding-bottom: 20px;
-margin-bottom: 30px;
-border-bottom: 1px dotted #aaa;}
-
-.quiz-lib-search{
-position: relative;
-bottom: 4px;
-left: 18px;
-}
-
-
-.quiz-lib-input{
-/*position: relative;
-left: 27px;
-*/}
-
-
-.quiz-lib-filter1{
-position: relative;
-bottom: 2px;
-padding-right: 5px;
-text-align: center;
-border-right: 1px solid #ccc;
-}
-
-.quiz-lib-filter2{
-position: relative;
-bottom: 2px;
-text-align: center;
-}
-
-.quiz-lib-elements{
-}
-
-.quiz-lib-t1{
-background: #eee;
-}
-
-.quiz-lib-t2 {
-padding-top: 10px;
-padding-left: 13px;
-margin-bottom: 10px;	}
-
-.quiz-lib-t3{
-margin-top: 0px;}
-
-.quiz-lib-t4 {
-margin-top:-10px;
-line-height: 15px;
-margin-bottom: 5px;
-}
-
-.quiz-lib-t5 {
-background: #ddd}
 
 
 /* questions

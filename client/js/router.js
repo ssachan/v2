@@ -79,7 +79,7 @@ var AppRouter = Backbone.Router.extend({
 	},
 	
 	fac : function(id){
-		Manager.getFacById(id);
+		Manager.getFaculty(id,streamId);
 	},
 	
 	startQuiz : function(id) {

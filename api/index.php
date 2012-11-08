@@ -110,7 +110,11 @@ $app->get('/getLastSync/:timestamp', 'getLastSync');
 
 $app->get('/quizzesByStreamId/:id', 'getQuizzesByStreamId');
 
+$app->get('/quizzesByFac/:id', 'getQuizzesByFac');
+
 $app->get('/facByStreamId/:id', 'getFacByStreamId');
+
+$app->get('/fac/:id', 'getFac');
 
 $app->get('/questionByQuizId/:id', 'getQuestionByQuizId');
 
@@ -149,6 +153,65 @@ function getAccount($id){
     }
 }
 
+function getFac($id){
+    $sql = "select * from faculty where id=:id";
+    //$sql = "SELECT * from section_l1 where streamId=:id";
+    try {
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("id", $id);
+        $stmt->execute();
+        $fac = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $db = null;
+        if (!isset($_GET['callback'])) {
+            echo json_encode($fac);
+        } else {
+            echo $_GET['callback'] . '(' . json_encode($l1) . ');';
+        }
+    } catch (PDOException $e) {
+        echo '{"error":{"text":' . $e->getMessage() . '}}';
+    }
+}
+
+function getLastQuizzes($id){
+    $sql = "select * from faculty where id=:id";
+    //$sql = "SELECT * from section_l1 where streamId=:id";
+    try {
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("id", $id);
+        $stmt->execute();
+        $fac = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $db = null;
+        if (!isset($_GET['callback'])) {
+            echo json_encode($fac);
+        } else {
+            echo $_GET['callback'] . '(' . json_encode($l1) . ');';
+        }
+    } catch (PDOException $e) {
+        echo '{"error":{"text":' . $e->getMessage() . '}}';
+    }
+}
+
+function getFollowers($id){
+    $sql = "select * from faculty where id=:id";
+    //$sql = "SELECT * from section_l1 where streamId=:id";
+    try {
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("id", $id);
+        $stmt->execute();
+        $fac = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $db = null;
+        if (!isset($_GET['callback'])) {
+            echo json_encode($fac);
+        } else {
+            echo $_GET['callback'] . '(' . json_encode($l1) . ');';
+        }
+    } catch (PDOException $e) {
+        echo '{"error":{"text":' . $e->getMessage() . '}}';
+    }
+}
 function getL1ByStream($id) {
 	$sql = "select * from section_l1 where streamId=:id";
 	//$sql = "SELECT * from section_l1 where streamId=:id";
@@ -275,6 +338,28 @@ function getQuizzesByStreamId($id) {
 	} catch (PDOException $e) {
 		echo '{"error":{"text":' . $e->getMessage() . '}}';
 	}
+}
+
+function getQuizzesByFac($id) {
+    $ids = explode("|", $id);
+    $sql = "select q.id,q.questionIds,q.description,q.descriptionShort,q.difficulty,q.ratings,q.conceptsTested, q.tags from quizzes q where q.facultyId=:facId and q.streamId=:streamId";
+    try {
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("facId", $ids[0]);
+        $stmt->bindParam("streamId", $ids[1]);
+        $stmt->execute();
+        $quizzes = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $db = null;
+        if (!isset($_GET['callback'])) {
+            echo json_encode($quizzes);
+        } else {
+            echo $_GET['callback'] . '(' . json_encode($quizzes) . ');';
+        }
+        //echo json_encode($quizzes);
+    } catch (PDOException $e) {
+        echo '{"error":{"text":' . $e->getMessage() . '}}';
+    }
 }
 
 function getFacByStreamId($id) {
