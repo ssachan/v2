@@ -178,11 +178,24 @@ window.Manager = {
 	getFaculty : function(facId, streamId){
 		this.getFacById();
 	},
+	
+	getQuestion : function(id) {
+		var url = Config.serverUrl + 'questions/'+id;
+		return $.ajax({
+			url : url,
+			dataType : "json",
+			success : function(data) {
+				console.log("questions fetched: " + data.length);
+				quizQuestions.add(data);
+			}
+		});
+	},
+	
 	/**
 	 * @param id
 	 * @returns
 	 */
-	getQuestion : function(id) {
+	getGETQuestion : function(ids) {
 		var url = Config.serverUrl + 'questions/';
 		return $.ajax({
 			url : url,
@@ -195,13 +208,13 @@ window.Manager = {
 		});
 	},
 
-	getQuestions : function(ids) {
+	getPOSTQuestions : function(ids) {
 		//var passIds = JSON.stringify(ids);
 		var url = Config.serverUrl + 'getQuestions/';
 		return $.ajax({
-			url : url+ids.join('|'),
+			url : url,
 			type: "POST",
-			//data: JSON.stringify(ids), // gotta strinigfy the entire hash
+			data: JSON.stringify(ids), // gotta strinigfy the entire hash
 			dataType : "json",
 			success : function(data) {
 				console.log("questions fetched: " + data.length);
@@ -209,6 +222,7 @@ window.Manager = {
 			}
 		});
 	},
+	
 	/**
 	 * ensure all questions are loaded in the quizQuestions collection
 	 * 
@@ -223,7 +237,8 @@ window.Manager = {
 		 * make this call more efficient. Pass all ids at one go and fetch the
 		 * questions using an IN clause
 		 */
-		this.getQuestion(qIds);
+		dfd.push(this.getPOSTQuestions(qIds));
+		//this.getQuestions(qIds);
 		/*for ( var i = 0; i < len; i++) {
 			if (quizQuestions.get(qIds[i]) == null) {
 				dfd.push(this.getQuestion(qIds[i]));
@@ -267,5 +282,17 @@ window.Manager = {
 			quizView.renderResults();
 		});
 	},
+	
+	reset : function (){
+		var url = Config.serverUrl + 'resetDB/';
+		return $.ajax({
+			url : url,
+			dataType : "json",
+			success : function(data) {
+				console.log("Database Reset");
+				quizQuestions.add(data);
+			}
+		});
+	}
 
 };
