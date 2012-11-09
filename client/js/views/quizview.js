@@ -259,13 +259,44 @@ window.QuizResultsView = Backbone.View.extend({
 
 	calculateVideoArray : function(options){
 
-		var videoResults = {
-			analysisVideo : {
-				el : 'video-analysis',
-				poster : 'img/ProfTanuj.jpg',
-				src : 'videos/video1.mp4'
-			}
-		};
+		var videoResults = Array(
+			 {
+			 	
+				thumb_url : 'img/video1.jpg',
+				poster_url : 'img/video1.jpg',
+				sources : [{
+					src : 'videos/video1.mp4',
+					type : "video/mp4",
+					title : 'analysisVideo',
+					media : ''
+				}]
+			},
+			{
+			 	
+				thumb_url : 'img/video2.jpg',
+				poster_url : 'img/video2.jpg',
+				sources : [{
+					src : 'videos/video2.mp4',
+					type : "video/mp4",
+					title : 'q1',
+					media : ''
+					}]
+			},
+			 {
+			 	
+				thumb_url : 'img/video1.jpg',
+				poster_url : 'img/video1.jpg',
+				sources : [{
+									src : 'videos/video1.mp4',
+									type : "video/mp4",
+									title : 'q2',
+									media : ''
+							}]
+			}			
+		);
+
+
+		
 
 		//a video object has el,src,poster
 
@@ -278,8 +309,17 @@ window.QuizResultsView = Backbone.View.extend({
 
 		//I need to know marks. 
 
-
 		return videoResults;
+
+	},
+
+	setUpPlaylist : function(videoResults){
+
+		var videoOptions = {"playlist": videoResults}
+		var myPlayer = _V_("video_analysis",videoOptions);
+		
+		myPlayer.addEvent("ended",function(){myPlayer.playlist.next()}); //enables autoplay of next
+		
 
 	},
 
@@ -313,9 +353,11 @@ window.QuizResultsView = Backbone.View.extend({
 			'strategicInsights' : strategicInsights,
 			'historyInsights' : historyInsights,
 			'difficultyInsights' : difficultyInsights,
-			'videoPoster' : videoResults.analysisVideo.poster,
-			'videoSrc' : videoResults.analysisVideo.src
+			'videoResults' : videoResults
 		}));
+		
+		this.setUpPlaylist(videoResults);
+
 		drawTimeChart(this.model);
 		drawDifficultyChart(this.model);
 		drawHistoryChart(this.model);
