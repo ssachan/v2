@@ -183,10 +183,11 @@ window.Manager = {
 	 * @returns
 	 */
 	getQuestion : function(id) {
-		var url = Config.serverUrl + 'questions/' + id;
+		var url = Config.serverUrl + 'questions/';
 		return $.ajax({
 			url : url,
 			dataType : "json",
+			data : JSON.stringify(id),
 			success : function(data) {
 				console.log("questions fetched: " + data.length);
 				quizQuestions.add(data);
@@ -194,6 +195,20 @@ window.Manager = {
 		});
 	},
 
+	getQuestions : function(ids) {
+		//var passIds = JSON.stringify(ids);
+		var url = Config.serverUrl + 'getQuestions/';
+		return $.ajax({
+			url : url+ids.join('|'),
+			type: "POST",
+			//data: JSON.stringify(ids), // gotta strinigfy the entire hash
+			dataType : "json",
+			success : function(data) {
+				console.log("questions fetched: " + data.length);
+				quizQuestions.reset(data);
+			}
+		});
+	},
 	/**
 	 * ensure all questions are loaded in the quizQuestions collection
 	 * 
@@ -208,11 +223,12 @@ window.Manager = {
 		 * make this call more efficient. Pass all ids at one go and fetch the
 		 * questions using an IN clause
 		 */
-		for ( var i = 0; i < len; i++) {
+		this.getQuestion(qIds);
+		/*for ( var i = 0; i < len; i++) {
 			if (quizQuestions.get(qIds[i]) == null) {
 				dfd.push(this.getQuestion(qIds[i]));
 			}
-		}
+		}*/
 		$.when.apply(null, dfd).then(function(data) {
 			var quizView = new QuizView({
 				model : quiz,

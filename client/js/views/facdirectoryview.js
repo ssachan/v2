@@ -22,8 +22,6 @@ window.FacDirectoryView = Backbone.View.extend({
 
 window.FacItemView = Backbone.View.extend({
 
-	className: "media",
-
 	initialize: function () {
 	       this.render();
 	},

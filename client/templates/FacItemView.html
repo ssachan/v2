@@ -1,9 +1,23 @@
-<a class="pull-left" href="#fac/<%=id %>"> 
-    <img class="media-object" src="http://placehold.it/80x80">
-</a>
-<div class="media-body">
-	<h4 class="media-heading"><%= firstName%> <%= lastName%></h4>
-    Specialization <%= specialization%><br>
-    Worked at <%= experience %><br>
-    Studied at <%= education %>
+<div class="media box">
+    <a class="pull-left" href="#fac/<%=id %>"> <img class="media-object" src="img/prof3.jpg"
+        height="90" width="90">
+    </a>
+    <div class="media-body faclib-fac">
+        <div class="span7">
+            <h4 class="media-heading"><%= firstName%> <%= lastName%></h4>
+            <div class="faclib-details">
+                <img src="img/subject.png" height="15" width="15" /> <span class="font-h4">
+                </span><%= specialization %> <br> <img src="img/work.png" height="20" width="15" /> <span class="font-h4">
+                    Worked at <%= experience %> </span> <br> <img src="img/edu.png" height="15"
+                    width="15" /> <span class="font-h4"> Studied at <%= education %> </span> <br>
+            </div>
+        </div>
+        <div class="span5 faclib-social">
+            <h4>Popularity</h4>
+            <img src="img/popular.png" height="15" width="15" /> <span class="font-h4"> <%=totalQuizzes
+                %> tests taken</span> <br> <img src="img/recommend.png" height="15" width="15" /> <span
+                class="font-h4"> <%= rec %> recommenders</span>
+            <!--<div class="btn btn-small pull-right pull-bottom font-h4 bold"> View profile </div> -->
+        </div>
+    </div>
 </div>

@@ -80,33 +80,16 @@ $app->delete('/delete', function () {
 			echo 'This is a DELETE route';
 		});
 
-$app->get('/questions/', 'getQuestions');
-$app->get('/questions/:id', 'getQuestion');
-
 $app->get('/quizzes/', 'getQuizzes');
 $app->get('/quizzes/:id', 'getQuiz');
 
-$app->get('/questionsets/', 'getQuestionSets');
-$app->get('/questionsets/:id', 'getQuestionSet');
-
-$app->get('/practicetests/', 'getPracticeTests');
-$app->get('/practicetests/:id', 'getPracticeTest');
-
-$app->get('/flashcards/', 'getAllFlashCards');
-$app->get('/flashcards/:id', 'getFlashCard');
-$app->get('/flashcardlists/', 'getFlashCardLists');
+$app->get('/questions/', 'getQuestions');
+$app->get('/questions/:id', 'getQuestion');
+$app->post('/getQuestions/', 'getQ');
 
 $app->get('/l3/', 'getL3');
 
-$app->get('/practicetests/', 'getPracticeTests');
-$app->get('/practicetests/:id', 'getPracticeTest');
-$app->get('/quizzes/sync/:uid', 'getSyncQuizIds');
-
-$app->get('/quizzes/getnext/:accountId', 'getNextQuizzes');
-
 $app->post('/responses/', 'addResponse');
-
-$app->get('/getLastSync/:timestamp', 'getLastSync');
 
 $app->get('/quizzesByStreamId/:id', 'getQuizzesByStreamId');
 
@@ -321,7 +304,7 @@ function getL2Performance($id) {
 }
 
 function getQuizzesByStreamId($id) {
-	$sql = "select q.id,q.questionIds,q.description,q.descriptionShort,q.difficulty,q.ratings,q.conceptsTested, q.tags, f.firstName,f.lastName from quizzes q, faculty f where q.facultyId=f.id and q.streamId=:id";
+	$sql = "select q.id,q.questionIds,q.description,q.descriptionShort,q.difficulty,q.rec,q.conceptsTested, q.l2Ids, q.l3Ids, f.firstName,f.lastName from quizzes q, faculty f where q.facultyId=f.id and q.streamId=:id";
 	try {
 		$db = getConnection();
 		$stmt = $db->prepare($sql);
@@ -342,7 +325,7 @@ function getQuizzesByStreamId($id) {
 
 function getQuizzesByFac($id) {
     $ids = explode("|", $id);
-    $sql = "select q.id,q.questionIds,q.description,q.descriptionShort,q.difficulty,q.ratings,q.conceptsTested, q.tags from quizzes q where q.facultyId=:facId and q.streamId=:streamId";
+    $sql = "select q.id,q.questionIds,q.description,q.descriptionShort,q.difficulty,q.rec,q.conceptsTested, q.tags from quizzes q where q.facultyId=:facId and q.streamId=:streamId";
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
@@ -406,24 +389,6 @@ function getQuestionByQuizId($id) {
 	}
 }
 
-function getLastSync($timestamp) {
-	$sql = "SELECT quizId,optionsSelected,timeTaken from quizzes_pushed where accountId='1' and syncTimeStamp >"
-			. $timestamp . " ; ";
-	try {
-		$db = getConnection();
-		$stmt = $db->query($sql);
-		$projects = $stmt->fetchAll(PDO::FETCH_OBJ);
-		$db = null;
-		// Include support for JSONP requests
-		if (!isset($_GET['callback'])) {
-			echo json_encode($projects);
-		} else {
-			echo $_GET['callback'] . '(' . json_encode($projects) . ');';
-		}
-	} catch (PDOException $e) {
-		echo '{"error":{"text":' . $e->getMessage() . '}}';
-	}
-}
 
 /**
  * some dummy logic to update the scores. 
@@ -519,202 +484,27 @@ function getQuizzesHistory($id){
 	}
 }
 
-function objectToArray($object) {
-	if (!is_object($object) && !is_array($object)) {
-		return $object;
-	}
-	if (is_object($object)) {
-		$object = get_object_vars($object);
-	}
-	return array_map('objectToArray', $object);
-}
-
-function generateQuizByUID($uid) {
-	//quiz Generation Algorithm goes here
-	$testIDs = array(1, 2, 3, 4, 5, 6);
-	return $testIDs;
-
-}
-
-function getFlashCardLists() {
-	$sql = "SELECT * from flash_cards_list";
-	try {
-		$db = getConnection();
-		$stmt = $db->query($sql);
-		$projects = $stmt->fetchAll(PDO::FETCH_OBJ);
-		$db = null;
-		// Include support for JSONP requests
-		if (!isset($_GET['callback'])) {
-			echo json_encode($projects);
-		} else {
-			echo $_GET['callback'] . '(' . json_encode($projects) . ');';
-		}
-	} catch (PDOException $e) {
-		echo '{"error":{"text":' . $e->getMessage() . '}}';
-	}
-}
-
-function getSyncQuizIds($uid) {
-	$sql = "SELECT id from quizzes WHERE accountid ='" . $uid . "'";
-	try {
-		$db = getConnection();
-		$stmt = $db->query($sql);
-		$projects = $stmt->fetchAll(PDO::FETCH_OBJ);
-		$db = null;
-		// Include support for JSONP requests
-		if (!isset($_GET['callback'])) {
-			echo json_encode($projects);
-		} else {
-			echo $_GET['callback'] . '(' . json_encode($projects) . ');';
-		}
-	} catch (PDOException $e) {
-		echo '{"error":{"text":' . $e->getMessage() . '}}';
-	}
-}
-
-function getAllFlashCards() {
-	$sql = "SELECT * from flash_cards";
-	try {
-		$db = getConnection();
-		$stmt = $db->query($sql);
-		$projects = $stmt->fetchAll(PDO::FETCH_OBJ);
-		$db = null;
-		// Include support for JSONP requests
-		if (!isset($_GET['callback'])) {
-			echo json_encode($projects);
-		} else {
-			echo $_GET['callback'] . '(' . json_encode($projects) . ');';
-		}
-	} catch (PDOException $e) {
-		echo '{"error":{"text":' . $e->getMessage() . '}}';
-	}
-}
-
-function getFlashCard($id) {
-	$sql = "SELECT * from flash_cards where id='$id'";
-	try {
-		$db = getConnection();
-		$stmt = $db->query($sql);
-		$projects = $stmt->fetchAll(PDO::FETCH_OBJ);
-		$db = null;
-		// Include support for JSONP requests
-		if (!isset($_GET['callback'])) {
-			echo substr(json_encode($projects), 1,
-					strlen(json_encode($projects)) - 2);
-			//What fucking stupidity, 
-			//if I don't implement workaround,
-			//the attributes go into a subproperty. fucking shite. -TB.
-			//echo json_encode($projects);
-
-		} else {
-			echo $_GET['callback'] . '(' . json_encode($projects) . ');';
-		}
-	} catch (PDOException $e) {
-		echo '{"error":{"text":' . $e->getMessage() . '}}';
-	}
-}
-
-function getNextQuizzes($accountId) {
-
-	$testIDs = generateQuizByUID($uid);
-	$sql = "SELECT * from quizzes where id IN (" . implode(",", $testIDs) . ")";
-
-	try {
-		$db = getConnection();
-		$stmt = $db->query($sql);
-		$quizzes = $stmt->fetchAll(PDO::FETCH_OBJ);
-		$db = null;
-
-		$qListIDs = array();
-		$qIDs = array();
-		$question_sets_index = array();
-		$output_quizzes = array();
-
-		foreach ($quizzes as $quiz) {
-			$qList = explode("|:", $quiz->question_list_ids);
-
-			foreach ($qList as $tempqid) {
-				$qListIDs[] = $tempqid;
-			}
-		}
-
-		$sql2 = "select * from question_list where id IN ("
-				. implode(",", $qListIDs) . ")";
-
-		$db = getConnection();
-		$stmt = $db->query($sql2);
-		$question_sets = $stmt->fetchAll(PDO::FETCH_OBJ);
-		$db = null;
-
-		foreach ($question_sets as $question_set) {
-			$qList = explode("|:", $question_set->question_id_list);
-
-			$question_sets_index[$question_set->id] = $question_set;
-
-			foreach ($qList as $tempqid) {
-				$qIDs[] = $tempqid;
-			}
-		}
-
-		$sql3 = "select * from questions where id IN (" . implode(",", $qIDs)
-				. ")";
-
-		$db = getConnection();
-		$stmt = $db->query($sql3);
-		$questions = $stmt->fetchAll(PDO::FETCH_OBJ);
-		$db = null;
-
-		$questions_index = array();
-
-		foreach ($questions as $question) {
-			$questions_index[$question->id] = $question;
-		}
-
-		foreach ($quizzes as $quiz) {
-
-			$output_quiz["id"] = $quiz->id;
-			$output_quiz["l1_id"] = $quiz->l1_id;
-			$now = new DateTime('now');
-			$output_quiz["send_time"] = $now->getTimestamp();
-			$output_quiz["sync_time"] = $now->getTimestamp();
-			$output_quiz["total_score"] = 0;
-
-			$qListCollection = array();
-			$qListIDMap = array(0);
-
-			foreach (explode("|:", $quiz->question_list_ids) as $tempQListID) {
-				$qListIDMap[$tempQListID] = $qListIDMap[0];
-				$qListIDMap[0] += 1;
-
-				$qListCollection[$qListIDMap[$tempQListID]] = objectToArray(
-						$question_sets_index[$tempQListID]);
-			}
-
-			foreach ($qListCollection as $qList) {
-				$questions_f = array();
-				foreach (explode("|:", $qList["question_id_list"]) as $qid) {
-					$questions_f[] = objectToArray($questions_index[$qid]);
-				}
-				$qListCollection[$qListIDMap[$qList["id"]]]["questions"] = $questions_f;
-			}
-
-			$output_quiz["questionLists"] = $qListCollection;
-			$output_quizzes[] = $output_quiz;
-		}
-
-		// Include support for JSONP requests
-		if (!isset($_GET['callback'])) {
-			echo json_encode($output_quizzes);
-		} else {
-			echo $_GET['callback'] . '(' . json_encode($output_quizzes) . ');';
-		}
-
-	} catch (PDOException $e) {
-		echo '{"error":{"text":' . $e->getMessage() . '}}';
-	}
-}
-
 function getQuestion($id) {
+    echo json_decode($id);
+    $sql = "SELECT * from questions where id IN(".implode(",", $response).")";
+    echo $sql;
+    /*try {
+        $db = getConnection();
+        $stmt = $db->query($sql);
+        $question = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $db = null;
+        // Include support for JSONP requests
+        if (!isset($_GET['callback'])) {
+            echo json_encode($question);
+        } else {
+            echo $_GET['callback'] . '(' . json_encode($question) . ');';
+        }
+    } catch (PDOException $e) {
+        echo '{"error":{"text":' . $e->getMessage() . '}}';
+    }*/
+}
+
+/*function getQuestion($id) {
 	//echo "Getting Question $id <br />";
 	$sql = "SELECT * from questions where id='$id'";
 	try {
@@ -731,11 +521,50 @@ function getQuestion($id) {
 	} catch (PDOException $e) {
 		echo '{"error":{"text":' . $e->getMessage() . '}}';
 	}
+}*/
+
+/**
+ * the post method
+ */
+function getQ() {
+    //echo "Getting Questions<br />";
+    $request = Slim::getInstance()->request();
+    $response = json_decode($request->getBody());
+    $sql = "SELECT * from questions where id IN(".implode(",", $response).")";
+    //echo $sql;
+    try {
+        $db = getConnection();
+        $stmt = $db->query($sql);
+        $questions = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $db = null;
+        //echo json_encode($questions);
+        //echo $questions[0];
+        print_r($questions[0]);                
+        // Include support for JSONP requests
+        /*if (!isset($_GET['callback'])) {
+            echo json_encode($projects);
+        } else {
+            echo $_GET['callback'] . '(' . json_encode($projects) . ');';
+        }*/
+    } catch (PDOException $e) {
+        echo '{"error":{"text":' . $e->getMessage() . '}}';
+    }
 }
+
 
 function getQuestions() {
+    //$request = $_GET['id']
+    //echo "hello";
+    $re = $app->request()->get('data');
+    echo $re;
+    //$response = json_decode($app->request()->get('data'));
+    //echo $response;
+    //$response = json_decode( $_GET['data']);
+    //$sql = "SELECT * from questions where id IN(".implode(",", $response).")";
+    //echo $sql;
+    
 	//echo "Getting Questions<br />";
-	$sql = "SELECT * from questions where availableFlag='1'";
+	/*$sql = "SELECT * from questions where availableFlag='1'";
 	try {
 		$db = getConnection();
 		$stmt = $db->query($sql);
@@ -749,44 +578,7 @@ function getQuestions() {
 		}
 	} catch (PDOException $e) {
 		echo '{"error":{"text":' . $e->getMessage() . '}}';
-	}
-}
-
-function getQuestionSet($id) {
-	echo "Getting Test $id <br />";
-	$sql = "SELECT * from question_sets where id='$id'";
-	try {
-		$db = getConnection();
-		$stmt = $db->query($sql);
-		$projects = $stmt->fetchAll(PDO::FETCH_OBJ);
-		$db = null;
-		// Include support for JSONP requests
-		if (!isset($_GET['callback'])) {
-			echo json_encode($projects);
-		} else {
-			echo $_GET['callback'] . '(' . json_encode($projects) . ');';
-		}
-	} catch (PDOException $e) {
-		echo '{"error":{"text":' . $e->getMessage() . '}}';
-	}
-}
-
-function getQuestionSets() {
-	$sql = "SELECT * from question_sets";
-	try {
-		$db = getConnection();
-		$stmt = $db->query($sql);
-		$projects = $stmt->fetchAll(PDO::FETCH_OBJ);
-		$db = null;
-		// Include support for JSONP requests
-		if (!isset($_GET['callback'])) {
-			echo json_encode($projects);
-		} else {
-			echo $_GET['callback'] . '(' . json_encode($projects) . ');';
-		}
-	} catch (PDOException $e) {
-		echo '{"error":{"text":' . $e->getMessage() . '}}';
-	}
+	}*/
 }
 
 function getQuiz($id) {
@@ -810,43 +602,6 @@ function getQuiz($id) {
 
 function getQuizzes() {
 	$sql = "SELECT * from quizzes";
-	try {
-		$db = getConnection();
-		$stmt = $db->query($sql);
-		$projects = $stmt->fetchAll(PDO::FETCH_OBJ);
-		$db = null;
-		// Include support for JSONP requests
-		if (!isset($_GET['callback'])) {
-			echo json_encode($projects);
-		} else {
-			echo $_GET['callback'] . '(' . json_encode($projects) . ');';
-		}
-	} catch (PDOException $e) {
-		echo '{"error":{"text":' . $e->getMessage() . '}}';
-	}
-}
-
-function getPracticeTest($id) {
-	echo "Getting Test $id <br />";
-	$sql = "SELECT * from quizzes where id='$id'";
-	try {
-		$db = getConnection();
-		$stmt = $db->query($sql);
-		$projects = $stmt->fetchAll(PDO::FETCH_OBJ);
-		$db = null;
-		// Include support for JSONP requests
-		if (!isset($_GET['callback'])) {
-			echo json_encode($projects);
-		} else {
-			echo $_GET['callback'] . '(' . json_encode($projects) . ');';
-		}
-	} catch (PDOException $e) {
-		echo '{"error":{"text":' . $e->getMessage() . '}}';
-	}
-}
-
-function getPracticeTests() {
-	$sql = "SELECT * from practice";
 	try {
 		$db = getConnection();
 		$stmt = $db->query($sql);
