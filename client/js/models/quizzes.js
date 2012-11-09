@@ -45,6 +45,8 @@ window.Quiz = Backbone.Model.extend({
 			var score = JSON.parse(this.get('score'));
 			this.set('totalCorrect', score[0]);
 			this.set('totalIncorrect', score[1]);
+			this.set('totalScore', score[2]);
+			this.set('maxScore', score[3]);
 		}
 		if(this.get('l2Ids')!=null){
 			var l2Ids = this.get('l2Ids').split(SEPARATOR);

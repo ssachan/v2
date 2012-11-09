@@ -222,7 +222,7 @@ window.QuizQuestionView = Backbone.View
 								+ this.model.get('explanation') + '</div>');
 				$('#solution')
 						.append(
-								'<br><div class="stats"><span class="green bold">Average Accuracy</span> : 50 % <span class="green bold"> Average Time</span> : 1 min <span class="green bold">Top 20% Time</span> : 30 sec <span class="badge badge-success">2012 CAT</span></div>');
+								'<br><div class="stats"><span class="green bold">Average Correct</span>:'+ this.model.get('averageCorrect')+'<span class="green bold"> Average Time</span> :'+ this.model.get('averageTimeCorrect')+'<span class="badge badge-success">2012 CAT</span></div>');
 				//code to add video here.
 				
 				/*

@@ -65,21 +65,6 @@ $app->get('/', function () {
     echo $template;
 });*/
 
-//POST route
-$app->post('/post', function () {
-			echo 'This is a POST route';
-		});
-
-//PUT route
-$app->put('/put', function () {
-			echo 'This is a PUT route';
-		});
-
-//DELETE route
-$app->delete('/delete', function () {
-			echo 'This is a DELETE route';
-		});
-
 $app->get('/quizzes/', 'getQuizzes');
 $app->get('/quizzes/:id', 'getQuiz');
 
@@ -114,6 +99,8 @@ $app->get('/l3ByStream/:id', 'getL3ByStream');
 $app->get('/historyById/:id', 'getQuizzesHistory');
 
 $app->get('/getAccount/:id', 'getAccount');
+
+$app->get('/resetDB/', 'resetDB');
 
 function getAccount($id){
 	$ids = explode("|", $id);
@@ -465,7 +452,7 @@ function addResponse() {
 
 function getQuizzesHistory($id){
 	$ids = explode("|", $id);
-	$sql = "select r.selectedAnswers,r.timePerQuestion,q.* from results r,quizzes q where accountId=:accountId and q.streamId=:streamId and r.quizId=q.id order by timestamp";
+	$sql = "select r.selectedAnswers,r.timePerQuestion,r.score,q.* from results r,quizzes q where accountId=:accountId and q.streamId=:streamId and r.quizId=q.id order by timestamp";
 	try {
 		$db = getConnection();
 		$stmt = $db->prepare($sql);
@@ -484,27 +471,8 @@ function getQuizzesHistory($id){
 	}
 }
 
-function getQuestion($id) {
-    echo json_decode($id);
-    $sql = "SELECT * from questions where id IN(".implode(",", $response).")";
-    echo $sql;
-    /*try {
-        $db = getConnection();
-        $stmt = $db->query($sql);
-        $question = $stmt->fetchAll(PDO::FETCH_OBJ);
-        $db = null;
-        // Include support for JSONP requests
-        if (!isset($_GET['callback'])) {
-            echo json_encode($question);
-        } else {
-            echo $_GET['callback'] . '(' . json_encode($question) . ');';
-        }
-    } catch (PDOException $e) {
-        echo '{"error":{"text":' . $e->getMessage() . '}}';
-    }*/
-}
 
-/*function getQuestion($id) {
+function getQuestion($id) {
 	//echo "Getting Question $id <br />";
 	$sql = "SELECT * from questions where id='$id'";
 	try {
@@ -521,7 +489,7 @@ function getQuestion($id) {
 	} catch (PDOException $e) {
 		echo '{"error":{"text":' . $e->getMessage() . '}}';
 	}
-}*/
+}
 
 /**
  * the post method
@@ -537,10 +505,7 @@ function getQ() {
         $stmt = $db->query($sql);
         $questions = $stmt->fetchAll(PDO::FETCH_OBJ);
         $db = null;
-        //echo json_encode($questions);
-        //echo $questions[0];
-        print_r($questions[0]);                
-        // Include support for JSONP requests
+        echo json_encode($questions);
         /*if (!isset($_GET['callback'])) {
             echo json_encode($projects);
         } else {
@@ -636,6 +601,28 @@ function getL2() {
 		echo '{"error":{"text":' . $e->getMessage() . '}}';
 	}
 }
+
+function resetDB() {
+    //echo "Getting Questions<br />";
+    $sql = "TRUNCATE table results  ";
+    try {
+        $db = getConnection();
+        $stmt = $db->query($sql);
+        $projects = $stmt->execute();
+        $db = null;
+        // Include support for JSONP requests
+        if (!isset($_GET['callback'])) {
+            echo json_encode($projects);
+        } else {
+            echo $_GET['callback'] . '(' . json_encode($projects) . ');';
+        }
+    } catch (PDOException $e) {
+        echo '{"error":{"text":' . $e->getMessage() . '}}';
+    }
+}
+
+
+
 
 include 'xkcd.php';
 

@@ -11,14 +11,14 @@ window.HeaderView = Backbone.View.extend({
 	},
 	
 	events : {
-		'click #syncUp' : 'onSyncUpClick',
+		'click #reset' : 'reset',
 		'click #syncDown' : 'onSyncDownClick',
 
 	},
     
-	onSyncUpClick : function() {
+	reset : function() {
 		// the list of completed unsynced quizzes
-    	dao.syncUp();
+    	Manager.reset();
 	},
 
 	onSyncDownClick : function() {
