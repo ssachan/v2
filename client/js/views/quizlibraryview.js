@@ -40,8 +40,8 @@ window.QuizItemView = Backbone.View.extend({
 	},
 	
 	onQuizItemClick : function(){
-        var view = new ModalView({ model: this.model });
-        view.show();
+		mView.model = this.model;//var view = new ModalView({ model: this.model });
+        mView.show();
 	},
 	
 	render : function() {

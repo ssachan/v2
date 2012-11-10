@@ -10,6 +10,7 @@ var activeStream = new Stream({
 	displayName : 'Engineering'
 });
 var streamId = activeStream.get('id');
+var mView = new ModalView();
 
 var account = new Account({
 	id : '1',
@@ -39,7 +40,6 @@ var AppRouter = Backbone.Router.extend({
 		"quizLibrary" : "quizLibrary",
 		"facDirectory" : "facDirectory",
 		"quizResults/:id" : "quizResults",
-		"quizDetails/:id/p:qno" : "quizDetails",
 		"quiz/:id" : "startQuiz",
 		"fac/:id":"fac",
 	},
@@ -82,7 +82,14 @@ var AppRouter = Backbone.Router.extend({
 		Manager.getFaculty(id,streamId);
 	},
 	
+	/**
+	 * TODO:at this point there are separate routes for start and results but later 
+	 * we might want to merge them to same route #quiz...it displays the results when 
+	 * the quiz is attempted else starts the quiz. 
+	 * @param id
+	 */
 	startQuiz : function(id) {
+		mView.close();
 		activeQuiz = quizLibrary.get(id); // active quiz initialized for the first time
 		Manager.getQuizDataForStart(activeQuiz);
 	},

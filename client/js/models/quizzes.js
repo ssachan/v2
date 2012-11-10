@@ -140,7 +140,7 @@ window.Quiz = Backbone.Model.extend({
 		});
 		response.save({
 			success : function(data) {
-				quizHistory.add(data);
+				//quizHistory.add(data);
 			}
 		});
 	}
