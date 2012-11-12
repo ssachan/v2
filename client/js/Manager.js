@@ -1,3 +1,19 @@
+ // Tell jQuery to watch for any 401 or 403 errors and handle them appropriately
+$.ajaxSetup({
+    statusCode: {
+        401: function(){
+            // Redirec the to the login page.
+            window.location.replace('#login');
+         
+        },
+        403: function() {
+            // 403 -- Access denied
+            window.location.replace('#denied');
+        }
+    }
+});
+
+
 /**
  * 
  * The Manager class
@@ -9,16 +25,6 @@ window.Manager = {
 
 	getStreams : function() {
 
-	},
-	
-	getAccount : function(id) {
-		return $.ajax({
-			url : Config.serverUrl + 'getAccount/' + id,
-			dataType : "json",
-			success : function(data) {
-				account.set(data);
-			}
-		});
 	},
 	
 	getL1ByStreamId : function(id) {
@@ -86,6 +92,7 @@ window.Manager = {
 			}
 		});
 	},
+	
 	getSubjectsByStreamId : function(id) {
 		var dfd = [ this.getL1ByStreamId(id), this.getL2ByStreamId(id),
 				this.getL3ByStreamId(id) ];
@@ -94,7 +101,6 @@ window.Manager = {
 	},
 
 	getDashboardData : function() {
-		this.getAccount('"shikhar"|'+streamId);
 		var dfd = [];
 		// ensure that by this time you have all the global data available
 		if (sectionL1.length == 0 || sectionL2.length == 0) {
@@ -179,8 +185,8 @@ window.Manager = {
 		this.getFacById();
 	},
 	
-	getQuestion : function(id) {
-		var url = Config.serverUrl + 'questions/'+id;
+	getQuestionByQuizId : function(id){
+		var url = Config.serverUrl + 'questionsByQuiz/'+id;
 		return $.ajax({
 			url : url,
 			dataType : "json",
@@ -191,6 +197,33 @@ window.Manager = {
 		});
 	},
 	
+	/*getQuestion : function(id) {
+		var url = Config.serverUrl + 'questions/'+id;
+		return $.ajax({
+			url : url,
+			dataType : "json",
+			success : function(data) {
+				console.log("questions fetched: " + data.length);
+				quizQuestions.add(data);
+			}
+		});
+	},*/
+	
+	getPackagesByStreamId : function(streamId){
+		var url = Config.serverUrl + 'packagesByStreamId/'+streamId;
+		return $.ajax({
+			url : url,
+			dataType : "json",
+			success : function(data) {
+				console.log("questions fetched: " + data.length);
+				packages.reset(data);
+				new PackagesView({
+					collection : packages,
+					el : $('#content'),
+				});
+			}
+		});	
+	},
 	/**
 	 * @param id
 	 * @returns
@@ -214,7 +247,21 @@ window.Manager = {
 		return $.ajax({
 			url : url,
 			type: "POST",
-			data: JSON.stringify(ids), // gotta strinigfy the entire hash
+			data: {ids:JSON.stringify(ids)}, // gotta strinigfy the entire hash
+			dataType : "json",
+			success : function(data) {
+				console.log("questions fetched: " + data.length);
+				quizQuestions.reset(data);
+			}
+		});
+	},
+	
+	purchasePackage : function(id){
+		var url = Config.serverUrl + 'getQuestions/';
+		return $.ajax({
+			url : url,
+			type: "POST",
+			data: {ids:JSON.stringify(ids)}, // gotta strinigfy the entire hash
 			dataType : "json",
 			success : function(data) {
 				console.log("questions fetched: " + data.length);
@@ -283,16 +330,27 @@ window.Manager = {
 		});
 	},
 	
-	reset : function (){
-		var url = Config.serverUrl + 'resetDB/';
+	resetResults : function (){
+		var url = Config.serverUrl + 'resetResults/';
 		return $.ajax({
 			url : url,
 			dataType : "json",
 			success : function(data) {
-				console.log("Database Reset");
-				quizQuestions.add(data);
+				alert("Results Reset");
+			}
+		});
+	},
+	
+	resetAccounts : function (){
+		var url = Config.serverUrl + 'resetAccounts/';
+		return $.ajax({
+			url : url,
+			dataType : "json",
+			success : function(data) {
+				alert("All accounts Deleted Reset");
 			}
 		});
 	}
+	
 
 };

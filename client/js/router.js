@@ -12,15 +12,7 @@ var activeStream = new Stream({
 var streamId = activeStream.get('id');
 var mView = new ModalView();
 
-var account = new Account({
-	id : '1',
-	firstName : 'Shikhar',
-	lastName : 'Sachan',
-	streamId : '1',
-	quizzesAttempted : '1|:2|:3'
-});
-
-var id = account.get('id')+'|'+activeStream.get('id');
+var id = null;//account.get('id')+'|'+activeStream.get('id');
 
 var timer = new Timer(1000, null, []); // we will have just one global timer
 										// object shared across quizzes and
@@ -29,6 +21,17 @@ var timer = new Timer(1000, null, []); // we will have just one global timer
 $(document).ready(function() {
 	helper.loadTemplate(Config.viewsArray, function() {
 		app = new AppRouter();
+		/* (function (d) {
+             var js, id = 'facebook-jssdk';
+             if (d.getElementById(id)) {
+                 return;
+             }
+             js = d.createElement('script');
+             js.id = id;
+             js.async = true;
+             js.src = "//connect.facebook.net/en_US/all.js";
+             d.getElementsByTagName('head')[0].appendChild(js);
+         }(document));*/
 		Backbone.history.start();
 	});
 });
@@ -36,12 +39,16 @@ $(document).ready(function() {
 var AppRouter = Backbone.Router.extend({
 
 	routes : {
-		"":"dashboard",
+		"":"landing",
+		"dashboard":"dashboard",
+		"login":"login",
 		"quizLibrary" : "quizLibrary",
 		"facDirectory" : "facDirectory",
 		"quizResults/:id" : "quizResults",
 		"quiz/:id" : "startQuiz",
 		"fac/:id":"fac",
+		"packages":"packages",
+		"forgotPass":"forgotPass"
 	},
 
 	initialize : function() {
@@ -66,6 +73,10 @@ var AppRouter = Backbone.Router.extend({
 
 	quizLibrary : function() {
 		Manager.getQuizzesByStreamId(streamId);
+	},
+	
+	packages : function(){
+		Manager.getPackagesByStreamId(streamId);
 	},
 	
 	facDirectory : function() {
@@ -103,6 +114,12 @@ var AppRouter = Backbone.Router.extend({
 			alert('access denied');
 		}
 	},
+	
+	forgotPass : function(){
+		console.log('forgot pass');
+		// load forgot password page
+	}
+	
 	
 
 });

@@ -1,69 +1,9 @@
 <?php
 header("Access-Control-Allow-Origin: *");
 require 'Slim/Slim.php';
-$app = new Slim();
+\Slim\Slim::registerAutoloader();
 
-//GET route
-/*
-$app->get('/', function () {
-    $template = "
-<!DOCTYPE html>
-    <html>
-        <head>
-            <meta charset='utf-8'/>
-            <title>TestRex. Rawr at the CAT.</title>
-            <style>
-                html,body,div,span,object,iframe,
-                h1,h2,h3,h4,h5,h6,p,blockquote,pre,
-                abbr,address,cite,code,
-                del,dfn,em,img,ins,kbd,q,samp,
-                small,strong,sub,sup,var,
-                b,i,
-                dl,dt,dd,ol,ul,li,
-                fieldset,form,label,legend,
-                table,caption,tbody,tfoot,thead,tr,th,td,
-                article,aside,canvas,details,figcaption,figure,
-                footer,header,hgroup,menu,nav,section,summary,
-                time,mark,audio,video{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent;}
-                body{line-height:1;}
-                article,aside,details,figcaption,figure,
-                footer,header,hgroup,menu,nav,section{display:block;}
-                nav ul{list-style:none;}
-                blockquote,q{quotes:none;}
-                blockquote:before,blockquote:after,
-                q:before,q:after{content:'';content:none;}
-                a{margin:0;padding:0;font-size:100%;vertical-align:baseline;background:transparent;}
-                ins{background-color:#ff9;color:#000;text-decoration:none;}
-                mark{background-color:#ff9;color:#000;font-style:italic;font-weight:bold;}
-                del{text-decoration:line-through;}
-                abbr[title],dfn[title]{border-bottom:1px dotted;cursor:help;}
-                table{border-collapse:collapse;border-spacing:0;}
-                hr{display:block;height:1px;border:0;border-top:1px solid #cccccc;margin:1em 0;padding:0;}
-                input,select{vertical-align:middle;}
-                html{ background: #EDEDED; height: 100%; }
-                body{background:#FFF;margin:0 auto;min-height:100%;padding:0 30px;width:440px;color:#666;font:14px/23px Arial,Verdana,sans-serif;}
-                h1,h2,h3,p,ul,ol,form,section{margin:0 0 20px 0;}
-                h1{color:#333;font-size:20px;}
-                h2,h3{color:#333;font-size:14px;}
-                h3{margin:0;font-size:12px;font-weight:bold;}
-                ul,ol{list-style-position:inside;color:#999;}
-                ul{list-style-type:square;}
-                code,kbd{background:#EEE;border:1px solid #DDD;border:1px solid #DDD;border-radius:4px;-moz-border-radius:4px;-webkit-border-radius:4px;padding:0 4px;color:#666;font-size:12px;}
-                pre{background:#EEE;border:1px solid #DDD;border-radius:4px;-moz-border-radius:4px;-webkit-border-radius:4px;padding:5px 10px;color:#666;font-size:12px;}
-                pre code{background:transparent;border:none;padding:0;}
-                a{color:#70a23e;}
-                header{padding: 30px 0;text-align:center;}
-            </style>
-        </head>
-        <body>
-            <h1>Welcome to TestRex!</h1>
-            <a href='./questions'>Questions</a> <br />
-            <a href='./quizzes'>tests</a> <br />
-        </body>
-    </html>
-";
-    echo $template;
-});*/
+$app = new \Slim\Slim();
 
 $app->get('/quizzes/', 'getQuizzes');
 $app->get('/quizzes/:id', 'getQuiz');
@@ -98,30 +38,11 @@ $app->get('/l3ByStream/:id', 'getL3ByStream');
 
 $app->get('/historyById/:id', 'getQuizzesHistory');
 
-$app->get('/getAccount/:id', 'getAccount');
-
 $app->get('/resetDB/', 'resetDB');
 
-function getAccount($id){
-	$ids = explode("|", $id);
-    $sql = "select a.id as id,a.userName, a.firstName,a.lastName,a.email,s.* from accounts a, students s where a.id= s.accountId and s.streamId=:streamId and a.userName=:userName";
-    try {
-        $db = getConnection();
-        $stmt = $db->prepare($sql);
-        $stmt->bindParam("userName", $ids[0]);
-        $stmt->bindParam("streamId", $ids[1]);
-        $stmt->execute();
-        $account = $stmt->fetchAll(PDO::FETCH_OBJ);
-        $db = null;
-        if (!isset($_GET['callback'])) {
-            echo json_encode($account);
-        } else {
-            echo $_GET['callback'] . '(' . json_encode($account) . ');';
-        }
-    } catch (PDOException $e) {
-        echo '{"error":{"text":' . $e->getMessage() . '}}';
-    }
-}
+$app->get('/packagesByStreamId/:id', 'getPackagesByStreamId');
+
+$app->post('/purchase/:id', 'addPurchase');
 
 function getFac($id){
     $sql = "select * from faculty where id=:id";
@@ -360,8 +281,61 @@ function getFacById($id) {
     }
 }
 
+/**
+ * The server side check required to redeem the package
+ * 
+ */
+function redeemPackage(){
+    $accountId = $app->request()->post('accountId');
+    $quizId = $app->request()->post('quizId');
+    // check if this quiz belongs to the list of free quizzes
+    $sql = "SELECT id,questionIds, type, streamId FROM quizzes where id=:id";
+    
+    
+    // get the quiz type and stream from the database
+    $sql = "SELECT id,questionIds, type, streamId FROM quizzes where id=:id";
+    try {
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("id", $quizId);
+        $stmt->execute();
+        $quizData = $stmt->fetchObject();
+        $db = null;
+    } catch(PDOException $e) {
+        echo '{"error":{"text":'. $e->getMessage() .'}}';
+    }
+    if(!($quizData->id)){
+     return;   
+    }
+
+    // get the details of remaining packages of this type
+    $sql = "SELECT id,questionIds, type, streamId FROM quizzes where id=:id";
+    try {
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("id", $quizId);
+        $stmt->execute();
+        $quizData = $stmt->fetchObject();
+        $db = null;
+    } catch(PDOException $e) {
+        echo '{"error":{"text":'. $e->getMessage() .'}}';
+    }
+    
+    try {
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        $quizzes = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $db = null;
+    }catch (PDOException $e) {
+		echo '{"error":{"text":' . $e->getMessage() . '}}';
+	}
+	// get the total number of tests remaining for this type for this user
+	//$sql = 
+}
+
 function getQuestionByQuizId($id) {
-	$sql = "select * from questions where id IN(1,2,3,4,5,6,7,8,9)";
+	$sql = "select questions from questions where id IN(1,2,3,4,5,6,7,8,9)";
 	try {
 		$db = getConnection();
 		$stmt = $db->prepare($sql);
@@ -369,7 +343,6 @@ function getQuestionByQuizId($id) {
 		$stmt->execute();
 		$quizzes = $stmt->fetchAll(PDO::FETCH_OBJ);
 		$db = null;
-
 		echo json_encode($quizzes);
 	} catch (PDOException $e) {
 		echo '{"error":{"text":' . $e->getMessage() . '}}';
@@ -471,7 +444,6 @@ function getQuizzesHistory($id){
 	}
 }
 
-
 function getQuestion($id) {
 	//echo "Getting Question $id <br />";
 	$sql = "SELECT * from questions where id='$id'";
@@ -495,17 +467,20 @@ function getQuestion($id) {
  * the post method
  */
 function getQ() {
+    echo $_POST['ids'];
     //echo "Getting Questions<br />";
-    $request = Slim::getInstance()->request();
-    $response = json_decode($request->getBody());
-    $sql = "SELECT * from questions where id IN(".implode(",", $response).")";
+    //$request = Slim::getInstance()->request();
+    //$response = json_decode($request->getBody());
+    //$email = $app->request()->post('ids');
+    //echo $app->request();
+   // $sql = "SELECT * from questions where id IN(".implode(",", $response).")";
     //echo $sql;
     try {
-        $db = getConnection();
+        /*$db = getConnection();
         $stmt = $db->query($sql);
         $questions = $stmt->fetchAll(PDO::FETCH_OBJ);
         $db = null;
-        echo json_encode($questions);
+        echo json_encode($questions);*/
         /*if (!isset($_GET['callback'])) {
             echo json_encode($projects);
         } else {
@@ -602,8 +577,27 @@ function getL2() {
 	}
 }
 
+function getPackagesByStreamId($id){
+    $sql = "SELECT p.id as id,p.name,p.details,p.price,t.name from packages p, package_type t where p.streamId='".$id."' AND p.type=t.id";
+    //echo $sql;
+    try {
+        $db = getConnection();
+        $stmt = $db->query($sql);
+        $packages = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $db = null;
+        // Include support for JSONP requests
+        if (!isset($_GET['callback'])) {
+            echo json_encode($packages);
+        } else {
+            echo $_GET['callback'] . '(' . json_encode($packages) . ');';
+        }
+        return ;
+    } catch (PDOException $e) {
+        echo '{"error":{"text":' . $e->getMessage() . '}}';
+    }
+
+};
 function resetDB() {
-    //echo "Getting Questions<br />";
     $sql = "TRUNCATE table results  ";
     try {
         $db = getConnection();
@@ -621,8 +615,24 @@ function resetDB() {
     }
 }
 
-
-
+function resetUsers() {
+    $sql = "TRUNCATE table results  ";
+    try {
+        $db = getConnection();
+        $stmt = $db->query($sql);
+        $projects = $stmt->execute();
+        $db = null;
+        // Include support for JSONP requests
+        if (!isset($_GET['callback'])) {
+            echo json_encode($projects);
+        } else {
+            echo $_GET['callback'] . '(' . json_encode($projects) . ');';
+        }
+    } catch (PDOException $e) {
+        echo '{"error":{"text":' . $e->getMessage() . '}}';
+    }
+}
+include 'authState.php';
 
 include 'xkcd.php';
 

@@ -22,8 +22,6 @@
 <script src="config.js"></script>
  
 <script src="js/lib/bootstrap.min.js"></script>
-<script src="js/lib/bootstrap-contextmenu.js"></script>
-
 <!-- The Scripts -->
 <script src="js/lib/underscore-min.js"></script>
 <script src="js/lib/backbone.js"></script>
@@ -37,11 +35,15 @@
 <script src="js/utils/charts.js"></script>
 <script src="js/utils/insights.js"></script>
 
+<!-- <script src="js/auth/facebook.js"></script> -->
+<script src="js/auth/google.js"></script>
+
 <script src="js/models/accounts.js"></script>
 <script src="js/models/streams.js"></script>
 <script src="js/models/questions.js"></script>
 <script src="js/models/quizzes.js"></script>
 <script src="js/models/fac.js"></script>
+<script src="js/models/packages.js"></script>
 <script src="js/models/sections.js"></script>
 <script src="js/models/scores.js"></script>
 <script src="js/models/responses.js"></script>
@@ -54,7 +56,9 @@ var views = [
               "quizview",
               "quizlibraryview",
               'facdirectoryview',
-              'modalview'
+              'modalview',
+              'loginview',
+              'packagesview'
             ];
 
 _.each(views,function(item){
@@ -71,5 +75,6 @@ _.each(views,function(item){
 <body>
   <header></header>
   <div id="content"></div>
+  <div id="fb-root"></div>
 </body>
 </html>

@@ -49,7 +49,7 @@ window.fbAsyncInit = function() {
 	user.updateLoginStatus();
 };
 
-$('#login').click(function(){ user.login(); });
+/*$('#login').click(function(){ user.login(); });
 
 $('#logout').click(function(){ user.logout(); });
-
+*/

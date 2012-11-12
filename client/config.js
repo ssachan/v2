@@ -10,6 +10,8 @@ var Config = {
     viewsArray : [  
                     'HeaderView',
                     'LandingView',
+                    'LoginView',
+                    'SignUpView',
                     'QuizView',
                     'QuizQuestionView',
                     'QuizResultsView',
@@ -18,7 +20,10 @@ var Config = {
                     'QuizItemView',
                     'FacDirectoryView',
                     'FacItemView',
-                    'DashboardView',
-                    'ModalView'
-                ]
+                    'ModalView',
+                    'InfoView',
+                    'PackagesView',
+                    'PackageItemView',
+                    'ForgotPassView'
+                  ]
 };

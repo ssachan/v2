@@ -16,6 +16,7 @@ window.DashboardView = Backbone.View.extend({
 
 	render : function() {
 		$(this.el).html(this.template());
+		new InfoView({el:'#info', model:account});
 		var l1Scores = this.collection;
 		var l2Scores = this.options.collection2;
 		// loop through the sectionL1 collection and print the scores
@@ -39,6 +40,16 @@ window.DashboardView = Backbone.View.extend({
 			}
 		}
 		new HistoryView({el:'#history', collection:quizHistory});
+	}
+});
+
+window.InfoView = Backbone.View.extend({
+	initialize : function() {
+		this.render();
+	},
+
+	render : function() {
+		$(this.el).html(this.template(this.model.toJSON()));
 	}
 });
 
