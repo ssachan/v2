@@ -224,6 +224,20 @@ window.Manager = {
 			}
 		});	
 	},
+	
+	processQuiz : function (quizId){
+		var url = Config.serverUrl + 'processQuiz/';
+		return $.ajax({
+			url : url,
+			dataType : "json",
+			data : {quizId : quizId, accountId : accountId},
+			success : function(data) {
+				console.log("questions fetched: " + data.length);
+				quizQuestions.add(data);
+			}
+		});
+	},
+	
 	/**
 	 * @param id
 	 * @returns

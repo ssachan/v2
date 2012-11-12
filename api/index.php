@@ -282,56 +282,47 @@ function getFacById($id) {
 }
 
 /**
- * The server side check required to redeem the package
+ * The function where the quiz processing takes place. We check for all the 
+ * package level details. 
  * 
  */
-function redeemPackage(){
+function processQuiz(){
     $accountId = $app->request()->post('accountId');
     $quizId = $app->request()->post('quizId');
-    // check if this quiz belongs to the list of free quizzes
-    $sql = "SELECT id,questionIds, type, streamId FROM quizzes where id=:id";
-    
-    
-    // get the quiz type and stream from the database
-    $sql = "SELECT id,questionIds, type, streamId FROM quizzes where id=:id";
+    // for now just return the questions from the quiz if quiz is not a part of the history. 
+    $sql = "SELECT count(*) as count FROM results where quizId=:id and accountId=:id";
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
         $stmt->bindParam("id", $quizId);
         $stmt->execute();
-        $quizData = $stmt->fetchObject();
+        $count = $stmt->fetchObject();
         $db = null;
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
-    if(!($quizData->id)){
-     return;   
-    }
-
-    // get the details of remaining packages of this type
-    $sql = "SELECT id,questionIds, type, streamId FROM quizzes where id=:id";
-    try {
-        $db = getConnection();
-        $stmt = $db->prepare($sql);
-        $stmt->bindParam("id", $quizId);
-        $stmt->execute();
-        $quizData = $stmt->fetchObject();
-        $db = null;
-    } catch(PDOException $e) {
-        echo '{"error":{"text":'. $e->getMessage() .'}}';
-    }
-    
-    try {
-        $db = getConnection();
-        $stmt = $db->prepare($sql);
-        $stmt->execute();
-        $quizzes = $stmt->fetchAll(PDO::FETCH_OBJ);
-        $db = null;
-    }catch (PDOException $e) {
-		echo '{"error":{"text":' . $e->getMessage() . '}}';
-	}
-	// get the total number of tests remaining for this type for this user
-	//$sql = 
+    if($count==0){
+        // this quiz hasn't been taken go ahead and fetch the questions
+        $sql = "SELECT questionIds FROM quizzes where id=:id";
+        try {
+            $db = getConnection();
+            $stmt = $db->prepare($sql);
+            $stmt->bindParam("id", $quizId);
+            $stmt->execute();
+            $questions = $stmt->fetchObject();
+            $db = null;
+            if (!isset($_GET['callback'])) {
+                echo json_encode($questions);
+            } else {
+                echo $_GET['callback'] . '(' . json_encode($questions) . ');';
+            }
+        } catch(PDOException $e) {
+            echo '{"error":{"text":'. $e->getMessage() .'}}';
+        }
+    }else{
+        $msg = "Quiz already taken";
+        echo '{"error":{"text":'. $msg .'}}';
+    } 
 }
 
 function getQuestionByQuizId($id) {
@@ -595,9 +586,9 @@ function getPackagesByStreamId($id){
     } catch (PDOException $e) {
         echo '{"error":{"text":' . $e->getMessage() . '}}';
     }
-
 };
-function resetDB() {
+
+function resetResults() {
     $sql = "TRUNCATE table results  ";
     try {
         $db = getConnection();
@@ -616,7 +607,9 @@ function resetDB() {
 }
 
 function resetUsers() {
-    $sql = "TRUNCATE table results  ";
+    $sql = "TRUNCATE table students";
+    
+    $sql = "TRUNCATE table results";
     try {
         $db = getConnection();
         $stmt = $db->query($sql);
