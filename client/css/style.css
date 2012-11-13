@@ -145,16 +145,22 @@ color: #C0504D
 
 .box{
     background-color: white;
-    box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
-	
-    -moz-box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4);
-    -webkit-box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
+ 
+	box-shadow: 0 1px 6px rgba(0, 0, 0, 0.25);
+    -moz-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.25);
+    -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.25);
 
     -webkit-border-radius: 0px;
     -moz-border-radius: 0px;
     border-radius: 0px;
 }
 
+.outline{
+border: 1px solid #ccc;
+-webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+}
 
 .yellow-box{
 	border: solid 1px #CCC; 
@@ -165,7 +171,7 @@ color: #C0504D
 
 .credits{
 
-background:#C0504D;
+background:#193D42;
 color: white;
 margin-top: -20px;
 padding-top: 5px;
@@ -176,7 +182,7 @@ text-align: center;}
 
 .navbar-inner {
   background-color: #fff; /* background color will be black for all browsers */
-  background-image: none;
+  background-image: none ;
   background-repeat: no-repeat;
   filter: none;
 }
@@ -308,14 +314,6 @@ width: 100%;
 .dashboard {
     width: 70%;
 }
-
-.das-update {
-    position: relative;
-	bottom: 3px;}
-
-
-
-
 	
 .das-personal-info{
 padding-top: 10px;
@@ -332,17 +330,29 @@ top:20px;}
 .das-sec2{
 margin-bottom: 15px;}
 
+.das-sec2 .outline{
+margin-top: 18px;
+margin-left: 5px;
+margin-right: 5px;}
 
+.das-sec2 img{
+margin-left: 40px;}
+
+.das-sec2 ul{
+margin-top: -5px;
+margin-left: 15px;}
+
+.das-sec2 h4{
+margin-top: 0px;
+}
 
 .das-sec3{
 margin-top: 15px;
-
 margin-bottom: 15px;}
 
 .das-sec3 h3{
-margin-top: 10px;
+margin-top: 0px;
 padding-left: 10px;
-background: #dee;
 }
 
 .das-sec4{
@@ -351,15 +361,30 @@ padding-bottom: 15px;
 margin-bottom: 15px;}
 
 .das-sec4 h3{
-margin-top: 10px;
 padding-left: 10px;
-background: #dee;
 }
 
 .das-sec4 ul{
 text-align: left;
 }
 
+.progress{
+position: relative;
+top: 12px;
+}
+
+.stars{
+position: relative;
+bottom: 2px;
+}
+
+.practice{
+position: relative;
+left: 270px;}
+
+.accuracy{
+position: relative;
+left: 570px;}
 
 /* Quiz Library
 -------------------------------------------------- */
@@ -419,7 +444,7 @@ background: #eee;
 }
 
 .quiz-lib-t2 {
-padding-top: 10px;
+padding-top: 20px;
 padding-left: 13px;
 margin-bottom: 10px;	}
 
@@ -427,13 +452,16 @@ margin-bottom: 10px;	}
 margin-top: 0px;}
 
 .quiz-lib-t4 {
-margin-top:-10px;
+margin-top:15px;
 line-height: 15px;
-margin-bottom: 5px;
+margin-bottom: 15px;
 }
 
 .quiz-lib-t5 {
-background: #ddd}
+border-top: 0.2px solid #ddd;
+padding-top: 5px;
+padding-bottom: 5px;
+padding-left: 10px;}
 
 
 /* Fac Directory
