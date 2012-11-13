@@ -204,15 +204,11 @@ text-align: center;}
 	border-right: 1px solid #EEE;
 	border-bottom: 1px solid #CCC;
 	background-color: white;
-	-moz-border-radius: 6px;
-	-webkit-border-radius: 6px;
-	border-radius: 6px;
-	border-left: 1px solid #E4E4E4;
-	border-right: 1px solid #EEE;
-	border-bottom: 1px solid #CCC;
-	-moz-box-shadow: 3px 0px 6px #aaa;
-	-webkit-box-shadow: 3px 0px 6px #aaa;
-	box-shadow: 3px 0px 6px #aaa;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+box-shadow: 0 1px 6px rgba(0, 0, 0, 0.25);
+    -moz-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.25);
+    -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.25);
 }
 
 .detail-unit .heading {
@@ -250,16 +246,18 @@ text-align: center;}
 -------------------------------------------------- */
 .sidebar {
 	height: 100%;
-    min-height: 100%;
-	background: url('../img/side-ribbon.jpg') repeat-y;
-	padding-top: 50px;
+    min-height: 600px;
+	background: url('../img/linen.png') repeat-y;
+	margin-top: -15px;
+	padding-top: 10px;
 	background-size: 100% auto;
+	
 	-webkit-background-size: 100% auto; /*  Safari  */
 	-khtml-background-size: 100% auto; /*  Konqueror  */
 	-moz-background-size: 100% auto;
 	background-size: 100% auto; /*  Firefox  */
-	-webkit-box-shadow: #444 3px 0px 6px;
-	box-shadow: #444 3px 0px 6px;
+	-webkit-box-shadow: #ccc 3px 0px 6px;
+	box-shadow: #ccc 3px 0px 6px;
 }
 
 /* Landing
@@ -568,16 +566,33 @@ top: 15px;
 }
 
 
-/* questions
+/* Quiz View
 -------------------------------------------------- */
+.quizview{
+width:70%;
+}
+
 .question-toolbar {
 	padding: 5px;
 	text-align: center;
-	background-color: whiteSmoke;
+	background-color: white;
 	border-top: 1px solid white;
 	border: 1px solid #DDD;
 	margin-top:10px;
 }
+
+.question-text{
+font-size: 13px;}
+
+.top-buttons{
+padding: 5px;}
+
+.topbuttons span{
+margin-left: 5px;
+padding-top: 1px;
+color: black;
+};
+;
 
 #next,#previous,#submit {
     cursor: pointer;
@@ -616,13 +631,19 @@ top: 15px;
 	padding:10px
 }
 
-.quizview .sidenav>li>a, .quiz-analytics .sidenav>li>a {
+
+.questionno{
+margin-top: 20px;
+font-style: bold;
+color: #0091B2}
+
+.quizview li>a, .quiz-analytics >li>a{
 	display: block;
 	margin: 0px;
-	padding: 0px;
+	padding: 4px;
 	text-align: center;
 	color: #C6C6C6;
-	font-size: 20px;
+	
 }
 
 .quizview > .row-fluid, .quiz-analytics > .row-fluid{
@@ -634,6 +655,7 @@ top: 15px;
     height: 100%;
     min-height: 100%;
 }
+
 
 .quiz-analytics .box{
 	padding : 10px 0px 25px 0px;
