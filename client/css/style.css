@@ -19,9 +19,8 @@ body {
 }
 
 #content{
-    background: white url('../img/bg.jpeg') top center repeat;
-    margin:0px auto;
-    padding-top:40px;
+    margin: 0px auto;
+    padding-top: 70px;
 }
 
 .bold{
@@ -208,7 +207,11 @@ text-align: center;}
 	margin-bottom: 10px;
 }
 
-.navbar-inverse .navbar-inner {
+.navbar-inner {
+    background-image : none;
+    background-color : white;
+}
+/*.navbar-inverse .navbar-inner {
 	background: #193D42;
 }
 
@@ -217,14 +220,14 @@ text-align: center;}
 .navbar .nav > li > a { padding: (@navbarHeight - 20)/2 10px ((@navbarHeight - 20)/2 + 1); }
 .navbar .brand { padding: (((@navbarHeight - 20) / 2) * 0.8) 20px (((@navbarHeight - 20) / 2) * 1.2); }
 */
-.navbar .nav {
+/*.navbar .nav {
 	height: 51px;
 }
 
 .navbar .nav>li>a {
 	padding: 15px 10px 16px
 }
-
+*/
 /* Sidebar
 -------------------------------------------------- */
 .sidebar {

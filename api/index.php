@@ -5,44 +5,36 @@ require 'Slim/Slim.php';
 
 $app = new \Slim\Slim();
 
-$app->get('/quizzes/', 'getQuizzes');
-$app->get('/quizzes/:id', 'getQuiz');
-
-$app->get('/questions/', 'getQuestions');
-$app->get('/questions/:id', 'getQuestion');
-$app->post('/getQuestions/', 'getQ');
-
-$app->get('/l3/', 'getL3');
-
-$app->post('/responses/', 'addResponse');
-
-$app->get('/quizzesByStreamId/:id', 'getQuizzesByStreamId');
-
-$app->get('/quizzesByFac/:id', 'getQuizzesByFac');
-
-$app->get('/facByStreamId/:id', 'getFacByStreamId');
-
-$app->get('/fac/:id', 'getFac');
-
-$app->get('/questionByQuizId/:id', 'getQuestionByQuizId');
-
-$app->get('/l1Performance/:id', 'getL1Performance');
-
-$app->get('/l2Performance/:id', 'getL2Performance');
-
+// the L1,L2,L3
 $app->get('/l1ByStream/:id', 'getL1ByStream');
-
 $app->get('/l2ByStream/:id', 'getL2ByStream');
-
 $app->get('/l3ByStream/:id', 'getL3ByStream');
 
+//quiz library
+$app->get('/quizzesByStreamId/:id', 'getQuizzesByStreamId');
+
+// the fac pages
+$app->get('/facByStreamId/:id', 'getFacByStreamId');
+$app->get('/fac/:id', 'getFac');
+$app->get('/quizzesByFac/:id', 'getQuizzesByFac');
+
+//dashboard page
+$app->get('/l1Performance/:id', 'getL1Performance');
+$app->get('/l2Performance/:id', 'getL2Performance');
 $app->get('/historyById/:id', 'getQuizzesHistory');
 
-$app->get('/resetDB/', 'resetDB');
+//quiz
+$app->get('/processQuiz/', 'processQuiz');
+
+$app->post('/responses/', 'addResponse');
 
 $app->get('/packagesByStreamId/:id', 'getPackagesByStreamId');
 
 $app->post('/purchase/:id', 'addPurchase');
+
+// the resets
+$app->get('/resetResults/', 'resetResults');
+$app->get('/resetResults/', 'resetResults');
 
 function getFac($id){
     $sql = "select * from faculty where id=:id";
@@ -325,22 +317,6 @@ function processQuiz(){
     } 
 }
 
-function getQuestionByQuizId($id) {
-	$sql = "select questions from questions where id IN(1,2,3,4,5,6,7,8,9)";
-	try {
-		$db = getConnection();
-		$stmt = $db->prepare($sql);
-		$stmt->bindParam("id", $id);
-		$stmt->execute();
-		$quizzes = $stmt->fetchAll(PDO::FETCH_OBJ);
-		$db = null;
-		echo json_encode($quizzes);
-	} catch (PDOException $e) {
-		echo '{"error":{"text":' . $e->getMessage() . '}}';
-	}
-}
-
-
 /**
  * some dummy logic to update the scores. 
  */
@@ -435,83 +411,6 @@ function getQuizzesHistory($id){
 	}
 }
 
-function getQuestion($id) {
-	//echo "Getting Question $id <br />";
-	$sql = "SELECT * from questions where id='$id'";
-	try {
-		$db = getConnection();
-		$stmt = $db->query($sql);
-		$question = $stmt->fetchAll(PDO::FETCH_OBJ);
-		$db = null;
-		// Include support for JSONP requests
-		if (!isset($_GET['callback'])) {
-			echo json_encode($question);
-		} else {
-			echo $_GET['callback'] . '(' . json_encode($question) . ');';
-		}
-	} catch (PDOException $e) {
-		echo '{"error":{"text":' . $e->getMessage() . '}}';
-	}
-}
-
-/**
- * the post method
- */
-function getQ() {
-    echo $_POST['ids'];
-    //echo "Getting Questions<br />";
-    //$request = Slim::getInstance()->request();
-    //$response = json_decode($request->getBody());
-    //$email = $app->request()->post('ids');
-    //echo $app->request();
-   // $sql = "SELECT * from questions where id IN(".implode(",", $response).")";
-    //echo $sql;
-    try {
-        /*$db = getConnection();
-        $stmt = $db->query($sql);
-        $questions = $stmt->fetchAll(PDO::FETCH_OBJ);
-        $db = null;
-        echo json_encode($questions);*/
-        /*if (!isset($_GET['callback'])) {
-            echo json_encode($projects);
-        } else {
-            echo $_GET['callback'] . '(' . json_encode($projects) . ');';
-        }*/
-    } catch (PDOException $e) {
-        echo '{"error":{"text":' . $e->getMessage() . '}}';
-    }
-}
-
-
-function getQuestions() {
-    //$request = $_GET['id']
-    //echo "hello";
-    $re = $app->request()->get('data');
-    echo $re;
-    //$response = json_decode($app->request()->get('data'));
-    //echo $response;
-    //$response = json_decode( $_GET['data']);
-    //$sql = "SELECT * from questions where id IN(".implode(",", $response).")";
-    //echo $sql;
-    
-	//echo "Getting Questions<br />";
-	/*$sql = "SELECT * from questions where availableFlag='1'";
-	try {
-		$db = getConnection();
-		$stmt = $db->query($sql);
-		$projects = $stmt->fetchAll(PDO::FETCH_OBJ);
-		$db = null;
-		// Include support for JSONP requests
-		if (!isset($_GET['callback'])) {
-			echo json_encode($projects);
-		} else {
-			echo $_GET['callback'] . '(' . json_encode($projects) . ');';
-		}
-	} catch (PDOException $e) {
-		echo '{"error":{"text":' . $e->getMessage() . '}}';
-	}*/
-}
-
 function getQuiz($id) {
 	echo "Getting Test $id <br />";
 	$sql = "SELECT * from quizzes where id='$id'";
@@ -533,25 +432,6 @@ function getQuiz($id) {
 
 function getQuizzes() {
 	$sql = "SELECT * from quizzes";
-	try {
-		$db = getConnection();
-		$stmt = $db->query($sql);
-		$projects = $stmt->fetchAll(PDO::FETCH_OBJ);
-		$db = null;
-		// Include support for JSONP requests
-		if (!isset($_GET['callback'])) {
-			echo json_encode($projects);
-		} else {
-			echo $_GET['callback'] . '(' . json_encode($projects) . ');';
-		}
-	} catch (PDOException $e) {
-		echo '{"error":{"text":' . $e->getMessage() . '}}';
-	}
-}
-
-function getL2() {
-	//echo "Getting Questions<br />";
-	$sql = "SELECT * from section_l2 ";
 	try {
 		$db = getConnection();
 		$stmt = $db->query($sql);
