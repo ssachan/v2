@@ -129,9 +129,38 @@ window.Quiz = Backbone.Model.extend({
 
 	submitResults : function(quiz) {
 		var score = [ parseInt(this.get('totalCorrect')),
-				parseInt(this.get('totalIncorrect')),parseInt(this.get('totalScore')),parseInt(this.get('maxScore')) ]; // shouldn't this be
-														// calculated?
-		var response = new Response({
+		parseInt(this.get('totalIncorrect')),parseInt(this.get('totalScore')),parseInt(this.get('maxScore')) ];
+		
+		var url = '../api/responses';
+		console.log('Adding responses... ');
+		$.ajax({
+			url : url,
+			type : 'POST',
+			dataType : "json",
+			data : {
+				accountId : account.get('id'),
+				streamId : streamId,
+				quizId : this.get('id'),
+				streamId : streamId,
+				score : JSON.stringify(score),
+				selectedAnswers : JSON.stringify(this.getSelectedAnswers()),
+				timePerQuestion : JSON.stringify(this.getTimeTakenPerQuestion()),
+			},
+			success : function(data) {
+				console.log([ "signup request details: ", data ]);
+				if (data.error) { // If there is an error, show the error
+					// messages
+					console.log(data.error.text);
+				} else { // If not, send them back to the home page
+					
+				}
+			},
+			error : function(data) {
+				// console.log([ "error: ", data ]);
+				console.log(data);
+			},
+		});
+		/*var response = new Response({
 			accountId : id,
 			quizId : this.get('id'),
 			score : JSON.stringify(score),
@@ -142,7 +171,7 @@ window.Quiz = Backbone.Model.extend({
 			success : function(data) {
 				//quizHistory.add(data);
 			}
-		});
+		});*/
 	}
 });
 

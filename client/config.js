@@ -1,7 +1,7 @@
 var SEPARATOR = '|:';
 
 var Config = {
-    serverUrl : 'http://localhost/code/api/',
+    serverUrl : '../api/',
     edition : '1',
     editionName : 'web',
     assetPath : '',

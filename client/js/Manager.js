@@ -13,7 +13,6 @@ $.ajaxSetup({
     }
 });
 
-
 /**
  * 
  * The Manager class
@@ -130,10 +129,11 @@ window.Manager = {
 			success : function(data) {
 				console.log("quizzes fetched: " + data.length);
 				quizLibrary.reset(data);
-				new QuizLibraryView({
+				var quizLibraryView = new QuizLibraryView({
 					model : quizLibrary,
-					el : '#content'
+					//el : '#content'
 				});
+				app.showView(quizLibraryView);
 			}
 		});
 	},
@@ -185,29 +185,19 @@ window.Manager = {
 		this.getFacById();
 	},
 	
-	getQuestionByQuizId : function(id){
-		var url = Config.serverUrl + 'questionsByQuiz/'+id;
+	getQuestions : function(qids){
+		var url = Config.serverUrl + 'questions/';
 		return $.ajax({
 			url : url,
 			dataType : "json",
+			type : 'GET',
+			data : {qids : qids},
 			success : function(data) {
 				console.log("questions fetched: " + data.length);
 				quizQuestions.add(data);
 			}
 		});
 	},
-	
-	/*getQuestion : function(id) {
-		var url = Config.serverUrl + 'questions/'+id;
-		return $.ajax({
-			url : url,
-			dataType : "json",
-			success : function(data) {
-				console.log("questions fetched: " + data.length);
-				quizQuestions.add(data);
-			}
-		});
-	},*/
 	
 	getPackagesByStreamId : function(streamId){
 		var url = Config.serverUrl + 'packagesByStreamId/'+streamId;
@@ -229,15 +219,19 @@ window.Manager = {
 		var url = Config.serverUrl + 'processQuiz/';
 		return $.ajax({
 			url : url,
+			type : 'GET',
 			dataType : "json",
-			data : {quizId : quizId, accountId : accountId},
+			data : {quizId : quizId, accountId : account.get('id')},
 			success : function(data) {
-				console.log("questions fetched: " + data.length);
-				quizQuestions.add(data);
+				if (data.error) { // If there is an error, show the error
+					// messages
+					alert(data.error.text);
+				} else { // If not, send them back to the home page
+					quizQuestions.reset(data);
+				}
 			}
 		});
 	},
-	
 	
 	purchasePackage : function(id){
 		var url = Config.serverUrl + 'package/';
@@ -247,7 +241,7 @@ window.Manager = {
 			data: {packageId: id}, // gotta strinigfy the entire hash
 			dataType : "json",
 			success : function(data) {
-				console.log("questions fetched: " + data.length);
+				console.log("packages fetched: " + data.length);
 			}
 		});
 	},
@@ -258,22 +252,17 @@ window.Manager = {
 	 * @param quiz
 	 * @returns
 	 */
-	getQuizDataForStart : function(quiz) {
-		var qIds = quiz.getQuestionIds();
-		var len = qIds.length;
+	getQuizDataForStart : function(quizId) {
+		activeQuiz = quizLibrary.get(quizId); // active quiz initialized for the first time
 		var dfd = [];
-		/**
-		 * make this call more efficient. Pass all ids at one go and fetch the
-		 * questions using an IN clause
-		 */
-		dfd.push(this.processQuiz(quiz.get('id')));
-
+		dfd.push(this.processQuiz(quizId));
 		$.when.apply(null, dfd).then(function(data) {
 			var quizView = new QuizView({
-				model : quiz,
+				model : activeQuiz,
 				index : 0,
-				el : $('#content'),
+				//el : $('#content')
 			});
+			app.showView(quizView);
 			quizView.startQuiz();
 		});
 	},
@@ -285,24 +274,14 @@ window.Manager = {
 	 * @returns
 	 */
 	getQuizDataForResults : function(quiz) {
-		var qIds = quiz.getQuestionIds();
-		var len = qIds.length;
 		var dfd = [];
-		/**
-		 * make this call more efficient. Pass all ids at one go and fetch the
-		 * questions using an IN clause
-		 */
-		for ( var i = 0; i < len; i++) {
-			if (quizQuestions.get(qIds[i]) == null) {
-				dfd.push(this.getQuestion(qIds[i]));
-			}
-		}
+		dfd.push(this.getQuestions(quiz.get('questionIds')));
 		$.when.apply(null, dfd).then(function(data) {
 			var quizView = new QuizView({
 				model : quiz,
 				index : 0,
-				el : $('#content'),
 			});
+			app.showView(quizView);
 			quizView.renderResults();
 		});
 	},

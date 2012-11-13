@@ -12,26 +12,22 @@ var activeStream = new Stream({
 var streamId = activeStream.get('id');
 var mView = new ModalView();
 
-var id = null;//account.get('id')+'|'+activeStream.get('id');
+var id = null;// account.get('id')+'|'+activeStream.get('id');
 
 var timer = new Timer(1000, null, []); // we will have just one global timer
-										// object shared across quizzes and
-										// practice
+// object shared across quizzes and
+// practice
 
 $(document).ready(function() {
 	helper.loadTemplate(Config.viewsArray, function() {
 		app = new AppRouter();
-		/* (function (d) {
-             var js, id = 'facebook-jssdk';
-             if (d.getElementById(id)) {
-                 return;
-             }
-             js = d.createElement('script');
-             js.id = id;
-             js.async = true;
-             js.src = "//connect.facebook.net/en_US/all.js";
-             d.getElementsByTagName('head')[0].appendChild(js);
-         }(document));*/
+		/*
+		 * (function (d) { var js, id = 'facebook-jssdk'; if
+		 * (d.getElementById(id)) { return; } js = d.createElement('script');
+		 * js.id = id; js.async = true; js.src =
+		 * "//connect.facebook.net/en_US/all.js";
+		 * d.getElementsByTagName('head')[0].appendChild(js); }(document));
+		 */
 		Backbone.history.start();
 	});
 });
@@ -39,23 +35,24 @@ $(document).ready(function() {
 var AppRouter = Backbone.Router.extend({
 
 	routes : {
-		"":"landing",
-		"dashboard":"dashboard",
-		"login":"login",
+		"" : "dashboard",
+		"landing" : "landing",
+		"login" : "login",
 		"quizLibrary" : "quizLibrary",
 		"facDirectory" : "facDirectory",
 		"quizResults/:id" : "quizResults",
 		"quiz/:id" : "startQuiz",
-		"fac/:id":"fac",
-		"packages":"packages",
-		"forgotPass":"forgotPass"
+		"fac/:id" : "fac",
+		"packages" : "packages",
+		"forgotPass" : "forgotPass"
 	},
 
 	initialize : function() {
-		//fetch all the initial data here
+		// fetch all the initial data here
 		Manager.getSubjectsByStreamId(streamId);
 		this.headerView = new HeaderView({
-			el : $('header')
+			el : $('header'),
+			model : account
 		});
 	},
 
@@ -68,58 +65,78 @@ var AppRouter = Backbone.Router.extend({
 	},
 
 	dashboard : function() {
-		Manager.getDashboardData();
+		// check if authenticated move to dashboard page, else move to landing
+		// page
+		if (account.get('id') != null) {
+			Manager.getDashboardData();
+		} else {
+			account.isAuth();
+		}
 	},
 
 	quizLibrary : function() {
 		Manager.getQuizzesByStreamId(streamId);
 	},
-	
-	packages : function(){
+
+	packages : function() {
 		Manager.getPackagesByStreamId(streamId);
 	},
-	
+
 	facDirectory : function() {
-		//if streamId is set
-		if(streamId){
+		// if streamId is set
+		if (streamId) {
 			Manager.getFacByStreamId(streamId);
-		}else{
+		} else {
 			// get a generic faculty list
 			alert('generic list of fac');
 		}
 	},
-	
-	fac : function(id){
-		Manager.getFaculty(id,streamId);
+
+	fac : function(id) {
+		Manager.getFaculty(id, streamId);
 	},
-	
+
 	/**
-	 * TODO:at this point there are separate routes for start and results but later 
-	 * we might want to merge them to same route #quiz...it displays the results when 
-	 * the quiz is attempted else starts the quiz. 
+	 * TODO:at this point there are separate routes for start and results but
+	 * later we might want to merge them to same route #quiz...it displays the
+	 * results when the quiz is attempted else starts the quiz.
+	 * 
 	 * @param id
 	 */
 	startQuiz : function(id) {
-		mView.close();
-		activeQuiz = quizLibrary.get(id); // active quiz initialized for the first time
-		Manager.getQuizDataForStart(activeQuiz);
+		if (account.get('id') != null) {
+			mView.close();
+			Manager.getQuizDataForStart(id);
+		} else {
+			window.location.replace('#');
+		}
 	},
-	
+
 	quizResults : function(id) {
-			// pick from history
+		// pick from history
 		var quiz = quizHistory.get(id);
-		if(quiz){
+		if (quiz) {
 			Manager.getQuizDataForResults(quiz);
-		}else{
+		} else {
 			alert('access denied');
 		}
 	},
-	
-	forgotPass : function(){
+
+	forgotPass : function() {
 		console.log('forgot pass');
 		// load forgot password page
-	}
-	
-	
+	},
+
+	showView : function(view) {
+		if (this.currentView)
+			this.currentView.close();
+		this.currentView = view;
+		$('#content').html((this.currentView.render()).el);
+	},
 
 });
+
+Backbone.View.prototype.close = function() {
+	this.remove();
+	this.unbind();
+};

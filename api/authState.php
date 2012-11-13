@@ -32,12 +32,22 @@ $app->add(new \Slim\Middleware\SessionCookie(array(
 $authenticate = function ($app) {
     return function () use ($app) {
         if (!isset($_SESSION['user'])) {
-           $app->redirect('../client/#login');
-        }else {
-            // If a user is not logged in at all, return a 401
-            $app->halt(401, 'Dude, you aren\'t logged in...sign in, will you?');
+            $app->redirect('../client/#landing');
         }
     };
+};
+
+function getStudentByEmailAndStreamId($email,$streamId){
+    $sql = "SELECT a.id as id,a.email,a.firstName,a.lastName,s.ascoreL1 as ascore from accounts a,students s where a.email='".$email."' AND s.streamId='".$streamId."' AND a.id=s.accountId";
+    try {
+        $db = getConnection();
+        $stmt = $db->query($sql);
+        $account = $stmt->fetch(PDO::FETCH_OBJ);
+        $db = null;
+        return $account;
+    } catch (PDOException $e) {
+        echo '{"error":{"text":' . $e->getMessage() . '}}';
+    }
 };
 
 function emailExists($email){
@@ -96,6 +106,7 @@ function sendEmail($content, $email){
         echo("<p>Message successfully sent!</p>");
     }
 }
+
 /*$app->hook('slim.before.dispatch', function() use ($app) {
     $user = null;
     if (isset($_SESSION['user'])) {
@@ -105,18 +116,19 @@ function sendEmail($content, $email){
 });*/
 
 $app->post("/signup", function () use ($app) {
-    $firstName = $_POST['firstName'];
-    $lastName = $_POST['lastName'];
-    $email =  $_POST['email'];
-    $password = $_POST['password'];
-    $streamId = $_POST['streamId'];
+    $firstName = mysql_real_escape_string($_POST['firstName']);
+    $lastName = mysql_real_escape_string($_POST['lastName']);
+    $email =  mysql_real_escape_string($_POST['email']);
+    $password = mysql_real_escape_string($_POST['password']);
+    $streamId = mysql_real_escape_string($_POST['streamId']);
     
     if(emailExists($email) != 0){
         // email exists
         $msg = 'email already exists. you should probably try forgot password';
+        //echo json_encode('{"error":{"text":' . $msg . '}}');
         echo '{"error":{"text":' . $msg . '}}';
         //return;
-    }
+    }else{
     $sql = "INSERT INTO accounts (firstName,lastName,email,password, createdOn) VALUES (:firstName, :lastName, :email, :password, :createdOn)";
     try {
         $db = getConnection();
@@ -139,21 +151,27 @@ $app->post("/signup", function () use ($app) {
         echo json_encode($response);
     } catch (PDOException $e) {
         error_log($e->getMessage(), 3, '/var/tmp/php.log');
-        //echo '{"error":{"text":' . $e->getMessage() . '}}';
+        echo '{"error":{"text":' . $e->getMessage() . '}}';
+    }
     }
 });
     
 $app->get("/logout", function () use ($app) {
-    unset($_SESSION['user']);
-    $app->redirect('../client/#login');
+    if (isset($_SESSION['user'])) {
+        unset($_SESSION['user']);
+        echo json_encode(true);
+    } else {
+        $msg = 'Already logged out';
+        echo '{"error":{"text":' . $msg . '}}';
+    }
 });
+
 
 $app->post("/login", function () use ($app) {
     $email = $app->request()->post('email');    
     $password = $app->request()->post('password');
     $streamId = $app->request()->post('streamId');
     $sql = "SELECT a.id as id,a.email,a.firstName,a.lastName,s.ascoreL1 as ascore from accounts a,students s where a.email='".$email."' AND a.password='".$password."' AND s.streamId='".$streamId."' AND a.id=s.accountId";
-    //echo $sql;
     try {
         $db = getConnection();
         $stmt = $db->query($sql);
@@ -168,7 +186,6 @@ $app->post("/login", function () use ($app) {
 });
 
 $app->post("/forgotpass", function () use ($app) {
-    
     $email=$_POST['email'];
     $email=mysql_real_escape_string($email);
     $status = "OK";
@@ -199,7 +216,18 @@ $app->post("/forgotpass", function () use ($app) {
         sendMail($email, "your password is ".$account->password.""); 
     } 
 });
-        
+
+$app->get("/isAuth",function () use ($app) {
+    $user=null;
+    if (isset($_SESSION['user'])) {
+        $user = $_SESSION['user'];
+        $account = getStudentByEmailAndStreamId($user,1);
+        echo json_encode($account);
+    }else{
+        echo json_encode(false);
+    }
+});
+    
 $app->get("/private/about", $authenticate($app), function () use ($app) {
     $app->render('privateAbout.php');
 });

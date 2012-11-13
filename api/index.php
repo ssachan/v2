@@ -5,6 +5,8 @@ require 'Slim/Slim.php';
 
 $app = new \Slim\Slim();
 
+include 'authState.php';
+
 // the L1,L2,L3
 $app->get('/l1ByStream/:id', 'getL1ByStream');
 $app->get('/l2ByStream/:id', 'getL2ByStream');
@@ -24,9 +26,11 @@ $app->get('/l2Performance/:id', 'getL2Performance');
 $app->get('/historyById/:id', 'getQuizzesHistory');
 
 //quiz
-$app->get('/processQuiz/', 'processQuiz');
+$app->get('/processQuiz/',$authenticate($app), 'processQuiz');
 
-$app->post('/responses/', 'addResponse');
+$app->get('/questions/',$authenticate($app), 'getQuestionsByIds');
+
+$app->post('/responses', 'addResponse');
 
 $app->get('/packagesByStreamId/:id', 'getPackagesByStreamId');
 
@@ -273,27 +277,55 @@ function getFacById($id) {
     }
 }
 
+function getQuestions($qids){
+    $qids = explode("|:", $qids);
+    $sql = "SELECT * from questions where id IN(".implode(",", $qids).")";
+    try {
+        $db = getConnection();
+        $stmt = $db->query($sql);
+        $questions = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $db = null;
+        return $questions;
+    } catch (PDOException $e) {
+        echo '{"error":{"text":' . $e->getMessage() . '}}';
+    }
+}
+
+function getQuestionsByIds(){
+    $qids = $_GET['qids'];
+    
+    $questions = getQuestions($qids) ;
+    if (!isset($_GET['callback'])) {
+        echo json_encode($questions);
+    } else {
+        echo $_GET['callback'] . '(' . json_encode($questions) . ');';
+    }
+}
+
 /**
  * The function where the quiz processing takes place. We check for all the 
- * package level details. 
+ * packages available and then substract from the appropriate one.
  * 
  */
 function processQuiz(){
-    $accountId = $app->request()->post('accountId');
-    $quizId = $app->request()->post('quizId');
-    // for now just return the questions from the quiz if quiz is not a part of the history. 
-    $sql = "SELECT count(*) as count FROM results where quizId=:id and accountId=:id";
+    $accountId = $_GET['accountId'];
+    $quizId = $_GET['quizId'];
+    // for now just return the questions from the quiz if quiz is not a part of the history.
+    $sql = "SELECT count(*) as count FROM results where quizId=:quizId and accountId=:accountId";
+    //echo $sql;
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
-        $stmt->bindParam("id", $quizId);
+        $stmt->bindParam("quizId", $quizId);
+        $stmt->bindParam("accountId", $quizId);
         $stmt->execute();
         $count = $stmt->fetchObject();
         $db = null;
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
-    if($count==0){
+    
+    if($count->count==0){
         // this quiz hasn't been taken go ahead and fetch the questions
         $sql = "SELECT questionIds FROM quizzes where id=:id";
         try {
@@ -301,12 +333,15 @@ function processQuiz(){
             $stmt = $db->prepare($sql);
             $stmt->bindParam("id", $quizId);
             $stmt->execute();
-            $questions = $stmt->fetchObject();
+            $questionIds = $stmt->fetchObject();
             $db = null;
-            if (!isset($_GET['callback'])) {
-                echo json_encode($questions);
-            } else {
-                echo $_GET['callback'] . '(' . json_encode($questions) . ');';
+            if($questionIds->questionIds!=null){
+                $questions = getQuestions($questionIds->questionIds) ;
+                if (!isset($_GET['callback'])) {
+                    echo json_encode($questions);
+                } else {
+                    echo $_GET['callback'] . '(' . json_encode($questions) . ');';
+                }
             }
         } catch(PDOException $e) {
             echo '{"error":{"text":'. $e->getMessage() .'}}';
@@ -314,7 +349,7 @@ function processQuiz(){
     }else{
         $msg = "Quiz already taken";
         echo '{"error":{"text":'. $msg .'}}';
-    } 
+    }
 }
 
 /**
@@ -338,20 +373,29 @@ function updateScores($accId, $streamId){
 
 function addResponse() {
 	// error_log('addWine\n', 3, '/var/tmp/php.log');
-	$request = Slim::getInstance()->request();
-	$response = json_decode($request->getBody());
+	//$request = Slim::getInstance()->request();
+	//$response = json_decode($request->getBody());
 	$date = date("Y-m-d H:i:s", time());
-	$ids = explode("|", $response->accountId);
+	//$ids = explode("|", $response->accountId);
+	$streamId = $_POST['streamId'];
+	$accountId = $_POST['accountId'];
+	$quizId =  $_POST['quizId'];
+	$score = $_POST['score'];
+	$selectedAnswers = $_POST['selectedAnswers'];
+	$timePerQuestion = $_POST['timePerQuestion'];
+	
+	
 	$sql = "INSERT INTO results (accountId, quizId, selectedAnswers, score, timePerQuestion, timestamp) VALUES (:accountId, :quizId, :selectedAnswers, :score, :timePerQuestion, :timeStamp)";
+	echo $sql;
 	try {
 		$db = getConnection();
 		$stmt = $db->prepare($sql);
-		$stmt->bindParam("accountId", $ids[0]);
-		$stmt->bindParam("quizId", $response->quizId);
+		$stmt->bindParam("accountId", $accountId);
+		$stmt->bindParam("quizId", $quizId);
 		//$stmt->bindParam("questionId", $response->questionId);
-		$stmt->bindParam("selectedAnswers", $response->selectedAnswers);
-		$stmt->bindParam("score", $response->score);
-		$stmt->bindParam("timePerQuestion", $response->timePerQuestion);
+		$stmt->bindParam("selectedAnswers", $selectedAnswers);
+		$stmt->bindParam("score", $score);
+		$stmt->bindParam("timePerQuestion", $timePerQuestion);
 		$stmt->bindParam("timeStamp", $date);
 		$stmt->execute();
 		$response->id = $db->lastInsertId();
@@ -489,7 +533,6 @@ function resetResults() {
 function resetUsers() {
     $sql = "TRUNCATE table students";
     
-    $sql = "TRUNCATE table results";
     try {
         $db = getConnection();
         $stmt = $db->query($sql);
@@ -505,7 +548,6 @@ function resetUsers() {
         echo '{"error":{"text":' . $e->getMessage() . '}}';
     }
 }
-include 'authState.php';
 
 include 'xkcd.php';
 

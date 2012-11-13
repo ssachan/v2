@@ -20,7 +20,6 @@ window.QuizView = Backbone.View.extend({
 		}
 		timer.setUpdateFunction(context.updateQuizTimer, [ context ]);
 		this.currentView = '';
-		this.render();
 	},
 	
 

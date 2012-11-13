@@ -45,25 +45,35 @@ window.Account = Backbone.Model.extend({
 					alert(data.error.text);
 				} else { // If not, send them back to the home page
 					account.set(data);
-					account.set('type',1);
-					id=account.get('id')+'|'+activeStream.get('id');
-					window.location.replace('#dashboard');
+					account.set('type', 1);
+					id = account.get('id') + '|' + activeStream.get('id');
+					window.location.replace('#');
 				}
 			}
 		});
 	},
 
 	logout : function() {
-		// Do a DELETE to /session and clear the clientside data
-		var that = this;
-
-		/*
-		 * this.destroy({ success : function(model, resp) { model.clear(); //
-		 * Set auth to false to trigger a change:auth event // The server also
-		 * returns a new csrf token so that // the user can relogin without
-		 * refreshing the page that.set({ auth : false, _csrf : resp._csrf });
-		 *  } });
-		 */
+		//delete the existing sesison and reset account
+		var url = '../api/logout';
+		$.ajax({
+			url : url,
+			type : 'GET',
+			dataType : "json",
+			success : function(data) {
+				console.log('log out');
+				if (data.error) { // If there is an error, show the error
+					// messages
+					console.log(data.error.text);
+				} else { // If not, send them back to the home page
+					window.location.replace('#landing');
+					account.clear();
+				}
+			},
+			error : function(data) {
+				console.log(data);
+			},
+		});
 	},
 
 	getAuth : function(callback) {
@@ -94,19 +104,21 @@ window.Account = Backbone.Model.extend({
 				console.log([ "signup request details: ", data ]);
 				if (data.error) { // If there is an error, show the error
 					// messages
-					alert(data.error.text);
+					console.log(data.error.text);
 				} else { // If not, send them back to the home page
 					account.set(data);
-					account.set('type',1);
-					id=account.get('id')+'|'+activeStream.get('id');
-					window.location.replace('#dashboard');
-					
+					account.set('type', 1);
+					id = account.get('id') + '|' + activeStream.get('id');
+					window.location.replace('#');
 				}
-			}
+			},
+			error : function(data) {
+				// console.log([ "error: ", data ]);
+			},
 		});
 	},
-	
-	forgotPass : function(email){
+
+	forgotPass : function(email) {
 		var url = '../api/forgotpass';
 		console.log('Loggin in... ');
 		var formValues = {
@@ -121,18 +133,40 @@ window.Account = Backbone.Model.extend({
 				console.log([ "signup request details: ", data ]);
 				if (data.error) { // If there is an error, show the error
 					// messages
-					alert(data.error.text);
+					console.log(data.error.text);
 				} else { // If not, send them back to the home page
 					account.set(data);
-					account.set('type',1);
-					id=account.get('id')+'|'+activeStream.get('id');
-					window.location.replace('#dashboard');
-					
+					account.set('type', 1);
+					id = account.get('id') + '|' + activeStream.get('id');
+					window.location.replace('#');
 				}
 			}
 		});
 	},
-	
+
+	isAuth : function() {
+		// getAuth is wrapped around our router
+		// before we start any routers let us see if the user is valid
+		url = '../api/isAuth';
+		$.ajax({
+			url : url,
+			type : 'GET',
+			dataType : "json",
+			success : function(data) {
+				if (data == false) { // If there is an error, show the
+					// error
+					// messages
+					window.location.replace('#landing');
+				} else { // If not, send them back to the home page
+					account.set(data);
+					account.set('type', 1);
+					id = account.get('id') + '|' + activeStream.get('id');
+					app.dashboard();	
+				}
+			}
+		});
+	},
+
 	defaults : {
 		id : null,
 	}

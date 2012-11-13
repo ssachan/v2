@@ -13,7 +13,13 @@ window.HeaderView = Backbone.View.extend({
 	events : {
 		'click #reset' : 'reset',
 		'click #syncDown' : 'onSyncDownClick',
-
+		'click #logout' : 'onLogOutClick'
+	},
+	
+	onLogOutClick : function (){
+		if(this.model.get('id')!=null){
+			this.model.logout();
+		}		
 	},
     
 	reset : function() {
