@@ -162,6 +162,11 @@ border: 1px solid #ccc;
     border-radius: 6px;
 }
 
+.outline2 /* This one has rectangular edges) */{
+border: 1px solid #aaa;
+padding: 2px;
+}
+
 .yellow-box{
 	border: solid 1px #CCC; 
 	background-color: #FCFDCC;
@@ -388,6 +393,17 @@ left: 570px;}
 
 /* Quiz Library
 -------------------------------------------------- */
+.selected{
+background: #ccc;
+background: #31859C;
+color: white;
+}
+
+.form-search a{
+background: #F4763E;
+color: white;
+font-style: bold;}
+
 .quiz-library{
 width: 70%;
 }
@@ -462,6 +478,7 @@ border-top: 0.2px solid #ddd;
 padding-top: 5px;
 padding-bottom: 5px;
 padding-left: 10px;}
+
 
 
 /* Fac Directory

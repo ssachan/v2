@@ -13,71 +13,285 @@
 </head>
 <body>
     <header>
-        <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar navbar-fixed-top">
             <div class="navbar-inner">
-                <div class="container">
-                    <!-- <ul class="nav">
-                <li class="dropdown active"><a href="#" class="dropdown-toggle"
-                    data-toggle="dropdown"><span id="active-view">Dashboard
-                    </span><b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        
-                    </ul></li>
-            </ul>  -->
-                    <div class="nav-collapse collapse pull-right">
-                        <ul class="nav">
-                            <li><a href="#quizLibrary">Browse Library</a></li>
-                            <li><a href="#facDirectory">Search Faculty</a></li>
-                            <li class="dropdown"><a href="#" class="dropdown-toggle"
-                                data-toggle="dropdown"><img src="img/dummy.png" height="20px"
-                                    width="20px"> <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Settings</a></li>
-                                    <li><a href="#">Log Out</a></li>
-                                </ul></li>
-                        </ul>
-                    </div>
-                    <!--/.nav-collapse -->
+                <a class="brand" href="#"><img src="img/logo.png" height="80px" width="95px" style="position:absolute;left: 18px;top: 2px;"></a>
+                <div class="nav-collapse collapse pull-right">
+                    <ul class="nav">
+                        <li class="active"><a href="#">Home</a></li>
+                        <li><a href="#">Link</a></li>
+                        <li><a href="#">Link</a></li>
+                    </ul>
                 </div>
             </div>
         </div>
+      
     </header>
+
     <div id="content">
         <div class="container quiz-library">
+		
+		<div class="row-fluid span12">  
+			  <div class="row-fluid span12 quiz-lib-sec1"> 
+			     <div class="span3 quiz-lib-heading">
+				 <h2>QUIZ LIBRARY</h2>
+				 </div>
+			  
+			    <div class="span4">
+				<form class="form-search">
+          <input type="text" class="search-bar" placeholder="JEE, Medical,..">
+          <a class="btn btn-primary" href="#search">Search</a>
+        </form>    
+				 </div>
+				
+				 <!--  Use bootstrap to create this as a text field
+				 <form class="form-search span4">
+                   <input type="text" class="input-small search-query">
+                   <button type="submit" class="btn"><img src="img/search-icon.png" /> </button>
+                 </form>
+				 -->
+							 
+				 <div class="span5">
+				   				  
+				   <div class="span4 quiz-lib-filter1">
+				   <h5>Most Relevant</h5>
+				
+				   </div>
+				   <div class="span3 quiz-lib-filter1">
+				   <h5>Toughest</h5>
+				   </div>
+				   <div class="span4 quiz-lib-filter2 selected">
+				   <h5>Recently Added</h5>
+				   </div>
+				 			   
+				 </div>
+			  </div>
+		
+		<div class="row-fluid span12 page-number">
+
+        <div class="span8"> </div>
+        <ul class="span4 nav nav-pills"> 
+        <li class="outline2"> 1 </li>		
+		<li class="outline2 selected"> 2 </li>
+		<li class="outline2"> 3 </li>
+		<li class="outline2"> 4 </li>
+		<li class="outline2"> 5 </li>
+		<li class="outline2"> 6 </li>
+		<li class="outline2"> 7 </li>
+		<li class="outline2"> Next</li>
+		<li> </li>
+		<li class="outline2"> End </li>
+		</ul>
+		</div>
             <div class="row-fluid" id="quizzes">
                 <ul class="thumbnails">
-                    <li class="span2"> 
+                  <!--Quiz 1 -->                   
+				   <li class="span4"> 
                         <div class="thumbnail box">
-                            1 | 2 | Tags <img src="img/128.gif" height="150" width="125" alt="">
-                            <h5>Circles</h5>
-                            <p>A short 4-5 word description</p>
+                         <div class="quiz-lib-t1 font-h5"> <img src="img/recommend.png" height="12" width="12"/>  125 
+					    <img src="img/analytics-icon.png" height="14" width="14"/> 6 </div> 
+						<div class="quiz-lib-t2 row-fluid"> <img src="img/physics.png" height="40" width="40" >
+                            <span class="font-h4 bold">Physics Sectional Test</span> </div>
+                           <ul class="left quiz-lib-t4 font-h5"> 
+						   <li>Problems from Mechanics and Electro</li>
+						   <li>Time based strategy analyzed</li>	
+							</ul> 
+							
+							</div>
+                        <div class="box quiz-lib-t5 font-h5 bold">
+                          <img src="img/prof1.jpg" height="25" width="25"> Raj Gupta 
                         </div>
-                        <div class="box">
-                            <img src="img/50.gif" height="30" width="30"> Raghav Verma
-                        </div>
+						
+                        
                     </li>
-                    <li class="span2"> 
+					
+					
+                    <!--Quiz 2 -->                   
+				   <li class="span4"> 
                         <div class="thumbnail box">
-                            1 | 2 | Tags <img src="img/128.gif" height="150" width="125" alt="">
-                            <h5>Circles</h5>
-                            <p>A short 4-5 word description</p>
+                         <div class="quiz-lib-t1 font-h5"> <img src="img/recommend.png" height="12" width="12"/>  125 
+					    <img src="img/analytics-icon.png" height="14" width="14"/> 6 </div> 
+						<div class="quiz-lib-t2 row-fluid"> <img src="img/physics.png" height="40" width="40" >
+                            <span class="font-h4 bold">Physics Sectional Test</span> </div>
+                           <ul class="left quiz-lib-t4 font-h5"> 
+						   <li>Problems from Mechanics and Electro</li>
+						   <li>Time based strategy analyzed</li>	
+							</ul> 
+							
+							</div>
+                        <div class="box quiz-lib-t5 font-h5 bold">
+                          <img src="img/prof1.jpg" height="25" width="25"> Raj Gupta 
                         </div>
-                        <div class="box">
-                            <img src="img/50.gif" height="30" width="30"> Raghav Verma
-                        </div>
+                        
                     </li>
-                    <li class="span2"> 
+					
+                    <!--Quiz 3-->                   
+				   <li class="span4"> 
                         <div class="thumbnail box">
-                            1 | 2 | Tags <img src="img/128.gif" height="150" width="125" alt="">
-                            <h5>Circles</h5>
-                            <p>A short 4-5 word description</p>
+                         <div class="quiz-lib-t1 font-h5"> <img src="img/recommend.png" height="12" width="12"/>  125 
+					    <img src="img/analytics-icon.png" height="14" width="14"/> 6 </div> 
+						<div class="quiz-lib-t2 row-fluid"> <img src="img/physics.png" height="40" width="40" >
+                            <span class="font-h4 bold">Physics Sectional Test</span> </div>
+                           <ul class="left quiz-lib-t4 font-h5"> 
+						   <li>Problems from Mechanics and Electro</li>
+						   <li>Time based strategy analyzed</li>	
+							</ul> 
+							
+							</div>
+                        <div class="box quiz-lib-t5 font-h5 bold">
+                          <img src="img/prof1.jpg" height="25" width="25"> Raj Gupta 
                         </div>
-                        <div class="box">
-                            <img src="img/50.gif" height="30" width="30"> Raghav Verma
-                        </div>
+						
+                        
                     </li>
+					</ul>
+					
+					 <ul class="thumbnails">
+					<!--Quiz 4 -->                   
+				   <li class="span4"> 
+                        <div class="thumbnail box">
+                         <div class="quiz-lib-t1 font-h5"> <img src="img/recommend.png" height="12" width="12"/>  125 
+					    <img src="img/analytics-icon.png" height="14" width="14"/> 6 </div> 
+						<div class="quiz-lib-t2 row-fluid"> <img src="img/physics.png" height="40" width="40" >
+                            <span class="font-h4 bold">Physics Sectional Test</span> </div>
+                           <ul class="left quiz-lib-t4 font-h5"> 
+						   <li>Problems from Mechanics and Electro</li>
+						   <li>Time based strategy analyzed</li>	
+							</ul> 
+							
+							</div>
+                        <div class="box quiz-lib-t5 font-h5 bold">
+                          <img src="img/prof1.jpg" height="25" width="25"> Raj Gupta 
+                        </div>
+						
+                        
+                    </li>
+					
+					
+                    <!--Quiz 5 -->                   
+				   <li class="span4"> 
+                        <div class="thumbnail box">
+                         <div class="quiz-lib-t1 font-h5"> <img src="img/recommend.png" height="12" width="12"/>  125 
+					    <img src="img/analytics-icon.png" height="14" width="14"/> 6 </div> 
+						<div class="quiz-lib-t2 row-fluid"> <img src="img/physics.png" height="40" width="40" >
+                            <span class="font-h4 bold">Physics Sectional Test</span> </div>
+                           <ul class="left quiz-lib-t4 font-h5"> 
+						   <li>Problems from Mechanics and Electro</li>
+						   <li>Time based strategy analyzed</li>	
+							</ul> 
+							
+							</div>
+                        <div class="box quiz-lib-t5 font-h5 bold">
+                          <img src="img/prof1.jpg" height="25" width="25"> Raj Gupta 
+                        </div>
+                        
+                    </li>
+					
+                    <!--Quiz 6-->                   
+				   <li class="span4"> 
+                        <div class="thumbnail box">
+                         <div class="quiz-lib-t1 font-h5"> <img src="img/recommend.png" height="12" width="12"/>  125 
+					    <img src="img/analytics-icon.png" height="14" width="14"/> 6 </div> 
+						<div class="quiz-lib-t2 row-fluid"> <img src="img/physics.png" height="40" width="40" >
+                            <span class="font-h4 bold">Physics Sectional Test</span> </div>
+                           <ul class="left quiz-lib-t4 font-h5"> 
+						   <li>Problems from Mechanics and Electro</li>
+						   <li>Time based strategy analyzed</li>	
+							</ul> 
+							
+							</div>
+                        <div class="box quiz-lib-t5 font-h5 bold">
+                          <img src="img/prof1.jpg" height="25" width="25"> Raj Gupta 
+                        </div>
+						
+                        
+                    </li>
+					
                 </ul>
+				
+				<ul class="thumbnails">
+					<!--Quiz 7 -->                   
+				   <li class="span4"> 
+                        <div class="thumbnail box">
+                         <div class="quiz-lib-t1 font-h5"> <img src="img/recommend.png" height="12" width="12"/>  125 
+					    <img src="img/analytics-icon.png" height="14" width="14"/> 6 </div> 
+						<div class="quiz-lib-t2 row-fluid"> <img src="img/physics.png" height="40" width="40" >
+                            <span class="font-h4 bold">Physics Sectional Test</span> </div>
+                           <ul class="left quiz-lib-t4 font-h5"> 
+						   <li>Problems from Mechanics and Electro</li>
+						   <li>Time based strategy analyzed</li>	
+							</ul> 
+							
+							</div>
+                        <div class="box quiz-lib-t5 font-h5 bold">
+                          <img src="img/prof1.jpg" height="25" width="25"> Raj Gupta 
+                        </div>
+						
+                        
+                    </li>
+					
+					
+                    <!--Quiz 8 -->                   
+				   <li class="span4"> 
+                        <div class="thumbnail box">
+                         <div class="quiz-lib-t1 font-h5"> <img src="img/recommend.png" height="12" width="12"/>  125 
+					    <img src="img/analytics-icon.png" height="14" width="14"/> 6 </div> 
+						<div class="quiz-lib-t2 row-fluid"> <img src="img/physics.png" height="40" width="40" >
+                            <span class="font-h4 bold">Physics Sectional Test</span> </div>
+                           <ul class="left quiz-lib-t4 font-h5"> 
+						   <li>Problems from Mechanics and Electro</li>
+						   <li>Time based strategy analyzed</li>	
+							</ul> 
+							
+							</div>
+                        <div class="box quiz-lib-t5 font-h5 bold">
+                          <img src="img/prof1.jpg" height="25" width="25"> Raj Gupta 
+                        </div>
+                        
+                    </li>
+					
+                    <!--Quiz 9-->                   
+				   <li class="span4"> 
+                        <div class="thumbnail box">
+                         <div class="quiz-lib-t1 font-h5"> <img src="img/recommend.png" height="12" width="12"/>  125 
+					    <img src="img/analytics-icon.png" height="14" width="14"/> 6 </div> 
+						<div class="quiz-lib-t2 row-fluid"> <img src="img/physics.png" height="40" width="40" >
+                            <span class="font-h4 bold">Physics Sectional Test</span> </div>
+                           <ul class="left quiz-lib-t4 font-h5"> 
+						   <li>Problems from Mechanics and Electro</li>
+						   <li>Time based strategy analyzed</li>	
+							</ul> 
+							
+							</div>
+                        <div class="box quiz-lib-t5 font-h5 bold">
+                          <img src="img/prof1.jpg" height="25" width="25"> Raj Gupta 
+                        </div>
+						
+                        
+                    </li>
+					
+                </ul>
+				
             </div>
+			
+			<div class="row-fluid span12 page-number">
+
+        <div class="span8"> </div>
+        <ul class="span4 nav nav-pills"> 
+        <li class="outline2"> 1 </li>		
+		<li class="outline2 selected"> 2 </li>
+		<li class="outline2"> 3 </li>
+		<li class="outline2"> 4 </li>
+		<li class="outline2"> 5 </li>
+		<li class="outline2"> 6 </li>
+		<li class="outline2"> 7 </li>
+		<li class="outline2"> Next</li>
+		<li> </li>
+		<li class="outline2"> End </li>
+		</ul>
+		</div>
+		
+		
         </div>
     </div>
 </body>
