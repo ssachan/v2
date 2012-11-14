@@ -147,13 +147,7 @@ window.Quiz = Backbone.Model.extend({
 				timePerQuestion : JSON.stringify(this.getTimeTakenPerQuestion()),
 			},
 			success : function(data) {
-				console.log([ "signup request details: ", data ]);
-				if (data.error) { // If there is an error, show the error
-					// messages
-					console.log(data.error.text);
-				} else { // If not, send them back to the home page
-					
-				}
+				console.log('results submitted');
 			},
 			error : function(data) {
 				// console.log([ "error: ", data ]);
