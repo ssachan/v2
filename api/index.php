@@ -312,19 +312,17 @@ function processQuiz(){
     $quizId = $_GET['quizId'];
     // for now just return the questions from the quiz if quiz is not a part of the history.
     $sql = "SELECT count(*) as count FROM results where quizId=:quizId and accountId=:accountId";
-    //echo $sql;
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
         $stmt->bindParam("quizId", $quizId);
-        $stmt->bindParam("accountId", $quizId);
+        $stmt->bindParam("accountId", $accountId);
         $stmt->execute();
         $count = $stmt->fetchObject();
         $db = null;
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
-    
     if($count->count==0){
         // this quiz hasn't been taken go ahead and fetch the questions
         $sql = "SELECT questionIds FROM quizzes where id=:id";
