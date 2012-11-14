@@ -322,7 +322,11 @@ window.QuizResultsView = Backbone.View.extend({
 		var videoOptions = {"playlist": videoResults}
 		var myPlayer = _V_("video_analysis",videoOptions);
 		
-		myPlayer.addEvent("ended",function(){myPlayer.playlist.next()}); //enables autoplay of next
+		myPlayer.addEvent("ended",function(){
+		
+		myPlayer.playlist.next()
+
+		}); //enables autoplay of next
 		
 
 	},
