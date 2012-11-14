@@ -42,7 +42,6 @@ $app->get('/resetResults/', 'resetResults');
 
 function getFac($id){
     $sql = "select * from faculty where id=:id";
-    //$sql = "SELECT * from section_l1 where streamId=:id";
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);

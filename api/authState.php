@@ -81,13 +81,18 @@ function getStudentByEmailAndStreamId($email,$streamId){
 };
 
 function emailExists($email){
-    $sql = "SELECT count(*) as count from accounts where email='".$email."'";
+    $sql = "SELECT id from accounts where email='".$email."'";
     try {
         $db = getConnection();
         $stmt = $db->query($sql);
-        $count = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $record = $stmt->fetch(PDO::FETCH_OBJ);
         $db = null;
-        return $count[0]->count;
+        //echo $id->id;
+        if($record && $record->id){
+            return $record->id;
+        }else{
+            return 0;
+        }
     } catch (PDOException $e) {
         echo '{"error":{"text":' . $e->getMessage() . '}}';
     }
@@ -147,7 +152,8 @@ function insertFb($info){
         $stmt->bindParam("link", $accountId);
         $stmt->bindParam("locale", $accountId);
         $stmt->execute();
-        return $response->id = $db->lastInsertId();
+        $response->id = $db->lastInsertId();
+        return $response->id;
     } catch (PDOException $e) {
         error_log($e->getMessage(), 3, '/var/tmp/php.log');
     }
@@ -233,19 +239,20 @@ $app->post("/signup", function () use ($app) {
             break;
         case 2:
             //fb sign-up
-            $firstName = $_POST['firstName'];
-            $lastName = $_POST['lastName'];
+            $firstName = $_POST['first_name'];
+            $lastName = $_POST['last_name'];
             $email =  $_POST['email'];
             $streamId = $_POST['streamId'];
             if(emailExists($email) != 0){
                 // email exists
                 //check if fb account is linked 
-                if(fbAccountExist($email)!=0){
+                if(fbAccountExists($email)!=0){
                    // fb account exists
                    
                 }else{
                     // insert into fb
                 }
+                
             }else{
                 // create account
                 $response->id = createAccount($firstName,$lastName,$email,$password);
@@ -253,14 +260,14 @@ $app->post("/signup", function () use ($app) {
                 //insertFb($_POST);
                 // push into students
                 insertStudent($response->id, $streamId);
-                $response->firstName = $firstName;
-                $response->lastName = $firstName;
-                $response->email = $lastName;
-                $response->streamId = $streamId;
-                $response->ascore = 0;
-                $_SESSION['user'] = $email;
-                echo json_encode($response);
             }
+            $response->firstName = $firstName;
+            $response->lastName = $lastName;
+            $response->email = $email;
+            $response->streamId = $streamId;
+            $response->ascore = 0;
+            $_SESSION['user'] = $email;
+            echo json_encode($response);
             break;
         case 3:
             //google sign-up
