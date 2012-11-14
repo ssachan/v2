@@ -18,7 +18,7 @@ $app->add(new StrongAuth($config));
 //require_once "Mail.php";
 
 $app->add(new \Slim\Middleware\SessionCookie(array(
-        'expires' => '2 minutes',
+        'expires' => '5 minutes',
         'path' => '/',
         'domain' => null,
         'secure' => false,

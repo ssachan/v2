@@ -382,11 +382,12 @@ function addResponse() {
 	$quizId =  $_POST['quizId'];
 	$score = $_POST['score'];
 	$selectedAnswers = $_POST['selectedAnswers'];
+	echo $selectedAnswers;
 	$timePerQuestion = $_POST['timePerQuestion'];
 	
 	
 	$sql = "INSERT INTO results (accountId, quizId, selectedAnswers, score, timePerQuestion, timestamp) VALUES (:accountId, :quizId, :selectedAnswers, :score, :timePerQuestion, :timeStamp)";
-	echo $sql;
+	//echo $sql;
 	try {
 		$db = getConnection();
 		$stmt = $db->prepare($sql);
@@ -398,7 +399,7 @@ function addResponse() {
 		$stmt->bindParam("timePerQuestion", $timePerQuestion);
 		$stmt->bindParam("timeStamp", $date);
 		$stmt->execute();
-		$response->id = $db->lastInsertId();
+		//$response->id = $db->lastInsertId();
 		$db = null;
 		//echo json_encode($response);
 	} catch (PDOException $e) {
@@ -412,9 +413,9 @@ function addResponse() {
 		$stmt = $db->prepare($sql2);
 		$stmt->bindParam("quizId", $response->quizId);
 		$stmt->execute();	    
-		$db = null;
 		$response->id = $db->lastInsertId();
-	    //echo json_encode($response->id);
+		$db = null;
+		//echo json_encode($response->id);
 	} catch(PDOException $e) {
 	    //echo '{"error":{"text":'. $e->getMessage() .'}}';
 	}
