@@ -59,7 +59,7 @@ window.SignUpView = Backbone.View.extend({
     			firstName : $('#inputFname').val(),
     			lastName : $('#inputLname').val(),
     			type : 1,
-    			streamId : 1,
+    			streamId : streamId,
     		};
         this.model.signUp(formValues);
     }

@@ -31,6 +31,7 @@ window.fbAsyncInit = function() {
 		if(account.get('id')==null){
 			// sign me up 
 			user.attributes.type=2;
+			user.attributes.streamId=streamId;
 			account.signUp(user.attributes);
 		}
 		//account.signup(user.attributes);

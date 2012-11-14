@@ -4,24 +4,27 @@
  * 
  **/
 window.QuizLibraryView = Backbone.View.extend({
-
-    initialize: function () {
+	className : "container quiz-library",
+	
+	initialize: function () {
     },
 
     render: function () {
         $(this.el).html(this.template());
+        return this;
+    },
+    
+    renderQuizItems : function(){
     	var quizzes = this.model.models;
         var len = quizzes.length;
         var i = 0;
         while(i<len){
-        	$(this.el).append('<ul class="thumbnails">');
-        	for (var j = 0; j < 4&&i<len; j++) {
-        		$(this.el).append(new QuizItemView({model: quizzes[i]}).render().el);
+        	$("#quizzes").append('<ul class="thumbnails"></ul>');
+        	for (var j = 0; j < 3&&i<len; j++) {
+        		$(".thumbnails:last").append(new QuizItemView({model: quizzes[i]}).render().el);
         		i++;
         	}
-        	$(this.el).append('</ul>');
         }
-        return this;
     }
 });
 
@@ -29,7 +32,7 @@ window.QuizItemView = Backbone.View.extend({
 
 	tagName: "li",
 
-	className: "span2",
+	className: "span4",
 
 	initialize: function () {
 	       this.render();

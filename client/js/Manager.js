@@ -134,6 +134,7 @@ window.Manager = {
 					//el : '#content'
 				});
 				app.showView(quizLibraryView);
+				quizLibraryView.renderQuizItems();
 			}
 		});
 	},
