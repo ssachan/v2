@@ -4,7 +4,7 @@
 #
 # Host: localhost (MySQL 5.5.9)
 # Database: nero
-# Generation Time: 2012-11-14 00:57:12 +0530
+# Generation Time: 2012-11-14 12:10:07 +0530
 # ************************************************************
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -86,19 +86,8 @@ CREATE TABLE `accounts` (
   `resetsentOn` datetime DEFAULT NULL,
   `pics` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-LOCK TABLES `accounts` WRITE;
-/*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
-INSERT INTO `accounts` (`id`,`username`,`password`,`firstName`,`lastName`,`email`,`roles`,`createdOn`,`verifiedOn`,`lastsignedinOn`,`deletedOn`,`suspendedOn`,`resetsentOn`,`pics`)
-VALUES
-	(1,NULL,'aa','aa','aa','aa',NULL,'2012-11-13 08:56:27',NULL,NULL,NULL,NULL,NULL,NULL),
-	(2,NULL,'jj','jj','jj','jj',NULL,'2012-11-13 12:25:47',NULL,NULL,NULL,NULL,NULL,NULL),
-	(3,NULL,'ll','ll','ll','ll',NULL,'2012-11-13 12:36:33',NULL,NULL,NULL,NULL,NULL,NULL),
-	(4,NULL,'pop','pop','pop','pop',NULL,'2012-11-13 22:09:55',NULL,NULL,NULL,NULL,NULL,NULL);
-
-/*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table ascores_l1
@@ -138,20 +127,6 @@ DROP TABLE IF EXISTS `ascores_l3`;
 
 CREATE TABLE `ascores_l3` (
   `id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-
-# Dump of table creditHistory
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `creditHistory`;
-
-CREATE TABLE `creditHistory` (
-  `accountId` int(11) DEFAULT NULL,
-  `refilledOn` timestamp NULL DEFAULT NULL,
-  `creditsAdded` int(11) DEFAULT NULL,
-  KEY `accountId` (`accountId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -779,7 +754,10 @@ LOCK TABLES `results` WRITE;
 INSERT INTO `results` (`quizId`,`accountId`,`selectedAnswers`,`score`,`timePerQuestion`,`timeTaken`,`toggleData`,`timestamp`)
 VALUES
 	(9,1,'[\"1\",\"2\",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]','[0,2,0,18]','[3,2,2,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]',NULL,NULL,'2012-11-14 00:48:49'),
-	(2,1,'[\"1\",\"2\",\"1\",\"2\",null,null,null,null,null,null,null,null,null,null,null,null,null,null]','[0,4,0,18]','[3,2,2,2,null,null,null,null,null,null,null,null,null,null,null,null,null,null]',NULL,NULL,'2012-11-14 00:55:47');
+	(2,1,'[\"1\",\"2\",\"1\",\"2\",null,null,null,null,null,null,null,null,null,null,null,null,null,null]','[0,4,0,18]','[3,2,2,2,null,null,null,null,null,null,null,null,null,null,null,null,null,null]',NULL,NULL,'2012-11-14 00:55:47'),
+	(4,1,'[\"1\",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]','[0,1,0,18]','[3,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]',NULL,NULL,'2012-11-14 10:19:04'),
+	(10,1,'[\"0\",\"2\",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]','[0,2,0,18]','[3,1,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]',NULL,NULL,'2012-11-14 10:19:11'),
+	(4,12,'[\"0\",\"1\",\"2\",\"1\",\"2\",\"1\",\"2\",null,null,null,null,null,null,null,null,null,null,null]','[2,5,2,18]','[3,2,2,2,2,1,4,null,null,null,null,null,null,null,null,null,null,null]',NULL,NULL,'2012-11-14 11:50:08');
 
 /*!40000 ALTER TABLE `results` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -955,17 +933,6 @@ CREATE TABLE `students` (
   KEY `accountId` (`accountId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-LOCK TABLES `students` WRITE;
-/*!40000 ALTER TABLE `students` DISABLE KEYS */;
-INSERT INTO `students` (`ascoreL1`,`ascoreL2`,`quizzesAttempted`,`accountId`,`streamId`)
-VALUES
-	(0,0,NULL,1,1),
-	(0,0,NULL,2,1),
-	(0,0,NULL,3,1),
-	(0,0,NULL,4,1);
-
-/*!40000 ALTER TABLE `students` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 

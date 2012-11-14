@@ -16,8 +16,6 @@ window.fbAsyncInit = function() {
 
 	user.on('facebook:connected', function(model, response) {
 		console.info('facebook:connected');
-		console.log(user.attributes);
-		account.signUp(user.attributes);
 	});
 
 	user.on('facebook:disconnected', function(model, response) {
@@ -29,7 +27,12 @@ window.fbAsyncInit = function() {
 
 	user.on('change', function() {
 		console.info('change');
-		//console.log(user.attributes);
+		console.log(user.attributes);
+		if(account.get('id')==null){
+			// sign me up 
+			user.attributes.type=2;
+			account.signUp(user.attributes);
+		}
 		//account.signup(user.attributes);
 
 		/*app.menu();
