@@ -223,8 +223,8 @@ $app->post("/signup", function () use ($app) {
                 $response->id = createAccount($firstName,$lastName,$email,$password);
                 insertStudent($response->id, $streamId);
                 $response->firstName = $firstName;
-                $response->lastName = $firstName;
-                $response->email = $lastName;
+                $response->lastName = $lastName;
+                $response->email = $email;
                 $response->streamId = $streamId;
                 $response->ascore = 0;
                 $_SESSION['user'] = $email;
@@ -250,17 +250,17 @@ $app->post("/signup", function () use ($app) {
                 // create account
                 $response->id = createAccount($firstName,$lastName,$email,$password);
                 // push into fb
-                insertFb($_POST);
+                //insertFb($_POST);
                 // push into students
                 insertStudent($response->id, $streamId);
+                $response->firstName = $firstName;
+                $response->lastName = $firstName;
+                $response->email = $lastName;
+                $response->streamId = $streamId;
+                $response->ascore = 0;
+                $_SESSION['user'] = $email;
+                echo json_encode($response);
             }
-            $response->firstName = $firstName;
-            $response->lastName = $firstName;
-            $response->email = $lastName;
-            $response->streamId = $streamId;
-            $response->ascore = 0;
-            $_SESSION['user'] = $email;
-            echo json_encode($response);
             break;
         case 3:
             //google sign-up
@@ -290,8 +290,10 @@ $app->post("/login", function () use ($app) {
         $stmt = $db->query($sql);
         $account = $stmt->fetch(PDO::FETCH_OBJ);
         $db = null;
-        $_SESSION['user'] = $email;
-        echo json_encode($account);
+        if($account!=null && $account->id!=null){
+            echo json_encode($account);
+            $_SESSION['user'] = $email;
+        }
      } catch (PDOException $e) {
         echo '{"error":{"text":' . $e->getMessage() . '}}';
     }
@@ -311,7 +313,6 @@ $app->get("/isAuth",function () use ($app) {
     
 $app->post("/forgotpass", function () use ($app) {
     $email=$_POST['email'];
-    $email=mysql_real_escape_string($email);
     $status = "OK";
     $msg="";
     //error_reporting(E_ERROR | E_PARSE | E_CORE_ERROR);
@@ -323,7 +324,7 @@ $app->post("/forgotpass", function () use ($app) {
     }
     
     if($status=="OK"){  // validation passed now we will check the tables
-        $query="SELECT email,password FROM accounts WHERE email = '$email'";
+        $sql="SELECT email,password FROM accounts WHERE email = '$email'";
         try {
             $db = getConnection();
             $stmt = $db->query($sql);
