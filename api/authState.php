@@ -209,11 +209,11 @@ $app->post("/signup", function () use ($app) {
     switch ($accountType) {
         case 1:
             //our custom sign-up
-            $firstName = mysql_real_escape_string($_POST['firstName']);
-            $lastName = mysql_real_escape_string($_POST['lastName']);
-            $email =  mysql_real_escape_string($_POST['email']);
-            $password = mysql_real_escape_string($_POST['password']);
-            $streamId = mysql_real_escape_string($_POST['streamId']);
+            $firstName = $_POST['firstName'];
+            $lastName = $_POST['lastName'];
+            $email =  $_POST['email'];
+            $password = $_POST['password'];
+            $streamId = $_POST['streamId'];
             if(emailExists($email) != 0){
                 // email exists
                 $msg = 'email already exists. you should probably try forgot password';
@@ -233,10 +233,10 @@ $app->post("/signup", function () use ($app) {
             break;
         case 2:
             //fb sign-up
-            $firstName = mysql_real_escape_string($_POST['firstName']);
-            $lastName = mysql_real_escape_string($_POST['lastName']);
-            $email =  mysql_real_escape_string($_POST['email']);
-            $streamId = mysql_real_escape_string($_POST['streamId']);
+            $firstName = $_POST['firstName'];
+            $lastName = $_POST['lastName'];
+            $email =  $_POST['email'];
+            $streamId = $_POST['streamId'];
             if(emailExists($email) != 0){
                 // email exists
                 //check if fb account is linked 
