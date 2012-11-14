@@ -143,6 +143,19 @@ color: #C0504D
 	color :#3C0E5D;	
 }
 
+.orange{
+color:#F4763E;
+}
+
+.light-blue{
+color:#31859C;
+}
+
+.dark-blue{
+color:#193D42;
+}
+
+
 .box{
     background-color: white;
  
@@ -541,15 +554,13 @@ width: 70%;
 position: relative;
 top: 25px;}
 
-.analytics-sec1{
-
+.comp-stats{
+padding-left: 37px; 
 }
 
 .scorebar{
 padding: 0px;
-position: relative;
-top: 15px;
-right: 20px;
+margin-top: -10px;
 /*background: #C4BD97;*/
 }
 
