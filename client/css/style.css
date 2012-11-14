@@ -490,6 +490,9 @@ padding-top: 5px;
 padding-bottom: 5px;
 padding-left: 10px;}
 
+.page-number{
+margin-top: -15px;
+margin-bottom: -15px;}
 
 
 /* Fac Directory
@@ -532,17 +535,41 @@ text-align: center;
 margin-bottom:30px;
 }
 
+.fac-pic{
+margin-left: 8px;
+margin-top: 8px;
+margin-right: -8px;
+}
+
 .faclib-fac{
-margin-bottom: 10px;
+margin-bottom: 5px;
 padding-left: 20px;
 }
 
+.fac-ind{
+margin-bottom: -5px;
+}
+
+
+.faclib-fac div{
+margin-top: 5px;}
+
+.faclib-fac .btn{
+margin-top: 20px;
+background: #31859C;
+color: white;
+font-style: normal;}
+
+.faclib-fac h4{
+padding-left: 23px;
+}
+
 .faclib-details{
-padding-top: 10px;
+padding-top: 0px;
 padding-left: 20px;}
 
 .faclib-social{
-padding-left: 20px;}
+margin-top: 29px !important;}
 	
 /* Analytics View 
 -------------------------------------------------*/
