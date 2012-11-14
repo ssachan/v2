@@ -12,48 +12,170 @@
 <!-- The Scripts -->
 </head>
 <body>
-	<header>
-		<div class="navbar navbar-inverse navbar-fixed-top">
-			<div class="navbar-inner">
-				<div class="container">
-					<ul class="nav">
-						<li class="dropdown active"><a href="#"
-							class="dropdown-toggle" data-toggle="dropdown">My Profile <b
-								class="caret"></b></a>
-							<ul class="dropdown-menu">
-								<li><a href="#">Learn</a></li>
-								<li><a href="#">Practice</a></li>
-								<li><a href="#">Quiz</a></li>
-							</ul></li>
-					</ul>
-					<div class="nav-collapse collapse pull-right">
-						<ul class="nav">
-							<li class="dropdown"><a href="#" class="dropdown-toggle"
-								data-toggle="dropdown">Shikhar Sachan <b class="caret"></b></a>
-								<ul class="dropdown-menu">
-									<li><a href="#">Settings</a></li>
-									<li><a href="#">Log Out</a></li>
-								</ul></li>
-						</ul>
-					</div>
-					<!--/.nav-collapse -->
-				</div>
-			</div>
-		</div>
-	</header>
-	<div id="content">
-		<div class="container fac">
-			<img src="img/128.gif" style="padding: 5px; border: thin solid">
-			<div class="row-fluid">
-				<div class="span8 plain">
-						<h4>Work and Experience</h4>
-				</div>
-				<div class="span4 plain">
-                        <h4>Work and Experience</h4>
+	 <header>
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <a class="brand" href="#"><img src="img/logo1.png" class="" height="80px" width="95px" style="position:absolute;left: 88px; top: 2px;
+                border-bottom-color: #D4D4D4; -webkit-border-image: none;
+                -webkit-box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 10px 0px;
+                -webkit-filter: none;"></a>
+                <div class="nav-collapse collapse pull-right">
+                    <ul class="nav">
+                        <li class="active"><a href="#">Home</a></li>
+                        <li><a href="#">Link</a></li>
+                        <li><a href="#">Link</a></li>
+                    </ul>
                 </div>
-                
+            </div>
+        </div>
+      
+    </header>
+	
+	          
+          
+   
+       <div id="content">
+
+	<div class="container facpro">
+           
+	    <div class="row-fluid span12">   <!--Enclosing the section 1-->
+
+         	<div class="row-fluid span12 facpro-sec1"> 
+			     <div class="span3 faclib-heading">
+				 <h2>BHIM SINGH</h2>
+				 </div>
+			  
+			
+			  </div>
+
+			  
+		   </div>
+		   
+		   
+		 <!--Filters to be added -->  
+		 
+            <div class="row-fluid" id="facpro-list">
+               <!--Faculty 1-->               
+			   <div class="media box">
+                    
+					<div class="span2 fac-pic">
+					
+					<a class="center" href="#fac/<%=id %>"> <img class="media-object"
+                        src="img/prof3.jpg" height="120" width="120">
+						
+                    </a>
+					
+					</div>
+					
+                    <div class="media-body facpro-fac">
+                        <div class="span6">
+						    <h3 class="media-heading"> Bio </h3>
+                            <h4 class="media-heading normal">Bhim Singh sir is a graduate of IIT Delhi, having done his Chemical Engineering from 1989-1993. He did his Ph.D. from Oxford and came back to India to teach engineering at NITs
+                             He has experience of many years teaching physics at the most renowned institutes in Kota and Delhi  </h4>
+							 
+							 
+							 <h4> Tests taken: 25,000 </h4> 
+					<h4> Subscribers: 150 </h4>
+                            
+							
+							
+						</div>
+                        <div class="span4 facpro-social">
+						 <h4>Details</h4>
+                            <div class="facpro-details">
+							<img src="img/subject.png" height="15" width = "15" /> <span class="font-h4">  Physical Chemistry, Inorganic Chemistry</span> <br> 
+							<img src="img/work.png" height="20" width = "15" /> <span class="font-h4"> Worked at FIITJEE limited </span> <br> 
+							<img src="img/edu.png" height="15" width = "15" /> <span class="font-h4">  IIT Delhi B.Tech 1962 </span> <br>
+                            </div>
+							<br/>
+							<h4>Popularity</h4>
+							
+							<img src="img/popular.png" height="15" width = "15" /> <span class="font-h4"> 2,500 tests taken </span> <br>
+							<img src="img/recommend.png" height="15" width = "15" /> <span class="font-h4"> 150 recommenders </span>
+							<br/>
+							<!--<div class="btn btn-small pull-right pull-bottom font-h4 bold"> View profile </div> -->
+                        </div>
+                    </div>
+                </div>
+                 <!--End of Faculty 1 -->
+				 
+				 <!--Top Quizzes-->               
+			   <div class="row-fluid box facpro-sec2"> 
+            <h3>Top Quizzes</h3>
+
+			  
+                <ul class="thumbnails span11">
+				
+            <!--Quiz 1-->
+					
+					<li class="span3"> 
+                        <div class="thumbnail box">
+                         <div class="quiz-lib-t1 font-h5"> <img src="img/recommend.png" height="14" width="14"/>  125 
+					    <img src="img/fire.png" height="14" width="14"/> 6 </div> 
+						<div class="quiz-lib-t2"> <img src="img/physics.png" height="125" width="110" > </div>
+						<div class=" quiz-lib-t3">
+                            <h4>Physics</h4> </div>
+                           <div class="left quiz-lib-t4 font-h5"> <span>Problems from Mechanics and Electro</span>
+							</div>
+                        
+						</div>
+                        <div class="box quiz-lib-t5 font-h5 bold">
+                          <img src="img/prof3.jpg" height="25" width="25"> Bhim Singh 
+                        </div>
+                    </li>
+					
+					<li class="span1">  </li>
+                <!--Quiz 2-->
+					<li class="span3"> 
+                        <div class="thumbnail box">
+                         <div class="quiz-lib-t1 font-h5"> <img src="img/recommend.png" height="14" width="14"/>  125 
+					    <img src="img/fire.png" height="14" width="14"/> 6 </div> 
+						<div class="quiz-lib-t2"> <img src="img/physics.png" height="125" width="110" > </div>
+						<div class=" quiz-lib-t3">
+                            <h4>Physics</h4> </div>
+                           <div class="left quiz-lib-t4 font-h5"> <span>Problems from Mechanics and Electro</span>
+							</div>
+                        
+						</div>
+                        <div class="box quiz-lib-t5 font-h5 bold">
+                          <img src="img/prof3.jpg" height="25" width="25"> Bhim Singh 
+                        </div>
+                    </li>
+
+					
+					
+			    <!--Quiz 3-->
+					<li class="span3"> 
+                        <div class="thumbnail box">
+                         <div class="quiz-lib-t1 font-h5"> <img src="img/recommend.png" height="14" width="14"/>  125 
+					    <img src="img/fire.png" height="14" width="14"/> 6 </div> 
+						<div class="quiz-lib-t2"> <img src="img/physics.png" height="125" width="110" > </div>
+						<div class=" quiz-lib-t3">
+                            <h4>Physics</h4> </div>
+                           <div class="left quiz-lib-t4 font-h5"> <span>Problems from Mechanics and Electro</span>
+							</div>
+                        
+						</div>
+                        <div class="box quiz-lib-t5 font-h5 bold">
+                          <img src="img/prof3.jpg" height="25" width="25"> Bhim Singh 
+                        </div>
+                    </li>
+					
+					 
+                   </ul>
+				   
+			
+			
 			</div>
+            </div>			
+                 <!--End of Top Quizzes -->
+				 
+				 
+					
+			
+            </div>
+        </div>
 		</div>
-	</div>
+
 </body>
 </html>

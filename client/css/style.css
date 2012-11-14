@@ -556,7 +556,9 @@ margin-top: 5px;}
 
 .faclib-fac .btn{
 margin-top: 20px;
-background: #31859C;
+background-image: -webkit-linear-gradient(top, #F77F00, #F45000);
+background-repeat: repeat-x;
+border-bottom-color: #AB3901;
 color: white;
 font-style: normal;}
 
@@ -570,6 +572,48 @@ padding-left: 20px;}
 
 .faclib-social{
 margin-top: 29px !important;}
+
+
+/* Faculty Profile
+------------------------------------------------- */
+
+.facpro {
+width: 70%;}
+
+.facpro-heading{
+margin-left: 0px;}
+
+.facpro-bio{
+margin-top: 15px;
+}
+
+.facpro-details{
+margin-top: 20px;
+padding: 5px;}
+
+.facpro-social{
+margin-top: 23px;
+padding: 5px}
+
+.facpro-quiz{
+margin-left: 0px;
+margin-top: 25px;
+margin-bottom: 20px;}
+
+.view-all{
+margin-top: -37px;
+}
+
+.facpro-posts{
+padding: 10px 10px;
+margin-top: 10px;
+margin-left: 0px !important;
+background: #ddd;
+}
+
+.date{
+font-style: italic;
+margin-left:20px;}
 	
 /* Analytics View 
 -------------------------------------------------*/
