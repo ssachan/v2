@@ -341,7 +341,7 @@ $app->post("/forgotpass", function () use ($app) {
     } 
 });
     
-$app->post("/changepass", function () use ($app) {
+$app->post("/changepass", $authenticate($app), function () use ($app) {
     $oldpassword=$_POST['oldpassword'];
     $newpassword=$_POST['newpassword'];
     $sql = "UPDATE accounts SET password=:newpassword WHERE password=:oldpassword";
