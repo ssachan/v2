@@ -53,15 +53,22 @@ window.SignUpView = Backbone.View.extend({
 
     signup:function (event) {
         event.preventDefault(); // Don't let this button submit the form
-    	this.model.signUp($('#inputEmail').val(), $('#inputPassword').val(),$('#inputFname').val(),$('#inputLname').val());
+    	var formValues = {
+    			email : $('#inputEmail').val(),
+    			password :  $('#inputPassword').val(),
+    			firstName : $('#inputFname').val(),
+    			lastName : $('#inputLname').val(),
+    			type : 1,
+    			streamId : 1,
+    		};
+        this.model.signUp(formValues);
     }
 });
 
 window.ForgotPassView = Backbone.View.extend({
 
     initialize:function () {
-        console.log('Initializing SignUp View');
-        this.render();
+        console.log('initializing forgot pass view');
     },
 
     events: {
@@ -75,6 +82,27 @@ window.ForgotPassView = Backbone.View.extend({
 
     forgotPass:function (event) {
         event.preventDefault(); // Don't let this button submit the form
-    	this.model.signUp($('#inputEmail').val(), $('#inputPassword').val(),$('#inputFname').val(),$('#inputLname').val());
+    	this.model.forgotPass($('#forgotPassEmail').val());
+    }
+});
+
+window.ChangePassView = Backbone.View.extend({
+
+    initialize:function () {
+        console.log('initializing change pass view');
+    },
+
+    events: {
+        "click #changePassButton": "changePass"
+    },
+
+    render:function () {
+        $(this.el).html(this.template());
+        return this;
+    },
+
+    changePass:function (event) {
+        event.preventDefault(); // Don't let this button submit the form
+    	this.model.changePass($('#currPassword').val(), $('#newPassword').val());
     }
 });

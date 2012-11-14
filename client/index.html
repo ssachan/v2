@@ -29,14 +29,16 @@
 <script src="js/lib/highcharts.js"></script>
 <script src="js/lib/highcharts-more.js"></script>
 <script src="js/lib/exporting.js"></script>
+<script src="js/lib/FacebookUser.js"></script>
 
 <script src="js/helper.js"></script>
 <script src="js/utils/timer.js"></script>
 <script src="js/utils/charts.js"></script>
 <script src="js/utils/insights.js"></script>
 
-<!-- <script src="js/auth/facebook.js"></script> -->
+<script src="js/auth/facebook.js"></script>
 <script src="js/auth/google.js"></script>
+<!-- <script type='text/javascript' src='/js/lib/backbone-oauth.js'></script> -->
 
 <script src="js/models/accounts.js"></script>
 <script src="js/models/streams.js"></script>
@@ -64,7 +66,6 @@ var views = [
 _.each(views,function(item){
   document.write('<script src="js/views/'+item+'.js"></' + 'script>');  
 });
-
 </script>
 
 <script src="js/router.js"></script>
@@ -77,4 +78,5 @@ _.each(views,function(item){
   <div id="content"></div>
   <div id="fb-root"></div>
 </body>
+
 </html>

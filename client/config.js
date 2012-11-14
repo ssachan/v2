@@ -24,6 +24,7 @@ var Config = {
                     'InfoView',
                     'PackagesView',
                     'PackageItemView',
-                    'ForgotPassView'
+                    'ForgotPassView',
+                    'ChangePassView'
                   ]
 };

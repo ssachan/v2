@@ -16,6 +16,8 @@ window.fbAsyncInit = function() {
 
 	user.on('facebook:connected', function(model, response) {
 		console.info('facebook:connected');
+		console.log(user.attributes);
+		account.signUp(user.attributes);
 	});
 
 	user.on('facebook:disconnected', function(model, response) {
@@ -27,10 +29,12 @@ window.fbAsyncInit = function() {
 
 	user.on('change', function() {
 		console.info('change');
-		console.log(user.attributes);
-		app.menu();
-		var table = $('.table tbody').empty();
+		//console.log(user.attributes);
+		//account.signup(user.attributes);
 
+		/*app.menu();
+		var table = $('.table tbody').empty();
+		
 		_(user.attributes).each(
 				function(value, attribute) {
 					if (typeof value !== 'string')
@@ -44,6 +48,8 @@ window.fbAsyncInit = function() {
 					tr.append(attr).append(val).appendTo(table);
 				}, this);
 		user.get('pictures').square;
+		*/
+	
 	});
 	
 	user.updateLoginStatus();

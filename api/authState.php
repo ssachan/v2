@@ -37,6 +37,36 @@ $authenticate = function ($app) {
     };
 };
 
+function sendEmail($content, $email){
+    $from = "<from.gmail.com>";
+    $to = $email;
+    $subject = "Hi!";
+    $body = $content;
+
+    $host = "ssl://smtp.gmail.com";
+    $port = "465";
+    $username = "myaccount@gmail.com";  //<> give errors
+    $password = "password";
+
+    $headers = array ('From' => $from,
+            'To' => $to,
+            'Subject' => $subject);
+    $smtp = Mail::factory('smtp',
+            array ('host' => $host,
+                    'port' => $port,
+                    'auth' => true,
+                    'username' => $username,
+                    'password' => $password));
+
+    $mail = $smtp->send($to, $headers, $body);
+
+    if (PEAR::isError($mail)) {
+        echo("<p>" . $mail->getMessage() . "</p>");
+    } else {
+        echo("<p>Message successfully sent!</p>");
+    }
+}
+
 function getStudentByEmailAndStreamId($email,$streamId){
     $sql = "SELECT a.id as id,a.email,a.firstName,a.lastName,s.ascoreL1 as ascore from accounts a,students s where a.email='".$email."' AND s.streamId='".$streamId."' AND a.id=s.accountId";
     try {
@@ -63,6 +93,32 @@ function emailExists($email){
     }
 };
 
+function fbAccountExists($accountId){
+    $sql = "SELECT count(*) as count from account_fb where accountId='".$accountId."'";
+    try {
+        $db = getConnection();
+        $stmt = $db->query($sql);
+        $count = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $db = null;
+        return $count[0]->count;
+    } catch (PDOException $e) {
+        echo '{"error":{"text":' . $e->getMessage() . '}}';
+    }
+};
+
+function googleAccountExists($accountId){
+    $sql = "SELECT count(*) as count from account_google where accountId='".$accountId."'";
+    try {
+        $db = getConnection();
+        $stmt = $db->query($sql);
+        $count = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $db = null;
+        return $count[0]->count;
+    } catch (PDOException $e) {
+        echo '{"error":{"text":' . $e->getMessage() . '}}';
+    }
+};
+
 function insertStudent($accountId, $streamId){
     $sql = "INSERT INTO students (accountId,streamId) VALUES (:accountId, :streamId)";
     try {
@@ -77,58 +133,46 @@ function insertStudent($accountId, $streamId){
     }
 }
 
-function sendEmail($content, $email){
-    $from = "<from.gmail.com>";
-    $to = $email;
-    $subject = "Hi!";
-    $body = $content;
-    
-    $host = "ssl://smtp.gmail.com";
-    $port = "465";
-    $username = "myaccount@gmail.com";  //<> give errors
-    $password = "password";
-    
-    $headers = array ('From' => $from,
-            'To' => $to,
-            'Subject' => $subject);
-    $smtp = Mail::factory('smtp',
-            array ('host' => $host,
-                    'port' => $port,
-                    'auth' => true,
-                    'username' => $username,
-                    'password' => $password));
-    
-    $mail = $smtp->send($to, $headers, $body);
-    
-    if (PEAR::isError($mail)) {
-        echo("<p>" . $mail->getMessage() . "</p>");
-    } else {
-        echo("<p>Message successfully sent!</p>");
+function insertFb($info){
+    $sql = "INSERT INTO accounts_fb (accountId,facebookId, bio, education, firstName, gender, lastName, link,locale) VALUES (:accountId,:facebookId, :bio,:education, :firstName, :gender, :lastName, :link,:locale)";
+    try {
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("accountId", $accountId);
+        $stmt->bindParam("facebookId", $accountId);
+        $stmt->bindParam("bio", $accountId);
+        $stmt->bindParam("firstName", $accountId);
+        $stmt->bindParam("gender", $accountId);
+        $stmt->bindParam("lastName", $accountId);
+        $stmt->bindParam("link", $accountId);
+        $stmt->bindParam("locale", $accountId);
+        $stmt->execute();
+        return $response->id = $db->lastInsertId();
+    } catch (PDOException $e) {
+        error_log($e->getMessage(), 3, '/var/tmp/php.log');
     }
+    /*bio: "find my scribbling here - http://greypad.thinkpluto.com/"
+    education: Array[2]
+    email: "shikhar.sachan@gmail.com"
+    first_name: "Shikhar"
+    gender: "male"
+    id: "675467514"
+    last_name: "Sachan"
+    link: "https://www.facebook.com/shikhar.sachan"
+    locale: "en_US"
+    name: "Shikhar Sachan"
+    pictures: Object
+    quotes: "you loose 100 % of the shots you don't take ..."
+    timezone: 5.5
+    updated_time: "2012-08-18T16:31:31+0000"
+    username: "shikhar.sachan"
+    verified: true
+    work: Array[1]
+    */
+    
 }
 
-/*$app->hook('slim.before.dispatch', function() use ($app) {
-    $user = null;
-    if (isset($_SESSION['user'])) {
-        $user = $_SESSION['user'];
-    }
-    $app->view()->setData('user', $user);
-});*/
-
-$app->post("/signup", function () use ($app) {
-    $firstName = mysql_real_escape_string($_POST['firstName']);
-    $lastName = mysql_real_escape_string($_POST['lastName']);
-    $email =  mysql_real_escape_string($_POST['email']);
-    $password = mysql_real_escape_string($_POST['password']);
-    $streamId = mysql_real_escape_string($_POST['streamId']);
-    
-    if(emailExists($email) != 0){
-        // email exists
-        $msg = 'email already exists. you should probably try forgot password';
-        //echo json_encode('{"error":{"text":' . $msg . '}}');
-        echo '{"error":{"text":' . $msg . '}}';
-        //return;
-    }else{
+function createAccount($firstName,$lastName,$email,$password){
     $sql = "INSERT INTO accounts (firstName,lastName,email,password, createdOn) VALUES (:firstName, :lastName, :email, :password, :createdOn)";
     try {
         $db = getConnection();
@@ -139,20 +183,89 @@ $app->post("/signup", function () use ($app) {
         $stmt->bindParam("password", $password);
         $stmt->bindParam("createdOn", date("Y-m-d H:i:s", time()));
         $stmt->execute();
-        $response->id = $db->lastInsertId();
+        $id = $db->lastInsertId();
         $db = null;
-        insertStudent($response->id, $streamId);
-        $response->firstName = $firstName;
-        $response->lastName = $firstName;
-        $response->email = $firstName;
-        $response->streamId = $streamId;
-        $response->ascore = 0;
-        $_SESSION['user'] = $email;
-        echo json_encode($response);
+        return $id;
     } catch (PDOException $e) {
         error_log($e->getMessage(), 3, '/var/tmp/php.log');
         echo '{"error":{"text":' . $e->getMessage() . '}}';
     }
+}
+
+function fbSignUp(){
+    
+}
+/*$app->hook('slim.before.dispatch', function() use ($app) {
+    $user = null;
+    if (isset($_SESSION['user'])) {
+        $user = $_SESSION['user'];
+    }
+    $app->view()->setData('user', $user);
+});*/
+
+$app->post("/signup", function () use ($app) {
+    $accountType = $_POST['type'];
+    
+    switch ($accountType) {
+        case 1:
+            //our custom sign-up
+            $firstName = mysql_real_escape_string($_POST['firstName']);
+            $lastName = mysql_real_escape_string($_POST['lastName']);
+            $email =  mysql_real_escape_string($_POST['email']);
+            $password = mysql_real_escape_string($_POST['password']);
+            $streamId = mysql_real_escape_string($_POST['streamId']);
+            if(emailExists($email) != 0){
+                // email exists
+                $msg = 'email already exists. you should probably try forgot password';
+                //echo json_encode('{"error":{"text":' . $msg . '}}');
+                echo '{"error":{"text":' . $msg . '}}';
+            }else{
+                $response->id = createAccount($firstName,$lastName,$email,$password);
+                insertStudent($response->id, $streamId);
+                $response->firstName = $firstName;
+                $response->lastName = $firstName;
+                $response->email = $lastName;
+                $response->streamId = $streamId;
+                $response->ascore = 0;
+                $_SESSION['user'] = $email;
+                echo json_encode($response);
+            }
+            break;
+        case 2:
+            //fb sign-up
+            $firstName = mysql_real_escape_string($_POST['firstName']);
+            $lastName = mysql_real_escape_string($_POST['lastName']);
+            $email =  mysql_real_escape_string($_POST['email']);
+            $streamId = mysql_real_escape_string($_POST['streamId']);
+            if(emailExists($email) != 0){
+                // email exists
+                //check if fb account is linked 
+                if(fbAccountExist($email)!=0){
+                   // fb account exists
+                   
+                }else{
+                    // insert into fb
+                }
+            }else{
+                // create account
+                $response->id = createAccount($firstName,$lastName,$email,$password);
+                // push into fb
+                insertFb($_POST);
+                // push into students
+                insertStudent($response->id, $streamId);
+            }
+            $response->firstName = $firstName;
+            $response->lastName = $firstName;
+            $response->email = $lastName;
+            $response->streamId = $streamId;
+            $response->ascore = 0;
+            $_SESSION['user'] = $email;
+            echo json_encode($response);
+            break;
+        case 3:
+            //google sign-up
+           
+           break;
     }
 });
     
@@ -185,6 +298,17 @@ $app->post("/login", function () use ($app) {
     $errors = array();    
 });
 
+$app->get("/isAuth",function () use ($app) {
+    $user=null;
+    if (isset($_SESSION['user'])) {
+        $user = $_SESSION['user'];
+        $account = getStudentByEmailAndStreamId($user,1);
+        echo json_encode($account);
+    }else{
+        echo json_encode(false);
+    }
+});
+    
 $app->post("/forgotpass", function () use ($app) {
     $email=$_POST['email'];
     $email=mysql_real_escape_string($email);
@@ -216,16 +340,23 @@ $app->post("/forgotpass", function () use ($app) {
         sendMail($email, "your password is ".$account->password.""); 
     } 
 });
-
-$app->get("/isAuth",function () use ($app) {
-    $user=null;
-    if (isset($_SESSION['user'])) {
-        $user = $_SESSION['user'];
-        $account = getStudentByEmailAndStreamId($user,1);
-        echo json_encode($account);
-    }else{
-        echo json_encode(false);
+    
+$app->post("/changepass", function () use ($app) {
+    $oldpassword=$_POST['oldpassword'];
+    $newpassword=$_POST['newpassword'];
+    $sql = "UPDATE accounts SET password=:newpassword WHERE password=:oldpassword";
+    try {
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("newpassword", $newpassword);
+        $stmt->bindParam("oldpassword", $oldpassword);
+        $stmt->execute();
+        $db = null;
+        echo json_encode(true);
+    } catch(PDOException $e) {
+        echo '{"error":{"text":'. $e->getMessage() .'}}';
     }
+    // we can send an email here too. 
 });
     
 $app->get("/private/about", $authenticate($app), function () use ($app) {
@@ -236,26 +367,3 @@ $app->get("/private/goodstuff", $authenticate($app), function () use ($app) {
     $app->render('privateGoodStuff.php');
 });
 
-
-/*
-   // formating the mail posting
-            // headers here
-         /*   $headers="admin@sitename.com";  // Change this address within quotes to your address
-            $headers.="Reply-to: $headers4\n";
-            $headers .= "From: $headers4\n";
-            $headers .= "Errors-to: $headers4\n";
-            //$headers = "Content-Type: text/html; charset=iso-8859-1\n".$headers;// for html mail
-            // mail funciton will return true if it is successful
-            if(mail("$em","Your Request for login details","This is in response to your request for login detailst at
-                site_name \n \nLogin ID: $row->userid \n
-                Password: $row->password \n\n Thank You \n \n siteadmin","$headers"))
-                {echo "<center><b>THANK YOU</b> <br>Your password is posted to your emil address .
-Please check your mail after some time. </center>";}
-            else{// there is a system problem in sending mail
-                    echo " <center>There is some system problem in sending login details to your address.
-Please contact site-admin. <br><br><input type='button' value='Retry' onClick='history.go(-1)'></center>";}
-                }
-        else {// Validation failed so show the error message
-            echo "<center>$msg
-    <br><br><input type='button' value='Retry' onClick='history.go(-1)'></center>";
-    */

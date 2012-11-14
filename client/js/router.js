@@ -21,13 +21,19 @@ var timer = new Timer(1000, null, []); // we will have just one global timer
 $(document).ready(function() {
 	helper.loadTemplate(Config.viewsArray, function() {
 		app = new AppRouter();
-		/*
-		 * (function (d) { var js, id = 'facebook-jssdk'; if
-		 * (d.getElementById(id)) { return; } js = d.createElement('script');
-		 * js.id = id; js.async = true; js.src =
-		 * "//connect.facebook.net/en_US/all.js";
-		 * d.getElementsByTagName('head')[0].appendChild(js); }(document));
-		 */
+
+		(function(d) {
+			var js, id = 'facebook-jssdk';
+			if (d.getElementById(id)) {
+				return;
+			}
+			js = d.createElement('script');
+			js.id = id;
+			js.async = true;
+			js.src = "//connect.facebook.net/en_US/all.js";
+			d.getElementsByTagName('head')[0].appendChild(js);
+		}(document));
+
 		Backbone.history.start();
 	});
 });
@@ -44,7 +50,8 @@ var AppRouter = Backbone.Router.extend({
 		"quiz/:id" : "startQuiz",
 		"fac/:id" : "fac",
 		"packages" : "packages",
-		"forgotPass" : "forgotPass"
+		"forgotpass" : "forgotPass",
+		"changepass" : "changePass"
 	},
 
 	initialize : function() {
@@ -121,12 +128,23 @@ var AppRouter = Backbone.Router.extend({
 			alert('access denied');
 		}
 	},
+	
+	changePass: function() {
+		console.log('changing pass');
+		// load forgot password page
+		var changePassView = new ChangePassView({model:account});
+		this.showView(changePassView);
 
+
+	},
+	
 	forgotPass : function() {
 		console.log('forgot pass');
 		// load forgot password page
+		var forgotPassView = new ForgotPassView({model:account});
+		this.showView(forgotPassView);
 	},
-
+	
 	showView : function(view) {
 		if (this.currentView)
 			this.currentView.close();

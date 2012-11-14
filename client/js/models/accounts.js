@@ -84,22 +84,23 @@ window.Account = Backbone.Model.extend({
 		});
 	},
 
-	signUp : function(email, password, firstName, lastName) {
+	signUp : function(inputValues) {
 		// Do a POST to /login and send the creds
 		var url = '../api/signup';
 		console.log('Loggin in... ');
-		var formValues = {
+		/*var formValues = {
 			email : email,
 			password : password,
 			firstName : firstName,
 			lastName : lastName,
 			streamId : 1,
 		};
+		*/
 		$.ajax({
 			url : url,
 			type : 'POST',
 			dataType : "json",
-			data : formValues,
+			data : inputValues,
 			success : function(data) {
 				console.log([ "signup request details: ", data ]);
 				if (data.error) { // If there is an error, show the error
@@ -120,7 +121,7 @@ window.Account = Backbone.Model.extend({
 
 	forgotPass : function(email) {
 		var url = '../api/forgotpass';
-		console.log('Loggin in... ');
+		console.log('forgot pass... ');
 		var formValues = {
 			email : email,
 		};
@@ -144,6 +145,29 @@ window.Account = Backbone.Model.extend({
 		});
 	},
 
+	changePass : function(oldpassword, newpassword){
+		var url = '../api/changepass';
+		console.log('change pass... ');
+		$.ajax({
+			url : url,
+			type : 'POST',
+			dataType : "json",
+			data : {oldpassword : oldpassword, newpassword: newpassword},
+			success : function(data) {
+				console.log([ "signup request details: ", data ]);
+				if (data.error) { // If there is an error, show the error
+					// messages
+					console.log(data.error.text);
+				} else { // If not, send them back to the home page
+					account.set(data);
+					account.set('type', 1);
+					id = account.get('id') + '|' + activeStream.get('id');
+					window.location.replace('#');
+				}
+			}
+		});
+	},
+	
 	isAuth : function() {
 		// getAuth is wrapped around our router
 		// before we start any routers let us see if the user is valid
