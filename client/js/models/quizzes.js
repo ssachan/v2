@@ -20,6 +20,7 @@ window.Quiz = Backbone.Model.extend({
 				selectedAnswersArray : new Array()
 			});
 		}
+		
 		if (!this.get('timePerQuestionArray')) {
 			this.set({
 				timePerQuestionArray : new Array()
@@ -154,18 +155,6 @@ window.Quiz = Backbone.Model.extend({
 				console.log(data);
 			},
 		});
-		/*var response = new Response({
-			accountId : id,
-			quizId : this.get('id'),
-			score : JSON.stringify(score),
-			selectedAnswers : JSON.stringify(this.getSelectedAnswers()),
-			timePerQuestion : JSON.stringify(this.getTimeTakenPerQuestion()),
-		});
-		response.save({
-			success : function(data) {
-				//quizHistory.add(data);
-			}
-		});*/
 	}
 });
 

@@ -176,7 +176,7 @@ window.Manager = {
 			url : url,
 			dataType : "json",
 			success : function(data) {
-				console.log("faculty fetched: " + data.length);
+				console.log("faculty quizzes fetched: " + data.length);
 			}
 		});
 	},
@@ -307,6 +307,4 @@ window.Manager = {
 			}
 		});
 	}
-	
-
 };
