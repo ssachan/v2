@@ -381,11 +381,8 @@ function addResponse() {
 	$accountId = $_POST['accountId'];
 	$quizId =  $_POST['quizId'];
 	$score = $_POST['score'];
-	$selectedAnswers = $_POST['selectedAnswers'];
-	echo $selectedAnswers;
+	$selectedAnswers = stripslashes($_POST['selectedAnswers']);
 	$timePerQuestion = $_POST['timePerQuestion'];
-	
-	
 	$sql = "INSERT INTO results (accountId, quizId, selectedAnswers, score, timePerQuestion, timestamp) VALUES (:accountId, :quizId, :selectedAnswers, :score, :timePerQuestion, :timeStamp)";
 	//echo $sql;
 	try {
@@ -395,7 +392,7 @@ function addResponse() {
 		$stmt->bindParam("quizId", $quizId);
 		//$stmt->bindParam("questionId", $response->questionId);
 		$stmt->bindParam("selectedAnswers", $selectedAnswers);
-		$stmt->bindParam("score", $score);
+	    $stmt->bindParam("score", $score);
 		$stmt->bindParam("timePerQuestion", $timePerQuestion);
 		$stmt->bindParam("timeStamp", $date);
 		$stmt->execute();

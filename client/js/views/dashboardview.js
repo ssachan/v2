@@ -72,7 +72,7 @@ window.HistoryView = Backbone.View.extend({
 		var quizHistory = this.collection.models;
 		var len = quizHistory.length;
 		for(var i=0;i<len;i++){
-			$(this.el).append('<a href=#quizResults/'+quizHistory[i].get('id')+'>quiz</a>' );
+			$(this.el).append('<a href=#quizResults/'+quizHistory[i].get('id')+'>quiz'+quizHistory[i].get('id')+'|</a>' );
 		}
 	}
 });
