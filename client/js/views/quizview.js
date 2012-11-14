@@ -35,6 +35,9 @@ window.QuizView = Backbone.View.extend({
 		}
 	},
 	
+	/**
+	 * TODO:video - check if the view variable is results or quiz. Have another reference to the results page video. 
+	 */
 	switchView : function(view){
 		if(this.currentView==''){
 			this.currentView = view;
@@ -144,7 +147,9 @@ window.QuizView = Backbone.View.extend({
 		return this;
 	},
 	
-	
+	/**
+	 * TODO:video - just store the reference of the current video
+	 */
 	renderQuestion : function() {
 		this.question = quizQuestions.get(this.questionIds[this.index]);
 		if (this.question.get('timeTaken') == null) {

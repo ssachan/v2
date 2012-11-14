@@ -128,6 +128,11 @@ window.Quiz = Backbone.Model.extend({
 		return this.get('timePerQuestionArray');
 	},
 
+	/**
+	 * Data uploaded to results. TODO:video
+	 * 
+	 * @param quiz
+	 */
 	submitResults : function(quiz) {
 		var score = [ parseInt(this.get('totalCorrect')),
 		parseInt(this.get('totalIncorrect')),parseInt(this.get('totalScore')),parseInt(this.get('maxScore')) ];
