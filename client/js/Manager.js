@@ -161,12 +161,8 @@ window.Manager = {
 			url : url,
 			dataType : "json",
 			success : function(data) {
-				console.log("faculty fetched: " + data.length);
-				var faculty = new fac(data);//facDirectory.reset(data);
-				new FacView({
-					model : faculty,
-					el : '#content'
-				});
+				console.log("faculty fetched: " + data);
+				fac.set(data);//facDirectory.reset(data);
 			}
 		});
 	},
@@ -178,12 +174,21 @@ window.Manager = {
 			dataType : "json",
 			success : function(data) {
 				console.log("faculty quizzes fetched: " + data.length);
+				facQuizzes.reset(data);
 			}
 		});
 	},
 	
-	getFaculty : function(facId, streamId){
-		this.getFacById();
+	getFaculty : function(facId){
+		var dfd = [this.getFacById(facId),this.getQuizzesByFac(facId) ];
+		$.when.apply(null, dfd).then(function(data) {
+			var facView = new FacView({
+				model : fac,
+				collection : facQuizzes,
+			});
+			app.showView(facView);
+			facView.renderQuizzes();
+		});
 	},
 	
 	getQuestions : function(qids){

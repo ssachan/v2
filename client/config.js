@@ -20,11 +20,13 @@ var Config = {
                     'QuizItemView',
                     'FacDirectoryView',
                     'FacItemView',
+                    'FacView',
                     'ModalView',
                     'InfoView',
                     'PackagesView',
                     'PackageItemView',
                     'ForgotPassView',
-                    'ChangePassView'
+                    'ChangePassView',
+                    'FacQuizView',
                   ]
 };

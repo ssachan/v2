@@ -47,12 +47,12 @@ function getFac($id){
         $stmt = $db->prepare($sql);
         $stmt->bindParam("id", $id);
         $stmt->execute();
-        $fac = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $fac = $stmt->fetch(PDO::FETCH_OBJ);
         $db = null;
         if (!isset($_GET['callback'])) {
             echo json_encode($fac);
         } else {
-            echo $_GET['callback'] . '(' . json_encode($l1) . ');';
+            echo $_GET['callback'] . '(' . json_encode($fac) . ');';
         }
     } catch (PDOException $e) {
         echo '{"error":{"text":' . $e->getMessage() . '}}';

@@ -16,3 +16,4 @@ window.FacCollection = Backbone.Collection.extend({
 
 var facDirectory = new FacCollection();
 var facQuizzes = new QuizCollection();
+var fac = new Fac();

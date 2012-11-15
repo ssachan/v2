@@ -101,7 +101,7 @@ var AppRouter = Backbone.Router.extend({
 	},
 
 	fac : function(id) {
-		Manager.getFaculty(id, streamId);
+		Manager.getFaculty(id);
 	},
 
 	/**
