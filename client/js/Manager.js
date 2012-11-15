@@ -123,18 +123,18 @@ window.Manager = {
 
 	getQuizzesByStreamId : function(id) {
 		var url = Config.serverUrl + 'quizzesByStreamId/' + id;
-		$.ajax({
+		return $.ajax({
 			url : url,
 			dataType : "json",
 			success : function(data) {
 				console.log("quizzes fetched: " + data.length);
 				quizLibrary.reset(data);
-				var quizLibraryView = new QuizLibraryView({
+				/*var quizLibraryView = new QuizLibraryView({
 					model : quizLibrary,
 					//el : '#content'
 				});
 				app.showView(quizLibraryView);
-				quizLibraryView.renderQuizItems();
+				quizLibraryView.renderQuizItems();*/
 			}
 		});
 	},
@@ -253,6 +253,32 @@ window.Manager = {
 			success : function(data) {
 				console.log("packages fetched: " + data.length);
 			}
+		});
+	},
+	
+	/**
+	 * ensure all questions are loaded in the quizQuestions collection
+	 * 
+	 * @param quiz
+	 * @returns
+	 */
+	getDataForQuizLibrary : function(streamId) {
+		var dfd = [];
+		if (sectionL1.length == 0 || sectionL2.length == 0) {
+			// what if the data is already is being fetched???I think jquery
+			// makes sure with promises that it is not fetched again
+			dfd.push(this.getL1ByStreamId(streamId));
+			dfd.push(this.getL2ByStreamId(streamId));
+			dfd.push(this.getL3ByStreamId(streamId));
+		}
+		dfd.push(this.getQuizzesByStreamId(streamId));
+		$.when.apply(null, dfd).then(function(data) {
+			var quizLibraryView = new QuizLibraryView({
+				model : quizLibrary,
+				//el : '#content'
+			});
+			app.showView(quizLibraryView);
+			quizLibraryView.renderQuizItems();
 		});
 	},
 	
