@@ -179,6 +179,10 @@ window.Manager = {
 		});
 	},
 	
+	/**
+	 * fetch all the data for the faculty page
+	 * @param facId
+	 */
 	getFaculty : function(facId){
 		var dfd = [this.getFacById(facId),this.getQuizzesByFac(facId) ];
 		$.when.apply(null, dfd).then(function(data) {
