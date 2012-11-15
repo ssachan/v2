@@ -12,6 +12,7 @@ body {
 	position: relative;
 	padding-top: 30px;
 	font-family: 'Source Sans Pro', sans-serif;
+	/*font-family: proxima-nova, 'Helvetica Neue', Helvetica, Arial, sans-serif;*/
 	font-size: 16px;
 	/*background: white url('../img/bg.png') top center repeat;*/
 	color:#333;
@@ -22,6 +23,8 @@ body {
     background: white url('../img/bg.jpeg') top center repeat;
     margin:0px auto;
     padding-top:40px;
+	width: 75%;
+	
 }
 
 .bold{
@@ -52,6 +55,7 @@ h3, h4, h5 {
 
 h1 {
 	font-size: 30px;
+	/*font-family: proxima-nova, 'Helvetica Neue', Helvetica, Arial, serif;*/
 }
 
 h2 {
@@ -315,7 +319,7 @@ font-style: bold;
 }
 
 .feature-row{
-background: #f5f5f5;
+background: #ddd;
 padding-top: 30px;
 padding-left: 50px;
 margin-top: 20px;
@@ -328,7 +332,7 @@ width: 100%;
 /* Dashboard
 -------------------------------------------------- */
 .dashboard {
-    width: 70%;
+    width: 93%;
 }
 	
 .das-personal-info{
@@ -396,11 +400,14 @@ bottom: 2px;
 
 .practice{
 position: relative;
-left: 270px;}
+left: 290px;
+text-decoration: underline;
+}
 
 .accuracy{
 position: relative;
-left: 570px;}
+left: 600px;
+text-decoration: underline;}
 
 /* Quiz Library
 -------------------------------------------------- */
@@ -416,7 +423,7 @@ color: white;
 font-style: bold;}
 
 .quiz-library{
-width: 70%;
+width: 93%;
 }
 
 .quiz-library .box{
@@ -498,7 +505,7 @@ margin-bottom: -15px;}
 /* Fac Directory
 -------------------------------------------------- */
 .faclib{
-width: 70%;
+width: 93%;
 }
 
 .faclib .box{
@@ -556,9 +563,7 @@ margin-top: 5px;}
 
 .faclib-fac .btn{
 margin-top: 20px;
-background-image: -webkit-linear-gradient(top, #F77F00, #F45000);
-background-repeat: repeat-x;
-border-bottom-color: #AB3901;
+background: #F4763E;
 color: white;
 font-style: normal;}
 
@@ -574,11 +579,12 @@ padding-left: 20px;}
 margin-top: 29px !important;}
 
 
+
 /* Faculty Profile
 ------------------------------------------------- */
 
 .facpro {
-width: 70%;}
+width: 93%;}
 
 .facpro-heading{
 margin-left: 0px;}
@@ -586,6 +592,11 @@ margin-left: 0px;}
 .facpro-bio{
 margin-top: 15px;
 }
+
+.facpro-list{
+margin-bottom: 15px;
+}
+
 
 .facpro-details{
 margin-top: 20px;
@@ -614,6 +625,11 @@ background: #ddd;
 .date{
 font-style: italic;
 margin-left:20px;}
+
+.view-all-posts{
+margin-top: -37px;
+position: relative;
+left: 35px;}
 	
 /* Analytics View 
 -------------------------------------------------*/
@@ -635,6 +651,8 @@ margin-top: -10px;
 /*background: #C4BD97;*/
 }
 
+
+
 .analytics-list{
 border: 1px solid #dee;
 padding-top:5px;
@@ -647,11 +665,26 @@ position: relative;
 top: 15px;
 }
 
+.correct{
+border: 1px solid #06947A;
+color: #06947A;
+font-style: bold;}
+
+.incorrect{
+border: 1px solid #B81324;
+color: #B81324;
+font-style: bold;}
+
+.unattempted{
+border: 1px solid #bbb;
+color: #bbb;
+font-style: bold;}
+
 
 /* Quiz View
 -------------------------------------------------- */
 .quizview{
-width:70%;
+width:93%;
 }
 
 .question-toolbar {

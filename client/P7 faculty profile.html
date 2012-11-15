@@ -12,22 +12,29 @@
 <!-- The Scripts -->
 </head>
 <body>
-     <header>
-        <div class="navbar navbar-fixed-top">
-            <div class="navbar-inner">
-                <a class="brand" href="#"><img src="img/logo1.png" class="" height="80px" width="95px" style="position:absolute;left: 58px; top: 2px;
-                border-bottom-color: #D4D4D4; -webkit-border-image: none;
-                -webkit-box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 10px 0px;
-                -webkit-filter: none;"></a>
-                <div class="nav-collapse collapse pull-right">
-                    <ul class="nav">
-                        <li class="active"><a href="#">Home</a></li>
-                        <li><a href="#">Link</a></li>
-                        <li><a href="#">Link</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+    <header>
+        <div class="navbar navbar-fixed-top"> <div class="navbar-inner">
+ <a class="brand" href="#"><img src="img/logo1.png" class="" height="80px" width="95px" style="position:absolute;left: 38px; top: 2px;
+                "></a>
+				<div style="border-bottom: 1px solid #D4D4D4;
+                border-right: 1px solid #D4D4D4;
+                border-left: 1px solid #D4D4D4;
+                -webkit-border-image: none;
+				border-bottom-left-radius: 6px;
+				border-bottom-right-radius: 6px;
+				box-shadow: rgba(0, 0, 0, 0.0980392) 0px 1px 10px 0px;
+                -webkit-box-shadow: rgba(0, 0, 0, 0.0980392) 0px 1px 10px 0px;
+                -webkit-filter: none; position:absolute;left: 38px; top: 51px; color: white; height:38px; width: 95px; z-index: 1000;"> 
+				 </div>
+ <div class="nav-collapse collapse pull-right"> 
+ <ul class="nav"> <li><a href="#packages">Packages</a>
+ </li> <li><a href="#quizLibrary">Browse Library</a></li> <li><a href="#facDirectory">Search Faculty</a></li> <li>
+ <a href="#">Home</a></li> <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">
+ <img src="img/profile.jpg" height="20px" width="20px"> <b class="caret"></b></a> <ul class="dropdown-menu"> <li><a href="#">Settings</a>
+ </li> <li><a id="logout">Log Out</a></li> 
+ </ul>
+ </li> </ul>
+ </div> </div> </div>
       
     </header>
 	
@@ -35,7 +42,7 @@
 
 	<div class="container facpro">
            
-	    <div class="row-fluid span12">   <!--Enclosing the section 1-->
+	    <div class="row-fluid span12" style=" margin-left: 0px !important;">  
 
          	<div class="row-fluid span12 facpro-heading"> 
 			     <div class="span3">
@@ -48,7 +55,7 @@
             <div class="row-fluid" id="facpro-list">
                <!--Faculty 1-->               
 			   <div class="media box">
-                    
+                    -
 					<div class="span2 fac-pic">
 					
 					<a class="center" href="#fac/<%=id %>"> <img class="media-object"
@@ -97,8 +104,8 @@
                   <!--Quiz 1 -->                   
 				   <li class="span4"> 
                         <div class="thumbnail box">
-                         <div class="quiz-lib-t1 font-h5"> <img src="img/recommend.png" height="12" width="12"/>  125 
-					    <img src="img/analytics-icon.png" height="14" width="14"/> 6 </div> 
+                         <div class="quiz-lib-t1 font-h5"> <img src="img/recommend.png" height="12" width="12"/>  25
+					    <img src="img/analytics-icon.png" height="14" width="14"/> 2 </div> 
 						<div class="quiz-lib-t2 row-fluid"> <img src="img/physics.png" height="40" width="40" >
                             <span class="font-h4 bold">Physics Sectional Test</span> </div>
                            <ul class="left quiz-lib-t4 font-h5"> 
@@ -107,9 +114,7 @@
 							</ul> 
 							
 							</div>
-                        <div class="box quiz-lib-t5 font-h5 bold">
-                          <img src="img/prof1.jpg" height="25" width="25"> Raj Gupta 
-                        </div>
+                       
 						
                         
                     </li>
@@ -119,37 +124,33 @@
 				   <li class="span4"> 
                         <div class="thumbnail box">
                          <div class="quiz-lib-t1 font-h5"> <img src="img/recommend.png" height="12" width="12"/>  125 
-					    <img src="img/analytics-icon.png" height="14" width="14"/> 6 </div> 
+					    <img src="img/analytics-icon.png" height="14" width="14"/> 3 </div> 
 						<div class="quiz-lib-t2 row-fluid"> <img src="img/physics.png" height="40" width="40" >
-                            <span class="font-h4 bold">Physics Sectional Test</span> </div>
+                            <span class="font-h4 bold">Physics Topic Test</span> </div>
                            <ul class="left quiz-lib-t4 font-h5"> 
-						   <li>Problems from Mechanics and Electro</li>
-						   <li>Time based strategy analyzed</li>	
+						   <li>Problems from Mechanics</li>
+						   <li>Friction, Rotation, Momentum</li>	
 							</ul> 
 							
 							</div>
-                        <div class="box quiz-lib-t5 font-h5 bold">
-                          <img src="img/prof1.jpg" height="25" width="25"> Raj Gupta 
-                        </div>
+                        
                         
                     </li>
 					
                     <!--Quiz 3-->                   
 				   <li class="span4"> 
                         <div class="thumbnail box">
-                         <div class="quiz-lib-t1 font-h5"> <img src="img/recommend.png" height="12" width="12"/>  125 
-					    <img src="img/analytics-icon.png" height="14" width="14"/> 6 </div> 
-						<div class="quiz-lib-t2 row-fluid"> <img src="img/physics.png" height="40" width="40" >
-                            <span class="font-h4 bold">Physics Sectional Test</span> </div>
+                         <div class="quiz-lib-t1 font-h5"> <img src="img/recommend.png" height="12" width="12"/>  150 
+					    <img src="img/analytics-icon.png" height="14" width="14"/> 2 </div> 
+						<div class="quiz-lib-t2 row-fluid"> <img src="img/maths.png" height="40" width="40" >
+                            <span class="font-h4 bold">Maths Sectional Test</span> </div>
                            <ul class="left quiz-lib-t4 font-h5"> 
-						   <li>Problems from Mechanics and Electro</li>
-						   <li>Time based strategy analyzed</li>	
+						   <li>Problems from Algebra</li>
+						   <li>Concepts tested</li>	
 							</ul> 
 							
 							</div>
-                        <div class="box quiz-lib-t5 font-h5 bold">
-                          <img src="img/prof1.jpg" height="25" width="25"> Raj Gupta 
-                        </div>
+                        
 						
                         
                     </li>
@@ -184,8 +185,8 @@
 			    <div class="row-fluid">
 				<div class="span1"> </div>
                    <div class=" span10 outline question-text facpro-posts">
-                     <div class="span 7 row-fluid font-h5"> <span class="bold question-text "> JEE New Format </span> <span class="date"> Dec 13, 2012 </span>  <span class="pull-right"> <img src="img/popular.png" height="15" width = "15" /> 2,100 views <br>
-				      <img src="img/recommend.png" height="15" width = "15" />  20 recommended </span> <br>
+                     <div class="span 7 row-fluid font-h5"> <span class="bold question-text "> JEE Mains Paper </span> <span class="date"> Nov 28, 2012 </span>  <span class="pull-right"> <img src="img/popular.png" height="15" width = "15" /> 5,220 views <br>
+				      <img src="img/recommend.png" height="15" width = "15" />  50 recommended </span> <br>
                      <span class="question-text"> This time, the focus was on the concepts, as opposed to the logical reasoning… </span>
 					 </div>
                	</div>
@@ -194,7 +195,7 @@
 			
 			</div>
 			
-			 <div class="span1 view-all font-h4 bold"> <a> View all </a> </div>
+			 <div class="span1 view-all-posts font-h4 bold"> <a> View all </a> </div>
 			
         </div>
 		</div>
