@@ -762,3 +762,15 @@ color: #0091B2}
 .nav-pills {
     text-align:center;
 }
+
+.modal-body{
+    max-height:none;
+}
+.vid-modal{
+    width:auto;
+    left:40%;
+}
+
+.modal.fade.in {
+    top:38%;
+}

@@ -35,6 +35,7 @@ $app->post('/responses', 'addResponse');
 $app->get('/packagesByStreamId/:id', 'getPackagesByStreamId');
 
 $app->post('/purchase/:id', 'addPurchase');
+$app->get('/testq/:id','testQuestion');
 
 // the resets
 $app->get('/resetResults/', 'resetResults');
@@ -42,6 +43,7 @@ $app->get('/resetResults/', 'resetResults');
 
 function getFac($id){
     $sql = "select * from faculty where id=:id";
+    echo $sql;
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
@@ -299,6 +301,27 @@ function getQuestionsByIds(){
     } else {
         echo $_GET['callback'] . '(' . json_encode($questions) . ');';
     }
+}
+function testQuestion($id)
+{
+	$sql = "SELECT * FROM questions where id='".$id."'";
+    echo $sql;    
+        try {
+            $db = getConnection();
+ 	    	$stmt = $db->query($sql);
+    	    $questions = $stmt->fetchAll(PDO::FETCH_OBJ);
+            $db = null;
+
+            echo "\n \n Outputting question text ----====";
+            echo json_encode($questions[0]->text);
+            echo "\n \n Outputting option text ----====";
+            echo json_encode($questions[0]->options);
+            echo "\n \n Outputting description text ----====";
+            echo json_encode($questions[0]->explanation);
+            
+        } catch(PDOException $e) {
+            echo '{"error":{"text":'. $e->getMessage() .'}}';
+        }
 }
 
 /**
