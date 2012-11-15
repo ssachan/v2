@@ -207,7 +207,7 @@ function getL2Performance($id) {
 }
 
 function getQuizzesByStreamId($id) {
-	$sql = "select q.id,q.questionIds,q.description,q.descriptionShort,q.difficulty,q.rec,q.conceptsTested, q.l2Ids, q.l3Ids, f.firstName,f.lastName from quizzes q, faculty f where q.facultyId=f.id and q.streamId=:id";
+	$sql = "select q.id,q.questionIds,q.description,q.descriptionShort,q.difficulty,q.rec,q.conceptsTested, q.l2Ids, q.l3Ids, f.id as fid, f.firstName,f.lastName from quizzes q, faculty f where q.facultyId=f.id and q.streamId=:id";
 	try {
 		$db = getConnection();
 		$stmt = $db->prepare($sql);
