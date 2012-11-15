@@ -26,18 +26,15 @@ window.DashboardView = Backbone.View.extend({
 		for(var i=0; i< len; i++){
 			l1Id = l1[i].get('id');
 			var l1ScoreModel = l1Scores.get(l1Id);
-			var l2Score = (l1ScoreModel==null?'N/A':l1ScoreModel.get('score'));
-			$('#performance').append('<h4>'+l1[i].get('displayName')+'-( '+l2Score+' )</h4>');
+			var l1Score = (l1ScoreModel==null?'N/A':l1ScoreModel.get('score'));
+			var pView = new PerformanceView({model:l1[i]});
+			$('#performance').append(pView.el);
+			//$('#performance').append('<h4>'+l1[i].get('displayName')+'-( '+l2Score+' )</h4>');
 			// get the L2s for this L1
 			var l2 = sectionL2.where({l1Id:l1Id});
 			var len2 = l2.length;
 			// loop through L2s and get the scores for each of these l2s
-			for(var j = 0 ; j < len2 ;j++){
-				l2Id =l2[j].get('id'); 
-				var l2ScoreModel = l2Scores.get(l2Id);
-				var l2Score = (l2ScoreModel==null?'N/A':l2ScoreModel.get('score'));
-				$('#performance').append('<h5>'+l2[j].get('displayName')+'-'+l2Score+'</h5>');
-			}
+			
 		}
 		new HistoryView({el:'#history', collection:quizHistory});
 	}
@@ -50,7 +47,8 @@ window.InfoView = Backbone.View.extend({
 
 	render : function() {
 		$(this.el).html(this.template(this.model.toJSON()));
-	}
+	},
+	
 });
 
 window.PerformanceView = Backbone.View.extend({
@@ -59,7 +57,17 @@ window.PerformanceView = Backbone.View.extend({
 	},
 
 	render : function() {
-		$(this.el).html(this.template());
+		$(this.el).html(this.template(this.model.toJSON()));
+	},
+	
+
+	renderQuestion : function(){
+		for(var j = 0 ; j < len2 ;j++){
+			l2Id =l2[j].get('id'); 
+			var l2ScoreModel = l2Scores.get(l2Id);
+			var l2Score = (l2ScoreModel==null?'N/A':l2ScoreModel.get('score'));
+			$(this.el).append('<h5>'+l2[j].get('displayName')+'-'+l2Score+'</h5>');
+		}
 	}
 });
 

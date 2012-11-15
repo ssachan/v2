@@ -22,6 +22,7 @@ body {
     background: white url('../img/bg.jpeg') top center repeat;
     margin:0px auto;
     padding-top:40px;
+    width: 75%
 }
 
 .bold{
@@ -328,7 +329,7 @@ width: 100%;
 /* Dashboard
 -------------------------------------------------- */
 .dashboard {
-    width: 70%;
+    width: 93%;
 }
 	
 .das-personal-info{
@@ -416,7 +417,7 @@ color: white;
 font-style: bold;}
 
 .quiz-library{
-width: 70%;
+width: 93%;
 }
 
 .quiz-library .box{
@@ -498,7 +499,7 @@ margin-bottom: -15px;}
 /* Fac Directory
 -------------------------------------------------- */
 .faclib{
-width: 70%;
+width: 93%;
 }
 
 .faclib .box{
@@ -578,7 +579,7 @@ margin-top: 29px !important;}
 ------------------------------------------------- */
 
 .facpro {
-width: 70%;}
+width: 93%;}
 
 .facpro-heading{
 margin-left: 0px;}
@@ -618,7 +619,7 @@ margin-left:20px;}
 /* Analytics View 
 -------------------------------------------------*/
 .analytics-view{
-width: 70%;
+width: 93%;
 }
 
 .analytics-comp{
@@ -651,7 +652,7 @@ top: 15px;
 /* Quiz View
 -------------------------------------------------- */
 .quizview{
-width:70%;
+width:93%;
 }
 
 .question-toolbar {
@@ -679,7 +680,6 @@ color: black;
 #next,#previous,#submit {
     cursor: pointer;
 }
-
 
 .option-button {
 	margin: 10px 0px 10px 0px;
@@ -752,13 +752,11 @@ color: #0091B2}
 	font-weight: bold;
 }
 
-
 .nav-tabs > li, .nav-pills > li {
     float:none;
     display:inline-block;
     *display: inline;     /* for IE7*/
     *zoom:1;              /* for IE7*/
-
 }
 
 .nav-pills {

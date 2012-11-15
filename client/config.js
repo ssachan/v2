@@ -28,5 +28,6 @@ var Config = {
                     'ForgotPassView',
                     'ChangePassView',
                     'FacQuizView',
+                    'PerformanceView'
                   ]
 };
