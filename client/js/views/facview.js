@@ -23,12 +23,19 @@ window.FacView = Backbone.View.extend({
         var len = quizzes.length;
         var i = 0;
         while(i<len){
-        	//$("#quizzes").append('<ul class="thumbnails span10"></ul>');
+        	$("#quizzes").append('<ul class="thumbnails"></ul>');
         	for (var j = 0; j < 3&&i<len; j++) {
         		$(".thumbnails:last").append(new FacQuizView({model: quizzes[i]}).render().el);
         		i++;
         	}
         }
+        /*while(i<len){
+        	//$("#quizzes").append('<ul class="thumbnails span10"></ul>');
+        	for (var j = 0; j < 3&&i<len; j++) {
+        		$(".thumbnails:last").append(new FacQuizView({model: quizzes[i]}).render().el);
+        		i++;
+        	}
+        }*/
 	}
 });
 
