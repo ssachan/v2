@@ -2,11 +2,18 @@
     <div class="span4">
         <h4><%= displayName %></h4>
     </div>
-    <div class="progress progress-success span3">
-        <div class="bar" style="width: 70%;"></div>
+    <div class="span3">
+        <div class="progress progress-success">
+            <div class="bar" style="width: 70%;"></div>
+        </div>
     </div>
     <div class="stars pull-right span3">
-        <img src="img/stars.jpg" height="20" width="120" />
+      <%if(displayName!='Physics'){  %>
+       <img src="img/stars.jpg" height="20" width="120" />
+      <%}else{  %>
+         <img src="img/stars2.jpg" height="20px" width="60px" />
+      <%} %>
+        
     </div>
 </div>
 <div id="l2-performance"></div>
