@@ -288,15 +288,37 @@ window.QuizResultsView = Backbone.View.extend({
 			},
 			 {
 			 	
-				thumb_url : 'img/video1.jpg',
-				poster_url : 'img/video1.jpg',
+				thumb_url : 'img/video3.jpg',
+				poster_url : 'img/video3.jpg',
 				sources : [{
-									src : 'videos/video1.mp4',
+									src : 'videos/video3.mp4',
 									type : "video/mp4",
 									title : 'q2',
 									media : ''
 							}]
-			}			
+			},
+{
+			 	
+				thumb_url : 'img/video4.jpg',
+				poster_url : 'img/video4.jpg',
+				sources : [{
+									src : 'videos/video3.mp4',
+									type : "video/mp4",
+									title : 'q2',
+									media : ''
+							}]
+			},
+ {
+			 	
+				thumb_url : 'img/video4.jpg',
+				poster_url : 'img/video4.jpg',
+				sources : [{
+									src : 'videos/video4.mp4',
+									type : "video/mp4",
+									title : 'q2',
+									media : ''
+							}]
+			}
 		);
 
 
