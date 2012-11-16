@@ -57,10 +57,11 @@ window.Manager = {
 	},
 
 	getL1Performance : function() {
-		var url = Config.serverUrl + 'l1Performance/' + id;
+		var url = Config.serverUrl + 'l1Performance/';
 		return $.ajax({
 			url : url,
 			dataType : "json",
+			data:{accountId:account.get('id'), streamId:streamId},
 			success : function(data) {
 				console.log("L1performance fetched: " + data.length);
 				scoreL1.reset(data);
@@ -69,9 +70,10 @@ window.Manager = {
 	},
 
 	getL2Performance : function() {
-		var url = Config.serverUrl + 'l2Performance/' + id;
+		var url = Config.serverUrl + 'l2Performance/';
 		return $.ajax({
 			url : url,
+			data:{accountId:account.get('id'), streamId:streamId},
 			dataType : "json",
 			success : function(data) {
 				console.log("L2performance fetched: " + data.length);
@@ -81,9 +83,10 @@ window.Manager = {
 	},
 
 	getHistoryById : function() {
-		var url = Config.serverUrl + 'historyById/' + id;
+		var url = Config.serverUrl + 'historyById/';
 		return $.ajax({
 			url : url,
+			data:{accountId:account.get('id'), streamId:streamId},
 			dataType : "json",
 			success : function(data) {
 				console.log("history fetched: " + data.length);

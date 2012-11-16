@@ -31,8 +31,10 @@ $authenticate = function ($app) {
     return function () use ($app) {
         if (!isset($_SESSION['user'])) {
             $app->redirect('../../client/#landing');
+            //echo 'not set session';
         } else {
             if (isset($_GET['accountId'])) {
+                //echo 'accountId'.$_GET['accountId'];
                 // check if accountId is same as sessionId
                 if ($_GET['accountId'] != $_SESSION['user']) {
                     $app->redirect('../../client/#landing');
@@ -67,9 +69,9 @@ function sendEmail($content, $email) {
     }
 }
 
-function getStudentByEmailAndStreamId($email, $streamId) {
-    $sql = "SELECT a.id as id,a.email,a.firstName,a.lastName,s.ascoreL1 as ascore from accounts a,students s where a.email='"
-            . $email . "' AND s.streamId='" . $streamId
+function getStudentByAccountId($accountId, $streamId) {
+    $sql = "SELECT a.id as id,a.email,a.firstName,a.lastName,s.ascoreL1 as ascore from accounts a,students s where a.id='"
+            . $accountId . "' AND s.streamId='" . $streamId
             . "' AND a.id=s.accountId";
     try {
         $db = getConnection();
@@ -244,7 +246,7 @@ $app
                             $response->email = $email;
                             $response->streamId = $streamId;
                             $response->ascore = 0;
-                            $_SESSION['user'] = $email;
+                            $_SESSION['user'] = $response->id;
                             echo json_encode($response);
                         }
                         break;
@@ -278,7 +280,7 @@ $app
                         $response->email = $email;
                         $response->streamId = $streamId;
                         $response->ascore = 0;
-                        $_SESSION['user'] = $email;
+                        $_SESSION['user'] = $response->id;
                         echo json_encode($response);
                         break;
                     case 3:
@@ -328,10 +330,10 @@ $app
 $app
         ->get("/isAuth",
                 function () use ($app) {
-                    $user = null;
+                    $id = null;
                     if (isset($_SESSION['user'])) {
-                        $user = $_SESSION['user'];
-                        $account = getStudentByEmailAndStreamId($user, 1);
+                        $id = $_SESSION['user'];
+                        $account = getStudentByAccountId($id, 1);
                         echo json_encode($account);
                     } else {
                         echo json_encode(false);

@@ -21,9 +21,9 @@ $app->get('/fac/:id', 'getFac');
 $app->get('/quizzesByFac/:id', 'getQuizzesByFac');
 
 //dashboard page
-$app->get('/l1Performance/:id', 'getL1Performance');
-$app->get('/l2Performance/:id', 'getL2Performance');
-$app->get('/historyById/:id', 'getQuizzesHistory');
+$app->get('/l1Performance/',$authenticate($app), 'getL1Performance');
+$app->get('/l2Performance/',$authenticate($app), 'getL2Performance');
+$app->get('/historyById/',$authenticate($app),'getQuizzesHistory');
 
 //quiz
 $app->get('/processQuiz/',$authenticate($app), 'processQuiz');
@@ -161,16 +161,18 @@ function getL3ByStream($id) {
 }
 
 
-function getL1Performance($id) {
-	$ids = explode("|", $id);
+function getL1Performance() {
+	//$ids = explode("|", $id);
+	$accountId = $_GET['accountId'];
+	$streamId = $_GET['streamId'];
 	$sql = "select a.l1Id as id, a.score,MAX(a.updatedOn) as updatedOn from ascores_l1 a where a.accountId=:accountId and streamId=:streamId group by l1Id";
 	//$sql = "select l.id,l.displayName,T.score from section_l1 l LEFT JOIN (select a.l1Id, a.score,MAX(a.updatedOn) from ascores_l1 a where a.accountId=:id and streamId='1' group by l1Id) as T on l.id=T.l1Id where l.streamId='1'";
 	//$sql = "SELECT * from section_l1 where streamId=:id";
 	try {
 		$db = getConnection();
 		$stmt = $db->prepare($sql);
-		$stmt->bindParam("accountId", $ids[0]);
-		$stmt->bindParam("streamId", $ids[1]);
+		$stmt->bindParam("accountId", $accountId);
+		$stmt->bindParam("streamId", $streamId);
 		$stmt->execute();
 		$l1 = $stmt->fetchAll(PDO::FETCH_OBJ);
 		$db = null;
@@ -184,16 +186,17 @@ function getL1Performance($id) {
 	}
 }
 
-function getL2Performance($id) {
-	$ids = explode("|", $id);
-	$sql = "select a.l2Id as id, a.score,MAX(a.updatedOn) as updatedOn from ascores_l2 a where a.accountId=:accountId and streamId=:streamId group by a.l2Id";
+function getL2Performance() {
+	$accountId = $_GET['accountId'];
+	$streamId = $_GET['streamId'];
+    $sql = "select a.l2Id as id, a.score,MAX(a.updatedOn) as updatedOn from ascores_l2 a where a.accountId=:accountId and streamId=:streamId group by a.l2Id";
 	// $sql = "select l.id,l.displayName,T.score,l.l1Id from section_l2 l LEFT JOIN (select a.l2Id, a.score,MAX(a.updatedOn) from ascores_l2 a where a.accountId=:id and streamId='1' group by a.l2Id) as T on l.id=t.l2Id where l.streamId='1'";
 	//$sql = "select l.id,l.displayName,l.l1Id,l.streamId,a.streamId as st, a.score from section_l2 l LEFT JOIN ascores_l2 a ON a.l2Id=l.id where l.streamId=1 and (a.streamId IS NULL OR a.streamId=1) order by l.l1Id ";
 	try {
 		$db = getConnection();
 		$stmt = $db->prepare($sql);
-		$stmt->bindParam("accountId", $ids[0]);
-		$stmt->bindParam("streamId", $ids[1]);
+		$stmt->bindParam("accountId", $accountId);
+		$stmt->bindParam("streamId", $streamId);
 		$stmt->execute();
 		$l2 = $stmt->fetchAll(PDO::FETCH_OBJ);
 		$db = null;
@@ -430,14 +433,17 @@ function addResponse() {
 	}*/
 }
 
-function getQuizzesHistory($id){
-	$ids = explode("|", $id);
-	$sql = "select r.selectedAnswers,r.timePerQuestion,r.score,q.* from results r,quizzes q where accountId=:accountId and q.streamId=:streamId and r.quizId=q.id order by timestamp";
+function getQuizzesHistory(){
+    $accountId = $_GET['accountId'];
+    $streamId = $_GET['streamId'];
+	//echo $accountId.$streamId;
+    $sql = "select r.selectedAnswers,r.timePerQuestion,r.score,q.* from results r,quizzes q where accountId=:accountId and q.streamId=:streamId and r.quizId=q.id order by timestamp";
+	//echo $sql;
 	try {
 		$db = getConnection();
 		$stmt = $db->prepare($sql);
-		$stmt->bindParam("accountId", $ids[0]);
-		$stmt->bindParam("streamId", $ids[1]);
+		$stmt->bindParam("accountId", $accountId);
+		$stmt->bindParam("streamId", $streamId);
 		$stmt->execute();
 		$l2 = $stmt->fetchAll(PDO::FETCH_OBJ);
 		$db = null;
