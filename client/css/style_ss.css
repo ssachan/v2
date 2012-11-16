@@ -19,10 +19,21 @@ body {
 }
 
 #content{
+    /*background: white url('../img/bg.jpeg') top center repeat;*/
+    margin:0px auto;
+    padding-top:25px;
+    /*width: 75%*/
+}
+.quiz-library, .dashboard, .faclib, .facpro{
+    width:70%;
+    background: white url('../img/bg.jpeg') top center repeat;
+    padding:10px 20px 0px 20px;
+}
+
+#content2{
     background: white url('../img/bg.jpeg') top center repeat;
     margin:0px auto;
     padding-top:40px;
-    width: 75%
 }
 
 .bold{
@@ -320,7 +331,6 @@ background: #CCC;
 padding-top: 30px;
 padding-left: 50px;
 margin-top: 20px;
-width: 100%;
 }
 
 .feature-row h3
@@ -328,9 +338,6 @@ width: 100%;
 
 /* Dashboard
 -------------------------------------------------- */
-.dashboard {
-    width: 93%;
-}
 	
 .das-personal-info{
 padding-top: 10px;
@@ -416,9 +423,6 @@ background: #F4763E;
 color: white;
 font-style: bold;}
 
-.quiz-library{
-width: 93%;
-}
 
 .quiz-library .box{
 	padding:5px;
@@ -498,9 +502,6 @@ margin-bottom: -15px;}
 
 /* Fac Directory
 -------------------------------------------------- */
-.faclib{
-width: 93%;
-}
 
 .faclib .box{
 padding:5px;}
@@ -577,9 +578,6 @@ margin-top: 29px !important;}
 
 /* Faculty Profile
 ------------------------------------------------- */
-
-.facpro {
-width: 93%;}
 
 .facpro-heading{
 margin-left: 0px;}
