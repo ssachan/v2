@@ -42,7 +42,7 @@ $app->get('/resetResults/', 'resetResults');
 
 function getFac($id){
     $sql = "select * from faculty where id=:id";
-    echo $sql;
+    //echo $sql;
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
