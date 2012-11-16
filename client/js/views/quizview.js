@@ -364,7 +364,7 @@ window.QuizResultsView = Backbone.View.extend({
 		var accuracyInsights = insights.accuracyInsights(this.model);
 		var difficultyInsights = insights.difficultyLevelInsights(this.model);
 		var strategicInsights = insights.strategicInsights(this.model);
-		var historyInsights = 'they come here';
+		var historyInsights = '';
 		
 		//video array containing all data for all questions and analysis
 		var videoResults = this.calculateVideoArray();
