@@ -55,14 +55,18 @@ window.Quiz = Backbone.Model.extend({
 			if(len==1){
 				var l2 = sectionL2.get(l2Ids[0]);
 				this.set('topics',l2.get('displayName'));
+				this.set('l1', (sectionL1.get(l2.get('l1Id'))).get('id'));
 			}else{
 				var topics=[];
 				for(var i=0;i<len;i++){
 					var l2 = sectionL2.get(l2Ids[i]);
 					topics.push(l2.get('displayName'));
+					this.set('l1', (sectionL1.get(l2.get('l1Id'))).get('id'));
 				}
 				this.set('topics',topics.join(','));
 			}
+		}else{
+			this.set('l1', 2);
 		}
 	},
 
@@ -76,6 +80,7 @@ window.Quiz = Backbone.Model.extend({
 		'totalScore' : 0,
 		'maxScore' : 0,
 		'topics' :'',
+		'l1':null,
 	},
 
 	/**
