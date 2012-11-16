@@ -361,8 +361,8 @@ window.QuizResultsView = Backbone.View.extend({
 		var incorrect = this.model.get('totalIncorrect');
 		var unattempted = parseInt(length)
 				- (parseInt(correct) + parseInt(incorrect));
-		var accuracyInsights = insights.accuracyInsights(this.model);
-		var difficultyInsights = insights.difficultyLevelInsights(this.model);
+		var accuracyInsights = '';//insights.accuracyInsights(this.model);
+		var difficultyInsights = '';//insights.difficultyLevelInsights(this.model);
 		var strategicInsights = insights.strategicInsights(this.model);
 		var historyInsights = '';
 		

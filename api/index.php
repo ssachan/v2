@@ -232,7 +232,7 @@ function getQuizzesByStreamId($id) {
 
 function getQuizzesByFac($id) {
     $ids = explode("|", $id);
-    $sql = "select q.id,q.questionIds,q.description,q.descriptionShort,q.difficulty,q.rec,q.conceptsTested, q.tags from quizzes q where q.facultyId=:facId and q.streamId=:streamId";
+    $sql = "select q.id,q.questionIds,q.description,q.descriptionShort,q.difficulty,q.allotedTime,q.rec,q.conceptsTested, q.l2Ids, q.l3Ids from quizzes q where q.facultyId=:facId and q.streamId=:streamId";
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);

@@ -4,8 +4,8 @@
             src="img/analytics-icon.png" height="14" width="14" /> <%= difficulty %>
     </div>
     <div class="quiz-lib-t2 row-fluid">
-        <img src="img/physics.png" height="40" width="40"> <span class="font-h4 bold"><%=
-            topics %></span>
+        <img src="img/physics.png" height="40" width="40"> <span class="font-h4 bold"><%
+            if(!topics){ %>Full Length <%}else{ %> <%=topics %><%}%> </span>
     </div>
     <ul class="left quiz-lib-t4 font-h5">
         <li><%= descriptionShort %></li>
