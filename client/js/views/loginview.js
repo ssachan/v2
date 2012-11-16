@@ -7,8 +7,8 @@ window.LoginView = Backbone.View.extend({
 
     events: {
         'click #loginButton': 'login',
-        'click #flogin' : 'fConnect',
-    	'click #glogin' : 'gConnect',
+        /*'click #flogin' : 'fConnect',
+    	'click #glogin' : 'gConnect',*/
     },
 
     render:function () {
@@ -16,14 +16,14 @@ window.LoginView = Backbone.View.extend({
         return this;
     },
 
-	fConnect : function() {
+	/*fConnect : function() {
 		user.login();
 		//also send the details to the server
 	},
 
 	gConnect : function() {
 		glogin();
-	},
+	},*/
 	
     login:function (event) {
         event.preventDefault(); // Don't let this button submit the form
@@ -43,7 +43,9 @@ window.SignUpView = Backbone.View.extend({
     },
 
     events: {
-        "click #signupButton": "signup"
+        "click #signupButton": "signup",
+        'click #flogin' : 'fConnect',
+    	'click #glogin' : 'gConnect'
     },
 
     render:function () {
@@ -62,7 +64,16 @@ window.SignUpView = Backbone.View.extend({
     			streamId : streamId,
     		};
         this.model.signUp(formValues);
-    }
+    },
+    fConnect : function() {
+		user.login();
+		//also send the details to the server
+	},
+
+	gConnect : function() {
+		glogin();
+	},
+    
 });
 
 window.ForgotPassView = Backbone.View.extend({

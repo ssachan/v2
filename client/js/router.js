@@ -68,10 +68,12 @@ var AppRouter = Backbone.Router.extend({
 		new LandingView({
 			el : $('#content')
 		});
+		$('#log-in').html((new LoginView({model:account})).el);
 		return;
 	},
 
 	dashboard : function() {
+		$('#log-in').html('');
 		// check if authenticated move to dashboard page, else move to landing
 		// page
 		mView.close();
@@ -83,6 +85,7 @@ var AppRouter = Backbone.Router.extend({
 	},
 
 	quizLibrary : function() {
+		$('#log-in').html('');
 		Manager.getDataForQuizLibrary(streamId);
 
 		//Manager.getQuizzesByStreamId(streamId);
@@ -93,6 +96,7 @@ var AppRouter = Backbone.Router.extend({
 	},
 
 	facDirectory : function() {
+		$('#log-in').html('');
 		// if streamId is set
 		if (streamId) {
 			Manager.getFacByStreamId(streamId);
@@ -103,6 +107,7 @@ var AppRouter = Backbone.Router.extend({
 	},
 
 	fac : function(id) {
+		$('#log-in').html('');
 		Manager.getFaculty(id);
 	},
 
