@@ -52,7 +52,7 @@ window.Question = Backbone.Model.extend({
 				return parseInt(this.get('correctScore'));
 			}else if(this.isOptionSelectedCorrect(this.get('optionSelected'))==false){
 				// got it incorrect
-				return parseIntparseInt('-'+this.get('incorrectScore'));
+				return parseInt('-'+this.get('incorrectScore'));
 			}
 			break;
 		case "2":

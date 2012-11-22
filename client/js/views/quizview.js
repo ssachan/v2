@@ -289,9 +289,9 @@ window.QuizQuestionView = Backbone.View
 				$('#solution').hide();
 				if (this.hasAttempted) {
 					this.renderInfo();
-					
+					$('#analytics').show();
 				}else{
-					
+					$('#analytics').hide();
 				}
 				//diable right click for this page
 				$('.quizview').bind("contextmenu", function(e) {
