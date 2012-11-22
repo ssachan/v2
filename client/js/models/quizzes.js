@@ -47,7 +47,6 @@ window.Quiz = Backbone.Model.extend({
 			this.set('totalCorrect', score[0]);
 			this.set('totalIncorrect', score[1]);
 			this.set('totalScore', score[2]);
-			this.set('maxScore', score[3]);
 		}
 		if(this.get('l2Ids')!=null){
 			var l2Ids = this.get('l2Ids').split(SEPARATOR);
@@ -93,17 +92,14 @@ window.Quiz = Backbone.Model.extend({
 			var len = qIds.length;
 			for ( var i = 0; i < len; i++) {
 				var question = quizQuestions.get(qIds[i]);
-				var correctScore = parseInt(question.get('correctScore'));
-				this.set('maxScore', this.get('maxScore')+correctScore);
+				var score = question.getScore();
+				this.set('totalScore', this.get('totalScore')
+						+ score);
 				var answer = question.get('optionSelected');
 				if (question.isOptionSelectedCorrect(answer) == true) {
 					this.set('totalCorrect', this.get('totalCorrect') + 1);
-					this.set('totalScore', this.get('totalScore')
-							+ correctScore);
 				} else if (question.isOptionSelectedCorrect(answer) == false) {
 					this.set('totalIncorrect', this.get('totalIncorrect') + 1);
-					this.set('totalScore', this.get('totalScore')
-							- parseInt(question.get('incorrectScore')));
 				}
 				this.getSelectedAnswers().push(answer);
 				this.getTimeTakenPerQuestion().push(question.get('timeTaken'));
@@ -140,7 +136,7 @@ window.Quiz = Backbone.Model.extend({
 	 */
 	submitResults : function(quiz) {
 		var score = [ parseInt(this.get('totalCorrect')),
-		parseInt(this.get('totalIncorrect')),parseInt(this.get('totalScore')),parseInt(this.get('maxScore')) ];
+		parseInt(this.get('totalIncorrect')),parseInt(this.get('totalScore')) ];
 		
 		var url = '../api/responses';
 		console.log('Adding responses... ');

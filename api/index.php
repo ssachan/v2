@@ -38,7 +38,6 @@ $app->post('/purchase/:id', 'addPurchase');
 
 // the resets
 $app->get('/resetResults/', 'resetResults');
-$app->get('/resetResults/', 'resetResults');
 
 function getFac($id){
     $sql = "select * from faculty where id=:id";
@@ -211,7 +210,7 @@ function getL2Performance() {
 }
 
 function getQuizzesByStreamId($id) {
-	$sql = "select q.id,q.questionIds,q.description,q.descriptionShort,q.difficulty,q.allotedTime,q.rec,q.conceptsTested, q.l2Ids, q.l3Ids, q.typeId, f.id as fid, f.firstName,f.lastName from quizzes q, faculty f where q.facultyId=f.id and q.streamId=:id";
+	$sql = "select q.id,q.questionIds,q.description,q.descriptionShort,q.difficulty,q.allotedTime,q.maxScore,q.rec,q.conceptsTested, q.l2Ids, q.l3Ids, q.typeId, f.id as fid, f.firstName,f.lastName from quizzes q, faculty f where q.facultyId=f.id and q.streamId=:id";
 	try {
 		$db = getConnection();
 		$stmt = $db->prepare($sql);
@@ -232,7 +231,7 @@ function getQuizzesByStreamId($id) {
 
 function getQuizzesByFac($id) {
     $ids = explode("|", $id);
-    $sql = "select q.id,q.questionIds,q.description,q.descriptionShort,q.difficulty,q.allotedTime,q.rec,q.conceptsTested, q.l2Ids, q.l3Ids, q.typeId from quizzes q where q.facultyId=:facId and q.streamId=:streamId";
+    $sql = "select q.id,q.questionIds,q.description,q.descriptionShort,q.difficulty,q.allotedTime,q.maxScore,q.rec,q.conceptsTested, q.l2Ids, q.l3Ids, q.typeId from quizzes q where q.facultyId=:facId and q.streamId=:streamId";
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
