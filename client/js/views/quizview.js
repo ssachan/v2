@@ -101,13 +101,6 @@ window.QuizView = Backbone.View.extend({
 			return;
 		}
 		this.renderQuestion();
-		$('#previous').show();
-		$('#next').show();
-		if (this.index == 0) {
-			$('#previous').hide();
-		} else {
-			$('#previous').show();
-		}
 	},
 
 	onNextClick : function() {
@@ -119,13 +112,6 @@ window.QuizView = Backbone.View.extend({
 			return;
 		}
 		this.renderQuestion();
-		$('#previous').show();
-		$('#next').show();
-		if (this.index == (this.totalQuestions - 1)) {
-			$('#next').hide();
-		} else {
-			$('#next').show();
-		}
 	},
 
 	onQNoClick : function(e) {
@@ -166,6 +152,13 @@ window.QuizView = Backbone.View.extend({
 		$("#qnum").html((parseInt(this.index) + 1));
 		$("#qtotal").html((this.totalQuestions));
 		this.question.get('openTimeStamps').push(new Date().getTime());
+		$('#previous').show();
+		$('#next').show();
+		if (this.index == 0) {
+			$('#previous').hide();
+		} else if(this.index == (this.totalQuestions - 1)){
+			$('#next').hide();
+		}
 		return null;
 	},
 
