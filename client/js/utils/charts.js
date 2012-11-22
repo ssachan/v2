@@ -303,7 +303,7 @@ window.drawDifficultyChart = function (quiz) {
     	options.xAxis.plotBands[j] = { from: (j*2),
                 to: (j*2)+2,
                 label: {
-                    text: obj.name,
+                    text: ob.name,
                     style: {
                         color: '#606060'
                     }

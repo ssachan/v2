@@ -620,6 +620,7 @@ window.QuizResultsView = Backbone.View.extend({
 		$('#difficulty-div').hide();
 		$('#history-div').hide();
 		$('#strategy-div').hide();
+		$('#' + this.activeInsights).parent().addClass('active');
 		$("tspan:contains('Highcharts.com')").hide();
 		return this;
 	}

@@ -94,7 +94,7 @@ window.Question = Backbone.Model.extend({
 				var optionScore = parseInt(this.get('optionScore'));
 				if(optionScore!=0){
 					// we have option scores
-					var correctAnswersArray = (this.get('correctAnswers')).split(SEPARATOR+SEPARATOR);
+					var correctAnswersArray = (this.get('correctAnswer')).split(SEPARATOR+SEPARATOR);
 					var selectedOptionsArray = (this.get('optionSelected')).split(SEPARATOR+SEPARATOR);
 					var len = correctAnswersArray.length;
 					for (var i = 0; i< len; i++){
