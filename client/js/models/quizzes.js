@@ -78,6 +78,7 @@ window.Quiz = Backbone.Model.extend({
 		'timePerQuestion' : null,
 		'totalScore' : 0,
 		'maxScore' : 0,
+		'totalScore' : 0,
 		'topics' :'',
 		'l1':null,
 	},
@@ -93,8 +94,10 @@ window.Quiz = Backbone.Model.extend({
 			for ( var i = 0; i < len; i++) {
 				var question = quizQuestions.get(qIds[i]);
 				var score = question.getScore();
-				this.set('totalScore', this.get('totalScore')
+				if(score!=null){
+					this.set('totalScore', this.get('totalScore')
 						+ score);
+				}
 				var answer = question.get('optionSelected');
 				if (question.isOptionSelectedCorrect(answer) == true) {
 					this.set('totalCorrect', this.get('totalCorrect') + 1);

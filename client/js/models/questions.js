@@ -53,6 +53,8 @@ window.Question = Backbone.Model.extend({
 			}else if(this.isOptionSelectedCorrect(this.get('optionSelected'))==false){
 				// got it incorrect
 				return parseInt('-'+this.get('incorrectScore'));
+			}else{
+				return null;
 			}
 			break;
 		case "2":
@@ -63,7 +65,10 @@ window.Question = Backbone.Model.extend({
 			}else if(this.isOptionSelectedCorrect(this.get('optionSelected'))==false){
 				// got it incorrect check for individual options
 				return parseInt('-'+this.get('incorrectScore'));
+			}else{
+				return null;
 			}
+
 			break;
 		case "3":
 			// integer type
@@ -73,7 +78,10 @@ window.Question = Backbone.Model.extend({
 			}else if(this.isOptionSelectedCorrect(this.get('optionSelected'))==false){
 				// got it incorrect
 				return parseInt('-'+this.get('incorrectScore'));
+			}else{
+				return null;
 			}
+
 			break;
 		case "4":
 			// matrix type
@@ -97,6 +105,8 @@ window.Question = Backbone.Model.extend({
 					}
 				}
 				return totalScore;
+			}else{
+				return null
 			}
 			break;
 		}
