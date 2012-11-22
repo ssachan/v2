@@ -189,9 +189,9 @@ window.QuizQuestionView = Backbone.View
 				'click #multiple-type button': 'handleMultipleType',
 				'keypress #integer-type' : 'checkIntegerType',
 				'keyup #integer-type' : 'handleIntegerType',
-				'click #matrix-type input' : 'handleMatrixType'
+				'click #matrix-type input' : 'handleMatrixType',				
 			},
-
+		
 			handleSingleType : function(e) {
 				var oldOptionSelected = this.model.get('optionSelected');
 				var optionSelected = e.target.value;
@@ -295,6 +295,10 @@ window.QuizQuestionView = Backbone.View
 				if (this.hasAttempted) {
 					this.renderInfo();
 				}
+				//diable right click for this page
+				$('.quizview').bind("contextmenu", function(e) {
+	                e.preventDefault();
+	            });
 				return this;
 			},
 
