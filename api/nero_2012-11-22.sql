@@ -4,7 +4,7 @@
 #
 # Host: localhost (MySQL 5.5.9)
 # Database: nero
-# Generation Time: 2012-11-15 23:32:17 +0530
+# Generation Time: 2012-11-22 19:33:57 +0530
 # ************************************************************
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -86,18 +86,15 @@ CREATE TABLE `accounts` (
   `resetsentOn` datetime DEFAULT NULL,
   `pics` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `accounts` WRITE;
 /*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
 INSERT INTO `accounts` (`id`,`username`,`password`,`firstName`,`lastName`,`email`,`roles`,`createdOn`,`verifiedOn`,`lastsignedinOn`,`deletedOn`,`suspendedOn`,`resetsentOn`,`pics`)
 VALUES
-	(1,NULL,'aa','aa','aa','aa',NULL,'2012-11-14 14:56:31',NULL,NULL,NULL,NULL,NULL,NULL),
-	(2,NULL,'lop','lop','lop','lop',NULL,'2012-11-14 15:10:40',NULL,NULL,NULL,NULL,NULL,NULL),
-	(3,NULL,'ss','ss','ss','ss',NULL,'2012-11-14 17:17:17',NULL,NULL,NULL,NULL,NULL,NULL),
-	(4,NULL,'pp','pp','pp','pp',NULL,'2012-11-14 18:53:34',NULL,NULL,NULL,NULL,NULL,NULL),
-	(5,NULL,'asdfg','R','V','raghav@gmail.com',NULL,'2012-11-14 19:16:14',NULL,NULL,NULL,NULL,NULL,NULL),
-	(6,NULL,'ssachan','ssachan','ssachan','ssachan',NULL,'2012-11-14 19:42:00',NULL,NULL,NULL,NULL,NULL,NULL);
+	(1,NULL,'aa','aa','aa','aa',NULL,'2012-11-16 15:19:08',NULL,NULL,NULL,NULL,NULL,NULL),
+	(2,NULL,'pass','fn','ln','email',NULL,'2012-11-16 15:44:30',NULL,NULL,NULL,NULL,NULL,NULL),
+	(3,NULL,'lopl','lopl','lopl','lopl',NULL,'2012-11-16 15:59:26',NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -116,6 +113,15 @@ CREATE TABLE `ascores_l1` (
   `streamId` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+LOCK TABLES `ascores_l1` WRITE;
+/*!40000 ALTER TABLE `ascores_l1` DISABLE KEYS */;
+INSERT INTO `ascores_l1` (`accountId`,`score`,`updatedOn`,`l1Id`,`streamId`)
+VALUES
+	(1,4,'0000-00-00 00:00:00',1,1),
+	(1,2,'0000-00-00 00:00:00',2,1);
+
+/*!40000 ALTER TABLE `ascores_l1` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table ascores_l2
@@ -131,6 +137,14 @@ CREATE TABLE `ascores_l2` (
   `streamId` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+LOCK TABLES `ascores_l2` WRITE;
+/*!40000 ALTER TABLE `ascores_l2` DISABLE KEYS */;
+INSERT INTO `ascores_l2` (`accountId`,`score`,`updatedOn`,`l2Id`,`streamId`)
+VALUES
+	(1,1,'0000-00-00 00:00:00',1,1);
+
+/*!40000 ALTER TABLE `ascores_l2` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table ascores_l3
@@ -290,27 +304,6 @@ VALUES
 UNLOCK TABLES;
 
 
-# Dump of table package_type
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `package_type`;
-
-CREATE TABLE `package_type` (
-  `id` int(11) DEFAULT NULL,
-  `name` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-LOCK TABLES `package_type` WRITE;
-/*!40000 ALTER TABLE `package_type` DISABLE KEYS */;
-INSERT INTO `package_type` (`id`,`name`)
-VALUES
-	(1,'Basic'),
-	(2,'Custom');
-
-/*!40000 ALTER TABLE `package_type` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
 # Dump of table packages
 # ------------------------------------------------------------
 
@@ -318,14 +311,16 @@ DROP TABLE IF EXISTS `packages`;
 
 CREATE TABLE `packages` (
   `id` int(11) DEFAULT NULL,
-  `packages` varchar(50) DEFAULT NULL
+  `packageName` varchar(50) DEFAULT NULL,
+  `details` text,
+  `poolId` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `packages` WRITE;
 /*!40000 ALTER TABLE `packages` DISABLE KEYS */;
-INSERT INTO `packages` (`id`,`packages`)
+INSERT INTO `packages` (`id`,`packageName`,`details`,`poolId`)
 VALUES
-	(NULL,NULL);
+	(1,NULL,NULL,NULL);
 
 /*!40000 ALTER TABLE `packages` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -467,10 +462,10 @@ LOCK TABLES `questions` WRITE;
 /*!40000 ALTER TABLE `questions` DISABLE KEYS */;
 INSERT INTO `questions` (`id`,`text`,`options`,`correctAnswer`,`explanation`,`l3Id`,`typeId`,`tagIds`,`difficulty`,`paraId`,`resourcesIds`,`averageTimeCorrect`,`averageTimeIncorrect`,`averageTimeUnattempted`,`averageCorrect`,`averageIncorrect`,`averageUnattempted`,`allotedTime`,`correctScore`,`incorrectScore`,`optionScore`,`unattemptedScore`,`mobileFlag`,`availableFlag`)
 VALUES
-	(1,'Out of 6 people in a group, find the number of ways of selecting 4 people in the group','12|:24|:30|:15|:|:12|:24|:30|:15','2','This is a simple application of Permutations. Selecting 4 out of 6 is equivalent to 6C4 which is <br> 6!/ (2! 4!) = 15',6,1,'2',1,NULL,NULL,0,0,0,0,0,0,0,1,0,0,0,1,1),
-	(2,'Using 8 different english alphabets and 4 different numbers, 5 digit codes are generated. The code contains 3 alphabets and 2 numbers. If in the given code all the characters are distinct, how many such codes can be generated ','40320|:53760|:336|:448|:2240','0','We start by looking at all the coices that can be generated by selecting 3 unique alphabets out of 8 and selecting 2 numbers out of 4. Hence we have 8C3 X 4C2. Having selected the 5 digits now we need to arrange them in all possible manners to have 5! combinations. Hence we have a total to 8C3X4C2X5! combinations, which is 40320. ',3,1,'1',2,NULL,NULL,0,0,0,0,0,0,0,1,0,0,0,1,1),
-	(3,'In a foorball tournament each team plays alll the other teams twice, if there there were 90 matches, how many teams played in the tournament','sadada|:bsdfec|:cedece|:hdjjdks|:hdjjdks','2','Since each team played two matches with all the opponent teams, the total matches played in the tournament should be nC2 X 2. <br> Hence nC2 = 45 => n(n-1)/2 = 45. Solving for n, we get n = 10',22,1,'3',2,NULL,NULL,0,0,0,0,0,0,0,1,0,0,0,1,1),
-	(4,'Letters from the word ANDROID are used to create all possible words using all letters in the given word. How many such words would start with D','1|:2|:2','2','We fix letter D at the first position. Since no other word is repeating, we have the choice of arranging all 6 remaining alphabets in 6! Ways. Hence we have 720 such words',15,1,'1',1,NULL,NULL,0,0,0,0,0,0,0,1,0,0,0,1,1),
+	(1,'Out of 6 people in a group, find the number of ways of selecting 4 people in the group','12|:24|:30|:15','2','This is a simple application of Permutations. Selecting 4 out of 6 is equivalent to 6C4 which is <br> 6!/ (2! 4!) = 15',6,1,'2',1,NULL,NULL,0,0,0,0,0,0,0,1,0,0,0,1,1),
+	(2,'Using 8 different english alphabets and 4 different numbers, 5 digit codes are generated. The code contains 3 alphabets and 2 numbers. If in the given code all the characters are distinct, how many such codes can be generated ','40320|:53760|:336|:448|:2240','1|:2|:4','We start by looking at all the coices that can be generated by selecting 3 unique alphabets out of 8 and selecting 2 numbers out of 4. Hence we have 8C3 X 4C2. Having selected the 5 digits now we need to arrange them in all possible manners to have 5! combinations. Hence we have a total to 8C3X4C2X5! combinations, which is 40320. ',3,2,'1',2,NULL,NULL,0,0,0,0,0,0,0,1,0,0,0,1,1),
+	(3,'In a foorball tournament each team plays alll the other teams twice, if there there were 90 matches, how many teams played in the tournament','','2','Since each team played two matches with all the opponent teams, the total matches played in the tournament should be nC2 X 2. <br> Hence nC2 = 45 => n(n-1)/2 = 45. Solving for n, we get n = 10',22,3,'3',2,NULL,NULL,0,0,0,0,0,0,0,1,1,0,0,1,1),
+	(4,'Letters from the word ANDROID are used to create all possible words using all letters in the given word. How many such words would start with D','1|:2|:2|:|:23|:45|:66|:78|:80','1|:2|:3|:|:1|:2|:|:0','We fix letter D at the first position. Since no other word is repeating, we have the choice of arranging all 6 remaining alphabets in 6! Ways. Hence we have 720 such words',15,4,'1',1,NULL,NULL,0,0,0,0,0,0,0,4,0,1,0,1,1),
 	(5,'Letters from the word ANDROID are used to create all possible words using all letters in the given word. How many such words would start with A and end in R','120|:240|:60|:480|:None of the above','1','We fix letters A and R at the first and the last position. We have 5 positions to fill with 5 letters and hence 5! Combinations. Now since D is repeating we divide by 2! Hence we have 5!/2! = 60',24,1,'2',2,NULL,NULL,0,0,0,0,0,0,0,1,0,0,0,1,1),
 	(6,'A committee of 7 has to be formed from 5 ladies and 6 gentlemen. How many such committees can be formed which consist of atleast 4 ladies','110|:100|:120|:115|:105','2','The committee can either consist of 4 ladies and 3 gentlemen or 5 ladies and 2 gentlemen, hence: <br> 5C4 X 6C3 + 5C5 X 6C2 <br> =115',18,1,'2',2,NULL,NULL,0,0,0,0,0,0,0,1,0,0,0,1,1),
 	(7,'Rajat answers questions at random from in a 12 question test in with each question having 4 options (and only 1 option correct). What is the probability that Rajat gets all questions wrong.','1/12|:1/6|:(1/4)^12|:3/4|:(3/4)^12','2','The number of ways in whichh Rajat can answer the exam - 4^12 <br> For Rajat to get all answers wrong he needs to select one of 3 wrong options for all questions, hence he can answer in 3^12 ways. Therefore the probability of getting all answers wrong is 3^12/4^12',5,1,'1',2,NULL,NULL,0,0,0,0,0,0,0,1,0,0,0,1,1),
@@ -647,8 +642,8 @@ VALUES
 	(178,' The way the gay-rights story is usually told, things got moving only in 1969, when a fed-up phalanx of bull dykes, drag queens, and street youths rioted at the Stonewall Inn, in the West Village','its |: premises, |: whether |: the','0','Here the probability includes the following two events: both the cards can be Aces OR be Red in color. Hence the probability will be defined as - P(A) + P (R) - P(A U R) <br> P(A) = 4C2/52C2, P(R) = 26C2/52C2, P(A U R) = 2C2/52C2 . <br> Hence the probability is - (26C2 + 4C2 - 1) / 52C2',7,1,'1',2,NULL,NULL,0,0,0,0,0,0,0,1,0,0,0,1,1),
 	(179,' One advantage of Hirshman\\уs bookяbreezily written, but kinetic in its storytellingяis that it honors the activism of the pre-Stonewall era, when any public exposure required considerable courage','premises, |: whether |: the |: premises','1','The following cases can come up when 2 coins are tossed together - HH, HT, TH, TT. <br> The top faces are same for HH & TT, hence the probability of occurance is 1/2',7,1,'2',3,NULL,NULL,0,0,0,0,0,0,0,1,0,0,0,1,1),
 	(180,' Political and legal advances, such as a 1958 Supreme Court decision ruling that the gay magazine ONE was not obscene material, were modest but hard won','whether |: the |: premises |: are','1','To evaluate the probability, we need to take 2 cases. <br> Case 1: When the first pen is also a Red pen and, <br> Case 2: When the first pen is not a Red pen. <br> For Case 1, since 1 red pen is already gone the probability will be 4/10 X 3/9, while for Case 2, the probability will be 6/10 X 4/9<br> Hence the total probability is - (4X3 + 6X4)/10X9 = .4',25,1,'0',3,NULL,NULL,0,0,0,0,0,0,0,1,0,0,0,1,1),
-	(200,'Two large vertical and parallel metal plates having a separation of 1 cm are connected to a DC voltage source of potential difference X. A proton is released at rest midway between the two plates. It is found to move at 45<sup>o<//sup> to the vertical JUST after release. Then X is nearly','1 x 10<sup>-5<//sup> V |: 1 x 10<sup>-7<//sup> V |: 1 x 10<sup>-9<//sup> V |: 1 x 10<sup>-10<//sup> V','2','<div>Writing the force equations on the particle, <br>\nmg = qE <br>\n(1.67 x 10<sup>-27<//sup>) x (10) = (1.67 x 10<sup>-19<//sup>)<img src = \"p29.png\"> <br>\n<img src = \"p30.png\"> <br>\nx = 1 x 10<sup>-9<//sup><//div> <div> <img src = \"image1.jpg\"><//div>',44,1,'1',1,NULL,NULL,0,0,0,0,0,0,0,1,0,0,0,0,0),
-	(201,'For the circuit given below which of the following is true: <div> <img src = \'image2.jpg\'></div>','The current I through the battery is 7.5mA |: The potential difference across RL is 20V|: The ratios of power dissipated in R1 and R2 is 5 |: If R1 and R2 are interchanged, magnitude of power dissipated in RL will decrease by a factor of 3','0','R<sub>2</sub> and R<sub>L</sub> are in parallel hence <img src = \"p1.png\"> <br>\nR<sub>2L</sub> = 1.2k <br>\nR<sub>2L</sub> in turn is in series with R<sub>1</sub> hence the resistance of the circuit is:<br>\nR = 1.2 + 2 = 3.2 k <br>\nThe current I through battery is <img src = \'p2.png\'> <br> \n(A) is true\n',45,1,'1',2,NULL,NULL,0,0,0,0,0,0,0,1,0,0,0,0,0),
+	(200,'Two large vertical and parallel metal plates having a separation of 1 cm are connected to a DC voltage source of potential difference X. A proton is released at rest midway between the two plates. It is found to move at 45<sup>o</sup> to the vertical JUST after release. Then X is nearly','1 x 10<sup>-5<//sup> V |: 1 x 10<sup>-7<//sup> V |: 1 x 10<sup>-9<//sup> V |: 1 x 10<sup>-10<//sup> V','2','<div>Writing the force equations on the particle, <br>\nmg = qE <br>\n(1.67 x 10<sup>-27<//sup>) x (10) = (1.67 x 10<sup>-19<//sup>)<img src = \"p29.png\"> <br>\n<img src = \"p30.png\"> <br>\nx = 1 x 10<sup>-9<//sup><//div> <div> <img src = \"image1.jpg\"><//div>',44,1,'1',1,NULL,NULL,0,0,0,0,0,0,0,1,0,0,0,0,0),
+	(201,'For the circuit given below which of the following is true: <div> <img src = \'<%=src[0] %>\'></div>','The current I through the battery is 7.5mA |: The potential difference across RL is 20V|: The ratios of power dissipated in R1 and R2 is 5 |: If R1 and R2 are interchanged, magnitude of power dissipated in RL will decrease by a factor of 3','0','R<sub>2</sub> and R<sub>L</sub> are in parallel hence <img src = \"p1.png\"> <br>\nR<sub>2L</sub> = 1.2k <br>\nR<sub>2L</sub> in turn is in series with R<sub>1</sub> hence the resistance of the circuit is:<br>\nR = 1.2 + 2 = 3.2 k <br>\nThe current I through battery is <img src = \'p2.png\'> <br> \n(A) is true\n',45,1,'1',2,NULL,NULL,0,0,0,0,0,0,0,1,0,0,0,0,0),
 	(202,'<img src = \"image3.jpg\"> <br> A meter bridge is set-up as shown, to determine an unknown resistance X using a standard 10 ohm resistor. The galvanometer shows null point when tapping-key is at 52 cm mark. The end-corrections are 1 cm and 2 cm respectively for the ends A and B.  The determined value of X is:','10.2 ohm |: 10.6 ohm |:\n10.8 ohm |: 11.1 ohm','1',' <img src = \"p3.png\"> <br>\nWhere l<sub>1</sub> and l<sub>2</sub> are the lengths with end corrections<br>\nl<sub>1</sub> = 52 + 1 = 53 cm; l<sub>2</sub> = 48 + 2 = 50 cm<br> <img src = \"p4.png\"> <br>\nX = 10.6',46,1,'1',1,NULL,NULL,0,0,0,0,0,0,0,1,0,0,0,0,0),
 	(203,'A spherical metal A of radius R<sub>A</sub> and a solid metal sphere B of radius R<sub>B</sub> \n(< R<sub>A</sub>) are kept far apart and each is given charge. Now a thin metal wire connects them. Which one of the following is false: ','E<sub>A</sub> (inside) = 0 |: Q<sub>A</sub> < Q<sub>B</sub> |:<sub>A</sub> /<sub>B</sub> = R<sub>B</sub> / R<sub>A </sub>|: E<sub>A</sub> (on surface) < E<sub>B</sub> (on surface)','3','E (inside) for metallic shell = 0 <br> <img src =  \"p5.png\"><br>\nSince R<sub>A</sub> > R<sub>B</sub> hence Q<sub>A</sub> > Q<sub>B</sub> => B is false <br> <img src =  \"p6.png\"><br> <img src =  \"p7.png\"> <1 <br> E<sub>A</sub><E<sub>B</sub>',47,1,'1',1,NULL,NULL,0,0,0,0,0,0,0,1,0,0,0,0,0),
 	(204,'For the resistance network shown in the figure, choose the wrong option.<br><img src = \"image4.jpg\"><br>','The current through PQ is zero |: i<sub>1</sub> = 3 A |: The potential at S is more than that at Q |: i<sub>2</sub> = 2 A\n','1','Due to input and output symmetry P & Q and S & T have same potential\nHence PQ and ST have 0 current\nHence R<sub>2</sub> = 6 ohm\nAnd R<sub>3</sub> = 12 ohm\nSince the 2 are in parallel, <br> <img src =  \"p8.png\"><br> <img src =  \"p9.png\"><br> \nQ and P have same potential. Since current is flowing from P to S with a resistance of 2ohm, V<sub>S</sub>< V<sub>P</sub> and hence V<sub>S</sub>< V<sub>Q</sub>\nTo calculate I<sub>2</sub>: \n6 x I<sub>2</sub> = 12 x (3- I<sub>2</sub>)\nI<sub>2</sub> = 2A',44,1,'1',2,NULL,NULL,0,0,0,0,0,0,0,1,0,0,0,0,0),
@@ -698,24 +693,24 @@ LOCK TABLES `quizzes` WRITE;
 /*!40000 ALTER TABLE `quizzes` DISABLE KEYS */;
 INSERT INTO `quizzes` (`id`,`questionIds`,`description`,`descriptionShort`,`conceptsTested`,`tags`,`l3Ids`,`l2Ids`,`questionCount`,`allotedTime`,`difficulty`,`ratings`,`rec`,`typeId`,`facultyId`,`available`,`mobileFlag`,`addedOn`,`totalAttempts`,`streamId`,`maxScore`)
 VALUES
-	(1,'1|:2|:3|:4|:5|:6|:7|:8|:9','Problems from Physical Chemistry<br>Lengthy Calculation Quiz','Problems from Physical Chemistry<br>Lengthy Calculation Quiz','Lengthy Calculation Quiz',NULL,NULL,'1|:2',9,2000,3,NULL,17,NULL,1,NULL,NULL,NULL,2218,1,100),
+	(1,'4|:2|:3|:1|:5|:6|:7|:8|:9','Problems from Physical Chemistry<br>Lengthy Calculation Quiz','Problems from Physical Chemistry<br>Lengthy Calculation Quiz','Lengthy Calculation Quiz',NULL,NULL,'1|:2',9,2000,3,NULL,17,NULL,1,NULL,NULL,NULL,2218,1,100),
 	(2,'10|:11|:12|:13|:14|:15|:16|:17|:18','Problems from Organic Chemistry<br>Focus on benzene groups','Problems from Organic Chemistry<br>Focus on benzene groups','Focus on benzene groups',NULL,NULL,'12',9,2000,2,NULL,22,NULL,1,NULL,NULL,NULL,753,1,100),
 	(3,'19|:20|:21|:22|:23|:24|:25|:26|:27','Problems from Physical Chemistry<br>Tricky Questions','Problems from Physical Chemistry<br>Tricky Questions','Tricky Questions',NULL,NULL,'10',9,2000,2,NULL,11,NULL,2,NULL,NULL,NULL,2429,1,100),
 	(4,'28|:29|:30|:31|:32|:33|:34|:35|:36','Problems from Inorganic Chemistry<br>Core Concepts','Problems from Inorganic Chemistry<br>Core Concepts','Core Concepts',NULL,NULL,'11',9,2000,2,NULL,6,NULL,2,NULL,NULL,NULL,3807,1,100),
 	(5,'37|:38|:39|:40|:41|:42|:43|:44|:45','Problems from Inorganic Chemistry<br>Tricky Questions','Problems from Inorganic Chemistry<br>Tricky Questions','Tricky Questions',NULL,NULL,'11',9,2000,3,NULL,4,NULL,2,NULL,NULL,NULL,3547,1,100),
-	(6,'45|:46|:47|:48|:49|:50|:51|:52|:53','Problems from Full Length Mock<br>','Problems from Full Length Mock<br>','',NULL,NULL,NULL,9,2000,1,NULL,17,NULL,3,NULL,NULL,NULL,1528,1,100),
-	(7,'54|:55|:56|:57|:58|:59|:60|:61|:62','Problems from Full Length Mock<br>','Problems from Full Length Mock<br>','',NULL,NULL,NULL,9,2000,2,NULL,23,NULL,4,NULL,NULL,NULL,976,1,100),
-	(8,'62|:63|:64|:65|:66|:67|:68|:69|:70','Problems from Full Length Mock<br>','Problems from Full Length Mock<br>','',NULL,NULL,NULL,9,2000,1,NULL,17,NULL,4,NULL,NULL,NULL,3023,1,100),
-	(9,'71|:72|:73|:74|:75|:76|:77|:78|:79','Problems from Full Length Mock<br>','Problems from Full Length Mock<br>','',NULL,NULL,NULL,9,2000,3,NULL,1,NULL,1,NULL,NULL,NULL,1730,1,100),
-	(10,'80|:81|:82|:83|:84|:85|:86|:87|:88','Problems from Full Length Mock<br>','Problems from Full Length Mock<br>','',NULL,NULL,NULL,9,2000,2,NULL,5,NULL,1,NULL,NULL,NULL,5025,1,100),
-	(11,'88|:89|:90|:91|:92|:93|:94|:95|:96','Problems from Full Length Mock<br>','Problems from Full Length Mock<br>','',NULL,NULL,NULL,9,2000,3,NULL,1,NULL,2,NULL,NULL,NULL,5172,1,100),
-	(12,'96|:97|:98|:99|:100|:101|:102|:103|:104','Problems from Full Length Mock<br>','Problems from Full Length Mock<br>','',NULL,NULL,NULL,9,2000,3,NULL,6,NULL,2,NULL,NULL,NULL,4601,1,100),
-	(13,'105|:106|:107|:108|:109|:110|:111|:112|:113','Problems from Full Length Mock<br>','Problems from Full Length Mock<br>','',NULL,NULL,NULL,9,2000,2,NULL,16,NULL,3,NULL,NULL,NULL,4645,1,100),
-	(14,'114|:115|:116|:117|:118|:119|:120|:121|:122','Problems from Full Length Mock<br>','Problems from Full Length Mock<br>','',NULL,NULL,NULL,9,2000,3,NULL,2,NULL,3,NULL,NULL,NULL,5122,1,100),
-	(15,'123|:124|:125|:126|:127|:128|:129|:130|:131','Problems from Full Length Mock<br>','Problems from Full Length Mock<br>','',NULL,NULL,NULL,9,2000,2,NULL,3,NULL,1,NULL,NULL,NULL,568,1,100),
-	(16,'132|:133|:134|:135|:136|:137|:138|:139|:140','Problems from Full Length Mock<br>','Problems from Full Length Mock<br>','',NULL,NULL,NULL,9,2000,3,NULL,11,NULL,1,NULL,NULL,NULL,389,1,100),
-	(17,'141|:142|:143|:144|:145|:146|:147|:148|:149','Problems from Full Length Mock<br>','Problems from Full Length Mock<br>','',NULL,NULL,NULL,9,2000,3,NULL,15,NULL,2,NULL,NULL,NULL,2698,1,100),
-	(18,'150|:151|:152|:153|:154|:155|:156|:157|:158','Problems from Full Length Mock<br>','Problems from Full Length Mock<br>','',NULL,NULL,'1',9,2000,3,NULL,1,NULL,2,NULL,NULL,NULL,4929,1,100),
+	(6,'45|:46|:47|:48|:49|:50|:51|:52|:53','Problems from Full Length Mock<br>','Problems from Full Length Mock<br>','',NULL,NULL,NULL,9,2000,1,NULL,17,1,3,NULL,NULL,NULL,1528,1,100),
+	(7,'54|:55|:56|:57|:58|:59|:60|:61|:62','Problems from Full Length Mock<br>','Problems from Full Length Mock<br>','',NULL,NULL,NULL,9,2000,2,NULL,23,1,4,NULL,NULL,NULL,976,1,100),
+	(8,'62|:63|:64|:65|:66|:67|:68|:69|:70','Problems from Full Length Mock<br>','Problems from Full Length Mock<br>','',NULL,NULL,NULL,9,2000,1,NULL,17,1,4,NULL,NULL,NULL,3023,1,100),
+	(9,'71|:72|:73|:74|:75|:76|:77|:78|:79','Problems from Full Length Mock<br>','Problems from Full Length Mock<br>','',NULL,NULL,NULL,9,2000,3,NULL,1,1,1,NULL,NULL,NULL,1730,1,100),
+	(10,'80|:81|:82|:83|:84|:85|:86|:87|:88','Problems from Full Length Mock<br>','Problems from Full Length Mock<br>','',NULL,NULL,NULL,9,2000,2,NULL,5,1,1,NULL,NULL,NULL,5025,1,100),
+	(11,'88|:89|:90|:91|:92|:93|:94|:95|:96','Problems from Full Length Mock<br>','Problems from Full Length Mock<br>','',NULL,NULL,NULL,9,2000,3,NULL,1,1,2,NULL,NULL,NULL,5172,1,100),
+	(12,'96|:97|:98|:99|:100|:101|:102|:103|:104','Problems from Full Length Mock<br>','Problems from Full Length Mock<br>','',NULL,NULL,NULL,9,2000,3,NULL,6,1,2,NULL,NULL,NULL,4601,1,100),
+	(13,'105|:106|:107|:108|:109|:110|:111|:112|:113','Problems from Full Length Mock<br>','Problems from Full Length Mock<br>','',NULL,NULL,NULL,9,2000,2,NULL,16,1,3,NULL,NULL,NULL,4645,1,100),
+	(14,'114|:115|:116|:117|:118|:119|:120|:121|:122','Problems from Full Length Mock<br>','Problems from Full Length Mock<br>','',NULL,NULL,NULL,9,2000,3,NULL,2,1,3,NULL,NULL,NULL,5122,1,100),
+	(15,'123|:124|:125|:126|:127|:128|:129|:130|:131','Problems from Full Length Mock<br>','Problems from Full Length Mock<br>','',NULL,NULL,NULL,9,2000,2,NULL,3,1,1,NULL,NULL,NULL,568,1,100),
+	(16,'132|:133|:134|:135|:136|:137|:138|:139|:140','Problems from Full Length Mock<br>','Problems from Full Length Mock<br>','',NULL,NULL,NULL,9,2000,3,NULL,11,1,1,NULL,NULL,NULL,389,1,100),
+	(17,'141|:142|:143|:144|:145|:146|:147|:148|:149','Problems from Full Length Mock<br>','Problems from Full Length Mock<br>','',NULL,NULL,NULL,9,2000,3,NULL,15,1,2,NULL,NULL,NULL,2698,1,100),
+	(18,'150|:151|:152|:153|:154|:155|:156|:157|:158','Problems from Full Length Mock<br>','Problems from Full Length Mock<br>','',NULL,NULL,NULL,9,2000,3,NULL,1,1,2,NULL,NULL,NULL,4929,1,100),
 	(19,'159|:160|:161|:162|:163|:164|:165|:166|:167','Problems from Probability<br>','Problems from Probability<br>','',NULL,NULL,'1',9,2000,3,NULL,24,NULL,5,NULL,NULL,NULL,2186,1,100),
 	(20,'168|:169|:170|:171|:172|:173|:174|:175|:176','Problems from Trigonometry<br>','Problems from Trigonometry<br>','',NULL,NULL,'2',9,2000,3,NULL,7,NULL,5,NULL,NULL,NULL,2225,1,100),
 	(21,'105|:106|:107|:108|:109|:110|:111|:112|:113','Problems from All Maths<br>','Problems from All Maths<br>','',NULL,NULL,'3',9,2000,3,NULL,10,NULL,5,NULL,NULL,NULL,4710,1,100),
@@ -777,6 +772,19 @@ VALUES
 UNLOCK TABLES;
 
 
+# Dump of table redeem
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `redeem`;
+
+CREATE TABLE `redeem` (
+  `purchaseId` int(11) DEFAULT NULL,
+  `remaining` text,
+  `date` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
 # Dump of table resources
 # ------------------------------------------------------------
 
@@ -807,36 +815,6 @@ CREATE TABLE `results` (
   `timestamp` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-LOCK TABLES `results` WRITE;
-/*!40000 ALTER TABLE `results` DISABLE KEYS */;
-INSERT INTO `results` (`quizId`,`accountId`,`selectedAnswers`,`score`,`timePerQuestion`,`timeTaken`,`toggleData`,`timestamp`)
-VALUES
-	(4,2,'[\"2\",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]','[0,1,0,18]','[3,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]',NULL,NULL,'2012-11-14 15:10:53'),
-	(10,2,'[\"1\",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]','[0,1,0,18]','[2,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]',NULL,NULL,'2012-11-14 15:11:07'),
-	(4,2,'[\"1\",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]','[0,1,0,18]','[23,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]',NULL,NULL,'2012-11-14 15:11:39'),
-	(4,5,'[\"1\",\"2\",\"0\",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]','[1,2,1,18]','[5,1,2,15,null,null,null,null,null,null,null,null,null,null,null,null,null,null]',NULL,NULL,'2012-11-14 19:17:46'),
-	(9,5,'[null,null,null,\"2\",null,null,null,null,\"1\",null,null,\"0\",null,null,\"0\",null,null,null]','[2,2,2,18]','[5,null,null,2,null,null,null,null,3,null,null,3,null,null,3,null,null,null]',NULL,NULL,'2012-11-14 19:44:43'),
-	(3,1,'[\"1\",\"2\",\"1\",null,null,null,null,null,null]','[0,3,0,9]','[3,3,2,null,null,null,null,null,null]',NULL,NULL,'2012-11-15 19:39:03'),
-	(6,1,'[null,null,null,null,null,null,null,null,null]','[0,0,0,9]','[2,null,null,null,null,null,null,null,null]',NULL,NULL,'2012-11-15 19:39:49'),
-	(8,1,'[null,\"0\",null,null,null,null,null,null,null]','[1,0,1,9]','[3,3,null,null,null,null,null,null,null]',NULL,NULL,'2012-11-15 19:41:13'),
-	(20,1,'[null,null,null,null,null,null,null,null,null]','[0,0,0,9]','[6,null,null,null,null,null,null,null,null]',NULL,NULL,'2012-11-15 19:42:33'),
-	(35,1,'[null,null,null,null,null,null,null,null,null]','[0,0,0,9]','[3,null,null,null,null,null,null,null,null]',NULL,NULL,'2012-11-15 19:48:11'),
-	(32,1,'[null,null,null,null,null,null,null,null,null]','[0,0,0,9]','[2,null,null,null,null,null,null,null,null]',NULL,NULL,'2012-11-15 19:50:29'),
-	(24,1,'[null,null,null,null,null,null,null,null,null]','[0,0,0,9]','[3,null,null,null,null,null,null,null,null]',NULL,NULL,'2012-11-15 19:53:27'),
-	(34,1,'[null,null,null,null,null,null,null,null,null]','[0,0,0,9]','[3,null,null,null,null,null,null,null,null]',NULL,NULL,'2012-11-15 19:55:32'),
-	(12,1,'[null,null,null,null,null,null,null,null,null]','[0,0,0,9]','[2,null,null,null,null,null,null,null,null]',NULL,NULL,'2012-11-15 19:58:06'),
-	(23,1,'[null,null,null,null,null,null,null,null,null]','[0,0,0,9]','[2,null,null,null,null,null,null,null,null]',NULL,NULL,'2012-11-15 19:59:30'),
-	(19,1,'[null,null,null,null,null,null,null,null,null]','[0,0,0,9]','[3,null,null,null,null,null,null,null,null]',NULL,NULL,'2012-11-15 20:00:07'),
-	(11,1,'[null,null,null,null,null,null,null,null,null]','[0,0,0,9]','[2,null,null,null,null,null,null,null,null]',NULL,NULL,'2012-11-15 20:01:17'),
-	(15,1,'[null,null,null,null,null,null,null,null,null]','[0,0,0,9]','[2,null,null,null,null,null,null,null,null]',NULL,NULL,'2012-11-15 20:01:54'),
-	(5,1,'[null,null,null,null,null,null,null,null,null]','[0,0,0,9]','[3,null,null,null,null,null,null,null,null]',NULL,NULL,'2012-11-15 20:03:51'),
-	(9,1,'[null,null,null,null,null,null,null,null,null]','[0,0,0,9]','[3,null,null,null,null,null,null,null,null]',NULL,NULL,'2012-11-15 20:04:31'),
-	(29,1,'[null,null,null,null,null,null,null,null,null]','[0,0,0,9]','[2,null,null,null,null,null,null,null,null]',NULL,NULL,'2012-11-15 20:12:16'),
-	(4,1,'[null,null,null,null,null,null,null,null,null]','[0,0,0,9]','[2,null,null,null,null,null,null,null,null]',NULL,NULL,'2012-11-15 20:14:00'),
-	(10,1,'[null,null,null,null,null,null,null,null,null]','[0,0,0,9]','[2,null,null,null,null,null,null,null,null]',NULL,NULL,'2012-11-15 20:16:35');
-
-/*!40000 ALTER TABLE `results` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table roles
@@ -1192,10 +1170,7 @@ INSERT INTO `students` (`ascoreL1`,`ascoreL2`,`quizzesAttempted`,`accountId`,`st
 VALUES
 	(0,0,NULL,1,1),
 	(0,0,NULL,2,1),
-	(0,0,NULL,3,1),
-	(0,0,NULL,4,1),
-	(0,0,NULL,5,1),
-	(0,0,NULL,6,1);
+	(0,0,NULL,3,1);
 
 /*!40000 ALTER TABLE `students` ENABLE KEYS */;
 UNLOCK TABLES;
