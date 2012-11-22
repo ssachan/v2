@@ -202,6 +202,8 @@ window.QuizQuestionView = Backbone.View
 					}
 					(this.model.get('optionUnSelectedTimeStamps')[optionSelected])
 							.push(new Date().getTime());
+					$(e.target).removeClass('active');
+	                e.stopPropagation();
 				} else {
 					this.model.set('optionSelected', optionSelected);
 					if (!this.model.get('optionSelectedTimeStamps')[optionSelected]) {
