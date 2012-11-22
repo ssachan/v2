@@ -106,7 +106,7 @@ window.Question = Backbone.Model.extend({
 				}
 				return totalScore;
 			}else{
-				return null
+				return null;
 			}
 			break;
 		}

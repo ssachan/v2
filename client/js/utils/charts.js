@@ -6,7 +6,7 @@ var lineColor = "#C6C6C6";
 window.drawTimeChart = function (quiz) {
     var options = {
         chart: {
-            renderTo: 'time-chart',
+            renderTo: 'timeTaken-chart',
             type: 'column'
         },
         title: {

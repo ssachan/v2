@@ -477,7 +477,7 @@ window.QuizQuestionView = Backbone.View
 
 window.QuizResultsView = Backbone.View.extend({
 	initialize : function() {
-		this.activeInsights = 'time';
+		this.activeInsights = 'timeTaken';
 		this.render();
 	},
 
