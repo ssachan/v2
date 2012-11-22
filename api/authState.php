@@ -20,7 +20,7 @@ $app->add(new StrongAuth($config));
 $app
         ->add(
                 new \Slim\Middleware\SessionCookie(
-                        array('expires' => '5 minutes', 'path' => '/',
+                        array('expires' => '59 minutes', 'path' => '/',
                                 'domain' => null, 'secure' => false,
                                 'httponly' => false, 'name' => 'slim_session',
                                 'secret' => 'CHANGE_ME',
