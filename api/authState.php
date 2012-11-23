@@ -185,7 +185,6 @@ function insertFb($info) {
     verified: true
     work: Array[1]
      */
-
 }
 
 function createAccount($firstName, $lastName, $email, $password) {
@@ -223,7 +222,6 @@ $app
         ->post("/signup",
                 function () use ($app) {
                     $accountType = $_POST['type'];
-
                     switch ($accountType) {
                     case 1:
                     //our custom sign-up
@@ -251,7 +249,6 @@ $app
                         }
                         break;
                     case 2:
-                    //fb sign-up
                         $firstName = $_POST['first_name'];
                         $lastName = $_POST['last_name'];
                         $email = $_POST['email'];

@@ -12,8 +12,6 @@ var activeStream = new Stream({
 var streamId = activeStream.get('id');
 var mView = new ModalView();
 
-var id = null;// account.get('id')+'|'+activeStream.get('id');
-
 var timer = new Timer(1000, null, []); // we will have just one global timer
 // object shared across quizzes and
 // practice
