@@ -39,7 +39,6 @@ window.Account = Backbone.Model.extend({
 			dataType : "json",
 			data : formValues,
 			success : function(data) {
-				console.log([ "Login request details: ", data ]);
 				if (data.error) { // If there is an error, show the error
 					// messages
 					alert(data.error.text);

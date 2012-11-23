@@ -20,9 +20,6 @@ window.fbAsyncInit = function() {
 
 	user.on('facebook:disconnected', function(model, response) {
 		console.info('facebook:disconnected');
-		$('#loginstatus').text(response.status);
-		$('#login').attr('disabled', false);
-		$('#logout').attr('disabled', true);
 	});
 
 	user.on('change', function() {
@@ -53,9 +50,7 @@ window.fbAsyncInit = function() {
 				}, this);
 		user.get('pictures').square;
 		*/
-	
 	});
-	
 	user.updateLoginStatus();
 };
 

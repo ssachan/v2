@@ -27,10 +27,7 @@ $app->get('/historyById/',$authenticate($app),'getQuizzesHistory');
 
 //quiz
 $app->get('/processQuiz/',$authenticate($app), 'processQuiz');
-
 $app->get('/questions/',$authenticate($app), 'getQuestionsByIds');
-
-$app->post('/responses', 'addResponse');
 
 $app->get('/packagesByStreamId/:id', 'getPackagesByStreamId');
 
@@ -456,43 +453,6 @@ function getQuizzesHistory(){
 	}
 }
 
-function getQuiz($id) {
-	echo "Getting Test $id <br />";
-	$sql = "SELECT * from quizzes where id='$id'";
-	try {
-		$db = getConnection();
-		$stmt = $db->query($sql);
-		$projects = $stmt->fetchAll(PDO::FETCH_OBJ);
-		$db = null;
-		// Include support for JSONP requests
-		if (!isset($_GET['callback'])) {
-			echo json_encode($projects);
-		} else {
-			echo $_GET['callback'] . '(' . json_encode($projects) . ');';
-		}
-	} catch (PDOException $e) {
-		echo '{"error":{"text":' . $e->getMessage() . '}}';
-	}
-}
-
-function getQuizzes() {
-	$sql = "SELECT * from quizzes";
-	try {
-		$db = getConnection();
-		$stmt = $db->query($sql);
-		$projects = $stmt->fetchAll(PDO::FETCH_OBJ);
-		$db = null;
-		// Include support for JSONP requests
-		if (!isset($_GET['callback'])) {
-			echo json_encode($projects);
-		} else {
-			echo $_GET['callback'] . '(' . json_encode($projects) . ');';
-		}
-	} catch (PDOException $e) {
-		echo '{"error":{"text":' . $e->getMessage() . '}}';
-	}
-}
-
 function getPackagesByStreamId($id){
     $sql = "SELECT p.id as id,p.name,p.details,p.price,t.name from packages p, package_type t where p.streamId='".$id."' AND p.type=t.id";
     //echo $sql;
@@ -533,7 +493,6 @@ function resetResults() {
 
 function resetUsers() {
     $sql = "TRUNCATE table students";
-    
     try {
         $db = getConnection();
         $stmt = $db->query($sql);
@@ -569,7 +528,6 @@ function testQuestion($id)
         echo json_encode($questions[0]->options);
         echo "\n \n Outputting description text ----====";
         echo json_encode($questions[0]->explanation);
-
     } catch(PDOException $e) {
         echo '{"error":{"text":'. $e->getMessage() .'}}';
     }

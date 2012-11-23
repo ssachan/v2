@@ -85,8 +85,6 @@ var AppRouter = Backbone.Router.extend({
 	quizLibrary : function() {
 		$('#log-in').html('');
 		Manager.getDataForQuizLibrary(streamId);
-
-		//Manager.getQuizzesByStreamId(streamId);
 	},
 
 	packages : function() {
@@ -121,7 +119,7 @@ var AppRouter = Backbone.Router.extend({
 			mView.close();
 			Manager.getQuizDataForStart(id);
 		} else {
-			window.location.replace('#');
+			window.location.replace('#quizLibrary');
 		}
 	},
 

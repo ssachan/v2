@@ -132,7 +132,6 @@ function googleAccountExists($accountId) {
         echo '{"error":{"text":' . $e->getMessage() . '}}';
     }
 }
-;
 
 function insertStudent($accountId, $streamId) {
     $sql = "INSERT INTO students (accountId,streamId) VALUES (:accountId, :streamId)";
