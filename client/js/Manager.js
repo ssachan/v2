@@ -236,9 +236,9 @@ window.Manager = {
 			dataType : "json",
 			data : {quizId : quizId, accountId : account.get('id')},
 			success : function(data) {
-				if (data.error) { // If there is an error, show the error
+				if (data.status=='fail') { // If there is an error, show the error
 					// messages
-					alert(data.error.text);
+					alert(data.data);
 				} else { // If not, send them back to the home page
 					quizQuestions.reset(data);
 				}
