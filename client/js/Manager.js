@@ -1,16 +1,22 @@
- // Tell jQuery to watch for any 401 or 403 errors and handle them appropriately
+var STATUS = {
+	SUCCESS : 'success',
+	FAIL : 'fail',
+	ERROR : 'error'
+};
+
+// Tell jQuery to watch for any 401 or 403 errors and handle them appropriately
 $.ajaxSetup({
-    statusCode: {
-        401: function(){
-            // Redirec the to the login page.
-            window.location.replace('#login');
-         
-        },
-        403: function() {
-            // 403 -- Access denied
-            window.location.replace('#denied');
-        }
-    }
+	statusCode : {
+		401 : function() {
+			// Redirec the to the login page.
+			window.location.replace('#login');
+
+		},
+		403 : function() {
+			// 403 -- Access denied
+			window.location.replace('#denied');
+		}
+	}
 });
 
 /**
@@ -25,7 +31,7 @@ window.Manager = {
 	getStreams : function() {
 
 	},
-	
+
 	getL1ByStreamId : function(id) {
 		return $.ajax({
 			url : Config.serverUrl + 'l1ByStream/' + id,
@@ -61,7 +67,10 @@ window.Manager = {
 		return $.ajax({
 			url : url,
 			dataType : "json",
-			data:{accountId:account.get('id'), streamId:streamId},
+			data : {
+				accountId : account.get('id'),
+				streamId : streamId
+			},
 			success : function(data) {
 				console.log("L1performance fetched: " + data.length);
 				scoreL1.reset(data);
@@ -73,7 +82,10 @@ window.Manager = {
 		var url = Config.serverUrl + 'l2Performance/';
 		return $.ajax({
 			url : url,
-			data:{accountId:account.get('id'), streamId:streamId},
+			data : {
+				accountId : account.get('id'),
+				streamId : streamId
+			},
 			dataType : "json",
 			success : function(data) {
 				console.log("L2performance fetched: " + data.length);
@@ -86,7 +98,10 @@ window.Manager = {
 		var url = Config.serverUrl + 'historyById/';
 		return $.ajax({
 			url : url,
-			data:{accountId:account.get('id'), streamId:streamId},
+			data : {
+				accountId : account.get('id'),
+				streamId : streamId
+			},
 			dataType : "json",
 			success : function(data) {
 				console.log("history fetched: " + data.length);
@@ -94,7 +109,7 @@ window.Manager = {
 			}
 		});
 	},
-	
+
 	getSubjectsByStreamId : function(id) {
 		var dfd = [ this.getL1ByStreamId(id), this.getL2ByStreamId(id),
 				this.getL3ByStreamId(id) ];
@@ -132,12 +147,12 @@ window.Manager = {
 			success : function(data) {
 				console.log("quizzes fetched: " + data.length);
 				quizLibrary.reset(data);
-				/*var quizLibraryView = new QuizLibraryView({
-					model : quizLibrary,
-					//el : '#content'
-				});
-				app.showView(quizLibraryView);
-				quizLibraryView.renderQuizItems();*/
+				/*
+				 * var quizLibraryView = new QuizLibraryView({ model :
+				 * quizLibrary, //el : '#content' });
+				 * app.showView(quizLibraryView);
+				 * quizLibraryView.renderQuizItems();
+				 */
 			}
 		});
 	},
@@ -165,13 +180,13 @@ window.Manager = {
 			dataType : "json",
 			success : function(data) {
 				console.log("faculty fetched: " + data);
-				fac.set(data);//facDirectory.reset(data);
+				fac.set(data);// facDirectory.reset(data);
 			}
 		});
 	},
-	
+
 	getQuizzesByFac : function(id) {
-		var url = Config.serverUrl + 'quizzesByFac/' + id+'|'+streamId;
+		var url = Config.serverUrl + 'quizzesByFac/' + id + '|' + streamId;
 		return $.ajax({
 			url : url,
 			dataType : "json",
@@ -181,13 +196,14 @@ window.Manager = {
 			}
 		});
 	},
-	
+
 	/**
 	 * fetch all the data for the faculty page
+	 * 
 	 * @param facId
 	 */
-	getFaculty : function(facId){
-		var dfd = [this.getFacById(facId),this.getQuizzesByFac(facId) ];
+	getFaculty : function(facId) {
+		var dfd = [ this.getFacById(facId), this.getQuizzesByFac(facId) ];
 		$.when.apply(null, dfd).then(function(data) {
 			var facView = new FacView({
 				model : fac,
@@ -197,23 +213,25 @@ window.Manager = {
 			facView.renderQuizzes();
 		});
 	},
-	
-	getQuestions : function(qids){
+
+	getQuestions : function(qids) {
 		var url = Config.serverUrl + 'questions/';
 		return $.ajax({
 			url : url,
 			dataType : "json",
 			type : 'GET',
-			data : {qids : qids},
+			data : {
+				qids : qids
+			},
 			success : function(data) {
 				console.log("questions fetched: " + data.length);
 				quizQuestions.add(data);
 			}
 		});
 	},
-	
-	getPackagesByStreamId : function(streamId){
-		var url = Config.serverUrl + 'packagesByStreamId/'+streamId;
+
+	getPackagesByStreamId : function(streamId) {
+		var url = Config.serverUrl + 'packagesByStreamId/' + streamId;
 		return $.ajax({
 			url : url,
 			dataType : "json",
@@ -225,40 +243,46 @@ window.Manager = {
 					el : $('#content'),
 				});
 			}
-		});	
+		});
 	},
-	
-	processQuiz : function (quizId){
+
+	processQuiz : function(quizId) {
 		var url = Config.serverUrl + 'processQuiz/';
 		return $.ajax({
 			url : url,
 			type : 'GET',
 			dataType : "json",
-			data : {quizId : quizId, accountId : account.get('id')},
+			data : {
+				quizId : quizId,
+				accountId : account.get('id')
+			},
 			success : function(data) {
-				if (data.status=='fail') { // If there is an error, show the error
+				if (data.status == STATUS.SUCCESS) { // If there is an error, show
+					// the error
 					// messages
-					alert(data.data);
+					quizQuestions.reset(data.data);
 				} else { // If not, send them back to the home page
-					quizQuestions.reset(data);
+					helper.showError(data.data);
 				}
 			}
 		});
 	},
-	
-	purchasePackage : function(id){
+
+	purchasePackage : function(id) {
 		var url = Config.serverUrl + 'package/';
 		return $.ajax({
 			url : url,
-			type: "POST",
-			data: {packageId: id}, // gotta strinigfy the entire hash
+			type : "POST",
+			data : {
+				packageId : id
+			}, // gotta strinigfy the entire hash
 			dataType : "json",
 			success : function(data) {
 				console.log("packages fetched: " + data.length);
 			}
 		});
 	},
-	
+
 	/**
 	 * ensure all questions are loaded in the quizQuestions collection
 	 * 
@@ -278,13 +302,13 @@ window.Manager = {
 		$.when.apply(null, dfd).then(function(data) {
 			var quizLibraryView = new QuizLibraryView({
 				model : quizLibrary,
-				//el : '#content'
+			// el : '#content'
 			});
 			app.showView(quizLibraryView);
 			quizLibraryView.renderQuizItems();
 		});
 	},
-	
+
 	/**
 	 * ensure all questions are loaded in the quizQuestions collection
 	 * 
@@ -292,17 +316,21 @@ window.Manager = {
 	 * @returns
 	 */
 	getQuizDataForStart : function(quizId) {
-		activeQuiz = quizLibrary.get(quizId); // active quiz initialized for the first time
+		activeQuiz = quizLibrary.get(quizId); // active quiz initialized for
+		// the first time
+		quizQuestions.reset();
 		var dfd = [];
 		dfd.push(this.processQuiz(quizId));
 		$.when.apply(null, dfd).then(function(data) {
-			var quizView = new QuizView({
-				model : activeQuiz,
-				index : 0,
-				//el : $('#content')
-			});
-			app.showView(quizView);
-			quizView.startQuiz();
+			if (quizQuestions.length > 0) {
+				var quizView = new QuizView({
+					model : activeQuiz,
+					index : 0,
+				// el : $('#content')
+				});
+				app.showView(quizView);
+				quizView.startQuiz();
+			}
 		});
 	},
 
@@ -324,8 +352,8 @@ window.Manager = {
 			quizView.renderResults();
 		});
 	},
-	
-	resetResults : function (){
+
+	resetResults : function() {
 		var url = Config.serverUrl + 'resetResults/';
 		return $.ajax({
 			url : url,
@@ -335,8 +363,8 @@ window.Manager = {
 			}
 		});
 	},
-	
-	resetAccounts : function (){
+
+	resetAccounts : function() {
 		var url = Config.serverUrl + 'resetAccounts/';
 		return $.ajax({
 			url : url,

@@ -66,7 +66,13 @@ window.helper = {
 		$('.alert').html('<strong>' + title + '</strong> ' + text);
 		$('.alert').show();
 	},
-
+	
+	showError : function(text) {
+		$('#errorModal').modal('show');
+		$('#error').html(text);
+		$('#errorModal').show();
+	},
+	
 	hideAlert : function() {
 		$('.alert').hide();
 	},

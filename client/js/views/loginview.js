@@ -64,6 +64,28 @@ window.SignUpView = Backbone.View.extend({
     			streamId : streamId,
     		};
         this.model.signUp(formValues);
+        /*
+         //Test type 2 auth
+         var formValues = {
+        	bio: "find my scribbling here - http://greypad.thinkpluto.com/",
+            email: "shikhar.sachan@gmail.com",
+            first_name: "Shikhar",
+            gender: "male",
+            id: "675467514",
+            last_name: "Sachan",
+            link: "https://www.facebook.com/shikhar.sachan",
+            locale: "en_US",
+            name: "Shikhar Sachan",
+            pictures: Object,
+            quotes: "you loose 100 % of the shots you don't take ...",
+            timezone: 5.5,
+            updated_time: "2012-08-18T16:31:31+0000",
+            username: "shikhar.sachan",
+            type : 2,
+			streamId : streamId,
+        };
+        this.model.signUp(formValues);
+        */
     },
     fConnect : function() {
 		user.login();

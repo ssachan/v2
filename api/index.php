@@ -39,6 +39,24 @@ $app->post('/purchase/:id', 'addPurchase');
 // the resets
 $app->get('/resetResults/', 'resetResults');
 
+define('SUCCESS', "success");   // returns the requested data.
+define('FAIL', "fail");   // logical error.
+define('ERROR', "error");   // system error.
+
+/**
+ * All requests routed through this function
+ * @param Object $response
+ */
+function sendResponse($response) {
+    // maintaining a queue/ including any checks
+    // Include support for JSONP requests
+    if (!isset($_GET['callback'])) {
+        echo json_encode($response);
+    } else {
+        echo $_GET['callback'] . '(' . json_encode($response) . ');';
+    }
+}
+
 function getFac($id) {
     $sql = "select * from faculty where id=:id";
     //echo $sql;
@@ -307,7 +325,7 @@ function getQuestionsByIds() {
  * 
  */
 function processQuiz() {
-    $response=array();
+    $response = array();
     $accountId = $_GET['accountId'];
     $quizId = $_GET['quizId'];
     // for now just return the questions from the quiz if quiz is not a part of the history.
@@ -335,22 +353,23 @@ function processQuiz() {
             $db = null;
             if ($questionIds->questionIds != null) {
                 $questions = getQuestions($questionIds->questionIds);
-                if (!isset($_GET['callback'])) {
-                    echo json_encode($questions);
-                } else {
-                    echo $_GET['callback'] . '(' . json_encode($questions)
-                            . ');';
-                }
+                $response["status"] = "success";
+                $response["data"] = $questions;
+            }else{
+                $response["status"] = "fail";
+                $response["data"] = "Something went wrong! Please drop in an email to admin@ps.com";
             }
         } catch (PDOException $e) {
-            echo '{"error":{"text":' . $e->getMessage() . '}}';
+            $response["status"] = "error";
+            $response["data"] = $e->getMessage();
+            //echo '{"error":{"text":' . $e->getMessage() . '}}';
         }
     } else {
-        $response["status"] = "fail";
+        $response["status"] = FAIL;
         $response["data"] = "You have already taken this quiz";
-        echo json_encode($response);
         //echo '{"error":{"text":' . $msg . '}}';
     }
+    sendResponse($response);
 }
 
 /**

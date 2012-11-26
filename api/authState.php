@@ -55,7 +55,6 @@ function getStudentByAccountId($accountId, $streamId) {
         echo '{"error":{"text":' . $e->getMessage() . '}}';
     }
 }
-;
 
 function emailExists($email) {
     $sql = "SELECT id from accounts where email='" . $email . "'";
@@ -74,32 +73,38 @@ function emailExists($email) {
         echo '{"error":{"text":' . $e->getMessage() . '}}';
     }
 }
-;
 
 function fbAccountExists($accountId) {
-    $sql = "SELECT count(*) as count from account_fb where accountId='"
+    $sql = "SELECT count(*) as count from accounts_fb where accountId='"
             . $accountId . "'";
     try {
         $db = getConnection();
         $stmt = $db->query($sql);
-        $count = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $record = $stmt->fetch(PDO::FETCH_OBJ);
         $db = null;
-        return $count[0]->count;
+        if ($record->count) {
+            return true;
+        } else {
+            return false;
+        }
     } catch (PDOException $e) {
         echo '{"error":{"text":' . $e->getMessage() . '}}';
     }
 }
-;
 
 function googleAccountExists($accountId) {
-    $sql = "SELECT count(*) as count from account_google where accountId='"
+    $sql = "SELECT count(*) as count from accounts_google where accountId='"
             . $accountId . "'";
     try {
         $db = getConnection();
         $stmt = $db->query($sql);
-        $count = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $record = $stmt->fetch(PDO::FETCH_OBJ);
         $db = null;
-        return $count[0]->count;
+        if ($record->count) {
+            return true;
+        } else {
+            return false;
+        }
     } catch (PDOException $e) {
         echo '{"error":{"text":' . $e->getMessage() . '}}';
     }
@@ -119,24 +124,33 @@ function insertStudent($accountId, $streamId) {
     }
 }
 
-function insertFb($info) {
-    $sql = "INSERT INTO accounts_fb (accountId,facebookId, bio, education, firstName, gender, lastName, link,locale) VALUES (:accountId,:facebookId, :bio,:education, :firstName, :gender, :lastName, :link,:locale)";
+function insertFb($accountId) {
+    $sql = "INSERT INTO accounts_fb (accountId,facebookId, bio, education, firstName, gender, lastName, link,locale, timezone, username) VALUES (:accountId,:facebookId, :bio,:education, :firstName, :gender, :lastName, :link,:locale,:timezone,:username)";
+    $edu = "test";
+    //$stmt->bindParam("pictures", $_POST['pictures']);
+    //$stmt->bindParam("quotes", $_POST['quotes']);
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
         $stmt->bindParam("accountId", $accountId);
-        $stmt->bindParam("facebookId", $accountId);
-        $stmt->bindParam("bio", $accountId);
-        $stmt->bindParam("firstName", $accountId);
-        $stmt->bindParam("gender", $accountId);
-        $stmt->bindParam("lastName", $accountId);
-        $stmt->bindParam("link", $accountId);
-        $stmt->bindParam("locale", $accountId);
-        $stmt->execute();
-        $response->id = $db->lastInsertId();
-        return $response->id;
+        $stmt->bindParam("facebookId", $_POST['id']);
+        $stmt->bindParam("bio", $_POST['bio']);
+        $stmt->bindParam("education", $edu);
+        $stmt->bindParam("firstName", $_POST['first_name']);
+        $stmt->bindParam("gender", $_POST['gender']);
+        $stmt->bindParam("lastName", $_POST['last_name']);
+        $stmt->bindParam("link", $_POST['link']);
+        $stmt->bindParam("locale", $_POST['locale']);
+        //$stmt->bindParam("pictures", $_POST['pictures']);
+        //$stmt->bindParam("quotes", $_POST['quotes']);
+        $stmt->bindParam("timezone", $_POST['timezone']);
+        $stmt->bindParam("username", $_POST['username']);
+        //$stmt->bindParam("work", $_POST['work']);
+        return $stmt->execute();
+        $db = null;
     } catch (PDOException $e) {
         error_log($e->getMessage(), 3, '/var/tmp/php.log');
+        echo $e->getMessage();
     }
     /*bio: "find my scribbling here - http://greypad.thinkpluto.com/"
     education: Array[2]
@@ -158,7 +172,28 @@ function insertFb($info) {
      */
 }
 
-function createAccount($firstName, $lastName, $email, $password) {
+/*function createStudentAccount($firstName, $lastName, $email, $password) {
+    $sql = "INSERT INTO accounts (firstName,lastName,email,password, createdOn) VALUES (:firstName, :lastName, :email, :password, :createdOn)";
+    try {
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("firstName", $firstName);
+        $stmt->bindParam("lastName", $lastName);
+        $stmt->bindParam("email", $email);
+        $stmt->bindParam("password", $password);
+        $stmt->bindParam("createdOn", date("Y-m-d H:i:s", time()));
+        $stmt->execute();
+        $id = $db->lastInsertId();
+        $db = null;
+        return $id;
+    } catch (PDOException $e) {
+        error_log($e->getMessage(), 3, '/var/tmp/php.log');
+        echo '{"error":{"text":' . $e->getMessage() . '}}';
+    }
+
+}*/
+
+function createAccount($firstName, $lastName, $email, $password = null) {
     $sql = "INSERT INTO accounts (firstName,lastName,email,password, createdOn) VALUES (:firstName, :lastName, :email, :password, :createdOn)";
     try {
         $db = getConnection();
@@ -178,9 +213,6 @@ function createAccount($firstName, $lastName, $email, $password) {
     }
 }
 
-function fbSignUp() {
-
-}
 /*$app->hook('slim.before.dispatch', function() use ($app) {
     $user = null;
     if (isset($_SESSION['user'])) {
@@ -190,10 +222,32 @@ function fbSignUp() {
 });*/
 
 $app->post("/signup", function () use ($app) {
+    $response = array();
     $accountType = $_POST['type'];
     switch ($accountType) {
-    case 1:
-    //our custom sign-up
+    case 1: //our custom sign-up
+    //validate inputs
+        if (!(filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))) {
+            $response["status"] = FAIL;
+            $response["data"] = "Please enter a valid email address";
+            break;
+        }
+        if (!isset($_POST['firstName'])) {
+            $response["status"] = FAIL;
+            $response["data"] = "Please enter your first name";
+            break;
+        }
+        if (!isset($_POST['lastName'])) {
+            $response["status"] = FAIL;
+            $response["data"] = "Please enter your last name";
+            break;
+        }
+        if (!isset($_POST['password'])) {
+            $response["status"] = FAIL;
+            $response["data"] = "Please enter a valid password";
+            break;
+        }
+
         $firstName = $_POST['firstName'];
         $lastName = $_POST['lastName'];
         $email = $_POST['email'];
@@ -201,57 +255,71 @@ $app->post("/signup", function () use ($app) {
         $streamId = $_POST['streamId'];
         if (emailExists($email) != 0) {
             // email exists
-            $msg = 'email already exists. you should probably try forgot password';
-            //echo json_encode('{"error":{"text":' . $msg . '}}');
-            echo '{"error":{"text":' . $msg . '}}';
+            $response["status"] = FAIL;
+            $response["data"] = "Email already exists. you should probably try forgot password";
         } else {
-            $response->id = createAccount($firstName, $lastName, $email, $password);
-            insertStudent($response->id, $streamId);
-            $response->firstName = $firstName;
-            $response->lastName = $lastName;
-            $response->email = $email;
-            $response->streamId = $streamId;
-            $response->ascore = 0;
-            $_SESSION['user'] = $response->id;
-            echo json_encode($response);
+            $account->id = createAccount($firstName, $lastName, $email, $password);
+            insertStudent($account->id, $streamId);
+            $account->firstName = $firstName;
+            $account->lastName = $lastName;
+            $account->email = $email;
+            $account->streamId = $streamId;
+            $account->ascore = 0;
+            $_SESSION['user'] = $account->id;
+            $response["status"] = SUCCESS;
+            $response["data"] = $account;
         }
         break;
-    case 2:
+    case 2:// fb log-in
+        if (!(filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))) {
+            $response["status"] = FAIL;
+            $response["data"] = "Please give appropriate permission to access your email";
+            break;
+        }
+        if (!isset($_POST['first_name'])) {
+            $response["status"] = FAIL;
+            $response["data"] = "No first name set. Try Again.";
+            break;
+        }
+        if (!isset($_POST['last_name'])) {
+            $response["status"] = FAIL;
+            $response["data"] = "No last name set. Try Again.";
+            break;
+        }
         $firstName = $_POST['first_name'];
         $lastName = $_POST['last_name'];
         $email = $_POST['email'];
         $streamId = $_POST['streamId'];
-        if (emailExists($email) != 0) {
+        if (($account->id = emailExists($email)) != 0) {
             // email exists
             //check if fb account is linked 
-            if (fbAccountExists($email) != 0) {
-                // fb account exists
-
-            } else {
-                // insert into fb
+            if (fbAccountExists($account->id) == 0) {
+                insertFb($account->id);
             }
-
+            $account = getStudentByAccountId($account->id, 1);
         } else {
             // create account
-            $response->id = createAccount($firstName, $lastName, $email, $password);
+            $account->id = createAccount($firstName, $lastName, $email);
             // push into fb
-            //insertFb($_POST);
+            insertFb($account->id);
             // push into students
-            insertStudent($response->id, $streamId);
+            insertStudent($account->id, $streamId);
+            $account->firstName = $firstName;
+            $account->lastName = $lastName;
+            $account->email = $email;
+            $account->streamId = $streamId;
+            $account->ascore = 0;
         }
-        $response->firstName = $firstName;
-        $response->lastName = $lastName;
-        $response->email = $email;
-        $response->streamId = $streamId;
-        $response->ascore = 0;
-        $_SESSION['user'] = $response->id;
-        echo json_encode($response);
+        $_SESSION['user'] = $account->id;
+        $response["status"] = SUCCESS;
+        $response["data"] = $account;
         break;
     case 3:
     //google sign-up
 
         break;
     }
+    sendResponse($response);
 });
 
 $app->get("/logout", function () use ($app) {

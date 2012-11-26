@@ -86,30 +86,19 @@ window.Account = Backbone.Model.extend({
 	signUp : function(inputValues) {
 		// Do a POST to /login and send the creds
 		var url = '../api/signup';
-		console.log('Loggin in... ');
-		/*var formValues = {
-			email : email,
-			password : password,
-			firstName : firstName,
-			lastName : lastName,
-			streamId : 1,
-		};
-		*/
+		console.log('signing up... ');
 		$.ajax({
 			url : url,
 			type : 'POST',
 			dataType : "json",
 			data : inputValues,
 			success : function(data) {
-				console.log([ "signup request details: ", data ]);
-				if (data.error) { // If there is an error, show the error
-					// messages
-					console.log(data.error.text);
-				} else { // If not, send them back to the home page
-					account.set(data);
+				if (data.status == STATUS.SUCCESS) { 
+					account.set(data.data);
 					account.set('type', 1);
-					id = account.get('id') + '|' + activeStream.get('id');
 					window.location.replace('#');
+				} else { 
+					helper.showError(data.data);
 				}
 			},
 			error : function(data) {
@@ -130,7 +119,14 @@ window.Account = Backbone.Model.extend({
 			dataType : "json",
 			data : formValues,
 			success : function(data) {
-				console.log([ "signup request details: ", data ]);
+				if (data.status == STATUS.SUCCESS) { 
+					account.set(data.data);
+					account.set('type', 1);
+				} else { 
+					helper.showError(data.data);
+				}
+				
+				/*console.log([ "signup request details: ", data ]);
 				if (data.error) { // If there is an error, show the error
 					// messages
 					console.log(data.error.text);
@@ -139,7 +135,7 @@ window.Account = Backbone.Model.extend({
 					account.set('type', 1);
 					id = account.get('id') + '|' + activeStream.get('id');
 					window.location.replace('#');
-				}
+				}*/
 			}
 		});
 	},
