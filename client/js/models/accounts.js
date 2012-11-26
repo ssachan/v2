@@ -53,7 +53,7 @@ window.Account = Backbone.Model.extend({
 	},
 
 	logout : function() {
-		//delete the existing sesison and reset account
+		// delete the existing sesison and reset account
 		var url = '../api/logout';
 		$.ajax({
 			url : url,
@@ -66,6 +66,9 @@ window.Account = Backbone.Model.extend({
 					console.log(data.error.text);
 				} else { // If not, send them back to the home page
 					window.location.replace('#landing');
+					if (account.get('type') == 2) {
+						user.logout();
+					}
 					account.clear();
 				}
 			},
@@ -93,11 +96,14 @@ window.Account = Backbone.Model.extend({
 			dataType : "json",
 			data : inputValues,
 			success : function(data) {
-				if (data.status == STATUS.SUCCESS) { 
+				if (data.status == STATUS.SUCCESS) {
 					account.set(data.data);
-					account.set('type', 1);
-					window.location.replace('#');
-				} else { 
+					if (account.get('type') == 1) {
+						window.location.replace('#');
+					} else {
+						app.dashboard();
+					}
+				} else {
 					helper.showError(data.data);
 				}
 			},
@@ -119,52 +125,34 @@ window.Account = Backbone.Model.extend({
 			dataType : "json",
 			data : formValues,
 			success : function(data) {
-				if (data.status == STATUS.SUCCESS) { 
+				if (data.status == STATUS.SUCCESS) {
 					account.set(data.data);
-					account.set('type', 1);
-				} else { 
+				} else {
 					helper.showError(data.data);
 				}
-				
-				/*console.log([ "signup request details: ", data ]);
-				if (data.error) { // If there is an error, show the error
-					// messages
-					console.log(data.error.text);
-				} else { // If not, send them back to the home page
-					account.set(data);
-					account.set('type', 1);
-					id = account.get('id') + '|' + activeStream.get('id');
-					window.location.replace('#');
-				}*/
 			}
 		});
 	},
 
-	changePass : function(oldpassword, newpassword){
+	changePass : function(oldpassword, newpassword) {
 		var url = '../api/changepass';
 		console.log('change pass... ');
 		$.ajax({
 			url : url,
 			type : 'POST',
 			dataType : "json",
-			data : {oldpassword : oldpassword, newpassword: newpassword},
+			data : {
+				oldpassword : oldpassword,
+				newpassword : newpassword
+			},
 			success : function(data) {
-				console.log([ "signup request details: ", data ]);
-				if (data.error) { // If there is an error, show the error
-					// messages
-					console.log(data.error.text);
-				} else { // If not, send them back to the home page
-					account.set(data);
-					account.set('type', 1);
-					id = account.get('id') + '|' + activeStream.get('id');
-					window.location.replace('#');
-				}
+
 			}
 		});
 	},
-	
+
 	isAuth : function() {
-		// getAuth is wrapped around our router
+		// isAuth is wrapped around our router
 		// before we start any routers let us see if the user is valid
 		url = '../api/isAuth';
 		$.ajax({
@@ -178,9 +166,7 @@ window.Account = Backbone.Model.extend({
 					window.location.replace('#landing');
 				} else { // If not, send them back to the home page
 					account.set(data);
-					account.set('type', 1);
-					id = account.get('id') + '|' + activeStream.get('id');
-					app.dashboard();	
+					app.dashboard();
 				}
 			}
 		});

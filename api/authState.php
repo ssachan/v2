@@ -125,7 +125,8 @@ function insertStudent($accountId, $streamId) {
 }
 
 function insertFb($accountId) {
-    $sql = "INSERT INTO accounts_fb (accountId,facebookId, bio, education, firstName, gender, lastName, link,locale, timezone, username) VALUES (:accountId,:facebookId, :bio,:education, :firstName, :gender, :lastName, :link,:locale,:timezone,:username)";
+    $date = date("Y-m-d H:i:s", time());
+    $sql = "INSERT INTO accounts_fb (accountId,facebookId, linkedOn, bio, education, firstName, gender, lastName, link,locale, timezone, username) VALUES (:accountId,:facebookId,:linkedOn, :bio,:education, :firstName, :gender, :lastName, :link,:locale,:timezone,:username)";
     $edu = "test";
     //$stmt->bindParam("pictures", $_POST['pictures']);
     //$stmt->bindParam("quotes", $_POST['quotes']);
@@ -134,6 +135,7 @@ function insertFb($accountId) {
         $stmt = $db->prepare($sql);
         $stmt->bindParam("accountId", $accountId);
         $stmt->bindParam("facebookId", $_POST['id']);
+        $stmt->bindParam("linkedOn", $date);
         $stmt->bindParam("bio", $_POST['bio']);
         $stmt->bindParam("education", $edu);
         $stmt->bindParam("firstName", $_POST['first_name']);
@@ -247,7 +249,6 @@ $app->post("/signup", function () use ($app) {
             $response["data"] = "Please enter a valid password";
             break;
         }
-
         $firstName = $_POST['firstName'];
         $lastName = $_POST['lastName'];
         $email = $_POST['email'];
@@ -315,8 +316,8 @@ $app->post("/signup", function () use ($app) {
         $response["data"] = $account;
         break;
     case 3:
-    //google sign-up
-
+        //google sign-up
+        
         break;
     }
     sendResponse($response);

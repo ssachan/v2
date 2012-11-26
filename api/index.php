@@ -392,17 +392,13 @@ function updateScores($accId, $streamId) {
 }
 
 function addResponse() {
-    // error_log('addWine\n', 3, '/var/tmp/php.log');
-    //$request = Slim::getInstance()->request();
-    //$response = json_decode($request->getBody());
-    $date = date("Y-m-d H:i:s", time());
-    //$ids = explode("|", $response->accountId);
     $streamId = $_POST['streamId'];
     $accountId = $_POST['accountId'];
     $quizId = $_POST['quizId'];
     $score = $_POST['score'];
     $selectedAnswers = stripslashes($_POST['selectedAnswers']);
     $timePerQuestion = $_POST['timePerQuestion'];
+    $date = date("Y-m-d H:i:s", time());
     $sql = "INSERT INTO results (accountId, quizId, selectedAnswers, score, timePerQuestion, timestamp) VALUES (:accountId, :quizId, :selectedAnswers, :score, :timePerQuestion, :timeStamp)";
     //echo $sql;
     try {

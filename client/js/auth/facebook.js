@@ -20,6 +20,10 @@ window.fbAsyncInit = function() {
 
 	user.on('facebook:disconnected', function(model, response) {
 		console.info('facebook:disconnected');
+		// check if a session is already on, if so redirect him to the dashboard page
+		if(account.get('id')==null){
+			account.isAuth();
+		}
 	});
 
 	user.on('change', function() {
@@ -27,6 +31,7 @@ window.fbAsyncInit = function() {
 		console.log(user.attributes);
 		if(account.get('id')==null){
 			// sign me up 
+			account.set('type',2);
 			user.attributes.type=2;
 			user.attributes.streamId=streamId;
 			account.signUp(user.attributes);

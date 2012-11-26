@@ -257,9 +257,7 @@ window.Manager = {
 				accountId : account.get('id')
 			},
 			success : function(data) {
-				if (data.status == STATUS.SUCCESS) { // If there is an error, show
-					// the error
-					// messages
+				if (data.status == STATUS.SUCCESS) {
 					quizQuestions.reset(data.data);
 				} else { // If not, send them back to the home page
 					helper.showError(data.data);

@@ -64,6 +64,8 @@ window.SignUpView = Backbone.View.extend({
     			streamId : streamId,
     		};
         this.model.signUp(formValues);
+        this.model.set('type', 1);
+
         /*
          //Test type 2 auth
          var formValues = {
@@ -88,11 +90,13 @@ window.SignUpView = Backbone.View.extend({
         */
     },
     fConnect : function() {
+        this.model.set('type', 2);
 		user.login();
 		//also send the details to the server
 	},
 
 	gConnect : function() {
+        this.model.set('type', 3);
 		glogin();
 	},
     

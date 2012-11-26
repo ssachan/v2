@@ -13,13 +13,10 @@ var streamId = activeStream.get('id');
 var mView = new ModalView();
 
 var timer = new Timer(1000, null, []); // we will have just one global timer
-// object shared across quizzes and
-// practice
 
 $(document).ready(function() {
 	helper.loadTemplate(Config.viewsArray, function() {
 		app = new AppRouter();
-
 		(function(d) {
 			var js, id = 'facebook-jssdk';
 			if (d.getElementById(id)) {
@@ -31,7 +28,6 @@ $(document).ready(function() {
 			js.src = "//connect.facebook.net/en_US/all.js";
 			d.getElementsByTagName('head')[0].appendChild(js);
 		}(document));
-
 		Backbone.history.start();
 	});
 });
@@ -70,6 +66,14 @@ var AppRouter = Backbone.Router.extend({
 		return;
 	},
 
+	/*dashboard : function() {
+		$('#log-in').html('');
+		// check if authenticated move to dashboard page, else move to landing
+		// page
+		mView.close();
+		Manager.getDashboardData();
+	},*/
+	
 	dashboard : function() {
 		$('#log-in').html('');
 		// check if authenticated move to dashboard page, else move to landing
@@ -77,8 +81,6 @@ var AppRouter = Backbone.Router.extend({
 		mView.close();
 		if (account.get('id') != null) {
 			Manager.getDashboardData();
-		} else {
-			account.isAuth();
 		}
 	},
 
