@@ -4,19 +4,14 @@ var STATUS = {
 	ERROR : 'error'
 };
 
+/**
+ * the generic loaders
+ */
 $(document).ajaxStart(function() {
 	  $('#loading').show();
-	  //$('#cboxLoadedContent').hide();
 	}).ajaxStop(function() {
 	  $('#loading').hide();
-	  //$('#cboxLoadedContent').fadeIn('slow');
-	});
-
-/*$('#loading').ajaxStart(function() {
-	$(this).show();
-}).ajaxStop(function() {
-	$(this).hide();
-});*/
+});
 
 // Tell jQuery to watch for any 401 or 403 errors and handle them appropriately
 $.ajaxSetup({
@@ -338,7 +333,6 @@ window.Manager = {
 				var quizView = new QuizView({
 					model : activeQuiz,
 					index : 0,
-				// el : $('#content')
 				});
 				app.showView(quizView);
 				quizView.startQuiz();

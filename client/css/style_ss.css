@@ -782,11 +782,29 @@ color: #0091B2}
    -moz-user-select: -moz-none;
    -khtml-user-select: none;
    -webkit-user-select: none;
-
    /*
      Introduced in IE 10.
      See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
    */
    -ms-user-select: none;
    user-select: none;
+}
+
+#loading{
+    font-size:16px;
+    font-style:normal;
+    font-variant:normal;
+    font-weight:normal;
+    height:100px;
+    left:50%;
+    line-height:normal;
+    margin-left:-50px;
+    margin-top:-50px;
+    overflow:auto;
+    padding:10px;
+    position:fixed;
+    text-align:center;
+    top:50%;
+    width:100px;
+    z-index:2;
 }

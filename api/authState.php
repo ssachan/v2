@@ -316,8 +316,7 @@ $app->post("/signup", function () use ($app) {
         $response["data"] = $account;
         break;
     case 3:
-    //google sign-up
-
+        //google sign-up
         break;
     }
     sendResponse($response);

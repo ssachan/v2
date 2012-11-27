@@ -4,7 +4,7 @@ window.fbAsyncInit = function() {
 	FB.init({
 		appId : '345218642220354', // App ID
 		status : true, // check login status
-		cookie : true, // enable cookies to allow the server to access the
+		cookie : true, // enable cookies to allow the server to access
 		xfbml : true
 	});
 
@@ -28,7 +28,23 @@ window.fbAsyncInit = function() {
 
 	user.on('change', function() {
 		console.info('change');
-		console.log(user.attributes);
+		/*if(account.get('type')=='2'){
+			// this is a sign-up using facebook
+			if(account.get('id')==null){
+				// sign me up 
+				account.set('type',2);
+				user.attributes.type=2;
+				user.attributes.streamId=streamId;
+				account.signUp(user.attributes);
+			}
+		}else{
+			// check if a session already exists 
+			if(account.get('id')==null){
+				account.isAuth();
+			}else{
+				
+			}
+		}*/
 		/*if(account.get('id')==null){
 			// sign me up 
 			account.set('type',2);

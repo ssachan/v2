@@ -36,9 +36,7 @@
 
     onLoginStatusChange: function(response) {
       if(this._loginStatus === response.status) return false;
-
       var event;
-
       if(response.status === 'not_authorized') {
         event = 'facebook:unauthorized';
       } else if (response.status === 'connected') {
@@ -47,7 +45,6 @@
       } else {
         event = 'facebook:disconnected';
       }
-
       this.trigger(event, this, response);
       this._loginStatus = response.status;
     },
@@ -62,7 +59,6 @@
 
     sync: function(method, model, options) {
       if(method !== 'read') throw new Error('FacebookUser is a readonly model, cannot perform ' + method);
-
       var callback = function(response) {
         if(response.error) {
           options.error(response);

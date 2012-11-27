@@ -3,7 +3,6 @@
  */
 var app = null;
 var activeQuiz = null;
-var currentQuizQuestion = null;
 
 var activeStream = new Stream({
 	id : '1',
@@ -65,12 +64,12 @@ var AppRouter = Backbone.Router.extend({
 		$('#log-in').html((new LoginView({model:account})).el);
 		$('#packages-menu').hide();
 		$('#home-menu').hide();
+		$('#'+activeMenu).removeClass('active');
 		return;
 	},
 
 	dashboard : function() {
-		// check if authenticated move to dashboard page, else move to landing
-		// page
+		// check if authenticated move to dashboard page, else move to landing page
 		mView.close();
 		if (account.get('id') != null) {
 			Manager.getDashboardData();
@@ -138,8 +137,6 @@ var AppRouter = Backbone.Router.extend({
 		// load forgot password page
 		var changePassView = new ChangePassView({model:account});
 		this.showView(changePassView);
-
-
 	},
 	
 	forgotPass : function() {
