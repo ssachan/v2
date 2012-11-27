@@ -39,14 +39,11 @@ window.Account = Backbone.Model.extend({
 			dataType : "json",
 			data : formValues,
 			success : function(data) {
-				if (data.error) { // If there is an error, show the error
-					// messages
-					alert(data.error.text);
-				} else { // If not, send them back to the home page
-					account.set(data);
-					account.set('type', 1);
-					id = account.get('id') + '|' + activeStream.get('id');
+				if (data.status == STATUS.SUCCESS) {
+					account.set(data.data);
 					window.location.replace('#');
+				} else {
+					helper.showError(data.data);
 				}
 			}
 		});

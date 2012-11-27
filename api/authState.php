@@ -234,17 +234,17 @@ $app->post("/signup", function () use ($app) {
             $response["data"] = "Please enter a valid email address";
             break;
         }
-        if (!isset($_POST['firstName']) || $_POST['firstName']=='') {
+        if (!isset($_POST['firstName']) || $_POST['firstName'] == '') {
             $response["status"] = FAIL;
             $response["data"] = "Please enter your first name";
             break;
         }
-        if (!isset($_POST['lastName']) || $_POST['lastName']=='') {
+        if (!isset($_POST['lastName']) || $_POST['lastName'] == '') {
             $response["status"] = FAIL;
             $response["data"] = "Please enter your last name";
             break;
         }
-        if (!isset($_POST['password']) || $_POST['password']=='') {
+        if (!isset($_POST['password']) || $_POST['password'] == '') {
             $response["status"] = FAIL;
             $response["data"] = "Please enter a valid password";
             break;
@@ -277,12 +277,12 @@ $app->post("/signup", function () use ($app) {
             $response["data"] = "Please give appropriate permission to access your email";
             break;
         }
-        if (!isset($_POST['first_name']) || $_POST['first_name']=='' ) {
+        if (!isset($_POST['first_name']) || $_POST['first_name'] == '') {
             $response["status"] = FAIL;
             $response["data"] = "No first name set. Try Again.";
             break;
         }
-        if (!isset($_POST['last_name']) || $_POST['last_name']=='') {
+        if (!isset($_POST['last_name']) || $_POST['last_name'] == '') {
             $response["status"] = FAIL;
             $response["data"] = "No last name set. Try Again.";
             break;
@@ -316,8 +316,8 @@ $app->post("/signup", function () use ($app) {
         $response["data"] = $account;
         break;
     case 3:
-        //google sign-up
-        
+    //google sign-up
+
         break;
     }
     sendResponse($response);
@@ -334,6 +334,7 @@ $app->get("/logout", function () use ($app) {
 });
 
 $app->post("/login", function () use ($app) {
+    $response = array();
     $email = $app->request()->post('email');
     $password = $app->request()->post('password');
     $streamId = $app->request()->post('streamId');
@@ -346,13 +347,17 @@ $app->post("/login", function () use ($app) {
         $account = $stmt->fetch(PDO::FETCH_OBJ);
         $db = null;
         if ($account != null && $account->id != null) {
-            echo json_encode($account);
+            $response["status"] = SUCCESS;
+            $response["data"] = $account;
             $_SESSION['user'] = $account->id;
+        } else {
+            $response["status"] = FAIL;
+            $response["data"] = "Email and Password dont match.";
         }
     } catch (PDOException $e) {
         echo '{"error":{"text":' . $e->getMessage() . '}}';
     }
-    $errors = array();
+    sendResponse($response);
 });
 
 $app->get("/isAuth", function () use ($app) {
