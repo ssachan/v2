@@ -4,7 +4,7 @@
 #
 # Host: localhost (MySQL 5.5.9)
 # Database: nero
-# Generation Time: 2012-11-22 19:33:57 +0530
+# Generation Time: 2012-11-27 10:17:08 +0530
 # ************************************************************
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -15,54 +15,6 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
-
-# Dump of table account_fb
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `account_fb`;
-
-CREATE TABLE `account_fb` (
-  `accountId` int(11) NOT NULL,
-  `facebookId` bigint(20) DEFAULT NULL,
-  `linkedOn` datetime DEFAULT NULL,
-  `bio` varchar(120) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `education` varchar(120) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `firstName` varchar(120) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `gender` varchar(120) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `lastName` varchar(120) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `link` varchar(120) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `locale` varchar(120) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `pictures` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `quotes` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `timezone` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `username` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `work` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`accountId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-
-# Dump of table account_google
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `account_google`;
-
-CREATE TABLE `account_google` (
-  `accountId` int(11) DEFAULT NULL,
-  `googleId` int(25) DEFAULT NULL,
-  `familyName` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `gender` varchar(1) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `givenName` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `link` varchar(300) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `locale` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `name` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `picture` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `verifiedEmail` int(1) DEFAULT NULL,
-  `linkedOn` datetime DEFAULT NULL,
-  KEY `accountId` (`accountId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 
 # Dump of table accounts
@@ -86,7 +38,7 @@ CREATE TABLE `accounts` (
   `resetsentOn` datetime DEFAULT NULL,
   `pics` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `accounts` WRITE;
 /*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
@@ -94,10 +46,75 @@ INSERT INTO `accounts` (`id`,`username`,`password`,`firstName`,`lastName`,`email
 VALUES
 	(1,NULL,'aa','aa','aa','aa',NULL,'2012-11-16 15:19:08',NULL,NULL,NULL,NULL,NULL,NULL),
 	(2,NULL,'pass','fn','ln','email',NULL,'2012-11-16 15:44:30',NULL,NULL,NULL,NULL,NULL,NULL),
-	(3,NULL,'lopl','lopl','lopl','lopl',NULL,'2012-11-16 15:59:26',NULL,NULL,NULL,NULL,NULL,NULL);
+	(3,NULL,'lopl','lopl','lopl','lopl',NULL,'2012-11-16 15:59:26',NULL,NULL,NULL,NULL,NULL,NULL),
+	(4,NULL,'test','test','test','test',NULL,'2012-11-25 22:16:04',NULL,NULL,NULL,NULL,NULL,NULL),
+	(5,NULL,'lop','lop','lop','lop',NULL,'2012-11-25 22:16:49',NULL,NULL,NULL,NULL,NULL,NULL),
+	(6,NULL,'place','place','place','place',NULL,'2012-11-25 22:31:38',NULL,NULL,NULL,NULL,NULL,NULL),
+	(24,NULL,NULL,'Shikhar','Sachan','shikhar.sachan@gmail.com',NULL,'2012-11-25 23:49:16',NULL,NULL,NULL,NULL,NULL,NULL),
+	(25,NULL,'tt','tt','tt','tt',NULL,'2012-11-26 10:18:04',NULL,NULL,NULL,NULL,NULL,NULL),
+	(26,NULL,'ll','ll','ll','ll',NULL,'2012-11-26 10:19:14',NULL,NULL,NULL,NULL,NULL,NULL),
+	(27,NULL,'a','a','a','test@t.com',NULL,'2012-11-26 10:57:29',NULL,NULL,NULL,NULL,NULL,NULL),
+	(28,NULL,'aaaa','aaaa','aaaa','aa@a.com',NULL,'2012-11-26 11:09:57',NULL,NULL,NULL,NULL,NULL,NULL),
+	(29,NULL,'','','','aa@g.com',NULL,'2012-11-27 06:47:37',NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
 UNLOCK TABLES;
+
+
+# Dump of table accounts_fb
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `accounts_fb`;
+
+CREATE TABLE `accounts_fb` (
+  `accountId` int(11) NOT NULL,
+  `facebookId` bigint(20) DEFAULT NULL,
+  `linkedOn` datetime DEFAULT NULL,
+  `bio` varchar(120) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `education` varchar(120) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `firstName` varchar(120) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `gender` varchar(120) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `lastName` varchar(120) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `link` varchar(120) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `locale` varchar(120) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `pictures` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `quotes` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `timezone` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `username` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `work` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`accountId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `accounts_fb` WRITE;
+/*!40000 ALTER TABLE `accounts_fb` DISABLE KEYS */;
+INSERT INTO `accounts_fb` (`accountId`,`facebookId`,`linkedOn`,`bio`,`education`,`firstName`,`gender`,`lastName`,`link`,`locale`,`pictures`,`quotes`,`timezone`,`username`,`work`)
+VALUES
+	(24,675467514,NULL,'find my scribbling here - http://greypad.thinkpluto.com/','test','Shikhar','male','Sachan','https://www.facebook.com/shikhar.sachan','en_US',NULL,NULL,'5.5','shikhar.sachan',NULL);
+
+/*!40000 ALTER TABLE `accounts_fb` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# Dump of table accounts_google
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `accounts_google`;
+
+CREATE TABLE `accounts_google` (
+  `accountId` int(11) DEFAULT NULL,
+  `googleId` int(25) DEFAULT NULL,
+  `familyName` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `gender` varchar(1) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `givenName` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `link` varchar(300) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `locale` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `name` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `picture` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `verifiedEmail` int(1) DEFAULT NULL,
+  `linkedOn` datetime DEFAULT NULL,
+  KEY `accountId` (`accountId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 
 # Dump of table ascores_l1
@@ -311,16 +328,18 @@ DROP TABLE IF EXISTS `packages`;
 
 CREATE TABLE `packages` (
   `id` int(11) DEFAULT NULL,
-  `packageName` varchar(50) DEFAULT NULL,
+  `name` varchar(50) DEFAULT NULL,
   `details` text,
-  `poolId` int(11) DEFAULT NULL
+  `poolId` int(11) DEFAULT NULL,
+  `price` int(11) DEFAULT NULL,
+  `streamId` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `packages` WRITE;
 /*!40000 ALTER TABLE `packages` DISABLE KEYS */;
-INSERT INTO `packages` (`id`,`packageName`,`details`,`poolId`)
+INSERT INTO `packages` (`id`,`name`,`details`,`poolId`,`price`,`streamId`)
 VALUES
-	(1,NULL,NULL,NULL);
+	(1,'Physics Test Series','5|:2',1,250,1);
 
 /*!40000 ALTER TABLE `packages` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -815,6 +834,17 @@ CREATE TABLE `results` (
   `timestamp` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+LOCK TABLES `results` WRITE;
+/*!40000 ALTER TABLE `results` DISABLE KEYS */;
+INSERT INTO `results` (`quizId`,`accountId`,`selectedAnswers`,`score`,`timePerQuestion`,`timeTaken`,`toggleData`,`timestamp`)
+VALUES
+	(1,1,'[\"1|:2|:|:2|:|:\",null,null,null,null,null,null,null,null]','[0,1,0]','[6,null,null,null,null,null,null,null,null]',NULL,NULL,'2012-11-23 17:49:36'),
+	(3,24,'[\"1\",null,null,null,null,null,null,null,null]','[0,1,0]','[4,null,null,null,null,null,null,null,null]',NULL,NULL,'2012-11-25 23:53:23'),
+	(2,24,'[\"1\",null,null,null,null,null,null,null,null]','[0,1,0]','[3,null,null,null,null,null,null,null,null]',NULL,NULL,'2012-11-26 08:16:40'),
+	(2,28,'[\"2\",\"2\",\"1\",null,null,null,null,null,null]','[1,2,1]','[4,1,2,null,null,null,null,null,null]',NULL,NULL,'2012-11-26 11:10:09');
+
+/*!40000 ALTER TABLE `results` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table roles
@@ -1170,7 +1200,14 @@ INSERT INTO `students` (`ascoreL1`,`ascoreL2`,`quizzesAttempted`,`accountId`,`st
 VALUES
 	(0,0,NULL,1,1),
 	(0,0,NULL,2,1),
-	(0,0,NULL,3,1);
+	(0,0,NULL,3,1),
+	(0,0,NULL,6,1),
+	(0,0,NULL,24,1),
+	(0,0,NULL,25,1),
+	(0,0,NULL,26,1),
+	(0,0,NULL,27,1),
+	(0,0,NULL,28,1),
+	(0,0,NULL,29,1);
 
 /*!40000 ALTER TABLE `students` ENABLE KEYS */;
 UNLOCK TABLES;
