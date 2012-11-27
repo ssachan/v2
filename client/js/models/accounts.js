@@ -57,16 +57,13 @@ window.Account = Backbone.Model.extend({
 			type : 'GET',
 			dataType : "json",
 			success : function(data) {
-				console.log('log out');
-				if (data.error) { // If there is an error, show the error
-					// messages
-					console.log(data.error.text);
-				} else { // If not, send them back to the home page
+				if (data.status == STATUS.SUCCESS) {
+					console.log('log out');
 					window.location.replace('#landing');
-					if (account.get('type') == 2) {
-						user.logout();
-					}
 					account.clear();
+					helper.showError(data.data);
+				} else {
+					helper.showError(data.data);
 				}
 			},
 			error : function(data) {

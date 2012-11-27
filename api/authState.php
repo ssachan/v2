@@ -324,13 +324,16 @@ $app->post("/signup", function () use ($app) {
 });
 
 $app->get("/logout", function () use ($app) {
+    $response = array();
     if (isset($_SESSION['user'])) {
         unset($_SESSION['user']);
-        echo json_encode(true);
+        $response["status"] = SUCCESS;
+        $response["data"] = "Logged Out";
     } else {
-        $msg = 'Already logged out';
-        echo '{"error":{"text":' . $msg . '}}';
+        $response["status"] = FAIL;
+        $response["data"] = "Already logged out";
     }
+    sendResponse($response);
 });
 
 $app->post("/login", function () use ($app) {
@@ -344,12 +347,12 @@ $app->post("/login", function () use ($app) {
     try {
         $db = getConnection();
         $stmt = $db->query($sql);
-        $account = $stmt->fetch(PDO::FETCH_OBJ);
+        $record = $stmt->fetch(PDO::FETCH_OBJ);
         $db = null;
-        if ($account != null && $account->id != null) {
+        if ($record != null && $record->id != null) {
             $response["status"] = SUCCESS;
-            $response["data"] = $account;
-            $_SESSION['user'] = $account->id;
+            $response["data"] = $record;
+            $_SESSION['user'] = $record->id;
         } else {
             $response["status"] = FAIL;
             $response["data"] = "Email and Password dont match.";

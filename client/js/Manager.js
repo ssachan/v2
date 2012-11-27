@@ -4,13 +4,19 @@ var STATUS = {
 	ERROR : 'error'
 };
 
-$('#loading').ajaxStart(function() {
+$(document).ajaxStart(function() {
+	  $('#loading').show();
+	  //$('#cboxLoadedContent').hide();
+	}).ajaxStop(function() {
+	  $('#loading').hide();
+	  //$('#cboxLoadedContent').fadeIn('slow');
+	});
+
+/*$('#loading').ajaxStart(function() {
 	$(this).show();
-	$('#result').hide();
 }).ajaxStop(function() {
 	$(this).hide();
-	$('#result').fadeIn('slow');
-});
+});*/
 
 // Tell jQuery to watch for any 401 or 403 errors and handle them appropriately
 $.ajaxSetup({
