@@ -16,20 +16,10 @@ window.LoginView = Backbone.View.extend({
         return this;
     },
 
-	/*fConnect : function() {
-		user.login();
-		//also send the details to the server
-	},
-
-	gConnect : function() {
-		glogin();
-	},*/
-	
     login:function (event) {
         event.preventDefault(); // Don't let this button submit the form
     	this.model.login($('#linputEmail').val(), $('#linputPassword').val());
-    	
-        event.preventDefault(); // Don't let this button submit the form
+    	event.preventDefault(); // Don't let this button submit the form
         $('.alert-error').hide(); // Hide any errors on a new submit
         
     }

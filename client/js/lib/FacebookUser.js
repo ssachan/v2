@@ -31,7 +31,7 @@
     },
 
     updateLoginStatus: function(){
-      FB.getLoginStatus(this.onLoginStatusChange);
+    	FB.getLoginStatus(this.onLoginStatusChange);
     },
 
     onLoginStatusChange: function(response) {

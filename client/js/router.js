@@ -81,6 +81,8 @@ var AppRouter = Backbone.Router.extend({
 		mView.close();
 		if (account.get('id') != null) {
 			Manager.getDashboardData();
+		}else{
+			account.isAuth();
 		}
 	},
 

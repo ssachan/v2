@@ -43,8 +43,12 @@ window.QuizItemView = Backbone.View.extend({
 	},
 	
 	onQuizItemClick : function(){
-		mView.model = this.model;//var view = new ModalView({ model: this.model });
-        mView.show();
+		if(this.model.get('hasAttempted')==true){
+			window.location.replace('#quizResults/' + this.model.get('id')+ '');
+		}else{
+			mView.model = this.model;//var view = new ModalView({ model: this.model });
+			mView.show();
+		}
 	},
 	
 	render : function() {

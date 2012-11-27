@@ -11,6 +11,9 @@
         <li><%= descriptionShort %></li>
     </ul>
 </div>
+<%
+if(fid){ %>
 <div class="box quiz-lib-t5 font-h5 bold">
     <img src="../api/resources/fac/<%=fid%>.jpg" height="25" width="25"> <%= firstName %> <%= lastName %>
 </div>
+<%}%>
