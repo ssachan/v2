@@ -13,6 +13,7 @@ var streamId = activeStream.get('id');
 var mView = new ModalView();
 
 var timer = new Timer(1000, null, []); // we will have just one global timer
+var activeMenu = null;
 
 $(document).ready(function() {
 	helper.loadTemplate(Config.viewsArray, function() {
@@ -58,45 +59,40 @@ var AppRouter = Backbone.Router.extend({
 	},
 
 	landing : function() {
-		// if authenticated, move to dashboard, else display the login page
 		new LandingView({
 			el : $('#content')
 		});
 		$('#log-in').html((new LoginView({model:account})).el);
+		$('#packages-menu').hide();
+		$('#home-menu').hide();
 		return;
 	},
 
-	/*dashboard : function() {
-		$('#log-in').html('');
-		// check if authenticated move to dashboard page, else move to landing
-		// page
-		mView.close();
-		Manager.getDashboardData();
-	},*/
-	
 	dashboard : function() {
-		$('#log-in').html('');
 		// check if authenticated move to dashboard page, else move to landing
 		// page
 		mView.close();
 		if (account.get('id') != null) {
 			Manager.getDashboardData();
+			$('#packages-menu').show();
+			$('#home-menu').show();
+			this.changeMenu('home-menu');
 		}else{
 			account.isAuth();
 		}
 	},
 
 	quizLibrary : function() {
-		$('#log-in').html('');
 		Manager.getDataForQuizLibrary(streamId);
+		this.changeMenu('quiz-menu');
 	},
 
 	packages : function() {
 		Manager.getPackagesByStreamId(streamId);
+		this.changeMenu('packages-menu');
 	},
 
 	facDirectory : function() {
-		$('#log-in').html('');
 		// if streamId is set
 		if (streamId) {
 			Manager.getFacByStreamId(streamId);
@@ -104,10 +100,10 @@ var AppRouter = Backbone.Router.extend({
 			// get a generic faculty list
 			alert('generic list of fac');
 		}
+		this.changeMenu('fac-menu');
 	},
 
 	fac : function(id) {
-		$('#log-in').html('');
 		Manager.getFaculty(id);
 	},
 
@@ -159,7 +155,19 @@ var AppRouter = Backbone.Router.extend({
 		this.currentView = view;
 		$('#content').html((this.currentView.render()).el);
 	},
-
+	
+	changeMenu : function(newMenu){
+		if (activeMenu!=null){
+			$('#'+activeMenu).removeClass('active');
+		}
+		activeMenu = newMenu;
+		$('#'+activeMenu).addClass('active');
+		if (account.get('id') == null) {
+			$('#log-in').show();
+		}else{
+			$('#log-in').hide();
+		}
+	}
 });
 
 Backbone.View.prototype.close = function() {

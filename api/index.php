@@ -471,8 +471,8 @@ function getQuizzesHistory() {
 }
 
 function getPackagesByStreamId($id) {
-    $sql = "SELECT p.id as id,p.name,p.details,p.price,t.name from packages p, package_type t where p.streamId='"
-            . $id . "' AND p.type=t.id";
+    $sql = "SELECT p.id as id,p.name,p.details,p.price from packages p where p.streamId='"
+            . $id . "'";
     //echo $sql;
     try {
         $db = getConnection();
