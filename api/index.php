@@ -30,7 +30,7 @@ $app->get('/processQuiz/', $authenticate($app), 'processQuiz');
 $app->get('/questions/', $authenticate($app), 'getQuestionsByIds');
 
 // responses
-$app->post('/responses', 'addResponse');
+$app->post('/responses', 'addResults');
 
 $app->get('/packagesByStreamId/:id', 'getPackagesByStreamId');
 
@@ -66,7 +66,6 @@ function phpLog($msg) {
     //error_log($msg, 3, '/var/tmp/php.log');
 }
 
-
 function getL1ByStream($id) {
     $response = array();
     $sql = "select * from section_l1 where streamId=:id";
@@ -77,13 +76,8 @@ function getL1ByStream($id) {
         $stmt->execute();
         $records = $stmt->fetchAll(PDO::FETCH_OBJ);
         $db = null;
-        if ($records != null && sizeof($records) > 0) {
-            $response["status"] = SUCCESS;
-            $response["data"] = $records;
-        } else {
-            $response["status"] = FAIL;
-            $response["data"] = "data doesn't exist";
-        }
+        $response["status"] = SUCCESS;
+        $response["data"] = $records;
     } catch (PDOException $e) {
         $response["status"] = ERROR;
         $response["data"] = EXCEPTION_MSG;
@@ -102,13 +96,8 @@ function getL2ByStream($id) {
         $stmt->execute();
         $records = $stmt->fetchAll(PDO::FETCH_OBJ);
         $db = null;
-        if ($records != null && sizeof($records) > 0) {
-            $response["status"] = SUCCESS;
-            $response["data"] = $records;
-        } else {
-            $response["status"] = FAIL;
-            $response["data"] = "data doesn't exist";
-        }
+        $response["status"] = SUCCESS;
+        $response["data"] = $records;
     } catch (PDOException $e) {
         $response["status"] = ERROR;
         $response["data"] = EXCEPTION_MSG;
@@ -127,13 +116,8 @@ function getL3ByStream($id) {
         $stmt->execute();
         $records = $stmt->fetchAll(PDO::FETCH_OBJ);
         $db = null;
-        if ($records != null && sizeof($records) > 0) {
-            $response["status"] = SUCCESS;
-            $response["data"] = $records;
-        } else {
-            $response["status"] = FAIL;
-            $response["data"] = "data doesn't exist";
-        }
+        $response["status"] = SUCCESS;
+        $response["data"] = $records;
     } catch (PDOException $e) {
         $response["status"] = ERROR;
         $response["data"] = EXCEPTION_MSG;
@@ -161,13 +145,8 @@ function getL1Performance() {
         $stmt->execute();
         $records = $stmt->fetchAll(PDO::FETCH_OBJ);
         $db = null;
-        if ($records != null && sizeof($records) > 0) {
-            $response["status"] = SUCCESS;
-            $response["data"] = $records;
-        } else {
-            $response["status"] = FAIL;
-            $response["data"] = "data doesn't exist";
-        }
+        $response["status"] = SUCCESS;
+        $response["data"] = $records;
     } catch (PDOException $e) {
         $response["status"] = ERROR;
         $response["data"] = EXCEPTION_MSG;
@@ -191,13 +170,8 @@ function getL2Performance() {
         $stmt->execute();
         $records = $stmt->fetchAll(PDO::FETCH_OBJ);
         $db = null;
-        if ($records != null && sizeof($records) > 0) {
-            $response["status"] = SUCCESS;
-            $response["data"] = $records;
-        } else {
-            $response["status"] = FAIL;
-            $response["data"] = "data doesn't exist";
-        }
+        $response["status"] = SUCCESS;
+        $response["data"] = $records;
     } catch (PDOException $e) {
         $response["status"] = ERROR;
         $response["data"] = EXCEPTION_MSG;
@@ -205,7 +179,6 @@ function getL2Performance() {
     }
     sendResponse($response);
 }
-
 
 function getQuizzesHistory() {
     $response = array();
@@ -220,13 +193,8 @@ function getQuizzesHistory() {
         $stmt->execute();
         $records = $stmt->fetchAll(PDO::FETCH_OBJ);
         $db = null;
-        if ($records != null && sizeof($records) > 0) {
-            $response["status"] = SUCCESS;
-            $response["data"] = $records;
-        } else {
-            $response["status"] = FAIL;
-            $response["data"] = "data doesn't exist";
-        }
+        $response["status"] = SUCCESS;
+        $response["data"] = $records;
     } catch (PDOException $e) {
         $response["status"] = ERROR;
         $response["data"] = EXCEPTION_MSG;
@@ -248,13 +216,8 @@ function getQuizzesByStreamId($id) {
         $stmt->execute();
         $records = $stmt->fetchAll(PDO::FETCH_OBJ);
         $db = null;
-        if ($records != null && sizeof($records) > 0) {
-            $response["status"] = SUCCESS;
-            $response["data"] = $records;
-        } else {
-            $response["status"] = FAIL;
-            $response["data"] = "data doesn't exist";
-        }
+        $response["status"] = SUCCESS;
+        $response["data"] = $records;
     } catch (PDOException $e) {
         $response["status"] = ERROR;
         $response["data"] = EXCEPTION_MSG;
@@ -263,7 +226,6 @@ function getQuizzesByStreamId($id) {
     sendResponse($response);
 }
 
-
 //
 // The fac directory page
 //
@@ -271,27 +233,22 @@ function getQuizzesByStreamId($id) {
 function getFacByStreamId($id) {
     $response = array();
     $sql = "select * from faculty where streamIds like '%" . $id
-    . "' or streamIds like '" . $id . "%' or streamIds like '%|:" . $id
-    . "|:%'";
+            . "' or streamIds like '" . $id . "%' or streamIds like '%|:" . $id
+            . "|:%'";
     try {
         $db = getConnection();
         $stmt = $db->query($sql);
         $stmt->execute();
         $records = $stmt->fetchAll(PDO::FETCH_OBJ);
         $db = null;
-        if ($records != null && sizeof($records) > 0) {
-            $response["status"] = SUCCESS;
-            $response["data"] = $records;
-        } else {
-            $response["status"] = FAIL;
-            $response["data"] = "data doesn't exist";
-        }
+        $response["status"] = SUCCESS;
+        $response["data"] = $records;
     } catch (PDOException $e) {
         $response["status"] = ERROR;
         $response["data"] = EXCEPTION_MSG;
         phpLog($e->getMessage());
     }
-    sendResponse($response);        
+    sendResponse($response);
 }
 
 //
@@ -335,13 +292,8 @@ function getQuizzesByFac($id) {
         $stmt->execute();
         $records = $stmt->fetchAll(PDO::FETCH_OBJ);
         $db = null;
-        if ($records != null && sizeof($records) > 0) {
-            $response["status"] = SUCCESS;
-            $response["data"] = $records;
-        } else {
-            $response["status"] = FAIL;
-            $response["data"] = "data doesn't exist";
-        }
+        $response["status"] = SUCCESS;
+        $response["data"] = $records;
     } catch (PDOException $e) {
         $response["status"] = ERROR;
         $response["data"] = EXCEPTION_MSG;
@@ -360,13 +312,8 @@ function getFollowers($id) {
         $stmt->execute();
         $records = $stmt->fetchAll(PDO::FETCH_OBJ);
         $db = null;
-        if ($records != null && sizeof($records) > 0) {
-            $response["status"] = SUCCESS;
-            $response["data"] = $records;
-        } else {
-            $response["status"] = FAIL;
-            $response["data"] = "data doesn't exist";
-        }
+        $response["status"] = SUCCESS;
+        $response["data"] = $records;
     } catch (PDOException $e) {
         $response["status"] = ERROR;
         $response["data"] = EXCEPTION_MSG;
@@ -419,7 +366,9 @@ function processQuiz() {
         $count = $stmt->fetchObject();
         $db = null;
     } catch (PDOException $e) {
-        echo '{"error":{"text":' . $e->getMessage() . '}}';
+        $response["status"] = ERROR;
+        $response["data"] = EXCEPTION_MSG;
+        phpLog($e->getMessage());
     }
     if ($count->count == 0) {
         // this quiz hasn't been taken.
@@ -441,9 +390,9 @@ function processQuiz() {
                 $response["data"] = "Something went wrong! Please drop in an email to admin@ps.com";
             }
         } catch (PDOException $e) {
-            $response["status"] = "error";
-            $response["data"] = $e->getMessage();
-            //echo '{"error":{"text":' . $e->getMessage() . '}}';
+            $response["status"] = ERROR;
+            $response["data"] = EXCEPTION_MSG;
+            phpLog($e->getMessage());
         }
     } else {
         // you have already taken this quiz, fetch the questions and show it in results
@@ -454,7 +403,8 @@ function processQuiz() {
     sendResponse($response);
 }
 
-function addResponse() {
+function addResults() {
+    $response = array();
     $streamId = $_POST['streamId'];
     $accountId = $_POST['accountId'];
     $quizId = $_POST['quizId'];
@@ -463,13 +413,11 @@ function addResponse() {
     $timePerQuestion = $_POST['timePerQuestion'];
     $date = date("Y-m-d H:i:s", time());
     $sql = "INSERT INTO results (accountId, quizId, selectedAnswers, score, timePerQuestion, timestamp) VALUES (:accountId, :quizId, :selectedAnswers, :score, :timePerQuestion, :timeStamp)";
-    //echo $sql;
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
         $stmt->bindParam("accountId", $accountId);
         $stmt->bindParam("quizId", $quizId);
-        //$stmt->bindParam("questionId", $response->questionId);
         $stmt->bindParam("selectedAnswers", $selectedAnswers);
         $stmt->bindParam("score", $score);
         $stmt->bindParam("timePerQuestion", $timePerQuestion);
@@ -477,34 +425,60 @@ function addResponse() {
         $stmt->execute();
         $db = null;
     } catch (PDOException $e) {
-        error_log($e->getMessage(), 3, '/var/tmp/php.log');
+        $response["status"] = ERROR;
+        $response["data"] = EXCEPTION_MSG;
+        phpLog($e->getMessage());
     }
-
-    $sql2 = "UPDATE quizzes SET totalAttempts=totalAttempts+1 where id=:quizId";
+    $sql = "SELECT quizzesAttempted from STUDENTS where accountId=:accountId and streamId=:streamId";
     try {
         $db = getConnection();
-        $stmt = $db->prepare($sql2);
-        $stmt->bindParam("quizId", $response->quizId);
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("accountId", $accountId);
+        $stmt->bindParam("streamId", $streamId);
         $stmt->execute();
-        $response->id = $db->lastInsertId();
-        $db = null;
+        $record = $stmt->fetch(PDO::FETCH_OBJ);
+        if ($record->quizzesAttempted == null) {
+            $quizzesAttempted = array();
+        } else {
+            $quizzesAttempted = json_decode($record->quizzesAttempted);
+        }
+        if (!(in_array($quizId, $quizzesAttempted))) {
+            array_push($quizzesAttempted, $quizId);
+        }
+        $quizzesAttemptedJson = json_encode($quizzesAttempted);
+        $sql = "UPDATE students SET quizzesAttempted=:quizzesAttempted where accountId=:accountId and streamId=:streamId";
+        try {
+            $db = getConnection();
+            $stmt = $db->prepare($sql);
+            $stmt->bindParam("quizzesAttempted", $quizzesAttemptedJson);
+            $stmt->bindParam("accountId", $accountId);
+            $stmt->bindParam("streamId", $streamId);
+            $stmt->execute();
+            $db = null;
+        } catch (PDOException $e) {
+            $response["status"] = ERROR;
+            $response["data"] = EXCEPTION_MSG;
+            phpLog($e->getMessage());
+        }
+        // insert it back in the table
     } catch (PDOException $e) {
-        //echo '{"error":{"text":'. $e->getMessage() .'}}';
+        $response["status"] = ERROR;
+        $response["data"] = EXCEPTION_MSG;
+        phpLog($e->getMessage());
     }
 
-    /*$sql3 = "UPDATE students SET ascoreL1=ascoreL1+1 where accountId=:accountId and streamId=:streamId";
-     try {
-    $db = getConnection();
-    $stmt = $db->prepare($sql3);
-    $stmt->bindParam("accountId", $ids[0]);
-    $stmt->bindParam("streamId", $ids[1]);
-    $stmt->execute();
-    $db = null;
-    ///$response->id = $db->lastInsertId();
-    echo json_encode($response);
-    } catch(PDOException $e) {
-    echo '{"error":{"text":'. $e->getMessage() .'}}';
-    }*/
+    $sql = "UPDATE quizzes SET totalAttempts=totalAttempts+1 where id=:quizId";
+    try {
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("quizId", $quizId);
+        $stmt->execute();
+        $db = null;
+    } catch (PDOException $e) {
+        $response["status"] = ERROR;
+        $response["data"] = EXCEPTION_MSG;
+        phpLog($e->getMessage());
+    }
 }
 
 /**
@@ -526,7 +500,6 @@ function updateScores($accId, $streamId) {
     }
 }
 
-
 function getPackagesByStreamId($id) {
     $sql = "SELECT p.id as id,p.name,p.details,p.price from packages p where p.streamId='"
             . $id . "'";
@@ -547,7 +520,6 @@ function getPackagesByStreamId($id) {
         echo '{"error":{"text":' . $e->getMessage() . '}}';
     }
 }
-;
 
 function resetResults() {
     $sql = "TRUNCATE table results  ";
