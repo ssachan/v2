@@ -14,14 +14,6 @@ function phpLog($msg) {
 }
 
 /**
- * checks if email is valid
- * @param unknown_type $email
- */
-function isEmail($email){
-    
-}
-
-/**
  * Function to send emails
  * @param unknown_type $content
  * @param unknown_type $email

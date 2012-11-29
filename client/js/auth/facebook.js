@@ -12,23 +12,15 @@ window.fbAsyncInit = function() {
 
 	user.on('facebook:unauthorized', function(model, response) {
 		console.info('facebook:unauthorized');
+		if(account.get('type')=='2'){
+			//login button is pressed
+			FB.login(function(){}, { scope: 'email'}); //this.options.scope.join(',') }
+		}
 	});
 
 	user.on('facebook:connected', function(model, response) {
 		console.info('facebook:connected');
-	});
-
-	user.on('facebook:disconnected', function(model, response) {
-		console.info('facebook:disconnected');
-		// check if a session is already on, if so redirect him to the dashboard page
-		/*if(account.get('id')==null){
-			account.isAuth();
-		}*/
-	});
-
-	user.on('change', function() {
-		console.info('change');
-		/*if(account.get('type')=='2'){
+		if(account.get('type')=='2'){
 			// this is a sign-up using facebook
 			if(account.get('id')==null){
 				// sign me up 
@@ -44,7 +36,36 @@ window.fbAsyncInit = function() {
 			}else{
 				
 			}
-		}*/
+		}
+	});
+
+	user.on('facebook:disconnected', function(model, response) {
+		console.info('facebook:disconnected');
+		if(account.get('type')=='2'){
+			//login button is pressed
+			FB.login(function(){}, { scope: 'email'}); //this.options.scope.join(',') }
+		}
+	});
+
+	/*user.on('change', function() {
+		console.info('change');
+		if(account.get('type')=='2'){
+			// this is a sign-up using facebook
+			if(account.get('id')==null){
+				// sign me up 
+				account.set('type',2);
+				user.attributes.type=2;
+				user.attributes.streamId=streamId;
+				account.signUp(user.attributes);
+			}
+		}else{
+			// check if a session already exists 
+			if(account.get('id')==null){
+				account.isAuth();
+			}else{
+				
+			}
+		}
 		/*if(account.get('id')==null){
 			// sign me up 
 			account.set('type',2);
@@ -70,9 +91,10 @@ window.fbAsyncInit = function() {
 					tr.append(attr).append(val).appendTo(table);
 				}, this);
 		user.get('pictures').square;
-		*/
-	});
-	user.updateLoginStatus();
+		
+	});*/
+	
+	//user.updateLoginStatus();
 };
 
 /*$('#login').click(function(){ user.login(); });

@@ -8,9 +8,9 @@ var STATUS = {
  * the generic loaders
  */
 $(document).ajaxStart(function() {
-	  $('#loading').show();
-	}).ajaxStop(function() {
-	  $('#loading').hide();
+	$('#loading').show();
+}).ajaxStop(function() {
+	$('#loading').hide();
 });
 
 // Tell jQuery to watch for any 401 or 403 errors and handle them appropriately
@@ -46,7 +46,11 @@ window.Manager = {
 			url : Config.serverUrl + 'l1ByStream/' + id,
 			dataType : "json",
 			success : function(data) {
-				sectionL1.reset(data);
+				if (data.status == STATUS.SUCCESS) {
+					sectionL1.reset(data.data);
+				} else { // If not, send them back to the home page
+					helper.showError(data.data);
+				}
 			}
 		});
 	},
@@ -56,7 +60,11 @@ window.Manager = {
 			url : Config.serverUrl + 'l2ByStream/' + id,
 			dataType : "json",
 			success : function(data) {
-				sectionL2.reset(data);
+				if (data.status == STATUS.SUCCESS) {
+					sectionL2.reset(data.data);
+				} else { // If not, send them back to the home page
+					helper.showError(data.data);
+				}
 			}
 		});
 	},
@@ -66,7 +74,11 @@ window.Manager = {
 			url : Config.serverUrl + 'l3ByStream/' + id,
 			dataType : "json",
 			success : function(data) {
-				sectionL3.reset(data);
+				if (data.status == STATUS.SUCCESS) {
+					sectionL3.reset(data.data);
+				} else { // If not, send them back to the home page
+					helper.showError(data.data);
+				}
 			}
 		});
 	},
@@ -81,8 +93,11 @@ window.Manager = {
 				streamId : streamId
 			},
 			success : function(data) {
-				console.log("L1performance fetched: " + data.length);
-				scoreL1.reset(data);
+				if (data.status == STATUS.SUCCESS) {
+					scoreL1.reset(data.data);
+				} else { // If not, send them back to the home page
+					helper.showError(data.data);
+				}
 			}
 		});
 	},
@@ -97,8 +112,11 @@ window.Manager = {
 			},
 			dataType : "json",
 			success : function(data) {
-				console.log("L2performance fetched: " + data.length);
-				scoreL2.reset(data);
+				if (data.status == STATUS.SUCCESS) {
+					scoreL2.reset(data.data);
+				} else { // If not, send them back to the home page
+					helper.showError(data.data);
+				}
 			}
 		});
 	},
@@ -114,7 +132,11 @@ window.Manager = {
 			dataType : "json",
 			success : function(data) {
 				console.log("history fetched: " + data.length);
-				quizHistory.reset(data);
+				if (data.status == STATUS.SUCCESS) {
+					quizHistory.reset(data.data);
+				} else { // If not, send them back to the home page
+					helper.showError(data.data);
+				}
 			}
 		});
 	},
@@ -154,14 +176,11 @@ window.Manager = {
 			url : url,
 			dataType : "json",
 			success : function(data) {
-				console.log("quizzes fetched: " + data.length);
-				quizLibrary.reset(data);
-				/*
-				 * var quizLibraryView = new QuizLibraryView({ model :
-				 * quizLibrary, //el : '#content' });
-				 * app.showView(quizLibraryView);
-				 * quizLibraryView.renderQuizItems();
-				 */
+				if (data.status == STATUS.SUCCESS) {
+					quizLibrary.reset(data.data);
+				} else { // If not, send them back to the home page
+					helper.showError(data.data);
+				}
 			}
 		});
 	},
@@ -172,12 +191,15 @@ window.Manager = {
 			url : url,
 			dataType : "json",
 			success : function(data) {
-				console.log("faculty fetched: " + data.length);
-				facDirectory.reset(data);
-				new FacDirectoryView({
-					model : facDirectory,
-					el : '#content'
-				});
+				if (data.status == STATUS.SUCCESS) {
+					facDirectory.reset(data.data);
+					new FacDirectoryView({
+						model : facDirectory,
+						el : '#content'
+					});
+				} else { // If not, send them back to the home page
+					helper.showError(data.data);
+				}
 			}
 		});
 	},
@@ -188,8 +210,12 @@ window.Manager = {
 			url : url,
 			dataType : "json",
 			success : function(data) {
-				console.log("faculty fetched: " + data);
-				fac.set(data);// facDirectory.reset(data);
+				if (data.status == STATUS.SUCCESS) {
+					console.log("faculty fetched: " + data);
+					fac.set(data.data);// facDirectory.reset(data);
+				} else { // If not, show error
+					helper.showError(data.data);
+				}
 			}
 		});
 	},
@@ -200,8 +226,12 @@ window.Manager = {
 			url : url,
 			dataType : "json",
 			success : function(data) {
-				console.log("faculty quizzes fetched: " + data.length);
-				facQuizzes.reset(data);
+				if (data.status == STATUS.SUCCESS) {
+					console.log("faculty fetched: " + data);
+					facQuizzes.reset(data.data);// facDirectory.reset(data);
+				} else { // If not, show error
+					helper.showError(data.data);
+				}
 			}
 		});
 	},

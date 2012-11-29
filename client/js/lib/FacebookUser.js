@@ -23,7 +23,8 @@
     _loginStatus: null,
 
     login: function(){
-      FB.login(function(){}, { scope: 'email'}); //this.options.scope.join(',') }
+    	FB.getLoginStatus(this.onLoginStatusChange);
+    	//user.updateLoginStatus();
     },
 
     logout: function(){
@@ -35,7 +36,7 @@
     },
 
     onLoginStatusChange: function(response) {
-      if(this._loginStatus === response.status) return false;
+     //if(this._loginStatus === response.status) return false;
       var event;
       if(response.status === 'not_authorized') {
         event = 'facebook:unauthorized';
@@ -46,7 +47,7 @@
         event = 'facebook:disconnected';
       }
       this.trigger(event, this, response);
-      this._loginStatus = response.status;
+      //this._loginStatus = response.status;
     },
 
     parse: function(response) {

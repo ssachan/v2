@@ -72,14 +72,6 @@ window.Account = Backbone.Model.extend({
 		});
 	},
 
-	getAuth : function(callback) {
-		// getAuth is wrapped around our router
-		// before we start any routers let us see if the user is valid
-		this.fetch({
-			success : callback
-		});
-	},
-
 	signUp : function(inputValues) {
 		// Do a POST to /login and send the creds
 		var url = '../api/signup';
@@ -92,11 +84,7 @@ window.Account = Backbone.Model.extend({
 			success : function(data) {
 				if (data.status == STATUS.SUCCESS) {
 					account.set(data.data);
-					if (account.get('type') == 1) {
-						window.location.replace('#');
-					} else {
-						app.dashboard();
-					}
+					window.location.replace('#');
 				} else {
 					helper.showError(data.data);
 				}
