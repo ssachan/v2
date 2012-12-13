@@ -12,71 +12,34 @@ window.fbAsyncInit = function() {
 
 	user.on('facebook:unauthorized', function(model, response) {
 		console.info('facebook:unauthorized');
-		if(account.get('type')=='2'){
-			//login button is pressed
-			FB.login(function(){}, { scope: 'email'}); //this.options.scope.join(',') }
-		}
 	});
 
 	user.on('facebook:connected', function(model, response) {
 		console.info('facebook:connected');
-		if(account.get('type')=='2'){
+		if(account.get('type')=='2' && account.get('id')==null && user.attributes.id!=null){
 			// this is a sign-up using facebook
-			if(account.get('id')==null){
-				// sign me up 
 				account.set('type',2);
 				user.attributes.type=2;
 				user.attributes.streamId=streamId;
 				account.signUp(user.attributes);
-			}
-		}else{
-			// check if a session already exists 
-			if(account.get('id')==null){
-				account.isAuth();
-			}else{
-				
-			}
 		}
 	});
 
 	user.on('facebook:disconnected', function(model, response) {
 		console.info('facebook:disconnected');
-		if(account.get('type')=='2'){
-			//login button is pressed
-			FB.login(function(){}, { scope: 'email'}); //this.options.scope.join(',') }
-		}
 	});
 
-	/*user.on('change', function() {
+	user.on('change', function() {
 		console.info('change');
-		if(account.get('type')=='2'){
+		if(account.get('type')=='2' && account.get('id')==null){
 			// this is a sign-up using facebook
-			if(account.get('id')==null){
-				// sign me up 
 				account.set('type',2);
 				user.attributes.type=2;
 				user.attributes.streamId=streamId;
 				account.signUp(user.attributes);
-			}
-		}else{
-			// check if a session already exists 
-			if(account.get('id')==null){
-				account.isAuth();
-			}else{
-				
-			}
 		}
-		/*if(account.get('id')==null){
-			// sign me up 
-			account.set('type',2);
-			user.attributes.type=2;
-			user.attributes.streamId=streamId;
-			account.signUp(user.attributes);
-		}*/
-		//account.signup(user.attributes);
-
-		/*app.menu();
-		var table = $('.table tbody').empty();
+		
+		/*var table = $('.table tbody').empty();
 		
 		_(user.attributes).each(
 				function(value, attribute) {
@@ -91,8 +54,8 @@ window.fbAsyncInit = function() {
 					tr.append(attr).append(val).appendTo(table);
 				}, this);
 		user.get('pictures').square;
-		
-	});*/
+		*/
+	});
 	
 	//user.updateLoginStatus();
 };

@@ -10,6 +10,9 @@
     <ul class="left quiz-lib-t4 font-h5">
         <li><%= descriptionShort %></li>
     </ul>
+    <% if(hasAttempted==true){  %>
+        you have already attempted this quiz
+    <%}%>
 </div>
 <%
 if(fid){ %>

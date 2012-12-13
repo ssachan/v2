@@ -16,6 +16,10 @@ $app->add(new StrongAuth($config));
  */
 
 //require_once "Mail.php";
+//account types
+define('CUSTOM', 1); // custom sign up
+define('FB', 2); // FB sign up.
+define('GOOGLE', 3); // google.
 
 $app->add(new \Slim\Middleware\SessionCookie(
         array('expires' => '59 minutes', 'path' => '/', 'domain' => null,
@@ -23,6 +27,7 @@ $app->add(new \Slim\Middleware\SessionCookie(
                 'name' => 'slim_session', 'secret' => 'CHANGE_ME',
                 'cipher' => MCRYPT_RIJNDAEL_256,
                 'cipher_mode' => MCRYPT_MODE_CBC)));
+
 
 $authenticate = function ($app) {
     return function () use ($app) {
@@ -42,7 +47,7 @@ $authenticate = function ($app) {
 };
 
 function getStudentByAccountId($accountId, $streamId) {
-    $sql = "SELECT a.id as id,a.email,a.firstName,a.lastName,s.ascoreL1 as ascore from accounts a,students s where a.id='"
+    $sql = "SELECT a.id as id,a.email,a.firstName,a.lastName,s.ascoreL1 as ascore,s.quizzesAttempted from accounts a,students s where a.id='"
             . $accountId . "' AND s.streamId='" . $streamId
             . "' AND a.id=s.accountId";
     try {
@@ -126,8 +131,11 @@ function insertStudent($accountId, $streamId) {
 
 function insertFb($accountId) {
     $date = date("Y-m-d H:i:s", time());
-    $sql = "INSERT INTO accounts_fb (accountId,facebookId, linkedOn, bio, education, firstName, gender, lastName, link,locale, timezone, username) VALUES (:accountId,:facebookId,:linkedOn, :bio,:education, :firstName, :gender, :lastName, :link,:locale,:timezone,:username)";
-    $edu = "test";
+    $sql = "INSERT INTO accounts_fb (accountId,facebookId, linkedOn, bio, education, firstName, gender, lastName, link,locale, timezone, username,pictures,work) VALUES (:accountId,:facebookId,:linkedOn, :bio,:education, :firstName, :gender, :lastName, :link,:locale,:timezone,:username,:pics,:work)";
+    $edu = json_encode($_POST['education']);
+    $work = json_encode($_POST['work']);
+    $pics = json_encode($_POST['pictures']);
+    //echo json_encode($_POST['pictures']);
     //$stmt->bindParam("pictures", $_POST['pictures']);
     //$stmt->bindParam("quotes", $_POST['quotes']);
     try {
@@ -143,16 +151,15 @@ function insertFb($accountId) {
         $stmt->bindParam("lastName", $_POST['last_name']);
         $stmt->bindParam("link", $_POST['link']);
         $stmt->bindParam("locale", $_POST['locale']);
-        //$stmt->bindParam("pictures", $_POST['pictures']);
+        $stmt->bindParam("pics", $pics);
         //$stmt->bindParam("quotes", $_POST['quotes']);
         $stmt->bindParam("timezone", $_POST['timezone']);
         $stmt->bindParam("username", $_POST['username']);
-        //$stmt->bindParam("work", $_POST['work']);
+        $stmt->bindParam("work", $work);
         return $stmt->execute();
         $db = null;
     } catch (PDOException $e) {
-        error_log($e->getMessage(), 3, '/var/tmp/php.log');
-        echo $e->getMessage();
+        phpLog($e->getMessage());
     }
     /*bio: "find my scribbling here - http://greypad.thinkpluto.com/"
     education: Array[2]
@@ -210,8 +217,7 @@ function createAccount($firstName, $lastName, $email, $password = null) {
         $db = null;
         return $id;
     } catch (PDOException $e) {
-        error_log($e->getMessage(), 3, '/var/tmp/php.log');
-        echo '{"error":{"text":' . $e->getMessage() . '}}';
+        phpLog($e->getMessage());
     }
 }
 
@@ -267,6 +273,7 @@ $app->post("/signup", function () use ($app) {
             $account->streamId = $streamId;
             $account->ascore = 0;
             $_SESSION['user'] = $account->id;
+            $_SESSION['type'] = CUSTOM;
             $response["status"] = SUCCESS;
             $response["data"] = $account;
         }
@@ -309,14 +316,16 @@ $app->post("/signup", function () use ($app) {
             $account->lastName = $lastName;
             $account->email = $email;
             $account->streamId = $streamId;
+            //$account->streamId = $streamId;
             $account->ascore = 0;
         }
         $_SESSION['user'] = $account->id;
+        $_SESSION['type'] = FB;
         $response["status"] = SUCCESS;
         $response["data"] = $account;
         break;
     case 3:
-        //google sign-up
+    //google sign-up
         break;
     }
     sendResponse($response);
@@ -326,6 +335,7 @@ $app->get("/logout", function () use ($app) {
     $response = array();
     if (isset($_SESSION['user'])) {
         unset($_SESSION['user']);
+        unset($_SESSION['type']);
         $response["status"] = SUCCESS;
         $response["data"] = "Logged Out";
     } else {
@@ -340,7 +350,7 @@ $app->post("/login", function () use ($app) {
     $email = $app->request()->post('email');
     $password = $app->request()->post('password');
     $streamId = $app->request()->post('streamId');
-    $sql = "SELECT a.id as id,a.email,a.firstName,a.lastName,s.ascoreL1 as ascore from accounts a,students s where a.email='"
+    $sql = "SELECT a.id as id,a.email,a.firstName,a.lastName,s.ascoreL1 as ascore,s.quizzesAttempted from accounts a,students s where a.email='"
             . $email . "' AND a.password='" . $password . "' AND s.streamId='"
             . $streamId . "' AND a.id=s.accountId";
     try {
@@ -349,28 +359,37 @@ $app->post("/login", function () use ($app) {
         $record = $stmt->fetch(PDO::FETCH_OBJ);
         $db = null;
         if ($record != null && $record->id != null) {
+            $record->type = CUSTOM;
             $response["status"] = SUCCESS;
             $response["data"] = $record;
             $_SESSION['user'] = $record->id;
+            $_SESSION['type'] = $record->type;
         } else {
             $response["status"] = FAIL;
-            $response["data"] = "Email and Password dont match.";
+            $response["data"] = "Email and Password don't match.";
         }
     } catch (PDOException $e) {
-        echo '{"error":{"text":' . $e->getMessage() . '}}';
+        $response["status"] = ERROR;
+        $response["data"] = EXCEPTION_MSG;
+        phpLog($e->getMessage());
     }
     sendResponse($response);
 });
 
 $app->get("/isAuth", function () use ($app) {
+    $response = array();
     $id = null;
     if (isset($_SESSION['user'])) {
         $id = $_SESSION['user'];
         $account = getStudentByAccountId($id, 1);
-        echo json_encode($account);
+        $account->type = $_SESSION['type'];
+        $response["status"] = SUCCESS;
+        $response["data"] = $account;
     } else {
-        echo json_encode(false);
+        $response["status"] = FAIL;
+        $response["data"] = "Not autenticated";
     }
+    sendResponse($response);
 });
 
 $app->post("/forgotpass", function () use ($app) {
@@ -407,7 +426,7 @@ $app->post("/forgotpass", function () use ($app) {
 $app->post("/changepass", $authenticate($app), function () use ($app) {
     $oldpassword = $_POST['oldpassword'];
     $newpassword = $_POST['newpassword'];
-    $sql = "UPDATE accounts SET password=:newpassword WHERE password=:oldpassword";
+    $sql = "UPDATE accounts SET password=:newpassword WHERE password=:oldpassword and id=:accountId";
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
@@ -417,6 +436,6 @@ $app->post("/changepass", $authenticate($app), function () use ($app) {
         $db = null;
         echo json_encode(true);
     } catch (PDOException $e) {
-        echo '{"error":{"text":' . $e->getMessage() . '}}';
+        phpLog($e->getMessage());
     }
 });

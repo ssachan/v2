@@ -3,6 +3,20 @@ window.Account = Backbone.Model.extend({
 	urlRoot : ' ',
 
 	initialize : function() {
+		if (!this.get('quizzesAttemptedArray')) {
+			this.set({
+				quizzesAttemptedArray : new Array()
+			});
+		}
+		
+		this.on('change:quizzesAttempted', function(model){
+			if(model.get('quizzesAttempted')!=null){
+				model.get('quizzesAttemptedArray').push.apply(this.get('quizzesAttemptedArray'), JSON.parse(model.get('quizzesAttempted')));
+			}
+            //var name = model.get("name"); // 'Stewie Griffin'
+            //alert("Changed my name to " + name );
+        });
+
 		var that = this;
 		// Hook into jquery
 		// The server must allow this through response headers
@@ -61,6 +75,7 @@ window.Account = Backbone.Model.extend({
 					console.log('log out');
 					window.location.replace('#landing');
 					account.clear();
+					user.clear();
 					helper.showError(data.data);
 				} else {
 					helper.showError(data.data);
@@ -142,21 +157,20 @@ window.Account = Backbone.Model.extend({
 			type : 'GET',
 			dataType : "json",
 			success : function(data) {
-				if (data == false) { // If there is an error, show the
-					// error
-					// messages
-					window.location.replace('#landing');
-				} else { // If not, send them back to the home page
-					account.set(data);
-					app.dashboard();
+				if (data.status == STATUS.SUCCESS) {
+					account.set(data.data);
 				}
+				app = new AppRouter();
+				Backbone.history.start();
 			}
 		});
 	},
 
 	defaults : {
 		id : null,
-	}
+		quizzesAttempted : null,
+	},
+
 
 });
 

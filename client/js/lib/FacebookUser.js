@@ -23,7 +23,8 @@
     _loginStatus: null,
 
     login: function(){
-    	FB.getLoginStatus(this.onLoginStatusChange);
+		FB.login(function(){}, { scope: 'email'}); //this.options.scope.join(',') }
+    	//FB.getLoginStatus(this.onLoginStatusChange);
     	//user.updateLoginStatus();
     },
 

@@ -14,13 +14,11 @@ window.Quiz = Backbone.Model.extend({
 				questionIdsArray : new Array()
 			});
 		}
-
 		if (!this.get('selectedAnswersArray')) {
 			this.set({
 				selectedAnswersArray : new Array()
 			});
 		}
-		
 		if (!this.get('timePerQuestionArray')) {
 			this.set({
 				timePerQuestionArray : new Array()
@@ -144,6 +142,7 @@ window.Quiz = Backbone.Model.extend({
 		
 		var url = '../api/responses';
 		console.log('Adding responses... ');
+		var that = this;
 		$.ajax({
 			url : url,
 			type : 'POST',
@@ -158,7 +157,14 @@ window.Quiz = Backbone.Model.extend({
 				timePerQuestion : JSON.stringify(this.getTimeTakenPerQuestion()),
 			},
 			success : function(data) {
-				console.log('results submitted');
+				if (data.status == STATUS.SUCCESS) {
+					// the results were submitted. Add this quiz to quizHistory
+					quizHistory.unshift(that);
+					// now show results
+					app.quizResults(that.get('id'));
+				} else { 
+					helper.showError(data.data);
+				}
 			},
 			error : function(data) {
 				// console.log([ "error: ", data ]);

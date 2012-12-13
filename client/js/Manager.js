@@ -8,8 +8,10 @@ var STATUS = {
  * the generic loaders
  */
 $(document).ajaxStart(function() {
+	$('#content').hide();
 	$('#loading').show();
 }).ajaxStop(function() {
+	$('#content').show();
 	$('#loading').hide();
 });
 
@@ -131,7 +133,6 @@ window.Manager = {
 			},
 			dataType : "json",
 			success : function(data) {
-				console.log("history fetched: " + data.length);
 				if (data.status == STATUS.SUCCESS) {
 					quizHistory.reset(data.data);
 				} else { // If not, send them back to the home page
@@ -177,7 +178,20 @@ window.Manager = {
 			dataType : "json",
 			success : function(data) {
 				if (data.status == STATUS.SUCCESS) {
-					quizLibrary.reset(data.data);
+					if(account.get('id')==null){
+						// just load the library
+						quizLibrary.reset(data.data);
+					}else{
+						//set the hasAttempted flag to true.
+						var len = data.data.length;
+						for(var i=0;i<len;i++){
+							var quiz = new Quiz(data.data[i]);
+							if($.inArray(quiz.get('id'), account.get('quizzesAttemptedArray'))!=-1){
+								quiz.set('hasAttempted',true);
+							}
+							quizLibrary.push(quiz);
+						}
+					}
 				} else { // If not, send them back to the home page
 					helper.showError(data.data);
 				}
@@ -253,7 +267,7 @@ window.Manager = {
 		});
 	},
 
-	getQuestions : function(qids) {
+	/*getQuestions : function(qids) {
 		var url = Config.serverUrl + 'questions/';
 		return $.ajax({
 			url : url,
@@ -267,7 +281,7 @@ window.Manager = {
 				quizQuestions.add(data);
 			}
 		});
-	},
+	},*/
 
 	getPackagesByStreamId : function(streamId) {
 		var url = Config.serverUrl + 'packagesByStreamId/' + streamId;
@@ -339,7 +353,6 @@ window.Manager = {
 		$.when.apply(null, dfd).then(function(data) {
 			var quizLibraryView = new QuizLibraryView({
 				model : quizLibrary,
-			// el : '#content'
 			});
 			app.showView(quizLibraryView);
 			quizLibraryView.renderQuizItems();
@@ -353,7 +366,7 @@ window.Manager = {
 	 * @returns
 	 */
 	getQuizDataForStart : function(quizId) {
-		activeQuiz = quizLibrary.get(quizId); // active quiz initialized for
+		var quiz = quizLibrary.get(quizId); // active quiz initialized for
 		// the first time
 		quizQuestions.reset();
 		var dfd = [];
@@ -361,7 +374,7 @@ window.Manager = {
 		$.when.apply(null, dfd).then(function(data) {
 			if (quizQuestions.length > 0) {
 				var quizView = new QuizView({
-					model : activeQuiz,
+					model : quiz,
 					index : 0,
 				});
 				app.showView(quizView);
@@ -376,7 +389,7 @@ window.Manager = {
 	 * @param id
 	 * @returns
 	 */
-	getQuizDataForResults : function(quiz) {
+	/*getQuizDataForResults : function(quiz) {
 		var dfd = [];
 		dfd.push(this.getQuestions(quiz.get('questionIds')));
 		$.when.apply(null, dfd).then(function(data) {
@@ -387,6 +400,55 @@ window.Manager = {
 			app.showView(quizView);
 			quizView.renderResults();
 		});
+	},*/
+
+	/**
+	 * ensure all data is present before quiz results are loaded.
+	 * 
+	 * @param id
+	 * @returns
+	 */
+	getQuizDataForResults : function(quizId) {
+		// check quiz history
+		var quiz = quizHistory.get(quizId);
+		// if not found show error
+		if(!quiz){
+			// some issue 
+			return;
+		}
+		//check if questions are available in the system
+		var allThere = true;
+		var questionIds =	quiz.get('questionIdsArray');
+		var len = questionIds.length;
+		for(var i=0; i<len;i++){
+			if(!quizQuestions.get(questionIds[i])){
+				allThere = false;
+				break;
+			}
+		}
+		var dfd = [];
+		if(allThere == false){
+			// get the questions
+			quizQuestions.reset();
+			dfd.push(this.processQuiz(quizId));
+			$.when.apply(null, dfd).then(function(data) {
+				if (quizQuestions.length > 0) {
+					var quizView = new QuizView({
+						model : quiz,
+						index : 0,
+					});
+					app.showView(quizView);
+					quizView.renderResults();
+				}
+			});
+		}else{
+			var quizView = new QuizView({
+				model : quiz,
+				index : 0,
+			});
+			app.showView(quizView);
+			quizView.renderResults();
+		}
 	},
 
 	resetResults : function() {

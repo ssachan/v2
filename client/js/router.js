@@ -2,13 +2,17 @@
  * THE GLOBALS
  */
 var app = null;
-var activeQuiz = null;
-
 var activeStream = new Stream({
 	id : '1',
 	displayName : 'Engineering'
 });
+
+/**
+ * Since streamId and accountId are very frequently used, move them out for faster access 
+ */
 var streamId = activeStream.get('id');
+var accountId = account.get('id');
+
 var mView = new ModalView();
 
 var timer = new Timer(1000, null, []); // we will have just one global timer
@@ -16,7 +20,6 @@ var activeMenu = null;
 
 $(document).ready(function() {
 	helper.loadTemplate(Config.viewsArray, function() {
-		app = new AppRouter();
 		(function(d) {
 			var js, id = 'facebook-jssdk';
 			if (d.getElementById(id)) {
@@ -28,7 +31,7 @@ $(document).ready(function() {
 			js.src = "//connect.facebook.net/en_US/all.js";
 			d.getElementsByTagName('head')[0].appendChild(js);
 		}(document));
-		Backbone.history.start();
+		account.isAuth();
 	});
 });
 
@@ -77,7 +80,7 @@ var AppRouter = Backbone.Router.extend({
 			$('#home-menu').show();
 			this.changeMenu('home-menu');
 		}else{
-			account.isAuth();
+			window.location.replace('#landing');
 		}
 	},
 
@@ -124,12 +127,7 @@ var AppRouter = Backbone.Router.extend({
 
 	quizResults : function(id) {
 		// pick from history
-		var quiz = quizHistory.get(id);
-		if (quiz) {
-			Manager.getQuizDataForResults(quiz);
-		} else {
-			alert('access denied');
-		}
+		Manager.getQuizDataForResults(id);
 	},
 	
 	changePass: function() {

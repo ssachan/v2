@@ -76,9 +76,9 @@ window.QuizView = Backbone.View.extend({
 		this.model.calculateScores();
 		this.hasAttempted = true;
 		this.model.submitResults();
-		$('#results-div').hide();
-		$('#quiz-div').show();
-		this.renderResults();
+		//$('#results-div').hide();
+		//$('#quiz-div').show();
+		//this.renderResults();
 	},
 
 	updateQuizTimer : function(context) {

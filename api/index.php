@@ -27,7 +27,6 @@ $app->get('/historyById/', $authenticate($app), 'getQuizzesHistory');
 
 //quiz
 $app->get('/processQuiz/', $authenticate($app), 'processQuiz');
-$app->get('/questions/', $authenticate($app), 'getQuestionsByIds');
 
 // responses
 $app->post('/responses', 'addResults');
@@ -35,9 +34,6 @@ $app->post('/responses', 'addResults');
 $app->get('/packagesByStreamId/:id', 'getPackagesByStreamId');
 
 $app->post('/purchase/:id', 'addPurchase');
-
-// the resets
-$app->get('/resetResults/', 'resetResults');
 
 define('SUCCESS', "success"); // returns the requested data.
 define('FAIL', "fail"); // logical error.
@@ -64,6 +60,7 @@ function sendResponse($response) {
  */
 function phpLog($msg) {
     //error_log($msg, 3, '/var/tmp/php.log');
+    echo $msg;
 }
 
 function getL1ByStream($id) {
@@ -336,16 +333,6 @@ function getQuestions($qids) {
     }
 }
 
-function getQuestionsByIds() {
-    $qids = $_GET['qids'];
-    $questions = getQuestions($qids);
-    if (!isset($_GET['callback'])) {
-        echo json_encode($questions);
-    } else {
-        echo $_GET['callback'] . '(' . json_encode($questions) . ');';
-    }
-}
-
 /**
  * The function where the quiz processing takes place. We check for all the 
  * packages available and then substract from the appropriate one.
@@ -373,32 +360,31 @@ function processQuiz() {
     if ($count->count == 0) {
         // this quiz hasn't been taken.
         // logic for package redemption at this point its null.
-        $sql = "SELECT questionIds FROM quizzes where id=:id";
-        try {
-            $db = getConnection();
-            $stmt = $db->prepare($sql);
-            $stmt->bindParam("id", $quizId);
-            $stmt->execute();
-            $questionIds = $stmt->fetchObject();
-            $db = null;
-            if ($questionIds->questionIds != null) {
-                $questions = getQuestions($questionIds->questionIds);
-                $response["status"] = "success";
-                $response["data"] = $questions;
-            } else {
-                $response["status"] = "fail";
-                $response["data"] = "Something went wrong! Please drop in an email to admin@ps.com";
-            }
-        } catch (PDOException $e) {
-            $response["status"] = ERROR;
-            $response["data"] = EXCEPTION_MSG;
-            phpLog($e->getMessage());
-        }
+       
     } else {
-        // you have already taken this quiz, fetch the questions and show it in results
-        $response["status"] = FAIL;
-        $response["data"] = "You have already taken this quiz";
-        //echo '{"error":{"text":' . $msg . '}}';
+        // you have already taken this quiz, this seems to be a call for fetching questions 
+        // for the results
+    }
+    $sql = "SELECT questionIds FROM quizzes where id=:id";
+    try {
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("id", $quizId);
+        $stmt->execute();
+        $questionIds = $stmt->fetchObject();
+        $db = null;
+        if ($questionIds->questionIds != null) {
+            $questions = getQuestions($questionIds->questionIds);
+            $response["status"] = "success";
+            $response["data"] = $questions;
+        } else {
+            $response["status"] = "fail";
+            $response["data"] = "Something went wrong! Please drop in an email to admin@ps.com";
+        }
+    } catch (PDOException $e) {
+        $response["status"] = ERROR;
+        $response["data"] = EXCEPTION_MSG;
+        phpLog($e->getMessage());
     }
     sendResponse($response);
 }
@@ -479,6 +465,11 @@ function addResults() {
         $response["data"] = EXCEPTION_MSG;
         phpLog($e->getMessage());
     }
+    if (!isset($response["status"])) {
+        $response["status"]=SUCCESS;
+        $response["data"] = true;
+     }
+    sendResponse($response);
 }
 
 /**
@@ -516,63 +507,6 @@ function getPackagesByStreamId($id) {
             echo $_GET['callback'] . '(' . json_encode($packages) . ');';
         }
         return;
-    } catch (PDOException $e) {
-        echo '{"error":{"text":' . $e->getMessage() . '}}';
-    }
-}
-
-function resetResults() {
-    $sql = "TRUNCATE table results  ";
-    try {
-        $db = getConnection();
-        $stmt = $db->query($sql);
-        $projects = $stmt->execute();
-        $db = null;
-        // Include support for JSONP requests
-        if (!isset($_GET['callback'])) {
-            echo json_encode($projects);
-        } else {
-            echo $_GET['callback'] . '(' . json_encode($projects) . ');';
-        }
-    } catch (PDOException $e) {
-        echo '{"error":{"text":' . $e->getMessage() . '}}';
-    }
-}
-
-function resetUsers() {
-    $sql = "TRUNCATE table students";
-    try {
-        $db = getConnection();
-        $stmt = $db->query($sql);
-        $projects = $stmt->execute();
-        $db = null;
-        // Include support for JSONP requests
-        if (!isset($_GET['callback'])) {
-            echo json_encode($projects);
-        } else {
-            echo $_GET['callback'] . '(' . json_encode($projects) . ');';
-        }
-    } catch (PDOException $e) {
-        echo '{"error":{"text":' . $e->getMessage() . '}}';
-    }
-}
-
-$app->get('/testq/:id', 'testQuestion');
-
-function testQuestion($id) {
-    $sql = "SELECT * FROM questions where id='" . $id . "'";
-    echo $sql;
-    try {
-        $db = getConnection();
-        $stmt = $db->query($sql);
-        $questions = $stmt->fetchAll(PDO::FETCH_OBJ);
-        $db = null;
-        echo "\n \n Outputting question text ----====";
-        echo json_encode($questions[0]->text);
-        echo "\n \n Outputting option text ----====";
-        echo json_encode($questions[0]->options);
-        echo "\n \n Outputting description text ----====";
-        echo json_encode($questions[0]->explanation);
     } catch (PDOException $e) {
         echo '{"error":{"text":' . $e->getMessage() . '}}';
     }
