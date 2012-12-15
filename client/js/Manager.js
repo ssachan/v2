@@ -262,7 +262,7 @@ window.Manager = {
 				model : fac,
 				collection : facQuizzes,
 			});
-			app.showView(facView);
+			app.showView('#content',facView);
 			facView.renderQuizzes();
 		});
 	},
@@ -352,10 +352,10 @@ window.Manager = {
 		dfd.push(this.getQuizzesByStreamId(streamId));
 		$.when.apply(null, dfd).then(function(data) {
 			var quizLibraryView = new QuizLibraryView({
-				model : quizLibrary,
+				collection : quizLibrary,
 			});
-			app.showView(quizLibraryView);
-			quizLibraryView.renderQuizItems();
+			app.showView('#content',quizLibraryView);
+			quizLibraryView.onRender();
 		});
 	},
 
@@ -377,7 +377,7 @@ window.Manager = {
 					model : quiz,
 					index : 0,
 				});
-				app.showView(quizView);
+				app.showView('#content',quizView);
 				quizView.startQuiz();
 			}
 		});
@@ -437,7 +437,7 @@ window.Manager = {
 						model : quiz,
 						index : 0,
 					});
-					app.showView(quizView);
+					app.showView('#content',quizView);
 					quizView.renderResults();
 				}
 			});
@@ -446,11 +446,16 @@ window.Manager = {
 				model : quiz,
 				index : 0,
 			});
-			app.showView(quizView);
+			app.showView('#content',quizView);
 			quizView.renderResults();
 		}
 	},
 
+	getFacContactPage : function(){
+		var facContactView = new FacContactView();
+		app.showView('#content',facContactView);
+	},
+	
 	resetResults : function() {
 		var url = Config.serverUrl + 'resetResults/';
 		return $.ajax({

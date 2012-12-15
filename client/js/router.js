@@ -8,15 +8,14 @@ var activeStream = new Stream({
 });
 
 /**
- * Since streamId and accountId are very frequently used, move them out for faster access 
+ * Since streamId and accountId are very frequently used, move them out for
+ * faster access
  */
 var streamId = activeStream.get('id');
 var accountId = account.get('id');
-
-var mView = new ModalView();
-
-var timer = new Timer(1000, null, []); // we will have just one global timer
 var activeMenu = null;
+var mView = new ModalView();
+var timer = new Timer(1000, null, []); // we will have just one global timer
 
 $(document).ready(function() {
 	helper.loadTemplate(Config.viewsArray, function() {
@@ -48,7 +47,8 @@ var AppRouter = Backbone.Router.extend({
 		"fac/:id" : "fac",
 		"packages" : "packages",
 		"forgotpass" : "forgotPass",
-		"changepass" : "changePass"
+		"changepass" : "changePass",
+		"facContact" : "facContact"
 	},
 
 	initialize : function() {
@@ -64,22 +64,25 @@ var AppRouter = Backbone.Router.extend({
 		new LandingView({
 			el : $('#content')
 		});
-		$('#log-in').html((new LoginView({model:account})).el);
+		$('#log-in').html((new LoginView({
+			model : account
+		})).el);
 		$('#packages-menu').hide();
 		$('#home-menu').hide();
-		$('#'+activeMenu).removeClass('active');
+		$('#' + activeMenu).removeClass('active');
 		return;
 	},
 
 	dashboard : function() {
-		// check if authenticated move to dashboard page, else move to landing page
+		// check if authenticated move to dashboard page, else move to landing
+		// page
 		mView.close();
 		if (account.get('id') != null) {
 			Manager.getDashboardData();
 			$('#packages-menu').show();
 			$('#home-menu').show();
 			this.changeMenu('home-menu');
-		}else{
+		} else {
 			window.location.replace('#landing');
 		}
 	},
@@ -109,6 +112,10 @@ var AppRouter = Backbone.Router.extend({
 		Manager.getFaculty(id);
 	},
 
+	facContact : function() {
+		Manager.getFacContactPage();
+	},
+
 	/**
 	 * TODO:at this point there are separate routes for start and results but
 	 * later we might want to merge them to same route #quiz...it displays the
@@ -121,7 +128,7 @@ var AppRouter = Backbone.Router.extend({
 			mView.close();
 			Manager.getQuizDataForStart(id);
 		} else {
-			window.location.replace('#quizLibrary');
+			window.location = '#quizLibrary';
 		}
 	},
 
@@ -129,37 +136,42 @@ var AppRouter = Backbone.Router.extend({
 		// pick from history
 		Manager.getQuizDataForResults(id);
 	},
-	
-	changePass: function() {
+
+	changePass : function() {
 		console.log('changing pass');
 		// load forgot password page
-		var changePassView = new ChangePassView({model:account});
+		var changePassView = new ChangePassView({
+			model : account
+		});
 		this.showView(changePassView);
 	},
-	
+
 	forgotPass : function() {
 		console.log('forgot pass');
 		// load forgot password page
-		var forgotPassView = new ForgotPassView({model:account});
+		var forgotPassView = new ForgotPassView({
+			model : account
+		});
 		this.showView(forgotPassView);
 	},
-	
-	showView : function(view) {
-		if (this.currentView)
-			this.currentView.close();
-		this.currentView = view;
-		$('#content').html((this.currentView.render()).el);
+
+	showView : function(selector, view) {
+		if (this.activeView)
+			this.activeView.close();
+		$(selector).html(view.render().el);
+		this.activeView = view;
+		return view;
 	},
-	
-	changeMenu : function(newMenu){
-		if (activeMenu!=null){
-			$('#'+activeMenu).removeClass('active');
+
+	changeMenu : function(newMenu) {
+		if (activeMenu != null) {
+			$('#' + activeMenu).removeClass('active');
 		}
 		activeMenu = newMenu;
-		$('#'+activeMenu).addClass('active');
+		$('#' + activeMenu).addClass('active');
 		if (account.get('id') == null) {
 			$('#log-in').show();
-		}else{
+		} else {
 			$('#log-in').hide();
 		}
 	}

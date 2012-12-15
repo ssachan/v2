@@ -11,12 +11,15 @@ window.PackagesView = Backbone.View.extend({
 
     render: function () {
         $(this.el).html(this.template());
-    	var packages = this.collection.models;
+        return this;
+    },
+    
+    onRender : function (){
+     	var packages = this.collection.models;
         var len = packages.length;
         for (var i = 0; i < len; i++) {
             $('#package-list', this.el).append(new PackageItemView({model: packages[i]}).render().el);
         }
-        return this;
     }
 });
 

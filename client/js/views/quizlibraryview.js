@@ -7,15 +7,54 @@ window.QuizLibraryView = Backbone.View.extend({
 	className : "container quiz-library",
 	
 	initialize: function () {
+		this.filtered = new QuizCollection();
+		this.tness = '0';
+		this.l1 = '0';
+		this.tness = '0';
     },
-
-    render: function () {
+    
+	events : {
+		'change #f-type' : 'typeFilter',
+		'change #f-l1' : 'l1Filter',
+		'change #f-tness' : 'tnessFilter',
+	},
+	
+	typeFilter : function (e){
+		this.type = $("#f-type option:selected").val();
+		this.onRender();
+	},
+	
+	l1Filter : function (e){
+		this.l1 = $("#f-l1 option:selected").val();
+		this.onRender();
+	},
+	
+	tnessFilter : function (e){
+		this.tness = $("#f-tness option:selected").val();
+		this.onRender();
+	},
+	
+	render: function () {
         $(this.el).html(this.template());
         return this;
     },
     
-    renderQuizItems : function(){
-    	var quizzes = this.model.models;
+    onRender :function(){
+    	$("#quizzes").empty();
+    	this.filtered.reset(this.collection.models);
+    	if(this.type!='0'){
+    		var filteredArray = this.filtered.where({type: this.type});
+			this.filtered.reset(filteredArray);
+    	}
+    	if(this.l1!='0'){
+    		var filteredArray = this.filtered.where({l1: this.l1});
+			this.filtered.reset(filteredArray);
+    	}
+    	if(this.tness!='0'){
+    		var filteredArray = this.filtered.where({difficulty: this.tness});
+			this.filtered.reset(filteredArray);
+    	}
+    	var quizzes = this.filtered.models;
         var len = quizzes.length;
         var i = 0;
         while(i<len){
@@ -25,7 +64,8 @@ window.QuizLibraryView = Backbone.View.extend({
         		i++;
         	}
         }
-    }
+    },
+    
 });
 
 window.QuizItemView = Backbone.View.extend({
@@ -44,7 +84,7 @@ window.QuizItemView = Backbone.View.extend({
 	
 	onQuizItemClick : function(){
 		if(this.model.get('hasAttempted')==true){
-			window.location.replace('#quizResults/' + this.model.get('id')+ '');
+			window.location = '#quizResults/' + this.model.get('id')+ '';
 		}else{
 			mView.model = this.model;//var view = new ModalView({ model: this.model });
 			mView.show();

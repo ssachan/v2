@@ -169,6 +169,7 @@ window.Account = Backbone.Model.extend({
 	defaults : {
 		id : null,
 		quizzesAttempted : null,
+		dp : 'img/profile.jpg'
 	},
 
 

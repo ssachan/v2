@@ -5,6 +5,7 @@ require 'Slim/Slim.php';
 
 $app = new \Slim\Slim();
 
+include 'helper.php';
 include 'authState.php';
 
 // the L1,L2,L3
@@ -31,14 +32,19 @@ $app->get('/processQuiz/', $authenticate($app), 'processQuiz');
 // responses
 $app->post('/responses', 'addResults');
 
-$app->get('/packagesByStreamId/:id', 'getPackagesByStreamId');
+// responses
+$app->post('/facContact/', 'facContact');
 
+//packages
+$app->get('/packagesByStreamId/:id', 'getPackagesByStreamId');
 $app->post('/purchase/:id', 'addPurchase');
 
 define('SUCCESS', "success"); // returns the requested data.
 define('FAIL', "fail"); // logical error.
 define('ERROR', "error"); // system error.
 define('EXCEPTION_MSG', "Something went wrong. Please send an email to ..."); // system error.
+
+define('DP_PATH', "resources/accounts/"); // system error.
 
 /**
  * All responses routed through this function
@@ -415,7 +421,7 @@ function addResults() {
         $response["data"] = EXCEPTION_MSG;
         phpLog($e->getMessage());
     }
-    $sql = "SELECT quizzesAttempted from STUDENTS where accountId=:accountId and streamId=:streamId";
+    $sql = "SELECT quizzesAttempted from students where accountId=:accountId and streamId=:streamId";
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
@@ -510,6 +516,56 @@ function getPackagesByStreamId($id) {
     } catch (PDOException $e) {
         echo '{"error":{"text":' . $e->getMessage() . '}}';
     }
+}
+
+function facContact() {
+    $response = array();
+    if (!(filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))) {
+        $response["status"] = FAIL;
+        $response["data"] = "Please enter a valid email address";
+        break;
+    }
+    if (!isset($_POST['firstName']) || $_POST['firstName'] == '') {
+        $response["status"] = FAIL;
+        $response["data"] = "Please enter your first name";
+        break;
+    }
+    if (!isset($_POST['lastName']) || $_POST['lastName'] == '') {
+        $response["status"] = FAIL;
+        $response["data"] = "Please enter your last name";
+        break;
+    }
+    if (!isset($_POST['phoneNumber']) || $_POST['phoneNumber'] == '') {
+        $response["status"] = FAIL;
+        $response["data"] = "Please enter your phone number";
+        break;
+    }
+    $firstName = $_POST['firstName'];
+    $lastName = $_POST['lastName'];
+    $email = $_POST['email'];
+    $phoneNumber = $_POST['phoneNumber'];
+    $about = $_POST['about'];
+    $sql = "INSERT INTO fac_contact (firstName, lastName, email, phoneNumber, about) VALUES (:firstName, :lastName, :email, :phoneNumber, :about)";
+    try {
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("firstName", $firstName);
+        $stmt->bindParam("lastName", $lastName);
+        $stmt->bindParam("phoneNumber", $phoneNumber);
+        $stmt->bindParam("email", $email);
+        $stmt->bindParam("about", $about);
+        $stmt->execute();
+        $db = null;
+    } catch (PDOException $e) {
+        $response["status"] = ERROR;
+        $response["data"] = EXCEPTION_MSG;
+        phpLog($e->getMessage());
+    }
+    if (!isset($response["status"])) {
+        $response["status"]=SUCCESS;
+        $response["data"] = true;
+     }
+    sendResponse($response);
 }
 
 include 'xkcd.php';

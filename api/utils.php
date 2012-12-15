@@ -1,8 +1,10 @@
 <?php
 
 /**
- * helper methods for server side
+ * Methods not used anywhere else in the code but executed directly through the urls
  */
+
+
 
 /**
  * ensure that the resources are correctly set in questions
@@ -85,4 +87,45 @@ function testQuestion($id) {
     } catch (PDOException $e) {
         echo '{"error":{"text":' . $e->getMessage() . '}}';
     }
+}
+
+
+$app->get('/email/', 'sendEmail');
+$app->get('/emailt/', 'sendEmail2');
+
+function sendEmail() {
+    require_once "/home/atestnqy/php/Mail.php";
+    require_once "/home/atestnqy/php/Net/Socket.php";
+    require_once "/home/atestnqy/php/Net/SMTP.php";
+    
+    $from = "shikhar@prepsquare.com";
+    $to = "shikhar.sachan@gmail.com";
+    $subject = "Hi!";
+    $body = "test";
+
+    $host = "ssl://smtp.gmail.com";
+    $port = "465";
+    $username = "shikhar@prepsquare.com"; //<> give errors
+    $password = "shikhar1";
+
+    $headers = array('From' => $from, 'To' => $to, 'Subject' => $subject);
+    $smtp = Mail::factory('smtp', array('host' => $host, 'port' => $port,
+            'auth' => true, 'username' => $username, 'password' => $password));
+
+    $mail = $smtp->send($to, $headers, $body);
+
+    if (PEAR::isError($mail)) {
+        echo ("<p>" . $mail->getMessage() . "</p>");
+    } else {
+        echo ("<p>Message successfully sent!</p>");
+    }
+}
+
+function sendEmail2(){
+    $to = "shikhar.sachan@gmail.com";
+    $subject = 'the subject';
+    $message = 'hello';
+    
+    $res = mail($to, $subject, $message);
+    echo json_encode($res);
 }

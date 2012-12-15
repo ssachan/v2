@@ -15,7 +15,14 @@
 $app->add(new StrongAuth($config));
  */
 
-//require_once "Mail.php";
+/*$app->hook('slim.before.dispatch', function() use ($app) {
+ $user = null;
+        if (isset($_SESSION['user'])) {
+        $user = $_SESSION['user'];
+        }
+        $app->view()->setData('user', $user);
+        });*/
+
 //account types
 define('CUSTOM', 1); // custom sign up
 define('FB', 2); // FB sign up.
@@ -27,7 +34,6 @@ $app->add(new \Slim\Middleware\SessionCookie(
                 'name' => 'slim_session', 'secret' => 'CHANGE_ME',
                 'cipher' => MCRYPT_RIJNDAEL_256,
                 'cipher_mode' => MCRYPT_MODE_CBC)));
-
 
 $authenticate = function ($app) {
     return function () use ($app) {
@@ -46,6 +52,11 @@ $authenticate = function ($app) {
     };
 };
 
+function copyImage() {
+    copy('http://www.google.co.in/intl/en_com/images/srpr/logo1w.png', '/tmp/file.jpeg');
+
+}
+
 function getStudentByAccountId($accountId, $streamId) {
     $sql = "SELECT a.id as id,a.email,a.firstName,a.lastName,s.ascoreL1 as ascore,s.quizzesAttempted from accounts a,students s where a.id='"
             . $accountId . "' AND s.streamId='" . $streamId
@@ -57,25 +68,22 @@ function getStudentByAccountId($accountId, $streamId) {
         $db = null;
         return $account;
     } catch (PDOException $e) {
-        echo '{"error":{"text":' . $e->getMessage() . '}}';
+        phpLog($e->getMessage());
     }
 }
 
-function emailExists($email) {
-    $sql = "SELECT id from accounts where email='" . $email . "'";
+function getAccountByEmail($email) {
+    $sql = "SELECT id,password from accounts where email=:email";
     try {
         $db = getConnection();
-        $stmt = $db->query($sql);
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("email", $email);
+        $stmt->execute();
         $record = $stmt->fetch(PDO::FETCH_OBJ);
         $db = null;
-        //echo $id->id;
-        if ($record && $record->id) {
-            return $record->id;
-        } else {
-            return 0;
-        }
+        return $record;
     } catch (PDOException $e) {
-        echo '{"error":{"text":' . $e->getMessage() . '}}';
+        phpLog($e->getMessage());
     }
 }
 
@@ -93,7 +101,7 @@ function fbAccountExists($accountId) {
             return false;
         }
     } catch (PDOException $e) {
-        echo '{"error":{"text":' . $e->getMessage() . '}}';
+        phpLog($e->getMessage());
     }
 }
 
@@ -111,7 +119,7 @@ function googleAccountExists($accountId) {
             return false;
         }
     } catch (PDOException $e) {
-        echo '{"error":{"text":' . $e->getMessage() . '}}';
+        phpLog($e->getMessage());
     }
 }
 
@@ -125,7 +133,7 @@ function insertStudent($accountId, $streamId) {
         $stmt->execute();
         return $response->id = $db->lastInsertId();
     } catch (PDOException $e) {
-        error_log($e->getMessage(), 3, '/var/tmp/php.log');
+        phpLog($e->getMessage());
     }
 }
 
@@ -135,9 +143,6 @@ function insertFb($accountId) {
     $edu = json_encode($_POST['education']);
     $work = json_encode($_POST['work']);
     $pics = json_encode($_POST['pictures']);
-    //echo json_encode($_POST['pictures']);
-    //$stmt->bindParam("pictures", $_POST['pictures']);
-    //$stmt->bindParam("quotes", $_POST['quotes']);
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
@@ -221,14 +226,6 @@ function createAccount($firstName, $lastName, $email, $password = null) {
     }
 }
 
-/*$app->hook('slim.before.dispatch', function() use ($app) {
-    $user = null;
-    if (isset($_SESSION['user'])) {
-        $user = $_SESSION['user'];
-    }
-    $app->view()->setData('user', $user);
-});*/
-
 $app->post("/signup", function () use ($app) {
     $response = array();
     $accountType = $_POST['type'];
@@ -260,10 +257,16 @@ $app->post("/signup", function () use ($app) {
         $email = $_POST['email'];
         $password = $_POST['password'];
         $streamId = $_POST['streamId'];
-        if (emailExists($email) != 0) {
-            // email exists
-            $response["status"] = FAIL;
-            $response["data"] = "Email already exists. you should probably try forgot password";
+        $account = getAccountByEmail($email);
+        if ($account != null) {
+            // account exists
+            if ($account->password == null) {
+                $response["status"] = FAIL;
+                $response["data"] = "You have either logged in through FB or Google. To create a custom account, log in through the account and set a password";
+            } else {
+                $response["status"] = FAIL;
+                $response["data"] = "Email already exists. you should probably try forgot password";
+            }
         } else {
             $account->id = createAccount($firstName, $lastName, $email, $password);
             insertStudent($account->id, $streamId);
@@ -298,7 +301,8 @@ $app->post("/signup", function () use ($app) {
         $lastName = $_POST['last_name'];
         $email = $_POST['email'];
         $streamId = $_POST['streamId'];
-        if (($account->id = emailExists($email)) != 0) {
+        $account = getAccountByEmail($email);
+        if ($account != null) {
             // email exists
             //check if fb account is linked 
             if (fbAccountExists($account->id) == 0) {
@@ -403,7 +407,6 @@ $app->post("/forgotpass", function () use ($app) {
         echo '{"error":{"text":' . $msg . '}}';
         $status = "NOTOK";
     }
-
     if ($status == "OK") { // validation passed now we will check the tables
         $sql = "SELECT email,password FROM accounts WHERE email = '$email'";
         try {
@@ -439,3 +442,30 @@ $app->post("/changepass", $authenticate($app), function () use ($app) {
         phpLog($e->getMessage());
     }
 });
+
+$app->post("/uploadDP", $authenticate($app), function () use ($app) {
+    $response = array();
+    $allowedExts = array("jpg", "jpeg", "gif", "png");
+    $extension = end(explode(".", $_FILES["file"]["name"]));
+    if ((($_FILES["file"]["type"] == "image/gif")
+            || ($_FILES["file"]["type"] == "image/jpeg")
+            || ($_FILES["file"]["type"] == "image/png")
+            || ($_FILES["file"]["type"] == "image/pjpeg"))
+            && ($_FILES["file"]["size"] < 20000)
+            && in_array($extension, $allowedExts)) {
+        if ($_FILES["file"]["error"] > 0) {
+            $response["status"] = FAIL;
+            $response["data"] = $_FILES["file"]["error"];
+        } else {
+            if (file_exists(DP_PATH . accounId)) {
+                // rename the file and create a back-up
+                move_uploaded_file($_FILES["file"]["tmp_name"], DP_PATH.$_FILES["file"]["name"]);
+            }
+            move_uploaded_file($_FILES["file"]["tmp_name"], DP_PATH. $_FILES["file"]["name"]);
+        }
+    } else {
+        $response["status"] = FAIL;
+        $response["data"] = "Invaild file please ensure parameters are met";
+    }
+});
+
