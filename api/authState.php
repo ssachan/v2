@@ -443,7 +443,7 @@ $app->post("/changepass", $authenticate($app), function () use ($app) {
     }
 });
 
-$app->post("/uploadDP", $authenticate($app), function () use ($app) {
+$app->post("/uploadImage", $authenticate($app), function () use ($app) {
     $response = array();
     $allowedExts = array("jpg", "jpeg", "gif", "png");
     $extension = end(explode(".", $_FILES["file"]["name"]));
@@ -457,15 +457,19 @@ $app->post("/uploadDP", $authenticate($app), function () use ($app) {
             $response["status"] = FAIL;
             $response["data"] = $_FILES["file"]["error"];
         } else {
-            if (file_exists(DP_PATH . accounId)) {
+            if (file_exists(DP_PATH . $_SESSION['user'].'.jpg')) {
                 // rename the file and create a back-up
-                move_uploaded_file($_FILES["file"]["tmp_name"], DP_PATH.$_FILES["file"]["name"]);
+               // move_uploaded_file($_FILES["file"]["tmp_name"], DP_PATH.$_FILES["file"]["name"]);
             }
-            move_uploaded_file($_FILES["file"]["tmp_name"], DP_PATH. $_FILES["file"]["name"]);
+            if(move_uploaded_file($_FILES["file"]["tmp_name"], DP_PATH.$_SESSION['user'].'.jpg')){
+                $response["status"] = SUCCESS;
+                $response["data"] = "";
+            }
         }
     } else {
         $response["status"] = FAIL;
         $response["data"] = "Invaild file please ensure parameters are met";
     }
+    sendResponse($response);
 });
 

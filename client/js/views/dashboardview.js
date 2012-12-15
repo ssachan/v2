@@ -55,9 +55,35 @@ window.InfoView = Backbone.View.extend({
 	initialize : function() {
 		this.render();
 	},
-
+	
+    uploadImage: function () {
+		var btnUpload=$('#upload');
+		var status=$('#status');
+		new AjaxUpload(btnUpload, {
+			action: Config.serverUrl + 'uploadImage',
+			name: 'file',
+			type : 'POST',
+			onSubmit: function(file, ext){
+				 if (! (ext && /^(jpg|png|jpeg|gif)$/.test(ext))){ 
+                    // extension is not allowed 
+					status.text('Only JPG, PNG or GIF files are allowed');
+					return false;
+				}
+				status.text('Uploading...');
+			},
+			onComplete: function(file, response){
+				//On completion clear the status
+				status.text('');
+				$("#dp img").attr("src", $("#dp img").attr("src")+"?timestamp=" + new Date().getTime());
+				//$('#profile-pic').html('<img class="media-object" src="<%=dp%>" height="100" width="130">');
+				//Add uploaded file to list
+			}
+		});
+    },
+    
 	render : function() {
 		$(this.el).html(this.template(this.model.toJSON()));
+		this.uploadImage();
 	},
 
 });
@@ -67,7 +93,7 @@ window.PerformanceView = Backbone.View
 			initialize : function() {
 				this.render();
 			},
-
+		
 			render : function() {
 				var l1Id = this.model.get('id');
 				var l1ScoreModel = scoreL1.get(l1Id);
@@ -85,7 +111,9 @@ window.PerformanceView = Backbone.View
 				var len = l2.length;
 				for ( var i = 0; i < len;) {
 					var l2ScoreModel = scoreL2.get(l2[i].get('id'));
-					var l2Score = (l2ScoreModel == null ? 'N/A' : l2ScoreModel.get('score')+'/10');
+					var l2Score = (l2ScoreModel == null ? 'N/A' : l2ScoreModel
+							.get('score')
+							+ '/10');
 					for ( var j = 0; j < 3 && i < len; j++) {
 						if (j == 0) {
 							$('.l2-performance:last').append(
@@ -93,7 +121,9 @@ window.PerformanceView = Backbone.View
 						}
 						$('.l2row:last').append(
 								'<div class="span4">'
-										+ l2[i].get('displayName') +'<span style="margin-left:10px">'+l2Score+'</span></div>');
+										+ l2[i].get('displayName')
+										+ '<span style="margin-left:10px">'
+										+ l2Score + '</span></div>');
 						i++;
 					}
 				}
@@ -111,31 +141,34 @@ window.PerformanceView = Backbone.View
 		});
 
 window.HistoryView = Backbone.View.extend({
-	initialize : function() {
-		this.render();
-	},
+    initialize: function () {
+        this.render();
+    },
 
-	render : function() {
-		var quizzes = this.collection.models;
+    render: function () {
+        var quizzes = this.collection.models;
         var len = quizzes.length;
         var i = 0;
-        if(len==0){
-        	$("#history").append('You have not taken any tests. Please take a test to update your history');
+        if (len == 0) {
+            $("#history")
+                .append(
+                'You have not taken any tests. Please take a test to update your history');
         }
-        while(i<len){
-        	$("#history").append('<ul class="thumbnails"></ul>');
-        	for (var j = 0; j < 3&&i<len; j++) {
-        		$(".thumbnails:last").append(new QuizItemView({model: quizzes[i]}).render().el);
-        		i++;        		
-        	}
+        while (i < len) {
+            $("#history").append('<ul class="thumbnails"></ul>');
+            for (var j = 0; j < 3 && i < len; j++) {
+                $(".thumbnails:last").append(new QuizItemView({
+                    model: quizzes[i]
+                }).render().el);
+                i++;
+            }
         }
-        
-		/*var quizHistory = this.collection.models;
-		var len = quizHistory.length;
-		for ( var i = 0; i < len; i++) {
-			$(this.el).append(
-					'<a href=#quizResults/' + quizHistory[i].get('id')
-							+ '>quiz' + quizHistory[i].get('id') + '|</a>');
-		}*/
-	}
+
+        /*
+         * var quizHistory = this.collection.models; var len =
+         * quizHistory.length; for ( var i = 0; i < len; i++) {
+         * $(this.el).append( '<a href=#quizResults/' +
+         * quizHistory[i].get('id') + '>quiz' + quizHistory[i].get('id') + '|</a>'); }
+         */
+    }
 });

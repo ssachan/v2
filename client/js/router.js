@@ -83,7 +83,7 @@ var AppRouter = Backbone.Router.extend({
 			$('#home-menu').show();
 			this.changeMenu('home-menu');
 		} else {
-			window.location.replace('#landing');
+			window.location = '#landing';
 		}
 	},
 

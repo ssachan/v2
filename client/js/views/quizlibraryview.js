@@ -8,15 +8,17 @@ window.QuizLibraryView = Backbone.View.extend({
 	
 	initialize: function () {
 		this.filtered = new QuizCollection();
-		this.tness = '0';
+		this.type = '0';
 		this.l1 = '0';
 		this.tness = '0';
+		this.rec = '0';
     },
     
 	events : {
 		'change #f-type' : 'typeFilter',
 		'change #f-l1' : 'l1Filter',
 		'change #f-tness' : 'tnessFilter',
+		'click #s-rec' : 'recSort',
 	},
 	
 	typeFilter : function (e){
@@ -34,6 +36,10 @@ window.QuizLibraryView = Backbone.View.extend({
 		this.onRender();
 	},
 	
+	recSort : function(e){
+		this.rec = (this.rec=='0'? '1':'0');
+		this.onRender();
+	},
 	render: function () {
         $(this.el).html(this.template());
         return this;
@@ -53,6 +59,18 @@ window.QuizLibraryView = Backbone.View.extend({
     	if(this.tness!='0'){
     		var filteredArray = this.filtered.where({difficulty: this.tness});
 			this.filtered.reset(filteredArray);
+    	}
+    	if(this.rec!='1'){
+    		var sortedCollection = this.filtered.sortBy(function(quiz){
+    			  return parseInt(quiz.get("rec"));
+    			});
+			this.filtered.reset(sortedCollection);
+    	}
+    	if(this.rec!='2'){
+    		var sortedCollection = this.filtered.sortBy(function(quiz){
+    			  return -parseInt(quiz.get("rec"));
+    			});
+			this.filtered.reset(sortedCollection);
     	}
     	var quizzes = this.filtered.models;
         var len = quizzes.length;

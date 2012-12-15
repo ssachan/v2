@@ -59,18 +59,24 @@ window.helper = {
 	 * field).parent().parent(); controlGroup.removeClass('error');
 	 * $('.help-inline', controlGroup).html(''); },
 	 */
-	showAlert : function(title, text, klass) {
+	/*showAlert : function(title, text, klass) {
 		$('.alert').removeClass(
 				"alert-error alert-warning alert-success alert-info");
 		$('.alert').addClass(klass);
 		$('.alert').html('<strong>' + title + '</strong> ' + text);
 		$('.alert').show();
-	},
+		setTimeout(function(){
+			$('.alert').hide();
+		}, 6000);
+	},*/
 	
 	showError : function(text) {
-		$('#errorModal').modal('show');
-		$('#error').html(text);
-		$('#errorModal').show();
+		clearTimeout(this.timeout);
+		$('.alert p').html('<strong>ERROR :</strong>'+text);
+		$('.alert').show();
+		this.timeout = setTimeout(function(){
+			$('.alert').hide();
+		}, 6000);
 	},
 	
 	hideAlert : function() {
