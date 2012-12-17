@@ -371,10 +371,10 @@ $app->post("/login", function () use ($app) {
         if ($record != null && $record->id != null) {
             $record->type = CUSTOM;
             $response["status"] = SUCCESS;
-            if (file_exists(DP_PATH.$record->id)) {
-                $record->dp='1';
+            if (file_exists(DP_PATH.$record->id.'.jpg')) {
+                $record->dp=true;
             }else{
-                $record->dp='0';
+                $record->dp=false;
             }
             $response["data"] = $record;
             $_SESSION['user'] = $record->id;
@@ -397,6 +397,11 @@ $app->get("/isAuth", function () use ($app) {
     if (isset($_SESSION['user'])) {
         $id = $_SESSION['user'];
         $account = getStudentByAccountId($id, 1);
+        if (file_exists(DP_PATH.$account->id.'.jpg')) {
+            $account->dp=true;
+        }else{
+            $account->dp=false;
+        }
         $account->type = $_SESSION['type'];
         $response["status"] = SUCCESS;
         $response["data"] = $account;

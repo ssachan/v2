@@ -17,9 +17,9 @@ window.Account = Backbone.Model.extend({
 		
 		this.on('change:dp', function(model){
 			if(model.get('dp')==true){
-				model.set('dpUrl', RESOURCES_URL+model.get('id')+'.jpg');
+				model.set('dpUrl', DP_PATH+model.get('id')+'.jpg');
 			}else{
-				model.set('dpUrl', RESOURCES_URL+'avatar.jpg');				
+				model.set('dpUrl', DP_PATH+'avatar.jpg');				
 			}
         });
 		
@@ -175,7 +175,7 @@ window.Account = Backbone.Model.extend({
 	defaults : {
 		id : null,
 		quizzesAttempted : null,
-		dpUrl : RESOURCES_URL+'avatar.jpg'
+		dpUrl : DP_PATH+'avatar.jpg'
 	},
 
 

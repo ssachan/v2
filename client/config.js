@@ -1,5 +1,7 @@
 var SEPARATOR = '|:';
-var RESOURCES_URL = '../api/resources/accounts/';
+var DP_PATH = '../api/resources/accounts/';
+var FAC_PATH = '../api/resources/accounts/fac';
+
 var Config = {
     serverUrl : '../api/',
     edition : '1',

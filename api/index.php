@@ -44,7 +44,7 @@ define('FAIL', "fail"); // logical error.
 define('ERROR', "error"); // system error.
 define('EXCEPTION_MSG', "Something went wrong. Please send an email to ..."); // system error.
 
-define('DP_PATH', "resources/accounts/"); // system error.
+define('DP_PATH', "resources/accounts/"); // DP PATH.
 
 /**
  * All responses routed through this function
