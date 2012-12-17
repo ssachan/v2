@@ -59,6 +59,7 @@ window.InfoView = Backbone.View.extend({
     uploadImage: function () {
 		var btnUpload=$('#upload');
 		var status=$('#status');
+		var that = this;
 		new AjaxUpload(btnUpload, {
 			action: Config.serverUrl + 'uploadImage',
 			name: 'file',
@@ -74,7 +75,8 @@ window.InfoView = Backbone.View.extend({
 			onComplete: function(file, response){
 				//On completion clear the status
 				status.text('');
-				$("#dp img").attr("src", $("#dp img").attr("src")+"?timestamp=" + new Date().getTime());
+				that.model.set('dp',true);
+				$("#dp img").attr("src", that.model.get('dpUrl')+"?timestamp=" + new Date().getTime());
 				//$('#profile-pic').html('<img class="media-object" src="<%=dp%>" height="100" width="130">');
 				//Add uploaded file to list
 			}

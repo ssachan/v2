@@ -19,6 +19,8 @@ window.QuizLibraryView = Backbone.View.extend({
 		'change #f-l1' : 'l1Filter',
 		'change #f-tness' : 'tnessFilter',
 		'click #s-rec' : 'recSort',
+		'click #s-rec1' : 'recSort1',
+		'click #s-rec2' : 'recSort2',
 	},
 	
 	typeFilter : function (e){
@@ -37,9 +39,20 @@ window.QuizLibraryView = Backbone.View.extend({
 	},
 	
 	recSort : function(e){
-		this.rec = (this.rec=='0'? '1':'0');
+		this.rec = 0;
 		this.onRender();
 	},
+	
+	recSort1 : function(e){
+		this.rec = 1;
+		this.onRender();
+	},
+	
+	recSort2 : function(e){
+		this.rec = 2;
+		this.onRender();
+	},
+	
 	render: function () {
         $(this.el).html(this.template());
         return this;
@@ -49,7 +62,7 @@ window.QuizLibraryView = Backbone.View.extend({
     	$("#quizzes").empty();
     	this.filtered.reset(this.collection.models);
     	if(this.type!='0'){
-    		var filteredArray = this.filtered.where({type: this.type});
+    		var filteredArray = this.filtered.where({typeId: this.type});
 			this.filtered.reset(filteredArray);
     	}
     	if(this.l1!='0'){
@@ -60,13 +73,12 @@ window.QuizLibraryView = Backbone.View.extend({
     		var filteredArray = this.filtered.where({difficulty: this.tness});
 			this.filtered.reset(filteredArray);
     	}
-    	if(this.rec!='1'){
+    	if(this.rec=='1'){
     		var sortedCollection = this.filtered.sortBy(function(quiz){
     			  return parseInt(quiz.get("rec"));
     			});
 			this.filtered.reset(sortedCollection);
-    	}
-    	if(this.rec!='2'){
+    	} else if(this.rec=='2'){
     		var sortedCollection = this.filtered.sortBy(function(quiz){
     			  return -parseInt(quiz.get("rec"));
     			});

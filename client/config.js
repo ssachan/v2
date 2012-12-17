@@ -1,5 +1,5 @@
 var SEPARATOR = '|:';
-
+var RESOURCES_URL = '../api/resources/accounts/';
 var Config = {
     serverUrl : '../api/',
     edition : '1',

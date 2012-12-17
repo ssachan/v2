@@ -73,9 +73,9 @@ window.helper = {
 	showError : function(text) {
 		clearTimeout(this.timeout);
 		$('.alert p').html('<strong>ERROR :</strong>'+text);
-		$('.alert').show();
+		$('.alert').slideDown();
 		this.timeout = setTimeout(function(){
-			$('.alert').hide();
+			$('.alert').slideUp();
 		}, 6000);
 	},
 	

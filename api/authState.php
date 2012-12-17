@@ -277,6 +277,7 @@ $app->post("/signup", function () use ($app) {
             $account->ascore = 0;
             $_SESSION['user'] = $account->id;
             $_SESSION['type'] = CUSTOM;
+            $account->dp='0';
             $response["status"] = SUCCESS;
             $response["data"] = $account;
         }
@@ -325,6 +326,11 @@ $app->post("/signup", function () use ($app) {
         }
         $_SESSION['user'] = $account->id;
         $_SESSION['type'] = FB;
+        if (file_exists(DP_PATH.$account->id)) {
+            $account->dp='1';
+        }else{
+            $account->dp='0';
+        }
         $response["status"] = SUCCESS;
         $response["data"] = $account;
         break;
@@ -365,6 +371,11 @@ $app->post("/login", function () use ($app) {
         if ($record != null && $record->id != null) {
             $record->type = CUSTOM;
             $response["status"] = SUCCESS;
+            if (file_exists(DP_PATH.$record->id)) {
+                $record->dp='1';
+            }else{
+                $record->dp='0';
+            }
             $response["data"] = $record;
             $_SESSION['user'] = $record->id;
             $_SESSION['type'] = $record->type;

@@ -13,11 +13,17 @@ window.Account = Backbone.Model.extend({
 			if(model.get('quizzesAttempted')!=null){
 				model.get('quizzesAttemptedArray').push.apply(this.get('quizzesAttemptedArray'), JSON.parse(model.get('quizzesAttempted')));
 			}
-            //var name = model.get("name"); // 'Stewie Griffin'
-            //alert("Changed my name to " + name );
         });
-
-		var that = this;
+		
+		this.on('change:dp', function(model){
+			if(model.get('dp')==true){
+				model.set('dpUrl', RESOURCES_URL+model.get('id')+'.jpg');
+			}else{
+				model.set('dpUrl', RESOURCES_URL+'avatar.jpg');				
+			}
+        });
+		
+		//var that = this;
 		// Hook into jquery
 		// The server must allow this through response headers
 		/*
@@ -169,7 +175,7 @@ window.Account = Backbone.Model.extend({
 	defaults : {
 		id : null,
 		quizzesAttempted : null,
-		dp : 'img/profile.jpg'
+		dpUrl : RESOURCES_URL+'avatar.jpg'
 	},
 
 
