@@ -58,6 +58,10 @@ var AppRouter = Backbone.Router.extend({
 			el : $('header'),
 			model : account
 		});
+		this.footerView = new FooterView({
+			el : $('footer'),
+		});
+
 	},
 
 	landing : function() {

@@ -31,6 +31,7 @@ var Config = {
                     'ChangePassView',
                     'FacQuizView',
                     'PerformanceView',
-                    'FacContactView'
+                    'FacContactView',
+                    'FooterView'
                   ]
 };
