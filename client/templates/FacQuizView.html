@@ -1,13 +1,34 @@
-<div class="thumbnail box">
-    <div class="quiz-lib-t1 font-h5">
-        <img src="img/recommend.png" height="12" width="12" /> <%=rec%> <img
-            src="img/analytics-icon.png" height="14" width="14" /> <%= difficulty %>
+
+<div class="thumbnail box quiz-box">
+    <div class="quiz-lib-t1 row-fluid">
+        <div class="span3 img-test">
+            <img src="img/physics.png" width="35" />
+        </div>
+        <div class="font-h4 span9 topic-test"><%
+            if(!topics){ %>Full Length <%}else{ %> <%=topics %><%}%></div>
     </div>
-    <div class="quiz-lib-t2 row-fluid">
-        <img src="img/l1_<%=l1%>.png" height="40" width="40"> <span class="font-h4 bold"><%
-            if(!topics){ %>Full Length <%}else{ %> <%=topics %><%}%> </span>
+    <div class="row-fluid quiz-lib-t2 row-fluid">
+        <div class="font-h4 bold center">
+        <%= descriptionShort %>
+        </div>
     </div>
-    <ul class="left quiz-lib-t4 font-h5">
-        <li><%= descriptionShort %></li>
-    </ul>
+    <div class="row-fluid quiz-lib-t3 media-object font-h5">
+        <div class="span4 prof-img">
+            <img class="media-object" src="img/prof1.jpg" width="50">
+        </div>
+        <div class="span8 prof-bio">
+            <span class="bold font-h4"><%= firstName %> <%= lastName %></span> <br> <em>HOD
+                Physics at Kartikey Classes</em> <br>
+        </div>
+    </div>
+    <div class="row-fluid quiz-lib-t4 font-h4">
+        <div class="span6 center font-h5">
+            <img src="img/recommend.png" width="20" /> <span class="bold"> <%=rec%>
+                recommenders </span>
+        </div>
+        <div class="span6 center font-h5">
+            <img src="img/analytics-icon.png" width="20" /> <span class="bold"> <%=
+                difficulty %> </span>
+        </div>
+    </div>
 </div>

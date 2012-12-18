@@ -79,7 +79,9 @@ window.Quiz = Backbone.Model.extend({
 		'totalScore' : 0,
 		'topics' :'',
 		'l1':null,
-		'fid':null
+		'fid':null,
+		'firstName':null,
+		'lastName':null
 	},
 
 	/**

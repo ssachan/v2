@@ -1,25 +1,31 @@
-    <!--Individual Faculty Box -->
-    <a class="pull-left" href="#fac/<%=id %>"> <img class="media-object fac-pic"
-        src="../api/resources/fac/<%=id%>.jpg" height="80" width="80">
+<div class="media">
+    <a class="pull-left" href="#"> <img class="media-object" alt="" src="">
     </a>
-    <div class="media-body faclib-fac">
-        <div class="span7">
-            <h4 class="media-heading bold"><%= firstName%> <%= lastName%></h4>
-            <div class="faclib-details">
-                <img src="img/subject-icon.png" height="20" width="20" /> <span
-                    class="question-text"> <%= specialization %></span> <br> <img
-                    src="img/work.png" height="25" width="20" /> <span class="question-text">
-                    Worked at: <%= experience %> </span> <br> <img src="img/graduate.png" height="20"
-                    width="20" /> <span class="question-text"> Education: <%= education %> </span>
-                <br>
+    <div class="media-body">
+        <div class="row-fluid">
+            <div class="span8">
+                <div class="media-heading">
+                    <span class="name"><%= firstName%> <%= lastName%></span><i class="icon-stop"></i><span
+                        class="specialization"><%= specialization %> </span>
+                </div>
+                <p>marketting</p>
+                <div class="info">
+                    <i class="icon-lock"></i>Experience : <span><%= experience %></span>
+                </div>
+                <div class="info">
+                    <i class="icon-book"></i>Education : <span><%= education %></span>
+                </div>
+            </div>
+            <div class="span4">
+                <div class="stats">
+                    <ul class="unstyled">
+                        <li><i class="icon-signal"></i> <%=totalQuizzes %> Recommenders</li>
+                        <li><i class="icon-user"></i> <%=totalQuizzes %> Students</li>
+                        <li><i class="icon-th-list"></i><%=totalQuizzes %> Tests</li>
+                    </ul>
+                    <a href="#fac/<%=id %>" class="btn">View Profile</a>
+                </div>
             </div>
         </div>
-        <div class="span5 faclib-social">
-
-            <img src="img/popular.png" height="15" width="15" /> <span class="question-text">
-                <%=totalQuizzes %> tests taken </span> <br> <img src="img/recommend.png" height="15"
-                width="15" /> <span class="question-text"> <%= rec %> recommenders </span>
-
-            <div class="btn btn-small pull-right question-text">View profile</div>
-        </div>
+    </div>
 </div>

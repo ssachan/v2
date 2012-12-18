@@ -1,34 +1,29 @@
-<div class="container faclib">
-    <div class="row-fluid">
-        <div class="row-fluid quiz-lib-sec1">
-            <div class="span3 quiz-lib-heading">
-                <h2>FACULTY LIBRARY</h2>
-            </div>
-            <div class="span5">
-                <form class="form-search">
-                    <input type="text" class="search-bar"
-                        placeholder="Search Name, Specialization etc"> <a
-                        class="btn btn-primary" href="#search">Search</a>
-                </form>
-            </div>
-            <!--  Use bootstrap to create this as a text field
-                 <form class="form-search span4">
-                   <input type="text" class="input-small search-query">
-                   <button type="submit" class="btn"><img src="img/search-icon.png" /> </button>
-                 </form>
-                 -->
-            <div class="span4">
-                <div class="span4 quiz-lib-filter1">
-                    <h5>Most Recommended</h5>
-                </div>
-                <div class="span3 quiz-lib-filter1">
-                    <h5>Most Relevant</h5>
-                </div>
-                <div class="span4 quiz-lib-filter2 selected">
-                    <h5>Recently Joined</h5>
+<div class="container fac-dir">
+    <h2>
+        <i class="ico-stats"></i>Faculty
+    </h2>
+    <div class="well large">
+        <div class="row-fluid">
+            <div class="span3">
+                <div class="input-prepend">
+                    <span class="add-on">Name</span> <input id="prependedInput" type="text"
+                        placeholder="type name">
                 </div>
             </div>
+            <div class="span3">
+                <div class="input-prepend">
+                    <span class="add-on">Subject</span> <select id="f-l1" class="input-small">
+                        <option value="0">All</option>
+                        <option value="1">Maths</option>
+                        <option value="2">Physics</option>
+                        <option value="3">Chemistry</option>
+                    </select>
+                </div>
+            </div>
+            <div class="span3">Sort by recommendations</div>
+            <div class="span3">Sort by test takers</div>
         </div>
-        <div class="row-fluid" id="faclib-list"></div>
     </div>
+    <ul id="fac-list" class="box unstyled">
+    </ul>
 </div>

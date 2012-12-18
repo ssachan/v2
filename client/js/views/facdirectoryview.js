@@ -20,7 +20,7 @@ window.FacDirectoryView = Backbone.View.extend({
 		var facs = this.model.models;
 		var len = facs.length;
 		for ( var i = 0; i < len; i++) {
-			$('#faclib-list', this.el).append(new FacItemView({
+			$('#fac-list', this.el).append(new FacItemView({
 				model : facs[i]
 			}).render().el);
 		}
@@ -29,8 +29,8 @@ window.FacDirectoryView = Backbone.View.extend({
 });
 
 window.FacItemView = Backbone.View.extend({
-
-	className : "media box fac-ind",
+	tagName :'li',
+	className : 'fac-item',
 	initialize : function() {
 		this.render();
 	},

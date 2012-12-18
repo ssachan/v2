@@ -7,7 +7,7 @@
 
 window.FacView = Backbone.View.extend({
 	
-	className : "container facpro",
+	className : "container fac-profile",
 	
 	initialize : function() {
 		this.render();
@@ -25,7 +25,7 @@ window.FacView = Backbone.View.extend({
         while(i<len){
         	$("#quizzes").append('<ul class="thumbnails"></ul>');
         	for (var j = 0; j < 3&&i<len; j++) {
-        		$(".thumbnails:last").append(new FacQuizView({model: quizzes[i]}).render().el);
+        		$(".thumbnails:last").append(new QuizItemView({model: quizzes[i]}).render().el);
         		i++;
         	}
         }
@@ -39,7 +39,9 @@ window.FacView = Backbone.View.extend({
 	}
 });
 
-
+/**
+ * Not being used now. will be deleted
+ */
 window.FacQuizView = Backbone.View.extend({
 
 	tagName: "li",
