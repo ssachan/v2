@@ -39,7 +39,7 @@ var AppRouter = Backbone.Router.extend({
 	routes : {
 		"" : "dashboard",
 		"landing" : "landing",
-		"login" : "login",
+		"signUp" : "signUp",
 		"quizLibrary" : "quizLibrary",
 		"facDirectory" : "facDirectory",
 		"quizResults/:id" : "quizResults",
@@ -68,9 +68,10 @@ var AppRouter = Backbone.Router.extend({
 		new LandingView({
 			el : $('#content')
 		});
-		$('#log-in').html((new LoginView({
+		/*$('#log-in').html((new LoginView({
 			model : account
 		})).el);
+		*/
 		$('#packages-menu').hide();
 		$('#home-menu').hide();
 		$('#' + activeMenu).removeClass('active');
@@ -158,7 +159,15 @@ var AppRouter = Backbone.Router.extend({
 		});
 		this.showView(forgotPassView);
 	},
-
+	
+	signUp : function (){
+		var signUpView = new SignUpView({
+			model : account
+		});
+		this.showView('#content', signUpView);
+		signUpView.onRender();
+	},
+	
 	showView : function(selector, view) {
 		if (this.activeView)
 			this.activeView.close();
@@ -166,7 +175,7 @@ var AppRouter = Backbone.Router.extend({
 		this.activeView = view;
 		return view;
 	},
-
+	
 	changeMenu : function(newMenu) {
 		if (activeMenu != null) {
 			$('#' + activeMenu).removeClass('active');

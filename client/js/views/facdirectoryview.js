@@ -8,7 +8,8 @@ window.FacDirectoryView = Backbone.View.extend({
 	// className : "container fac-directory",
 
 	initialize : function() {
-		this.filtered = new QuizCollection();
+		this.filtered = new FacCollection();
+		this.letters = '';
 		this.type = '0';
 		this.l1 = '0';
 		this.totalTests='0';
@@ -17,6 +18,7 @@ window.FacDirectoryView = Backbone.View.extend({
 	},	
 
 	events : {
+		'keyup #s-name' : 'nameSearch',
 		'change #f-l1' : 'l1Filter',
 		'click #s-rec' : 'recSort',
 		'click #s-rec1' : 'recSort1',
@@ -25,7 +27,12 @@ window.FacDirectoryView = Backbone.View.extend({
 		'click #s-tests1' : 'testsSort1',
 		'click #s-tests2' : 'testsSort2',
 	},
-		
+	
+	nameSearch : function (){
+		this.letters = $('#s-name').val();
+		this.onRender();
+	},
+	
 	l1Filter : function (e){
 		this.l1 = $("#f-l1 option:selected").val();
 		this.onRender();
@@ -78,8 +85,18 @@ window.FacDirectoryView = Backbone.View.extend({
 	onRender : function (){
 		$("#fac-list").empty();
     	this.filtered.reset(this.collection.models);
+    	if(this.letters!=''){
+    		var pattern = new RegExp(this.letters,'gi');
+    		var res = this.filtered.filter(function(data) {
+    		  	if(pattern.test(data.get('firstName')) || pattern.test(data.get('lastName'))){
+    		  		return true;
+    		  	}
+    		});
+    		this.filtered.reset(res);
+    	}
+    	
     	if(this.l1!='0'){
-    		var filteredArray = this.filtered.where({l1: this.l1});
+    		var filteredArray = this.filtered.where({l1Ids: this.l1});
 			this.filtered.reset(filteredArray);
     	}
     	if(this.rec=='1'){

@@ -12,7 +12,8 @@ var Config = {
     viewsArray : [  
                     'HeaderView',
                     'LandingView',
-                    'LoginView',
+                    'LoginBox',
+                    'SignUpBox',
                     'SignUpView',
                     'QuizView',
                     'QuizQuestionView',

@@ -16,15 +16,26 @@ window.Fac = Backbone.Model.extend({
 			}
 		});
 	},
-
+	
 	defaults : {
-		dpUrl : DP_PATH + 'avatar.jpg'
+		id:null,
+		dpUrl : DP_PATH + 'avatar.jpg',
+		firstName:null
 	}
 });
 
 window.FacCollection = Backbone.Collection.extend({
 	model : Fac,
 	url : Config.serverUrl + 'fac/',
+	search : function(letters){
+		if(letters == "") return this;
+ 
+		var pattern = new RegExp(letters,'gi');
+		return _(this.filter(function(data) {
+		  	return pattern.test(data.get('firstName'));
+			
+		}));
+	},
 });
 
 var facDirectory = new FacCollection();
