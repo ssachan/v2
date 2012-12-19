@@ -79,7 +79,7 @@ window.Account = Backbone.Model.extend({
 			success : function(data) {
 				if (data.status == STATUS.SUCCESS) {
 					console.log('log out');
-					window.location.replace('#landing');
+					//window.location.replace('#landing');
 					account.clear();
 					user.clear();
 					helper.showError(data.data);

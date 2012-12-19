@@ -81,7 +81,6 @@ var AppRouter = Backbone.Router.extend({
 	dashboard : function() {
 		// check if authenticated move to dashboard page, else move to landing
 		// page
-		mView.close();
 		if (account.get('id') != null) {
 			Manager.getDashboardData();
 			$('#packages-menu').show();
@@ -121,11 +120,7 @@ var AppRouter = Backbone.Router.extend({
 		Manager.getFacContactPage();
 	},
 
-	/**
-	 * TODO:at this point there are separate routes for start and results but
-	 * later we might want to merge them to same route #quiz...it displays the
-	 * results when the quiz is attempted else starts the quiz.
-	 * 
+	/** 
 	 * @param id
 	 */
 	startQuiz : function(id) {
@@ -161,6 +156,10 @@ var AppRouter = Backbone.Router.extend({
 	},
 	
 	signUp : function (){
+		if(account.get('id')!=null){
+			account.logout();
+			$('#sign-up').html('<a href="#signUp">Log Out</a>');
+		}
 		var signUpView = new SignUpView({
 			model : account
 		});
@@ -183,9 +182,10 @@ var AppRouter = Backbone.Router.extend({
 		activeMenu = newMenu;
 		$('#' + activeMenu).addClass('active');
 		if (account.get('id') == null) {
-			$('#log-in').show();
+			$('#sign-up').html('<a href="#signUp">Sign-Up</a>');
+			//$('#log-in').show();
 		} else {
-			$('#log-in').hide();
+			$('#sign-up').html('<a href="#signUp">Log Out</a>');
 		}
 	}
 });

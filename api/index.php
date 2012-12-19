@@ -366,7 +366,7 @@ function processQuiz() {
     if ($count->count == 0) {
         // this quiz hasn't been taken.
         // logic for package redemption at this point its null.
-       
+
     } else {
         // you have already taken this quiz, this seems to be a call for fetching questions 
         // for the results
@@ -395,6 +395,10 @@ function processQuiz() {
     sendResponse($response);
 }
 
+function addResponse() {
+
+}
+
 function addResults() {
     $response = array();
     $streamId = $_POST['streamId'];
@@ -421,6 +425,24 @@ function addResults() {
         $response["data"] = EXCEPTION_MSG;
         phpLog($e->getMessage());
     }
+    
+    /*$sql = "INSERT INTO responses (accountId, questionId, selectedAnswer, score, timePerQuestion, timestamp) VALUES (:accountId, :quizId, :selectedAnswers, :score, :timePerQuestion, :timeStamp)";
+    // loop through 
+    try {
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("questionId", $accountId);
+        $stmt->bindParam("questionId", $questionId);
+        $stmt->bindParam("selectedAnswer", $selectedAnswer);
+        $stmt->bindParam("timeTaken", timeTaken);
+        $stmt->execute();
+        $db = null;
+    } catch (PDOException $e) {
+        $response["status"] = ERROR;
+        $response["data"] = EXCEPTION_MSG;
+        phpLog($e->getMessage());
+    }
+     */
     $sql = "SELECT quizzesAttempted from students where accountId=:accountId and streamId=:streamId";
     try {
         $db = getConnection();
@@ -472,9 +494,9 @@ function addResults() {
         phpLog($e->getMessage());
     }
     if (!isset($response["status"])) {
-        $response["status"]=SUCCESS;
+        $response["status"] = SUCCESS;
         $response["data"] = true;
-     }
+    }
     sendResponse($response);
 }
 
@@ -562,9 +584,9 @@ function facContact() {
         phpLog($e->getMessage());
     }
     if (!isset($response["status"])) {
-        $response["status"]=SUCCESS;
+        $response["status"] = SUCCESS;
         $response["data"] = true;
-     }
+    }
     sendResponse($response);
 }
 
