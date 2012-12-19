@@ -208,7 +208,7 @@ window.Manager = {
 				if (data.status == STATUS.SUCCESS) {
 					facDirectory.reset(data.data);
 					new FacDirectoryView({
-						model : facDirectory,
+						collection : facDirectory,
 						el : '#content'
 					});
 				} else { // If not, send them back to the home page

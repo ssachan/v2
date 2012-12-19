@@ -6,6 +6,6 @@ window.LandingView = Backbone.View.extend({
 
 	render : function() {
 		$(this.el).html(this.template());
-		$('#sign-up').append((new SignUpView({model:account})).el);
+		//$('#sign-up').append((new SignUpView({model:account})).el);
 	}
 });

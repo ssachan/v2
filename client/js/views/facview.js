@@ -29,13 +29,6 @@ window.FacView = Backbone.View.extend({
         		i++;
         	}
         }
-        /*while(i<len){
-        	//$("#quizzes").append('<ul class="thumbnails span10"></ul>');
-        	for (var j = 0; j < 3&&i<len; j++) {
-        		$(".thumbnails:last").append(new FacQuizView({model: quizzes[i]}).render().el);
-        		i++;
-        	}
-        }*/
 	}
 });
 

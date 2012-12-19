@@ -1300,7 +1300,7 @@ width: 75%;
 }
 
 .quiz-library h2{
-font-weight: 100;}
+font-weight: 400;}
 
 .quiz-lib-heading{
 text-align: center;
@@ -1343,25 +1343,24 @@ top: 7px;}
 .quiz-lib-t2 {
 background: #37535C;
 
-background-image: linear-gradient(bottom, rgb(28,75,87) 6%, rgb(41,111,128) 28%, rgb(56,148,171) 77%);
-background-image: -o-linear-gradient(bottom, rgb(28,75,87) 6%, rgb(41,111,128) 28%, rgb(56,148,171) 77%);
-background-image: -moz-linear-gradient(bottom, rgb(28,75,87) 6%, rgb(41,111,128) 28%, rgb(56,148,171) 77%);
-background-image: -webkit-linear-gradient(bottom, rgb(28,75,87) 6%, rgb(41,111,128) 28%, rgb(56,148,171) 77%);
-background-image: -ms-linear-gradient(bottom, rgb(28,75,87) 6%, rgb(41,111,128) 28%, rgb(56,148,171) 77%);
+background-image: linear-gradient(bottom, rgb(128,156,163) 6%, rgb(133,174,184) 53%);
+background-image: -o-linear-gradient(bottom, rgb(128,156,163) 6%, rgb(133,174,184) 53%);
+background-image: -moz-linear-gradient(bottom, rgb(128,156,163) 6%, rgb(133,174,184) 53%);
+background-image: -webkit-linear-gradient(bottom, rgb(128,156,163) 6%, rgb(133,174,184) 53%);
+background-image: -ms-linear-gradient(bottom, rgb(128,156,163) 6%, rgb(133,174,184) 53%);
 
 background-image: -webkit-gradient(
 	linear,
 	left bottom,
 	left top,
-	color-stop(0.06, rgb(28,75,87)),
-	color-stop(0.28, rgb(41,111,128)),
-	color-stop(0.77, rgb(56,148,171))
+	color-stop(0.06, rgb(128,156,163)),
+	color-stop(0.53, rgb(133,174,184))
 );
 
 
 
 
-color: white;
+color: #222;
 padding-top: 10px;
 padding-bottom: 10px;
 margin-top: 5px;
@@ -1387,6 +1386,10 @@ padding-top: 10px;
 padding-bottom: 0px;
 /*position: relative;
 top: 20px;*/}
+
+.quiz-box{
+width: 85%;
+margin-bottom: 30px;}
 
 .quiz-box:hover {
 box-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
@@ -1964,4 +1967,43 @@ font-weight:bold;
 .org .date{
 	color:#333;
 	font-size: 13px;
+}
+
+
+
+/* Alert Boxes
+=================================================================== */
+.alert {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    line-height: 18px;
+    margin-bottom: 15px;
+    position: relative;
+    padding: 14px 40px 14px 18px;
+    -webkit-box-shadow:  0px 1px 1px 0px rgba(180, 180, 180, 0.1);
+    box-shadow:  0px 1px 1px 0px rgba(180, 180, 180, 0.1);
+}
+
+.alert.alert-success {
+    background-color: #edf6e5 !important;
+    color: #7a9659 !important;
+    border: 1px solid #9fc76f !important;
+}
+
+.alert.alert-error {
+    background-color: #fdeaea !important;
+    color: #ca6f74 !important;
+    border: 1px solid #f27b81 !important;
+}
+
+.alert {
+    background-color: #fffee1 !important;
+    color: #daac50 !important;
+    border: 1px solid #f5c056 !important;
+}
+
+.alert.alert-info {
+    background-color: #e9f8ff !important;
+    color: #5d9fa9 !important;
+    border: 1px solid #75c7d3 !important;
 }
