@@ -48,7 +48,8 @@ var AppRouter = Backbone.Router.extend({
 		"packages" : "packages",
 		"forgotpass" : "forgotPass",
 		"changepass" : "changePass",
-		"facContact" : "facContact"
+		"facContact" : "facContact",
+		"review" : "review",
 	},
 
 	initialize : function() {
@@ -68,10 +69,6 @@ var AppRouter = Backbone.Router.extend({
 		new LandingView({
 			el : $('#content')
 		});
-		/*$('#log-in').html((new LoginView({
-			model : account
-		})).el);
-		*/
 		$('#packages-menu').hide();
 		$('#home-menu').hide();
 		$('#' + activeMenu).removeClass('active');
@@ -111,7 +108,12 @@ var AppRouter = Backbone.Router.extend({
 		}
 		this.changeMenu('fac-menu');
 	},
-
+	
+	review : function() {
+		Manager.getDataForReview();
+		this.changeMenu('review-menu');
+	},
+	
 	fac : function(id) {
 		Manager.getFaculty(id);
 	},

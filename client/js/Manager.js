@@ -182,7 +182,7 @@ window.Manager = {
 						// just load the library
 						quizLibrary.reset(data.data);
 					}else{
-						//set the hasAttempted flag to true.
+						// set the hasAttempted flag to true.
 						var len = data.data.length;
 						for(var i=0;i<len;i++){
 							var quiz = new Quiz(data.data[i]);
@@ -267,21 +267,12 @@ window.Manager = {
 		});
 	},
 
-	/*getQuestions : function(qids) {
-		var url = Config.serverUrl + 'questions/';
-		return $.ajax({
-			url : url,
-			dataType : "json",
-			type : 'GET',
-			data : {
-				qids : qids
-			},
-			success : function(data) {
-				console.log("questions fetched: " + data.length);
-				quizQuestions.add(data);
-			}
-		});
-	},*/
+	/*
+	 * getQuestions : function(qids) { var url = Config.serverUrl +
+	 * 'questions/'; return $.ajax({ url : url, dataType : "json", type : 'GET',
+	 * data : { qids : qids }, success : function(data) { console.log("questions
+	 * fetched: " + data.length); quizQuestions.add(data); } }); },
+	 */
 
 	getPackagesByStreamId : function(streamId) {
 		var url = Config.serverUrl + 'packagesByStreamId/' + streamId;
@@ -298,7 +289,27 @@ window.Manager = {
 			}
 		});
 	},
-
+	
+	getAttemptedQuestions : function(){
+		var url = Config.serverUrl + 'attemptedQuestions/';
+		return $.ajax({
+			url : url,
+			data: {
+				accountId : account.get('id'),
+				streamId : streamId
+			},
+			dataType : "json",
+			success : function(data) {
+				if (data.status == STATUS.SUCCESS) {
+					console.log("review questions fetched: " + data);
+					attemptedQuestions.reset(data.data);// facDirectory.reset(data);
+				} else { // If not, show error
+					helper.showError(data.data);
+				}
+			}
+		});
+	},
+	
 	processQuiz : function(quizId) {
 		var url = Config.serverUrl + 'processQuiz/';
 		return $.ajax({
@@ -382,25 +393,33 @@ window.Manager = {
 			}
 		});
 	},
+	
+	
+	getDataForReview : function() {
+		var dfd = [];
+		dfd.push(this.getAttemptedQuestions());
+		$.when.apply(null, dfd).then(function(data) {
+			var reviewView = new ReviewView({
+				collection : attemptedQuestions,
+			});
+			app.showView('#content',reviewView);
+			reviewView.onRender();
+		});
+	},
 
+	
 	/**
 	 * ensure all data is present before quiz results are loaded.
 	 * 
 	 * @param id
 	 * @returns
 	 */
-	/*getQuizDataForResults : function(quiz) {
-		var dfd = [];
-		dfd.push(this.getQuestions(quiz.get('questionIds')));
-		$.when.apply(null, dfd).then(function(data) {
-			var quizView = new QuizView({
-				model : quiz,
-				index : 0,
-			});
-			app.showView(quizView);
-			quizView.renderResults();
-		});
-	},*/
+	/*
+	 * getQuizDataForResults : function(quiz) { var dfd = [];
+	 * dfd.push(this.getQuestions(quiz.get('questionIds'))); $.when.apply(null,
+	 * dfd).then(function(data) { var quizView = new QuizView({ model : quiz,
+	 * index : 0, }); app.showView(quizView); quizView.renderResults(); }); },
+	 */
 
 	/**
 	 * ensure all data is present before quiz results are loaded.
@@ -413,10 +432,10 @@ window.Manager = {
 		var quiz = quizHistory.get(quizId);
 		// if not found show error
 		if(!quiz){
-			// some issue 
+			// some issue
 			return;
 		}
-		//check if questions are available in the system
+		// check if questions are available in the system
 		var allThere = true;
 		var questionIds =	quiz.get('questionIdsArray');
 		var len = questionIds.length;

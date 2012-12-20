@@ -31,6 +31,8 @@ var Config = {
                     'ForgotPassView',
                     'ChangePassView',
                     'FacQuizView',
+                    'ReviewView',
+                    'QuestionItemView',
                     'PerformanceView',
                     'FacContactView',
                     'FooterView'

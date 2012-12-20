@@ -28,6 +28,17 @@ window.Question = Backbone.Model.extend({
             	optionUnSelectedTimeStamps: new Array()
             });
         }
+        var l3Id=this.get('l3Id');
+        if (l3Id) {
+        	var l3 = sectionL3.get(l3Id);
+        	var l2Id = l3.get('l2Id');
+            this.set('l2Id',l2Id);
+        	var l2 = sectionL2.get(l2Id);
+            this.set('l1Id',l2.get('l1Id'));
+        }
+        if (this.get('optionSelected')) {
+        	this.set('isCorrect',this.isOptionSelectedCorrect(this.get('optionSelected')));
+        }
     },
 	
     /**
@@ -119,6 +130,7 @@ window.Question = Backbone.Model.extend({
         'timeTaken': null,
         'attemptedInPractice':false,
         'optionSelected':null,
+        'isCorrect':null,
         'videoData' : null //am adding this to load video for each question
     }
 });
@@ -129,3 +141,5 @@ window.QuestionCollection = Backbone.Collection.extend({
 });
 
 var quizQuestions = new QuestionCollection();
+var attemptedQuestions = new QuestionCollection();
+

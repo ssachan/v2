@@ -70,7 +70,7 @@ window.SignUpBox = Backbone.View.extend({
         event.preventDefault(); // Don't let this button submit the form
     	var formValues = {
     			email : $('#email-su').val(),
-    			password :  $('#password-su').val(),
+    			password :  $('#pass-su').val(),
     			firstName : $('#fname-su').val(),
     			lastName : $('#lname-su').val(),
     			type : 1,
