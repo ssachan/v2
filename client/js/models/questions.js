@@ -128,7 +128,7 @@ window.Question = Backbone.Model.extend({
         'correctAnswer': null,
         'status': null,
         'timeTaken': null,
-        'attemptedInPractice':false,
+        'hasAttempted':false,
         'optionSelected':null,
         'isCorrect':null,
         'videoData' : null //am adding this to load video for each question

@@ -46,25 +46,28 @@ window.Quiz = Backbone.Model.extend({
 			this.set('totalIncorrect', score[1]);
 			this.set('totalScore', score[2]);
 		}
-		if(this.get('l2Ids')!=null){
+		if (this.get('l2Ids') != null) {
 			var l2Ids = this.get('l2Ids').split(SEPARATOR);
-			var len=l2Ids.length;
-			if(len==1){
+			var len = l2Ids.length;
+			if (len == 1) {
 				var l2 = sectionL2.get(l2Ids[0]);
-				this.set('topics',l2.get('displayName'));
+				this.set('topics', l2.get('displayName'));
 				this.set('l1', (sectionL1.get(l2.get('l1Id'))).get('id'));
-			}else{
-				var topics=[];
-				for(var i=0;i<len;i++){
+			} else {
+				var topics = [];
+				for ( var i = 0; i < len; i++) {
 					var l2 = sectionL2.get(l2Ids[i]);
 					topics.push(l2.get('displayName'));
 					this.set('l1', (sectionL1.get(l2.get('l1Id'))).get('id'));
 				}
-				this.set('topics',topics.join(','));
+				this.set('topics', topics.join(','));
 			}
-		}else{
+		} else {
 			this.set('l1', 2);
 		}
+		this.on('change:attemptAs', function(model) {
+
+		});
 	},
 
 	defaults : {
@@ -77,11 +80,49 @@ window.Quiz = Backbone.Model.extend({
 		'totalScore' : 0,
 		'maxScore' : 0,
 		'totalScore' : 0,
-		'topics' :'',
-		'l1':null,
-		'fid':null,
-		'firstName':null,
-		'lastName':null
+		'topics' : '',
+		'l1' : null,
+		'fid' : null,
+		'firstName' : null,
+		'lastName' : null,
+		'attemptedAs' : null
+	},
+
+	updateAttemptedAs : function() {
+		// Do a POST
+		var url = '../api/attemptedAs/';
+		var that = this;
+		$.ajax({
+			url : url,
+			type : 'POST',
+			dataType : "json",
+			data : {
+				accountId : account.get('id'),
+				quizId : this.get('id'),
+				attemptedAs : this.get('attemptedAs')
+			},
+			success : function(data) {
+				if (data.status == STATUS.SUCCESS) {
+					var testView = null;
+					if (data.data == 1) {
+						// start the quiz
+						testView = new QuizView({
+							model : that,
+							index : 0,
+						});
+					} else {
+						testView = new PracticeView({
+							model : that,
+							index : 0,
+						});
+					}
+					app.showView('#content', testView);
+					testView.startQuiz();
+				} else {
+					helper.showError(data.data);
+				}
+			}
+		});
 	},
 
 	/**
@@ -95,9 +136,8 @@ window.Quiz = Backbone.Model.extend({
 			for ( var i = 0; i < len; i++) {
 				var question = quizQuestions.get(qIds[i]);
 				var score = question.getScore();
-				if(score!=null){
-					this.set('totalScore', this.get('totalScore')
-						+ score);
+				if (score != null) {
+					this.set('totalScore', this.get('totalScore') + score);
 				}
 				var answer = question.get('optionSelected');
 				if (question.isOptionSelectedCorrect(answer) == true) {
@@ -140,9 +180,10 @@ window.Quiz = Backbone.Model.extend({
 	 */
 	submitResults : function(quiz) {
 		var score = [ parseInt(this.get('totalCorrect')),
-		parseInt(this.get('totalIncorrect')),parseInt(this.get('totalScore')) ];
-		
-		var url = '../api/responses';
+				parseInt(this.get('totalIncorrect')),
+				parseInt(this.get('totalScore')) ];
+
+		var url = '../api/results';
 		console.log('Adding responses... ');
 		var that = this;
 		$.ajax({
@@ -156,7 +197,8 @@ window.Quiz = Backbone.Model.extend({
 				streamId : streamId,
 				score : JSON.stringify(score),
 				selectedAnswers : JSON.stringify(this.getSelectedAnswers()),
-				timePerQuestion : JSON.stringify(this.getTimeTakenPerQuestion()),
+				timePerQuestion : JSON
+						.stringify(this.getTimeTakenPerQuestion()),
 			},
 			success : function(data) {
 				if (data.status == STATUS.SUCCESS) {
@@ -164,7 +206,7 @@ window.Quiz = Backbone.Model.extend({
 					quizHistory.unshift(that);
 					// now show results
 					app.quizResults(that.get('id'));
-				} else { 
+				} else {
 					helper.showError(data.data);
 				}
 			},

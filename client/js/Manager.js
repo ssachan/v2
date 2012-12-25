@@ -16,12 +16,10 @@ $(document).ajaxStart(function() {
 });
 
 // Tell jQuery to watch for any 401 or 403 errors and handle them appropriately
-$.ajaxSetup({
-	statusCode : {
+$.ajaxSetup({statusCode : {
 		401 : function() {
 			// Redirec the to the login page.
 			window.location = '#login';
-
 		},
 		403 : function() {
 			// 403 -- Access denied
@@ -163,11 +161,17 @@ window.Manager = {
 		dfd.push(this.getL2Performance());
 		dfd.push(this.getHistoryById());
 		$.when.apply(null, dfd).then(function(data) {
-			new DashboardView({
+			var dbView = new DashboardView({
+			});
+			app.showView('#content',dbView);
+			dbView.onRender();
+			
+			/*new DashboardView({
 				collection : scoreL1,
 				collection2 : scoreL2,
-				el : '#content'
-			});
+				//el : '#content'
+			});*/
+			
 		});
 	},
 
@@ -384,7 +388,33 @@ window.Manager = {
 		dfd.push(this.processQuiz(quizId));
 		$.when.apply(null, dfd).then(function(data) {
 			if (quizQuestions.length > 0) {
-				var quizView = new QuizView({
+				var instructionsView = new InstructionsView({model:quiz});
+				app.showView('#content',instructionsView);
+				/*var quizView = new QuizView({
+					model : quiz,
+					index : 0,
+				});
+				app.showView('#content',quizView);
+				quizView.startQuiz();*/
+			}
+		});
+	},
+	
+	/**
+	 * ensure all questions are loaded in the quizQuestions collection
+	 * 
+	 * @param quiz
+	 * @returns
+	 */
+	getDataToResume : function(quizId) {
+		var quiz = quizLibrary.get(quizId); // active quiz initialized for
+		// the first time
+		quizQuestions.reset();
+		var dfd = [];
+		dfd.push(this.processQuiz(quizId));
+		$.when.apply(null, dfd).then(function(data) {
+			if (quizQuestions.length > 0) {
+				var practiceView = new PracticeView({
 					model : quiz,
 					index : 0,
 				});
@@ -393,7 +423,6 @@ window.Manager = {
 			}
 		});
 	},
-	
 	
 	getDataForReview : function() {
 		var dfd = [];

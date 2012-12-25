@@ -52,9 +52,8 @@ $authenticate = function ($app) {
     };
 };
 
-function copyImage() {
-    copy('http://www.google.co.in/intl/en_com/images/srpr/logo1w.png', '/tmp/file.jpeg');
-
+function copyImage($url) {
+    //copy($url, );
 }
 
 function getStudentByAccountId($accountId, $streamId) {

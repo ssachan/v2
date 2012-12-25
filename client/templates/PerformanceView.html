@@ -1,20 +1,16 @@
+<h2><%= displayName %></h2>
+<!--Level 2 -->
 <div class="row-fluid">
-    <div class="span8">
-        <h3><%= displayName %></h3>
+    <div class="span4">
+        <ul class="nav nav-list s-list l2">
+            </ul>
     </div>
-    <div class="span2">
-        <div class="progress">
-            <div class="bar" style="width: 60%;"></div>
-        </div>
+
+    <div class="span4">
+        <ul class="nav nav-list s-list l3">
+        </ul>
     </div>
-    <div class="span2">
-      <%if(displayName!='Physics'){  %>
-       <img src="img/stars.jpg" height="20" width="120" />
-      <%}else{  %>
-         <img src="img/stars2.jpg" height="20px" width="60px" />
-      <%} %>
+    <!--Detailed Info -->
+    <div class="span4" id="l3-stats">
     </div>
-</div>
-<hr>
-<div class="l2-performance">
 </div>

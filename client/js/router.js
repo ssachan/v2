@@ -108,12 +108,12 @@ var AppRouter = Backbone.Router.extend({
 		}
 		this.changeMenu('fac-menu');
 	},
-	
+
 	review : function() {
 		Manager.getDataForReview();
 		this.changeMenu('review-menu');
 	},
-	
+
 	fac : function(id) {
 		Manager.getFaculty(id);
 	},
@@ -121,8 +121,8 @@ var AppRouter = Backbone.Router.extend({
 	facContact : function() {
 		Manager.getFacContactPage();
 	},
-
-	/** 
+	
+	/**
 	 * @param id
 	 */
 	startQuiz : function(id) {
@@ -156,19 +156,19 @@ var AppRouter = Backbone.Router.extend({
 		});
 		this.showView(forgotPassView);
 	},
-	
-	signUp : function (){
-		if(account.get('id')!=null){
+
+	signUp : function() {
+		if (account.get('id') != null) {
 			account.logout();
-			$('#sign-up').html('<a href="#signUp">Log Out</a>');
-		}
+		} 
+		this.changeMenu('signup-menu');
 		var signUpView = new SignUpView({
 			model : account
 		});
 		this.showView('#content', signUpView);
 		signUpView.onRender();
 	},
-	
+
 	showView : function(selector, view) {
 		if (this.activeView)
 			this.activeView.close();
@@ -176,7 +176,7 @@ var AppRouter = Backbone.Router.extend({
 		this.activeView = view;
 		return view;
 	},
-	
+
 	changeMenu : function(newMenu) {
 		if (activeMenu != null) {
 			$('#' + activeMenu).removeClass('active');
@@ -185,7 +185,7 @@ var AppRouter = Backbone.Router.extend({
 		$('#' + activeMenu).addClass('active');
 		if (account.get('id') == null) {
 			$('#sign-up').html('<a href="#signUp">Sign-Up</a>');
-			//$('#log-in').show();
+			// $('#log-in').show();
 		} else {
 			$('#sign-up').html('<a href="#signUp">Log Out</a>');
 		}

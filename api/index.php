@@ -28,10 +28,11 @@ $app->get('/l2Performance/', $authenticate($app), 'getL2Performance');
 $app->get('/historyById/', $authenticate($app), 'getQuizzesHistory');
 
 //quiz
+$app->post('/attemptedAs/', 'updateAttemptedAs');
 $app->get('/processQuiz/', $authenticate($app), 'processQuiz');
 
 // responses
-$app->post('/responses', 'addResults');
+$app->post('/results', 'updateResults');
 $app->get('/attemptedQuestions/', 'getAttemptedQuestions');
 
 //packages
@@ -210,7 +211,7 @@ function getQuizzesHistory() {
 //
 function getQuizzesByStreamId($id) {
     $response = array();
-    $sql = "select q.id,q.questionIds,q.description,q.descriptionShort,q.difficulty,q.allotedTime,q.maxScore,q.rec,q.conceptsTested, q.l2Ids, q.l3Ids, q.typeId, f.id as fid, f.firstName,f.lastName from quizzes q, faculty f where q.facultyId=f.id and q.streamId=:id";
+    $sql = "select q.id,q.questionIds,q.description,q.descriptionShort,q.difficulty,q.allotedTime,q.maxScore,q.rec,q.conceptsTested, q.l2Ids, q.l3Ids, q.typeId, a.id as fid, a.firstName,a.lastName,f.bioShort from quizzes q, accounts a, faculty f where q.facultyId=a.id and q.streamId=:id and f.accountId=a.id";
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
@@ -234,9 +235,9 @@ function getQuizzesByStreamId($id) {
 
 function getFacByStreamId($id) {
     $response = array();
-    $sql = "select * from faculty where streamIds like '%" . $id
-            . "' or streamIds like '" . $id . "%' or streamIds like '%|:" . $id
-            . "|:%'";
+    $sql = "select a.id as id, a.firstName,a.lastName,f.* from faculty f,accounts a where (f.streamIds like '%" . $id
+            . "' or f.streamIds like '" . $id . "%' or f.streamIds like '%|:" . $id
+            . "|:%') and a.id=f.accountId and a.roles='2'";
     try {
         $db = getConnection();
         $stmt = $db->query($sql);
@@ -259,7 +260,7 @@ function getFacByStreamId($id) {
 
 function getFac($id) {
     $response = array();
-    $sql = "select * from faculty where id=:id";
+    $sql = "select a.id as id,a.firstName,a.lastName,f.* from faculty f, accounts a where a.id=:id and a.id=f.accountId";
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
@@ -341,6 +342,30 @@ function getQuestionIdsByQuiz($quizId){
     }
 }
 
+function updateAttemptedAs() {
+    $response = array();
+    $accountId = $_POST['accountId'];
+    $quizId = $_POST['quizId'];
+    $attemptedAs = $_POST['attemptedAs'];
+    $sql = "update results set attemptedAs=:attemptedAs where quizId=:quizId and accountId=:accountId";
+    try {
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("accountId", $accountId);
+        $stmt->bindParam("quizId", $quizId);
+        $stmt->bindParam("attemptedAs", $attemptedAs);
+        $stmt->execute();
+        $db = null;
+        $response["status"] = SUCCESS;
+        $response["data"] = $attemptedAs;
+    } catch (PDOException $e) {
+        $response["status"] = ERROR;
+        $response["data"] = EXCEPTION_MSG;
+        phpLog($e->getMessage());
+    }
+    sendResponse($response);
+}
+
 function getAttemptedQuestions() {
     $response = array();
     $accountId = $_GET['accountId'];
@@ -391,7 +416,19 @@ function processQuiz() {
     if ($count->count == 0) {
         // this quiz hasn't been taken.
         // logic for package redemption at this point its null.
-
+        $sql = "INSERT INTO results (accountId, quizId) VALUES (:accountId, :quizId)";
+        try {
+            $db = getConnection();
+            $stmt = $db->prepare($sql);
+            $stmt->bindParam("accountId", $accountId);
+            $stmt->bindParam("quizId", $quizId);
+            $stmt->execute();
+            $db = null;
+        } catch (PDOException $e) {
+            $response["status"] = ERROR;
+            $response["data"] = EXCEPTION_MSG;
+            phpLog($e->getMessage());
+        }
     } else {
         // you have already taken this quiz, this seems to be a call for fetching questions 
         // for the results
@@ -420,7 +457,7 @@ function processQuiz() {
     sendResponse($response);
 }
 
-function addResults() {
+function updateResults() {
     $response = array();
     $streamId = $_POST['streamId'];
     $accountId = $_POST['accountId'];
@@ -429,7 +466,7 @@ function addResults() {
     $selectedAnswers = stripslashes($_POST['selectedAnswers']);
     $timePerQuestion = $_POST['timePerQuestion'];
     $date = date("Y-m-d H:i:s", time());
-    $sql = "INSERT INTO results (accountId, quizId, selectedAnswers, score, timePerQuestion, timestamp) VALUES (:accountId, :quizId, :selectedAnswers, :score, :timePerQuestion, :timeStamp)";
+    $sql = "UPDATE results SET selectedAnswers=:selectedAnswers, score=:score, timePerQuestion=:timePerQuestion, timestamp=:timeStamp where accountId=:accountId and quizId=:quizId";
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
