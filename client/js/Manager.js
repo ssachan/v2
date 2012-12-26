@@ -122,25 +122,6 @@ window.Manager = {
 		});
 	},
 
-	getHistoryById : function() {
-		var url = Config.serverUrl + 'historyById/';
-		return $.ajax({
-			url : url,
-			data : {
-				accountId : account.get('id'),
-				streamId : streamId
-			},
-			dataType : "json",
-			success : function(data) {
-				if (data.status == STATUS.SUCCESS) {
-					quizHistory.reset(data.data);
-				} else { // If not, send them back to the home page
-					helper.showError(data.data);
-				}
-			}
-		});
-	},
-
 	getSubjectsByStreamId : function(id) {
 		var dfd = [ this.getL1ByStreamId(id), this.getL2ByStreamId(id),
 				this.getL3ByStreamId(id) ];
@@ -194,6 +175,25 @@ window.Manager = {
 							quizLibrary.push(quiz);
 						}
 					}
+				} else { // If not, send them back to the home page
+					helper.showError(data.data);
+				}
+			}
+		});
+	},
+	
+	getHistoryById : function() {
+		var url = Config.serverUrl + 'historyById/';
+		return $.ajax({
+			url : url,
+			data : {
+				accountId : account.get('id'),
+				streamId : streamId
+			},
+			dataType : "json",
+			success : function(data) {
+				if (data.status == STATUS.SUCCESS) {
+					quizHistory.reset(data.data);
 				} else { // If not, send them back to the home page
 					helper.showError(data.data);
 				}

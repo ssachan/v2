@@ -40,8 +40,8 @@ var AppRouter = Backbone.Router.extend({
 		"" : "dashboard",
 		"landing" : "landing",
 		"signUp" : "signUp",
-		"quizLibrary" : "quizLibrary",
-		"facDirectory" : "facDirectory",
+		"library" : "library",
+		"facs" : "facs",
 		"quiz/:id" : "quiz",
 		"fac/:id" : "fac",
 		"packages" : "packages",
@@ -62,43 +62,36 @@ var AppRouter = Backbone.Router.extend({
 		this.footerView = new FooterView({
 			el : $('footer'),
 		});
-
 	},
 
 	landing : function() {
 		new LandingView({
 			el : $('#content')
 		});
-		$('#packages-menu').hide();
-		$('#home-menu').hide();
-		$('#' + activeMenu).removeClass('active');
 		return;
 	},
 
 	dashboard : function() {
 		// check if authenticated move to dashboard page, else move to landing
 		// page
-		if (account.get('id') != null) {
+		if(account.get('id')!=null){
 			Manager.getDashboardData();
-			$('#packages-menu').show();
-			$('#home-menu').show();
-			this.changeMenu('home-menu');
-		} else {
+			$('#signup-menu>a').html('Log Out');
+			$('#myprepset-menu').show();
+		}else{
 			window.location = '#landing';
+			$('#signup-menu>a').html('Sign Up');
+			$('#myprepset-menu').hide();
 		}
 	},
 
-	quizLibrary : function() {
+	library : function() {
+		this.changeMenu('lib-menu');
 		Manager.getDataForQuizLibrary(streamId);
-		this.changeMenu('quiz-menu');
 	},
 
-	packages : function() {
-		Manager.getPackagesByStreamId(streamId);
-		this.changeMenu('packages-menu');
-	},
-
-	facDirectory : function() {
+	facs : function() {
+		this.changeMenu('fac-menu');
 		// if streamId is set
 		if (streamId) {
 			Manager.getFacByStreamId(streamId);
@@ -106,15 +99,19 @@ var AppRouter = Backbone.Router.extend({
 			// get a generic faculty list
 			alert('generic list of fac');
 		}
-		this.changeMenu('fac-menu');
+	},
+	
+	packages : function() {
+		this.changeMenu('packages-menu');
+		Manager.getPackagesByStreamId(streamId);
 	},
 
 	review : function() {
 		Manager.getDataForReview();
-		this.changeMenu('review-menu');
 	},
 	
 	myprepsets : function (){
+		this.changeMenu('myprepsets-menu');
 		Manager.getDataForMySets();
 	},
 	
@@ -154,15 +151,18 @@ var AppRouter = Backbone.Router.extend({
 	},
 
 	signUp : function() {
+		this.changeMenu('signup-menu');
+		$('#signup-menu>a').html('Sign Up');
+		$('#myprepset-menu').hide();
 		if (account.get('id') != null) {
 			account.logout();
+		}else{
+			var signUpView = new SignUpView({
+				model : account
+			});
+			app.showView('#content', signUpView);
+			signUpView.onRender();
 		} 
-		this.changeMenu('signup-menu');
-		var signUpView = new SignUpView({
-			model : account
-		});
-		this.showView('#content', signUpView);
-		signUpView.onRender();
 	},
 
 	showView : function(selector, view) {

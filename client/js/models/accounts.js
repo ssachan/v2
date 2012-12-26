@@ -82,7 +82,11 @@ window.Account = Backbone.Model.extend({
 					//window.location.replace('#landing');
 					account.clear();
 					user.clear();
-					$('#sign-up').html('<a href="#signUp">Sign Up</a>');
+					var signUpView = new SignUpView({
+						model : account
+					});
+					app.showView('#content', signUpView);
+					signUpView.onRender();
 					helper.showError(data.data);
 				} else {
 					helper.showError(data.data);
@@ -157,7 +161,7 @@ window.Account = Backbone.Model.extend({
 
 	isAuth : function() {
 		// isAuth is wrapped around our router
-		// before we start any routers let us see if the user is valid
+		// before we start any routers let us see if the user is authenticated
 		url = '../api/isAuth';
 		$.ajax({
 			url : url,
