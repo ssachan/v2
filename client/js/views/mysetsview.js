@@ -6,22 +6,24 @@
  */
 
 window.MySetsView = Backbone.View.extend({
+	className : "container mysets",
 	
 	initialize : function() {
+		this.historyView = new HistoryView({collection:this.collection});
 	},
 	
 	render : function(){
 		$(this.el).html(this.template());
+		return this;
 	},
 	
 	onRender : function(){
-		
+		this.historyView.render();
 	}
 });
 
 window.HistoryView = Backbone.View.extend({
     initialize: function () {
-        this.render();
     },
 
     render: function () {

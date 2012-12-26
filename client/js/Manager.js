@@ -16,7 +16,8 @@ $(document).ajaxStart(function() {
 });
 
 // Tell jQuery to watch for any 401 or 403 errors and handle them appropriately
-$.ajaxSetup({statusCode : {
+$.ajaxSetup({
+	statusCode : {
 		401 : function() {
 			// Redirec the to the login page.
 			window.location = '#login';
@@ -159,19 +160,18 @@ window.Manager = {
 		}
 		dfd.push(this.getL1Performance());
 		dfd.push(this.getL2Performance());
-		dfd.push(this.getHistoryById());
+		// dfd.push(this.getHistoryById());
 		$.when.apply(null, dfd).then(function(data) {
-			var dbView = new DashboardView({
-			});
-			app.showView('#content',dbView);
+			var dbView = new DashboardView({});
+
+			app.showView('#content', dbView);
 			dbView.onRender();
-			
-			/*new DashboardView({
-				collection : scoreL1,
-				collection2 : scoreL2,
-				//el : '#content'
-			});*/
-			
+
+			/*
+			 * new DashboardView({ collection : scoreL1, collection2 : scoreL2,
+			 * //el : '#content' });
+			 */
+
 		});
 	},
 
@@ -182,16 +182,17 @@ window.Manager = {
 			dataType : "json",
 			success : function(data) {
 				if (data.status == STATUS.SUCCESS) {
-					if(account.get('id')==null){
+					if (account.get('id') == null) {
 						// just load the library
 						quizLibrary.reset(data.data);
-					}else{
+					} else {
 						// set the hasAttempted flag to true.
 						var len = data.data.length;
-						for(var i=0;i<len;i++){
+						for ( var i = 0; i < len; i++) {
 							var quiz = new Quiz(data.data[i]);
-							if($.inArray(quiz.get('id'), account.get('quizzesAttemptedArray'))!=-1){
-								quiz.set('hasAttempted',true);
+							if ($.inArray(quiz.get('id'), account
+									.get('quizzesAttemptedArray')) != -1) {
+								quiz.set('hasAttempted', true);
 							}
 							quizLibrary.push(quiz);
 						}
@@ -266,7 +267,7 @@ window.Manager = {
 				model : fac,
 				collection : facQuizzes,
 			});
-			app.showView('#content',facView);
+			app.showView('#content', facView);
 			facView.renderQuizzes();
 		});
 	},
@@ -293,12 +294,12 @@ window.Manager = {
 			}
 		});
 	},
-	
-	getAttemptedQuestions : function(){
+
+	getAttemptedQuestions : function() {
 		var url = Config.serverUrl + 'attemptedQuestions/';
 		return $.ajax({
 			url : url,
-			data: {
+			data : {
 				accountId : account.get('id'),
 				streamId : streamId
 			},
@@ -313,7 +314,7 @@ window.Manager = {
 			}
 		});
 	},
-	
+
 	processQuiz : function(quizId) {
 		var url = Config.serverUrl + 'processQuiz/';
 		return $.ajax({
@@ -331,6 +332,24 @@ window.Manager = {
 					helper.showError(data.data);
 				}
 			}
+		});
+	},
+
+	getDataForMySets : function() {
+		var dfd = [];
+		// ensure that by this time you have all the global data available
+		if (sectionL1.length == 0 || sectionL2.length == 0) {
+			// what if the data is already is being fetched???I think jquery
+			// makes sure with promises that it is not fetched again
+			dfd.push(this.getL1ByStreamId(streamId));
+			dfd.push(this.getL2ByStreamId(streamId));
+			dfd.push(this.getL3ByStreamId(streamId));
+		}
+		dfd.push(this.getHistoryById());
+		$.when.apply(null, dfd).then(function(data) {
+			var mySetsView = new MySetsView({collection:quizHistory});
+			app.showView('#content', mySetsView);
+			mySetsView.onRender();
 		});
 	},
 
@@ -369,7 +388,7 @@ window.Manager = {
 			var quizLibraryView = new QuizLibraryView({
 				collection : quizLibrary,
 			});
-			app.showView('#content',quizLibraryView);
+			app.showView('#content', quizLibraryView);
 			quizLibraryView.onRender();
 		});
 	},
@@ -388,18 +407,18 @@ window.Manager = {
 		dfd.push(this.processQuiz(quizId));
 		$.when.apply(null, dfd).then(function(data) {
 			if (quizQuestions.length > 0) {
-				var instructionsView = new InstructionsView({model:quiz});
-				app.showView('#content',instructionsView);
-				/*var quizView = new QuizView({
-					model : quiz,
-					index : 0,
+				var instructionsView = new InstructionsView({
+					model : quiz
 				});
-				app.showView('#content',quizView);
-				quizView.startQuiz();*/
+				app.showView('#content', instructionsView);
+				/*
+				 * var quizView = new QuizView({ model : quiz, index : 0, });
+				 * app.showView('#content',quizView); quizView.startQuiz();
+				 */
 			}
 		});
 	},
-	
+
 	/**
 	 * ensure all questions are loaded in the quizQuestions collection
 	 * 
@@ -418,12 +437,12 @@ window.Manager = {
 					model : quiz,
 					index : 0,
 				});
-				app.showView('#content',quizView);
+				app.showView('#content', quizView);
 				quizView.startQuiz();
 			}
 		});
 	},
-	
+
 	getDataForReview : function() {
 		var dfd = [];
 		dfd.push(this.getAttemptedQuestions());
@@ -431,12 +450,11 @@ window.Manager = {
 			var reviewView = new ReviewView({
 				collection : attemptedQuestions,
 			});
-			app.showView('#content',reviewView);
+			app.showView('#content', reviewView);
 			reviewView.onRender();
 		});
 	},
 
-	
 	/**
 	 * ensure all data is present before quiz results are loaded.
 	 * 
@@ -460,22 +478,22 @@ window.Manager = {
 		// check quiz history
 		var quiz = quizHistory.get(quizId);
 		// if not found show error
-		if(!quiz){
+		if (!quiz) {
 			// some issue
 			return;
 		}
 		// check if questions are available in the system
 		var allThere = true;
-		var questionIds =	quiz.get('questionIdsArray');
+		var questionIds = quiz.get('questionIdsArray');
 		var len = questionIds.length;
-		for(var i=0; i<len;i++){
-			if(!quizQuestions.get(questionIds[i])){
+		for ( var i = 0; i < len; i++) {
+			if (!quizQuestions.get(questionIds[i])) {
 				allThere = false;
 				break;
 			}
 		}
 		var dfd = [];
-		if(allThere == false){
+		if (allThere == false) {
 			// get the questions
 			quizQuestions.reset();
 			dfd.push(this.processQuiz(quizId));
@@ -485,25 +503,25 @@ window.Manager = {
 						model : quiz,
 						index : 0,
 					});
-					app.showView('#content',quizView);
+					app.showView('#content', quizView);
 					quizView.renderResults();
 				}
 			});
-		}else{
+		} else {
 			var quizView = new QuizView({
 				model : quiz,
 				index : 0,
 			});
-			app.showView('#content',quizView);
+			app.showView('#content', quizView);
 			quizView.renderResults();
 		}
 	},
 
-	getFacContactPage : function(){
+	getFacContactPage : function() {
 		var facContactView = new FacContactView();
-		app.showView('#content',facContactView);
+		app.showView('#content', facContactView);
 	},
-	
+
 	resetResults : function() {
 		var url = Config.serverUrl + 'resetResults/';
 		return $.ajax({

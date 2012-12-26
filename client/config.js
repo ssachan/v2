@@ -25,6 +25,7 @@ var Config = {
                     'FacItemView',
                     'FacView',
                     'ModalView',
+                    'MySetsView',
                     'InfoView',
                     'InstructionsView',
                     'PackagesView',

@@ -97,6 +97,7 @@ window.QuizView = Backbone.View.extend({
 		this.model.set('timeTaken', timer.count);
 		this.model.calculateScores();
 		this.hasAttempted = true;
+		this.model.set('state','0');
 		this.model.submitResults();
 		//$('#results-div').hide();
 		//$('#quiz-div').show();
@@ -685,7 +686,7 @@ window.PracticeView = Backbone.View.extend({
 		'click #next' : 'onNextClick',
 		'click .qnolist' : 'onQNoClick',
 		'click #submit' : 'submitQuestion',
-		'click #analytics' : 'switchAnalytics'
+		'click #pause' : 'submitQuiz'
 	},
 
 	switchAnalytics : function() {
@@ -733,7 +734,7 @@ window.PracticeView = Backbone.View.extend({
 		this.model.calculateScores();
 		this.hasAttempted = true;
 		this.model.submitResults();
-		quiz.state();
+		this.model.set('state',this.index);
 		//$('#results-div').hide();
 		//$('#quiz-div').show();
 		//this.renderResults();
@@ -805,6 +806,9 @@ window.PracticeView = Backbone.View.extend({
 			$('#previous').hide();
 			$('#next').hide();
 			$('#submit').show();
+			$('#pause').hide();
+		}else{
+			$('#pause').show();
 		}
 		$("#qnum").html((parseInt(this.index) + 1));
 		$("#qtotal").html((this.totalQuestions));

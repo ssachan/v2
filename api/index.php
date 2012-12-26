@@ -235,8 +235,9 @@ function getQuizzesByStreamId($id) {
 
 function getFacByStreamId($id) {
     $response = array();
-    $sql = "select a.id as id, a.firstName,a.lastName,f.* from faculty f,accounts a where (f.streamIds like '%" . $id
-            . "' or f.streamIds like '" . $id . "%' or f.streamIds like '%|:" . $id
+    $sql = "select a.id as id, a.firstName,a.lastName,f.* from faculty f,accounts a where (f.streamIds like '%"
+            . $id . "' or f.streamIds like '" . $id
+            . "%' or f.streamIds like '%|:" . $id
             . "|:%') and a.id=f.accountId and a.roles='2'";
     try {
         $db = getConnection();
@@ -319,7 +320,7 @@ function getQuestions($qids) {
     }
 }
 
-function getQuestionIdsByQuiz($quizId){
+function getQuestionIdsByQuiz($quizId) {
     $response = array();
     // for now just return the questions from the quiz if quiz is not a part of the history.
     $sql = "SELECT questionIds FROM quizzes where id=:quizId";
@@ -336,8 +337,8 @@ function getQuestionIdsByQuiz($quizId){
         $response["data"] = EXCEPTION_MSG;
         phpLog($e->getMessage());
     }
-    if($record->questionIds){
-        $qIdArray = explode("|:",$record->questionIds);
+    if ($record->questionIds) {
+        $qIdArray = explode("|:", $record->questionIds);
         return $qIdArray;
     }
 }
@@ -463,10 +464,26 @@ function updateResults() {
     $accountId = $_POST['accountId'];
     $quizId = $_POST['quizId'];
     $score = $_POST['score'];
+    $state = $_POST['state'];
     $selectedAnswers = stripslashes($_POST['selectedAnswers']);
     $timePerQuestion = $_POST['timePerQuestion'];
     $date = date("Y-m-d H:i:s", time());
-    $sql = "UPDATE results SET selectedAnswers=:selectedAnswers, score=:score, timePerQuestion=:timePerQuestion, timestamp=:timeStamp where accountId=:accountId and quizId=:quizId";
+    $sql = "SELECT state from results where accountId=:accountId and quizId=:quizId";
+    $previousState=0;
+    try {
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("accountId", $accountId);
+        $stmt->bindParam("quizId", $quizId);
+        $stmt->execute();
+        $record = $stmt->fetch(PDO::FETCH_OBJ);
+        if($record->state!=null){
+            $previousState = $record->state;
+        }
+    } catch (PDOException $e) {
+        
+    }
+    $sql = "UPDATE results SET selectedAnswers=:selectedAnswers, score=:score, timePerQuestion=:timePerQuestion, timestamp=:timeStamp,state=:state where accountId=:accountId and quizId=:quizId";
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
@@ -476,6 +493,7 @@ function updateResults() {
         $stmt->bindParam("score", $score);
         $stmt->bindParam("timePerQuestion", $timePerQuestion);
         $stmt->bindParam("timeStamp", $date);
+        $stmt->bindParam("state", $state);
         $stmt->execute();
         $db = null;
     } catch (PDOException $e) {
@@ -490,7 +508,11 @@ function updateResults() {
     $selectedAnswersArray = json_decode($selectedAnswers);
     $timePerQuestionArray = json_decode($timePerQuestion);
     $len = sizeof($selectedAnswersArray);
-    for ($i = 0; $i < $len; $i++) {
+    if ($state != null && $state > 0 && $state<$len) {
+        $len = $state;
+    }
+    $i = $previousState;
+    for ($i; $i< $len; $i++) {
         try {
             $db = getConnection();
             $stmt = $db->prepare($sql);

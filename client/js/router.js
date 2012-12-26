@@ -50,6 +50,7 @@ var AppRouter = Backbone.Router.extend({
 		"changepass" : "changePass",
 		"facContact" : "facContact",
 		"review" : "review",
+		"myprepsets" : "myprepsets",
 	},
 
 	initialize : function() {
@@ -113,7 +114,10 @@ var AppRouter = Backbone.Router.extend({
 		Manager.getDataForReview();
 		this.changeMenu('review-menu');
 	},
-
+	myprepsets : function (){
+		Manager.getDataForMySets();
+	},
+	
 	fac : function(id) {
 		Manager.getFaculty(id);
 	},
