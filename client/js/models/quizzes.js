@@ -205,8 +205,11 @@ window.Quiz = Backbone.Model.extend({
 				if (data.status == STATUS.SUCCESS) {
 					// the results were submitted. Add this quiz to quizHistory
 					quizHistory.unshift(that);
+					account.get('quizzesAttemptedArray').unshift(that.get('id'));
+					app.quiz(that.get('id'));
+					//window.location = '#quiz/'+that.get('id');
 					// now show results
-					app.quizResults(that.get('id'));
+					//app.quizResults(that.get('id'));
 				} else {
 					helper.showError(data.data);
 				}

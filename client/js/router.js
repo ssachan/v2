@@ -42,8 +42,7 @@ var AppRouter = Backbone.Router.extend({
 		"signUp" : "signUp",
 		"quizLibrary" : "quizLibrary",
 		"facDirectory" : "facDirectory",
-		"quizResults/:id" : "quizResults",
-		"quiz/:id" : "startQuiz",
+		"quiz/:id" : "quiz",
 		"fac/:id" : "fac",
 		"packages" : "packages",
 		"forgotpass" : "forgotPass",
@@ -114,6 +113,7 @@ var AppRouter = Backbone.Router.extend({
 		Manager.getDataForReview();
 		this.changeMenu('review-menu');
 	},
+	
 	myprepsets : function (){
 		Manager.getDataForMySets();
 	},
@@ -126,21 +126,13 @@ var AppRouter = Backbone.Router.extend({
 		Manager.getFacContactPage();
 	},
 	
-	/**
-	 * @param id
-	 */
-	startQuiz : function(id) {
+	quiz : function(id) {
 		if (account.get('id') != null) {
 			mView.close();
-			Manager.getQuizDataForStart(id);
+			Manager.getDataForQuiz(id);
 		} else {
 			window.location = '#quizLibrary';
 		}
-	},
-
-	quizResults : function(id) {
-		// pick from history
-		Manager.getQuizDataForResults(id);
 	},
 
 	changePass : function() {

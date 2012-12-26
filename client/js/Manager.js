@@ -163,15 +163,12 @@ window.Manager = {
 		// dfd.push(this.getHistoryById());
 		$.when.apply(null, dfd).then(function(data) {
 			var dbView = new DashboardView({});
-
 			app.showView('#content', dbView);
 			dbView.onRender();
-
 			/*
 			 * new DashboardView({ collection : scoreL1, collection2 : scoreL2,
 			 * //el : '#content' });
 			 */
-
 		});
 	},
 
@@ -272,13 +269,6 @@ window.Manager = {
 		});
 	},
 
-	/*
-	 * getQuestions : function(qids) { var url = Config.serverUrl +
-	 * 'questions/'; return $.ajax({ url : url, dataType : "json", type : 'GET',
-	 * data : { qids : qids }, success : function(data) { console.log("questions
-	 * fetched: " + data.length); quizQuestions.add(data); } }); },
-	 */
-
 	getPackagesByStreamId : function(streamId) {
 		var url = Config.serverUrl + 'packagesByStreamId/' + streamId;
 		return $.ajax({
@@ -347,7 +337,9 @@ window.Manager = {
 		}
 		dfd.push(this.getHistoryById());
 		$.when.apply(null, dfd).then(function(data) {
-			var mySetsView = new MySetsView({collection:quizHistory});
+			var mySetsView = new MySetsView({
+				collection : quizHistory
+			});
 			app.showView('#content', mySetsView);
 			mySetsView.onRender();
 		});
@@ -391,6 +383,88 @@ window.Manager = {
 			app.showView('#content', quizLibraryView);
 			quizLibraryView.onRender();
 		});
+	},
+	
+	startQuiz : function(quiz){
+		var dfd = [];
+		dfd.push(this.processQuiz(quiz.get('id')));
+		$.when.apply(null, dfd).then(function(data) {
+			if (quizQuestions.length > 0) {
+				var instructionsView = new InstructionsView({
+					model : quiz
+				});
+				app.showView('#content', instructionsView);
+			}
+		});
+	},
+	
+	resumeQuiz : function(quiz){
+		var dfd = [];
+		dfd.push(this.processQuiz(quiz.get('id')));
+		$.when.apply(null, dfd).then(function(data) {
+			if (quizQuestions.length > 0) {
+				var pView = new QuizView({
+					model : quiz,
+					index : parseInt(quiz.get('state')),
+				});
+				app.showView('#content', pView);
+				pView.startQuiz();
+			}
+		});
+	},
+	
+	showResults : function(quiz){
+		var dfd = [];
+		dfd.push(this.processQuiz(quiz.get('id')));
+		$.when.apply(null, dfd).then(function(data) {
+			if (quizQuestions.length > 0) {
+				var resultsView = new ResultsView({
+					model : quiz,
+					index : 0,
+				});
+				app.showView('#content', resultsView);
+				resultsView.renderResults();
+			}
+		});
+	},
+	
+	getDataForQuiz : function(quizId) {
+		var quiz = null;
+		quizQuestions.reset();
+		// check if the quiz exists in the local datastructures
+		// quiz library
+		quiz = quizLibrary.get(quizId);
+		if (quiz != null) {
+			// just a casual check if its already taken
+			if ($.inArray(quiz.get('id'), account.get('quizzesAttemptedArray')) == -1) {
+				// new quiz thats being taken right now
+				this.startQuiz(quiz);
+				return;
+			}
+		}
+		// check in hostory
+		quiz = quizHistory.get(quizId);
+		if (quiz != null) {
+			var totalQuestions = quiz.get('questionIdsArray').length;
+			// quiz was available in history, check if its complete or
+			// incomplete
+			if (parseInt(quiz.get('state'))==totalQuestions) {
+				// completed quiz, get the results
+				this.showResults(quiz);
+			} else {
+				if (quiz.get('attemptedAs') == '1') {
+					//start the quiz all over again
+					this.startQuiz(quiz);	
+				}else if(quiz.get('attemptedAs')=='2'){
+					//open practice view
+					this.resumeQuiz(quiz);
+				}
+			}
+			return;
+		}
+		if(quiz==null){
+			alert('fetch quiz from the database and process...yet to implement');
+		}
 	},
 
 	/**
@@ -461,19 +535,6 @@ window.Manager = {
 	 * @param id
 	 * @returns
 	 */
-	/*
-	 * getQuizDataForResults : function(quiz) { var dfd = [];
-	 * dfd.push(this.getQuestions(quiz.get('questionIds'))); $.when.apply(null,
-	 * dfd).then(function(data) { var quizView = new QuizView({ model : quiz,
-	 * index : 0, }); app.showView(quizView); quizView.renderResults(); }); },
-	 */
-
-	/**
-	 * ensure all data is present before quiz results are loaded.
-	 * 
-	 * @param id
-	 * @returns
-	 */
 	getQuizDataForResults : function(quizId) {
 		// check quiz history
 		var quiz = quizHistory.get(quizId);
@@ -521,26 +582,4 @@ window.Manager = {
 		var facContactView = new FacContactView();
 		app.showView('#content', facContactView);
 	},
-
-	resetResults : function() {
-		var url = Config.serverUrl + 'resetResults/';
-		return $.ajax({
-			url : url,
-			dataType : "json",
-			success : function(data) {
-				alert("Results Reset");
-			}
-		});
-	},
-
-	resetAccounts : function() {
-		var url = Config.serverUrl + 'resetAccounts/';
-		return $.ajax({
-			url : url,
-			dataType : "json",
-			success : function(data) {
-				alert("All accounts Deleted Reset");
-			}
-		});
-	}
 };
