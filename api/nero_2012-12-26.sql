@@ -4,7 +4,7 @@
 #
 # Host: localhost (MySQL 5.5.9)
 # Database: nero
-# Generation Time: 2012-12-25 15:25:19 +0530
+# Generation Time: 2012-12-26 11:04:28 +0530
 # ************************************************************
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -38,7 +38,7 @@ CREATE TABLE `accounts` (
   `resetsentOn` datetime DEFAULT NULL,
   `pics` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `accounts` WRITE;
 /*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
@@ -57,7 +57,8 @@ VALUES
 	(28,NULL,'aaaa','aaaa','aaaa','aa@a.com',NULL,'2012-11-26 11:09:57',NULL,NULL,NULL,NULL,NULL,NULL),
 	(29,NULL,'','','','aa@g.com',NULL,'2012-11-27 06:47:37',NULL,NULL,NULL,NULL,NULL,NULL),
 	(30,NULL,'hh','hh','hh','a@g.com',NULL,'2012-11-29 13:50:17',NULL,NULL,NULL,NULL,NULL,NULL),
-	(31,NULL,'pass','aa','aa','a@a.com',NULL,'2012-12-20 11:02:16',NULL,NULL,NULL,NULL,NULL,NULL);
+	(31,NULL,'aaa','aa','aa','a@a.com',NULL,'2012-12-20 11:02:16',NULL,NULL,NULL,NULL,NULL,NULL),
+	(32,NULL,'aaa','aaa','aaa','a@q.com',NULL,'2012-12-26 04:54:16',NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -172,7 +173,8 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `ascores_l3`;
 
 CREATE TABLE `ascores_l3` (
-  `id` int(11) DEFAULT NULL
+  `id` int(11) DEFAULT NULL,
+  `numQuestions` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -240,7 +242,6 @@ CREATE TABLE `fac_contact` (
 DROP TABLE IF EXISTS `faculty`;
 
 CREATE TABLE `faculty` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
   `l1Ids` text,
   `l2Ids` text,
   `specialization` varchar(20) DEFAULT NULL,
@@ -252,24 +253,23 @@ CREATE TABLE `faculty` (
   `totalQuizzes` int(5) DEFAULT '0',
   `rec` int(11) DEFAULT '0',
   `subscribers` int(11) DEFAULT '0',
-  `accountId` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+  `accountId` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `faculty` WRITE;
 /*!40000 ALTER TABLE `faculty` DISABLE KEYS */;
-INSERT INTO `faculty` (`id`,`l1Ids`,`l2Ids`,`specialization`,`bioShort`,`bio`,`experience`,`education`,`streamIds`,`totalQuizzes`,`rec`,`subscribers`,`accountId`)
+INSERT INTO `faculty` (`l1Ids`,`l2Ids`,`specialization`,`bioShort`,`bio`,`experience`,`education`,`streamIds`,`totalQuizzes`,`rec`,`subscribers`,`accountId`)
 VALUES
-	(1,'3',NULL,'Organic Chemistry',NULL,'MS Gusain is a Chemical Engineering graduate of IIT Delhi. He passed out in  He did his Ph.D. from Oxford and came back to India to take coaching classes. His specialization is Chemistry with a focus on organic chemistry\n','FIITJEE: 1999-2010|VM: 2009-2010|','IIT Delhi B.Tech 2001','1',3784,58,0,NULL),
-	(2,'3',NULL,'Physical Chemistry',NULL,'Sikta madam is a graduate of Delhi School of Economics. She has experience of many years teaching chemistry at the best institute in Kolkata and now runs her own coaching centre','FIITJEE: 2 years','Delhi School of Economics, MA 1998','1',7236,127,0,NULL),
-	(3,'3',NULL,'Inorganic Chemistry',NULL,'Bhim Singh sir is a graduate of IIT Delhi, having done his Chemical Engineering from 1989-1993. He did his Ph.D. from Oxford and came back to India to teach engineering at NITs\nHe has experience of many years teaching physics at the most renowned institutes in Kota and Delhi\n','VMC: 5 years; Allen: 5 years','IIT Delhi B.Tech 1993','1',6349,122,0,NULL),
-	(4,'1',NULL,'Mechanics, Algebra',NULL,'Crack IIT is a major coaching institute in Jaipur - they have provided coaching to toppers in the last 5 years. The excellent faculty consists of ex-IITians','Ex-IIT Faculty','Ex-IIT Faculty','1',6258,88,0,NULL),
-	(5,'2',NULL,'Algebra, Probability',NULL,'Aditya Saraswati is a Mechanical Engineering graduate from 2009.  His specialization is Maths and he is considered to be one of the best maths teachers in India. He has taught some of the toppers of the last few years','Brilliant Tutorials: 5 years','IIT Delhi B.Tech 2009','1',6603,126,0,NULL),
-	(6,'2',NULL,'Coordinate Geometry',NULL,'Dipanjan Dey is the most famous teacher in West Bengal - his students have obtained the top ranks in IITJEE and WBJEE','Bansals: 3 years','IIT Kharagpur B.Tech 2005','1',2401,46,0,NULL),
-	(7,'2',NULL,'Trigonometry',NULL,'KN Sharma is a Computer Engineering graduate of IIT Delhi. He passed out in   His specialization is Maths and he is considered to be one of the best maths teachers in India. He has taught some of the toppers of the last few years','FIITJEE: 2 years','IIT Delhi B.Tech 1962','1',2904,99,0,NULL),
-	(8,'1',NULL,'Mechanics',NULL,'Prashi is a graduate of IIM Calcutta and is considered to be the best physics teacher in India for IIT Physics','Career Launcher','IIM Calcutta, MBA: 2002','1',4888,75,0,NULL),
-	(9,'1',NULL,'Electromagnetism',NULL,'Raj Gupta Sir is a Mechanical Engineering graduate from 1989. He taught engineering at NITs. He has experience of many years teaching naths at the most renowned institutes in Bombay','Brilliant Tutorials: 15 years','IIT Madras, M.Tech, 1989','1',3365,138,0,NULL),
-	(10,'1',NULL,'Electromagnetism',NULL,'T Seetharaman is an IIM Ahmedabad graduate, and has worked at some of the best consulting firms in India befoe starting his coaching classes practice','','IIM Ahmedabad, MBA: 2002','1',5802,69,0,NULL);
+	('3',NULL,'Organic Chemistry',NULL,'MS Gusain is a Chemical Engineering graduate of IIT Delhi. He passed out in  He did his Ph.D. from Oxford and came back to India to take coaching classes. His specialization is Chemistry with a focus on organic chemistry\n','FIITJEE: 1999-2010|VM: 2009-2010|','IIT Delhi B.Tech 2001','1',3784,58,0,1),
+	('3',NULL,'Physical Chemistry',NULL,'Sikta madam is a graduate of Delhi School of Economics. She has experience of many years teaching chemistry at the best institute in Kolkata and now runs her own coaching centre','FIITJEE: 2 years','Delhi School of Economics, MA 1998','1',7236,127,0,2),
+	('3',NULL,'Inorganic Chemistry',NULL,'Bhim Singh sir is a graduate of IIT Delhi, having done his Chemical Engineering from 1989-1993. He did his Ph.D. from Oxford and came back to India to teach engineering at NITs\nHe has experience of many years teaching physics at the most renowned institutes in Kota and Delhi\n','VMC: 5 years; Allen: 5 years','IIT Delhi B.Tech 1993','1',6349,122,0,3),
+	('1',NULL,'Mechanics, Algebra',NULL,'Crack IIT is a major coaching institute in Jaipur - they have provided coaching to toppers in the last 5 years. The excellent faculty consists of ex-IITians','Ex-IIT Faculty','Ex-IIT Faculty','1',6258,88,0,4),
+	('2',NULL,'Algebra, Probability',NULL,'Aditya Saraswati is a Mechanical Engineering graduate from 2009.  His specialization is Maths and he is considered to be one of the best maths teachers in India. He has taught some of the toppers of the last few years','Brilliant Tutorials: 5 years','IIT Delhi B.Tech 2009','1',6603,126,0,5),
+	('2',NULL,'Coordinate Geometry',NULL,'Dipanjan Dey is the most famous teacher in West Bengal - his students have obtained the top ranks in IITJEE and WBJEE','Bansals: 3 years','IIT Kharagpur B.Tech 2005','1',2401,46,0,6),
+	('2',NULL,'Trigonometry',NULL,'KN Sharma is a Computer Engineering graduate of IIT Delhi. He passed out in   His specialization is Maths and he is considered to be one of the best maths teachers in India. He has taught some of the toppers of the last few years','FIITJEE: 2 years','IIT Delhi B.Tech 1962','1',2904,99,0,7),
+	('1',NULL,'Mechanics',NULL,'Prashi is a graduate of IIM Calcutta and is considered to be the best physics teacher in India for IIT Physics','Career Launcher','IIM Calcutta, MBA: 2002','1',4888,75,0,8),
+	('1',NULL,'Electromagnetism',NULL,'Raj Gupta Sir is a Mechanical Engineering graduate from 1989. He taught engineering at NITs. He has experience of many years teaching naths at the most renowned institutes in Bombay','Brilliant Tutorials: 15 years','IIT Madras, M.Tech, 1989','1',3365,138,0,9),
+	('1',NULL,'Electromagnetism',NULL,'T Seetharaman is an IIM Ahmedabad graduate, and has worked at some of the best consulting firms in India befoe starting his coaching classes practice','','IIM Ahmedabad, MBA: 2002','1',5802,69,0,10);
 
 /*!40000 ALTER TABLE `faculty` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -737,16 +737,16 @@ VALUES
 	(1,'4|:2|:3|:1|:5|:6|:7|:8|:9','Problems from Physical Chemistry<br>Lengthy Calculation Quiz','Problems from Physical Chemistry<br>Lengthy Calculation Quiz','Lengthy Calculation Quiz',NULL,NULL,'1|:2',9,2000,3,NULL,17,2,1,NULL,NULL,NULL,10,1,100),
 	(2,'10|:11|:12|:13|:14|:15|:16|:17|:18','Problems from Organic Chemistry<br>Focus on benzene groups','Problems from Organic Chemistry<br>Focus on benzene groups','Focus on benzene groups',NULL,NULL,'12',9,2000,2,NULL,22,2,1,NULL,NULL,NULL,3,1,100),
 	(3,'19|:20|:21|:22|:23|:24|:25|:26|:27','Problems from Physical Chemistry<br>Tricky Questions','Problems from Physical Chemistry<br>Tricky Questions','Tricky Questions',NULL,NULL,'10',9,2000,2,NULL,11,2,2,NULL,NULL,NULL,1,1,100),
-	(4,'28|:29|:30|:31|:32|:33|:34|:35|:36','Problems from Inorganic Chemistry<br>Core Concepts','Problems from Inorganic Chemistry<br>Core Concepts','Core Concepts',NULL,NULL,'11',9,2000,2,NULL,6,2,2,NULL,NULL,NULL,1,1,100),
+	(4,'28|:29|:30|:31|:32|:33|:34|:35|:36','Problems from Inorganic Chemistry<br>Core Concepts','Problems from Inorganic Chemistry<br>Core Concepts','Core Concepts',NULL,NULL,'11',9,2000,2,NULL,6,2,2,NULL,NULL,NULL,2,1,100),
 	(5,'37|:38|:39|:40|:41|:42|:43|:44|:45','Problems from Inorganic Chemistry<br>Tricky Questions','Problems from Inorganic Chemistry<br>Tricky Questions','Tricky Questions',NULL,NULL,'11',9,2000,3,NULL,4,2,2,NULL,NULL,NULL,1,1,100),
 	(6,'45|:46|:47|:48|:49|:50|:51|:52|:53','Problems from Full Length Mock<br>','Problems from Full Length Mock<br>','',NULL,NULL,'12',9,2000,1,NULL,17,1,3,NULL,NULL,NULL,0,1,100),
 	(7,'54|:55|:56|:57|:58|:59|:60|:61|:62','Problems from Full Length Mock<br>','Problems from Full Length Mock<br>','',NULL,NULL,'12',9,2000,2,NULL,23,1,4,NULL,NULL,NULL,1,1,100),
 	(8,'62|:63|:64|:65|:66|:67|:68|:69|:70','Problems from Full Length Mock<br>','Problems from Full Length Mock<br>','',NULL,NULL,NULL,9,2000,1,NULL,17,1,4,NULL,NULL,NULL,1,1,100),
-	(9,'71|:72|:73|:74|:75|:76|:77|:78|:79','Problems from Full Length Mock<br>','Problems from Full Length Mock<br>','',NULL,NULL,NULL,9,2000,3,NULL,1,1,1,NULL,NULL,NULL,0,1,100),
+	(9,'71|:72|:73|:74|:75|:76|:77|:78|:79','Problems from Full Length Mock<br>','Problems from Full Length Mock<br>','',NULL,NULL,NULL,9,2000,3,NULL,1,1,1,NULL,NULL,NULL,1,1,100),
 	(10,'80|:81|:82|:83|:84|:85|:86|:87|:88','Problems from Full Length Mock<br>','Problems from Full Length Mock<br>','',NULL,NULL,NULL,9,2000,2,NULL,5,1,1,NULL,NULL,NULL,0,1,100),
 	(11,'88|:89|:90|:91|:92|:93|:94|:95|:96','Problems from Full Length Mock<br>','Problems from Full Length Mock<br>','',NULL,NULL,NULL,9,2000,3,NULL,1,1,2,NULL,NULL,NULL,1,1,100),
 	(12,'96|:97|:98|:99|:100|:101|:102|:103|:104','Problems from Full Length Mock<br>','Problems from Full Length Mock<br>','',NULL,NULL,NULL,9,2000,3,NULL,6,1,2,NULL,NULL,NULL,0,1,100),
-	(13,'105|:106|:107|:108|:109|:110|:111|:112|:113','Problems from Full Length Mock<br>','Problems from Full Length Mock<br>','',NULL,NULL,NULL,9,2000,2,NULL,16,1,3,NULL,NULL,NULL,0,1,100),
+	(13,'105|:106|:107|:108|:109|:110|:111|:112|:113','Problems from Full Length Mock<br>','Problems from Full Length Mock<br>','',NULL,NULL,NULL,9,2000,2,NULL,16,1,3,NULL,NULL,NULL,1,1,100),
 	(14,'114|:115|:116|:117|:118|:119|:120|:121|:122','Problems from Full Length Mock<br>','Problems from Full Length Mock<br>','',NULL,NULL,NULL,9,2000,3,NULL,2,1,3,NULL,NULL,NULL,1,1,100),
 	(15,'123|:124|:125|:126|:127|:128|:129|:130|:131','Problems from Full Length Mock<br>','Problems from Full Length Mock<br>','',NULL,NULL,NULL,9,2000,2,NULL,3,1,1,NULL,NULL,NULL,0,1,100),
 	(16,'132|:133|:134|:135|:136|:137|:138|:139|:140','Problems from Full Length Mock<br>','Problems from Full Length Mock<br>','',NULL,NULL,NULL,9,2000,3,NULL,11,1,1,NULL,NULL,NULL,0,1,100),
@@ -835,6 +835,16 @@ CREATE TABLE `responses` (
   `toggleOptions` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+LOCK TABLES `responses` WRITE;
+/*!40000 ALTER TABLE `responses` DISABLE KEYS */;
+INSERT INTO `responses` (`accountId`,`questionId`,`optionSelected`,`timeTaken`,`toggleOptions`)
+VALUES
+	(32,71,2,9,NULL),
+	(32,72,2,3,NULL),
+	(32,73,1,4,NULL);
+
+/*!40000 ALTER TABLE `responses` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table results
@@ -861,18 +871,11 @@ LOCK TABLES `results` WRITE;
 /*!40000 ALTER TABLE `results` DISABLE KEYS */;
 INSERT INTO `results` (`quizId`,`accountId`,`selectedAnswers`,`score`,`timePerQuestion`,`timeTaken`,`toggleData`,`timestamp`,`attemptedAs`,`startTime`,`endTime`,`state`)
 VALUES
-	(1,1,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL),
-	(2,1,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL),
-	(3,1,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL),
-	(7,1,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL),
-	(4,1,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL),
-	(10,1,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL),
-	(11,1,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL),
-	(8,1,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL),
-	(14,1,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL),
-	(13,1,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL),
-	(15,1,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL),
-	(5,1,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL);
+	(5,32,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL),
+	(10,32,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL),
+	(16,32,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL),
+	(7,32,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL),
+	(9,32,'[\"2\",\"2\",\"1\",\"3\",null,null,null,null,null]','[0,4,0]','[9,3,4,3,null,null,null,null,null]',NULL,NULL,'2012-12-26 10:17:06',2,NULL,NULL,'3');
 
 /*!40000 ALTER TABLE `results` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -1229,7 +1232,8 @@ LOCK TABLES `students` WRITE;
 /*!40000 ALTER TABLE `students` DISABLE KEYS */;
 INSERT INTO `students` (`ascoreL1`,`ascoreL2`,`quizzesAttempted`,`accountId`,`streamId`)
 VALUES
-	(0,0,NULL,1,1);
+	(0,0,NULL,1,1),
+	(0,0,'[\"4\",\"13\",\"9\"]',32,1);
 
 /*!40000 ALTER TABLE `students` ENABLE KEYS */;
 UNLOCK TABLES;
