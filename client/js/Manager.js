@@ -403,7 +403,7 @@ window.Manager = {
 		dfd.push(this.processQuiz(quiz.get('id')));
 		$.when.apply(null, dfd).then(function(data) {
 			if (quizQuestions.length > 0) {
-				var pView = new QuizView({
+				var pView = new PracticeView({
 					model : quiz,
 					index : parseInt(quiz.get('state')),
 				});
@@ -467,56 +467,6 @@ window.Manager = {
 		}
 	},
 
-	/**
-	 * ensure all questions are loaded in the quizQuestions collection
-	 * 
-	 * @param quiz
-	 * @returns
-	 */
-	getQuizDataForStart : function(quizId) {
-		var quiz = quizLibrary.get(quizId); // active quiz initialized for
-		// the first time
-		quizQuestions.reset();
-		var dfd = [];
-		dfd.push(this.processQuiz(quizId));
-		$.when.apply(null, dfd).then(function(data) {
-			if (quizQuestions.length > 0) {
-				var instructionsView = new InstructionsView({
-					model : quiz
-				});
-				app.showView('#content', instructionsView);
-				/*
-				 * var quizView = new QuizView({ model : quiz, index : 0, });
-				 * app.showView('#content',quizView); quizView.startQuiz();
-				 */
-			}
-		});
-	},
-
-	/**
-	 * ensure all questions are loaded in the quizQuestions collection
-	 * 
-	 * @param quiz
-	 * @returns
-	 */
-	getDataToResume : function(quizId) {
-		var quiz = quizLibrary.get(quizId); // active quiz initialized for
-		// the first time
-		quizQuestions.reset();
-		var dfd = [];
-		dfd.push(this.processQuiz(quizId));
-		$.when.apply(null, dfd).then(function(data) {
-			if (quizQuestions.length > 0) {
-				var practiceView = new PracticeView({
-					model : quiz,
-					index : 0,
-				});
-				app.showView('#content', quizView);
-				quizView.startQuiz();
-			}
-		});
-	},
-
 	getDataForReview : function() {
 		var dfd = [];
 		dfd.push(this.getAttemptedQuestions());
@@ -527,55 +477,6 @@ window.Manager = {
 			app.showView('#content', reviewView);
 			reviewView.onRender();
 		});
-	},
-
-	/**
-	 * ensure all data is present before quiz results are loaded.
-	 * 
-	 * @param id
-	 * @returns
-	 */
-	getQuizDataForResults : function(quizId) {
-		// check quiz history
-		var quiz = quizHistory.get(quizId);
-		// if not found show error
-		if (!quiz) {
-			// some issue
-			return;
-		}
-		// check if questions are available in the system
-		var allThere = true;
-		var questionIds = quiz.get('questionIdsArray');
-		var len = questionIds.length;
-		for ( var i = 0; i < len; i++) {
-			if (!quizQuestions.get(questionIds[i])) {
-				allThere = false;
-				break;
-			}
-		}
-		var dfd = [];
-		if (allThere == false) {
-			// get the questions
-			quizQuestions.reset();
-			dfd.push(this.processQuiz(quizId));
-			$.when.apply(null, dfd).then(function(data) {
-				if (quizQuestions.length > 0) {
-					var quizView = new QuizView({
-						model : quiz,
-						index : 0,
-					});
-					app.showView('#content', quizView);
-					quizView.renderResults();
-				}
-			});
-		} else {
-			var quizView = new QuizView({
-				model : quiz,
-				index : 0,
-			});
-			app.showView('#content', quizView);
-			quizView.renderResults();
-		}
 	},
 
 	getFacContactPage : function() {

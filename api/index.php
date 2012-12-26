@@ -187,7 +187,7 @@ function getQuizzesHistory() {
     $response = array();
     $accountId = $_GET['accountId'];
     $streamId = $_GET['streamId'];
-    $sql = "select r.selectedAnswers,r.timePerQuestion,r.score,q.* from results r,quizzes q where accountId=:accountId and q.streamId=:streamId and r.quizId=q.id order by timestamp";
+    $sql = "select r.selectedAnswers,r.timePerQuestion,r.score,r.state, r.attemptedAs, q.* from results r,quizzes q where accountId=:accountId and q.streamId=:streamId and r.quizId=q.id order by timestamp";
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
