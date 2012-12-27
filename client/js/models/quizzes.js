@@ -65,9 +65,7 @@ window.Quiz = Backbone.Model.extend({
 		} else {
 			this.set('l1', 2);
 		}
-		this.on('change:attemptAs', function(model) {
-
-		});
+		this.set('logo','img/l1-'+this.get('l1')+'.png');
 	},
 
 	defaults : {
@@ -85,7 +83,9 @@ window.Quiz = Backbone.Model.extend({
 		'fid' : null,
 		'firstName' : null,
 		'lastName' : null,
-		'attemptedAs' : null
+		'attemptedAs' : null,
+		'logo':null,
+		'fdp':	DP_PATH + 'avatar.jpg',
 	},
 
 	updateAttemptedAs : function() {

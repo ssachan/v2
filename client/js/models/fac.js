@@ -8,19 +8,19 @@ window.Fac = Backbone.Model.extend({
 	urlRoot : Config.serverUrl + 'fac/',
 	initialize : function() {
 		if (this.get('id') != null) {
-			this.set('dpUrl', FAC_PATH + this.get('id') + '.jpg');
+			this.set('dpUrl', DP_PATH + this.get('id') + '.jpg');
 		}
 		this.on('change:id', function(model) {
-			if (model.get('id') != null && model.get('id')=='') {
-				model.set('dpUrl', FAC_PATH + model.get('id') + '.jpg');
+			if (model.get('id') != null && model.get('id')!='') {
+				model.set('dpUrl', DP_PATH + model.get('id') + '.jpg');
+			}else{
+				model.set('dpUrl', DP_PATH + 'avatar.jpg');
 			}
 		});
 	},
 	
 	defaults : {
-		id:null,
 		dpUrl : DP_PATH + 'avatar.jpg',
-		firstName:null
 	}
 });
 
