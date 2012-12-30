@@ -48,11 +48,8 @@ window.QuizView = Backbone.View.extend({
 
 	startQuiz : function() {
 		this.renderQuestion();
-		if (!this.hasAttempted) {
-			timer.reset();
-			timer.start();
-		}
-		this.switchView('quiz');
+		timer.reset();
+		timer.start();
 	},
 
 	submitQuiz : function() {
@@ -76,9 +73,7 @@ window.QuizView = Backbone.View.extend({
 	},
 
 	onPreviousClick : function() {
-		if (!this.hasAttempted) {
-			this.question.get('closeTimeStamps').push(new Date().getTime());
-		}
+		this.question.get('closeTimeStamps').push(new Date().getTime());
 		this.index--;
 		if (this.index < 0) {
 			return;

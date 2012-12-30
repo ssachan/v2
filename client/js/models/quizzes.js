@@ -46,6 +46,9 @@ window.Quiz = Backbone.Model.extend({
 			this.set('totalIncorrect', score[1]);
 			this.set('totalScore', score[2]);
 		}
+		if(this.get('fid')!=null){
+			this.set('fdpURL','DP_PATH'+this.get('fid')+'.jpg');
+		}
 		if (this.get('l2Ids') != null) {
 			var l2Ids = this.get('l2Ids').split(SEPARATOR);
 			var len = l2Ids.length;
@@ -65,7 +68,9 @@ window.Quiz = Backbone.Model.extend({
 		} else {
 			this.set('l1', 2);
 		}
+		this.set('l1DisplayName', sectionL1.get(''));
 		this.set('logo','img/l1-'+this.get('l1')+'.png');
+		
 	},
 
 	defaults : {
@@ -85,7 +90,7 @@ window.Quiz = Backbone.Model.extend({
 		'lastName' : null,
 		'attemptedAs' : null,
 		'logo':null,
-		'fdp':	DP_PATH + 'avatar.jpg',
+		'fdpURL':	DP_PATH + 'avatar.jpg',
 	},
 
 	updateAttemptedAs : function() {

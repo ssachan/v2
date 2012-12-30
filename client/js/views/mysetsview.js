@@ -50,25 +50,11 @@ window.HistoryView = Backbone.View.extend({
     			}
     		}
         }
-        
-        len = history.length;
-        var i = 0;
-        if (len == 0) {
-            $("#history").append('You have not taken any tests. Please take a test to update your history');
-        }
-        while (i < len) {
-            $('#history').append('<ul class="thumbnails"></ul>');
-            for (var j = 0; j < 3 && i < len; j++) {
-                $('.thumbnails:last','#history').append(new QuizItemView({
-                    model: quizzes[i]
-                }).render().el);
-                i++;
-            }
-        }
+       
         len = paused.length;
         var i = 0;
         if (len == 0) {
-            $("#paused").append('You have not taken any tests. Please take a test to update your history');
+            $("#paused").append('You dont have any paused tests.');
         }
         while (i < len) {
             $('#paused').append('<ul class="thumbnails"></ul>');
@@ -82,7 +68,7 @@ window.HistoryView = Backbone.View.extend({
         len = interruped.length;
         i = 0;
         if (len == 0) {
-            $("#interruped").append('You have not taken any tests. Please take a test to update your history');
+            $("#interruped").append('You dont have any interrupted tests');
         }
         while (i < len) {
             $('#interruped').append('<ul class="thumbnails"></ul>');
