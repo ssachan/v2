@@ -47,7 +47,7 @@ window.Quiz = Backbone.Model.extend({
 			this.set('totalScore', score[2]);
 		}
 		if(this.get('fid')!=null){
-			this.set('fdpURL','DP_PATH'+this.get('fid')+'.jpg');
+			this.set('fdpURL',DP_PATH+this.get('fid')+'.jpg');
 		}
 		if (this.get('l2Ids') != null) {
 			var l2Ids = this.get('l2Ids').split(SEPARATOR);
@@ -68,7 +68,7 @@ window.Quiz = Backbone.Model.extend({
 		} else {
 			this.set('l1', 2);
 		}
-		this.set('l1DisplayName', sectionL1.get(''));
+		this.set('l1DisplayName', (sectionL1.get(this.get('l1'))).get('displayName'));
 		this.set('logo','img/l1-'+this.get('l1')+'.png');
 		
 	},
@@ -152,27 +152,6 @@ window.Quiz = Backbone.Model.extend({
 			this.get('selectedAnswersArray')[i] = answer;
 			this.get('timePerQuestionArray')[i] = question.get('timeTaken');
 		}
-		
-		/*if (!(this.get('hasAttempted'))) {
-			var qIds = this.getQuestionIds();
-			var len = qIds.length;
-			for ( var i = 0; i < len; i++) {
-				var question = quizQuestions.get(qIds[i]);
-				var score = question.getScore();
-				if (score != null) {
-					this.set('totalScore', this.get('totalScore') + score);
-				}
-				var answer = question.get('optionSelected');
-				if (question.isOptionSelectedCorrect(answer) == true) {
-					this.set('totalCorrect', this.get('totalCorrect') + 1);
-				} else if (question.isOptionSelectedCorrect(answer) == false) {
-					this.set('totalIncorrect', this.get('totalIncorrect') + 1);
-				}
-				this.getSelectedAnswers().push(answer);
-				this.getTimeTakenPerQuestion().push(question.get('timeTaken'));
-			}
-			this.set('hasAttempted', true);
-		}*/
 	},
 
 	/**

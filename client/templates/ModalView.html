@@ -5,7 +5,7 @@
         <h3 id="modalLabel">
             <div class="media">
                 <a class="pull-left" href="#fac/<%=id %>"> <img class="media-object"
-                    src="../api/resources/fac/<%=fid%>.jpg" height="80px" width="80px">
+                    src="<%=fdpURL%>" height="80px" width="80px">
                 </a>
                 <div class="media-body">
                     <h4 class="media-heading"><%= firstName%> <%= lastName%></h4>
@@ -16,14 +16,14 @@
     <div class="modal-body">
         <div class="media">
             <a class="pull-left" href="#fac/<%=id %>"> <img class="media-object"
-                src="img/l1_1.png" height="20px" width="20px">
+                src="<%=logo%>" height="20px" width="20px">
             </a>
             <div class="media-body">
                 <h4 class="media-heading"><%= topics %></h4>
             </div>
         </div>
         <p class="center">
-            <img src="../api/resources/fac/<%=fid%>.jpg" height="200" width="185" alt="" style="border:2px solid #ccc ; padding:5px">
+            <img src="<%=fdpURL%>" height="200" width="185" alt="" style="border:2px solid #ccc ; padding:5px">
         <p><%= description %></p>
         </p>
     </div>
