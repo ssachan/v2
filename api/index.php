@@ -308,7 +308,8 @@ function getQuizzesByFac($id) {
 
 function getQuestions($qids) {
     $qids = explode("|:", $qids);
-    $sql = "SELECT * from questions where id IN(" . implode(",", $qids) . ")";
+    $sql = "SELECT q.*,p.text as para from questions q left join para p on (p.id=q.paraId) where q.id IN(" . implode(",", $qids) . ")";
+    //echo $sql;
     try {
         $db = getConnection();
         $stmt = $db->query($sql);

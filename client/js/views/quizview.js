@@ -259,6 +259,7 @@ window.QuizQuestionView = Backbone.View
 				if (this.model.get('hasAttempted')) {
 					this.renderInfo();
 					$('#analytics').show();
+					//disable buttons
 				} else {
 					$('#analytics').hide();
 				}
@@ -266,6 +267,8 @@ window.QuizQuestionView = Backbone.View
 				$('.quizview').bind("contextmenu", function(e) {
 					e.preventDefault();
 				});
+				var math = document.getElementById('quiz-view');
+				MathJax.Hub.Queue(["Typeset",MathJax.Hub,math]);
 				return this;
 			},
 

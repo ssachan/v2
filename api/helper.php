@@ -40,7 +40,7 @@ function sendEmailSMTP() {
 $app->get('/getQ/:id', 'getQ');
 
 function getQ($id){
-    $sql = "SELECT * from questions where id=".$id.";";
+    $sql = "SELECT q.*,p.text as para from questions q left join para p on (p.id=q.paraId) where q.id=".$id.";";
     try {
         $db = getConnection();
         $stmt = $db->query($sql);
@@ -59,6 +59,10 @@ function getQ($id){
         echo '<br>3. explanation:<br>';
                 
         echo json_encode($questions->explanation);
+        
+        echo '<br>4. para:<br>';
+        
+        echo json_encode($questions->para);
         
     } catch (PDOException $e) {
         echo '{"error":{"text":' . $e->getMessage() . '}}';

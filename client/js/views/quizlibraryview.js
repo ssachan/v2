@@ -114,7 +114,7 @@ window.QuizItemView = Backbone.View.extend({
 	
 	onQuizItemClick : function(){
 		if(this.model.get('hasAttempted')==true){
-			window.location = '#quiz/' + this.model.get('id')+ '';
+			alert('Already Purchased. If you want to review, please select it from my prepsets');
 		}else{
 			mView.model = this.model;//var view = new ModalView({ model: this.model });
 			mView.show();

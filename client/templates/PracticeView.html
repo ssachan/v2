@@ -1,24 +1,5 @@
 <div class="container quizview">
     <div class="row-fluid">
-        <div class="span2">
-            <div class="span2"></div>
-            <div class="span10 sidebar">
-                <ul class="nav nav-list center sidebar font-h4">
-                    <li><a id="analytics">Analytics</a></li>
-                    <li class="questionno font-h4" >Question No</li> <% for(var i=0; i
-                    <totalQuestions; i++){
-			%>
-                    <li><a id="<%=i %>" class="qnolist"><%=(i+1) %></a></li>
-                    <% } %> <!-- <li><a href="#"><i class="icon-chevron-right"></i> 1</a></li>
-				<li><a href="#"><i class="icon-chevron-right"></i> 2</a></li>
-				<li><a href="#"><i class="icon-chevron-right"></i> 3</a></li>
-				 -->
-                   <li><a id="submit"><img src="img/submit.png" style="width: 40px">Submit
-                            </a><li>
-                 
-                </ul>
-            </div>
-        </div>
         <div class="span10" style="min-height: 100%; height: 100%">
             <div id="quiz-div">
                 <div class="question-toolbar affix-top">
@@ -45,4 +26,16 @@
                 <div id="question" style="min-height: 80%; height: 80%" class="unselectable"></div>
             </div>
             <div id="results-div"></div>
+        </div>
+           <div class="span2 box qno-nav">
+            <div class="pagination" style="margin-left: 10px;">
+              <ul class="center">
+               <% for(var i=0; i
+                    <totalQuestions; i++){
+            %>
+                    <li><a id="<%=i %>" class="qnolist"><%=(i+1) %></a></li>
+                    <% } %> 
+                    <li><a id="submit"><img src="img/submit.png" style="width: 40px">Submit</a><li>
+              </ul>
+             </div>
         </div>
