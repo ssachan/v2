@@ -36,3 +36,32 @@ function sendEmailSMTP() {
         echo ("<p>Message successfully sent!</p>");
     }
 }
+
+$app->get('/getQ/:id', 'getQ');
+
+function getQ($id){
+    $sql = "SELECT * from questions where id=".$id.";";
+    try {
+        $db = getConnection();
+        $stmt = $db->query($sql);
+        $questions = $stmt->fetch(PDO::FETCH_OBJ);
+        echo $questions->text;
+        echo '<br>options:';
+        echo $questions->options;
+        echo '<br>explanation';
+        echo $questions->explanation;
+        
+        echo '<br>1. Text:<br>';
+        echo json_encode($questions->text);
+        echo '<br>2. options:<br>';
+        
+        echo json_encode($questions->options);
+        echo '<br>3. explanation:<br>';
+                
+        echo json_encode($questions->explanation);
+        
+    } catch (PDOException $e) {
+        echo '{"error":{"text":' . $e->getMessage() . '}}';
+    }
+}
+

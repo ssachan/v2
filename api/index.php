@@ -211,7 +211,7 @@ function getQuizzesHistory() {
 //
 function getQuizzesByStreamId($id) {
     $response = array();
-    $sql = "select q.id,q.questionIds,q.description,q.descriptionShort,q.difficulty,q.allotedTime,q.maxScore,q.rec,q.conceptsTested, q.l2Ids, q.l3Ids, q.typeId, a.id as fid, a.firstName,a.lastName,f.bioShort from quizzes q, accounts a, faculty f where q.facultyId=a.id and q.streamId=:id and f.accountId=a.id";
+    $sql = "select q.id,q.questionIds,q.description,q.descriptionShort,q.difficulty,q.allotedTime,q.maxScore,q.rec,q.conceptsTested, q.l2Ids, q.l3Ids, q.typeId, a.id as fid, a.firstName,a.lastName,f.bioShort from quizzes q, accounts a, faculty f where q.facultyId=a.id and q.streamId=:id and f.accountId=a.id order by q.id";
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
@@ -238,7 +238,7 @@ function getFacByStreamId($id) {
     $sql = "select a.id as id, a.firstName,a.lastName,f.* from faculty f,accounts a where (f.streamIds like '%"
             . $id . "' or f.streamIds like '" . $id
             . "%' or f.streamIds like '%|:" . $id
-            . "|:%') and a.id=f.accountId and a.roles='2'";
+            . "|:%') and a.id=f.accountId and a.roles='3'";
     try {
         $db = getConnection();
         $stmt = $db->query($sql);
@@ -399,6 +399,7 @@ function processQuiz() {
     $response = array();
     $accountId = $_GET['accountId'];
     $quizId = $_GET['quizId'];
+    $streamId = $_GET['streamId'];
     // for now just return the questions from the quiz if quiz is not a part of the history.
     $sql = "SELECT count(*) as count FROM results where quizId=:quizId and accountId=:accountId";
     try {
@@ -425,6 +426,43 @@ function processQuiz() {
             $stmt->bindParam("quizId", $quizId);
             $stmt->execute();
             $db = null;
+        } catch (PDOException $e) {
+            $response["status"] = ERROR;
+            $response["data"] = EXCEPTION_MSG;
+            phpLog($e->getMessage());
+        }
+        // update auizzesAttempted 
+        $sql = "SELECT quizzesAttempted from students where accountId=:accountId and streamId=:streamId";
+        try {
+            $db = getConnection();
+            $stmt = $db->prepare($sql);
+            $stmt->bindParam("accountId", $accountId);
+            $stmt->bindParam("streamId", $streamId);
+            $stmt->execute();
+            $record = $stmt->fetch(PDO::FETCH_OBJ);
+            if ($record->quizzesAttempted == null) {
+                $quizzesAttempted = array();
+            } else {
+                $quizzesAttempted = json_decode($record->quizzesAttempted);
+            }
+            if (!(in_array($quizId, $quizzesAttempted))) {
+                array_push($quizzesAttempted, $quizId);
+            }
+            $quizzesAttemptedJson = json_encode($quizzesAttempted);
+            $sql = "UPDATE students SET quizzesAttempted=:quizzesAttempted where accountId=:accountId and streamId=:streamId";
+            try {
+                $db = getConnection();
+                $stmt = $db->prepare($sql);
+                $stmt->bindParam("quizzesAttempted", $quizzesAttemptedJson);
+                $stmt->bindParam("accountId", $accountId);
+                $stmt->bindParam("streamId", $streamId);
+                $stmt->execute();
+                $db = null;
+            } catch (PDOException $e) {
+                $response["status"] = ERROR;
+                $response["data"] = EXCEPTION_MSG;
+                phpLog($e->getMessage());
+            }
         } catch (PDOException $e) {
             $response["status"] = ERROR;
             $response["data"] = EXCEPTION_MSG;
@@ -468,8 +506,9 @@ function updateResults() {
     $selectedAnswers = stripslashes($_POST['selectedAnswers']);
     $timePerQuestion = $_POST['timePerQuestion'];
     $date = date("Y-m-d H:i:s", time());
-    $sql = "SELECT state from results where accountId=:accountId and quizId=:quizId";
-    $previousState=0;
+    $sql = "SELECT state,attemptedAs from results where accountId=:accountId and quizId=:quizId";
+    $previousState = null;
+    $attemptedAs = null;
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
@@ -477,11 +516,12 @@ function updateResults() {
         $stmt->bindParam("quizId", $quizId);
         $stmt->execute();
         $record = $stmt->fetch(PDO::FETCH_OBJ);
-        if($record->state!=null){
-            $previousState = $record->state;
-        }
+        $previousState = $record->state;
+        $attemptedAs = $record->attemptedAs;
     } catch (PDOException $e) {
-        
+        $response["status"] = ERROR;
+        $response["data"] = EXCEPTION_MSG;
+        phpLog($e->getMessage());
     }
     $sql = "UPDATE results SET selectedAnswers=:selectedAnswers, score=:score, timePerQuestion=:timePerQuestion, timestamp=:timeStamp,state=:state where accountId=:accountId and quizId=:quizId";
     try {
@@ -503,69 +543,56 @@ function updateResults() {
     }
 
     $sql = "INSERT INTO responses (accountId, questionId, optionSelected, timeTaken) VALUES (:accountId, :questionId, :selectedAnswer, :timeTaken)";
-    // loop through 
     $qIds = getQuestionIdsByQuiz($quizId);
     $selectedAnswersArray = json_decode($selectedAnswers);
     $timePerQuestionArray = json_decode($timePerQuestion);
     $len = sizeof($selectedAnswersArray);
-    if ($state != null && $state > 0 && $state<$len) {
-        $len = $state;
-    }
-    $i = $previousState;
-    for ($i; $i< $len; $i++) {
-        try {
-            $db = getConnection();
-            $stmt = $db->prepare($sql);
-            $stmt->bindParam("accountId", $accountId);
-            $stmt->bindParam("questionId", $qIds[$i]);
-            $stmt->bindParam("selectedAnswer", $selectedAnswersArray[$i]);
-            $stmt->bindParam("timeTaken", $timePerQuestionArray[$i]);
-            $stmt->execute();
-            $db = null;
-        } catch (PDOException $e) {
-            $response["status"] = ERROR;
-            $response["data"] = EXCEPTION_MSG;
-            phpLog($e->getMessage());
+    // clearly separate depending on attempted as
+    if ($attemptedAs == '1') {
+        for ($i=0; $i < $len; $i++) {
+            try {
+                $db = getConnection();
+                $stmt = $db->prepare($sql);
+                $stmt->bindParam("accountId", $accountId);
+                $stmt->bindParam("questionId", $qIds[$i]);
+                $stmt->bindParam("selectedAnswer", $selectedAnswersArray[$i]);
+                $stmt->bindParam("timeTaken", $timePerQuestionArray[$i]);
+                $stmt->execute();
+                $db = null;
+            } catch (PDOException $e) {
+                $response["status"] = ERROR;
+                $response["data"] = EXCEPTION_MSG;
+                phpLog($e->getMessage());
+            }
+        }
+    } else {
+        $i = 0;
+        if ($previousState!=null){
+            // start from where the questions haven't come
+            $i = $previousState + 1;
+        }
+        if ($state != null) {
+            $len = $state;
+        }
+        for ($i; $i <= $len; $i++) {
+            try {
+                $db = getConnection();
+                $stmt = $db->prepare($sql);
+                $stmt->bindParam("accountId", $accountId);
+                $stmt->bindParam("questionId", $qIds[$i]);
+                $stmt->bindParam("selectedAnswer", $selectedAnswersArray[$i]);
+                $stmt->bindParam("timeTaken", $timePerQuestionArray[$i]);
+                $stmt->execute();
+                $db = null;
+            } catch (PDOException $e) {
+                $response["status"] = ERROR;
+                $response["data"] = EXCEPTION_MSG;
+                phpLog($e->getMessage());
+            }
         }
     }
-    $sql = "SELECT quizzesAttempted from students where accountId=:accountId and streamId=:streamId";
-    try {
-        $db = getConnection();
-        $stmt = $db->prepare($sql);
-        $stmt->bindParam("accountId", $accountId);
-        $stmt->bindParam("streamId", $streamId);
-        $stmt->execute();
-        $record = $stmt->fetch(PDO::FETCH_OBJ);
-        if ($record->quizzesAttempted == null) {
-            $quizzesAttempted = array();
-        } else {
-            $quizzesAttempted = json_decode($record->quizzesAttempted);
-        }
-        if (!(in_array($quizId, $quizzesAttempted))) {
-            array_push($quizzesAttempted, $quizId);
-        }
-        $quizzesAttemptedJson = json_encode($quizzesAttempted);
-        $sql = "UPDATE students SET quizzesAttempted=:quizzesAttempted where accountId=:accountId and streamId=:streamId";
-        try {
-            $db = getConnection();
-            $stmt = $db->prepare($sql);
-            $stmt->bindParam("quizzesAttempted", $quizzesAttemptedJson);
-            $stmt->bindParam("accountId", $accountId);
-            $stmt->bindParam("streamId", $streamId);
-            $stmt->execute();
-            $db = null;
-        } catch (PDOException $e) {
-            $response["status"] = ERROR;
-            $response["data"] = EXCEPTION_MSG;
-            phpLog($e->getMessage());
-        }
-        // insert it back in the table
-    } catch (PDOException $e) {
-        $response["status"] = ERROR;
-        $response["data"] = EXCEPTION_MSG;
-        phpLog($e->getMessage());
-    }
-
+    /*
+    //not sure if we want to do it.  
     $sql = "UPDATE quizzes SET totalAttempts=totalAttempts+1 where id=:quizId";
     try {
         $db = getConnection();
@@ -578,6 +605,7 @@ function updateResults() {
         $response["data"] = EXCEPTION_MSG;
         phpLog($e->getMessage());
     }
+     */
     if (!isset($response["status"])) {
         $response["status"] = SUCCESS;
         $response["data"] = true;
