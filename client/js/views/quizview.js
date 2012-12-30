@@ -35,39 +35,8 @@ window.QuizView = Backbone.View.extend({
 		this.question = null;
 		this.questionIds = this.model.getQuestionIds();
 		this.totalQuestions = this.questionIds.length;
-		this.hasAttempted = this.model.get('hasAttempted');
-		if (this.hasAttempted) {
-			this.setUp();
-		}
 		timer.setUpdateFunction(context.updateQuizTimer, [ context ]);
 		this.currentView = '';
-	},
-
-	setUp : function() {
-		this.answersSelected = this.model.getSelectedAnswers();
-		this.getTimeTakenPerQuestion = this.model.getTimeTakenPerQuestion();
-		for ( var i = 0; i < this.totalQuestions; i++) {
-			var question = quizQuestions.get(this.questionIds[i]);
-			if (question.get('timeTaken') == null) {
-				question.set('timeTaken', this.answersSelected[i]);
-				question.set('optionSelected', this.answersSelected[i]);
-			}
-		}
-	},
-
-	/**
-	 * TODO:video - check if the view variable is results or quiz. Have another
-	 * reference to the results page video.
-	 */
-	switchView : function(view) {
-		if (this.currentView == '') {
-			this.currentView = view;
-			$('#' + this.currentView + '-div').show();
-			return;
-		}
-		$('#' + this.currentView + '-div').hide();
-		this.currentView = view;
-		$('#' + this.currentView + '-div').show();
 	},
 
 	events : {
@@ -137,7 +106,6 @@ window.QuizView = Backbone.View.extend({
 			'totalQuestions' : this.totalQuestions,
 			'hasAttempted' : this.hasAttempted,
 		}));
-		$('#quiz-view').hide();
 		return this;
 	},
 
@@ -495,9 +463,7 @@ window.PracticeView = Backbone.View.extend({
 		this.question = null;
 		this.questionIds = this.model.getQuestionIds();
 		this.totalQuestions = this.questionIds.length;
-		if (this.index > 0) {
-			this.setUp();
-		}
+		this.setUp();
 		timer.setUpdateFunction(context.updateQuizTimer, [ context ]);
 		this.currentView = '';
 	},
@@ -505,10 +471,11 @@ window.PracticeView = Backbone.View.extend({
 	setUp : function() {
 		this.answersSelected = this.model.getSelectedAnswers();
 		this.getTimeTakenPerQuestion = this.model.getTimeTakenPerQuestion();
-		for ( var i = 0; i < this.index; i++) {
+		for ( var i = 0; i <= this.index; i++) {
 			var question = quizQuestions.get(this.questionIds[i]);
-			if (question.get('timeTaken') == null) {
-				question.set('timeTaken', this.answersSelected[i]);
+			if (question.get('timeTaken') == null && this.answersSelected[i]!=null) {
+				//mark this question
+				question.set('timeTaken', this.getTimeTakenPerQuestion[i]);
 				question.set('optionSelected', this.answersSelected[i]);
 				question.set('hasAttempted', true);
 			}
@@ -529,13 +496,9 @@ window.PracticeView = Backbone.View.extend({
 	},
 
 	submitQuiz : function() {
-		// this.model.set('timeTaken', timer.count);
 		this.model.calculateScores();
 		this.hasAttempted = true;
 		this.model.submitResults();
-		// $('#results-div').hide();
-		// $('#quiz-div').show();
-		// this.renderResults();
 	},
 
 	submitQuestion : function() {
@@ -554,7 +517,6 @@ window.PracticeView = Backbone.View.extend({
 	},
 
 	pauseQuiz : function() {
-		timer.stop();
 		this.model.set('timeTaken', timer.count);
 		this.model.calculateScores();
 		this.hasAttempted = true;
@@ -586,11 +548,7 @@ window.PracticeView = Backbone.View.extend({
 	},
 
 	onQNoClick : function(e) {
-		this.index = e.target.getAttribute('id'); // .split('-')[1];
-		/*
-		 * if (!this.hasAttempted) {
-		 * this.question.get('closeTimeStamps').push(new Date().getTime()); }
-		 */
+		this.index = e.target.getAttribute('id'); 
 		this.renderQuestion();
 	},
 
@@ -600,7 +558,7 @@ window.PracticeView = Backbone.View.extend({
 			'hasAttempted' : this.hasAttempted,
 		}));
 		$('#quiz-view').hide();
-		$('#results-view').hide();
+		//$('#results-view').hide();
 		return this;
 	},
 
@@ -630,15 +588,7 @@ window.PracticeView = Backbone.View.extend({
 		}
 		$("#qnum").html((parseInt(this.index) + 1));
 		$("#qtotal").html((this.totalQuestions));
-		this.question.get('openTimeStamps').push(new Date().getTime());
+		//this.question.get('openTimeStamps').push(new Date().getTime());
 		return null;
-	},
-
-	renderResults : function() {
-		this.switchView('results');
-		new QuizResultsView({
-			model : this.model,
-			el : $('#results-div')
-		});
 	}
 });

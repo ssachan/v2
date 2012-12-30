@@ -31,6 +31,7 @@ body {
 	background: #EDF5F9; /*Smarterer2*/
 	background: url("http://static.memrise.com/garden/img/backgrounds/noise-white@2x.png?bef4ed");
 	
+	
 	/*background: url('https://d1y9by3jjulfzw.cloudfront.net/assets/shared/bg_linen-e7b2740957d3a6c0adf6570adf634295.png'); */
     margin:0px auto;
     padding-top:10px;
@@ -117,11 +118,6 @@ margin: 0px;
 background: #DDD
 }
 
-.normal{
-	font-weight: normal;
-}
-
-
 .center {
 	text-align: center;
 }
@@ -136,34 +132,27 @@ text-align: right;}
 	margin-left: 0px;
 }
 
-h1 {
-	font-weight: bold;
-}
-
 h2, h3, h4, h5 {
 	font-weight: normal;
 }
 
-
-
-
 h1 {
 	font-size: 45px;
 	line-height: 60px;
+	font-weight: bold;
 	/*font-family: proxima-nova, 'Helvetica Neue', Helvetica, Arial, serif;*/
 }
 
 h2 {
 	font-size: 30px;
     color: #31859c;
-
-	}
+}
 
 h3 {
 	font-size: 20px;
     margin-bottom: 5px;
 	line-height: 30px;
-	}
+}
 
 h4 {
 	font-size: 15px;
@@ -192,11 +181,6 @@ h5 {
 
 .font-h5 {
 	font-size: 11px;
-}
-
-
-.fac{
-    width:80%;	
 }
 
 /*
@@ -229,8 +213,6 @@ margin-bottom: 30px;
 
 
 /*Define the bold font */
-
-
 /* Define the color palette */
 .green {
 	color: #06947A;
@@ -367,7 +349,7 @@ box-shadow: 0 1px 6px rgba(0, 0, 0, 0.25);
 	-webkit-box-shadow: #ccc 3px 0px 6px;
 	box-shadow: #ccc 3px 0px 6px;
     border-radius: 10px;
-	}
+}
 
 /* Landing
 -------------------------------------------------- */
@@ -403,7 +385,13 @@ top: 2px;
 	background: url(../img/fbg5.jpg);
 	color: #e8e8e8;
 	width: 100%;
-};
+}
+
+.imgbox{
+box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.6);
+    -webkit-box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+}
 
 .landing-page-link{
 	position: relative;
@@ -556,8 +544,7 @@ padding-bottom: 10px;
 }
 
 .feature-row{
-padding-top: 30px;
-margin-top: 20px;
+padding-top: 50px;
 
 width: 100%;
 }
@@ -566,6 +553,7 @@ width: 100%;
 {color: #193D42;}
 
 .feature-bullets{
+text-align: left;
 font-family: Georgia, serif;
 font-size: 16px;
 line-height: 25px;
@@ -574,8 +562,8 @@ line-height: 25px;
 .testimonials{
 background: rgba(255,255,255,0.8);
 width: 90%;
-margin-top: 20px;
-margin-bottom: 20px;
+margin-top: 15px;
+margin-bottom: 15px;
 color: #444;
 }
 
@@ -588,7 +576,7 @@ font-size: 25px;
 
 
 .test-ind{
-padding: 100px;
+padding: 20px;
 }
 
 /*Login
@@ -641,18 +629,6 @@ font-weight: bold}
 margin-top: 36px;
 font-weight: bold}
 
-.stats{
-font-size: 15px;
-line-height: 20px;
- border-right: 1px solid #999;
- min-height: 207px;
- background: #31859C}	
-
-.stats li{
-padding: 5px 8px;
-}
-
-.stats a{color: #eee;}
  
 .das-personal-info{
 padding-top: 10px;
@@ -1673,7 +1649,7 @@ font-weight:bold;
 
 .l3  > li > a{
 	color:grey;
-	padding : 2px;
+	padding : 10px2px;
 	border-bottom: none;
 }
 

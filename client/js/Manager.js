@@ -313,7 +313,8 @@ window.Manager = {
 			dataType : "json",
 			data : {
 				quizId : quizId,
-				accountId : account.get('id')
+				accountId : account.get('id'),
+				streamId : streamId
 			},
 			success : function(data) {
 				if (data.status == STATUS.SUCCESS) {
@@ -463,7 +464,7 @@ window.Manager = {
 			return;
 		}
 		if(quiz==null){
-			alert('fetch quiz from the database and process...yet to implement');
+			alert('Direct ');
 		}
 	},
 

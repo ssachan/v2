@@ -3,6 +3,38 @@
 <head>
 <title>PrepSquare</title>
 <meta name="viewport" content="width=320; user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+        displayAlign: "left",
+    tex2jax: {inlineMath: [["~~","~~"],["\\(","\\)"]]}
+  });
+</script>
+<script type="text/javascript" src="../mathjax/MathJax.js?config=TeX-AMS_HTML-full"></script>
+<script>
+(function () {
+    var QUEUE = MathJax.Hub.queue;  // shorthand for the queue
+    var math = null;                // the element jax for the math output.
+
+    //
+    //  Get the element jax when MathJax has produced it.
+    //
+    QUEUE.Push(function () {
+      math = MathJax.Hub.getAllJax("question")[0];
+    });
+
+    //
+    //  The onchange event handler that typesets the
+    //  math entered by the user
+    //
+    window.UpdateMath = function (TeX) {
+      QUEUE.Push(["Text",math,"\\displaystyle{"+TeX+"}"]);
+    }
+  })();
+</script>
+
 <script src="js/lib/jquery-1.8.2.min.js"></script>
 
 <link rel="stylesheet" href="css/bootstrap.min.css">

@@ -130,7 +130,25 @@ window.Quiz = Backbone.Model.extend({
 	 * and totalIncorrect
 	 */
 	calculateScores : function() {
-		if (!(this.get('hasAttempted'))) {
+		var qIds = this.getQuestionIds();
+		var len = qIds.length;
+		for ( var i = 0; i < len; i++) {
+			var question = quizQuestions.get(qIds[i]);
+			var score = question.getScore();
+			if (score != null) {
+				this.set('totalScore', this.get('totalScore') + score);
+			}
+			var answer = question.get('optionSelected');
+			if (question.isOptionSelectedCorrect(answer) == true) {
+				this.set('totalCorrect', this.get('totalCorrect') + 1);
+			} else if (question.isOptionSelectedCorrect(answer) == false) {
+				this.set('totalIncorrect', this.get('totalIncorrect') + 1);
+			}
+			this.get('selectedAnswersArray')[i] = answer;
+			this.get('timePerQuestionArray')[i] = question.get('timeTaken');
+		}
+		
+		/*if (!(this.get('hasAttempted'))) {
 			var qIds = this.getQuestionIds();
 			var len = qIds.length;
 			for ( var i = 0; i < len; i++) {
@@ -149,7 +167,7 @@ window.Quiz = Backbone.Model.extend({
 				this.getTimeTakenPerQuestion().push(question.get('timeTaken'));
 			}
 			this.set('hasAttempted', true);
-		}
+		}*/
 	},
 
 	/**
