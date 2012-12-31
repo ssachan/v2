@@ -464,7 +464,7 @@ window.Manager = {
 			return;
 		}
 		if(quiz==null){
-			alert('Direct access not allowed');
+			alert('Direct access not allowed.');
 		}
 	},
 
