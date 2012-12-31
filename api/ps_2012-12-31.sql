@@ -4,7 +4,7 @@
 #
 # Host: localhost (MySQL 5.5.9)
 # Database: ps
-# Generation Time: 2012-12-31 05:28:21 +0530
+# Generation Time: 2012-12-31 15:39:46 +0530
 # ************************************************************
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -38,7 +38,7 @@ CREATE TABLE `accounts` (
   `resetsentOn` datetime DEFAULT NULL,
   `pics` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `accounts` WRITE;
 /*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
@@ -47,7 +47,8 @@ VALUES
 	(1,NULL,'himanshu','Himanshu','Bhutani','him.bhutani@gmail.com','3',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 	(2,NULL,'ashwin','Ashwin','M','ashwin.rsmd@gmail.com','3',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 	(3,NULL,'tanuj','Tanuj','Bhojwani','tanuj.bhojwani@gmail.com','3',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-	(4,NULL,'aa','aa','aa','a@a.com',NULL,'2012-12-28 20:42:09',NULL,NULL,NULL,NULL,NULL,NULL);
+	(4,NULL,'aa','aa','aa','a@a.com',NULL,'2012-12-28 20:42:09',NULL,NULL,NULL,NULL,NULL,NULL),
+	(5,NULL,'123456','aa','aa','aa@aa.com',NULL,'2012-12-31 11:09:00',NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -634,11 +635,43 @@ LOCK TABLES `responses` WRITE;
 /*!40000 ALTER TABLE `responses` DISABLE KEYS */;
 INSERT INTO `responses` (`accountId`,`questionId`,`optionSelected`,`timeTaken`,`toggleOptions`)
 VALUES
-	(4,33,1,6,NULL),
-	(4,34,2,4,NULL),
-	(4,35,3,5,NULL),
-	(4,36,1,3,NULL),
-	(4,37,1,3,NULL);
+	(4,1,1,4,NULL),
+	(4,2,2,3,NULL),
+	(4,3,NULL,2,NULL),
+	(4,4,NULL,NULL,NULL),
+	(4,5,NULL,NULL,NULL),
+	(4,6,NULL,NULL,NULL),
+	(4,7,NULL,NULL,NULL),
+	(4,8,NULL,NULL,NULL),
+	(4,9,NULL,NULL,NULL),
+	(4,10,NULL,NULL,NULL),
+	(4,11,NULL,NULL,NULL),
+	(4,12,NULL,NULL,NULL),
+	(4,33,1,15,NULL),
+	(4,34,2,2,NULL),
+	(4,35,1,3,NULL),
+	(4,36,1,2,NULL),
+	(4,37,2,4,NULL),
+	(4,38,NULL,2,NULL),
+	(4,39,NULL,1,NULL),
+	(4,40,NULL,NULL,NULL),
+	(4,41,NULL,NULL,NULL),
+	(4,42,NULL,NULL,NULL),
+	(4,43,NULL,NULL,NULL),
+	(4,44,NULL,NULL,NULL),
+	(4,45,NULL,NULL,NULL),
+	(4,46,NULL,NULL,NULL),
+	(4,47,NULL,NULL,NULL),
+	(4,48,NULL,NULL,NULL),
+	(4,49,NULL,NULL,NULL),
+	(4,50,NULL,NULL,NULL),
+	(4,51,NULL,NULL,NULL),
+	(4,52,NULL,NULL,NULL),
+	(4,53,NULL,NULL,NULL),
+	(4,54,NULL,NULL,NULL),
+	(4,55,NULL,NULL,NULL),
+	(4,56,NULL,NULL,NULL),
+	(4,57,NULL,NULL,NULL);
 
 /*!40000 ALTER TABLE `responses` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -656,7 +689,7 @@ CREATE TABLE `results` (
   `score` text,
   `timePerQuestion` text,
   `timeTaken` text,
-  `toggleData` text,
+  `data` text,
   `timestamp` datetime DEFAULT NULL,
   `attemptedAs` int(11) DEFAULT NULL,
   `startTime` datetime DEFAULT NULL,
@@ -666,9 +699,11 @@ CREATE TABLE `results` (
 
 LOCK TABLES `results` WRITE;
 /*!40000 ALTER TABLE `results` DISABLE KEYS */;
-INSERT INTO `results` (`quizId`,`accountId`,`selectedAnswers`,`score`,`timePerQuestion`,`timeTaken`,`toggleData`,`timestamp`,`attemptedAs`,`startTime`,`endTime`,`state`)
+INSERT INTO `results` (`quizId`,`accountId`,`selectedAnswers`,`score`,`timePerQuestion`,`timeTaken`,`data`,`timestamp`,`attemptedAs`,`startTime`,`endTime`,`state`)
 VALUES
-	(3,4,'[\"1\",\"2\",\"3\",\"1\",\"1\",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]','[1,4,null]','[6,4,5,3,3,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]',NULL,NULL,'2012-12-31 05:25:16',2,NULL,NULL,'4');
+	(1,4,'[\"1\",\"2\",null,null,null,null,null,null,null,null,null,null]','[0,2,null]','[4,3,2,null,null,null,null,null,null,null,null,null]',NULL,NULL,'2012-12-31 15:29:37',1,NULL,NULL,'12'),
+	(2,4,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL),
+	(3,4,'[\"1\",\"2\",\"1\",\"1\",\"2\",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]','[0,5,null]','[15,2,3,2,4,2,1,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]',NULL,'[{\"timestamp\":\"1356948318256\",\"action\":\"2\",\"questionId\":\"33\",\"optionIndex\":\"\"},{\"timestamp\":\"1356948319912\",\"action\":\"0\",\"questionId\":\"33\",\"optionIndex\":\"1\"},{\"timestamp\":\"1356948332916\",\"action\":\"2\",\"questionId\":\"34\",\"optionIndex\":\"\"},{\"timestamp\":\"1356948333658\",\"action\":\"0\",\"questionId\":\"34\",\"optionIndex\":\"2\"},{\"timestamp\":\"1356948334644\",\"action\":\"2\",\"questionId\":\"35\",\"optionIndex\":\"\"},{\"timestamp\":\"1356948335562\",\"action\":\"0\",\"questionId\":\"35\",\"optionIndex\":\"1\"},{\"timestamp\":\"1356948337400\",\"action\":\"2\",\"questionId\":\"36\",\"optionIndex\":\"\"},{\"timestamp\":\"1356948338394\",\"action\":\"0\",\"questionId\":\"36\",\"optionIndex\":\"2\"},{\"timestamp\":\"1356948339020\",\"action\":\"0\",\"questionId\":\"36\",\"optionIndex\":\"1\"},{\"timestamp\":\"1356948340221\",\"action\":\"2\",\"questionId\":\"37\",\"optionIndex\":\"\"},{\"timestamp\":\"1356948341524\",\"action\":\"0\",\"questionId\":\"37\",\"optionIndex\":\"0\"},{\"timestamp\":\"1356948342308\",\"action\":\"0\",\"questionId\":\"37\",\"optionIndex\":\"2\"},{\"timestamp\":\"1356948343747\",\"action\":\"2\",\"questionId\":\"38\",\"optionIndex\":\"\"},{\"timestamp\":\"1356948346386\",\"action\":\"2\",\"questionId\":\"39\",\"optionIndex\":\"\"}]','2012-12-31 15:35:47',1,NULL,NULL,'25');
 
 /*!40000 ALTER TABLE `results` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -1025,7 +1060,8 @@ LOCK TABLES `students` WRITE;
 /*!40000 ALTER TABLE `students` DISABLE KEYS */;
 INSERT INTO `students` (`ascoreL1`,`ascoreL2`,`quizzesAttempted`,`accountId`,`streamId`)
 VALUES
-	(0,0,NULL,4,1);
+	(0,0,'[\"1\",\"2\",\"3\"]',4,1),
+	(0,0,NULL,5,1);
 
 /*!40000 ALTER TABLE `students` ENABLE KEYS */;
 UNLOCK TABLES;
