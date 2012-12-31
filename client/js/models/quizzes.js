@@ -33,7 +33,6 @@ window.Quiz = Backbone.Model.extend({
 			this.get('selectedAnswersArray').push.apply(this
 					.get('selectedAnswersArray'), JSON.parse(this
 					.get('selectedAnswers')));
-			this.set('hasAttempted', true);
 		}
 		if (this.get('timePerQuestion') != null) {
 			this.get('timePerQuestionArray').push.apply(this
@@ -70,7 +69,6 @@ window.Quiz = Backbone.Model.extend({
 		}
 		this.set('l1DisplayName', (sectionL1.get(this.get('l1'))).get('displayName'));
 		this.set('logo','img/l1-'+this.get('l1')+'.png');
-		
 	},
 
 	defaults : {
@@ -202,6 +200,7 @@ window.Quiz = Backbone.Model.extend({
 				selectedAnswers : JSON.stringify(this.getSelectedAnswers()),
 				timePerQuestion : JSON
 						.stringify(this.getTimeTakenPerQuestion()),
+				logs:logs.toJSON(),
 			},
 			success : function(data) {
 				if (data.status == STATUS.SUCCESS) {

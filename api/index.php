@@ -308,7 +308,7 @@ function getQuizzesByFac($id) {
 
 function getQuestions($qids) {
     $qids = explode("|:", $qids);
-    $sql = "SELECT q.*,p.text as para from questions q left join para p on (p.id=q.paraId) where q.id IN(" . implode(",", $qids) . ")";
+    $sql = "SELECT q.*,p.id as paraId, p.text as para from questions q left join para p on (p.id=q.paraId) where q.id IN(" . implode(",", $qids) . ")";
     //echo $sql;
     try {
         $db = getConnection();
@@ -504,6 +504,7 @@ function updateResults() {
     $quizId = $_POST['quizId'];
     $score = $_POST['score'];
     $state = $_POST['state'];
+    $logs = json_encode($_POST['logs']);
     $selectedAnswers = stripslashes($_POST['selectedAnswers']);
     $timePerQuestion = $_POST['timePerQuestion'];
     $date = date("Y-m-d H:i:s", time());
@@ -524,7 +525,7 @@ function updateResults() {
         $response["data"] = EXCEPTION_MSG;
         phpLog($e->getMessage());
     }
-    $sql = "UPDATE results SET selectedAnswers=:selectedAnswers, score=:score, timePerQuestion=:timePerQuestion, timestamp=:timeStamp,state=:state where accountId=:accountId and quizId=:quizId";
+    $sql = "UPDATE results SET selectedAnswers=:selectedAnswers, score=:score, timePerQuestion=:timePerQuestion, timestamp=:timeStamp,state=:state,data=:data where accountId=:accountId and quizId=:quizId";
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
@@ -535,6 +536,7 @@ function updateResults() {
         $stmt->bindParam("timePerQuestion", $timePerQuestion);
         $stmt->bindParam("timeStamp", $date);
         $stmt->bindParam("state", $state);
+        $stmt->bindParam("data", $logs);
         $stmt->execute();
         $db = null;
     } catch (PDOException $e) {

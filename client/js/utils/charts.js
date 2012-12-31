@@ -16,7 +16,8 @@ window.drawTimeChart = function (quiz) {
             text: ''
         },
         xAxis: {
-        	 title: {
+            tickInterval: 1,
+        	title: {
                  text: 'Question Numbers'
              }        
         },
