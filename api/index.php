@@ -46,7 +46,7 @@ define('EXCEPTION_MSG', "Something went wrong. Please send an email to ..."); //
 
 define('DP_PATH', "resources/accounts/"); // DP PATH.
 
-// set timezone
+// set timezones
 date_default_timezone_set('Asia/Kolkata');
 
 /**
