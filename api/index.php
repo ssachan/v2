@@ -46,6 +46,8 @@ define('EXCEPTION_MSG', "Something went wrong. Please send an email to ..."); //
 
 define('DP_PATH', "resources/accounts/"); // DP PATH.
 
+date_default_timezone_set('Asia/Kolkata');
+
 /**
  * All responses routed through this function
  * @param Object $response
