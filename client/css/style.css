@@ -156,6 +156,10 @@ margin-top: 30px;
 margin-bottom: 30px;
 }
 
+
+
+
+
 /*Define the bold font */
 /* Define the color palette */
 .green {
@@ -977,8 +981,6 @@ font-style: bold;}
 	font-size: 16px;
 	line-height: 25px;
 	color: #666;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #ccc;
 }
 
 #status{
@@ -1077,6 +1079,25 @@ position: relative; left: 0px;
 
 .nav-pills {
     text-align:center;
+}
+
+
+.pagination .marked>a{
+	background-color: yellow;	
+}
+
+.pagination ul {
+margin-left :5px
+}
+.pagination ul > li > a, .pagination ul > li > span {
+	float: left;
+	padding: 4px 12px;
+	line-height: 20px;
+	text-decoration: none;
+	background-color: white;
+	border: 1px solid #DDD;
+	border-left-width: 0;
+	margin:2px;
 }
 
 .pagination ul > li:first-child > a, .pagination ul > li:first-child > span {

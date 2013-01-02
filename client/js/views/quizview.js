@@ -463,7 +463,7 @@ window.QuizQuestionView = Backbone.View
 				html.push('</div></div></div>');
 				$('#status').html(html.join(''));
 				$('#solution').show();
-				$('#solution>p').html(this.model.get('explanation'));
+				$('#solutionText').html(this.model.get('explanation'));
 				
 				/*		'<span class="green bold">Correct Answer</span> : '
 								+ this.model.get('correctAnswer'));
@@ -479,13 +479,8 @@ window.QuizQuestionView = Backbone.View
 										+ '<span class="badge badge-success">2012 CAT</span></div>');
 				// code to add video here.
 				*/
-				/*
-				 * <video id="analysis_video" class="video-js vjs-default-skin"
-				 * controls preload="none" width="640" height="264" poster="<%=
-				 * this.model.get('videoData').poster %>" data-setup="{}">
-				 * <source src="<%= this.model.get('videoData').src %>"
-				 * type='video/mp4' /> </video>
-				 */
+				$('#video').html('<video id="analysis_video" class="video-js vjs-default-skin" controls preload="none" width="640" height="264" data-setup="{}"><source src="videos/video1.mp4" type="video/mp4" /> </video>');
+				 
 				$('#time').html(this.model.get('timeTaken'));
 				$('#submit').hide();
 			}
