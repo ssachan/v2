@@ -406,7 +406,7 @@ window.Manager = {
 			if (quizQuestions.length > 0) {
 				var pView = new PracticeView({
 					model : quiz,
-					index : parseInt(quiz.get('state'))==null?0:parseInt(quiz.get('state')),
+					index : quiz.get('state')==null?0:parseInt(quiz.get('state')),
 				});
 				app.showView('#content', pView);
 				pView.startQuiz();
