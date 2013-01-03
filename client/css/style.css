@@ -632,145 +632,142 @@ padding-left: 10px;
 }
 
 .das-sec4{
-margin-top: 15px;
-padding-bottom: 15px;
-margin-bottom: 15px;}
+	margin-top: 15px;
+	padding-bottom: 15px;
+	margin-bottom: 15px;
+}
 
 .das-sec4 h3{
-padding-left: 10px;
+	padding-left: 10px;
 }
 
 .das-sec4 ul{
-text-align: left;
+	text-align: left;
 }
 
 .progress{
-position: relative;
-top: 12px;
+	position: relative;
+	top: 12px;
 }
 
 .stars{
-position: relative;
-bottom: 2px;
+	position: relative;
+	bottom: 2px;
 }
 
 .practice{
-position: relative;
-left: 290px;
-text-decoration: underline;
+	position: relative;
+	left: 290px;
+	text-decoration: underline;
 }
 
 .accuracy{
-position: relative;
-left: 600px;
-text-decoration: underline;}
+	position: relative;
+	left: 600px;
+	text-decoration: underline;
+}
+
 
 /* Quiz Library
 -------------------------------------------------- */
 
 .quiz-library{
-width: 75%;
+	width: 75%;
 }
 
 .quiz-lib-heading{
-text-align: left;
-padding-right:55px;
-color: #555;
-
+	text-align: left;
+	padding-right:55px;
+	color: #555;
 }
 
 .quizlib-filter{
-text-align: left;
-padding-bottom: 20px;
-margin-bottom: 30px;
-border-bottom: 1px dotted #555;}
-
-
-.quiz-library .box{
-	padding:5px;
+	text-align: left;
+	padding-bottom: 20px;
+	margin-bottom: 30px;
+	border-bottom: 1px dotted #555;
 }
 
-.quiz-library .box:hover{
-    cursor:pointer;
-}
-
-
-.quiz-lib-t1{
-padding-top: 10px;
-padding-bottom: 10px;
-color: black;
-font-weight: 400;
-}
-
-.img-test{
-position: relative;
-left: 20px;}
-
-.topic-test{
-position: relative;
-top: 7px;}
-
-.quiz-lib-t2 {
-background: #333;
-/* background-image: linear-gradient(bottom, rgb(128,156,163) 6%, rgb(133,174,184) 53%);
-background-image: -o-linear-gradient(bottom, rgb(128,156,163) 6%, rgb(133,174,184) 53%);
-background-image: -moz-linear-gradient(bottom, rgb(128,156,163) 6%, rgb(133,174,184) 53%);
-background-image: -webkit-linear-gradient(bottom, rgb(128,156,163) 6%, rgb(133,174,184) 53%);
-background-image: -ms-linear-gradient(bottom, rgb(128,156,163) 6%, rgb(133,174,184) 53%);
-
-background-image: -webkit-gradient(
-	linear,
-	left bottom,
-	left top,
-	color-stop(0.06, rgb(128,156,163)),
-	color-stop(0.53, rgb(133,174,184))
-);*/
-
-
-color: #ececec;
-padding-top: 10px;
-padding-bottom: 10px;
-margin-top: 5px;
-margin-bottom: 0px;	}
-
-
-.quiz-lib-t3{
-padding-top: 10px;
-padding-bottom: 10px;
-margin-bottom: 0px;
-background: #ddd }
-
-.prof-img{
-position: relative; left: 30px; top: -5px;}
-
-.prof-bio{
-position: relative;
-top: 5px;}
-
-.quiz-lib-t4{
-margin-top: 0px;
-padding-top: 10px;
-padding-bottom: 0px;
-/*position: relative;
-top: 20px;*/}
 
 .quiz-box{
-width: 85%;
-margin-bottom: 10px;
-margin-left: 20px;}
+	width: 85%;
+	margin-bottom: 10px;
+	margin-left: 20px;
+	padding:5px;
+	cursor:pointer;
+}
 
 .quiz-box:hover {
-box-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
+	box-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
     -moz-box-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
     -webkit-box-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
-background: #f1f1f1;
+	background: #f1f1f1;
 	position: relative;
 	bottom: 1px;
-	/*
-	opacity:0.8;
-filter:alpha(opacity=80);*/}
+}
 
+.quiz-box .l1{
+	padding:10px;
+}
 
+.quiz-box .l1 .media-body{
+	padding-top:5px;
+}
+
+.quiz-box .topic{
+	background: #6D7685;
+	background: -moz-linear-gradient(#6D7685, #434E60);
+	background: -webkit-linear-gradient(#6D7685, #434E60);
+	background: -o-linear-gradient(#6D7685, #434E60);
+	background: -ms-linear-gradient(#6D7685, #434E60);
+	background: linear-gradient(#6D7685, #434E60);		
+	border-top: 1px solid #9AA0AB;
+	color: white;
+	font-size: 15px;
+	height: 48px;
+	line-height: 22px;
+	padding: 8px;
+	text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+	display: table;
+	width: 100%;
+	margin: 0;
+	font-weight: bold;
+	-webkit-font-smoothing: antialiased;
+}
+
+.quiz-box .fac{
+	margin-top:0px;
+	background-color: #DDD;
+	font-size:15px;
+	padding:10px;
+}
+
+.quiz-box .fac .name{
+	font-weight: bold;
+	padding-bottom: 10px;
+}
+
+.quiz-box .fac .bio{
+	color: #666;
+	font-size:12px;
+	line-height: 15px;
+	min-height: 30px;
+	margin-button:;
+}
+
+.quiz-box  .pstats{
+	font-size: 11px;
+	font-weight: bold;
+	padding-top: 10px
+}
+
+.quiz-box  .pstats i{
+margin-right: 0px;
+}
+
+.quiz-box  .pstats .span6:last-child{
+	border-left: 1px solid #ccc;
+}
 
 
 /* Fac Directory

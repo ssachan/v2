@@ -22,7 +22,7 @@ window.ModalView = Backbone.View.extend({
 
 	show : function() {
 		$(document.body).append(this.render().el);
-        $('#modal').modal({backdrop:false});
+        $('#modal').modal({backdrop:true});
 	},
 
 	close : function() {
