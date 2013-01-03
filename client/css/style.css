@@ -137,14 +137,14 @@ border-bottom: 1px solid #FCFCFC;}
     margin-top: 20px;
 	margin-bottom: 20px;
 	height: 2px;
-	background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0),
-		rgba(0, 0, 0, .1), rgba(0, 0, 0, 0) );
-	background-image: -moz-linear-gradient(left, rgba(0, 0, 0, 0),
-		rgba(0, 0, 0, .1), rgba(0, 0, 0, 0) );
-	background-image: -ms-linear-gradient(left, rgba(0, 0, 0, 0),
-		rgba(0, 0, 0, .1), rgba(0, 0, 0, 0) );
-	background-image: -o-linear-gradient(left, rgba(0, 0, 0, 0),
-		rgba(0, 0, 0, .1), rgba(0, 0, 0, 0) );
+	background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 1),
+		rgba(0, 0, 0, .9), rgba(0, 0, 0, 0.9) );
+	background-image: -moz-linear-gradient(left, rgba(0, 0, 0, 1),
+		rgba(0, 0, 0, .9), rgba(0, 0, 0, 0.9) );
+	background-image: -ms-linear-gradient(left, rgba(0, 0, 0, 1),
+		rgba(0, 0, 0, .9), rgba(0, 0, 0, 0.9) );
+	background-image: -o-linear-gradient(left, rgba(0, 0, 0, 1),
+		rgba(0, 0, 0, .9), rgba(0, 0, 0, 0.9) );
 	border: 0;
 }
 
@@ -323,13 +323,13 @@ font-style: bold;
 .blue-btn{
 background: #31859C;
 color: white;
-font-style: bold;
+
 }
 
 .blue-btn:hover{
-background: #3399CC;
+background: #31AA99;
 color: white;
-font-weight: bold;
+
 }
 
 .white-btn{
@@ -520,8 +520,6 @@ box-shadow: 0 1px 6px rgba(0, 0, 0, 0.25);
 }
 
 
-
-
 /* end landing
 -------------------------------------------------- */
 
@@ -531,7 +529,12 @@ box-shadow: 0 1px 6px rgba(0, 0, 0, 0.25);
 ------------------------------------------------- */
 
 .login{
-width: 75%;
+width: 85%;
+min-height: 580px;
+}
+
+.login hr{
+margin-bottom: 20px;
 }
 
 .login-box{
@@ -547,7 +550,7 @@ width: 90px;
 }
 
 .form-horizontal .controls {
-margin-left: 70px;
+margin-left: 20px;
 }
 
 
@@ -557,18 +560,20 @@ margin-top: 20px;
 margin-bottom: 30px;}
 
 .pw{
-margin-left: 32px;
-margin-bottom: 20px;}
+margin-left: 10px;
+margin-top: 20px;}
 
-.loginbtn{
-margin-left: 60px;
-margin-bottom: 10px;
-margin-top: -20px;}
+.form-horizontal .btn{
+margin-top: 10px;}
 
 .signup-form{
-margin-top: 4px;
+margin-top: 25px;
+margin-left: 0px; 
 }
 
+.login-head{
+margin-top: 20px;
+}
 
 /* Dashboard
 -------------------------------------------------- */
@@ -1673,6 +1678,27 @@ width: 65%;
 }
 
 
+/* Instructions Page
+--------------------*/
+
+.instructions{
+min-height: 500px;}
+
+.instructions ul{
+margin-top: 30px;
+line-height: 25px;
+margin-bottom: 30px;}
+
+.instructions ul>li{
+margin-bottom: 10px;}
+
+
+/* Pre-test Modal
+------------------------*/
+.modalpre .btn{
+margin-bottom: 20px;}
+
+
 
 /*
 Clickable Lists
@@ -1756,3 +1782,4 @@ Clickable Lists
 	padding: 15px 10px;
 	margin:0px;
 }
+
