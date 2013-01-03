@@ -39,7 +39,7 @@ var AppRouter = Backbone.Router.extend({
 	routes : {
 		"" : "dashboard",
 		"landing" : "landing",
-		"signUp" : "signUp",
+		"signup" : "signUp",
 		"library" : "library",
 		"facs" : "facs",
 		"quiz/:id" : "quiz",
