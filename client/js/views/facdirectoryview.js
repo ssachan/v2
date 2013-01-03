@@ -5,7 +5,7 @@
  * 
  */
 window.FacDirectoryView = Backbone.View.extend({
-	// className : "container fac-directory",
+	className : "container fac-dir",
 
 	initialize : function() {
 		this.filtered = new FacCollection();
@@ -14,75 +14,49 @@ window.FacDirectoryView = Backbone.View.extend({
 		this.l1 = '0';
 		this.totalTests='0';
 		this.rec = '0';
-		this.render();
 	},	
 
 	events : {
 		'keyup #s-name' : 'nameSearch',
 		'change #f-l1' : 'l1Filter',
 		'click #s-rec' : 'recSort',
-		'click #s-rec1' : 'recSort1',
-		'click #s-rec2' : 'recSort2',
 		'click #s-tests' : 'testsSort',
-		'click #s-tests1' : 'testsSort1',
-		'click #s-tests2' : 'testsSort2',
 	},
 	
 	nameSearch : function (){
 		this.letters = $('#s-name').val();
-		this.onRender();
+		this.renderFacItems();
 	},
 	
 	l1Filter : function (e){
 		this.l1 = $("#f-l1 option:selected").val();
-		this.onRender();
+		this.renderFacItems();
 	},
 
 	
 	recSort : function(e){
-		this.rec = 0;
-		this.onRender();
-	},
-	
-	recSort1 : function(e){
-		this.rec = 1;
-		this.onRender();
-	},
-	
-	recSort2 : function(e){
-		this.rec = 2;
-		this.onRender();
+		this.rec = (this.rec=='1')?0:1;
+		this.renderFacItems();
 	},
 	
 	testsSort : function(e){
-		this.totalTests = 0;
-		this.onRender();
+		this.totalTests = (this.totalTests=='1')?0:1;
+		this.renderFacItems();
 	},
-	
-	testsSort1 : function(e){
-		this.totalTests = 1;
-		this.onRender();
-	},
-	
-	testsSort2: function(e){
-		this.totalTests = 2;
-		this.onRender();
-	},
-	
+		
 	render : function() {
 		$(this.el).html(this.template());
-		this.onRender();
-		/*var facs = this.collection.models;
-		var len = facs.length;
-		for ( var i = 0; i < len; i++) {
-			$('#fac-list', this.el).append(new FacItemView({
-				model : facs[i]
-			}).render().el);
-		}*/
 		return this;
 	},
 	
-	onRender : function (){
+	onRender : function() {
+		$('.selectpicker').selectpicker({
+			btnStyle : 'btn-small'
+		});
+		this.renderFacItems();
+	},
+
+	renderFacItems : function (){
 		$("#fac-list").empty();
     	this.filtered.reset(this.collection.models);
     	if(this.letters!=''){
@@ -101,26 +75,16 @@ window.FacDirectoryView = Backbone.View.extend({
     	}
     	if(this.rec=='1'){
     		var sortedCollection = this.filtered.sortBy(function(fac){
-    			  return parseInt(fac.get("rec"));
-    			});
-			this.filtered.reset(sortedCollection);
-    	} else if(this.rec=='2'){
-    		var sortedCollection = this.filtered.sortBy(function(fac){
     			  return -parseInt(fac.get("rec"));
     			});
 			this.filtered.reset(sortedCollection);
-    	}
+    	} 
     	if(this.totalTests=='1'){
-    		var sortedCollection = this.filtered.sortBy(function(fac){
-    			  return parseInt(fac.get("totalQuizzes"));
-    			});
-			this.filtered.reset(sortedCollection);
-    	} else if(this.rec=='2'){
     		var sortedCollection = this.filtered.sortBy(function(fac){
     			  return -parseInt(fac.get("totalQuizzes"));
     			});
 			this.filtered.reset(sortedCollection);
-    	}
+    	} 
     	var facs = this.filtered.models;
         var len = facs.length;
     	for ( var i = 0; i < len; i++) {

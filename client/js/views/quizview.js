@@ -81,7 +81,7 @@ window.QuizView = Backbone.View.extend({
 	},
 
 	onNextClick : function() {
-		this.question.get('closeTimeStamps').push(new Date().getTime());
+		//this.question.get('closeTimeStamps').push(new Date().getTime());
 		this.index++;
 		if (this.index >= this.totalQuestions) {
 			return;
@@ -91,7 +91,7 @@ window.QuizView = Backbone.View.extend({
 
 	onQNoClick : function(e) {
 		this.index = e.target.getAttribute('id'); // .split('-')[1];
-		this.question.get('closeTimeStamps').push(new Date().getTime());
+		//this.question.get('closeTimeStamps').push(new Date().getTime());
 		this.renderQuestion();
 	},
 

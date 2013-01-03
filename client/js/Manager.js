@@ -209,10 +209,12 @@ window.Manager = {
 			success : function(data) {
 				if (data.status == STATUS.SUCCESS) {
 					facDirectory.reset(data.data);
-					new FacDirectoryView({
+					var facDirectoryView = new FacDirectoryView({
 						collection : facDirectory,
-						el : '#content'
 					});
+					app.showView('#content', facDirectoryView);
+					facDirectoryView.onRender();
+
 				} else { // If not, send them back to the home page
 					helper.showError(data.data);
 				}
@@ -228,7 +230,7 @@ window.Manager = {
 			success : function(data) {
 				if (data.status == STATUS.SUCCESS) {
 					console.log("faculty fetched: " + data);
-					fac.set(data.data);// facDirectory.reset(data);
+					fac.set(data.data);
 				} else { // If not, show error
 					helper.showError(data.data);
 				}
