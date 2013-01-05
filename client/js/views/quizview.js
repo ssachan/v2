@@ -18,6 +18,9 @@ window.InstructionsView = Backbone.View.extend({
 		var attemptedAs = $('input:radio[name=attemptedAs]:checked').val();
 		this.model.set('attemptedAs', attemptedAs);
 		this.model.updateAttemptedAs();
+		//logs resetting
+		logs.reset();
+		logs.addEntry("TEST_START");
 	},
 
 	render : function() {
@@ -58,6 +61,8 @@ window.QuizView = Backbone.View.extend({
 		this.model.calculateScores();
 		this.model.set('state', this.totalQuestions);
 		this.model.submitResults();
+
+		logs.addEntry("TEST_SUBMIT");
 	},
 
 	updateQuizTimer : function(context) {
@@ -73,6 +78,9 @@ window.QuizView = Backbone.View.extend({
 
 	onPreviousClick : function() {
 		this.question.get('closeTimeStamps').push(new Date().getTime());
+
+		logs.addEntry("QUESTION_CLOSE",this.index);
+
 		this.index--;
 		if (this.index < 0) {
 			return;
@@ -82,6 +90,8 @@ window.QuizView = Backbone.View.extend({
 
 	onNextClick : function() {
 		//this.question.get('closeTimeStamps').push(new Date().getTime());
+		logs.addEntry("QUESTION_CLOSE",this.index);
+
 		this.index++;
 		if (this.index >= this.totalQuestions) {
 			return;
@@ -90,6 +100,7 @@ window.QuizView = Backbone.View.extend({
 	},
 
 	onQNoClick : function(e) {
+		logs.addEntry("QUESTION_CLOSE",this.index);
 		this.index = e.target.getAttribute('id'); // .split('-')[1];
 		//this.question.get('closeTimeStamps').push(new Date().getTime());
 		this.renderQuestion();
@@ -150,12 +161,8 @@ window.QuizQuestionView = Backbone.View
 				var oldOptionSelected = this.model.get('optionSelected');
 				var optionSelected = e.target.value;
 				if (optionSelected == oldOptionSelected) {
-					logs.add(new Log({
-						'questionId' : this.model.get('id'),
-						'optionIndex' : optionSelected,
-						'timestamp' : new Date().getTime(),
-						'action' : 1
-					}));
+					logs.addEntry("OPTION_DESELECT",this.model.get('id'),optionSelected);
+					
 					this.model.set('optionSelected', null);
 					if (!this.model.get('optionUnSelectedTimeStamps')[optionSelected]) {
 						this.model.get('optionUnSelectedTimeStamps')[optionSelected] = new Array();
@@ -165,12 +172,7 @@ window.QuizQuestionView = Backbone.View
 					$(e.target).removeClass('active');
 					e.stopPropagation();
 				} else {
-					logs.add(new Log({
-						'questionId' : this.model.get('id'),
-						'optionIndex' : optionSelected,
-						'timestamp' : new Date().getTime(),
-						'action' : 0
-					}));
+					logs.addEntry("OPTION_SELECT",this.model.get('id'),optionSelected);
 					this.model.set('optionSelected', optionSelected);
 					if (!this.model.get('optionSelectedTimeStamps')[optionSelected]) {
 						this.model.get('optionSelectedTimeStamps')[optionSelected] = new Array();
@@ -230,6 +232,7 @@ window.QuizQuestionView = Backbone.View
 
 			handleIntegerType : function(e) {
 				this.model.set('optionSelected', $('#integer-type').val());
+				logs.addEntry("OPTION_SELECT",this.model.get('id'),this.model.get('optionSelected'));
 			},
 
 			handleMatrixType : function(e) {
@@ -273,11 +276,7 @@ window.QuizQuestionView = Backbone.View
 					$('#analytics').show();
 					// disable buttons
 				} else {
-					logs.add(new Log({
-						'questionId' : this.model.get('id'),
-						'timestamp' : new Date().getTime(),
-						'action' : 2
-					}));
+					logs.addEntry("QUESTION_OPEN",this.model.get('id'));
 					$('#analytics').hide();
 				}
 				// diable right click for this page

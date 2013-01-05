@@ -33,7 +33,7 @@ function template_send()
 
 function template_update()
 {
-	 $response = array();
+	$response = array();
     $accountId = $_POST['accountId'];
     $quizId = $_POST['quizId'];
     $attemptedAs = $_POST['attemptedAs'];
