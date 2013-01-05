@@ -197,9 +197,9 @@ window.Quiz = Backbone.Model.extend({
 				streamId : streamId,
 				score : JSON.stringify(score),
 				state : this.get('state'),
-				selectedAnswers : JSON.stringify(this.getSelectedAnswers()),
+				selectedAnswers : JSON.stringify(this.get('selectedAnswersArray')),
 				timePerQuestion : JSON
-						.stringify(this.getTimeTakenPerQuestion()),
+						.stringify(this.get('timePerQuestionArray')),
 				logs:logs.toJSON(),
 			},
 			success : function(data) {
