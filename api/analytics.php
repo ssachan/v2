@@ -72,18 +72,30 @@ function updateResults2()
             $timeTaken[$qid] = 0;
         }
 
+        $qDetails = getQuestionDetails($qid);
+        $userAbility = getUserAbilityLevels($accountId, $qDetails->l3id);
         $delta = evaluateQuestion($qid,$optionText[$qid], $timeTaken[$qid],$accountId);
+
+        updateScore($accountId, $delta, $userAbility);
+
 
     }
 
 }
 
-function evaluateQuestion($qid, $optionText, $timeTaken, $accountId)
+function updateScore($accountId, $delta, $userAbility)
 {
-    $qDetails = getQuestionDetails($qid);
-    $userAbility = getUserAbilityLevels($accountId, $qDetails->l3id);
+    //this function updates l1, l2, l3 based on delta
+
+    //l2 is weighted average of l3s, l1 is weighted average of l1s
+
+}
+
+function evaluateQuestion($qDetails, $optionText, $timeTaken, $userAbility)
+{
 
     //Code here to calculate scores based on certain factors.
+
 
     return $delta;
 
@@ -102,18 +114,19 @@ function getQuestionDetails($qid)
         $results = $stmt->fetch(PDO::FETCH_OBJ);        
         $db = null;
         return $results;
-        
+
     } catch (PDOException $e) {
         phpLog($e->getMessage());
     }
-
 }
 
 function getUserAbilityLevels($accountId, $l3id)
 {
-    $sql = "SELECT l1.id 'l1', l2.id 'l2' FROM section_l1 l1, section_l2 l2, section_l3 l3 WHERE l3.id=:l3id AND l3.l2id = l2.id AND l2.id = l1.id";
+    $sql = "SELECT l1.id 'l1', l2.id 'l2', l2.weightage 'l2w', l3.weightage 'l3w' FROM section_l1 l1, section_l2 l2, section_l3 l3 WHERE l3.id=:l3id AND l3.l2id = l2.id AND l2.id = l1.id";
     $l1id = 0;
     $l2id = 0;
+    $l2w = 0;
+    $l3w = 0;
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
@@ -122,15 +135,21 @@ function getUserAbilityLevels($accountId, $l3id)
         $ids = $stmt->fetch(PDO::FETCH_OBJ);
         $l1id = $ids->l1;
         $l2id = $ids->l2;
+        $l2w = $ids->l2w;
+        $l3w = $ids->l3w;
         $db = null;
 
     } catch (PDOException $e) {
         phpLog($e->getMessage());
     }
-
+    $score["l1id"] = $l1id;
+    $score["l2id"] = $l2id;
+    $score["l3id"] = $l3id;
     $score["l1"] = getScore("l1",$l1id);
     $score["l2"] = getScore("l2",$l2id);
     $score["l3"] = getScore("l3",$l3id);
+    $score["l2w"] = $l2w;
+    $score["l3w"] = $l3w;
 
     return $score;
 }
