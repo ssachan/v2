@@ -77,10 +77,10 @@ window.Quiz = Backbone.Model.extend({
 				.get('displayName'));
 		this.set('logo', 'img/l1-' + this.get('l1') + '.png');
 		if (this.get('timePerQuestion') != null) {
-			if (state == null) {
+			if (this.get('state') == null) {
 				// interrupted
 				this.set('status', this.STATUS_INTERRUPTED);
-			} else if (state == this.get('questionIdsArray').length) {
+			} else if (this.get('state') == this.get('questionIdsArray').length) {
 				this.set('status', this.STATUS_COMPLETED);
 			} else {
 				this.set('status', this.STATUS_INPROGRESS);
@@ -124,16 +124,13 @@ window.Quiz = Backbone.Model.extend({
 			},
 			success : function(data) {
 				if (data.status == STATUS.SUCCESS) {
-					var testView = null;
 					if (data.data == 1) {
 						// start the quiz
-						Manager.loadQuiz(quiz);
+						Manager.loadQuiz(that);
 					} else {
-						Manager.loadPractice(quiz);
+						Manager.loadPractice(that);
 						
 					}
-					app.showView('#content', testView);
-					testView.startQuiz();
 				} else {
 					helper.showError(data.data);
 				}
@@ -184,50 +181,6 @@ window.Quiz = Backbone.Model.extend({
 	 */
 	getTimeTakenPerQuestion : function() {
 		return this.get('timePerQuestionArray');
-	},
-
-	submitQuestion : function() {
-		var score = [ parseInt(this.get('totalCorrect')),
-				parseInt(this.get('totalIncorrect')),
-				parseInt(this.get('totalScore')) ];
-
-		var url = '../api/results';
-		console.log('Adding responses... ');
-		var that = this;
-		$.ajax({
-			url : url,
-			type : 'POST',
-			dataType : "json",
-			data : {
-				accountId : account.get('id'),
-				streamId : streamId,
-				quizId : this.get('id'),
-				streamId : streamId,
-				score : JSON.stringify(score),
-				state : this.get('state'),
-				selectedAnswers : JSON.stringify(this
-						.get('selectedAnswersArray')),
-				timePerQuestion : JSON.stringify(this
-						.get('timePerQuestionArray')),
-				logs : logs.toJSON(),
-			},
-			success : function(data) {
-				if (data.status == STATUS.SUCCESS) {
-					// the results were submitted. Add this quiz to quizHistory
-					quizHistory.unshift(that);
-					account.get('quizzesAttemptedArray')
-							.unshift(that.get('id'));
-					app.quiz(that.get('id'));
-					// app.quizResults(that.get('id'));
-				} else {
-					helper.showError(data.data);
-				}
-			},
-			error : function(data) {
-				// console.log([ "error: ", data ]);
-				console.log(data);
-			},
-		});
 	},
 
 	/**

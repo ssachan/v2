@@ -45,6 +45,8 @@ window.DashboardView = Backbone.View.extend({
 	},
 
 	renderOverall : function() {
+		this.switchMenu('performance');
+
 	},
 
 	renderPerformance : function() {
@@ -58,30 +60,6 @@ window.DashboardView = Backbone.View.extend({
 			$('#main-content', this.el).append(pView.render().el);
 			pView.onRender();
 		}
-	},
-
-	renderActivity : function() {
-		this.switchMenu('activity');
-
-	},
-
-	renderMyPrepSets : function(collection) {
-		this.switchMenu('myprepsets');
-		this.myPrepSetsView.collection = collection;
-		$('#main-content', this.el).html(this.myPrepSetsView.render().el);
-		this.myPrepSetsView.onRender();
-	},
-
-	renderReview : function(collection) {
-		this.switchMenu('review');
-		this.review.collection = collection;
-		$('#main-content', this.el).html(this.review.render().el);
-		this.review.onRender();
-	},
-
-	renderMyPackages : function() {
-		this.switchMenu('mypackages');
-
 	},
 
 });

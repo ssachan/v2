@@ -1,139 +1,52 @@
 window.ResultsView = Backbone.View.extend({
 
 	initialize : function() {
-		this.index = this.options.index;
-		this.questionView = null;
-		this.question = null;
-		this.questionIds = this.model.getQuestionIds();
-		this.totalQuestions = this.questionIds.length;
-		this.setUp();
-		this.currentView = '';
+		this.activeView=null;
 	},
-
-	setUp : function() {
-		this.answersSelected = this.model.getSelectedAnswers();
-		this.getTimeTakenPerQuestion = this.model.getTimeTakenPerQuestion();
-		for ( var i = 0; i < this.totalQuestions; i++) {
-			var question = quizQuestions.get(this.questionIds[i]);
-			if (question.get('timeTaken') == null) {
-				question.set('timeTaken', this.answersSelected[i]);
-				question.set('optionSelected', this.answersSelected[i]);
-			}
-		}
-	},
-
-	/**
-	 * TODO:video - check if the view variable is results or quiz. Have another
-	 * reference to the results page video.
-	 */
-	switchView : function(view) {
-		if (this.currentView == '') {
-			this.currentView = view;
-			$('#' + this.currentView + '-div').show();
-			return;
-		}
-		$('#' + this.currentView + '-div').hide();
-		this.currentView = view;
-		$('#' + this.currentView + '-div').show();
-	},
-
+	
 	events : {
-		'click #previous' : 'onPreviousClick',
-		'click #next' : 'onNextClick',
-		'click .qnolist' : 'onQNoClick',
-		'click #analytics' : 'switchAnalytics'
-	},
-
-	switchAnalytics : function() {
-		this.switchView('results');
-	},
-
-	onPreviousClick : function() {
-		this.index--;
-		if (this.index < 0) {
-			return;
-		}
-		this.renderQuestion();
-	},
-
-	onNextClick : function() {
-		this.index++;
-		if (this.index >= this.totalQuestions) {
-			return;
-		}
-		this.renderQuestion();
-	},
-
-	onQNoClick : function(e) {
-		this.index = e.target.getAttribute('id'); // .split('-')[1];
-		this.switchView('quiz');
-		this.renderQuestion();
+		'click .resnav>li' : 'onNavClick',
 	},
 
 	render : function() {
-		$(this.el).html(this.template({
-			'totalQuestions' : this.totalQuestions,
-			'hasAttempted' : this.hasAttempted,
-		}));
-		$('#quiz-view').hide();
-		$('#results-view').hide();
+		$(this.el).html(this.template());
 		return this;
 	},
 
-	/**
-	 * TODO:video - just store the reference of the current video
-	 */
-	renderQuestion : function() {
-		this.question = quizQuestions.get(this.questionIds[this.index]);
-		if (this.question.get('timeTaken') == null) {
-			this.question.set('timeTaken', 0);
-		}
-		if (this.questionView == null) {
-			this.questionView = new QuizQuestionView({
-				el : $('#question'),
-			});
-		}
-		this.question.set('hasAttempted',true);
-		this.questionView.model = this.question;
-		this.questionView.render();
-		$("#qnum").html((parseInt(this.index) + 1));
-		$("#qtotal").html((this.totalQuestions));
-		$('#previous').show();
-		$('#next').show();
-		if (this.index == 0) {
-			$('#previous').hide();
-		} else if(this.index == (this.totalQuestions - 1)){
-			$('#next').hide();
-		}
-		return null;
+	onRender : function() {
+		// render all views
+		var analysisView = new ResultAnalysisView({model:this.model});
+		$('#analysis-div').html(analysisView.render().el);
+		analysisView.onRender();
+		var graphsView = new ResultGraphsView({model:this.model});
+		$('#graphs-div').html(graphsView.render().el);
+		graphsView.onRender();
+		var solutionView = new SolutionsView({model:this.model, index : 0,});
+		$('#solutions-div').html(solutionView.render().el);
+		solutionView.renderQuestion();
+		$('#analysis-div').hide();
+		$('#graphs-div').hide();
+		$('#solutions-div').hide();
+		this.switchView('analysis');
 	},
-
-	renderResults : function() {
-		this.switchView('results');
-		new QuizResultsView({
-			model : this.model,
-			el : $('#results-div')
-		});
+	
+	onNavClick : function(e) {
+		this.switchView(e.currentTarget.getAttribute('id'));
+	},
+	
+	switchView : function(view){
+		if(this.activeView!=null){
+			$('#' + this.activeView).removeClass('active');
+			$('#' + this.activeView + '-div').hide();
+		}
+		this.activeView = view;
+		$('#' + this.activeView + '-div').show();
+		$('#' + this.activeView).addClass('active');
 	}
 });
 
-
-window.QuizResultsView = Backbone.View.extend({
+window.ResultAnalysisView = Backbone.View.extend({
 	initialize : function() {
-		this.activeInsights = 'timeTaken';
-		this.render();
-	},
-
-	events : {
-		'click .insightItem' : 'onInsightClick',
-	},
-
-	onInsightClick : function(e) {
-		$('#' + this.activeInsights).parent().removeClass('active');
-		$('#' + this.activeInsights + '-div').hide();
-		this.activeInsights = e.target.getAttribute('id');
-		$('#' + this.activeInsights + '-div').show();
-		$('#' + this.activeInsights).parent().addClass('active');
 	},
 
 	calculateVideoArray : function(options) {
@@ -253,18 +166,133 @@ window.QuizResultsView = Backbone.View.extend({
 			'difficultyInsights' : difficultyInsights,
 			'videoResults' : videoResults
 		}));
+		//this.setUpPlaylist(videoResults);
+		return this;
+	},
+	
+	onRender : function(){
+		
+	}
+});
 
-		this.setUpPlaylist(videoResults);
 
+window.ResultGraphsView = Backbone.View.extend({
+	initialize : function() {
+		this.activeInsights = '';
+	},
+
+	events : {
+		'click .insightItem>.btn' : 'onInsightClick',
+	},
+	
+	switchView : function (view){
+		$('#' + this.activeInsights + '-div').hide();
+		this.activeInsights = view;
+		$('#' + this.activeInsights + '-div').show();
+	},
+	
+	onInsightClick : function(e) {
+		this.switchView(e.target.getAttribute('id'));
+	},
+
+	render : function() {
+		$(this.el).html(this.template());
+		return this;
+	},
+	
+	onRender : function(){
 		drawTimeChart(this.model);
 		drawDifficultyChart(this.model);
-		drawHistoryChart(this.model);
-		// drawStratChart(this.model);
 		$('#difficulty-div').hide();
 		$('#history-div').hide();
 		$('#strategy-div').hide();
-		$('#' + this.activeInsights).parent().addClass('active');
 		$("tspan:contains('Highcharts.com')").hide();
-		return this;
+		this.switchView('timeTaken');
 	}
+});
+
+window.SolutionsView = Backbone.View.extend({
+	initialize : function() {
+		this.index = this.options.index;
+		this.questionView = null;
+		this.question = null;
+		this.questionIds = this.model.getQuestionIds();
+		this.totalQuestions = this.questionIds.length;
+		this.setUp();
+	},
+
+	setUp : function() {
+		this.answersSelected = this.model.getSelectedAnswers();
+		this.getTimeTakenPerQuestion = this.model.getTimeTakenPerQuestion();
+		for ( var i = 0; i < this.totalQuestions; i++) {
+			var question = quizQuestions.get(this.questionIds[i]);
+			if (question.get('timeTaken') == null) {
+				question.set('timeTaken', this.answersSelected[i]);
+				question.set('optionSelected', this.answersSelected[i]);
+			}
+		}
+	},
+
+	events : {
+		'click #previous' : 'onPreviousClick',
+		'click #next' : 'onNextClick',
+		'click .qnolist' : 'onQNoClick',
+	},
+
+	onPreviousClick : function() {
+		this.index--;
+		if (this.index < 0) {
+			return;
+		}
+		this.renderQuestion();
+	},
+
+	onNextClick : function() {
+		this.index++;
+		if (this.index >= this.totalQuestions) {
+			return;
+		}
+		this.renderQuestion();
+	},
+
+	onQNoClick : function(e) {
+		this.index = e.target.getAttribute('id'); // .split('-')[1];
+		this.renderQuestion();
+	},
+
+	render : function() {
+		$(this.el).html(this.template({
+			'totalQuestions' : this.totalQuestions,
+			'hasAttempted' : this.hasAttempted,
+		}));
+		return this;
+	},
+
+	/**
+	 * TODO:video - just store the reference of the current video
+	 */
+	renderQuestion : function() {
+		this.question = quizQuestions.get(this.questionIds[this.index]);
+		if (this.question.get('timeTaken') == null) {
+			this.question.set('timeTaken', 0);
+		}
+		if (this.questionView == null) {
+			this.questionView = new QuizQuestionView({
+				el : $('#question'),
+			});
+		}
+		this.question.set('hasAttempted',true);
+		this.questionView.model = this.question;
+		this.questionView.render();
+		$("#qnum").html((parseInt(this.index) + 1));
+		$("#qtotal").html((this.totalQuestions));
+		$('#previous').show();
+		$('#next').show();
+		if (this.index == 0) {
+			$('#previous').hide();
+		} else if(this.index == (this.totalQuestions - 1)){
+			$('#next').hide();
+		}
+		return null;
+	},
 });

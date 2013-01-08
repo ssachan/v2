@@ -48,9 +48,7 @@ window.QuizLibraryView = Backbone.View.extend({
 	},
 
 	onRender : function() {
-		$('.selectpicker').selectpicker({
-			btnStyle : 'btn-small'
-		});
+		$('.selectpicker').selectpicker();
 		this.renderQuizItems();
 	},
 	

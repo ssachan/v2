@@ -6,7 +6,9 @@
  */
 window.InstructionsView = Backbone.View.extend({
 
-    initialize: function () {},
+    initialize: function () {
+    	
+    },
 
     events: {
         'click #start-quiz': 'startQuiz',
@@ -78,6 +80,7 @@ window.QuizView = Backbone.View.extend({
         this.model.set('timeTaken', timer.count);
         this.model.calculateScores();
         this.model.set('state', this.totalQuestions);
+        this.model.set('status', 1);
         this.model.submitResults();
     },
 

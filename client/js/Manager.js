@@ -442,11 +442,10 @@ window.Manager = {
 		$.when.apply(null, dfd).then(function(data) {
 			if (quizQuestions.length > 0) {
 				var resultsView = new ResultsView({
-					model : quiz,
-					index : 0,
+					model : quiz
 				});
 				app.showView('#content', resultsView);
-				resultsView.renderResults();
+				resultsView.onRender();
 			}
 		});
 	},
@@ -468,6 +467,10 @@ window.Manager = {
 
 			case quiz.STATUS_INTERRUPTED:
 				this.startQuiz(quiz);
+				break;
+			
+			case quiz.STATUS_COMPLETED:
+				this.showResults(quiz);
 				break;
 			}
 		}

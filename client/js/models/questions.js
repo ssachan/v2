@@ -127,7 +127,7 @@ window.Question = Backbone.Model.extend({
 		var type = this.get('typeId');
 		switch (type){
 		case "1":
-            var optionsArray = options.split(SEPARATOR);
+            var optionsArray = this.get('options').split(SEPARATOR);
             return optionsArray[index];
 		}
 	},
