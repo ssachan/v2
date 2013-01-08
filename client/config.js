@@ -25,7 +25,7 @@ var Config = {
                     'FacView',
                     'ModalView',
                     'MySetsView',
-                    'InfoView',
+//                    'InfoView',
                     'InstructionsView',
                     'PackagesView',
                     'PackageItemView',
@@ -38,6 +38,7 @@ var Config = {
                     'QuestionItemView',
                     'PerformanceView',
                     'FacContactView',
-                    'FooterView'
+                    'FooterView',
+                    'OverView'
                   ]
 };

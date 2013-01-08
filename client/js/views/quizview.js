@@ -25,6 +25,29 @@ window.InstructionsView = Backbone.View.extend({
     }
 });
 
+window.ResumeView = Backbone.View.extend({
+
+    initialize: function () {},
+
+    events: {
+        'click #resume-quiz': 'resume',
+    },
+
+    resume: function () {
+        // store the preference
+        if(this.model.get('attemptedAs')==1){
+        	Manager.loadQuiz(this.model);
+        }else{
+        	Manager.loadPractice(this.model);        	
+        }
+    },
+
+    render: function () {
+        $(this.el).html(this.template(this.model.toJSON()));
+        return this;
+    }
+});
+
 window.QuizView = Backbone.View.extend({
 
     initialize: function () {
@@ -193,7 +216,7 @@ window.PracticeView = Backbone.View.extend({
     },
 
     submitQuestion: function () {
-        this.question.get('closeTimeStamps').push(new Date().getTime());
+        //this.question.get('closeTimeStamps').push(new Date().getTime());
         this.question.set('hasAttempted', true);
         timer.stop();
         timer.reset();
@@ -204,12 +227,12 @@ window.PracticeView = Backbone.View.extend({
         } else if (this.index == (this.totalQuestions - 1)) {
             $('#next').hide();
         }
-        this.renderQuestion();
+        //this.renderQuestion();
     },
 
     pauseQuiz: function () {
         this.model.set('timeTaken', timer.count);
-        this.model.calculateScores();
+        //this.model.calculateScores();
         this.model.set('state', this.index);
         this.model.submitResults();
     },

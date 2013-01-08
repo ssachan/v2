@@ -29,7 +29,6 @@ body {
 }
 
 
-
 .bold{
 	font-weight: bold;
 }
@@ -37,8 +36,6 @@ body {
 .italics{
 font-style: italic;
 }
-
-
 
 .pw {
 position: relative;
@@ -155,10 +152,6 @@ margin-top: 30px;
 .bottom-margin {
 margin-bottom: 30px;
 }
-
-
-
-
 
 /*Define the bold font */
 /* Define the color palette */
@@ -342,7 +335,7 @@ background-image: linear-gradient(bottom, rgb(214,211,214) 36%, rgb(235,235,235)
 background-image: -o-linear-gradient(bottom, rgb(214,211,214) 36%, rgb(235,235,235) 68%, rgb(250,247,250) 84%);
 background-image: -moz-linear-gradient(bottom, rgb(214,211,214) 36%, rgb(235,235,235) 68%, rgb(250,247,250) 84%);
 background-image: -webkit-linear-gradient(bottom, rgb(214,211,214) 36%, rgb(235,235,235) 68%, rgb(250,247,250) 84%);
-background-image: -ms-linear-gradient(bottom, rgb(214,211,214) 36%, rgb(235,235,235) 68%, rgb(250,247,250) 84%);
+background-image: -ms-linear-gradient(bottom, rgb(214,211,214)  6%, rgb(235,235,235) 68%, rgb(250,247,250) 84%);
 
 background-image: -webkit-gradient(
 	linear,
@@ -469,7 +462,7 @@ box-shadow: 0 1px 6px rgba(0, 0, 0, 0.25);
 	margin-right: 50px;
 	}
 
-.banner button{
+.banner a{
     margin-right: 50px;
 }
 
@@ -560,12 +553,32 @@ margin-top: 20px;}
 margin-top: 10px;}
 
 .signup-form{
-margin-top: 25px;
-margin-left: 0px; 
+    margin-top: 25px;
+    margin-left: 0px; 
 }
 
 .login-head{
-margin-top: 20px;
+    margin-top: 20px;
+}
+
+/*
+ Dashboard New
+-------------------------------------------------- */
+.dp{
+	padding: 4px;
+	line-height: 20px;
+	border: 1px solid #DDD;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	-webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
+	-moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
+	-webkit-transition: all 0.2s ease-in-out;
+	-moz-transition: all 0.2s ease-in-out;
+	-o-transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
+	width: 100px;
 }
 
 /* Dashboard
@@ -581,7 +594,7 @@ margin-bottom: 15px;}
 margin: 8px 0px 0px 8px}	
 	
 .pqhead{
-font-size: 25px; 
+font-size: 20px; 
 font-weight: bold}
 
 .review-set{
@@ -1267,8 +1280,6 @@ margin-bottom:0px;
 	width:80%;
 }
 
-
-
 .card h3{
 	border-bottom : 5px solid #F6F6F6;
 	color: #31859C;
@@ -1311,25 +1322,6 @@ margin-bottom:0px;
 	border-bottom: 1px solid rgba(0, 0, 0, 0.03);
 	padding : 10px 0px 10px 10px;
 	color: black;
-}
-
-.info{
-min-height: 214px;
-}
-
-.info h3{
-	border-bottom : 2px solid #ddd;
-	color: #31859C;
-	margin-top:2px;
-	background: #E6e6e6;
-	padding-left:10px;
-
-}
-
-.info li{
-	margin-top:15px;
-	
-
 }
 
 .org .name{
@@ -1636,6 +1628,57 @@ width: 65%;
 	width: 95%
 }
 
+.qresults a{
+color: #555;
+}
+
+.nav-list > .active > a{
+background: #C5C5C5 !important;
+color: #31859C;
+font-weight: bold;
+font-size: 16px;
+}
+
+.results{
+	background-color: #DAE4E6;
+	padding: 15px 10px;
+	margin:0px;
+	
+}
+
+.qresults .btn-group{
+margin-top: 20px;
+}
+
+.stat-gradient{
+background-color: #FCFCFC !important;
+background-image: -webkit-gradient(linear, 0 0%, 0 100%, from(#FCFCFC), to(#F1F1F1)) !important;
+background-image: -webkit-linear-gradient(top, #FCFCFC 0%, #F1F1F1 100%) !important;
+background-image: -moz-linear-gradient(top, #FCFCFC 0%, #F1F1F1 100%) !important;
+background-image: -ms-linear-gradient(top, #FCFCFC 0%, #F1F1F1 100%) !important;
+background-image: -o-linear-gradient(top, #FCFCFC 0%, #F1F1F1 100%) !important;
+background-image: linear-gradient(top, #FCFCFC 0%, #F1F1F1 100%) !important;
+}
+
+/* Square
+-----------------*/
+
+.dashboard{
+width:100%;}
+
+.header1{
+color: white;
+background-color: #4F4F4F;
+-webkit-border-radius: 9px;
+-moz-border-radius: 9px;
+border-radius: 3px;
+border: solid 1px #333;
+margin-bottom: 0px;
+filter: none;
+padding: 0px 5px;
+font-size: 15px;
+line-height: 22px;
+}
 
 /* Instructions Page
 --------------------*/
@@ -1664,6 +1707,7 @@ Clickable Lists
 */
 
 .c-list {
+
 	float:none !important; 
 	margin: auto 0px;
 	padding: 0;
@@ -1679,18 +1723,20 @@ Clickable Lists
 	padding: 15px 5px;
 	border-bottom: 1px solid #e5e5e5;
     cursor: default;
+
 }
 
 .c-list > li.unc {
 
 	line-height: normal;
 	height:100%;
-	background: #333;
+	background: #444;
 	color: white;
+	margin-bottom: 6px;
 	border: 1px solid #bbb;
-	padding: 15px 5px;
+	padding: 25px 15px;
 	text-align: center;
-	font-size: 17px;
+	font-size: 16px;
 
 }
 
@@ -1698,7 +1744,7 @@ Clickable Lists
 	display: block;
 	width: 190px \9;
 	margin: 0 0 -1px;
-	padding: 12px 30px;
+	padding: 20px 30px;
 	border-bottom: 1px solid #e5e5e5;
 }
 
@@ -1710,7 +1756,7 @@ Clickable Lists
 .c-list > .active > a {
 	position: relative;
 	z-index: 2;
-	padding: 15px 30px;
+	padding: 20px 30px;
 	border: 0;
 	text-shadow: 0 1px 0 rgba(0,0,0,.15);
   -webkit-box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
@@ -1735,11 +1781,7 @@ Clickable Lists
  	opacity: 1;
 }
 
-.results h3{
-	background-color: #EEE;
-	padding: 15px 10px;
-	margin:0px;
-}
+
 
 
 /*
@@ -1795,3 +1837,5 @@ border-bottom-right-radius: 0px;
   color: #999999;
   cursor: default;
 }
+
+

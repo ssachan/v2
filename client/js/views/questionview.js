@@ -270,8 +270,14 @@ window.QuizQuestionView = Backbone.View.extend({
         $('#options').hide();
         $('#video').show();
         html.push('<div class="row-fluid"><div class="span7">');
-        html.push('<h3>YOU MARKED OPTION A - <span class="orange">100ml</span>');
-        html.push('<img src="img/checkmark.png" width="33px"> <br> <span class="orange"> in 20 seconds</span>');
+        html.push('<h3>YOU MARKED OPTION '+String.fromCharCode(65 + this.model.get('optionSelected'))+' - <span class="orange">'+this.model.getOption(this.model.get('optionSelected'))+'</span>');
+        if(this.model.isOptionSelectedCorrect(this.model.get('optionSelected'))){
+            html.push('<img src="img/tick.png" width="33px">');
+        }else{
+            html.push('<img src="img/cross.png" width="33px"><br>');
+            html.push('<h3>CORRECT OPTION '+String.fromCharCode(65 + this.model.get('correctAnswer'))+' - <span class="orange">'+this.model.getOption(this.model.get('correctAnswer'))+'</span>');
+        }
+        html.push('<br><span class="orange"> in 20 seconds</span>');
         html.push('</h3></div>');
         html.push('<div class="span5">');
         html.push('<div class="g-stats">');
@@ -280,7 +286,7 @@ window.QuizQuestionView = Backbone.View.extend({
         html.push('<div class="stat">');
         html.push(' Average Accuracy<br> <span class="blue">30%</span>');
         html.push('</div>');
-        html.push('<div class="stat">Average Time<br> <span class="blue">30 Seconds</span>');
+        html.push('<div class="stat">Average Time<br> <span class="blue">'+this.model.get('timeTaken')+'</span>');
         html.push('</div></div>');
         html.push('<div class="g-stats">');
         html.push('<span class="val">JEE 2012, JEE 2013</span>');
@@ -289,23 +295,10 @@ window.QuizQuestionView = Backbone.View.extend({
         $('#solution').show();
         $('#solutionText').html(this.model.get('explanation'));
 
-        /*		'<span class="green bold">Correct Answer</span> : '
-								+ this.model.get('correctAnswer'));
-				$('#solution').append(
-						'<br><div class="sol"><span class="green bold">Solution</span> : '
-								+ this.model.get('explanation') + '</div>');
-				$('#solution')
-						.append(
-								'<br><div class="stats"><span class="green bold">Average Correct</span>:'
-										+ this.model.get('averageCorrect')
-										+ '<span class="green bold"> Average Time</span> :'
-										+ this.model.get('averageTimeCorrect')
-										+ '<span class="badge badge-success">2012 CAT</span></div>');
-				// code to add video here.
-				*/
+        /*// code to add video here.*/
         $('#video').html('<video id="analysis_video" class="video-js vjs-default-skin" controls preload="none" width="640" height="264" data-setup="{}"><source src="videos/video1.mp4" type="video/mp4" /> </video>');
 
-        $('#time').html(this.model.get('timeTaken'));
+        $('#time').html(helper.formatTime(this.model.get('timeTaken')));
         $('#submit').hide();
     }
 });

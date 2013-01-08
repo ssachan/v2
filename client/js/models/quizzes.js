@@ -5,10 +5,16 @@
  * 
  */
 window.Quiz = Backbone.Model.extend({
-
 	urlRoot : Config.serverUrl + 'quizzes/',
-	initialize : function() {
 
+	STATUS_NOTSTARTED : 0, //
+	STATUS_COMPLETED : 1, // if set then show him the results
+	STATUS_INPROGRESS : 2, // if in progress the state is set
+	STATUS_INTERRUPTED : 3,
+
+	initialize : function() {
+		this.set('status',this.STATUS_NOTSTARTED);
+		
 		if (!this.get('questionIdsArray')) {
 			this.set({
 				questionIdsArray : new Array()
@@ -45,8 +51,8 @@ window.Quiz = Backbone.Model.extend({
 			this.set('totalIncorrect', score[1]);
 			this.set('totalScore', score[2]);
 		}
-		if(this.get('fid')!=null){
-			this.set('fdpURL',DP_PATH+this.get('fid')+'.jpg');
+		if (this.get('fid') != null) {
+			this.set('fdpURL', DP_PATH + this.get('fid') + '.jpg');
 		}
 		if (this.get('l2Ids') != null) {
 			var l2Ids = this.get('l2Ids').split(SEPARATOR);
@@ -67,8 +73,19 @@ window.Quiz = Backbone.Model.extend({
 		} else {
 			this.set('l1', 2);
 		}
-		this.set('l1DisplayName', (sectionL1.get(this.get('l1'))).get('displayName'));
-		this.set('logo','img/l1-'+this.get('l1')+'.png');
+		this.set('l1DisplayName', (sectionL1.get(this.get('l1')))
+				.get('displayName'));
+		this.set('logo', 'img/l1-' + this.get('l1') + '.png');
+		if (this.get('timePerQuestion') != null) {
+			if (state == null) {
+				// interrupted
+				this.set('status', this.STATUS_INTERRUPTED);
+			} else if (state == this.get('questionIdsArray').length) {
+				this.set('status', this.STATUS_COMPLETED);
+			} else {
+				this.set('status', this.STATUS_INPROGRESS);
+			}
+		}
 	},
 
 	defaults : {
@@ -87,8 +104,9 @@ window.Quiz = Backbone.Model.extend({
 		'firstName' : null,
 		'lastName' : null,
 		'attemptedAs' : null,
-		'logo':null,
-		'fdpURL':	DP_PATH + 'avatar.jpg',
+		'logo' : null,
+		'fdpURL' : DP_PATH + 'avatar.jpg',
+		'state' : null,
 	},
 
 	updateAttemptedAs : function() {
@@ -109,15 +127,10 @@ window.Quiz = Backbone.Model.extend({
 					var testView = null;
 					if (data.data == 1) {
 						// start the quiz
-						testView = new QuizView({
-							model : that,
-							index : 0,
-						});
+						Manager.loadQuiz(quiz);
 					} else {
-						testView = new PracticeView({
-							model : that,
-							index : 0,
-						});
+						Manager.loadPractice(quiz);
+						
 					}
 					app.showView('#content', testView);
 					testView.startQuiz();
@@ -173,12 +186,7 @@ window.Quiz = Backbone.Model.extend({
 		return this.get('timePerQuestionArray');
 	},
 
-	/**
-	 * Data uploaded to results. TODO:video
-	 * 
-	 * @param quiz
-	 */
-	submitResults : function(quiz) {
+	submitQuestion : function() {
 		var score = [ parseInt(this.get('totalCorrect')),
 				parseInt(this.get('totalIncorrect')),
 				parseInt(this.get('totalScore')) ];
@@ -197,26 +205,73 @@ window.Quiz = Backbone.Model.extend({
 				streamId : streamId,
 				score : JSON.stringify(score),
 				state : this.get('state'),
-				selectedAnswers : JSON.stringify(this.get('selectedAnswersArray')),
-				timePerQuestion : JSON
-						.stringify(this.get('timePerQuestionArray')),
-				logs:logs.toJSON(),
+				selectedAnswers : JSON.stringify(this
+						.get('selectedAnswersArray')),
+				timePerQuestion : JSON.stringify(this
+						.get('timePerQuestionArray')),
+				logs : logs.toJSON(),
 			},
 			success : function(data) {
 				if (data.status == STATUS.SUCCESS) {
 					// the results were submitted. Add this quiz to quizHistory
 					quizHistory.unshift(that);
-					account.get('quizzesAttemptedArray').unshift(that.get('id'));
+					account.get('quizzesAttemptedArray')
+							.unshift(that.get('id'));
 					app.quiz(that.get('id'));
-					//window.location = '#quiz/'+that.get('id');
-					// now show results
-					//app.quizResults(that.get('id'));
+					// app.quizResults(that.get('id'));
 				} else {
 					helper.showError(data.data);
 				}
 			},
 			error : function(data) {
 				// console.log([ "error: ", data ]);
+				console.log(data);
+			},
+		});
+	},
+
+	/**
+	 * Data uploaded to results. TODO:video
+	 * 
+	 * @param quiz
+	 */
+	submitResults : function() {
+		var score = [ parseInt(this.get('totalCorrect')),
+				parseInt(this.get('totalIncorrect')),
+				parseInt(this.get('totalScore')) ];
+
+		var url = '../api/results';
+		console.log('Adding responses... ');
+		var that = this;
+		$.ajax({
+			url : url,
+			type : 'POST',
+			dataType : "json",
+			data : {
+				accountId : account.get('id'),
+				streamId : streamId,
+				quizId : this.get('id'),
+				streamId : streamId,
+				score : JSON.stringify(score),
+				state : this.get('state'),
+				selectedAnswers : JSON.stringify(this
+						.get('selectedAnswersArray')),
+				timePerQuestion : JSON.stringify(this
+						.get('timePerQuestionArray')),
+				logs : logs.toJSON(),
+			},
+			success : function(data) {
+				if (data.status == STATUS.SUCCESS) {
+					// the results were submitted. Add this quiz to quizHistory
+					quizHistory.unshift(that);
+					account.get('quizzesAttemptedArray')
+							.unshift(that.get('id'));
+					app.quiz(that.get('id'));
+				} else {
+					helper.showError(data.data);
+				}
+			},
+			error : function(data) {
 				console.log(data);
 			},
 		});

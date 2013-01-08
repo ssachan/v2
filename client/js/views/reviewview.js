@@ -14,7 +14,6 @@ window.ReviewView = Backbone.View.extend({
 		this.l3 = '0';
 		this.tness = '0';
 		this.status = '0';
-		this.render();
 	},	
 
 	events : {

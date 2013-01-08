@@ -121,7 +121,15 @@ window.Question = Backbone.Model.extend({
 			}
 			break;
 		}
-		
+	},
+	
+	getOption : function (index){
+		var type = this.get('typeId');
+		switch (type){
+		case "1":
+            var optionsArray = options.split(SEPARATOR);
+            return optionsArray[index];
+		}
 	},
 	
     defaults: {

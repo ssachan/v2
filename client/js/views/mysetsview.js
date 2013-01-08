@@ -34,21 +34,19 @@ window.HistoryView = Backbone.View.extend({
         var len = quizzes.length;
         for (var i=0;i<len;i++){
         	var quiz = quizzes[i];
-        	var totalQuestions = quiz.get('questionIdsArray').length;
-    		// quiz was available in history, check if its complete or
-    		// incomplete
-    		if (parseInt(quiz.get('state'))==totalQuestions) {
-    			// completed quiz, get the results
-    			history.push(quiz);
-    		} else {
-    			if (quiz.get('attemptedAs') == '1') {
-    				//start the quiz all over again
-    				interruped.push(quiz);
-    			}else if(quiz.get('attemptedAs')=='2'){
-    				//open practice view
-    				paused.push(quiz);
-    			}
-    		}
+        	switch (quiz.get('status')) {
+			case quiz.STATUS_COMPLETED:
+				history.push(quiz);
+				break;
+
+			case quiz.STATUS_INPROGRESS:
+				paused.push(quiz);
+				break;
+
+			case quiz.STATUS_INTERRUPTED:
+				interruped.push(quiz);
+				break;
+			}
         }
        
         len = paused.length;
@@ -93,12 +91,5 @@ window.HistoryView = Backbone.View.extend({
                 i++;
             }
         }
-
-        /*
-         * var quizHistory = this.collection.models; var len =
-         * quizHistory.length; for ( var i = 0; i < len; i++) {
-         * $(this.el).append( '<a href=#quizResults/' +
-         * quizHistory[i].get('id') + '>quiz' + quizHistory[i].get('id') + '|</a>'); }
-         */
     }
 });

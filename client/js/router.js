@@ -17,6 +17,8 @@ var activeMenu = null;
 var mView = new ModalView();
 var timer = new Timer(1000, null, []); // we will have just one global timer
 
+var activeView = null;
+
 $(document).ready(function() {
 	helper.loadTemplate(Config.viewsArray, function() {
 		(function(d) {
@@ -62,15 +64,6 @@ var AppRouter = Backbone.Router.extend({
 		this.footerView = new FooterView({
 			el : $('footer'),
 		});
-		/*if(account.get('id')!=null){
-			Manager.getDashboardData();
-			$('#signup-menu>a').html('Log Out');
-			$('#myprepset-menu').show();
-		}else{
-			window.location = '#landing';
-			$('#signup-menu>a').html('Sign Up');
-			$('#myprepset-menu').hide();
-		}*/
 	},
 
 	landing : function() {
@@ -120,7 +113,6 @@ var AppRouter = Backbone.Router.extend({
 	},
 	
 	myprepsets : function (){
-		this.changeMenu('myprepsets-menu');
 		Manager.getDataForMySets();
 	},
 	
@@ -175,10 +167,10 @@ var AppRouter = Backbone.Router.extend({
 	},
 
 	showView : function(selector, view) {
-		if (this.activeView)
-			this.activeView.close();
+		if (activeView)
+			activeView.close();
 		$(selector).html(view.render().el);
-		this.activeView = view;
+		activeView = view;
 		return view;
 	},
 

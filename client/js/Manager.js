@@ -128,28 +128,28 @@ window.Manager = {
 		$.when.apply(null, dfd).then(function(data) {
 		});
 	},
-
+	
+	loadOverallView : function(){
+		activeView.switchMenu('overall');
+		var overView = new OverView({model:account});
+		activeView.switchView(overView);
+	},
+	
 	getDashboardData : function() {
 		var dfd = [];
-		// ensure that by this time you have all the global data available
+		var that=this;
 		if (sectionL1.length == 0 || sectionL2.length == 0) {
-			// what if the data is already is being fetched???I think jquery
-			// makes sure with promises that it is not fetched again
 			dfd.push(this.getL1ByStreamId(streamId));
 			dfd.push(this.getL2ByStreamId(streamId));
 			dfd.push(this.getL3ByStreamId(streamId));
 		}
 		dfd.push(this.getL1Performance());
 		dfd.push(this.getL2Performance());
-		// dfd.push(this.getHistoryById());
 		$.when.apply(null, dfd).then(function(data) {
 			var dbView = new DashboardView({});
 			app.showView('#content', dbView);
 			dbView.onRender();
-			/*
-			 * new DashboardView({ collection : scoreL1, collection2 : scoreL2,
-			 * //el : '#content' });
-			 */
+			that.loadOverallView();
 		});
 	},
 
@@ -181,7 +181,7 @@ window.Manager = {
 			}
 		});
 	},
-	
+
 	getHistoryById : function() {
 		var url = Config.serverUrl + 'historyById/';
 		return $.ajax({
@@ -220,6 +220,29 @@ window.Manager = {
 				}
 			}
 		});
+	},
+
+	loadQuiz : function(quiz) {
+		if (quizQuestions.length > 0) {
+			var qView = new QuizView({
+				model : quiz,
+				index : 0,
+			});
+			app.showView('#content', qView);
+			qView.startQuiz();
+		}
+	},
+
+	loadPractice : function(quiz) {
+		if (quizQuestions.length > 0) {
+			var pView = new PracticeView({
+				model : quiz,
+				index : quiz.get('state') == null ? 0 : parseInt(quiz
+						.get('state')),
+			});
+			app.showView('#content', pView);
+			pView.startQuiz();
+		}
 	},
 
 	getFacById : function(id) {
@@ -330,21 +353,20 @@ window.Manager = {
 
 	getDataForMySets : function() {
 		var dfd = [];
-		// ensure that by this time you have all the global data available
 		if (sectionL1.length == 0 || sectionL2.length == 0) {
-			// what if the data is already is being fetched???I think jquery
-			// makes sure with promises that it is not fetched again
 			dfd.push(this.getL1ByStreamId(streamId));
 			dfd.push(this.getL2ByStreamId(streamId));
 			dfd.push(this.getL3ByStreamId(streamId));
 		}
 		dfd.push(this.getHistoryById());
 		$.when.apply(null, dfd).then(function(data) {
-			var mySetsView = new MySetsView({
-				collection : quizHistory
-			});
-			app.showView('#content', mySetsView);
-			mySetsView.onRender();
+			if (activeView instanceof DashboardView) {
+				activeView.switchMenu('myprepsets');
+				var mySetsView = new MySetsView({
+					collection : quizHistory
+				});
+				activeView.switchView(mySetsView);
+			}
 		});
 	},
 
@@ -387,8 +409,8 @@ window.Manager = {
 			quizLibraryView.onRender();
 		});
 	},
-	
-	startQuiz : function(quiz){
+
+	startQuiz : function(quiz) {
 		var dfd = [];
 		dfd.push(this.processQuiz(quiz.get('id')));
 		$.when.apply(null, dfd).then(function(data) {
@@ -400,23 +422,21 @@ window.Manager = {
 			}
 		});
 	},
-	
-	resumeQuiz : function(quiz){
+
+	resumeQuiz : function(quiz) {
 		var dfd = [];
 		dfd.push(this.processQuiz(quiz.get('id')));
 		$.when.apply(null, dfd).then(function(data) {
 			if (quizQuestions.length > 0) {
-				var pView = new PracticeView({
-					model : quiz,
-					index : quiz.get('state')==null?0:parseInt(quiz.get('state')),
+				var resumeView = new ResumeView({
+					model : quiz
 				});
-				app.showView('#content', pView);
-				pView.startQuiz();
+				app.showView('#content', resumeView);
 			}
 		});
 	},
-	
-	showResults : function(quiz){
+
+	showResults : function(quiz) {
 		var dfd = [];
 		dfd.push(this.processQuiz(quiz.get('id')));
 		$.when.apply(null, dfd).then(function(data) {
@@ -430,43 +450,26 @@ window.Manager = {
 			}
 		});
 	},
-	
+
 	getDataForQuiz : function(quizId) {
 		var quiz = null;
 		quizQuestions.reset();
-		// check if the quiz exists in the local datastructures
-		// quiz library
-		quiz = quizLibrary.get(quizId);
+		quiz = quizLibrary.get(quizId) == null ? quizHistory.get(quizId)
+				: quizLibrary.get(quizId);
 		if (quiz != null) {
-			// just a casual check if its already taken
-			if ($.inArray(quiz.get('id'), account.get('quizzesAttemptedArray')) == -1) {
-				// new quiz thats being taken right now
+			switch (quiz.get('status')) {
+			case quiz.STATUS_NOTSTARTED:
 				this.startQuiz(quiz);
-				return;
+				break;
+
+			case quiz.STATUS_INPROGRESS:
+				this.resumeQuiz(quiz);
+				break;
+
+			case quiz.STATUS_INTERRUPTED:
+				this.startQuiz(quiz);
+				break;
 			}
-		}
-		// check in hostory
-		quiz = quizHistory.get(quizId);
-		if (quiz != null) {
-			var totalQuestions = quiz.get('questionIdsArray').length;
-			// quiz was available in history, check if its complete or
-			// incomplete
-			if (parseInt(quiz.get('state'))==totalQuestions) {
-				// completed quiz, get the results
-				this.showResults(quiz);
-			} else {
-				if (quiz.get('attemptedAs') == '1') {
-					//start the quiz all over again
-					this.startQuiz(quiz);	
-				}else if(quiz.get('attemptedAs')=='2'){
-					//open practice view
-					this.resumeQuiz(quiz);
-				}
-			}
-			return;
-		}
-		if(quiz==null){
-			alert('Direct access not allowed.');
 		}
 	},
 
@@ -474,11 +477,11 @@ window.Manager = {
 		var dfd = [];
 		dfd.push(this.getAttemptedQuestions());
 		$.when.apply(null, dfd).then(function(data) {
-			var reviewView = new ReviewView({
-				collection : attemptedQuestions,
-			});
-			app.showView('#content', reviewView);
-			reviewView.onRender();
+			if (activeView instanceof DashboardView) {
+				activeView.switchMenu('review');
+				var reviewView = new ReviewView({collection:attemptedQuestions});
+				activeView.switchView(reviewView);
+			}
 		});
 	},
 
