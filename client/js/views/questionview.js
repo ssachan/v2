@@ -277,7 +277,7 @@ window.QuizQuestionView = Backbone.View.extend({
             html.push('<img src="img/cross.png" width="33px"><br>');
             html.push('<h3>CORRECT OPTION '+String.fromCharCode(65 + this.model.get('correctAnswer'))+' - <span class="orange">'+this.model.getOption(this.model.get('correctAnswer'))+'</span>');
         }
-        html.push('<br><span class="orange"> in 20 seconds</span>');
+        html.push('<br><span class="orange"> in '+helper.formatTime(this.model.get('timeTaken'))+ 'seconds</span>');
         html.push('</h3></div>');
         html.push('<div class="span5">');
         html.push('<div class="g-stats">');
