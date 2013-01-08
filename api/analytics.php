@@ -81,13 +81,76 @@ function updateResults2()
 function evaluateQuestion($qid, $optionText, $timeTaken, $accountId)
 {
     $qDetails = getQuestionDetails($qid);
-    getUserAbilityLevel("l3",$qDetails->l3id);
-    
+    $userAbility = getUserAbilityLevels($accountId, $qDetails->l3id);
+
+    //Code here to calculate scores based on certain factors.
+
+    return $delta;
+
 }
 
 function getQuestionDetails($qid)
 {
+    $sql = "SELECT * FROM questions WHERE id=:qid";
+    $l1id = 0;
+    $l2id = 0;
+    try {
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("qid", $qid);
+        $stmt->execute();
+        $results = $stmt->fetch(PDO::FETCH_OBJ);        
+        $db = null;
+        return $results;
+        
+    } catch (PDOException $e) {
+        phpLog($e->getMessage());
+    }
 
+}
+
+function getUserAbilityLevels($accountId, $l3id)
+{
+    $sql = "SELECT l1.id 'l1', l2.id 'l2' FROM section_l1 l1, section_l2 l2, section_l3 l3 WHERE l3.id=:l3id AND l3.l2id = l2.id AND l2.id = l1.id";
+    $l1id = 0;
+    $l2id = 0;
+    try {
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("l3id", $l3id);
+        $stmt->execute();
+        $ids = $stmt->fetch(PDO::FETCH_OBJ);
+        $l1id = $ids->l1;
+        $l2id = $ids->l2;
+        $db = null;
+
+    } catch (PDOException $e) {
+        phpLog($e->getMessage());
+    }
+
+    $score["l1"] = getScore("l1",$l1id);
+    $score["l2"] = getScore("l2",$l2id);
+    $score["l3"] = getScore("l3",$l3id);
+
+    return $score;
+}
+
+function getScore($level, $id, $accountId)
+{
+    $sql = "SELECT score FROM ascores_".$level." WHERE ".$level."id=:id AND accountId = :acid"; 
+   try {
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("id", $id);
+        $stmt->bindParam("acid", $accountId);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_OBJ);
+        return $result->score;
+        $db = null;
+
+    } catch (PDOException $e) {
+        phpLog($e->getMessage());
+    }
 }
 
 function updateResults3()
@@ -96,7 +159,6 @@ function updateResults3()
     $quizId = 2;
     echo "Hello!";
     var_dump(getQuestionIdsForQuiz($quizId));
-
 }
 
 function getQuestionIdsForQuiz($quizId)
@@ -174,8 +236,7 @@ function updateResultsTable($accountId, $quizId, $logs)
     }
 }
 
-
-function getTotalTime($questionData)
+function getTotalTime($questionData) //Can be optimized by combining these into one large loop.
 {
     $totalTime = 0;
     $prevTimeStamp = 0;
@@ -193,7 +254,6 @@ function getTotalTime($questionData)
     }
 
     return $totalTime;
-    //Can be optimized by combining these into one large loop.
 }
 
 function getFinalOptionArray($questionData)
@@ -213,7 +273,6 @@ function getFinalOptionArray($questionData)
     }
 
     return $optionsArray;
-
 }
 
 function getOptionTextFromArray($optionsArray)
@@ -225,6 +284,5 @@ function getOptionTextFromArray($optionsArray)
 
     $optionsText = implode("|:",$optionsText);
     return $optionsText;
-
 }
 
