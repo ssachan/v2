@@ -187,7 +187,6 @@ var AppRouter = Backbone.Router.extend({
 		$('#' + activeMenu).addClass('active');
 		if (account.get('id') == null) {
 			$('#sign-up').html('<a href="#signUp">Sign-Up</a>');
-			// $('#log-in').show();
 		} else {
 			$('#sign-up').html('<a href="#signUp">Log Out</a>');
 		}

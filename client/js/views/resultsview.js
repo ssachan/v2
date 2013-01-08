@@ -256,8 +256,9 @@ window.SolutionsView = Backbone.View.extend({
 	},
 
 	onQNoClick : function(e) {
-		this.index = e.target.getAttribute('id'); // .split('-')[1];
-		this.renderQuestion();
+		$('#'+this.index).removeClass('active');
+        this.index = e.currentTarget.getAttribute('id');
+        this.renderQuestion();
 	},
 
 	render : function() {
