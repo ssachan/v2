@@ -142,14 +142,17 @@ function getUserAbilityLevels($accountId, $l3id)
     } catch (PDOException $e) {
         phpLog($e->getMessage());
     }
-    $score["l1id"] = $l1id;
-    $score["l2id"] = $l2id;
-    $score["l3id"] = $l3id;
-    $score["l1"] = getScore("l1",$l1id);
-    $score["l2"] = getScore("l2",$l2id);
-    $score["l3"] = getScore("l3",$l3id);
-    $score["l2w"] = $l2w;
-    $score["l3w"] = $l3w;
+
+    $score = new stdClass();
+    $score->l1_id = $l1id;
+    $score->l2_id = $l2id;
+    $score->l3_id = $l3id;
+    
+    $score->l1_score = getScore("l1",$l1id);
+    $score->l2_score = getScore("l2",$l2id);
+    $score->l3_score = getScore("l3",$l3id);
+    $score->l2_weightage = $l2w;
+    $score->l3_weightage = $l3w;
 
     return $score;
 }
