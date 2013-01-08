@@ -184,8 +184,7 @@ window.Quiz = Backbone.Model.extend({
 	},
 
 	/**
-	 * Data uploaded to results. TODO:video
-	 * 
+	 * Data uploaded to results.
 	 * @param quiz
 	 */
 	submitResults : function() {
