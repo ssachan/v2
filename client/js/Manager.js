@@ -147,7 +147,7 @@ window.Manager = {
 		}
 		dfd.push(this.getL1Performance());
 		dfd.push(this.getL2Performance());
-		$.when.apply(null, dfd).then(function(data) {
+		return $.when.apply(null, dfd).then(function(data) {
 			var dbView = new DashboardView({});
 			app.showView('#content', dbView);
 			dbView.onRender();
@@ -280,19 +280,23 @@ window.Manager = {
 	},
 
 	getRSquareData : function() {
-		if (activeView instanceof DashboardView) {
+		var dfd=[];
+		if (!(activeView instanceof DashboardView)) {
+			dfd.push(this.getDashboardData());
+		}
+		$.when.apply(null, dfd).then(function(data) {
 			activeView.switchMenu('rsquare');
-			$('#main-content', this.el).append('<div class="header"><h2>Results Square</h2></div><br>');
+			$('#main-content').append('<div class="header"><h2>Results Square</h2></div><br>');
 			var l1 = sectionL1.models;
 			var len = l1.length;
 			for ( var i = 0; i < len; i++) {
 				var pView = new PerformanceView({
 					model : l1[i]
 				});
-				$('#main-content', this.el).append(pView.render().el);
+				$('#main-content').append(pView.render().el);
 				pView.onRender();
 			}
-		}
+		});
 	},
 
 	/**
@@ -371,10 +375,8 @@ window.Manager = {
 
 	getDataForMySets : function() {
 		var dfd = [];
-		if (sectionL1.length == 0 || sectionL2.length == 0) {
-			dfd.push(this.getL1ByStreamId(streamId));
-			dfd.push(this.getL2ByStreamId(streamId));
-			dfd.push(this.getL3ByStreamId(streamId));
+		if (!(activeView instanceof DashboardView)) {
+			dfd.push(this.getDashboardData());
 		}
 		dfd.push(this.getHistoryById());
 		$.when.apply(null, dfd).then(function(data) {
@@ -496,15 +498,16 @@ window.Manager = {
 
 	getDataForReview : function() {
 		var dfd = [];
+		if (!(activeView instanceof DashboardView)) {
+			dfd.push(this.getDashboardData());
+		}
 		dfd.push(this.getAttemptedQuestions());
 		$.when.apply(null, dfd).then(function(data) {
-			if (activeView instanceof DashboardView) {
 				activeView.switchMenu('review');
 				var reviewView = new ReviewView({
 					collection : attemptedQuestions
 				});
 				activeView.switchView(reviewView);
-			}
 		});
 	},
 

@@ -5,7 +5,7 @@
  * 
  */
 window.DashboardView = Backbone.View.extend({
-
+	className : 'container dashboard',
 	initialize : function() {
 		this.activeMenu = null;
 		this.activeView = null;
