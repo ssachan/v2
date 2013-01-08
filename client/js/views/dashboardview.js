@@ -9,10 +9,6 @@ window.DashboardView = Backbone.View.extend({
 	initialize : function() {
 		this.activeMenu = null;
 		this.activeView = null;
-		this.overView = new OverView();
-		this.myPrepSetsView = new MySetsView();
-		this.review = new ReviewView();
-		this.performanceView = new PerformanceView();
 	},
 
 	switchView : function(view) {

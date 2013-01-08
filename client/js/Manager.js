@@ -280,8 +280,9 @@ window.Manager = {
 	},
 
 	getRSquareData : function() {
-		$('#main-content').empty();
 		if (activeView instanceof DashboardView) {
+			activeView.switchMenu('rsquare');
+			$('#main-content', this.el).append('<div class="header"><h2>Results Square</h2></div><br>');
 			var l1 = sectionL1.models;
 			var len = l1.length;
 			for ( var i = 0; i < len; i++) {
