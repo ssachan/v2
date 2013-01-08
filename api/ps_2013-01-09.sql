@@ -4,7 +4,7 @@
 #
 # Host: localhost (MySQL 5.5.9)
 # Database: ps
-# Generation Time: 2012-12-31 15:39:46 +0530
+# Generation Time: 2013-01-09 04:36:41 +0530
 # ************************************************************
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -38,7 +38,7 @@ CREATE TABLE `accounts` (
   `resetsentOn` datetime DEFAULT NULL,
   `pics` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `accounts` WRITE;
 /*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
@@ -48,7 +48,10 @@ VALUES
 	(2,NULL,'ashwin','Ashwin','M','ashwin.rsmd@gmail.com','3',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 	(3,NULL,'tanuj','Tanuj','Bhojwani','tanuj.bhojwani@gmail.com','3',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 	(4,NULL,'aa','aa','aa','a@a.com',NULL,'2012-12-28 20:42:09',NULL,NULL,NULL,NULL,NULL,NULL),
-	(5,NULL,'123456','aa','aa','aa@aa.com',NULL,'2012-12-31 11:09:00',NULL,NULL,NULL,NULL,NULL,NULL);
+	(5,NULL,'aaa','aa','aa','aa@a.com',NULL,'2012-12-31 11:09:00',NULL,NULL,NULL,NULL,NULL,NULL),
+	(6,NULL,'aaa','aaaa','aaaa','aaa@a.com',NULL,'2013-01-02 14:44:16',NULL,NULL,NULL,NULL,NULL,NULL),
+	(7,NULL,'aaa','qqqq','qqqq','q@q.com',NULL,'2013-01-03 19:31:15',NULL,NULL,NULL,NULL,NULL,NULL),
+	(8,NULL,'raghav','Raghav ','Verma','raghavverma1@gmail.com',NULL,'2013-01-04 12:51:05',NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -225,9 +228,9 @@ LOCK TABLES `faculty` WRITE;
 /*!40000 ALTER TABLE `faculty` DISABLE KEYS */;
 INSERT INTO `faculty` (`l1Ids`,`l2Ids`,`specialization`,`bioShort`,`bio`,`experience`,`education`,`streamIds`,`totalQuizzes`,`rec`,`subscribers`,`accountId`)
 VALUES
-	('3','',NULL,'Physical Chemistry Specialist; B. Tech, IIT Guwahati','Himanshu is a specialist in Physical Chemistry. He completed his B.Tech. from IIT Guwahati in Chemical Engineering. With a combined coaching experience of 3 years, multiple All India Ranks (AIR) under 100 have had the  opportunity to study key physical chemistry concepts with him','Physical Chemistry - 3 years','B. Tech., IIT Guwahati, 2009','1',0,0,0,1),
-	('2','',NULL,'Physics Faculty at Kartikkey Classes;  IIT Madras','Ashwin is a B. Tech. from IIT Madras. He specializes in Physics and is a founding member at Kartikkey classes. His unique approach to teaching physics has got him excellent reviews from all students','Co-founder, Physics faculty - Kartikkey Classes','B. Tech., IIT Madras, 2010','1',0,0,0,2),
-	('2','',NULL,'Physics Faculty at Rise Institute','Tanuj Bhojwani is an IIT Bombay alumnus, and has co-founded the first IIT-JEE training institute in Kashmir: Rise Institute. Though he is a chemical engineer, his area of expertise is physics','Co-founder, Rise Institute','B. Tech., IIT Bombay, 2010','1',0,0,0,3);
+	('3','',NULL,'Physical Chemistry Specialist; B. Tech, IIT Guwahati','Himanshu is a specialist in Physical Chemistry. He completed his B.Tech. from IIT Guwahati in Chemical Engineering. With a combined coaching experience of 3 years, multiple All India Ranks (AIR) under 100 have had the  opportunity to study key physical chemistry concepts with him','Physical Chemistry - 3 years','B. Tech., IIT Guwahati, 2009','1',8,3,0,1),
+	('2','',NULL,'Physics Faculty at Kartikkey Classes;  IIT Madras','Ashwin is a B. Tech. from IIT Madras. He specializes in Physics and is a founding member at Kartikkey classes. His unique approach to teaching physics has got him excellent reviews from all students','Co-founder, Physics faculty - Kartikkey Classes','B. Tech., IIT Madras, 2010','1',5,1,0,2),
+	('2','',NULL,'Physics Faculty at Rise Institute','Tanuj Bhojwani is an IIT Bombay alumnus, and has co-founded the first IIT-JEE training institute in Kashmir: Rise Institute. Though he is a chemical engineer, his area of expertise is physics','Co-founder, Rise Institute','B. Tech., IIT Bombay, 2010','1',14,2,0,3);
 
 /*!40000 ALTER TABLE `faculty` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -562,9 +565,9 @@ LOCK TABLES `quizzes` WRITE;
 /*!40000 ALTER TABLE `quizzes` DISABLE KEYS */;
 INSERT INTO `quizzes` (`id`,`questionIds`,`description`,`descriptionShort`,`conceptsTested`,`tags`,`l3Ids`,`l2Ids`,`questionCount`,`allotedTime`,`difficulty`,`ratings`,`rec`,`typeId`,`facultyId`,`available`,`mobileFlag`,`addedOn`,`totalAttempts`,`streamId`,`maxScore`)
 VALUES
-	(1,'1|:2|:3|:4|:5|:6|:7|:8|:9|:10|:11|:12','Advanced Questions on Electricity & Magnetism','Questions on Electricity & Magnetism from the last 4 years IIT-JEE papers','Electricity & Magnetism','IIT JEE','44|:45|:46|:47','7',12,3600,2,NULL,0,2,3,NULL,NULL,NULL,0,1,36),
-	(2,'13|:14|:15|:16|:17|:18|:19|:20|:21|:22|:23|:24|:25|:26|:27|:28|:29|:30|:31|:32','Covers Redox Reactions , Stoichiometry, Chemical and Ionic Equilibrium','Advanced questions on Physicl Chemistry','Physical Chemistry','','61|:62|:63','10',20,3600,2,NULL,0,2,1,NULL,NULL,NULL,0,1,100),
-	(3,'33|:34|:35|:36|:37|:38|:39|:40|:41|:42|:43|:44|:45|:46|:47|:48|:49|:50|:51|:52|:53|:54|:55|:56|:57','Practice Set on Kinematics & Collisions','Medium difficulty question to strengthen the key topics of Kinematics and Collisions','Mechanics','','34|:35','6',25,3600,2,NULL,0,2,2,NULL,NULL,NULL,0,1,100);
+	(1,'1|:2|:3|:4|:5|:6|:7|:8|:9|:10|:11|:12','Questions on Electricity & Magnetism from the last 4 years IIT-JEE papers','Advanced Questions on Electricity & Magnetism','Electricity & Magnetism','IIT JEE','44|:45|:46|:47','7',12,3600,2,NULL,1,2,3,NULL,NULL,NULL,0,1,36),
+	(2,'13|:14|:15|:16|:17|:18|:19|:20|:21|:22|:23|:24|:25|:26|:27|:28|:29|:30|:31|:32','Covers Redox Reactions , Stoichiometry, Chemical and Ionic Equilibrium\n','Advanced questions on Physical Chemistry','Physical Chemistry','','61|:62|:63','10',20,3600,2,NULL,3,2,1,NULL,NULL,NULL,0,1,100),
+	(3,'33|:34|:35|:36|:37|:38|:39|:40|:41|:42|:43|:44|:45|:46|:47|:48|:49|:50|:51|:52|:53|:54|:55|:56|:57','Medium difficulty question to strengthen the key topics of Kinematics and Collisions','Practice Set on Kinematics & Collisions','Mechanics','','34|:35','6',25,3600,2,NULL,2,2,2,NULL,NULL,NULL,0,1,100);
 
 /*!40000 ALTER TABLE `quizzes` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -631,50 +634,6 @@ CREATE TABLE `responses` (
   `toggleOptions` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-LOCK TABLES `responses` WRITE;
-/*!40000 ALTER TABLE `responses` DISABLE KEYS */;
-INSERT INTO `responses` (`accountId`,`questionId`,`optionSelected`,`timeTaken`,`toggleOptions`)
-VALUES
-	(4,1,1,4,NULL),
-	(4,2,2,3,NULL),
-	(4,3,NULL,2,NULL),
-	(4,4,NULL,NULL,NULL),
-	(4,5,NULL,NULL,NULL),
-	(4,6,NULL,NULL,NULL),
-	(4,7,NULL,NULL,NULL),
-	(4,8,NULL,NULL,NULL),
-	(4,9,NULL,NULL,NULL),
-	(4,10,NULL,NULL,NULL),
-	(4,11,NULL,NULL,NULL),
-	(4,12,NULL,NULL,NULL),
-	(4,33,1,15,NULL),
-	(4,34,2,2,NULL),
-	(4,35,1,3,NULL),
-	(4,36,1,2,NULL),
-	(4,37,2,4,NULL),
-	(4,38,NULL,2,NULL),
-	(4,39,NULL,1,NULL),
-	(4,40,NULL,NULL,NULL),
-	(4,41,NULL,NULL,NULL),
-	(4,42,NULL,NULL,NULL),
-	(4,43,NULL,NULL,NULL),
-	(4,44,NULL,NULL,NULL),
-	(4,45,NULL,NULL,NULL),
-	(4,46,NULL,NULL,NULL),
-	(4,47,NULL,NULL,NULL),
-	(4,48,NULL,NULL,NULL),
-	(4,49,NULL,NULL,NULL),
-	(4,50,NULL,NULL,NULL),
-	(4,51,NULL,NULL,NULL),
-	(4,52,NULL,NULL,NULL),
-	(4,53,NULL,NULL,NULL),
-	(4,54,NULL,NULL,NULL),
-	(4,55,NULL,NULL,NULL),
-	(4,56,NULL,NULL,NULL),
-	(4,57,NULL,NULL,NULL);
-
-/*!40000 ALTER TABLE `responses` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table results
@@ -697,16 +656,6 @@ CREATE TABLE `results` (
   `state` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-LOCK TABLES `results` WRITE;
-/*!40000 ALTER TABLE `results` DISABLE KEYS */;
-INSERT INTO `results` (`quizId`,`accountId`,`selectedAnswers`,`score`,`timePerQuestion`,`timeTaken`,`data`,`timestamp`,`attemptedAs`,`startTime`,`endTime`,`state`)
-VALUES
-	(1,4,'[\"1\",\"2\",null,null,null,null,null,null,null,null,null,null]','[0,2,null]','[4,3,2,null,null,null,null,null,null,null,null,null]',NULL,NULL,'2012-12-31 15:29:37',1,NULL,NULL,'12'),
-	(2,4,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL),
-	(3,4,'[\"1\",\"2\",\"1\",\"1\",\"2\",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]','[0,5,null]','[15,2,3,2,4,2,1,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]',NULL,'[{\"timestamp\":\"1356948318256\",\"action\":\"2\",\"questionId\":\"33\",\"optionIndex\":\"\"},{\"timestamp\":\"1356948319912\",\"action\":\"0\",\"questionId\":\"33\",\"optionIndex\":\"1\"},{\"timestamp\":\"1356948332916\",\"action\":\"2\",\"questionId\":\"34\",\"optionIndex\":\"\"},{\"timestamp\":\"1356948333658\",\"action\":\"0\",\"questionId\":\"34\",\"optionIndex\":\"2\"},{\"timestamp\":\"1356948334644\",\"action\":\"2\",\"questionId\":\"35\",\"optionIndex\":\"\"},{\"timestamp\":\"1356948335562\",\"action\":\"0\",\"questionId\":\"35\",\"optionIndex\":\"1\"},{\"timestamp\":\"1356948337400\",\"action\":\"2\",\"questionId\":\"36\",\"optionIndex\":\"\"},{\"timestamp\":\"1356948338394\",\"action\":\"0\",\"questionId\":\"36\",\"optionIndex\":\"2\"},{\"timestamp\":\"1356948339020\",\"action\":\"0\",\"questionId\":\"36\",\"optionIndex\":\"1\"},{\"timestamp\":\"1356948340221\",\"action\":\"2\",\"questionId\":\"37\",\"optionIndex\":\"\"},{\"timestamp\":\"1356948341524\",\"action\":\"0\",\"questionId\":\"37\",\"optionIndex\":\"0\"},{\"timestamp\":\"1356948342308\",\"action\":\"0\",\"questionId\":\"37\",\"optionIndex\":\"2\"},{\"timestamp\":\"1356948343747\",\"action\":\"2\",\"questionId\":\"38\",\"optionIndex\":\"\"},{\"timestamp\":\"1356948346386\",\"action\":\"2\",\"questionId\":\"39\",\"optionIndex\":\"\"}]','2012-12-31 15:35:47',1,NULL,NULL,'25');
-
-/*!40000 ALTER TABLE `results` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table roles
@@ -718,18 +667,8 @@ CREATE TABLE `roles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-LOCK TABLES `roles` WRITE;
-/*!40000 ALTER TABLE `roles` DISABLE KEYS */;
-INSERT INTO `roles` (`id`,`name`)
-VALUES
-	(1,'Admin'),
-	(2,'student'),
-	(3,'faculty');
-
-/*!40000 ALTER TABLE `roles` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table section_l1
@@ -1060,8 +999,11 @@ LOCK TABLES `students` WRITE;
 /*!40000 ALTER TABLE `students` DISABLE KEYS */;
 INSERT INTO `students` (`ascoreL1`,`ascoreL2`,`quizzesAttempted`,`accountId`,`streamId`)
 VALUES
-	(0,0,'[\"1\",\"2\",\"3\"]',4,1),
-	(0,0,NULL,5,1);
+	(0,0,NULL,4,1),
+	(0,0,NULL,5,1),
+	(0,0,NULL,6,1),
+	(0,0,NULL,7,1),
+	(0,0,NULL,8,1);
 
 /*!40000 ALTER TABLE `students` ENABLE KEYS */;
 UNLOCK TABLES;
