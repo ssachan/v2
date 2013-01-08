@@ -32,7 +32,9 @@ $app->post('/attemptedAs/', 'updateAttemptedAs');
 $app->get('/processQuiz/', $authenticate($app), 'processQuiz');
 
 // responses
-$app->post('/results', 'updateResults');
+$app->post('/results', 'updateResults2');
+$app->get('/testcode', 'updateResults3');
+
 $app->get('/attemptedQuestions/', 'getAttemptedQuestions');
 
 //packages
@@ -710,5 +712,6 @@ function facContact() {
 }
 
 include 'xkcd.php';
+include 'analytics.php';
 
 $app->run();

@@ -37,8 +37,12 @@ window.LogCollection = Backbone.Collection.extend({
 	addEntry: function(eventname, questionid, optionid)
 	{
 		this.add(new Log("",this.eventids[eventname],questionid,optionid));
-	}
+	},
 
+	comparator: function(logEntry)
+	{
+		return logEntry.get("t");
+	}
 });
 
 var logs = new LogCollection();

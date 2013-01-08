@@ -57,12 +57,15 @@ window.QuizView = Backbone.View.extend({
 
 	submitQuiz : function() {
 		timer.stop();
+		logs.addEntry("QUESTION_CLOSE",this.index);
+		logs.addEntry("TEST_SUBMIT");
+		logs.sort();
+
 		this.model.set('timeTaken', timer.count);
 		this.model.calculateScores();
 		this.model.set('state', this.totalQuestions);
 		this.model.submitResults();
 
-		logs.addEntry("TEST_SUBMIT");
 	},
 
 	updateQuizTimer : function(context) {
@@ -161,66 +164,59 @@ window.QuizQuestionView = Backbone.View
 				var oldOptionSelected = this.model.get('optionSelected');
 				var optionSelected = e.target.value;
 				if (optionSelected == oldOptionSelected) {
-					logs.addEntry("OPTION_DESELECT",this.model.get('id'),optionSelected);
-					
+					logs.addEntry("OPTION_DESELECT",this.model.get('id'),oldOptionSelected);
 					this.model.set('optionSelected', null);
-					if (!this.model.get('optionUnSelectedTimeStamps')[optionSelected]) {
-						this.model.get('optionUnSelectedTimeStamps')[optionSelected] = new Array();
-					}
-					(this.model.get('optionUnSelectedTimeStamps')[optionSelected])
-							.push(new Date().getTime());
 					$(e.target).removeClass('active');
 					e.stopPropagation();
-				} else {
+				}
+				else
+				{
+					logs.addEntry("OPTION_DESELECT",this.model.get('id'),oldOptionSelected);
 					logs.addEntry("OPTION_SELECT",this.model.get('id'),optionSelected);
 					this.model.set('optionSelected', optionSelected);
-					if (!this.model.get('optionSelectedTimeStamps')[optionSelected]) {
-						this.model.get('optionSelectedTimeStamps')[optionSelected] = new Array();
-					}
-					(this.model.get('optionSelectedTimeStamps')[optionSelected])
-							.push(new Date().getTime());
 				}
 			},
 
 			handleMultipleType : function(e) {
 				var optionSelectedArray = [];
 				var optionSelected = this.model.get('optionSelected');
+				var optionLength = ((this.model.get('options')).split(SEPARATOR)).length;
 				if (optionSelected != null) {
-					optionSelectedArray = (optionSelected).split(SEPARATOR); // (SEPARATOR.SEPARATOR);
-				} else {
+					var temp = (optionSelected).split(SEPARATOR); // (SEPARATOR.SEPARATOR);
+					for ( var j = 0; j < optionLength; j++)
+					{
+						optionSelectedArray[j] = (temp.indexOf(j) != -1) ? 1 : 0;
+					}
+				}
+				else {
 					// fill all the fields with null
-					var len = ((this.model.get('options')).split(SEPARATOR)).length;
 					for ( var j = 0; j < len; j++) {
-						optionSelectedArray[j] = null;
+						optionSelectedArray[j] = 0;
 					}
 				}
-				var finalOptions = [];
-				len = optionSelectedArray.length;
-				for ( var i = 0; i < len; i++) {
-					if (optionSelectedArray[i] != null) {
-						finalOptions[parseInt(optionSelectedArray[i])] = true;
-					}
-				}
+
 				// get the class for selected button...if its active then it has
 				// been clicked again.
 				var currentClass = e.target.getAttribute('class');
 				var value = parseInt(e.target.getAttribute('value'));
 				if (currentClass.indexOf('active') != -1) {
 					// unselect this
-					finalOptions[value] = false;
+					logs.addEntry("OPTION_DESELECT",this.model.get('id'),value);
+					optionSelectedArray[value] = 0;
 					// optionSelectedArray[value] = "";
 				} else {
-					finalOptions[value] = true;
+					logs.addEntry("OPTION_SELECT",this.model.get('id'),value);
+					optionSelectedArray[value] = 1;
 				}
-				optionSelectedArray.length = 0;
-				len = finalOptions.length;
-				for (i = 0; i < len; i++) {
-					if (finalOptions[i] == true) {
-						optionSelectedArray.push(i);
+				var temp = [];
+				for (i = 0; i < optionLength; i++) {
+					if (optionSelectedArray[i])
+					{
+						temp.push(i);
 					}
 				}
-				this.model.set('optionSelected', optionSelectedArray
-						.join(SEPARATOR));
+				optionSelected = temp.join(SEPARATOR);
+				this.model.set('optionSelected', optionSelected);
 			},
 
 			checkIntegerType : function(e) {
