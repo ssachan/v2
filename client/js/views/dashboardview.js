@@ -42,36 +42,7 @@ window.DashboardView = Backbone.View.extend({
 
 	onRender : function() {
 
-	},
-
-	/*
-	 * kept in manager for the timebeing
-	 * renderOverall : function() {
-		this.switchMenu('overall');
-		var overView = new OverView({model:account});
-		this.switchView(overView);
-
-	},
-
-	renderPerformance : function() {
-		this.switchMenu('performance');
-		var l1 = sectionL1.models;
-		var len = l1.length;
-		for ( var i = 0; i < len; i++) {
-			var pView = new PerformanceView({
-				model : l1[i]
-			});
-			$('#main-content', this.el).append(pView.render().el);
-			pView.onRender();
-		}
-	},
-	
-	renderMyPrepSets : function() {
-		this.switchMenu('overall');
-		var overView = new OverView({model:account});
-		this.switchView(overView);
-	},
-	*/
+	}
 
 });
 

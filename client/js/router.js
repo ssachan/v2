@@ -52,6 +52,7 @@ var AppRouter = Backbone.Router.extend({
 		"facContact" : "facContact",
 		"review" : "review",
 		"myprepsets" : "myprepsets",
+		"rsquare" : "rsquare",
 	},
 
 	initialize : function() {
@@ -101,6 +102,10 @@ var AppRouter = Backbone.Router.extend({
 			// get a generic faculty list
 			alert('generic list of fac');
 		}
+	},
+	
+	rsquare : function (){
+		Manager.getRSquareData();
 	},
 	
 	packages : function() {

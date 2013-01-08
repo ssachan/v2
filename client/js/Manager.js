@@ -128,16 +128,18 @@ window.Manager = {
 		$.when.apply(null, dfd).then(function(data) {
 		});
 	},
-	
-	loadOverallView : function(){
+
+	loadOverallView : function() {
 		activeView.switchMenu('overall');
-		var overView = new OverView({model:account});
+		var overView = new OverView({
+			model : account
+		});
 		activeView.switchView(overView);
 	},
-	
+
 	getDashboardData : function() {
 		var dfd = [];
-		var that=this;
+		var that = this;
 		if (sectionL1.length == 0 || sectionL2.length == 0) {
 			dfd.push(this.getL1ByStreamId(streamId));
 			dfd.push(this.getL2ByStreamId(streamId));
@@ -275,6 +277,21 @@ window.Manager = {
 				}
 			}
 		});
+	},
+
+	getRSquareData : function() {
+		$('#main-content').empty();
+		if (activeView instanceof DashboardView) {
+			var l1 = sectionL1.models;
+			var len = l1.length;
+			for ( var i = 0; i < len; i++) {
+				var pView = new PerformanceView({
+					model : l1[i]
+				});
+				$('#main-content', this.el).append(pView.render().el);
+				pView.onRender();
+			}
+		}
 	},
 
 	/**
@@ -468,7 +485,7 @@ window.Manager = {
 			case quiz.STATUS_INTERRUPTED:
 				this.startQuiz(quiz);
 				break;
-			
+
 			case quiz.STATUS_COMPLETED:
 				this.showResults(quiz);
 				break;
@@ -482,7 +499,9 @@ window.Manager = {
 		$.when.apply(null, dfd).then(function(data) {
 			if (activeView instanceof DashboardView) {
 				activeView.switchMenu('review');
-				var reviewView = new ReviewView({collection:attemptedQuestions});
+				var reviewView = new ReviewView({
+					collection : attemptedQuestions
+				});
 				activeView.switchView(reviewView);
 			}
 		});
