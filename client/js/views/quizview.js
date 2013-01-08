@@ -183,7 +183,6 @@ window.PracticeView = Backbone.View.extend({
         this.totalQuestions = this.questionIds.length;
         this.setUp();
         timer.setUpdateFunction(context.updateQuizTimer, [context]);
-        this.currentView = '';
     },
 
     setUp: function () {
@@ -191,7 +190,7 @@ window.PracticeView = Backbone.View.extend({
         this.getTimeTakenPerQuestion = this.model.getTimeTakenPerQuestion();
         for (var i = 0; i <= this.index; i++) {
             var question = quizQuestions.get(this.questionIds[i]);
-            if (question.get('timeTaken') == null && this.answersSelected[i] != null) {
+            if (this.getTimeTakenPerQuestion[i] != null) {
                 // mark this question
                 question.set('timeTaken', this.getTimeTakenPerQuestion[i]);
                 question.set('optionSelected', this.answersSelected[i]);
@@ -219,7 +218,6 @@ window.PracticeView = Backbone.View.extend({
     },
 
     submitQuestion: function () {
-        //this.question.get('closeTimeStamps').push(new Date().getTime());
         this.question.set('hasAttempted', true);
         timer.stop();
         timer.reset();
@@ -227,17 +225,15 @@ window.PracticeView = Backbone.View.extend({
         $('#next').show();
         if (this.index == 0) {
             $('#previous').hide();
-        } else if (this.index == (this.totalQuestions - 1)) {
-            $('#next').hide();
-        }
-        //this.renderQuestion();
+        } 
+        this.model.set('state', this.index);
+        this.model.calculateScores();
+        this.model.submitResults();
+        this.renderQuestion();
     },
 
     pauseQuiz: function () {
-        this.model.set('timeTaken', timer.count);
-        //this.model.calculateScores();
-        this.model.set('state', this.index);
-        this.model.submitResults();
+		window.location = '#';
     },
 
     updateQuizTimer: function (context) {
@@ -257,10 +253,13 @@ window.PracticeView = Backbone.View.extend({
 
     onNextClick: function () {
         this.index++;
-        if (this.index >= this.totalQuestions) {
-            return;
+        if (this.index == this.totalQuestions) {
+            // show results
+        	Manager.showResults(this.model);
+        	return;
         }
         this.renderQuestion();
+        
     },
 
     onQNoClick: function (e) {
@@ -272,7 +271,6 @@ window.PracticeView = Backbone.View.extend({
         $(this.el).html(this.template({
             'totalQuestions': this.totalQuestions,
         }));
-        $('#quiz-view').hide();
         return this;
     },
 

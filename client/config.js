@@ -34,6 +34,7 @@ var Config = {
                     'FacQuizView',
                     'ReviewView',
                     'ResultsView',
+                    'ResumeView',
                     'ResultAnalysisView',
                     'ResultGraphsView',
                     'SolutionsView',

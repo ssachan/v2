@@ -280,23 +280,28 @@ window.Manager = {
 	},
 
 	getRSquareData : function() {
-		var dfd=[];
+		var dfd = [];
 		if (!(activeView instanceof DashboardView)) {
 			dfd.push(this.getDashboardData());
 		}
-		$.when.apply(null, dfd).then(function(data) {
-			activeView.switchMenu('rsquare');
-			$('#main-content').append('<div class="header"><h2>Results Square</h2></div><br>');
-			var l1 = sectionL1.models;
-			var len = l1.length;
-			for ( var i = 0; i < len; i++) {
-				var pView = new PerformanceView({
-					model : l1[i]
-				});
-				$('#main-content').append(pView.render().el);
-				pView.onRender();
-			}
-		});
+		$.when
+				.apply(null, dfd)
+				.then(
+						function(data) {
+							activeView.switchMenu('rsquare');
+							$('#main-content')
+									.append(
+											'<div class="header"><h2>Results Square</h2></div><br>');
+							var l1 = sectionL1.models;
+							var len = l1.length;
+							for ( var i = 0; i < len; i++) {
+								var pView = new PerformanceView({
+									model : l1[i]
+								});
+								$('#main-content').append(pView.render().el);
+								pView.onRender();
+							}
+						});
 	},
 
 	/**
@@ -352,25 +357,41 @@ window.Manager = {
 		});
 	},
 
-	processQuiz : function(quizId) {
-		var url = Config.serverUrl + 'processQuiz/';
-		return $.ajax({
-			url : url,
-			type : 'GET',
-			dataType : "json",
-			data : {
-				quizId : quizId,
-				accountId : account.get('id'),
-				streamId : streamId
-			},
-			success : function(data) {
-				if (data.status == STATUS.SUCCESS) {
-					quizQuestions.reset(data.data);
-				} else { // If not, send them back to the home page
-					helper.showError(data.data);
-				}
+	questionsExist : function(quiz) {
+		var exists = true;
+		var qArray = quiz.get('questionIdsArray');
+		var len = qArray.length;
+		for ( var i = 0; i < len; i++) {
+			if (quizQuestions[i] != qArray[i]) {
+				exists = false;
+				break;
 			}
-		});
+		}
+		return exists;
+	},
+
+	processQuiz : function(quiz) {
+		// check if the questions are present before hand
+		if (!this.questionsExist(quiz)) {
+			var url = Config.serverUrl + 'processQuiz/';
+			return $.ajax({
+				url : url,
+				type : 'GET',
+				dataType : "json",
+				data : {
+					quizId : quiz.get('id'),
+					accountId : account.get('id'),
+					streamId : streamId
+				},
+				success : function(data) {
+					if (data.status == STATUS.SUCCESS) {
+						quizQuestions.reset(data.data);
+					} else { // If not, send them back to the home page
+						helper.showError(data.data);
+					}
+				}
+			});
+		}
 	},
 
 	getDataForMySets : function() {
@@ -432,7 +453,7 @@ window.Manager = {
 
 	startQuiz : function(quiz) {
 		var dfd = [];
-		dfd.push(this.processQuiz(quiz.get('id')));
+		dfd.push(this.processQuiz(quiz));
 		$.when.apply(null, dfd).then(function(data) {
 			if (quizQuestions.length > 0) {
 				var instructionsView = new InstructionsView({
@@ -445,7 +466,7 @@ window.Manager = {
 
 	resumeQuiz : function(quiz) {
 		var dfd = [];
-		dfd.push(this.processQuiz(quiz.get('id')));
+		dfd.push(this.processQuiz(quiz));
 		$.when.apply(null, dfd).then(function(data) {
 			if (quizQuestions.length > 0) {
 				var resumeView = new ResumeView({
@@ -458,7 +479,7 @@ window.Manager = {
 
 	showResults : function(quiz) {
 		var dfd = [];
-		dfd.push(this.processQuiz(quiz.get('id')));
+		dfd.push(this.processQuiz(quiz));
 		$.when.apply(null, dfd).then(function(data) {
 			if (quizQuestions.length > 0) {
 				var resultsView = new ResultsView({
@@ -480,15 +501,12 @@ window.Manager = {
 			case quiz.STATUS_NOTSTARTED:
 				this.startQuiz(quiz);
 				break;
-
 			case quiz.STATUS_INPROGRESS:
 				this.resumeQuiz(quiz);
 				break;
-
 			case quiz.STATUS_INTERRUPTED:
 				this.startQuiz(quiz);
 				break;
-
 			case quiz.STATUS_COMPLETED:
 				this.showResults(quiz);
 				break;
@@ -503,11 +521,11 @@ window.Manager = {
 		}
 		dfd.push(this.getAttemptedQuestions());
 		$.when.apply(null, dfd).then(function(data) {
-				activeView.switchMenu('review');
-				var reviewView = new ReviewView({
-					collection : attemptedQuestions
-				});
-				activeView.switchView(reviewView);
+			activeView.switchMenu('review');
+			var reviewView = new ReviewView({
+				collection : attemptedQuestions
+			});
+			activeView.switchView(reviewView);
 		});
 	},
 

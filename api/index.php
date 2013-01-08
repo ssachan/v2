@@ -190,7 +190,7 @@ function getQuizzesHistory() {
     $response = array();
     $accountId = $_GET['accountId'];
     $streamId = $_GET['streamId'];
-    $sql = "select r.selectedAnswers,r.timePerQuestion,r.score,r.state, r.attemptedAs, q.*,a.id as fid, a.firstName,a.lastName,f.bioShort from results r,quizzes q,accounts a,faculty f where r.accountId=:accountId and q.streamId=:streamId and r.quizId=q.id and q.facultyId=a.id and f.accountId=a.id order by timestamp";
+    $sql = "select r.selectedAnswers,r.timePerQuestion,r.score,r.startTime,r.state, r.attemptedAs, q.*,a.id as fid, a.firstName,a.lastName,f.bioShort from results r,quizzes q,accounts a,faculty f where r.accountId=:accountId and q.streamId=:streamId and r.quizId=q.id and q.facultyId=a.id and f.accountId=a.id order by timestamp";
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
@@ -404,6 +404,7 @@ function processQuiz() {
     $accountId = $_GET['accountId'];
     $quizId = $_GET['quizId'];
     $streamId = $_GET['streamId'];
+    $date = date("Y-m-d H:i:s", time());
     // for now just return the questions from the quiz if quiz is not a part of the history.
     $sql = "SELECT count(*) as count FROM results where quizId=:quizId and accountId=:accountId";
     try {
@@ -422,12 +423,13 @@ function processQuiz() {
     if ($count->count == 0) {
         // this quiz hasn't been taken.
         // logic for package redemption at this point its null.
-        $sql = "INSERT INTO results (accountId, quizId) VALUES (:accountId, :quizId)";
+        $sql = "INSERT INTO results (accountId, quizId, startTime) VALUES (:accountId, :quizId, :startTime)";
         try {
             $db = getConnection();
             $stmt = $db->prepare($sql);
             $stmt->bindParam("accountId", $accountId);
             $stmt->bindParam("quizId", $quizId);
+            $stmt->bindParam("startTime", $date);
             $stmt->execute();
             $db = null;
         } catch (PDOException $e) {
