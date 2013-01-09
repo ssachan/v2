@@ -36,6 +36,14 @@ abstract class testEvent {
 
 }
 
+function testCode()
+{
+    $accountId = 4; 
+    $quizId = 2;
+    echo "Hello!";
+    var_dump(getQuestionIdsForQuiz($quizId));
+}
+
 function updateResults2()
 {
     $response = array();
@@ -96,6 +104,14 @@ function evaluateQuestion($qDetails, $optionText, $timeTaken, $userAbility)
 
     //Code here to calculate scores based on certain factors.
 
+    //First check if attempted or not
+
+    //If attempted, check if each option is in the state it is supposed to be
+
+
+    //If not attempted see if any time was spent on the question
+    //if time spent, scoring type 1, if not attempted scoring type 2
+
 
     return $delta;
 
@@ -122,7 +138,9 @@ function getQuestionDetails($qid)
 
 function getUserAbilityLevels($accountId, $l3id)
 {
-    $sql = "SELECT l1.id 'l1', l2.id 'l2', l2.weightage 'l2w', l3.weightage 'l3w' FROM section_l1 l1, section_l2 l2, section_l3 l3 WHERE l3.id=:l3id AND l3.l2id = l2.id AND l2.id = l1.id";
+    $sql = "SELECT l1.id 'l1', l2.id 'l2', l2.weightage 'l2w', l3.weightage 'l3w' FROM " +
+           "section_l1 l1, section_l2 l2, section_l3 l3 WHERE l3.id=:l3id AND l3.l2id = l2.id AND l2.id = l1.id";
+
     $l1id = 0;
     $l2id = 0;
     $l2w = 0;
@@ -148,16 +166,16 @@ function getUserAbilityLevels($accountId, $l3id)
     $score->l2_id = $l2id;
     $score->l3_id = $l3id;
     
-    $score->l1_score = getScore("l1",$l1id);
-    $score->l2_score = getScore("l2",$l2id);
-    $score->l3_score = getScore("l3",$l3id);
+    $score->l1_score = getAbilityScore("l1",$l1id);
+    $score->l2_score = getAbilityScore("l2",$l2id);
+    $score->l3_score = getAbilityScore("l3",$l3id);
     $score->l2_weightage = $l2w;
     $score->l3_weightage = $l3w;
 
     return $score;
 }
 
-function getScore($level, $id, $accountId)
+function getAbilityScore($level, $id, $accountId)
 {
     $sql = "SELECT score FROM ascores_".$level." WHERE ".$level."id=:id AND accountId = :acid"; 
    try {
@@ -173,14 +191,6 @@ function getScore($level, $id, $accountId)
     } catch (PDOException $e) {
         phpLog($e->getMessage());
     }
-}
-
-function updateResults3()
-{
-    $accountId = 4; 
-    $quizId = 2;
-    echo "Hello!";
-    var_dump(getQuestionIdsForQuiz($quizId));
 }
 
 function getQuestionIdsForQuiz($quizId)
@@ -306,5 +316,14 @@ function getOptionTextFromArray($optionsArray)
 
     $optionsText = implode("|:",$optionsText);
     return $optionsText;
+}
+
+function getOptionArrayFromText($optionsText, $optionLength)
+{
+    $optionsText = explode("|:",$optionsText);
+
+    foreach ($variable as $key => $value) {
+       // code missing
+    }
 }
 
