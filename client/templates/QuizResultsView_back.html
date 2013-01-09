@@ -1,0 +1,144 @@
+<div class="span4 outline stat-gradient" style="margin-top: 20px; padding: 18px; min-height: 135px;">
+    <p class="font-h2 bold red"><%= score %>/200 was your score
+    <strong class="red">20</strong> Attempted <strong class="red"><%=correct %></strong> Correct <strong
+        class="red"><%=incorrect %></strong> Incorrect
+    </p>
+</div>
+<div class="span4 outline center stat-gradient"
+    style="margin-top: 20px; padding: 18px; min-height: 135px;">
+    <p class="font-h2 bold blue center"><%=totalTime %></p>
+    <p>was the time you took</p>
+    <p>
+        Others finished this in <span class="blue bold"> 25 minutes </span>
+</div>
+<div class="span4 outline stat-gradient" style="margin-top: 20px; padding: 18px; min-height: 135px;">
+    <p>
+        You're in the <strong class="font-h2 orange">Top 20%!</strong>
+    </p>
+    <p>of people who gave this set</p>
+    <p>
+        Average Set Score was <strong class="orange bold"> 75</strong>
+    </p>
+</div>
+
+<div class="detail-unit">
+    <div class="content">
+        <div class="row-fluid score box">
+            YOU SCORED <span><%= score %></span><br> YOUR ACCURACY <span><%=
+                ((correct/(totalQuestions))*100) %></span>
+        </div>
+        <div class="row-fluid box">
+            <div class="span6" style="text-align: center">
+                <h4 style="border-bottom: 1px solid #CCC; padding-bottom: 10px">Accuracy Stats</h4>
+                <div class="row-fluid">
+                    <div class="span6">
+                        <b>Correct <br> Incorrect <br> Unattempted<br></b>
+                    </div>
+                    <div class="span6">
+                        <%=correct %><br><%=incorrect %><br><%=unattempted %><br>
+                    </div>
+                </div>
+            </div>
+            <div class="span6" style="text-align: center">
+                <h4 style="border-bottom: 1px solid #CCC; padding-bottom: 10px">Time Usage
+                    Stats</h4>
+                <div class="row-fluid">
+                    <div class="span6">
+                        <b> Time Available <br> Time Utilized <br> Avg. Time<br>
+                        </b>
+                    </div>
+                    <div class="span6">
+                        <%=totalTime %><br><%=timeTaken %><br><%=avgTime %><br>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="center" style="padding: 20px;">
+            <a href="#myModal" data-toggle="modal"> <img src="img/video1.jpg" width="250px"
+                height="150px" style="border: 2px solid #ccc; padding: 10px">
+            </a>
+        </div>
+        <!--    <div class="row-fluid box" id="video-container">
+                
+            
+         <video id="video_analysis"
+            class="video-js vjs-default-skin"
+            controls
+            preload="none"
+            width="640"
+            height="264"
+            poster="img/ProfTanuj.jpg">
+
+            <source src="videos/video1.mp4" type="video/mp4" />
+
+            </video>
+
+
+            
+
+        </div> -->
+        <div class="row-fluid box">
+            <ul class="nav nav-pills">
+                <li><a id="timeTaken" class="insightItem">Time</a></li>
+                <li class="divider">|</li>
+                <li><a id="difficulty" class="insightItem">Difficulty</a></li>
+                <li class="divider">|</li>
+                <li><a id="history" class="insightItem">Historical</a></li>
+                <li class="divider">|</li>
+                <!-- <li><a id="strategy" class="insightItem">Strategy</a></li> -->
+            </ul>
+            <div class="row-fluid" id="timeTaken-div">
+                <div class="row-fluid" style="border: solid 1px #CCC; background-color: #FCFDCC;">
+                    <%=accuracyInsights %></div>
+                <div id="timeTaken-chart" class="row-fluid"></div>
+            </div>
+            <div class="row-fluid" id="difficulty-div">
+                <div class="row-fluid" style="border: solid 1px #CCC; background-color: #FCFDCC;">
+                    <%=difficultyInsights %></div>
+                <div id="difficulty-chart" class="row-fluid"></div>
+            </div>
+            <div class="row-fluid" id="history-div">
+                <div class="row-fluid" style="border: solid 1px #CCC; background-color: #FCFDCC;">
+                    <%=historyInsights %>
+                    <!--  <ul>
+									<li>Consistent performance in <span class="green bold">Geometry</span>
+										in the last 4 tests - <span class="blue bold">improvement
+											from 50% accuracy to 100% accuracy</span>; you are currently at the
+										highest level
+									</li>
+									<li><span class="green bold">Permutation and
+											Combinations</span> has been your focus area for the last 3 quizzes
+										- <span class="blue bold">practise this topic and learn
+											to leave tough questions in the mock tests</span></li>
+								</ul>
+								-->
+                </div>
+                <div id="history-chart" class="row-fluid"></div>
+            </div>
+            <div class="row-fluid" id="strategy-div">
+                <div class="row-fluid" style="border: solid 1px #CCC; background-color: #FCFDCC;">
+                    <%=strategicInsights %></div>
+                <div id="strat-chart" class="row-fluid"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Button to trigger modal -->
+
+<!-- Modal -->
+<div id="myModal" class="modal hide fade vid-modal" tabindex="-1" role="dialog"
+    aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+        <h3 id="myModalLabel">Analysis</h3>
+    </div>
+    <div class="modal-body">
+        <div class="row-fluid box" id="video-container">
+            <video id="video_analysis" class="video-js vjs-default-skin" controls preload="none"
+                width="870" height="460" poster="img/ProfTanuj.jpg">
+                <source src="videos/video1.mp4" type="video/mp4" />
+            </video>
+        </div>
+    </div>
+</div>

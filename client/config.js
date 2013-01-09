@@ -16,7 +16,6 @@ var Config = {
                     'SignUpView',
                     'QuizView',
                     'QuizQuestionView',
-                    'QuizResultsView',
                     'DashboardView',
                     'QuizLibraryView',
                     'QuizItemView',
@@ -25,7 +24,7 @@ var Config = {
                     'FacView',
                     'ModalView',
                     'MySetsView',
-                    'InfoView',
+//                    'InfoView',
                     'InstructionsView',
                     'PackagesView',
                     'PackageItemView',
@@ -35,9 +34,14 @@ var Config = {
                     'FacQuizView',
                     'ReviewView',
                     'ResultsView',
+                    'ResumeView',
+                    'ResultAnalysisView',
+                    'ResultGraphsView',
+                    'SolutionsView',
                     'QuestionItemView',
                     'PerformanceView',
                     'FacContactView',
-                    'FooterView'
+                    'FooterView',
+                    'OverView'
                   ]
 };

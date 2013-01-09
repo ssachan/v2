@@ -5,7 +5,6 @@
  * 
  */
 window.ReviewView = Backbone.View.extend({
-	// className : "container fac-directory",
 
 	initialize : function() {
 		this.filtered = new FacCollection();
@@ -14,7 +13,6 @@ window.ReviewView = Backbone.View.extend({
 		this.l3 = '0';
 		this.tness = '0';
 		this.status = '0';
-		this.render();
 	},	
 
 	events : {
@@ -25,33 +23,30 @@ window.ReviewView = Backbone.View.extend({
 	
 	l1Filter : function (e){
 		this.l1 = $("#f-l1 option:selected").val();
-		this.onRender();
+		this.renderQuestionItems();
 	},
 
 	tnessFilter : function (e){
 		this.tness = $("#f-tness option:selected").val();
-		this.onRender();
+		this.renderQuestionItems();
 	},
 	
 	statusFilter : function (e){
 		this.status = $("#f-status option:selected").val();
-		this.onRender();
+		this.renderQuestionItems();
 	},
 	
 	render : function() {
 		$(this.el).html(this.template());
-		this.onRender();
-		/*var facs = this.collection.models;
-		var len = facs.length;
-		for ( var i = 0; i < len; i++) {
-			$('#fac-list', this.el).append(new FacItemView({
-				model : facs[i]
-			}).render().el);
-		}*/
+		this.renderQuestionItems();
 		return this;
 	},
 	
 	onRender : function (){
+		$('.selectpicker').selectpicker();
+	},
+	
+	renderQuestionItems : function (){
 		$("#q-list").empty();
     	this.filtered.reset(this.collection.models);
     	if(this.l1!='0'){

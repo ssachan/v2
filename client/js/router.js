@@ -17,6 +17,8 @@ var activeMenu = null;
 var mView = new ModalView();
 var timer = new Timer(1000, null, []); // we will have just one global timer
 
+var activeView = null;
+
 $(document).ready(function() {
 	helper.loadTemplate(Config.viewsArray, function() {
 		(function(d) {
@@ -50,6 +52,7 @@ var AppRouter = Backbone.Router.extend({
 		"facContact" : "facContact",
 		"review" : "review",
 		"myprepsets" : "myprepsets",
+		"rsquare" : "rsquare",
 	},
 
 	initialize : function() {
@@ -101,6 +104,10 @@ var AppRouter = Backbone.Router.extend({
 		}
 	},
 	
+	rsquare : function (){
+		Manager.getRSquareData();
+	},
+	
 	packages : function() {
 		this.changeMenu('packages-menu');
 		Manager.getPackagesByStreamId(streamId);
@@ -111,7 +118,6 @@ var AppRouter = Backbone.Router.extend({
 	},
 	
 	myprepsets : function (){
-		this.changeMenu('myprepsets-menu');
 		Manager.getDataForMySets();
 	},
 	
@@ -166,10 +172,10 @@ var AppRouter = Backbone.Router.extend({
 	},
 
 	showView : function(selector, view) {
-		if (this.activeView)
-			this.activeView.close();
+		if (activeView)
+			activeView.close();
 		$(selector).html(view.render().el);
-		this.activeView = view;
+		activeView = view;
 		return view;
 	},
 
@@ -181,7 +187,6 @@ var AppRouter = Backbone.Router.extend({
 		$('#' + activeMenu).addClass('active');
 		if (account.get('id') == null) {
 			$('#sign-up').html('<a href="#signUp">Sign-Up</a>');
-			// $('#log-in').show();
 		} else {
 			$('#sign-up').html('<a href="#signUp">Log Out</a>');
 		}

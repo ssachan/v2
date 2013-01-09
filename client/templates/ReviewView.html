@@ -1,44 +1,40 @@
-<div class="container review">
-    <h2>
-        <i class="ico-stats"></i>Review Questions
-    </h2>
-    <div class="row-fluid">
-        <div class="span2"></div>
-        <div class="span10">
-            <div class="well large">
-                <div class="span3">
-                    <div class="input-prepend">
-                        <span class="add-on">Subject</span> <select id="f-l1" class="input-small">
-                            <option value="0">All</option>
-                            <option value="1">Maths</option>
-                            <option value="2">Physics</option>
-                            <option value="3">Chemistry</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="span3">
-                    <select id="f-status" class="input-small">
+<div class="header">
+    <h2>Review</h2>
+</div>
+<br>
+<div class="row-fluid">
+        <div class="well large">
+            <div class="span3">
+                <div class="input-prepend">
+                    <span class="add-on">Subject</span> <select id="f-l1" class="selectpicker">
                         <option value="0">All</option>
-                        <option value="1">Correct</option>
-                        <option value="2">Incorrect</option>
-                    </select>
-                </div>
-                <div class="span3">
-                    Toughness <select id="f-tness" class="input-small">
-                        <option value="0">All</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
+                        <option value="1">Maths</option>
+                        <option value="2">Physics</option>
+                        <option value="3">Chemistry</option>
                     </select>
                 </div>
             </div>
-            <table class="table table-striped" id="q-list">
-                <tr>
-                    <th>Question</th>
-                    <th>Status</th>
-                    <th>Difficulty</th>
-                </tr>
-            </table>
+            <div class="span3">
+                <select id="f-status" class="selectpicker">
+                    <option value="0">All</option>
+                    <option value="1">Correct</option>
+                    <option value="2">Incorrect</option>
+                </select>
+            </div>
+            <div class="span3">
+                Toughness <select id="f-tness" class="selectpicker">
+                    <option value="0">All</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+            </div>
         </div>
-    </div>
+        <table class="table table-striped" id="q-list">
+            <tr>
+                <th>Question</th>
+                <th>Status</th>
+                <th>Difficulty</th>
+            </tr>
+        </table>
 </div>
