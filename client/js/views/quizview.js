@@ -24,9 +24,32 @@ window.InstructionsView = Backbone.View.extend({
 	},
 
 	render : function() {
-		$(this.el).html(this.template());
+		$(this.el).html(this.template(this.model.toJSON()));
 		return this;
 	},
+});
+
+window.ResumeView = Backbone.View.extend({
+
+    initialize: function () {},
+
+    events: {
+        'click #resume-quiz': 'resume',
+    },
+
+    resume: function () {
+        // store the preference
+        if(this.model.get('attemptedAs')==1){
+            Manager.loadQuiz(this.model);
+        }else{
+            Manager.loadPractice(this.model);           
+        }
+    },
+
+    render: function () {
+        $(this.el).html(this.template(this.model.toJSON()));
+        return this;
+    }
 });
 
 window.QuizView = Backbone.View.extend({
@@ -57,7 +80,7 @@ window.QuizView = Backbone.View.extend({
 
 	submitQuiz : function() {
 		timer.stop();
-		logs.addEntry("QUESTION_CLOSE",this.index);
+		logs.addEntry("QUESTION_CLOSE",this.question.get('id'));
 		logs.addEntry("TEST_SUBMIT");
 		logs.sort();
 
@@ -69,7 +92,7 @@ window.QuizView = Backbone.View.extend({
 	},
 
 	updateQuizTimer : function(context) {
-		$('#time').html(helper.formatTime(timer.count));
+        $('#time').html(helper.formatTime(timer.count));
 		var qtimer = context.question.get('timeTaken');
 		qtimer++;
 		context.question.set('timeTaken', qtimer);
@@ -82,7 +105,7 @@ window.QuizView = Backbone.View.extend({
 	onPreviousClick : function() {
 		this.question.get('closeTimeStamps').push(new Date().getTime());
 
-		logs.addEntry("QUESTION_CLOSE",this.index);
+		logs.addEntry("QUESTION_CLOSE",this.question.get('id'));
 
 		this.index--;
 		if (this.index < 0) {
@@ -93,7 +116,7 @@ window.QuizView = Backbone.View.extend({
 
 	onNextClick : function() {
 		//this.question.get('closeTimeStamps').push(new Date().getTime());
-		logs.addEntry("QUESTION_CLOSE",this.index);
+		logs.addEntry("QUESTION_CLOSE",this.question.get('id'));
 
 		this.index++;
 		if (this.index >= this.totalQuestions) {
@@ -103,8 +126,8 @@ window.QuizView = Backbone.View.extend({
 	},
 
 	onQNoClick : function(e) {
-		logs.addEntry("QUESTION_CLOSE",this.index);
-		this.index = e.target.getAttribute('id'); // .split('-')[1];
+		logs.addEntry("QUESTION_CLOSE",this.question.get('id'));
+		this.index = e.target.parentElement.getAttribute('id'); // .split('-')[1];
 		//this.question.get('closeTimeStamps').push(new Date().getTime());
 		this.renderQuestion();
 	},

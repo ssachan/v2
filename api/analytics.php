@@ -36,6 +36,10 @@ abstract class testEvent {
 
 }
 
+abstract class analConst {
+    const ABILITY_DEFAULT_SCORE = 50;
+}
+
 function testCode()
 {
     $accountId = 4; 
@@ -53,8 +57,8 @@ function updateResults2()
     $quizId = $_POST['quizId'];
     $logs = $_POST['logs'];
 
-
-    updateResultsTable(); //storing to database
+/**************UNCOMMENT BELOW LATER*******************/
+    // updateResultsTable(); //storing to database
 
     $questionIds = getQuestionIdsForQuiz($quizId);
     $logsByQuestion = splitLogsByQuestion($logs);
@@ -81,7 +85,7 @@ function updateResults2()
         }
 
         $qDetails = getQuestionDetails($qid);
-        $userAbility = getUserAbilityLevels($accountId, $qDetails->l3id);
+        $userAbility = getUserAbilityLevels($accountId, $qDetails->l3Id);
         $delta = evaluateQuestion($qid,$optionText[$qid], $timeTaken[$qid],$accountId);
 
         updateScore($accountId, $delta, $userAbility);
@@ -94,8 +98,32 @@ function updateResults2()
 function updateScore($accountId, $delta, $userAbility)
 {
     //this function updates l1, l2, l3 based on delta
-
+    updateAbility($accountId,"l3",$userAbility->l3id, $delta);
+    updateAbility($accountId,"l2",$userAbility->l2id, $delta*$userAbility->l3weightage);
+    updateAbility($accountId,"l1",$userAbility->l1id, $delta*$userAbility->l3weightage*$userAbility->l2weightage);
     //l2 is weighted average of l3s, l1 is weighted average of l1s
+}
+
+function updateAbility($accountId,$level,$id,$delta)
+{
+    $date = date("Y-m-d H:i:s", time());
+    $sql = "UPDATE ascores_".$level." SET numQuestions = numQuestions + 1, score = score + :delta, updatedOn = :timeStamp WHERE accountId = :acid AND ".$level."id = :id";
+    echo($sql);
+    try {
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("acid", $accountId);
+        $stmt->bindParam("id", $id);
+        $stmt->bindParam("timeStamp", $date);
+        $stmt->bindParam("delta", $delta);
+        $stmt->execute();
+        $db = null;
+        return analConst::ABILITY_DEFAULT_SCORE;
+    } catch (PDOException $e) {
+        $response["status"] = ERROR;
+        $response["data"] = EXCEPTION_MSG;
+        phpLog($e->getMessage());
+    }
 
 }
 
@@ -112,7 +140,8 @@ function evaluateQuestion($qDetails, $optionText, $timeTaken, $userAbility)
     //If not attempted see if any time was spent on the question
     //if time spent, scoring type 1, if not attempted scoring type 2
 
-
+    $delta = 5;
+    
     return $delta;
 
 }
@@ -138,9 +167,8 @@ function getQuestionDetails($qid)
 
 function getUserAbilityLevels($accountId, $l3id)
 {
-    $sql = "SELECT l1.id 'l1', l2.id 'l2', l2.weightage 'l2w', l3.weightage 'l3w' FROM " +
-           "section_l1 l1, section_l2 l2, section_l3 l3 WHERE l3.id=:l3id AND l3.l2id = l2.id AND l2.id = l1.id";
-
+    $sql = "SELECT l1.id 'l1', l2.id 'l2', l2.weightage 'l2w', l3.weightage 'l3w' FROM " .
+           "section_l1 l1, section_l2 l2, section_l3 l3 WHERE l3.id=:l3id AND l3.l2id = l2.id AND l2.l1id = l1.id";
     $l1id = 0;
     $l2id = 0;
     $l2w = 0;
@@ -162,15 +190,14 @@ function getUserAbilityLevels($accountId, $l3id)
     }
 
     $score = new stdClass();
-    $score->l1_id = $l1id;
-    $score->l2_id = $l2id;
-    $score->l3_id = $l3id;
-    
-    $score->l1_score = getAbilityScore("l1",$l1id);
-    $score->l2_score = getAbilityScore("l2",$l2id);
-    $score->l3_score = getAbilityScore("l3",$l3id);
-    $score->l2_weightage = $l2w;
-    $score->l3_weightage = $l3w;
+    $score->l1id = $l1id;
+    $score->l2id = $l2id;
+    $score->l3id = $l3id;
+    $score->l1score = getAbilityScore("l1",$l1id,$accountId);
+    $score->l2score = getAbilityScore("l2",$l2id,$accountId);
+    $score->l3score = getAbilityScore("l3",$l3id,$accountId);
+    $score->l2weightage = $l2w;
+    $score->l3weightage = $l3w;
 
     return $score;
 }
@@ -185,10 +212,38 @@ function getAbilityScore($level, $id, $accountId)
         $stmt->bindParam("acid", $accountId);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_OBJ);
-        return $result->score;
         $db = null;
+        if($result === false)
+            return abilityScoreNotFound($level,$id,$accountId);
+        else
+            return $result->score;
+
+        
 
     } catch (PDOException $e) {
+        //in case the ability score does not exist
+        
+        phpLog($e->getMessage());
+    }
+}
+
+function abilityScoreNotFound($level,$id,$accountId)
+{
+    $date = date("Y-m-d H:i:s", time());
+     $sql = "INSERT INTO ascores_".$level." (accountId, score, updatedOn, ".$level."id, numQuestions) VALUES (:acid,:score,:timeStamp,:id,0)";
+    try {
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("acid", $accountId);
+        $stmt->bindParam("id", $id);
+        $stmt->bindParam("timeStamp", $date);
+        $stmt->bindParam("score", analConst::ABILITY_DEFAULT_SCORE);
+        $stmt->execute();
+        $db = null;
+        return analConst::ABILITY_DEFAULT_SCORE;
+    } catch (PDOException $e) {
+        $response["status"] = ERROR;
+        $response["data"] = EXCEPTION_MSG;
         phpLog($e->getMessage());
     }
 }
@@ -216,7 +271,8 @@ function splitLogsByQuestion($logData)
     $questionDataSet = array();
 
     foreach ($logData as $key => $value)
-        $questionDataSet[$value['q']][]=$value;
+        if(isset($value['q']))
+            $questionDataSet[$value['q']][]=$value;
 
     return $questionDataSet;
 }
