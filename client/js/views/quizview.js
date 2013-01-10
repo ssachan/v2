@@ -62,7 +62,6 @@ window.QuizView = Backbone.View.extend({
 		this.questionIds = this.model.getQuestionIds();
 		this.totalQuestions = this.questionIds.length;
 		timer.setUpdateFunction(context.updateQuizTimer, [ context ]);
-		this.currentView = '';
 	},
 
 	events : {
@@ -87,6 +86,7 @@ window.QuizView = Backbone.View.extend({
 		this.model.set('timeTaken', timer.count);
 		this.model.calculateScores();
 		this.model.set('state', this.totalQuestions);
+        this.model.set('status', 1);        
 		this.model.submitResults();
 
 	},
@@ -143,7 +143,9 @@ window.QuizView = Backbone.View.extend({
 	 * TODO:video - just store the reference of the current video
 	 */
 	renderQuestion : function() {
+        $('#'+this.index).addClass('active');
 		this.question = quizQuestions.get(this.questionIds[this.index]);
+
 		if (this.question.get('timeTaken') == null) {
 			this.question.set('timeTaken', 0);
 		}
