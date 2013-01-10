@@ -171,7 +171,7 @@ window.QuizView = Backbone.View.extend({
 
 window.PracticeView = Backbone.View.extend({
 
-    initialize : function() {
+    initialize: function () {
         var context = this;
         this.index = this.options.index;
         this.questionView = null;
@@ -179,17 +179,15 @@ window.PracticeView = Backbone.View.extend({
         this.questionIds = this.model.getQuestionIds();
         this.totalQuestions = this.questionIds.length;
         this.setUp();
-        timer.setUpdateFunction(context.updateQuizTimer, [ context ]);
-        this.currentView = '';
+        timer.setUpdateFunction(context.updateQuizTimer, [context]);
     },
 
-    setUp : function() {
+    setUp: function () {
         this.answersSelected = this.model.getSelectedAnswers();
         this.getTimeTakenPerQuestion = this.model.getTimeTakenPerQuestion();
-        for ( var i = 0; i <= this.index; i++) {
+        for (var i = 0; i <= this.index; i++) {
             var question = quizQuestions.get(this.questionIds[i]);
-            if (question.get('timeTaken') == null
-                    && this.answersSelected[i] != null) {
+            if (this.getTimeTakenPerQuestion[i] != null) {
                 // mark this question
                 question.set('timeTaken', this.getTimeTakenPerQuestion[i]);
                 question.set('optionSelected', this.answersSelected[i]);
@@ -198,26 +196,25 @@ window.PracticeView = Backbone.View.extend({
         }
     },
 
-    events : {
-        'click #previous' : 'onPreviousClick',
-        'click #next' : 'onNextClick',
+    events: {
+        'click #previous': 'onPreviousClick',
+        'click #next': 'onNextClick',
         // 'click .qnolist' : 'onQNoClick',
-        'click #submit' : 'submitQuestion',
-        'click #pause' : 'pauseQuiz'
+        'click #submit': 'submitQuestion',
+        'click #pause': 'pauseQuiz'
     },
 
-    startQuiz : function() {
+    startQuiz: function () {
         timer.reset();
         this.renderQuestion();
     },
 
-    submitQuiz : function() {
+    submitQuiz: function () {
         this.model.calculateScores();
         this.model.submitResults();
     },
 
-    submitQuestion : function() {
-        this.question.get('closeTimeStamps').push(new Date().getTime());
+    submitQuestion: function () {
         this.question.set('hasAttempted', true);
         timer.stop();
         timer.reset();
@@ -225,27 +222,25 @@ window.PracticeView = Backbone.View.extend({
         $('#next').show();
         if (this.index == 0) {
             $('#previous').hide();
-        } else if (this.index == (this.totalQuestions - 1)) {
-            $('#next').hide();
-        }
+        } 
+        this.model.set('state', this.index);
+        this.model.calculateScores();
+        this.model.submitResults();
         this.renderQuestion();
     },
 
-    pauseQuiz : function() {
-        this.model.set('timeTaken', timer.count);
-        this.model.calculateScores();
-        this.model.set('state', this.index);
-        this.model.submitResults();
+    pauseQuiz: function () {
+        window.location = '#';
     },
 
-    updateQuizTimer : function(context) {
+    updateQuizTimer: function (context) {
         $('#time').html(helper.formatTime(timer.count));
         var qtimer = context.question.get('timeTaken');
         qtimer++;
         context.question.set('timeTaken', qtimer);
     },
 
-    onPreviousClick : function() {
+    onPreviousClick: function () {
         this.index--;
         if (this.index < 0) {
             return;
@@ -253,38 +248,40 @@ window.PracticeView = Backbone.View.extend({
         this.renderQuestion();
     },
 
-    onNextClick : function() {
+    onNextClick: function () {
         this.index++;
-        if (this.index >= this.totalQuestions) {
+        if (this.index == this.totalQuestions) {
+            // show results
+            Manager.showResults(this.model);
             return;
         }
         this.renderQuestion();
+        
     },
 
-    onQNoClick : function(e) {
+    onQNoClick: function (e) {
         this.index = e.target.getAttribute('id');
         this.renderQuestion();
     },
 
-    render : function() {
+    render: function () {
         $(this.el).html(this.template({
-            'totalQuestions' : this.totalQuestions,
+            'totalQuestions': this.totalQuestions,
         }));
-        $('#quiz-view').hide();
         return this;
     },
 
     /**
      * TODO:video - just store the reference of the current video
      */
-    renderQuestion : function() {
+    renderQuestion: function () {
         this.question = quizQuestions.get(this.questionIds[this.index]);
         if (this.question.get('timeTaken') == null) {
             this.question.set('timeTaken', 0);
         }
         if (this.questionView == null) {
             this.questionView = new QuizQuestionView({
-                el : $('#question')
+                el: $('#question')
             });
         }
         this.questionView.model = this.question;
