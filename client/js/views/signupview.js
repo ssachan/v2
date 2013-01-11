@@ -28,6 +28,7 @@ window.LoginBox = Backbone.View.extend({
 
     render:function () {
         $(this.el).html(this.template());
+        $(window).scrollTop(0);
         return this;
     },
     

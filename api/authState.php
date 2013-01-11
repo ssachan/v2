@@ -207,6 +207,7 @@ function insertFb($accountId) {
 }*/
 
 function createAccount($firstName, $lastName, $email, $password = null) {
+    $date = date("Y-m-d H:i:s", time());
     $sql = "INSERT INTO accounts (firstName,lastName,email,password, createdOn) VALUES (:firstName, :lastName, :email, :password, :createdOn)";
     try {
         $db = getConnection();
@@ -215,7 +216,7 @@ function createAccount($firstName, $lastName, $email, $password = null) {
         $stmt->bindParam("lastName", $lastName);
         $stmt->bindParam("email", $email);
         $stmt->bindParam("password", $password);
-        $stmt->bindParam("createdOn", date("Y-m-d H:i:s", time()));
+        $stmt->bindParam("createdOn", $date);
         $stmt->execute();
         $id = $db->lastInsertId();
         $db = null;
