@@ -3,29 +3,35 @@
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
         <h3 id="modalLabel">
-            <div class="media">
+            <div class="media" style="background-color: #DAE4E6">
                 <a class="pull-left" href="#fac/<%=id %>"> <img class="media-object"
                     src="<%=fdpURL%>" height="80px" width="80px">
                 </a>
                 <div class="media-body">
-                    <h4 class="media-heading"><%= firstName%> <%= lastName%></h4>
+                    <h3 class="media-heading"><%= firstName%> <%= lastName%></h3>
+                    <h4 class="italics"><%=bioShort %></h4>
                 </div>
             </div>
         </h3>
     </div>
     <div class="modal-body">
         <div class="media">
-            <a class="pull-left" href="#fac/<%=id %>"> <img class="media-object"
-                src="<%=logo%>" height="20px" width="20px">
+            <a class="pull-left" href="#fac/<%=id %>"> <img class="media-object" src="<%=logo%>"
+                height="20px" width="50px">
             </a>
             <div class="media-body">
-                <h4 class="media-heading"><%= topics %></h4>
+                <h3 class="blue"><%= descriptionShort %></h3>
             </div>
         </div>
-        <p class="center">
-            <img src="<%=fdpURL%>" height="200" width="185" alt="" style="border:2px solid #ccc ; padding:5px">
-        <p><%= description %></p>
-        </p>
+        <div class="center">
+            <div id="video">
+                <img src="<%=fdpURL%>" height="200" width="185" alt=""
+                    style="border: 2px solid #ccc; padding: 5px">
+            </div>
+            <p style="text-align:left;margin-top: 25px; padding: 10px 0px; margin-bottom: 20px; background-color: #ECECEC">
+                <strong>Description: </strong><%= description %>
+            </p>
+        </div>
     </div>
     <div class="modal-footer">
         <a href="#quiz/<%=id %>" class="btn btn-primary">Redeem your package and take the quiz</a>

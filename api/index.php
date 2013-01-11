@@ -32,7 +32,7 @@ $app->post('/attemptedAs/', 'updateAttemptedAs');
 $app->get('/processQuiz/', $authenticate($app), 'processQuiz');
 
 // responses
-$app->post('/results', 'updateResults2');
+$app->post('/results', 'updateResults');
 $app->get('/testcode', 'testCode');
 
 $app->get('/attemptedQuestions/', 'getAttemptedQuestions');

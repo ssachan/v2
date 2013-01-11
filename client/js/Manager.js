@@ -290,8 +290,7 @@ window.Manager = {
 						function(data) {
 							activeView.switchMenu('rsquare');
 							$('#main-content')
-									.append(
-											'<div class="header"><h2>Results Square</h2></div><br>');
+									.append('<div class="row-fluid"><div class="page-title"><h2>Results Square</h2></div><br></div>');
 							var l1 = sectionL1.models;
 							var len = l1.length;
 							for ( var i = 0; i < len; i++) {
