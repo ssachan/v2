@@ -53,6 +53,7 @@ var AppRouter = Backbone.Router.extend({
 		"review" : "review",
 		"myprepsets" : "myprepsets",
 		"rsquare" : "rsquare",
+		"activity" : "activity",
 	},
 
 	initialize : function() {
@@ -106,6 +107,10 @@ var AppRouter = Backbone.Router.extend({
 	
 	rsquare : function (){
 		Manager.getRSquareData();
+	},
+	
+	activity : function(){
+		Manager.getDataforActivity();
 	},
 	
 	packages : function() {

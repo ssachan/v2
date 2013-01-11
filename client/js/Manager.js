@@ -533,4 +533,22 @@ window.Manager = {
 		var facContactView = new FacContactView();
 		app.showView('#content', facContactView);
 	},
+	
+	getDataforActivity : function(){
+		var dfd = [];
+		if (!(activeView instanceof DashboardView)) {
+			dfd.push(this.getDashboardData());
+		}
+		dfd.push(this.getAttemptedQuestions());
+		$.when.apply(null, dfd).then(function(data) {
+			activeView.switchMenu('activity');
+			$('#main-content')
+			.append('<div class="row-fluid"><div class="page-title"><h2>Activity</h2></div><br></div>');
+
+			// plot the graph here, no need to create a view for this purpose;
+			drawDonutChart('main-content');
+						
+		});
+	}
+
 };
