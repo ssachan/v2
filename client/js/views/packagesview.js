@@ -4,6 +4,8 @@
  * 
  **/
 window.PackagesView = Backbone.View.extend({
+	
+	className : "container packages",
 
     initialize: function () {
     	this.render();

@@ -328,10 +328,11 @@ window.Manager = {
 			success : function(data) {
 				console.log("questions fetched: " + data.length);
 				packages.reset(data);
-				new PackagesView({
+				var packagesView = new PackagesView({
 					collection : packages,
-					el : $('#content'),
 				});
+				app.showView('#content', packagesView);
+				packagesView.onRender();
 			}
 		});
 	},
