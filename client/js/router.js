@@ -158,7 +158,7 @@ var AppRouter = Backbone.Router.extend({
 		var forgotPassView = new ForgotPassView({
 			model : account
 		});
-		this.showView(forgotPassView);
+		this.showView('#content',forgotPassView);
 	},
 
 	signUp : function() {

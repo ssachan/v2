@@ -15,7 +15,6 @@
 <body>
 
     <!--start: Header -->
-
     <header>
         <!--start: Container -->
         <div class="container">
@@ -38,10 +37,10 @@
                             </a>
                             <div class="nav-collapse collapse">
                                 <ul class="nav">
-                                    <li id="quiz-menu"><a href="../client/#library">Library</a></li>
+                                    <li id="quiz-menu"><a href="../client/#library">Practice</a></li>
                                     <li id="fac-menu"><a href="../client/#facs">Faculty</a></li>
-                                    <li id="packages-menu"><a href="../client/#packages">Packages</a></li>
-                                    <li id="signup-menu"><a href="../client/#signup">Sign-Up</a></li>
+                                    <li id="packages-menu"><a href="../client/#packages">Purchase</a></li>
+                                    <li id="signup-menu"><a href="../client/#signup">Sign Up</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -228,7 +227,8 @@
                 </div>
             </div>
             <div class="row-fluid center top-margin bottom-margin">
-                <a href="../client/#signup" class="btn btn-large orange-btn"> Get Started for FREE</a>
+                <a href="../client/#signup" class="btn btn-large orange-btn"> Get Started for
+                    FREE</a>
             </div>
         </div>
     </div>
@@ -388,39 +388,39 @@
     </div>
 
     <!-- end: Copyright -->
-<script type="text/javascript">
-    //$('learn').hide();
-    var active = 'learn';
-    $('#faculty').hide();
-    $('#feedback').hide();
-    $('#choice').hide();
-    $('#started').hide();
-    
-    $("#learn-menu").click(function() {
-                    changeMenu('learn')
-                });
+    <script type="text/javascript">
+					//$('learn').hide();
+					var active = 'learn';
+					$('#faculty').hide();
+					$('#feedback').hide();
+					$('#choice').hide();
+					$('#started').hide();
 
-                $("#faculty-menu").click(function() {
-                    changeMenu('faculty')
-                });
+					$("#learn-menu").click(function() {
+						changeMenu('learn')
+					});
 
-                $("#feedback-menu").click(function() {
-                    changeMenu('feedback')
-                });
+					$("#faculty-menu").click(function() {
+						changeMenu('faculty')
+					});
 
-                $("#choice-menu").click(function() {
-                    changeMenu('choice')
-                });
+					$("#feedback-menu").click(function() {
+						changeMenu('feedback')
+					});
 
-                $("#started-menu").click(function() {
-                    changeMenu('started')
-                });
+					$("#choice-menu").click(function() {
+						changeMenu('choice')
+					});
 
-                function changeMenu(id) {
-                    $('#' + active).hide();
-                    active = id;
-                    $('#' + active).show();
-                }
-            </script>
+					$("#started-menu").click(function() {
+						changeMenu('started')
+					});
+
+					function changeMenu(id) {
+						$('#' + active).hide();
+						active = id;
+						$('#' + active).show();
+					}
+				</script>
 </body>
 </html>

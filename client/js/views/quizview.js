@@ -5,17 +5,18 @@
  * 
  */
 window.InstructionsView = Backbone.View.extend({
-
+	className : 'container instructions',
+	
 	initialize : function() {
 	},
 
 	events : {
-		'click #start-quiz' : 'startQuiz',
+		'click .start-quiz' : 'startQuiz',
 	},
 
-	startQuiz : function() {
+	startQuiz : function(e) {
 		// store the preference
-		var attemptedAs = $('input:radio[name=attemptedAs]:checked').val();
+		var attemptedAs = e.currentTarget.getAttribute('id'); //$('input:radio[name=attemptedAs]:checked').val();
 		this.model.set('attemptedAs', attemptedAs);
 		this.model.updateAttemptedAs();
 		//logs resetting
@@ -24,7 +25,12 @@ window.InstructionsView = Backbone.View.extend({
 	},
 
 	render : function() {
-		$(this.el).html(this.template(this.model.toJSON()));
+		$(this.el).html(this.template(
+				{
+					'totalQuestions' : this.model.get('questionIdsArray').length,
+					'totalTime' : helper.formatTime(this.model.get('totalTime')),
+					'descriptionShort' : this.model.get('descriptionShort'),
+				}));
 		return this;
 	},
 });
@@ -128,7 +134,6 @@ window.QuizView = Backbone.View.extend({
 	onQNoClick : function(e) {
 		logs.addEntry("QUESTION_CLOSE",this.question.get('id'));
 		this.index = e.target.parentElement.getAttribute('id'); // .split('-')[1];
-		//this.question.get('closeTimeStamps').push(new Date().getTime());
 		this.renderQuestion();
 	},
 

@@ -128,7 +128,8 @@ window.ForgotPassView = Backbone.View.extend({
 });
 
 window.ChangePassView = Backbone.View.extend({
-
+	className : 'container forgotpass',
+	
     initialize:function () {
         console.log('initializing change pass view');
     },
