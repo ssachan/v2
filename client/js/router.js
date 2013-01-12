@@ -162,6 +162,7 @@ var AppRouter = Backbone.Router.extend({
 	},
 
 	signUp : function() {
+		mView.close();
 		this.changeMenu('signup-menu');
 		$('#signup-menu>a').html('Sign Up');
 		$('#myprepset-menu').hide();
