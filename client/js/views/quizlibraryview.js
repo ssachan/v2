@@ -116,10 +116,10 @@ window.QuizItemView = Backbone.View.extend({
 
 	onQuizItemClick : function() {
 		if (this.model.get('hasAttempted') == true) {
-			window.location = '#quiz/' + this.model.get('id');
+			alert('quiz purchased. Access it from My PrepSets space');
+			//window.location = '#quiz/' + this.model.get('id');
 		} else {
-			mView.model = this.model;// var view = new ModalView({ model:
-										// this.model });
+			mView.model = this.model;
 			mView.show();
 		}
 	},

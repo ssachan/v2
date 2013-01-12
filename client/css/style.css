@@ -1840,4 +1840,6 @@ border-bottom-right-radius: 0px;
   cursor: default;
 }
 
-
+.dim{
+    opacity:.6;    
+}
