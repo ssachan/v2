@@ -28,6 +28,7 @@ window.LoginBox = Backbone.View.extend({
 
     render:function () {
         $(this.el).html(this.template());
+        $(window).scrollTop(0);
         return this;
     },
     
@@ -72,7 +73,7 @@ window.SignUpBox = Backbone.View.extend({
     			email : $('#email-su').val(),
     			password :  $('#pass-su').val(),
     			firstName : $('#fname-su').val(),
-    			lastName : $('#lname-su').val(),
+    			lastName : 'dummy',
     			type : 1,
     			streamId : streamId,
     		};
@@ -127,7 +128,8 @@ window.ForgotPassView = Backbone.View.extend({
 });
 
 window.ChangePassView = Backbone.View.extend({
-
+	className : 'container forgotpass',
+	
     initialize:function () {
         console.log('initializing change pass view');
     },

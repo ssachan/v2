@@ -1,9 +1,9 @@
 <div id="modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
     aria-hidden="true">
-    <div class="modal-header">
+    <div class="modal-header" style="background-color: #DAE4E6">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
         <h3 id="modalLabel">
-            <div class="media" style="background-color: #DAE4E6">
+            <div class="media">
                 <a class="pull-left" href="#fac/<%=id %>"> <img class="media-object"
                     src="<%=fdpURL%>" height="80px" width="80px">
                 </a>
@@ -20,7 +20,7 @@
                 height="20px" width="50px">
             </a>
             <div class="media-body">
-                <h3 class="blue"><%= descriptionShort %></h3>
+                <h3 class="blue  font-h3"><%= descriptionShort %></h3>
             </div>
         </div>
         <div class="center">
@@ -33,7 +33,6 @@
             </p>
         </div>
     </div>
-    <div class="modal-footer">
-        <a href="#quiz/<%=id %>" class="btn btn-primary">Redeem your package and take the quiz</a>
+    <div class="modal-footer" id="take-btn">        
     </div>
 </div>

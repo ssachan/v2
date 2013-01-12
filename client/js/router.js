@@ -53,6 +53,7 @@ var AppRouter = Backbone.Router.extend({
 		"review" : "review",
 		"myprepsets" : "myprepsets",
 		"rsquare" : "rsquare",
+		"activity" : "activity",
 	},
 
 	initialize : function() {
@@ -108,6 +109,10 @@ var AppRouter = Backbone.Router.extend({
 		Manager.getRSquareData();
 	},
 	
+	activity : function(){
+		Manager.getDataforActivity();
+	},
+	
 	packages : function() {
 		this.changeMenu('packages-menu');
 		Manager.getPackagesByStreamId(streamId);
@@ -153,10 +158,11 @@ var AppRouter = Backbone.Router.extend({
 		var forgotPassView = new ForgotPassView({
 			model : account
 		});
-		this.showView(forgotPassView);
+		this.showView('#content',forgotPassView);
 	},
 
 	signUp : function() {
+		mView.close();
 		this.changeMenu('signup-menu');
 		$('#signup-menu>a').html('Sign Up');
 		$('#myprepset-menu').hide();

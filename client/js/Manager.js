@@ -494,7 +494,7 @@ window.Manager = {
 	getDataForQuiz : function(quizId) {
 		var quiz = null;
 		quizQuestions.reset();
-		
+
 		quiz = quizLibrary.get(quizId) || quizHistory.get(quizId);
 
 		if (quiz != null) {
@@ -512,6 +512,9 @@ window.Manager = {
 				this.showResults(quiz);
 				break;
 			}
+		}else{
+			//for now redirect to the quiz library page
+			window.location = '#library';
 		}
 	},
 
@@ -534,4 +537,20 @@ window.Manager = {
 		var facContactView = new FacContactView();
 		app.showView('#content', facContactView);
 	},
+	
+	getDataforActivity : function(){
+		var dfd = [];
+		if (!(activeView instanceof DashboardView)) {
+			dfd.push(this.getDashboardData());
+		}
+		dfd.push(this.getAttemptedQuestions());
+		$.when.apply(null, dfd).then(function(data) {
+			activeView.switchMenu('activity');
+			$('#main-content')
+			.append('<div class="row-fluid"><div class="page-title"><h2>Activity</h2></div><br></div><div id="donut"></div>');
+			// plot the graph here, no need to create a view for this purpose;
+			drawDonutChart('donut');
+		});
+	}
+
 };

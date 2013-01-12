@@ -228,13 +228,12 @@ window.Quiz = Backbone.Model
 					success : function(data) {
 						if (data.status == STATUS.SUCCESS) {
 							quizHistory.unshift(that);
+							account.get('quizzesAttemptedArray').unshift(
+									that.get('id'));
 							if (that.get('status') == that.STATUS_COMPLETED) {
-								account.get('quizzesAttemptedArray').unshift(
-										that.get('id'));
-								app.quiz(that.get('id'));
+										app.quiz(that.get('id'));
 							} else {
 								// continue the quiz
-
 							}
 						} else {
 							helper.showError(data.data);
