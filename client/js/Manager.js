@@ -494,8 +494,8 @@ window.Manager = {
 	getDataForQuiz : function(quizId) {
 		var quiz = null;
 		quizQuestions.reset();
-		quiz = quizLibrary.get(quizId) == null ? quizHistory.get(quizId)
-				: quizLibrary.get(quizId);
+		quiz = quizHistory.get(quizId) == null ? quizLibrary.get(quizId)
+				: quizHistory.get(quizId);
 		if (quiz != null) {
 			switch (quiz.get('status')) {
 			case quiz.STATUS_NOTSTARTED:
@@ -511,6 +511,9 @@ window.Manager = {
 				this.showResults(quiz);
 				break;
 			}
+		}else{
+			//for now redirect to the quiz library page
+			window.location = '#library';
 		}
 	},
 
