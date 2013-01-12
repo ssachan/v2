@@ -38,6 +38,18 @@ abstract class testEvent {
 
 abstract class analConst {
     const ABILITY_DEFAULT_SCORE = 50;
+
+    public static function timeFactor()
+    {
+
+    }
+
+    public static function abilityFactor()
+    {
+
+    }
+
+    
 }
 
 function testCode()
