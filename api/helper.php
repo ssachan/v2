@@ -13,7 +13,7 @@ function sendEmail($to, $subject, $message) {
 
 function testMail(){
     echo 'hi';
-    echo sendEmail('shikhar.sachan@gmail.com', "Welcome to PrepSquare", "An amazing sign-up message");
+    echo sendEmail('shikhar.sachan@gmail.com', "Welcome to PrepSquare-ll", "An amazing sign-up message");
 }
 
 function sendEmailSMTP() {

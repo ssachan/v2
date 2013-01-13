@@ -281,7 +281,6 @@ $app->post("/signup", function () use ($app) {
             $account->dp='0';
             $response["status"] = SUCCESS;
             $response["data"] = $account;
-            echo sendEmail($account->email, "Welcome to PrepSquare", "An amazing sign-up message");
         }
         break;
     case 2:// fb log-in
