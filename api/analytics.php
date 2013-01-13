@@ -33,34 +33,38 @@ abstract class testEvent {
         self::TEST_PAUSE => "Test Paused",
         self::TEST_START => "Test Started" 
     );
-
 }
 
 abstract class questionType {
     
     const SINGLE_CHOICE = 1;
-    const MATRIX_MATCH = 2;
-    const MULTIPLE_CHOICE = 3;
-
+    const MULTIPLE_CHOICE = 2;
+    const INTEGER_TYPE = 3;
+    const MATRIX_MATCH = 4;
 }
 
 abstract class analConst {
     const ABILITY_DEFAULT_SCORE = 50;
     const UNSEEN_TOLERANCE = 2000;
+    const CORRECT = 1;
+    const INCORRECT = 2;
+    const SKIPPED = 3;
+    const UNSEEN = 4;
+
 
     public static function timeFactor()
     {
-
+        return 1;
     }
 
     public static function abilityFactor()
     {
-
-    }
-
-    
+        return 1;
+    }    
 }
 
+
+//>> FRONT-FACING Functions
 function testCode()
 {
     $accountId = 4; 
@@ -77,8 +81,7 @@ function updateResults2()
     $accountId = $_POST['accountId']; 
     $quizId = $_POST['quizId'];
     $logs = $_POST['logs'];
-
-/**************UNCOMMENT BELOW LATER*******************/
+    /**************UNCOMMENT BELOW LATER*******************/
     // updateResultsTable(); //storing to database
 
     $questionIds = getQuestionIdsForQuiz($quizId);
@@ -86,8 +89,9 @@ function updateResults2()
 
     $optionArray = array();
     $optionText = array();
-    $timeTaken = array(); //All 3 are per question arrays
-
+    $timeTaken = array(); //All 4 are per question arrays
+    $optionToggle = array();
+    $delta = array();
     foreach ($questionIds as $key => $qid)
     {
        //Retrieve the final option selected and time taken
@@ -107,136 +111,20 @@ function updateResults2()
 
         $qDetails = getQuestionDetails($qid);
         $userAbility = getUserAbilityLevels($accountId, $qDetails->l3Id);
-        $delta = evaluateQuestion($qid,$optionText[$qid], $timeTaken[$qid],$accountId);
+        $delta[$qid] = evaluateQuestion($qid,$optionText[$qid], $timeTaken[$qid],$accountId);
+        // optimization tip:  unseen questions can be evaluated faster.
 
+        //now adding question to response table;
+        $optionToggle[$qid] = "?"; //////FIGURE THIS OUT
+        insertIntoResponsesTable($accountId, $qid, $optionText[$qid], $timeTaken[$qid],$optionToggle[$qid],$userAbility->l3score,$delta[$qid]);
         updateScore($accountId, $delta, $userAbility);
     }
+    
 
 }
+//<< END FRONT FACING
 
-function updateScore($accountId, $delta, $userAbility)
-{
-    //this function updates l1, l2, l3 based on delta
-    updateAbility($accountId,"l3",$userAbility->l3id, $delta);
-    updateAbility($accountId,"l2",$userAbility->l2id, $delta*$userAbility->l3weightage);
-    updateAbility($accountId,"l1",$userAbility->l1id, $delta*$userAbility->l3weightage*$userAbility->l2weightage);
-    //l2 is weighted average of l3s, l1 is weighted average of l1s
-}
-
-function updateAbility($accountId,$level,$id,$delta)
-{
-    $date = date("Y-m-d H:i:s", time());
-    $sql = "UPDATE ascores_".$level." SET numQuestions = numQuestions + 1, score = score + :delta, updatedOn = :timeStamp WHERE accountId = :acid AND ".$level."id = :id";
-    echo($sql);
-    try {
-        $db = getConnection();
-        $stmt = $db->prepare($sql);
-        $stmt->bindParam("acid", $accountId);
-        $stmt->bindParam("id", $id);
-        $stmt->bindParam("timeStamp", $date);
-        $stmt->bindParam("delta", $delta);
-        $stmt->execute();
-        $db = null;
-        return analConst::ABILITY_DEFAULT_SCORE;
-    } catch (PDOException $e) {
-        $response["status"] = ERROR;
-        $response["data"] = EXCEPTION_MSG;
-        phpLog($e->getMessage());
-    }
-}
-
-function evaluateQuestion($qDetails, $optionText, $timeTaken, $userAbility)
-{
-
-    //Code here to calculate scores based on certain factors.
-
-    //First check if attempted or not
-    if($optionText == "")
-    {
-        //unattempted
-        //If not attempted see if any time was spent on the question
-        if($timeTaken <= analConst::UNSEEN_TOLERANCE)
-        {
-            //question went unseen. Code that way
-            $delta = evalUnseen($qDetails,$userAbility);
-        }
-        else
-        {
-            //seen but skipped in $timeTaken seconds
-            $delta = evalSkip($qDetails,$userAbility,$timeTaken);
-        }
-    }
-    else
-    {
-        //If attempted, check if each option is in the state it is supposed to be
-        if($optionText == $qDetails->correctAnswer)
-        {
-            //everything correct exactly
-            $delta = evalCorrect($qDetails,$userAbility,$timeTaken)
-        }
-        else
-        {
-            switch($qDetails->typeId)
-            {
-                case questionType::SINGLE_CHOICE:
-                    evalIncorrect($qDetails,$userAbility,$timeTaken);
-                    break;
-                case questionType::MULTIPLE_CHOICE:
-
-                    break;
-                case questionType::MATRIX_MATCH:
-
-                    break;
-            }
-        }
-            
-    }
-
-    $delta = 5;
-
-    return $delta;
-
-}
-
-function evalUnseen($qdetails,$userAbility)
-{
-
-}
-
-function evalSkip($qdetails,$userAbility,$timeTaken)
-{
-
-}
-
-function evalCorrect($qdetails,$userAbility,$timeTaken)
-{
-
-}
-
-function evalIncorrect($qdetails,$userAbility,$timeTaken)
-{
-
-}
-
-function getQuestionDetails($qid)
-{
-    $sql = "SELECT * FROM questions WHERE id=:qid";
-    $l1id = 0;
-    $l2id = 0;
-    try {
-        $db = getConnection();
-        $stmt = $db->prepare($sql);
-        $stmt->bindParam("qid", $qid);
-        $stmt->execute();
-        $results = $stmt->fetch(PDO::FETCH_OBJ);        
-        $db = null;
-        return $results;
-
-    } catch (PDOException $e) {
-        phpLog($e->getMessage());
-    }
-}
-
+//>> RETRIEVING, UPDATING SCORES AND ABILITY
 function getUserAbilityLevels($accountId, $l3id)
 {
     $sql = "SELECT l1.id 'l1', l2.id 'l2', l2.weightage 'l2w', l3.weightage 'l3w' FROM " .
@@ -320,35 +208,39 @@ function abilityScoreNotFound($level,$id,$accountId)
     }
 }
 
-function getQuestionIdsForQuiz($quizId)
+function updateScore($accountId, $delta, $userAbility)
 {
-    $questionIds = "";
-    $sql = "SELECT questionIds FROM quizzes WHERE id=:id ";
+    //this function updates l1, l2, l3 based on delta
+    updateAbility($accountId,"l3",$userAbility->l3id, $delta);
+    updateAbility($accountId,"l2",$userAbility->l2id, $delta*$userAbility->l3weightage);
+    updateAbility($accountId,"l1",$userAbility->l1id, $delta*$userAbility->l3weightage*$userAbility->l2weightage);
+    //l2 is weighted average of l3s, l1 is weighted average of l1s
+}
+
+function updateAbility($accountId,$level,$id,$delta)
+{
+    $date = date("Y-m-d H:i:s", time());
+    $sql = "UPDATE ascores_".$level." SET numQuestions = numQuestions + 1, score = score + :delta, updatedOn = :timeStamp WHERE accountId = :acid AND ".$level."id = :id";
+    echo($sql);
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
-        $stmt->bindParam("id", $quizId);
+        $stmt->bindParam("acid", $accountId);
+        $stmt->bindParam("id", $id);
+        $stmt->bindParam("timeStamp", $date);
+        $stmt->bindParam("delta", $delta);
         $stmt->execute();
-        $questionIds = $stmt->fetch(PDO::FETCH_OBJ);
         $db = null;
-        return explode("|:",$questionIds->questionIds);
-
+        return analConst::ABILITY_DEFAULT_SCORE;
     } catch (PDOException $e) {
+        $response["status"] = ERROR;
+        $response["data"] = EXCEPTION_MSG;
         phpLog($e->getMessage());
     }
 }
+//<< END RETRIEVING, UPDATING SCORES AND ABILITY
 
-function splitLogsByQuestion($logData)
-{
-    $questionDataSet = array();
-
-    foreach ($logData as $key => $value)
-        if(isset($value['q']))
-            $questionDataSet[$value['q']][]=$value;
-
-    return $questionDataSet;
-}
-
+//>> QUIZ/QUESTION DETAIL RETRIEVERS
 function getStateOfQuiz($accountId, $quizId)
 {
     $sql = "SELECT state,attemptedAs from results where accountId=:accountId and quizId=:quizId";
@@ -373,6 +265,40 @@ function getStateOfQuiz($accountId, $quizId)
  // Code to get state and attempted as if needed.
 }
 
+function getQuestionDetails($qid)
+{
+    $sql = "SELECT * FROM questions WHERE id=:qid";
+    $l1id = 0;
+    $l2id = 0;
+    try {
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("qid", $qid);
+        $stmt->execute();
+        $results = $stmt->fetch(PDO::FETCH_OBJ);        
+        $db = null;
+        return $results;
+
+    } catch (PDOException $e) {
+        phpLog($e->getMessage());
+    }
+}
+
+//<< END QUIZ/QUESTION DETAIL RETRIEVERS
+
+//>> FUNCTIONS THAT OPERATE ON RAW LOGS
+function splitLogsByQuestion($logData)
+{
+    $questionDataSet = array();
+
+    foreach ($logData as $key => $value)
+        if(isset($value['q']))
+            $questionDataSet[$value['q']][]=$value;
+
+    return $questionDataSet;
+}
+
+
 function updateResultsTable($accountId, $quizId, $logs)
 {
     $date = date("Y-m-d H:i:s", time());
@@ -396,6 +322,36 @@ function updateResultsTable($accountId, $quizId, $logs)
     }
 }
 
+function insertIntoResponsesTable($accountId, $qid, $optionText, $timeTaken,$optionToggle,$abilityScore,$delta)
+{
+    $date = date("Y-m-d H:i:s", time());
+
+    $sql = "INSERT INTO responses (accountId,questionID, optionSelected, timeTaken, toggleOptions, abilityScoreBefore, delta, timestamp) VALUES (:accountId,:qid,:otxt,:ttk,:tops,:ascore,:delta,:tstmp)";
+    try {
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("accountId", $accountId);
+        $stmt->bindParam("qid", $qid);
+        $stmt->bindParam("tstmp", $date);
+        $stmt->bindParam("otxt", $optionText);
+        $stmt->bindParam("ttk", $timeTaken);
+        $stmt->bindParam("tops", $optionToggle);
+        $stmt->bindParam("ascore", $abilityScore);
+        $stmt->bindParam("delta", $delta);
+        
+        $stmt->execute();
+        $db = null;
+    } catch (PDOException $e) {
+        $response["status"] = ERROR;
+        $response["data"] = EXCEPTION_MSG;
+        phpLog($e->getMessage());
+    }
+}
+
+
+//<< END FUNCTIONS THAT OPERATE ON RAW LOGS
+
+//>> FUNCTIONS THAT OPERATE ON LOGS PERTAINING TO A SINGLE QUESTION
 function getTotalTime($questionData) //Can be optimized by combining these into one large loop.
 {
     $totalTime = 0;
@@ -434,24 +390,174 @@ function getFinalOptionArray($questionData)
 
     return $optionsArray;
 }
+//<< END FUNCTIONS THAT OPERATE ON LOGS PERTAINING TO A SINGLE QUESTION
+
+//>> HELPER FUNCTIONS
+
+function getQuestionIdsForQuiz($quizId)
+{
+    $questionIds = "";
+    $sql = "SELECT questionIds FROM quizzes WHERE id=:id ";
+    try {
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("id", $quizId);
+        $stmt->execute();
+        $questionIds = $stmt->fetch(PDO::FETCH_OBJ);
+        $db = null;
+        return explode("|:",$questionIds->questionIds);
+
+    } catch (PDOException $e) {
+        phpLog($e->getMessage());
+    }
+}
 
 function getOptionTextFromArray($optionsArray)
 {
-    $optionsText = array();
+    $optionText = array();
     foreach ($optionsArray as $key => $value)
         if($value)
-            $optionsText[]=$key;
+            $optionText[]=$key;
 
-    $optionsText = implode("|:",$optionsText);
-    return $optionsText;
+    $optionText = implode("|:",$optionText);
+    return $optionText;
 }
 
-function getOptionArrayFromText($optionsText, $optionLength)
+function getOptionArrayFromText($optionText, $optionLength)
 {
-    $optionsText = explode("|:",$optionsText);
-
-    foreach ($variable as $key => $value) {
-       // code missing
+    $answer = array();
+    if(strpos($optionText,"|:|:") !== false)
+    {
+        //matrix type
+        $optionText = explode("|:|:",$optionText);
+        foreach ($optionText as $key => $value) {
+            $temp = $optionText[$key];
+            $answer[]=getOptionArrayFromText($temp,$optionLength);
+        }
     }
+    else{
+        $optionText = explode("|:",$optionText);
+        for($i=0;$i<$optionLength;$i++)
+            $answer[$i] = false;
+        foreach ($optionText as $key => $value)
+            $answer[$value] = true;
+    }
+    return $answer;
 }
+//<< END HELPER FUNCTIONS
+
+//>> QUESTION EVALUATION functions
+function evaluateQuestion($qDetails, $optionText, $timeTaken, $userAbility)
+{
+
+    //Code here to calculate scores based on certain factors.
+
+    //First check if attempted or not
+    if($optionText == "")
+    {
+        //unattempted
+        //If not attempted see if any time was spent on the question
+        if($timeTaken <= analConst::UNSEEN_TOLERANCE)
+        {
+            //question went unseen. Code that way
+            $delta = evalUnseen($qDetails,$userAbility);
+        }
+        else
+        {
+            //seen but skipped in $timeTaken seconds
+            $delta = evalSkip($qDetails,$userAbility,$timeTaken);
+        }
+    }
+    else
+    {
+        //If attempted, check if each option is in the state it is supposed to be
+        if($optionText == $qDetails->correctAnswer)
+        {
+            //everything correct exactly
+            $delta = evalCorrect($qDetails,$userAbility,$timeTaken);
+        }
+        else
+        {
+            switch($qDetails->typeId)
+            {
+                case questionType::SINGLE_CHOICE:
+                    $delta = evalIncorrect($qDetails,$userAbility,$timeTaken);
+                    break;
+                case questionType::MULTIPLE_CHOICE:
+                    $optionLength = count(explode("|:",$qDetails->options));
+                    $delta = evalOption($optionText,
+                                        $qDetails->correctAnswer,
+                                        $optionLength,
+                                        $qDetails->correctScore,
+                                        $qDetails->inCorrectScore);
+                    break;
+                case questionType::MATRIX_MATCH:
+                    
+                    $tmpOption = explode("|:|:",$qDetails->options);
+                    $optionLength = count(explode("|:",$tmpOption[0]));
+
+                    $optionSuperArray =  getOptionArrayFromText($optionText,$optionLength);
+                    $correctSuperArray = getOptionArrayFromText($qDetails->correctAnswer,$optionLength);
+                    
+                    $delta = 0;
+                    foreach ($correctSuperArray as $k => $v) {
+                        $tmpCorrectText = $v;
+                        $tmpOptionText = $optionSuperArray[$k];
+                        $delta += evalOption($tmpCorrectText,
+                                        $tmpOptionText,
+                                        $optionLength,
+                                        $qDetails->correctScore,
+                                        $qDetails->inCorrectScore);
+                    }
+                    break;
+                case questionType::INTEGER_TYPE:
+                    $delta = evalIncorrect($qDetails,$userAbility,$timeTaken);
+                    break;
+            }
+        }
+            
+    }
+
+    return $delta;
+}
+
+function evalOption($optionText,$correctAnswerText, $optionLength, $correctScore, $incorrectScore)
+{
+    $optionsArray = getOptionArrayFromText($optionText,$optionLength);
+    $correctArray = getOptionArrayFromText($correctAnswerText,$optionLength);
+    $delta = 0;
+    foreach ($correctArray as $key => $value) {
+        if($optionsArray[$key] == $correctArray[$key])
+            $delta += $correctScore; // add factor
+        else
+            $delta += $incorrectScore; //add factor
+    }
+    return $delta;
+}
+
+function evalUnseen($qdetails,$userAbility)
+{
+    $delta = $qDetails->unattemptedScore; //add factor
+    return $delta;
+}
+
+function evalSkip($qdetails,$userAbility,$timeTaken)
+{
+    $delta = $qDetails->unattemptedScore; //add factor
+    return $delta;
+}
+
+function evalCorrect($qdetails,$userAbility,$timeTaken)
+{
+    $delta = $qDetails->correctScore; //add factor
+    return $delta;
+}
+
+function evalIncorrect($qdetails,$userAbility,$timeTaken)
+{
+    $delta = $delta = $qDetails->incorrectScore; //add factor
+    return $delta;
+}
+
+//<< QUESTION EVALAUATION FUNCTIONS END
 
