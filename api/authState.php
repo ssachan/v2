@@ -130,7 +130,7 @@ function insertStudent($accountId, $streamId) {
         $stmt->bindParam("accountId", $accountId);
         $stmt->bindParam("streamId", $streamId);
         $stmt->execute();
-        return $response->id = $db->lastInsertId();
+        return $db->lastInsertId();
     } catch (PDOException $e) {
         phpLog($e->getMessage());
     }
@@ -268,7 +268,7 @@ $app->post("/signup", function () use ($app) {
                 $response["data"] = "Email already exists. you should probably try forgot password";
             }
         } else {
-            $account = array();
+            $account = new stdClass();
             $account->id = createAccount($firstName, $lastName, $email, $password);
             insertStudent($account->id, $streamId);
             $account->firstName = $firstName;
