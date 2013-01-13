@@ -130,7 +130,7 @@ function insertStudent($accountId, $streamId) {
         $stmt->bindParam("accountId", $accountId);
         $stmt->bindParam("streamId", $streamId);
         $stmt->execute();
-        return $response->id = $db->lastInsertId();
+        return $db->lastInsertId();
     } catch (PDOException $e) {
         phpLog($e->getMessage());
     }
