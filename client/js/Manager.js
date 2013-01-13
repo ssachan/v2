@@ -494,8 +494,9 @@ window.Manager = {
 	getDataForQuiz : function(quizId) {
 		var quiz = null;
 		quizQuestions.reset();
-		quiz = quizHistory.get(quizId) == null ? quizLibrary.get(quizId)
-				: quizHistory.get(quizId);
+
+		quiz = quizLibrary.get(quizId) || quizHistory.get(quizId);
+
 		if (quiz != null) {
 			switch (quiz.get('status')) {
 			case quiz.STATUS_NOTSTARTED:
