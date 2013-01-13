@@ -4,9 +4,16 @@
  * Helper functions
  */
 
+$app->get('/mail', 'mail');
+
 function sendEmail($to, $subject, $message) {
     $res = mail($to, $subject, $message);
     return $res;
+}
+
+function mail(){
+    echo 'hi';
+    echo sendEmail('shikhar.sachan@gmail.com', "Welcome to PrepSquare", "An amazing sign-up message");
 }
 
 function sendEmailSMTP() {
