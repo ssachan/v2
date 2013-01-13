@@ -103,13 +103,12 @@ window.PerformanceView = Backbone.View.extend({
 	},
 
 	onL2Click : function(e) {
-		if (this.activel2Id != e.target.parentElement.getAttribute('id')) {
+		if (this.activel2Id != e.target.parentElement.getAttribute('lid')) {
 			$('.l3', this.el).empty();
 			$('.l3-stats', this.el).empty();
 			this.activel3Id = '0';
 			$('#' + this.activel2Id + '-l2').removeClass('active');
-			this.activel2Id = (e.target.parentElement.getAttribute('id'))
-					.split('-')[0];
+			this.activel2Id = (e.target.parentElement.getAttribute('lid'));
 
 			// this.activel2Id = e.target.getAttribute('id');
 			$('#' + this.activel2Id + '-l2').addClass('active');
@@ -118,10 +117,9 @@ window.PerformanceView = Backbone.View.extend({
 	},
 
 	onL3Click : function(e) {
-		if (this.activel3Id != e.target.parentElement.getAttribute('id')) {
+		if (this.activel3Id != e.target.parentElement.getAttribute('lid')) {
 			$('#' + this.activel3Id + '-l3').removeClass('active');
-			this.activel3Id = (e.target.parentElement.getAttribute('id'))
-					.split('-')[0];
+			this.activel3Id = (e.target.parentElement.getAttribute('lid'));
 			$('#' + this.activel3Id + '-l3').addClass('active');
 			this.renderStats();
 		}
@@ -139,7 +137,7 @@ window.PerformanceView = Backbone.View.extend({
 		var len = l2.length;
 		for ( var i = 0; i < len; i++) {
 			$('.l2', this.el).append(
-					'<li id="' + l2[i].get('id') + '-l2"><a>'
+					'<li id="' + l2[i].get('id') + '-l2" lid="'+l2[i].get('id')+'"><a>'
 							+ l2[i].get('displayName') + '</a></li>');
 		}
 	},
@@ -152,13 +150,15 @@ window.PerformanceView = Backbone.View.extend({
 		var len = l3.length;
 		for ( var i = 0; i < len; i++) {
 			$('.l3', this.el).append(
-					'<li id="' + l3[i].get('id') + '-l3"><a>'
+					'<li id="' + l3[i].get('id') + '-l3" lid="'+l3[i].get('id')+'"><a>'
 							+ l3[i].get('displayName') + '</a></li>');
 		}
 	},
 
 	renderStats : function() {
-		$('#l3-stats', this.el).html('Hard code these things for now');
+		var context = this;
+		var thisL3Score = scoreL3.get(context.activel3Id);
+		$('#l3-stats').html("Score is " + thisL3Score.get('score') );
 	}
 });
 

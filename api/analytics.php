@@ -36,8 +36,17 @@ abstract class testEvent {
 
 }
 
+abstract class questionType {
+    
+    const SINGLE_CHOICE = 1;
+    const MATRIX_MATCH = 2;
+    const MULTIPLE_CHOICE = 3;
+
+}
+
 abstract class analConst {
     const ABILITY_DEFAULT_SCORE = 50;
+    const UNSEEN_TOLERANCE = 2000;
 
     public static function timeFactor()
     {
@@ -101,8 +110,6 @@ function updateResults2()
         $delta = evaluateQuestion($qid,$optionText[$qid], $timeTaken[$qid],$accountId);
 
         updateScore($accountId, $delta, $userAbility);
-
-
     }
 
 }
@@ -136,7 +143,6 @@ function updateAbility($accountId,$level,$id,$delta)
         $response["data"] = EXCEPTION_MSG;
         phpLog($e->getMessage());
     }
-
 }
 
 function evaluateQuestion($qDetails, $optionText, $timeTaken, $userAbility)
@@ -145,16 +151,70 @@ function evaluateQuestion($qDetails, $optionText, $timeTaken, $userAbility)
     //Code here to calculate scores based on certain factors.
 
     //First check if attempted or not
+    if($optionText == "")
+    {
+        //unattempted
+        //If not attempted see if any time was spent on the question
+        if($timeTaken <= analConst::UNSEEN_TOLERANCE)
+        {
+            //question went unseen. Code that way
+            $delta = evalUnseen($qDetails,$userAbility);
+        }
+        else
+        {
+            //seen but skipped in $timeTaken seconds
+            $delta = evalSkip($qDetails,$userAbility,$timeTaken);
+        }
+    }
+    else
+    {
+        //If attempted, check if each option is in the state it is supposed to be
+        if($optionText == $qDetails->correctAnswer)
+        {
+            //everything correct exactly
+            $delta = evalCorrect($qDetails,$userAbility,$timeTaken)
+        }
+        else
+        {
+            switch($qDetails->typeId)
+            {
+                case questionType::SINGLE_CHOICE:
+                    evalIncorrect($qDetails,$userAbility,$timeTaken);
+                    break;
+                case questionType::MULTIPLE_CHOICE:
 
-    //If attempted, check if each option is in the state it is supposed to be
+                    break;
+                case questionType::MATRIX_MATCH:
 
-
-    //If not attempted see if any time was spent on the question
-    //if time spent, scoring type 1, if not attempted scoring type 2
+                    break;
+            }
+        }
+            
+    }
 
     $delta = 5;
-    
+
     return $delta;
+
+}
+
+function evalUnseen($qdetails,$userAbility)
+{
+
+}
+
+function evalSkip($qdetails,$userAbility,$timeTaken)
+{
+
+}
+
+function evalCorrect($qdetails,$userAbility,$timeTaken)
+{
+
+}
+
+function evalIncorrect($qdetails,$userAbility,$timeTaken)
+{
 
 }
 

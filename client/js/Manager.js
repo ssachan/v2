@@ -122,6 +122,56 @@ window.Manager = {
 		});
 	},
 
+	getL3Performance : function() {
+		var url = Config.serverUrl + 'l3Performance/';
+		return $.ajax({
+			url : url,
+			data : {
+				accountId : account.get('id'),
+				streamId : streamId
+			},
+			dataType : "json",
+			success : function(data) {
+				if (data.status == STATUS.SUCCESS) {
+					scoreL3.reset(data.data);
+				} else { // If not, send them back to the home page
+					helper.showError(data.data);
+				}
+			}
+		});
+	},
+
+/*	getScores : function(level, lid) {
+		var url = Config.serverUrl + level + 'Scores/';
+		return $.ajax({
+			url : url,
+			data : {
+				accountId : account.get('id'),
+				streamId : streamId,
+				lid: lid
+			},
+			dataType : "json",
+			success : function(data) {
+				if (data.status == STATUS.SUCCESS) {
+					switch(level)
+					{
+						case "l1":
+							//scoresL1 = data.data;
+							break;
+						case "l2":
+							//
+							break;
+						case "l3":
+							//
+							break;
+					}
+				} else { // If not, send them back to the home page
+					helper.showError(data.data);
+				}
+			}
+		});
+	},*/
+
 	getSubjectsByStreamId : function(id) {
 		var dfd = [ this.getL1ByStreamId(id), this.getL2ByStreamId(id),
 				this.getL3ByStreamId(id) ];
@@ -147,6 +197,7 @@ window.Manager = {
 		}
 		dfd.push(this.getL1Performance());
 		dfd.push(this.getL2Performance());
+		dfd.push(this.getL3Performance());
 		return $.when.apply(null, dfd).then(function(data) {
 			var dbView = new DashboardView({});
 			app.showView('#content', dbView);
