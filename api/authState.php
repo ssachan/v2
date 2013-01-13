@@ -268,6 +268,7 @@ $app->post("/signup", function () use ($app) {
                 $response["data"] = "Email already exists. you should probably try forgot password";
             }
         } else {
+            $account = array();
             $account->id = createAccount($firstName, $lastName, $email, $password);
             insertStudent($account->id, $streamId);
             $account->firstName = $firstName;
