@@ -105,7 +105,7 @@ window.PerformanceView = Backbone.View.extend({
 	onL2Click : function(e) {
 		if (this.activel2Id != e.target.parentElement.getAttribute('lid')) {
 			$('.l3', this.el).empty();
-			$('.l3-stats', this.el).empty();
+			$('.l3-stats', this.el).hide();
 			this.activel3Id = '0';
 			$('#' + this.activel2Id + '-l2').removeClass('active');
 			this.activel2Id = (e.target.parentElement.getAttribute('lid'));
@@ -128,6 +128,7 @@ window.PerformanceView = Backbone.View.extend({
 
 	render : function() {
 		$(this.el).html(this.template(this.model.toJSON()));
+		$('.l3-stats', this.el).hide();
 		return this;
 	},
 
@@ -159,8 +160,18 @@ window.PerformanceView = Backbone.View.extend({
 	renderL3Stats : function() {
 		var context = this;
 		var thisL3Score = scoreL3.get(context.activel3Id);
-		$(this.el).find('#l3-stats').html("Score is " + JSON.stringify(thisL3Score) );
+		var l3Name = (sectionL3.get(context.activel3Id)).get('displayName');
+		$('.l3-stats #topic', this.el).html(l3Name);
+		$('.l3-stats #bar', this.el).html('<div class="bar bar-warning" style="width:'+parseInt(thisL3Score.get('score'))+'%"></div>');
+
+		$('.l3-stats #pts', this.el).html(thisL3Score.get('score'));
+		$('.l3-stats #total', this.el).html(thisL3Score.get('numQuestions'));
+		$('.l3-stats #correct', this.el).html(thisL3Score.get('numCorrect'));
+		$('.l3-stats #incorrect', this.el).html(thisL3Score.get('numIncorrect'));
+		$('.l3-stats #unattempted', this.el).html(thisL3Score.get('numUnattempted'));
+		$('.l3-stats', this.el).show();
 	},
+	
 	renderL2Stats : function() {
 		var context = this;
 		var thisL2Score = scoreL2.get(context.activel2Id);

@@ -167,6 +167,7 @@ window.ResultAnalysisView = Backbone.View.extend({
 			'videoResults' : videoResults
 		}));
 		//this.setUpPlaylist(videoResults);
+		drawL3Chart('l3-graph');
 		return this;
 	},
 	
