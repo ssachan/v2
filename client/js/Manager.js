@@ -42,41 +42,23 @@ window.Manager = {
 
 	},
 
-	getL1ByStreamId : function(id) {
+	getTopics : function(level,id){
 		return $.ajax({
-			url : Config.serverUrl + 'l1ByStream/' + id,
+			url : Config.serverUrl + 'topics/' + level +'/'+ id,
 			dataType : "json",
 			success : function(data) {
 				if (data.status == STATUS.SUCCESS) {
-					sectionL1.reset(data.data);
-				} else { // If not, send them back to the home page
-					helper.showError(data.data);
-				}
-			}
-		});
-	},
-
-	getL2ByStreamId : function(id) {
-		return $.ajax({
-			url : Config.serverUrl + 'l2ByStream/' + id,
-			dataType : "json",
-			success : function(data) {
-				if (data.status == STATUS.SUCCESS) {
-					sectionL2.reset(data.data);
-				} else { // If not, send them back to the home page
-					helper.showError(data.data);
-				}
-			}
-		});
-	},
-
-	getL3ByStreamId : function(id) {
-		return $.ajax({
-			url : Config.serverUrl + 'l3ByStream/' + id,
-			dataType : "json",
-			success : function(data) {
-				if (data.status == STATUS.SUCCESS) {
-					sectionL3.reset(data.data);
+					switch(level){
+						case "l1":
+						sectionL1.reset(data.data);
+						break;
+						case "l2":
+						sectionL2.reset(data.data);
+						break;
+						case "l3":
+						sectionL3.reset(data.data);
+						break;
+					}
 				} else { // If not, send them back to the home page
 					helper.showError(data.data);
 				}
@@ -115,10 +97,17 @@ window.Manager = {
 	},
 
 	getSubjectsByStreamId : function(id) {
-		var dfd = [ this.getL1ByStreamId(id), this.getL2ByStreamId(id),
-				this.getL3ByStreamId(id) ];
+
+		var dfd = [this.getTopics("l1",id),
+				   this.getTopics("l2",id),
+				   this.getTopics("l3",id) ];
+		var pakka = new jQuery.Deferred();
+
 		$.when.apply(null, dfd).then(function(data) {
+			pakka.resolve("Subjects Fetched");
 		});
+
+		return pakka.promise();
 	},
 
 	loadOverallView : function() {
@@ -133,9 +122,7 @@ window.Manager = {
 		var dfd = [];
 		var that = this;
 		if (sectionL1.length == 0 || sectionL2.length == 0) {
-			dfd.push(this.getL1ByStreamId(streamId));
-			dfd.push(this.getL2ByStreamId(streamId));
-			dfd.push(this.getL3ByStreamId(streamId));
+			dfd.push(this.getSubjectsByStreamId(streamId));
 		}
 		dfd.push(this.getScores("l1"));
 		dfd.push(this.getScores("l2"));
@@ -274,9 +261,7 @@ window.Manager = {
 
 	getRSquareData : function() {
 		var dfd = [];
-		if (!(activeView instanceof DashboardView)) {
-			dfd.push(this.getDashboardData());
-		}
+		dfd.push(this.getDashboardData());
 		$.when
 				.apply(null, dfd)
 				.then(
@@ -430,9 +415,8 @@ window.Manager = {
 		if (sectionL1.length == 0 || sectionL2.length == 0) {
 			// what if the data is already is being fetched???I think jquery
 			// makes sure with promises that it is not fetched again
-			dfd.push(this.getL1ByStreamId(streamId));
-			dfd.push(this.getL2ByStreamId(streamId));
-			dfd.push(this.getL3ByStreamId(streamId));
+			// @ssachan You can check on the status of a promise - tanujb
+			dfd.push(this.getSubjectsByStreamId(streamId));
 		}
 		dfd.push(this.getQuizzesByStreamId(streamId));
 		$.when.apply(null, dfd).then(function(data) {

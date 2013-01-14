@@ -9,9 +9,7 @@ include 'helper.php';
 include 'authState.php';
 
 // the L1,L2,L3
-$app->get('/l1ByStream/:id', 'getL1ByStream');
-$app->get('/l2ByStream/:id', 'getL2ByStream');
-$app->get('/l3ByStream/:id', 'getL3ByStream');
+$app->get('/topics/:level/:id', 'getTopics');
 
 //quiz library
 $app->get('/quizzesByStreamId/:id', 'getQuizzesByStreamId');
@@ -73,49 +71,9 @@ function phpLog($msg) {
     echo $msg;
 }
 
-function getL1ByStream($id) {
+function getTopics($level,$id) {
     $response = array();
-    $sql = "select * from section_l1 where streamId=:id";
-    try {
-        $db = getConnection();
-        $stmt = $db->prepare($sql);
-        $stmt->bindParam("id", $id);
-        $stmt->execute();
-        $records = $stmt->fetchAll(PDO::FETCH_OBJ);
-        $db = null;
-        $response["status"] = SUCCESS;
-        $response["data"] = $records;
-    } catch (PDOException $e) {
-        $response["status"] = ERROR;
-        $response["data"] = EXCEPTION_MSG;
-        phpLog($e->getMessage());
-    }
-    sendResponse($response);
-}
-
-function getL2ByStream($id) {
-    $response = array();
-    $sql = "select * from section_l2 where streamId=:id";
-    try {
-        $db = getConnection();
-        $stmt = $db->prepare($sql);
-        $stmt->bindParam("id", $id);
-        $stmt->execute();
-        $records = $stmt->fetchAll(PDO::FETCH_OBJ);
-        $db = null;
-        $response["status"] = SUCCESS;
-        $response["data"] = $records;
-    } catch (PDOException $e) {
-        $response["status"] = ERROR;
-        $response["data"] = EXCEPTION_MSG;
-        phpLog($e->getMessage());
-    }
-    sendResponse($response);
-}
-
-function getL3ByStream($id) {
-    $response = array();
-    $sql = "SELECT * from section_l3 where streamId=:id";
+    $sql = "SELECT * from section_".$level." where streamId=:id";
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
