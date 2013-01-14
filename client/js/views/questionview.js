@@ -348,7 +348,7 @@ window.QuizQuestionView = Backbone.View
 				/* // code to add video here. */
 				$('#video')
 						.html(
-								'<video id="analysis_video" class="video-js vjs-default-skin" controls preload="none" width="640" height="264" data-setup="{}"><source src="../../video/q11vid1.mp4" type="video/mp4" /> </video>');
+								'<video id="analysis_video" class="video-js vjs-default-skin" controls preload="none" width="640" height="264" data-setup="{}"><source src="../../video/q'+this.model.get('id')+'vid1.mp4" type="video/mp4" /> </video>');
 
 				$('#time').html(helper.formatTime(this.model.get('timeTaken')));
 				$('#submit').hide();
