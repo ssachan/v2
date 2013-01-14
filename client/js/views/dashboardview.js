@@ -158,7 +158,7 @@ window.PerformanceView = Backbone.View.extend({
 	renderStats : function() {
 		var context = this;
 		var thisL3Score = scoreL3.get(context.activel3Id);
-		$('#l3-stats').html("Score is " + thisL3Score.get('score') );
+		$(this.el).find('#l3-stats').html("Score is " + JSON.stringify(thisL3Score) );
 	}
 });
 

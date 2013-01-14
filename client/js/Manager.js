@@ -85,7 +85,7 @@ window.Manager = {
 	},
 
 	getL1Performance : function() {
-		var url = Config.serverUrl + 'l1Performance/';
+		var url = Config.serverUrl + 'performance/l1';
 		return $.ajax({
 			url : url,
 			dataType : "json",
@@ -104,7 +104,7 @@ window.Manager = {
 	},
 
 	getL2Performance : function() {
-		var url = Config.serverUrl + 'l2Performance/';
+		var url = Config.serverUrl + 'performance/l2';
 		return $.ajax({
 			url : url,
 			data : {
@@ -123,7 +123,7 @@ window.Manager = {
 	},
 
 	getL3Performance : function() {
-		var url = Config.serverUrl + 'l3Performance/';
+		var url = Config.serverUrl + 'performance/l3';
 		return $.ajax({
 			url : url,
 			data : {

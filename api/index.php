@@ -26,6 +26,7 @@ $app->post('/facContact/', 'facContact');
 $app->get('/l1Performance/', $authenticate($app), 'getL1Performance');
 $app->get('/l2Performance/', $authenticate($app), 'getL2Performance');
 $app->get('/l3Performance/', $authenticate($app), 'getL3Performance');
+$app->get('/performance/:level', $authenticate($app), 'getPerformance');
 $app->get('/historyById/', $authenticate($app), 'getQuizzesHistory');
 
 //quiz
@@ -213,6 +214,31 @@ function getL3Performance() {
     }
     sendResponse($response);
 }
+
+function getPerformance($level){
+    $response = array();
+    $accountId = $_GET['accountId'];
+    $streamId = $_GET['streamId'];   
+    $sql = "select *, ".$level."id as id, MAX(updatedOn) as timeUpdated from ascores_".$level." a where a.accountId=:accountId and streamId=:streamId group by ".$level."Id";
+
+    try {
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("accountId", $accountId);
+        $stmt->bindParam("streamId", $streamId);
+        $stmt->execute();
+        $records = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $db = null;
+        $response["status"] = SUCCESS;
+        $response["data"] = $records;
+    } catch (PDOException $e) {
+        $response["status"] = ERROR;
+        $response["data"] = EXCEPTION_MSG;
+        phpLog($e->getMessage());
+    }
+    sendResponse($response);
+}
+
 
 function getQuizzesHistory() {
     $response = array();

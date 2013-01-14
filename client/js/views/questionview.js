@@ -21,7 +21,7 @@ window.QuizQuestionView = Backbone.View.extend({
             handleSingleType : function(e) {
                 var oldOptionSelected = this.model.get('optionSelected');
                 var optionSelected = e.target.value;
-                if (optionSelected == oldOptionSelected) {
+                if (optionSelected === oldOptionSelected) {
                     logs.addEntry("OPTION_DESELECT",this.model.get('id'),oldOptionSelected);
                     this.model.set('optionSelected', null);
                     $(e.target).removeClass('active');
@@ -29,7 +29,8 @@ window.QuizQuestionView = Backbone.View.extend({
                 }
                 else
                 {
-                    logs.addEntry("OPTION_DESELECT",this.model.get('id'),oldOptionSelected);
+                    if(oldOptionSelected !== null)
+                        logs.addEntry("OPTION_DESELECT",this.model.get('id'),oldOptionSelected);
                     logs.addEntry("OPTION_SELECT",this.model.get('id'),optionSelected);
                     this.model.set('optionSelected', optionSelected);
                 }

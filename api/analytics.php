@@ -67,30 +67,31 @@ abstract class analConst {
 //>> FRONT-FACING Functions
 function testCode()
 {
-    $accountId = 4; 
-    $quizId = 2;
-    echo "Hello!";
-    var_dump(getQuestionIdsForQuiz($quizId));
-}
 
-function updateResults2()
-{
-    $response = array();
-    //$streamId = $_POST['streamId']; // why is this required??
-    
-    $accountId = $_POST['accountId']; 
-    $quizId = $_POST['quizId'];
-    $logs = $_POST['logs'];
-    /**************UNCOMMENT BELOW LATER*******************/
-    // updateResultsTable(); //storing to database
-
-    $questionIds = getQuestionIdsForQuiz($quizId);
+    $accountId = 4;
+    $quizId = 1;
+    $logs[0]['t']=1358119882019;
+    $logs[0]['e']=10;
+    $logs[1]['t']=1358119882050;
+    $logs[1]['e']=3;
+    $logs[1]['q']=1;
+    $logs[2]['t']=1358119907940;
+    $logs[2]['e']=0;
+    $logs[2]['q']=1;
+    $logs[2]['o']=0;
+    $logs[3]['t']=1358119922980;
+    $logs[3]['e']=4;
+    $logs[3]['q']=1;
+    $logs[4]['t']=1358119922981;
+    $logs[4]['e']=8;
+       $questionIds = getQuestionIdsForQuiz($quizId);
     $logsByQuestion = splitLogsByQuestion($logs);
 
     $optionArray = array();
     $optionText = array();
     $timeTaken = array(); //All 4 are per question arrays
     $optionToggle = array();
+    $state = array();
     $delta = array();
     foreach ($questionIds as $key => $qid)
     {
@@ -107,20 +108,75 @@ function updateResults2()
             $optionsArray[$qid] = array();
             $optionText[$qid] = "";
             $timeTaken[$qid] = 0;
+            $state[$qid] = analConst::UNSEEN;
         }
 
         $qDetails = getQuestionDetails($qid);
         $userAbility = getUserAbilityLevels($accountId, $qDetails->l3Id);
-        $delta[$qid] = evaluateQuestion($qid,$optionText[$qid], $timeTaken[$qid],$accountId);
+        $result[$qid] = evaluateQuestion($qDetails,$optionText[$qid], $timeTaken[$qid],$userAbility);
         // optimization tip:  unseen questions can be evaluated faster.
 
         //now adding question to response table;
         $optionToggle[$qid] = "?"; //////FIGURE THIS OUT
-        insertIntoResponsesTable($accountId, $qid, $optionText[$qid], $timeTaken[$qid],$optionToggle[$qid],$userAbility->l3score,$delta[$qid]);
-        updateScore($accountId, $delta, $userAbility);
+        insertIntoResponsesTable($accountId, $qid, $optionText[$qid], $timeTaken[$qid],$optionToggle[$qid],$userAbility->l3score,$result[$qid][0]);
+        updateScore($accountId, $result[$qid][0], $userAbility,$result[$qid][1]);
     }
+    $response["status"] = SUCCESS;
+    $response["data"] = true;
+    sendResponse($response);
     
+}
 
+function updateResults2()
+{
+    $response = array();
+    //$streamId = $_POST['streamId']; // why is this required??
+    $accountId = $_POST['accountId']; 
+    $quizId = $_POST['quizId'];
+    $logs = $_POST['logs'];
+    /**************UNCOMMENT BELOW LATER*******************/
+    // updateResultsTable(); //storing to database
+
+    $questionIds = getQuestionIdsForQuiz($quizId);
+    $logsByQuestion = splitLogsByQuestion($logs);
+
+    $optionArray = array();
+    $optionText = array();
+    $timeTaken = array(); //All 4 are per question arrays
+    $optionToggle = array();
+    $state = array();
+    $delta = array();
+    foreach ($questionIds as $key => $qid)
+    {
+       //Retrieve the final option selected and time taken
+        if(isset($logsByQuestion[$qid]))
+        {
+            $optionArray[$qid] = getFinalOptionArray($logsByQuestion[$qid]);
+            $optionText[$qid] = getOptionTextFromArray($optionArray[$qid]);
+            $timeTaken[$qid] = getTotalTime($logsByQuestion[$qid]);
+        }
+        else
+        {
+            //not attempted at all
+            $optionsArray[$qid] = array();
+            $optionText[$qid] = "";
+            $timeTaken[$qid] = 0;
+            $state[$qid] = analConst::UNSEEN;
+        }
+
+        $qDetails = getQuestionDetails($qid);
+        $userAbility = getUserAbilityLevels($accountId, $qDetails->l3Id);
+        $result[$qid] = evaluateQuestion($qDetails,$optionText[$qid], $timeTaken[$qid],$userAbility);
+        // optimization tip:  unseen questions can be evaluated faster.
+
+        //now adding question to response table;
+        $optionToggle[$qid] = "?"; //////FIGURE THIS OUT
+        insertIntoResponsesTable($accountId, $qid, $optionText[$qid], $timeTaken[$qid],$optionToggle[$qid],$userAbility->l3score,$result[$qid][0]);
+        updateScore($accountId, $result[$qid][0], $userAbility,$result[$qid][1]);
+    }
+    $response["status"] = SUCCESS;
+    $response["data"] = true;
+    sendResponse($response);
 }
 //<< END FRONT FACING
 
@@ -148,7 +204,7 @@ function getUserAbilityLevels($accountId, $l3id)
     } catch (PDOException $e) {
         phpLog($e->getMessage());
     }
-
+    
     $score = new stdClass();
     $score->l1id = $l1id;
     $score->l2id = $l2id;
@@ -178,8 +234,6 @@ function getAbilityScore($level, $id, $accountId)
         else
             return $result->score;
 
-        
-
     } catch (PDOException $e) {
         //in case the ability score does not exist
         
@@ -190,14 +244,17 @@ function getAbilityScore($level, $id, $accountId)
 function abilityScoreNotFound($level,$id,$accountId)
 {
     $date = date("Y-m-d H:i:s", time());
-     $sql = "INSERT INTO ascores_".$level." (accountId, score, updatedOn, ".$level."id, numQuestions) VALUES (:acid,:score,:timeStamp,:id,0)";
+    $streamId = 1;
+    $defaultScore = analConst::ABILITY_DEFAULT_SCORE;
+     $sql = "INSERT INTO ascores_".$level." (accountId, score, updatedOn, ".$level."id, numQuestions, numCorrect, numIncorrect, numUnattempted, streamId) VALUES (:acid,:score,:timeStamp,:id,0,0,0,0,:streamId)";
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
         $stmt->bindParam("acid", $accountId);
         $stmt->bindParam("id", $id);
         $stmt->bindParam("timeStamp", $date);
-        $stmt->bindParam("score", analConst::ABILITY_DEFAULT_SCORE);
+        $stmt->bindParam("streamId",$streamId);
+        $stmt->bindParam("score", $defaultScore);
         $stmt->execute();
         $db = null;
         return analConst::ABILITY_DEFAULT_SCORE;
@@ -208,20 +265,30 @@ function abilityScoreNotFound($level,$id,$accountId)
     }
 }
 
-function updateScore($accountId, $delta, $userAbility)
+function updateScore($accountId, $delta, $userAbility, $state)
 {
     //this function updates l1, l2, l3 based on delta
-    updateAbility($accountId,"l3",$userAbility->l3id, $delta);
-    updateAbility($accountId,"l2",$userAbility->l2id, $delta*$userAbility->l3weightage);
-    updateAbility($accountId,"l1",$userAbility->l1id, $delta*$userAbility->l3weightage*$userAbility->l2weightage);
+    updateAbility($accountId,"l3",$userAbility->l3id, $delta, $state);
+    updateAbility($accountId,"l2",$userAbility->l2id, $delta*$userAbility->l3weightage, $state);
+    updateAbility($accountId,"l1",$userAbility->l1id, $delta*$userAbility->l3weightage*$userAbility->l2weightage, $state);
     //l2 is weighted average of l3s, l1 is weighted average of l1s
 }
 
-function updateAbility($accountId,$level,$id,$delta)
+function updateAbility($accountId,$level,$id,$delta,$state)
 {
     $date = date("Y-m-d H:i:s", time());
-    $sql = "UPDATE ascores_".$level." SET numQuestions = numQuestions + 1, score = score + :delta, updatedOn = :timeStamp WHERE accountId = :acid AND ".$level."id = :id";
-    echo($sql);
+    $switched = "numUnattempted = numUnattempted + 1,";
+    switch($state)
+    {
+        case analConst::CORRECT:
+            $switched = "numCorrect = numCorrect + 1,";
+            break;
+        case analConst::INCORRECT:
+            $switched = "numIncorrect = numIncorrect + 1,";
+            break;
+    }
+
+    $sql = "UPDATE ascores_".$level." SET numQuestions = numQuestions + 1,".$switched." score = score + :delta, updatedOn = :timeStamp WHERE accountId = :acid AND ".$level."id = :id";
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
@@ -231,7 +298,6 @@ function updateAbility($accountId,$level,$id,$delta)
         $stmt->bindParam("delta", $delta);
         $stmt->execute();
         $db = null;
-        return analConst::ABILITY_DEFAULT_SCORE;
     } catch (PDOException $e) {
         $response["status"] = ERROR;
         $response["data"] = EXCEPTION_MSG;
@@ -451,8 +517,10 @@ function evaluateQuestion($qDetails, $optionText, $timeTaken, $userAbility)
 {
 
     //Code here to calculate scores based on certain factors.
-
     //First check if attempted or not
+    $result = array();
+    $delta =0;
+    $state = "";
     if($optionText == "")
     {
         //unattempted
@@ -461,11 +529,13 @@ function evaluateQuestion($qDetails, $optionText, $timeTaken, $userAbility)
         {
             //question went unseen. Code that way
             $delta = evalUnseen($qDetails,$userAbility);
+            $state = analConst::UNSEEN;
         }
         else
         {
             //seen but skipped in $timeTaken seconds
             $delta = evalSkip($qDetails,$userAbility,$timeTaken);
+            $state = analConst::SKIPPED;
         }
     }
     else
@@ -475,6 +545,7 @@ function evaluateQuestion($qDetails, $optionText, $timeTaken, $userAbility)
         {
             //everything correct exactly
             $delta = evalCorrect($qDetails,$userAbility,$timeTaken);
+            $state = analConst::CORRECT;
         }
         else
         {
@@ -514,11 +585,12 @@ function evaluateQuestion($qDetails, $optionText, $timeTaken, $userAbility)
                     $delta = evalIncorrect($qDetails,$userAbility,$timeTaken);
                     break;
             }
+            $state = analConst::INCORRECT;
         }
             
     }
 
-    return $delta;
+    return array($delta,$state);
 }
 
 function evalOption($optionText,$correctAnswerText, $optionLength, $correctScore, $incorrectScore)
@@ -535,25 +607,25 @@ function evalOption($optionText,$correctAnswerText, $optionLength, $correctScore
     return $delta;
 }
 
-function evalUnseen($qdetails,$userAbility)
+function evalUnseen($qDetails,$userAbility)
 {
     $delta = $qDetails->unattemptedScore; //add factor
     return $delta;
 }
 
-function evalSkip($qdetails,$userAbility,$timeTaken)
+function evalSkip($qDetails,$userAbility,$timeTaken)
 {
     $delta = $qDetails->unattemptedScore; //add factor
     return $delta;
 }
 
-function evalCorrect($qdetails,$userAbility,$timeTaken)
+function evalCorrect($qDetails,$userAbility,$timeTaken)
 {
     $delta = $qDetails->correctScore; //add factor
     return $delta;
 }
 
-function evalIncorrect($qdetails,$userAbility,$timeTaken)
+function evalIncorrect($qDetails,$userAbility,$timeTaken)
 {
     $delta = $delta = $qDetails->incorrectScore; //add factor
     return $delta;
