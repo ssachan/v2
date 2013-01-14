@@ -23,10 +23,7 @@ $app->get('/quizzesByFac/:id', 'getQuizzesByFac');
 $app->post('/facContact/', 'facContact');
 
 //dashboard page
-$app->get('/l1Performance/', $authenticate($app), 'getL1Performance');
-$app->get('/l2Performance/', $authenticate($app), 'getL2Performance');
-$app->get('/l3Performance/', $authenticate($app), 'getL3Performance');
-$app->get('/performance/:level', $authenticate($app), 'getPerformance');
+$app->get('/scores/:level', $authenticate($app), 'getScores');
 $app->get('/historyById/', $authenticate($app), 'getQuizzesHistory');
 
 //quiz
@@ -140,82 +137,8 @@ function getL3ByStream($id) {
 // The dashboard page 
 //
 
-function getL1Performance() {
-    $response = array();
-    $accountId = $_GET['accountId'];
-    $streamId = $_GET['streamId'];
-    $sql = "select a.l1Id as id, a.score,MAX(a.updatedOn) as updatedOn from ascores_l1 a where a.accountId=:accountId and streamId=:streamId group by l1Id";
-    //$sql = "select l.id,l.displayName,T.score from section_l1 l LEFT JOIN (select a.l1Id, a.score,MAX(a.updatedOn) from ascores_l1 a where a.accountId=:id and streamId='1' group by l1Id) as T on l.id=T.l1Id where l.streamId='1'";
-    //$sql = "SELECT * from section_l1 where streamId=:id";
-    try {
-        $db = getConnection();
-        $stmt = $db->prepare($sql);
-        $stmt->bindParam("accountId", $accountId);
-        $stmt->bindParam("streamId", $streamId);
-        $stmt->execute();
-        $records = $stmt->fetchAll(PDO::FETCH_OBJ);
-        $db = null;
-        $response["status"] = SUCCESS;
-        $response["data"] = $records;
-    } catch (PDOException $e) {
-        $response["status"] = ERROR;
-        $response["data"] = EXCEPTION_MSG;
-        phpLog($e->getMessage());
-    }
-    sendResponse($response);
-}
 
-function getL2Performance() {
-    $response = array();
-    $accountId = $_GET['accountId'];
-    $streamId = $_GET['streamId'];
-    $sql = "select a.l2Id as id, a.score,MAX(a.updatedOn) as updatedOn from ascores_l2 a where a.accountId=:accountId and streamId=:streamId group by a.l2Id";
-    // $sql = "select l.id,l.displayName,T.score,l.l1Id from section_l2 l LEFT JOIN (select a.l2Id, a.score,MAX(a.updatedOn) from ascores_l2 a where a.accountId=:id and streamId='1' group by a.l2Id) as T on l.id=t.l2Id where l.streamId='1'";
-    //$sql = "select l.id,l.displayName,l.l1Id,l.streamId,a.streamId as st, a.score from section_l2 l LEFT JOIN ascores_l2 a ON a.l2Id=l.id where l.streamId=1 and (a.streamId IS NULL OR a.streamId=1) order by l.l1Id ";
-    try {
-        $db = getConnection();
-        $stmt = $db->prepare($sql);
-        $stmt->bindParam("accountId", $accountId);
-        $stmt->bindParam("streamId", $streamId);
-        $stmt->execute();
-        $records = $stmt->fetchAll(PDO::FETCH_OBJ);
-        $db = null;
-        $response["status"] = SUCCESS;
-        $response["data"] = $records;
-    } catch (PDOException $e) {
-        $response["status"] = ERROR;
-        $response["data"] = EXCEPTION_MSG;
-        phpLog($e->getMessage());
-    }
-    sendResponse($response);
-}
-
-function getL3Performance() {
-    $response = array();
-    $accountId = $_GET['accountId'];
-    $streamId = $_GET['streamId'];
-    $sql = "select a.l3Id as id, a.score,MAX(a.updatedOn) as updatedOn, a.numQuestions as numQ  from ascores_l3 a where a.accountId=:accountId and streamId=:streamId group by l3Id";
-    //$sql = "select l.id,l.displayName,T.score from section_l1 l LEFT JOIN (select a.l1Id, a.score,MAX(a.updatedOn) from ascores_l1 a where a.accountId=:id and streamId='1' group by l1Id) as T on l.id=T.l1Id where l.streamId='1'";
-    //$sql = "SELECT * from section_l1 where streamId=:id";
-    try {
-        $db = getConnection();
-        $stmt = $db->prepare($sql);
-        $stmt->bindParam("accountId", $accountId);
-        $stmt->bindParam("streamId", $streamId);
-        $stmt->execute();
-        $records = $stmt->fetchAll(PDO::FETCH_OBJ);
-        $db = null;
-        $response["status"] = SUCCESS;
-        $response["data"] = $records;
-    } catch (PDOException $e) {
-        $response["status"] = ERROR;
-        $response["data"] = EXCEPTION_MSG;
-        phpLog($e->getMessage());
-    }
-    sendResponse($response);
-}
-
-function getPerformance($level){
+function getScores($level){
     $response = array();
     $accountId = $_GET['accountId'];
     $streamId = $_GET['streamId'];   

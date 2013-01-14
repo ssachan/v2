@@ -84,71 +84,13 @@ window.Manager = {
 		});
 	},
 
-	getL1Performance : function() {
-		var url = Config.serverUrl + 'performance/l1';
-		return $.ajax({
-			url : url,
-			dataType : "json",
-			data : {
-				accountId : account.get('id'),
-				streamId : streamId
-			},
-			success : function(data) {
-				if (data.status == STATUS.SUCCESS) {
-					scoreL1.reset(data.data);
-				} else { // If not, send them back to the home page
-					helper.showError(data.data);
-				}
-			}
-		});
-	},
-
-	getL2Performance : function() {
-		var url = Config.serverUrl + 'performance/l2';
+	getScores : function(level) {
+		var url = Config.serverUrl + 'scores/' + level;
 		return $.ajax({
 			url : url,
 			data : {
 				accountId : account.get('id'),
 				streamId : streamId
-			},
-			dataType : "json",
-			success : function(data) {
-				if (data.status == STATUS.SUCCESS) {
-					scoreL2.reset(data.data);
-				} else { // If not, send them back to the home page
-					helper.showError(data.data);
-				}
-			}
-		});
-	},
-
-	getL3Performance : function() {
-		var url = Config.serverUrl + 'performance/l3';
-		return $.ajax({
-			url : url,
-			data : {
-				accountId : account.get('id'),
-				streamId : streamId
-			},
-			dataType : "json",
-			success : function(data) {
-				if (data.status == STATUS.SUCCESS) {
-					scoreL3.reset(data.data);
-				} else { // If not, send them back to the home page
-					helper.showError(data.data);
-				}
-			}
-		});
-	},
-
-/*	getScores : function(level, lid) {
-		var url = Config.serverUrl + level + 'Scores/';
-		return $.ajax({
-			url : url,
-			data : {
-				accountId : account.get('id'),
-				streamId : streamId,
-				lid: lid
 			},
 			dataType : "json",
 			success : function(data) {
@@ -156,13 +98,13 @@ window.Manager = {
 					switch(level)
 					{
 						case "l1":
-							//scoresL1 = data.data;
+							scoreL1.reset(data.data);
 							break;
 						case "l2":
-							//
+							scoreL2.reset(data.data);
 							break;
 						case "l3":
-							//
+							scoreL3.reset(data.data);
 							break;
 					}
 				} else { // If not, send them back to the home page
@@ -170,7 +112,7 @@ window.Manager = {
 				}
 			}
 		});
-	},*/
+	},
 
 	getSubjectsByStreamId : function(id) {
 		var dfd = [ this.getL1ByStreamId(id), this.getL2ByStreamId(id),
@@ -195,9 +137,9 @@ window.Manager = {
 			dfd.push(this.getL2ByStreamId(streamId));
 			dfd.push(this.getL3ByStreamId(streamId));
 		}
-		dfd.push(this.getL1Performance());
-		dfd.push(this.getL2Performance());
-		dfd.push(this.getL3Performance());
+		dfd.push(this.getScores("l1"));
+		dfd.push(this.getScores("l2"));
+		dfd.push(this.getScores("l3"));
 		return $.when.apply(null, dfd).then(function(data) {
 			var dbView = new DashboardView({});
 			app.showView('#content', dbView);

@@ -113,6 +113,7 @@ window.PerformanceView = Backbone.View.extend({
 			// this.activel2Id = e.target.getAttribute('id');
 			$('#' + this.activel2Id + '-l2').addClass('active');
 			this.renderL3();
+			this.renderL2Stats();
 		}
 	},
 
@@ -121,7 +122,7 @@ window.PerformanceView = Backbone.View.extend({
 			$('#' + this.activel3Id + '-l3').removeClass('active');
 			this.activel3Id = (e.target.parentElement.getAttribute('lid'));
 			$('#' + this.activel3Id + '-l3').addClass('active');
-			this.renderStats();
+			this.renderL3Stats();
 		}
 	},
 
@@ -155,10 +156,15 @@ window.PerformanceView = Backbone.View.extend({
 		}
 	},
 
-	renderStats : function() {
+	renderL3Stats : function() {
 		var context = this;
 		var thisL3Score = scoreL3.get(context.activel3Id);
 		$(this.el).find('#l3-stats').html("Score is " + JSON.stringify(thisL3Score) );
+	},
+	renderL2Stats : function() {
+		var context = this;
+		var thisL2Score = scoreL2.get(context.activel2Id);
+		$(this.el).find('#l3-stats').html("Score is " + JSON.stringify(thisL2Score) );
 	}
 });
 
