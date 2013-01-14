@@ -90,9 +90,9 @@ window.QuizView = Backbone.View.extend({
 		logs.addEntry("TEST_SUBMIT");
 		logs.sort();
         this.model.set('timeTaken', timer.count);
-        this.model.calculateScores();
+        //this.model.calculateScores();
         this.model.set('state', this.totalQuestions);
-        this.model.set('status', 1);
+        this.model.set('status', 1); //what does this do????
         this.model.submitResults();
     },
 
@@ -227,13 +227,9 @@ window.PracticeView = Backbone.View.extend({
         this.renderQuestion();
     },
 
-    submitQuiz: function () {
-        this.model.calculateScores();
-        this.model.submitResults();
-    },
-
     submitQuestion: function () {
         this.question.set('hasAttempted', true);
+        logs.addEntry("QUESTION_CLOSE",this.question.get('id'));
         timer.stop();
         timer.reset();
         $('#previous').show();
@@ -275,11 +271,6 @@ window.PracticeView = Backbone.View.extend({
         }
         this.renderQuestion();
         
-    },
-
-    onQNoClick: function (e) {
-        this.index = e.target.getAttribute('id');
-        this.renderQuestion();
     },
 
     render: function () {

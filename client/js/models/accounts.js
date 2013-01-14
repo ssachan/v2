@@ -46,7 +46,7 @@ window.Account = Backbone.Model.extend({
 
 	login : function(email, password) {
 		// Do a POST to /login and send the creds
-		var url = '../api/login';
+		var url = Config.serverUrl + 'login';
 		console.log('Loggin in... ');
 		var formValues = {
 			email : email,
@@ -71,7 +71,7 @@ window.Account = Backbone.Model.extend({
 
 	logout : function() {
 		// delete the existing sesison and reset account
-		var url = '../api/logout';
+		var url = Config.serverUrl + 'logout';
 		$.ajax({
 			url : url,
 			type : 'GET',
@@ -100,7 +100,7 @@ window.Account = Backbone.Model.extend({
 
 	signUp : function(inputValues) {
 		// Do a POST to /login and send the creds
-		var url = '../api/signup';
+		var url = Config.serverUrl + 'signup';
 		console.log('signing up... ');
 		$.ajax({
 			url : url,
@@ -122,7 +122,7 @@ window.Account = Backbone.Model.extend({
 	},
 
 	forgotPass : function(email) {
-		var url = '../api/forgotpass';
+		var url = Config.serverUrl + 'forgotpass';
 		console.log('forgot pass... ');
 		var formValues = {
 			email : email,
@@ -143,7 +143,7 @@ window.Account = Backbone.Model.extend({
 	},
 
 	changePass : function(oldpassword, newpassword) {
-		var url = '../api/changepass';
+		var url = Config.serverUrl + 'changepass';
 		console.log('change pass... ');
 		$.ajax({
 			url : url,
@@ -162,7 +162,7 @@ window.Account = Backbone.Model.extend({
 	isAuth : function() {
 		// isAuth is wrapped around our router
 		// before we start any routers let us see if the user is authenticated
-		url = '../api/isAuth';
+		url = Config.serverUrl + 'isAuth';
 		$.ajax({
 			url : url,
 			type : 'GET',

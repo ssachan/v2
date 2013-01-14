@@ -122,7 +122,7 @@ window.Quiz = Backbone.Model
 
 			updateAttemptedAs : function() {
 				// Do a POST
-				var url = '../api/attemptedAs/';
+				var url = Config.serverUrl + 'attemptedAs/';
 				var that = this;
 				$.ajax({
 					url : url,
@@ -152,6 +152,7 @@ window.Quiz = Backbone.Model
 			 * Calculates the total correct incorrect and stores them in
 			 * totalCorrect and totalIncorrect
 			 */
+			 /*
 			calculateScores : function() {
 				var qIds = this.getQuestionIds();
 				var len = qIds.length;
@@ -172,7 +173,7 @@ window.Quiz = Backbone.Model
 					this.get('timePerQuestionArray')[i] = question
 							.get('timeTaken');
 				}
-			},
+			}, */
 
 			/**
 			 * Get all question ids belonging to this quiz
@@ -201,11 +202,9 @@ window.Quiz = Backbone.Model
 			 * @param quiz
 			 */
 			submitResults : function() {
-				var score = [ parseInt(this.get('totalCorrect')),
-						parseInt(this.get('totalIncorrect')),
-						parseInt(this.get('totalScore')) ];
+				
 
-				var url = '../api/results';
+				var url = Config.serverUrl + 'results';
 				console.log('Adding responses... ');
 				var that = this;
 				$.ajax({
@@ -217,13 +216,8 @@ window.Quiz = Backbone.Model
 						streamId : streamId,
 						quizId : this.get('id'),
 						streamId : streamId,
-						score : JSON.stringify(score),
 						state : this.get('state'),
-						selectedAnswers : JSON.stringify(this
-								.get('selectedAnswersArray')),
-						timePerQuestion : JSON.stringify(this
-								.get('timePerQuestionArray')),
-						logs : logs.toJSON(),
+						logs : logs.toJSON()
 					},
 					success : function(data) {
 						if (data.status == STATUS.SUCCESS) {

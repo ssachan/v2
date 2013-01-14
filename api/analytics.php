@@ -50,7 +50,8 @@ abstract class analConst {
     const INCORRECT = 2;
     const SKIPPED = 3;
     const UNSEEN = 4;
-
+    const ATTEMPTED_AS_TIMED_TEST = 1;
+    const ATTEMPTED_AS_PRACTICE = 0;
 
     public static function timeFactor()
     {
@@ -124,16 +125,35 @@ function testCode()
     $response["status"] = SUCCESS;
     $response["data"] = true;
     sendResponse($response);
-    
 }
 
-function updateResults2()
+function updateResults()
 {
-    $response = array();
-    //$streamId = $_POST['streamId']; // why is this required??
     $accountId = $_POST['accountId']; 
     $quizId = $_POST['quizId'];
     $logs = $_POST['logs'];
+
+    $temp = getStateOfQuiz($accountId,$quizId);
+    $attemptedAs = $temp["attemptedAs"];
+    $state = $temp["state"];
+
+    if($attemptedAs == analConst::ATTEMPTED_AS_TIMED_TEST)
+    {
+        updateResultsForTest($accountId,$quizId,$logs);
+    }
+    elseif($attemptedAs == analConst::ATTEMPTED_AS_PRACTICE)
+    {
+        //
+    }
+
+}
+
+
+function updateResultsForTest($accountId,$quizId,$logs)
+{
+    $response = array();
+    //$streamId = $_POST['streamId']; // why is this required??
+    
     /**************UNCOMMENT BELOW LATER*******************/
     // updateResultsTable(); //storing to database
 
@@ -167,6 +187,7 @@ function updateResults2()
         $qDetails = getQuestionDetails($qid);
         $userAbility = getUserAbilityLevels($accountId, $qDetails->l3Id);
         $result[$qid] = evaluateQuestion($qDetails,$optionText[$qid], $timeTaken[$qid],$userAbility);
+        //$result[0] is $delta, $result[1] is state;
         // optimization tip:  unseen questions can be evaluated faster.
 
         //now adding question to response table;
@@ -174,6 +195,7 @@ function updateResults2()
         insertIntoResponsesTable($accountId, $qid, $optionText[$qid], $timeTaken[$qid],$optionToggle[$qid],$userAbility->l3score,$result[$qid][0]);
         updateScore($accountId, $result[$qid][0], $userAbility,$result[$qid][1]);
     }
+    setStateOfQuiz($accountId,$quizId,$questionIds[]);
     $response["status"] = SUCCESS;
     $response["data"] = true;
     sendResponse($response);
@@ -322,8 +344,27 @@ function getStateOfQuiz($accountId, $quizId)
         $previousState = $record->state;
         $attemptedAs = $record->attemptedAs;
     } catch (PDOException $e) {
-        $response["status"] = ERROR;
-        $response["data"] = EXCEPTION_MSG;
+        phpLog($e->getMessage());
+    }
+
+    return array("state"=>$previousState,"attemptedAs"=>$attemptedAs);
+ // Code to get state and attempted as if needed.
+}
+
+function setStateOfQuiz($accountId, $quizId, $state)
+{
+    $sql = "UPDATE results SET state = :state where accountId=:accountId and quizId=:quizId";
+    $previousState = null;
+    $attemptedAs = null;
+    try {
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("accountId", $accountId);
+        $stmt->bindParam("quizId", $quizId);
+        $stmt->bindParam("state", $state);
+        $stmt->execute();
+        $record = $stmt->fetch(PDO::FETCH_OBJ);
+    } catch (PDOException $e) {
         phpLog($e->getMessage());
     }
 
