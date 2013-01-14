@@ -1,10 +1,33 @@
+<div id="status">
+    <div class="row-fluid">
+        <div class="span7">
+            <h3 id="stathead">
+            </h3>
+        </div>
+        <div class="span5">
+            <div class="g-stats">
+                DIFFICULTY : <span class="blue" id="diff"></span>
+            </div>
+            <div class="g-stats">
+                <div class="stat">
+                    Average Accuracy<br> <span class="blue" id="avgAcc"></span>
+                </div>
+                <div class="stat">
+                    Average Time<br> <span class="blue" id="avgTime"></span>
+                </div>
+            </div>
+            <div class="g-stats">
+                <span class="val">JEE 2012, JEE 2013</span>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="qtext">
-<% if(paraId){ %>
-        <h3>Paragraph :</h3>
-       <%= para %>
-        <br><hr class="soften"><br>
-<%}%>
-   <%= text %>
+    <% if(paraId){ %>
+    <h3>Paragraph :</h3>
+    <%= para %> <br>
+    <hr class="soften">
+    <br> <%}%> <%= text %>
 </div>
 <div id="video" class="center">
     <a href="#myModal" data-toggle="modal"> <img src="img/video1.jpg" width="200px"
@@ -14,8 +37,6 @@
 <!-- Solution-->
 <div id="solution">
     <h3>Solution</h3>
-    <p id="solutionText">       
-    </p>
+    <p id="solutionText"></p>
 </div>
-<div class="row-fluid" id="options">
-</div>
+<div class="row-fluid" id="options"></div>
