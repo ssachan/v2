@@ -664,7 +664,8 @@ function returnQuestionData()
 {
     $accountId = $_POST['accountId']; 
     $qid = $_POST['qid'];
-    $sql = "select optionSelected as o, timeTaken as t, abilityScoreBefore as a, delta as d from responses where accountId :acid AND questionId = :qid";
+    $sql = "select optionSelected as o, timeTaken as t, abilityScoreBefore as a, delta as d, MAX(timeStamp) as m from responses where accountId :acid AND questionId = :qid GROUP BY questionId";
+    
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);

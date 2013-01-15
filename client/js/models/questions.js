@@ -62,17 +62,18 @@ window.Question = Backbone.Model.extend({
 			},
 			dataType : "json",
 			success : function(data) {
+				if(data.status == STATUS.SUCCESS ){
 						this.set('timeTaken') = data.t;
 						this.set('abilityScoreBefore') = data.a;
 						this.set('delta') = data.d;
 						this.set('optionSelected') = data.o;
-					}
+				
 				} else { // If not, send them back to the home page
 					helper.showError(data.data);
 				}
 			}
 		});
-	}
+	},
 	
     defaults: {
         'correctAnswer': null,
