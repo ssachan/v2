@@ -201,6 +201,7 @@ window.PracticeView = Backbone.View.extend({
     },
 
     setUp: function () {
+        // tanujb:TODO: What is this code supposed to do?
         this.answersSelected = this.model.getSelectedAnswers();
         this.getTimeTakenPerQuestion = this.model.getTimeTakenPerQuestion();
         for (var i = 0; i <= this.index; i++) {
@@ -238,7 +239,7 @@ window.PracticeView = Backbone.View.extend({
             $('#previous').hide();
         } 
         this.model.set('state', this.index);
-        this.model.calculateScores();
+        //this.model.calculateScores();
         this.model.submitResults();
         this.renderQuestion();
     },
@@ -296,6 +297,8 @@ window.PracticeView = Backbone.View.extend({
         this.questionView.model = this.question;
         this.questionView.render();
         if (this.question.get('hasAttempted') == false) {
+            logs.reset();
+            logs.addEntry("QUESTION_OPEN", this.question.get('id'));
             timer.start();
             $('#previous').hide();
             $('#next').hide();

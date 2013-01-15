@@ -51,7 +51,7 @@ abstract class analConst {
     const SKIPPED = 3;
     const UNSEEN = 4;
     const ATTEMPTED_AS_TIMED_TEST = 1;
-    const ATTEMPTED_AS_PRACTICE = 0;
+    const ATTEMPTED_AS_PRACTICE = 2;
 
     public static function timeFactor()
     {
@@ -143,14 +143,46 @@ function updateResults()
     }
     elseif($attemptedAs == analConst::ATTEMPTED_AS_PRACTICE)
     {
-        //
+        updateResultsForPractice($accountId,$quizId,$logs);
     }
-
 }
 
+function updateResultsForPractice($accountId,$quizId,$logs)
+{
+    $attemptedAs = analConst::ATTEMPTED_AS_PRACTICE;
+    $logsByQuestion = splitLogsByQuestion($logs);
+    $qid = 0;
+    foreach($logsByQuestion as $key => $value)
+    {
+        $qid = $key;
+        $logsByQuestion = $value;
+    }
+    
+
+    $optionArray = getFinalOptionArray($logsByQuestion);
+    $optionText = getOptionTextFromArray($optionArray);
+    $timeTaken = getTotalTime($logsByQuestion);
+
+    $qDetails = getQuestionDetails($qid);
+    $userAbility = getUserAbilityLevels($accountId, $qDetails->l3Id);
+    
+    //This might need to change for practice
+    $result = evaluateQuestion($qDetails,$optionText, $timeTaken,$userAbility);
+    $delta = $result[0];
+    $state = $result[1];
+    $delta = adjustDelta($qDetails,$userAbility,$timeTaken,$delta,$state,$attemptedAs);
+
+    insertIntoResponsesTable($accountId, $qid, $optionText, $timeTaken,$userAbility->l3score,$delta);
+    updateScore($accountId, $delta, $userAbility,$state);
+
+    $response["status"] = SUCCESS;
+    $response["data"] = true;
+    sendResponse($response);
+}
 
 function updateResultsForTest($accountId,$quizId,$logs)
 {
+    $attemptedAs = analConst::ATTEMPTED_AS_TIMED_TEST;
     $response = array();
     //$streamId = $_POST['streamId']; // why is this required??
     
@@ -165,7 +197,7 @@ function updateResultsForTest($accountId,$quizId,$logs)
     $timeTaken = array(); //All 4 are per question arrays
     $optionToggle = array();
     $state = array();
-    $delta = array();
+    $delta = array(); //default to 0?
     foreach ($questionIds as $key => $qid)
     {
        //Retrieve the final option selected and time taken
@@ -187,13 +219,14 @@ function updateResultsForTest($accountId,$quizId,$logs)
         $qDetails = getQuestionDetails($qid);
         $userAbility = getUserAbilityLevels($accountId, $qDetails->l3Id);
         $result[$qid] = evaluateQuestion($qDetails,$optionText[$qid], $timeTaken[$qid],$userAbility);
+        $delta[$qid] = $results[$qid][0]; $state[$qid] = $results[$qid][1];
+        $delta[$qid] = adjustDelta($qDetails,$userAbility,$timeTaken[$qid],$delta[$qid],$state[$qid],$attemptedAs);
         //$result[0] is $delta, $result[1] is state;
         // optimization tip:  unseen questions can be evaluated faster.
 
         //now adding question to response table;
-        $optionToggle[$qid] = "?"; //////FIGURE THIS OUT
-        insertIntoResponsesTable($accountId, $qid, $optionText[$qid], $timeTaken[$qid],$optionToggle[$qid],$userAbility->l3score,$result[$qid][0]);
-        updateScore($accountId, $result[$qid][0], $userAbility,$result[$qid][1]);
+        insertIntoResponsesTable($accountId, $qid, $optionText, $timeTaken,$userAbility->l3score,$delta[$qid]);
+        updateScore($accountId, $delta[$qid], $userAbility,$state[$qid]);
     }
     setStateOfQuiz($accountId,$quizId,$questionIds[]);
     $response["status"] = SUCCESS;
@@ -309,7 +342,6 @@ function updateAbility($accountId,$level,$id,$delta,$state)
             $switched = "numIncorrect = numIncorrect + 1,";
             break;
     }
-
     $sql = "UPDATE ascores_".$level." SET numQuestions = numQuestions + 1,".$switched." score = score + :delta, updatedOn = :timeStamp WHERE accountId = :acid AND ".$level."id = :id";
     try {
         $db = getConnection();
@@ -346,7 +378,6 @@ function getStateOfQuiz($accountId, $quizId)
     } catch (PDOException $e) {
         phpLog($e->getMessage());
     }
-
     return array("state"=>$previousState,"attemptedAs"=>$attemptedAs);
  // Code to get state and attempted as if needed.
 }
@@ -367,7 +398,6 @@ function setStateOfQuiz($accountId, $quizId, $state)
     } catch (PDOException $e) {
         phpLog($e->getMessage());
     }
-
     return array("state"=>$previousState,"attemptedAs"=>$attemptedAs);
  // Code to get state and attempted as if needed.
 }
@@ -390,21 +420,17 @@ function getQuestionDetails($qid)
         phpLog($e->getMessage());
     }
 }
-
 //<< END QUIZ/QUESTION DETAIL RETRIEVERS
 
 //>> FUNCTIONS THAT OPERATE ON RAW LOGS
 function splitLogsByQuestion($logData)
 {
     $questionDataSet = array();
-
     foreach ($logData as $key => $value)
         if(isset($value['q']))
             $questionDataSet[$value['q']][]=$value;
-
     return $questionDataSet;
 }
-
 
 function updateResultsTable($accountId, $quizId, $logs)
 {
@@ -429,11 +455,11 @@ function updateResultsTable($accountId, $quizId, $logs)
     }
 }
 
-function insertIntoResponsesTable($accountId, $qid, $optionText, $timeTaken,$optionToggle,$abilityScore,$delta)
+function insertIntoResponsesTable($accountId, $qid, $optionText, $timeTaken,$abilityScore,$delta)
 {
     $date = date("Y-m-d H:i:s", time());
 
-    $sql = "INSERT INTO responses (accountId,questionID, optionSelected, timeTaken, toggleOptions, abilityScoreBefore, delta, timestamp) VALUES (:accountId,:qid,:otxt,:ttk,:tops,:ascore,:delta,:tstmp)";
+    $sql = "INSERT INTO responses (accountId,questionID, optionSelected, timeTaken, abilityScoreBefore, delta, timestamp) VALUES (:accountId,:qid,:otxt,:ttk,:ascore,:delta,:tstmp)";
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
@@ -442,7 +468,6 @@ function insertIntoResponsesTable($accountId, $qid, $optionText, $timeTaken,$opt
         $stmt->bindParam("tstmp", $date);
         $stmt->bindParam("otxt", $optionText);
         $stmt->bindParam("ttk", $timeTaken);
-        $stmt->bindParam("tops", $optionToggle);
         $stmt->bindParam("ascore", $abilityScore);
         $stmt->bindParam("delta", $delta);
         
@@ -454,8 +479,6 @@ function insertIntoResponsesTable($accountId, $qid, $optionText, $timeTaken,$opt
         phpLog($e->getMessage());
     }
 }
-
-
 //<< END FUNCTIONS THAT OPERATE ON RAW LOGS
 
 //>> FUNCTIONS THAT OPERATE ON LOGS PERTAINING TO A SINGLE QUESTION
@@ -671,6 +694,13 @@ function evalIncorrect($qDetails,$userAbility,$timeTaken)
     $delta = $delta = $qDetails->incorrectScore; //add factor
     return $delta;
 }
-
+function adjustDelta($qDetails,$userAbility,$timeTaken,$delta,$state,$attemptedAs)
+{
+    if($attemptedAs = analConst::ATTEMPTED_AS_PRACTICE)
+    {
+        $delta *= 0.5; 
+    }
+    return $delta;
+}
 //<< QUESTION EVALAUATION FUNCTIONS END
 

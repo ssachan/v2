@@ -94,6 +94,7 @@ window.QuizQuestionView = Backbone.View
 			},
 
 			handleMatrixType : function(e) {
+				// tanujb:TODO:add logs
 				var optionSelectedArray = [];
 				var optionSelected = this.model.get('optionSelected');
 				if (optionSelected != null) {
@@ -296,6 +297,7 @@ window.QuizQuestionView = Backbone.View
 				}
 			},
 			renderInfo : function() {
+				// tanujb:TODO:add retrieval of data
 				var html = [];
 				$('#status').show();
 				$('#options').show();

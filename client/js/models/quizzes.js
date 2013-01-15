@@ -7,7 +7,7 @@
 window.Quiz = Backbone.Model
 		.extend({
 			urlRoot : Config.serverUrl + 'quizzes/',
-
+			// tanujb:TODO: this model is a mess, needs cleanup badly.
 			STATUS_NOTSTARTED : 0, // when the quiz is fresh from the library
 			STATUS_COMPLETED : 1, // when the quiz is completed
 			STATUS_INPROGRESS : 2, // when the attemptedAs is set and the quiz
@@ -149,33 +149,6 @@ window.Quiz = Backbone.Model
 			},
 
 			/**
-			 * Calculates the total correct incorrect and stores them in
-			 * totalCorrect and totalIncorrect
-			 */
-			 /*
-			calculateScores : function() {
-				var qIds = this.getQuestionIds();
-				var len = qIds.length;
-				for ( var i = 0; i < len; i++) {
-					var question = quizQuestions.get(qIds[i]);
-					var score = question.getScore();
-					if (score != null) {
-						this.set('totalScore', this.get('totalScore') + score);
-					}
-					var answer = question.get('optionSelected');
-					if (question.isOptionSelectedCorrect(answer) == true) {
-						this.set('totalCorrect', this.get('totalCorrect') + 1);
-					} else if (question.isOptionSelectedCorrect(answer) == false) {
-						this.set('totalIncorrect',
-								this.get('totalIncorrect') + 1);
-					}
-					this.get('selectedAnswersArray')[i] = answer;
-					this.get('timePerQuestionArray')[i] = question
-							.get('timeTaken');
-				}
-			}, */
-
-			/**
 			 * Get all question ids belonging to this quiz
 			 */
 			getQuestionIds : function() {
@@ -205,7 +178,6 @@ window.Quiz = Backbone.Model
 				
 
 				var url = Config.serverUrl + 'results';
-				console.log('Adding responses... ');
 				var that = this;
 				$.ajax({
 					url : url,
@@ -222,8 +194,7 @@ window.Quiz = Backbone.Model
 					success : function(data) {
 						if (data.status == STATUS.SUCCESS) {
 							quizHistory.unshift(that);
-							account.get('quizzesAttemptedArray').unshift(
-									that.get('id'));
+							account.get('quizzesAttemptedArray').unshift(that.get('id'));
 							if (that.get('status') == that.STATUS_COMPLETED) {
 										app.quiz(that.get('id'));
 							} else {

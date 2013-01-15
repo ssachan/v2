@@ -29,7 +29,7 @@ $app->post('/attemptedAs/', 'updateAttemptedAs');
 $app->get('/processQuiz/', $authenticate($app), 'processQuiz');
 
 // responses
-$app->post('/results', 'updateResults2');
+$app->post('/results', 'updateResults');
 $app->get('/testcode', 'testCode');
 
 $app->get('/attemptedQuestions/', 'getAttemptedQuestions');
@@ -119,7 +119,6 @@ function getScores($level){
     }
     sendResponse($response);
 }
-
 
 function getQuizzesHistory() {
     $response = array();
@@ -436,18 +435,12 @@ function processQuiz() {
     }
     sendResponse($response);
 }
-
+/*
 function updateResults() {
-    $response = array();
-    $streamId = $_POST['streamId'];
-    $accountId = $_POST['accountId'];
-    $quizId = $_POST['quizId'];
-    $score = $_POST['score'];
+    
     $state = $_POST['state'];
-    $logs = json_encode($_POST['logs']);
-    $selectedAnswers = stripslashes($_POST['selectedAnswers']);
-    $timePerQuestion = $_POST['timePerQuestion'];
-    $date = date("Y-m-d H:i:s", time());
+    
+    //$date = date("Y-m-d H:i:s", time());
     $sql = "SELECT state,attemptedAs from results where accountId=:accountId and quizId=:quizId";
     $previousState = null;
     $attemptedAs = null;
@@ -534,7 +527,7 @@ function updateResults() {
             }
         }
     }
-    /*
+    
     //not sure if we want to do it.  
     $sql = "UPDATE quizzes SET totalAttempts=totalAttempts+1 where id=:quizId";
     try {
@@ -548,32 +541,18 @@ function updateResults() {
         $response["data"] = EXCEPTION_MSG;
         phpLog($e->getMessage());
     }
-     */
+     
     if (!isset($response["status"])) {
         $response["status"] = SUCCESS;
         $response["data"] = true;
     }
     sendResponse($response);
 }
+*/
 
 /**
  * some dummy logic to update the scores. 
  */
-function updateScores($accId, $streamId) {
-    $sql2 = "UPDATE students SET ascoreL1=ascoreL1+1 where accountId=:accountId and streamId=:streamId";
-    try {
-        $db = getConnection();
-        $stmt = $db->prepare($sql2);
-        $stmt->bindParam("accountId", $accId);
-        $stmt->bindParam("streamId", $streamId);
-        $stmt->execute();
-        $db = null;
-        $response->id = $db->lastInsertId();
-        echo json_encode($response->id);
-    } catch (PDOException $e) {
-        echo '{"error":{"text":' . $e->getMessage() . '}}';
-    }
-}
 
 function getPackagesByStreamId($id) {
     $sql = "SELECT p.id as id,p.name,p.details,p.price from packages p where p.streamId='"
