@@ -372,6 +372,7 @@ function processQuiz() {
             phpLog($e->getMessage());
         }
         // update auizzesAttempted 
+        // tanujb:TODO: quizzes attempted should come from elsewhere?
         $sql = "SELECT quizzesAttempted from students where accountId=:accountId and streamId=:streamId";
         try {
             $db = getConnection();

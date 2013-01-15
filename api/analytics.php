@@ -68,63 +68,7 @@ abstract class analConst {
 //>> FRONT-FACING Functions
 function testCode()
 {
-
-    $accountId = 4;
-    $quizId = 1;
-    $logs[0]['t']=1358119882019;
-    $logs[0]['e']=10;
-    $logs[1]['t']=1358119882050;
-    $logs[1]['e']=3;
-    $logs[1]['q']=1;
-    $logs[2]['t']=1358119907940;
-    $logs[2]['e']=0;
-    $logs[2]['q']=1;
-    $logs[2]['o']=0;
-    $logs[3]['t']=1358119922980;
-    $logs[3]['e']=4;
-    $logs[3]['q']=1;
-    $logs[4]['t']=1358119922981;
-    $logs[4]['e']=8;
-       $questionIds = getQuestionIdsForQuiz($quizId);
-    $logsByQuestion = splitLogsByQuestion($logs);
-
-    $optionArray = array();
-    $optionText = array();
-    $timeTaken = array(); //All 4 are per question arrays
-    $optionToggle = array();
-    $state = array();
-    $delta = array();
-    foreach ($questionIds as $key => $qid)
-    {
-       //Retrieve the final option selected and time taken
-        if(isset($logsByQuestion[$qid]))
-        {
-            $optionArray[$qid] = getFinalOptionArray($logsByQuestion[$qid]);
-            $optionText[$qid] = getOptionTextFromArray($optionArray[$qid]);
-            $timeTaken[$qid] = getTotalTime($logsByQuestion[$qid]);
-        }
-        else
-        {
-            //not attempted at all
-            $optionsArray[$qid] = array();
-            $optionText[$qid] = "";
-            $timeTaken[$qid] = 0;
-            $state[$qid] = analConst::UNSEEN;
-        }
-
-        $qDetails = getQuestionDetails($qid);
-        $userAbility = getUserAbilityLevels($accountId, $qDetails->l3Id);
-        $result[$qid] = evaluateQuestion($qDetails,$optionText[$qid], $timeTaken[$qid],$userAbility);
-        // optimization tip:  unseen questions can be evaluated faster.
-
-        //now adding question to response table;
-        $optionToggle[$qid] = "?"; //////FIGURE THIS OUT
-        insertIntoResponsesTable($accountId, $qid, $optionText[$qid], $timeTaken[$qid],$optionToggle[$qid],$userAbility->l3score,$result[$qid][0]);
-        updateScore($accountId, $result[$qid][0], $userAbility,$result[$qid][1]);
-    }
-    $response["status"] = SUCCESS;
-    $response["data"] = true;
-    sendResponse($response);
+   
 }
 
 function updateResults()
@@ -135,15 +79,19 @@ function updateResults()
 
     $temp = getStateOfQuiz($accountId,$quizId);
     $attemptedAs = $temp["attemptedAs"];
-    $state = $temp["state"];
+    $state = intval($temp["state"]);
+
+    updateResultsTable($accountId,$quizId,$logs); //storing to database
 
     if($attemptedAs == analConst::ATTEMPTED_AS_TIMED_TEST)
     {
         updateResultsForTest($accountId,$quizId,$logs);
+        //updating state in Results table is taken care of in function itself.
     }
     elseif($attemptedAs == analConst::ATTEMPTED_AS_PRACTICE)
     {
         updateResultsForPractice($accountId,$quizId,$logs);
+        setStateOfQuiz($accountId,$quizId,$state+1);
     }
 }
 
@@ -187,7 +135,6 @@ function updateResultsForTest($accountId,$quizId,$logs)
     //$streamId = $_POST['streamId']; // why is this required??
     
     /**************UNCOMMENT BELOW LATER*******************/
-    // updateResultsTable(); //storing to database
 
     $questionIds = getQuestionIdsForQuiz($quizId);
     $logsByQuestion = splitLogsByQuestion($logs);
@@ -219,16 +166,16 @@ function updateResultsForTest($accountId,$quizId,$logs)
         $qDetails = getQuestionDetails($qid);
         $userAbility = getUserAbilityLevels($accountId, $qDetails->l3Id);
         $result[$qid] = evaluateQuestion($qDetails,$optionText[$qid], $timeTaken[$qid],$userAbility);
-        $delta[$qid] = $results[$qid][0]; $state[$qid] = $results[$qid][1];
+        $delta[$qid] = $result[$qid][0]; $state[$qid] = $result[$qid][1];
         $delta[$qid] = adjustDelta($qDetails,$userAbility,$timeTaken[$qid],$delta[$qid],$state[$qid],$attemptedAs);
         //$result[0] is $delta, $result[1] is state;
         // optimization tip:  unseen questions can be evaluated faster.
 
         //now adding question to response table;
-        insertIntoResponsesTable($accountId, $qid, $optionText, $timeTaken,$userAbility->l3score,$delta[$qid]);
+        insertIntoResponsesTable($accountId, $qid, $optionText[$qid], $timeTaken[$qid],$userAbility->l3score,$delta[$qid]);
         updateScore($accountId, $delta[$qid], $userAbility,$state[$qid]);
     }
-    setStateOfQuiz($accountId,$quizId,$questionIds[]);
+    setStateOfQuiz($accountId,$quizId,count($questionIds));
     $response["status"] = SUCCESS;
     $response["data"] = true;
     sendResponse($response);
@@ -384,9 +331,7 @@ function getStateOfQuiz($accountId, $quizId)
 
 function setStateOfQuiz($accountId, $quizId, $state)
 {
-    $sql = "UPDATE results SET state = :state where accountId=:accountId and quizId=:quizId";
-    $previousState = null;
-    $attemptedAs = null;
+    $sql = "UPDATE results SET state=:state where accountId=:accountId and quizId=:quizId";
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
@@ -394,12 +339,9 @@ function setStateOfQuiz($accountId, $quizId, $state)
         $stmt->bindParam("quizId", $quizId);
         $stmt->bindParam("state", $state);
         $stmt->execute();
-        $record = $stmt->fetch(PDO::FETCH_OBJ);
     } catch (PDOException $e) {
         phpLog($e->getMessage());
     }
-    return array("state"=>$previousState,"attemptedAs"=>$attemptedAs);
- // Code to get state and attempted as if needed.
 }
 
 function getQuestionDetails($qid)
@@ -434,18 +376,17 @@ function splitLogsByQuestion($logData)
 
 function updateResultsTable($accountId, $quizId, $logs)
 {
-    $date = date("Y-m-d H:i:s", time());
-    $state = 11; //arbitrary?????
+    $date = date("Y-m-d H:i:s", time());  // tanujb:TODO: arbitrary?????
 
-    $sql = "UPDATE results SET timestamp=:timeStamp, state=:state, data=:data where accountId=:accountId and quizId=:quizId";
+    $sql = "UPDATE results SET timestamp=:timeStamp, data=:data where accountId=:accountId and quizId=:quizId";
     try {
+        $logsJSON = json_encode($logs);
         $db = getConnection();
         $stmt = $db->prepare($sql);
         $stmt->bindParam("accountId", $accountId);
         $stmt->bindParam("quizId", $quizId);
         $stmt->bindParam("timeStamp", $date);
-        $stmt->bindParam("state", $state);
-        $stmt->bindParam("data", json_encode($logs));
+        $stmt->bindParam("data", $logsJSON);
         $stmt->execute();
         $db = null;
     } catch (PDOException $e) {
