@@ -51,7 +51,7 @@ window.Question = Backbone.Model.extend({
 		}
 	},
 
-	getResults : function()
+	/*getResults : function()
 	{
 		var url = Config.serverUrl + 'questions/result-data/';
 		return $.ajax({
@@ -67,12 +67,9 @@ window.Question = Backbone.Model.extend({
 						this.set('delta') = data.d;
 						this.set('optionSelected') = data.o;
 					}
-				} else { // If not, send them back to the home page
-					helper.showError(data.data);
-				}
-			}
+		}
 		});
-	}
+	}*/
 	
     defaults: {
         'correctAnswer': null,
