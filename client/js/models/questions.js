@@ -8,7 +8,7 @@ window.Question = Backbone.Model.extend({
     urlRoot: Config.serverUrl+'questions/',
 
     initialize: function () {
-        if (!this.get('openTimeStamps')) {
+      /*  if (!this.get('openTimeStamps')) {
             this.set({
                 openTimeStamps: new Array()
             });
@@ -27,7 +27,7 @@ window.Question = Backbone.Model.extend({
             this.set({
             	optionUnSelectedTimeStamps: new Array()
             });
-        }
+        }*/
         var l3Id=this.get('l3Id');
         if (l3Id) {
         	var l3 = sectionL3.get(l3Id);
@@ -41,87 +41,6 @@ window.Question = Backbone.Model.extend({
         }
     },
 	
-    /**
-     * returns true, false and null depending on whether the option selected was right, wrong or not selected at all. 
-     **/
-	isOptionSelectedCorrect : function (selectedOption){
-		var isCorrect = null; 
-		var answer = this.get('correctAnswer');
-		if(selectedOption && selectedOption!=null){
-			isCorrect = (selectedOption==answer)?true:false;
-		}
-		return isCorrect; 
-	},
-    
-	getScore : function(){
-		var type = this.get('typeId');
-		switch(type){
-		case "1":
-			// the single option correct
-			if(this.isOptionSelectedCorrect(this.get('optionSelected'))==true){
-				// got it correct
-				return parseInt(this.get('correctScore'));
-			}else if(this.isOptionSelectedCorrect(this.get('optionSelected'))==false){
-				// got it incorrect
-				return parseInt('-'+this.get('incorrectScore'));
-			}else{
-				return null;
-			}
-			break;
-		case "2":
-			// the multiple option correct
-			if(this.isOptionSelectedCorrect(this.get('optionSelected'))==true){
-				// got it correct
-				return parseInt(this.get('correctScore'));
-			}else if(this.isOptionSelectedCorrect(this.get('optionSelected'))==false){
-				// got it incorrect check for individual options
-				return parseInt('-'+this.get('incorrectScore'));
-			}else{
-				return null;
-			}
-
-			break;
-		case "3":
-			// integer type
-			if(this.isOptionSelectedCorrect(this.get('optionSelected'))==true){
-				// got it correct
-				return parseInt(this.get('correctScore'));
-			}else if(this.isOptionSelectedCorrect(this.get('optionSelected'))==false){
-				// got it incorrect
-				return parseInt('-'+this.get('incorrectScore'));
-			}else{
-				return null;
-			}
-
-			break;
-		case "4":
-			// matrix type
-			if(this.isOptionSelectedCorrect(this.get('optionSelected'))==true){
-				// got it correct
-				return parseInt(this.get('correctScore'));
-			}else if(this.isOptionSelectedCorrect(this.get('optionSelected'))==false){
-				// got it incorrect check for individual options
-				var totalScore = 0;
-				var optionScore = parseInt(this.get('optionScore'));
-				if(optionScore!=0){
-					// we have option scores
-					var correctAnswersArray = (this.get('correctAnswer')).split(SEPARATOR+SEPARATOR);
-					var selectedOptionsArray = (this.get('optionSelected')).split(SEPARATOR+SEPARATOR);
-					var len = correctAnswersArray.length;
-					for (var i = 0; i< len; i++){
-						if(selectedOptionsArray[i]!=null && selectedOptionsArray[i]==correctAnswersArray[i]){
-							// u got the option correct
-							totalScore = totalScore + optionScore;
-						}
-					}
-				}
-				return totalScore;
-			}else{
-				return null;
-			}
-			break;
-		}
-	},
 	
 	getOption : function (index){
 		var type = this.get('typeId');
@@ -131,6 +50,29 @@ window.Question = Backbone.Model.extend({
             return optionsArray[index];
 		}
 	},
+
+	getResults : function()
+	{
+		var url = Config.serverUrl + 'questions/result-data/';
+		return $.ajax({
+			url : url,
+			data : {
+				accountId : account.get('id'),
+				qid : this.get('id')
+			},
+			dataType : "json",
+			success : function(data) {
+						this.set('timeTaken') = data.t;
+						this.set('abilityScoreBefore') = data.a;
+						this.set('delta') = data.d;
+						this.set('optionSelected') = data.o;
+					}
+				} else { // If not, send them back to the home page
+					helper.showError(data.data);
+				}
+			}
+		});
+	}
 	
     defaults: {
         'correctAnswer': null,

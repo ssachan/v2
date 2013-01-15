@@ -120,11 +120,18 @@ function updateResultsForPractice($accountId,$quizId,$logs)
     $state = $result[1];
     $delta = adjustDelta($qDetails,$userAbility,$timeTaken,$delta,$state,$attemptedAs);
 
-    insertIntoResponsesTable($accountId, $qid, $optionText, $timeTaken,$userAbility->l3score,$delta);
+    insertIntoResponsesTable($accountId, $qid, $optionText, $timeTaken,$userAbility->l3score,$delta,$state);
     updateScore($accountId, $delta, $userAbility,$state);
 
     $response["status"] = SUCCESS;
     $response["data"] = true;
+    /*$response["data"] = array(
+        "optionText"=>$optionText,
+        "timeTaken "=>$timeTaken,
+        "state"=>$state,
+        "delta"=>$delta,
+        "userAbilityRecord"=>$userAbility
+        );*/
     sendResponse($response);
 }
 
@@ -142,9 +149,9 @@ function updateResultsForTest($accountId,$quizId,$logs)
     $optionArray = array();
     $optionText = array();
     $timeTaken = array(); //All 4 are per question arrays
-    $optionToggle = array();
     $state = array();
     $delta = array(); //default to 0?
+    $userAbilityRecord = array();
     foreach ($questionIds as $key => $qid)
     {
        //Retrieve the final option selected and time taken
@@ -168,16 +175,23 @@ function updateResultsForTest($accountId,$quizId,$logs)
         $result[$qid] = evaluateQuestion($qDetails,$optionText[$qid], $timeTaken[$qid],$userAbility);
         $delta[$qid] = $result[$qid][0]; $state[$qid] = $result[$qid][1];
         $delta[$qid] = adjustDelta($qDetails,$userAbility,$timeTaken[$qid],$delta[$qid],$state[$qid],$attemptedAs);
+        $userAbilityRecord[$qid]=$userAbility;
         //$result[0] is $delta, $result[1] is state;
         // optimization tip:  unseen questions can be evaluated faster.
 
         //now adding question to response table;
-        insertIntoResponsesTable($accountId, $qid, $optionText[$qid], $timeTaken[$qid],$userAbility->l3score,$delta[$qid]);
+        insertIntoResponsesTable($accountId, $qid, $optionText[$qid], $timeTaken[$qid],$userAbility->l3score,$delta[$qid],$state[$qid]);
         updateScore($accountId, $delta[$qid], $userAbility,$state[$qid]);
     }
     setStateOfQuiz($accountId,$quizId,count($questionIds));
     $response["status"] = SUCCESS;
-    $response["data"] = true;
+    $response["data"] = array(
+        "optionText"=>$optionText,
+        "timeTaken "=>$timeTaken,
+        "state"=>$state,
+        "delta"=>$delta,
+        "userAbilityRecord"=>$userAbilityRecord
+        );
     sendResponse($response);
 }
 //<< END FRONT FACING
@@ -339,6 +353,7 @@ function setStateOfQuiz($accountId, $quizId, $state)
         $stmt->bindParam("quizId", $quizId);
         $stmt->bindParam("state", $state);
         $stmt->execute();
+        $db=null;
     } catch (PDOException $e) {
         phpLog($e->getMessage());
     }
@@ -396,11 +411,11 @@ function updateResultsTable($accountId, $quizId, $logs)
     }
 }
 
-function insertIntoResponsesTable($accountId, $qid, $optionText, $timeTaken,$abilityScore,$delta)
+function insertIntoResponsesTable($accountId, $qid, $optionText, $timeTaken,$abilityScore,$delta,$state)
 {
     $date = date("Y-m-d H:i:s", time());
 
-    $sql = "INSERT INTO responses (accountId,questionID, optionSelected, timeTaken, abilityScoreBefore, delta, timestamp) VALUES (:accountId,:qid,:otxt,:ttk,:ascore,:delta,:tstmp)";
+    $sql = "INSERT INTO responses (accountId,questionID, optionSelected, timeTaken, abilityScoreBefore, delta, status, timestamp) VALUES (:accountId,:qid,:otxt,:ttk,:ascore,:delta,:sts,:tstmp)";
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
@@ -411,6 +426,7 @@ function insertIntoResponsesTable($accountId, $qid, $optionText, $timeTaken,$abi
         $stmt->bindParam("ttk", $timeTaken);
         $stmt->bindParam("ascore", $abilityScore);
         $stmt->bindParam("delta", $delta);
+        $stmt->bindParam("sts", $state);
         
         $stmt->execute();
         $db = null;
@@ -642,6 +658,26 @@ function adjustDelta($qDetails,$userAbility,$timeTaken,$delta,$state,$attemptedA
         $delta *= 0.5; 
     }
     return $delta;
+}
+
+function returnQuestionData()
+{
+    $accountId = $_POST['accountId']; 
+    $qid = $_POST['qid'];
+    $sql = "select optionSelected as o, timeTaken as t, abilityScoreBefore as a, delta as d from responses where accountId :acid AND questionId = :qid";
+    try {
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("acid", $accountId);
+        $stmt->bindParam("qid", $qid);
+        $stmt->execute();
+        $record = $stmt->fetch(PDO::FETCH_OBJ);
+    } catch (PDOException $e) {
+        phpLog($e->getMessage());
+    }
+    $response["status"] = SUCCESS;
+    $response["data"] = $record;
+    sendResponse($response);
 }
 //<< QUESTION EVALAUATION FUNCTIONS END
 
