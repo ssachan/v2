@@ -162,13 +162,21 @@ window.PerformanceView = Backbone.View.extend({
 		var thisL3Score = scoreL3.get(context.activel3Id);
 		var l3Name = (sectionL3.get(context.activel3Id)).get('displayName');
 		$('.l3-stats #topic', this.el).html(l3Name);
-		$('.l3-stats #bar', this.el).html('<div class="bar bar-warning" style="width:'+parseInt(thisL3Score.get('score'))+'%"></div>');
-
-		$('.l3-stats #pts', this.el).html(thisL3Score.get('score'));
-		$('.l3-stats #total', this.el).html(thisL3Score.get('numQuestions'));
-		$('.l3-stats #correct', this.el).html(thisL3Score.get('numCorrect'));
-		$('.l3-stats #incorrect', this.el).html(thisL3Score.get('numIncorrect'));
-		$('.l3-stats #unattempted', this.el).html(thisL3Score.get('numUnattempted'));
+		if(thisL3Score!=null){
+			$('.l3-stats #bar', this.el).html('<div class="bar bar-warning" style="width:'+parseInt(thisL3Score.get('score'))+'%"></div>');
+			$('.l3-stats #pts', this.el).html(thisL3Score.get('score'));
+			$('.l3-stats #total', this.el).html(thisL3Score.get('numQuestions'));
+			$('.l3-stats #correct', this.el).html(thisL3Score.get('numCorrect'));
+			$('.l3-stats #incorrect', this.el).html(thisL3Score.get('numIncorrect'));
+			$('.l3-stats #unattempted', this.el).html(thisL3Score.get('numUnattempted'));
+		}else{
+			$('.l3-stats #bar', this.el).html('<div class="bar bar-warning" style="width:'+parseInt('0')+'%"></div>');
+			$('.l3-stats #pts', this.el).html('0');
+			$('.l3-stats #total', this.el).html('0');
+			$('.l3-stats #correct', this.el).html('0');
+			$('.l3-stats #incorrect', this.el).html('0');
+			$('.l3-stats #unattempted', this.el).html('0');
+		}
 		$('.l3-stats', this.el).show();
 	},
 	
