@@ -302,6 +302,7 @@ window.QuizQuestionView = Backbone.View
 				$('#status').show();
 				$('#options').show();
 				$('#video').show();
+				$('click #single-type button').addClass('disabled');
 				//var status = this.model.isOptionSelectedCorrect(this.model.get('optionSelected'));
 				if (status==true) {
 					html.push('<h3>YOU MARKED OPTION '+ String.fromCharCode(65 + parseInt(this.model.get('optionSelected'))) + '</h3>');
@@ -320,34 +321,7 @@ window.QuizQuestionView = Backbone.View
 				$('#avgAcc').html('30%');
 				$('#avgTime').html(this.model.get('timeTaken'));
 
-				/*
-				 * html.push('<div class="row-fluid"><div class="span7">');
-				 * html.push('<h3>YOU MARKED OPTION '+String.fromCharCode(65 +
-				 * this.model.get('optionSelected'))+' - <span
-				 * class="orange">'+this.model.getOption(this.model.get('optionSelected'))+'</span>');
-				 * if(this.model.isOptionSelectedCorrect(this.model.get('optionSelected'))){
-				 * html.push('<img src="img/tick.png" width="33px">'); }else{
-				 * html.push('<img src="img/cross.png" width="33px"><br>');
-				 * html.push('<h3>CORRECT OPTION '+String.fromCharCode(65 +
-				 * this.model.get('correctAnswer'))+' - <span
-				 * class="orange">'+this.model.getOption(this.model.get('correctAnswer'))+'</span>'); }
-				 * html.push('<br><span class="orange"> in
-				 * '+helper.formatTime(this.model.get('timeTaken'))+ 'seconds</span>');
-				 * html.push('</h3></div>'); html.push('<div
-				 * class="span5">'); html.push('<div class="g-stats">');
-				 * html.push('Difficulty : <span class="blue">Easy</span></div>');
-				 * html.push('<div class="g-stats">'); html.push('<div
-				 * class="stat">'); html.push(' Average Accuracy<br> <span
-				 * class="blue">30%</span>'); html.push('</div>'); html.push('<div
-				 * class="stat">Average Time<br> <span
-				 * class="blue">'+this.model.get('timeTaken')+'</span>');
-				 * html.push('</div></div>'); html.push('<div
-				 * class="g-stats">'); html.push('<span class="val">JEE 2012,
-				 * JEE 2013</span>'); html.push('</div></div></div>');
-				 * $('#status').html(html.join('')); $('#solution').show();
-				 * $('#solutionText').html(this.model.get('explanation'));
-				 */
-				/* // code to add video here. */
+				$('#solution').show();
 				$('#video')
 						.html(
 								'<video id="analysis_video" class="video-js vjs-default-skin" controls preload="none" width="640" height="264" data-setup="{}"><source src="../../video/q'+this.model.get('id')+'vid1.mp4" type="video/mp4" /> </video>');

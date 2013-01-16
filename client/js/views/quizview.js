@@ -92,7 +92,7 @@ window.QuizView = Backbone.View.extend({
         this.model.set('timeTaken', timer.count);
         //this.model.calculateScores();
         this.model.set('state', this.totalQuestions);
-        this.model.set('status', quiz.STATUS_COMPLETED);
+        this.model.set('status', this.model.STATUS_COMPLETED);
         this.model.submitResults();
     },
 
@@ -175,7 +175,6 @@ window.QuizView = Backbone.View.extend({
         this.questionView.render();
         $("#qnum").html((parseInt(this.index) + 1));
         $("#qtotal").html((this.totalQuestions));
-        this.question.get('openTimeStamps').push(new Date().getTime());
         $('#previous').show();
         $('#next').show();
         if (this.index == 0) {

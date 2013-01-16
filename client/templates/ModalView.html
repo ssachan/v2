@@ -25,14 +25,15 @@
         </div>
         <div class="center">
             <div id="video">
-                <img src="<%=fdpURL%>" height="200" width="185" alt=""
-                    style="border: 2px solid #ccc; padding: 5px">
+                <video id="" class="video-js vjs-default-skin" controls preload="none" width="500"
+                    height="200" data-setup="{}">
+                    <source src="../../video/s<%=id%>intro.mp4" type="video/mp4" />
+                </video>
             </div>
-            <p style="text-align:left;margin-top: 25px; padding: 10px 0px; margin-bottom: 20px; background-color: #ECECEC">
+            <p style="text-align: left; margin-top: 25px; padding: 10px 0px; margin-bottom: 20px; background-color: #ECECEC">
                 <strong>Description: </strong><%= description %>
             </p>
         </div>
     </div>
-    <div class="modal-footer" id="take-btn">        
-    </div>
+    <div class="modal-footer" id="take-btn"></div>
 </div>
