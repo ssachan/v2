@@ -305,8 +305,8 @@ window.QuizQuestionView = Backbone.View
 				$('click #single-type button').addClass('disabled');
 				//var status = this.model.isOptionSelectedCorrect(this.model.get('optionSelected'));
 				if (status==true) {
+					html.push('<img src="img/cross.png" width="33px" style="float:left">');
 					html.push('<h3>YOU MARKED OPTION '+ String.fromCharCode(65 + parseInt(this.model.get('optionSelected'))) + '</h3>');
-					html.push('<img src="img/cross.png" width="33px">');
 				}else if(status==false){
 					html.push('<h3>YOU MARKED OPTION '+ String.fromCharCode(65 + parseInt(this.model.get('optionSelected'))) + '</h3>');
 					html.push('<img src="img/cross.png" width="33px">');
@@ -320,7 +320,7 @@ window.QuizQuestionView = Backbone.View
 				$('#diff').html(this.model.get('difficulty'));
 				$('#avgAcc').html('30%');
 				$('#avgTime').html(this.model.get('timeTaken'));
-
+				$('#solutionText').html(this.model.get('explanation'));
 				$('#solution').show();
 				$('#video')
 						.html(
