@@ -8,27 +8,7 @@ window.Question = Backbone.Model.extend({
     urlRoot: Config.serverUrl+'questions/',
 
     initialize: function () {
-      /*  if (!this.get('openTimeStamps')) {
-            this.set({
-                openTimeStamps: new Array()
-            });
-        }
-        if (!this.get('closeTimeStamps')) {
-            this.set({
-                closeTimeStamps: new Array()
-            });
-        }
-        if (!this.get('optionSelectedTimeStamps')) {
-            this.set({
-            	optionSelectedTimeStamps: new Array()
-            });
-        }
-        if (!this.get('optionUnSelectedTimeStamps')) {
-            this.set({
-            	optionUnSelectedTimeStamps: new Array()
-            });
-        }*/
-        var l3Id=this.get('l3Id');
+      var l3Id=this.get('l3Id');
         if (l3Id) {
         	var l3 = sectionL3.get(l3Id);
         	var l2Id = l3.get('l2Id');
@@ -132,7 +112,8 @@ window.Question = Backbone.Model.extend({
 		}
 		return isCorrect; 
 	},
-	getResults : function()
+	
+	/*getResults : function()
 	{
 		var url = Config.serverUrl + 'questions/result-data/';
 		return $.ajax({
@@ -154,7 +135,7 @@ window.Question = Backbone.Model.extend({
 			}
 		});
 	},
-
+*/
     defaults: {
         'correctAnswer': null,
         'status': null,

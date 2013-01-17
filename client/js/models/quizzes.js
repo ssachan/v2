@@ -175,8 +175,6 @@ window.Quiz = Backbone.Model
 			 * @param quiz
 			 */
 			submitResults : function() {
-				
-
 				var url = Config.serverUrl + 'results';
 				var that = this;
 				$.ajax({
@@ -199,6 +197,12 @@ window.Quiz = Backbone.Model
 							account.get('quizzesAttemptedArray').unshift(that.get('id'));
 							if (that.get('status') == that.STATUS_COMPLETED) {
 										that.set(data.data);
+										that.get('selectedAnswersArray').push.apply(that
+												.get('selectedAnswersArray'), JSON.parse(
+												data.data['selectedAnswers']));
+										that.get('timePerQuestionArray').push.apply(that
+												.get('timePerQuestionArray'), JSON.parse(
+												data.data['timePerQuestion']));
 										app.quiz(that.get('id'));
 							} else {
 								// continue the quiz

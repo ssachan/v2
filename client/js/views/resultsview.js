@@ -224,12 +224,14 @@ window.SolutionsView = Backbone.View.extend({
 	setUp : function() {
 		this.answersSelected = this.model.getSelectedAnswers();
 		this.getTimeTakenPerQuestion = this.model.getTimeTakenPerQuestion();
-		for ( var i = 0; i < this.totalQuestions; i++) {
+		for ( var i = 0; i < this.totalQuestions; i++) {			
 			var question = quizQuestions.get(this.questionIds[i]);
-			if (question.get('timeTaken') == null) {
-				question.set('timeTaken', this.answersSelected[i]);
-				question.set('optionSelected', this.answersSelected[i]);
-			}
+	        if (this.getTimeTakenPerQuestion[i] != null) {
+	            // mark this question
+	            question.set('timeTaken', this.getTimeTakenPerQuestion[i]);
+	            question.set('optionSelected', this.answersSelected[i]);
+	            question.set('hasAttempted', true);
+	        }
 		}
 	},
 
