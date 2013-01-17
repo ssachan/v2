@@ -79,7 +79,8 @@ function updateResults()
 
     $temp = getStateOfQuiz($accountId,$quizId);
     $attemptedAs = $temp["attemptedAs"];
-    $state = intval($temp["state"]);
+    //$state = intval($temp["state"]);
+    $state = $_POST['state'];
 
     updateResultsTable($accountId,$quizId,$logs); //storing to database
 
@@ -91,7 +92,7 @@ function updateResults()
     elseif($attemptedAs == analConst::ATTEMPTED_AS_PRACTICE)
     {
         updateResultsForPractice($accountId,$quizId,$logs);
-        setStateOfQuiz($accountId,$quizId,$state+1);
+        setStateOfQuiz($accountId,$quizId,$state);
     }
 }
 
@@ -665,7 +666,7 @@ function returnQuestionData()
     $accountId = $_POST['accountId']; 
     $qid = $_POST['qid'];
     $sql = "select optionSelected as o, timeTaken as t, abilityScoreBefore as a, delta as d, MAX(timeStamp) as m from responses where accountId :acid AND questionId = :qid GROUP BY questionId";
-    
+
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
