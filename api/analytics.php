@@ -186,6 +186,7 @@ function updateResultsForTest($accountId,$quizId,$logs)
     }
     setStateOfQuiz($accountId,$quizId,count($questionIds));
     $response["status"] = SUCCESS;
+
     $response["data"] = array(
         "optionText"=>$optionText,
         "timeTaken "=>$timeTaken,
@@ -193,6 +194,29 @@ function updateResultsForTest($accountId,$quizId,$logs)
         "delta"=>$delta,
         "userAbilityRecord"=>$userAbilityRecord
         );
+//extracode    
+        $optionArray2 = array();
+        $optionText2 = array();
+        $timeTaken2 = array(); //All 4 are per question arrays
+        $state2 = array();
+        $delta2 = array(); //default to 0?
+        $userAbilityRecord2 = array();
+    foreach ($questionIds as $key => $qid)
+    {
+        $optionText2[] = $optionText[$qid];
+        $timeTaken2[] = $timeTaken[$qid];
+        $state2[] = $state[$qid];
+        $delta2[] = $delta[$qid];
+        $userAbilityRecord2[] = $userAbilityRecord[$qid];
+    }
+    $response["data"] = array(
+        "optionText"=>$optionText2,
+        "timeTaken "=>$timeTaken2,
+        "state"=>$state2,
+        "delta"=>$delta2,
+        "userAbilityRecord"=>$userAbilityRecord2
+        );    
+
     sendResponse($response);
 }
 //<< END FRONT FACING
