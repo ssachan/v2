@@ -629,8 +629,30 @@ h5 {
 padding: 10px 10px !important;
 }
 
+.l2>li.active > a {
+color: #fff;
+text-shadow: 0 -1px 0 rgba(0,0,0,0.2);
+background-color: #08c;
+}
+
+.l3{
+    min-height:270px;    
+}
+
 .l3>li>a {
-    padding: 10px 2px !important;
+    padding: 10px 10px !important;
+}
+
+.l3>li.active > a {
+color: #fff;
+text-shadow: 0 -1px 0 rgba(0,0,0,0.2);
+background-color: #08c;
+}
+
+.nav-list > .active > a, .nav-list > .active > a:hover {
+color: #fff;
+text-shadow: 0 -1px 0 rgba(0,0,0,0.2);
+background-color: #08c;
 }
 
 .subject>div {
@@ -1655,4 +1677,8 @@ Pagination classes
 .pagination ul>.attempted>a,.pagination ul>.attempted>span {
     color: #999999;
     cursor: default;
+}
+
+.modal.fade.in {
+top: 45%;
 }
