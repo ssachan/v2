@@ -51,69 +51,22 @@ window.ResultAnalysisView = Backbone.View.extend({
 
 	calculateVideoArray : function(options) {
 
-		var videoResults = Array({
-
-			thumb_url : 'img/video1.jpg',
-			poster_url : 'img/video1.jpg',
-			sources : [ {
-				src : 'videos/video1.mp4',
-				type : "video/mp4",
-				title : 'analysisVideo',
-				media : ''
-			} ]
-		}, {
-
-			thumb_url : 'img/video2.jpg',
-			poster_url : 'img/video2.jpg',
-			sources : [ {
-				src : 'videos/video2.mp4',
-				type : "video/mp4",
-				title : 'q1',
-				media : ''
-			} ]
-		}, {
-
-			thumb_url : 'img/video3.jpg',
-			poster_url : 'img/video3.jpg',
-			sources : [ {
-				src : 'videos/video3.mp4',
-				type : "video/mp4",
-				title : 'q2',
-				media : ''
-			} ]
-		}, {
-
-			thumb_url : 'img/video4.jpg',
-			poster_url : 'img/video4.jpg',
-			sources : [ {
-				src : 'videos/video3.mp4',
-				type : "video/mp4",
-				title : 'q2',
-				media : ''
-			} ]
-		}, {
-
-			thumb_url : 'img/video4.jpg',
-			poster_url : 'img/video4.jpg',
-			sources : [ {
-				src : 'videos/video4.mp4',
-				type : "video/mp4",
-				title : 'q2',
-				media : ''
-			} ]
-		});
-
-		// a video object has el,src,poster
-
-		// this is an implementation to select one of 6 possible videos.
-		// if we're not editing those 6 videos, I will need a series of clips
-		// and
-		// add a handler to the _V_("video-analysis").addEvent("ended",handler)
-		// will have to add an indicator to let people know video remaining.
-
-		// Currently assuming we have those, let's get down to the dirty work
-
-		// I need to know marks.
+		videoResults = array();
+		
+		_.each(options,function(item)
+		{
+			videoResultObject = {
+				thumb_url : item.posterSrc,
+				poster_url : item.posterSrc,
+				sources : [ {
+					src : item.videoSrc,
+					type : "video/mp4",
+					title : (item.title || ""),
+					media : ''
+				} ]
+			};
+			videoResults.push(videoResultObject);
+		}
 
 		return videoResults;
 
@@ -148,7 +101,7 @@ window.ResultAnalysisView = Backbone.View.extend({
 		var historyInsights = '';
 
 		// video array containing all data for all questions and analysis
-		var videoResults = this.calculateVideoArray();
+		var videoResults = this.calculateVideoArray(this,model.get('videoArray'));
 
 		$(this.el).html(this.template({
 			'id' : this.model.get('id'),

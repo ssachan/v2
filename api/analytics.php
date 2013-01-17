@@ -185,6 +185,9 @@ function updateResultsForTest($accountId,$quizId,$logs)
         updateScore($accountId, $delta[$qid], $userAbility,$state[$qid]);
     }
     setStateOfQuiz($accountId,$quizId,count($questionIds));
+
+    $videoArray = getVideoArray($accountId, $qDetails, $state, $delta);
+
     $response["status"] = SUCCESS;
 
     $response["data"] = array(
@@ -192,8 +195,11 @@ function updateResultsForTest($accountId,$quizId,$logs)
         "timeTaken "=>$timeTaken,
         "state"=>$state,
         "delta"=>$delta,
-        "userAbilityRecord"=>$userAbilityRecord
+        "userAbilityRecord"=>$userAbilityRecord,
+        "videoArray"=>$videoArray
         );
+    
+
 //extracode    
         $optionArray2 = array();
         $optionText2 = array();
@@ -214,7 +220,8 @@ function updateResultsForTest($accountId,$quizId,$logs)
         "timePerQuestion"=>json_encode($timeTaken2),
         "state"=>$state2,
         "delta"=>$delta2,
-        "userAbilityRecord"=>$userAbilityRecord2
+        "userAbilityRecord"=>$userAbilityRecord2,
+        "videoArray"=>$videoArray
         );    
     updateUserResponseinResultsTable($accountId, $quizId, $responses["data"]["selectedAnswers"], $responses["data"]["timePerQuestion"]);
     sendResponse($response);
@@ -728,4 +735,22 @@ function returnQuestionData()
     sendResponse($response);
 }
 //<< QUESTION EVALAUATION FUNCTIONS END
+
+function getVideoArray($accountId, $qDetails, $state, $delta)
+{
+    $videoArray = array();
+    asort($delta);
+    $count = 0;
+    foreach ($delta as $key => $value) {
+        $videoObject = new stdClass();
+         
+            $videoObject->videoSrc = $qDetails[$key]->videoSrc;
+            $videoObject->posterSrc = $qDetails[$key]->posterSrc;
+        $videoArray[] = $videoObject;
+        $count += 1;
+        if($count == 5 or $value > 0)
+            break;
+    }
+    return $videoArray;
+}
 
