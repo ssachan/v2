@@ -80,11 +80,9 @@ h2,h3,h4,h5 {
 }
 
 h1 {
-    /*font-family: "HelveticaNeueW01-Thin","HelveticaNeue-Light","Helvetica Neue Light",Helvetica,Arial,sans-serif;*/
     font-size: 4.5em;
     line-height: 1.1em;
     font-weight: 200;
-    /*font-family: proxima-nova, 'Helvetica Neue', Helvetica, Arial, serif;*/
 }
 
 h2 {
@@ -126,12 +124,6 @@ h5 {
     font-size: 11px;
 }
 
-/*
-hr .horizontal{
-border-top: 1px solid #E0DFDF;
-border-bottom: 1px solid #FCFCFC;}
-*/
-
 /* Faded out hr */
 .soften hr {
     margin-top: 20px;
@@ -156,7 +148,6 @@ border-bottom: 1px solid #FCFCFC;}
     margin-bottom: 30px;
 }
 
-/*Define the bold font */
 /* Define the color palette */
 .green {
     color: #06947A;
@@ -575,7 +566,7 @@ border-bottom: 1px solid #FCFCFC;}
 -------------------------------------------------- */
 
 .dashboard {
-    width: 75%;
+    width: 100%;
 }
 
 .dp {
@@ -1488,13 +1479,7 @@ padding: 10px 10px !important;
     font-size: 16px;
 }
 
-/* Quiz Question Solution-----
-----------------------*/
-.qsolution {
-    width: 65%;
-}
-
-/*Quiz Results Page--------
+/*Quiz Results Page
 -----------------------*/
 .results {
     width: 95%
