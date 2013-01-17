@@ -216,7 +216,7 @@ function updateResultsForTest($accountId,$quizId,$logs)
         "delta"=>$delta2,
         "userAbilityRecord"=>$userAbilityRecord2
         );    
-
+    updateUserResponseinResultsTable($accountId, $quizId, $responses["data"]["selectedAnswers"], $responses["data"]["timePerQuestion"]);
     sendResponse($response);
 }
 //<< END FRONT FACING
@@ -427,6 +427,28 @@ function updateResultsTable($accountId, $quizId, $logs)
         $stmt->bindParam("quizId", $quizId);
         $stmt->bindParam("timeStamp", $date);
         $stmt->bindParam("data", $logsJSON);
+        $stmt->execute();
+        $db = null;
+    } catch (PDOException $e) {
+        $response["status"] = ERROR;
+        $response["data"] = EXCEPTION_MSG;
+        phpLog($e->getMessage());
+    }
+}
+
+function updateUserResponseinResultsTable($accountId, $quizId, $selectedAnswers, $timePerQuestion)
+{
+    $date = date("Y-m-d H:i:s", time());  // tanujb:TODO: arbitrary?????
+
+    $sql = "UPDATE results SET selectedAnswers = :selectedAnswers, timePerQuestion = :timePerQuestion where accountId=:accountId and quizId=:quizId";
+    try {
+        $logsJSON = json_encode($logs);
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("accountId", $accountId);
+        $stmt->bindParam("quizId", $quizId);
+        $stmt->bindParam("timePerQuestion", $timePerQuestion);
+        $stmt->bindParam("selectedAnswers", $selectedAnswers);
         $stmt->execute();
         $db = null;
     } catch (PDOException $e) {
