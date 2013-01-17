@@ -210,8 +210,8 @@ function updateResultsForTest($accountId,$quizId,$logs)
         $userAbilityRecord2[] = $userAbilityRecord[$qid];
     }
     $response["data"] = array(
-        "optionText"=>$optionText2,
-        "timeTaken "=>$timeTaken2,
+        "selectedAnswers"=>json_encode($optionText2),
+        "timePerQuestion"=>json_encode($timeTaken2),
         "state"=>$state2,
         "delta"=>$delta2,
         "userAbilityRecord"=>$userAbilityRecord2
