@@ -55,12 +55,6 @@ window.QuizLibraryView = Backbone.View.extend({
 	renderQuizItems : function(){
 		$("#quizzes").empty();
 		this.filtered.reset(this.collection.models);
-		if (this.type != '0') {
-			var filteredArray = this.filtered.where({
-				typeId : this.type
-			});
-			this.filtered.reset(filteredArray);
-		}
 		if (this.l1 != '0') {
 			var filteredArray = this.filtered.where({
 				l1 : this.l1
@@ -79,12 +73,6 @@ window.QuizLibraryView = Backbone.View.extend({
 			});
 			this.filtered.reset(sortedCollection);
 		}
-		/*else if (this.rec == '2') {
-			var sortedCollection = this.filtered.sortBy(function(quiz) {
-				return -parseInt(quiz.get("rec"));
-			});
-			this.filtered.reset(sortedCollection);
-		}*/
 		var quizzes = this.filtered.models;
 		var len = quizzes.length;
 		var i = 0;

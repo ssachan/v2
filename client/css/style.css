@@ -696,6 +696,13 @@ background-color: #08c;
     width: 35%;
 }
 
+/* Activity
+-------------------------------------------------- */
+#donut>div.highcharts-container{
+    margin:0px auto;
+    width:100%;
+}
+
 /* Quiz Library
 -------------------------------------------------- */
 .quiz-library {
