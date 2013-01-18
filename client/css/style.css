@@ -1292,7 +1292,7 @@ background-color: #08c;
 /* Fac Profile
 -------------------------------------------------- */
 .fac-profile {
-    width: 80%;
+    width: 90%;
 }
 
 .card h3 {
@@ -1697,4 +1697,15 @@ Pagination classes
 
 .modal.fade.in {
 top: 45%;
+}
+
+.grey-box{
+min-height: 20px;
+padding: 10px;
+margin-bottom: 20px;
+background-color: #f5f5f5;
+border: 1px solid #e3e3e3;
+-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.05);
+-moz-box-shadow: inset 0 1px 1px rgba(0,0,0,0.05);
+box-shadow: inset 0 1px 1px rgba(0,0,0,0.05);
 }

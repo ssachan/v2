@@ -122,7 +122,35 @@ window.ResultAnalysisView = Backbone.View.extend({
 	},
 	
 	onRender : function(){
-		drawL3Chart('l3-graph');
+		var l3GraphData = this.model.get('l3GraphData');
+		if(l3GraphData){
+			var html=[];
+			var len = l3GraphData.length;
+			for(var i=0; i< len; i++){
+				var l3Data = l3GraphData[i];
+				
+				html.push('<div class="grey-box"><div class="row-fluid"><div class="span8">');
+				html.push('<h3><span class="blue">'+(sectionL3.get(l3Data.lId)).get('displayName')+'</span><i class="icon-stop"></i><span style="font-h3  orange">'+l3Data.delta+'</span> </h3><hr>');
+				html.push('<div class="progress outline">');
+				if(parseInt(l3Data.delta)>0){
+				html.push('<div class="bar bar-warning" style="width:'+parseInt(l3Data.scoreBefore)+'%"></div>');
+				html.push('<div class="bar bar-success" style="width:'+parseInt(l3Data.delta)+'%"></div>');
+				}else{
+					var val = parseInt(l3Data.scoreBefore)+parseInt(l3Data.delta);
+					html.push('<div class="bar bar-warning" style="width:'+val+'%"></div>');
+					html.push('<div class="bar bar-danger" style="width:'+(-parseInt(l3Data.delta))+'%"></div>');
+				}
+				html.push('</div></div>');
+				html.push('<div class="span4">');
+				html.push('<div class="stats">');
+				html.push('<ul class="unstyled">');
+				html.push('<li><i class="icon-signal"></i>'+l3Data.numQ+' Questions</li>');
+				html.push('<li><i class="icon-th-list"></i>'+l3Data.numCorrect+' Correct</li>');
+				html.push('<li><i class="icon-th-list"></i>'+l3Data.numIncorrect+' Incorrect</li>');
+				html.push('</ul></div></div></div></div>');
+			}
+			$('#topic-wise').html(html.join(' '));
+		}
 	}
 });
 
