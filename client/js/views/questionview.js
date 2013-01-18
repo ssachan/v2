@@ -307,8 +307,8 @@ window.QuizQuestionView = Backbone.View
 				$('#status').show();
 				$('#options').show();
 				$('#video').show();
-				$('click #single-type button').addClass('disabled');
-				//var status = this.model.isOptionSelectedCorrect(this.model.get('optionSelected'));
+				
+				var status = this.model.isOptionSelectedCorrect(this.model.get('optionSelected'));
 				if (status==true) {
 					html.push('<img src="img/cross.png" width="33px" style="float:left">');
 					html.push('<h3>YOU MARKED OPTION '+ String.fromCharCode(65 + parseInt(this.model.get('optionSelected'))) + '</h3>');
