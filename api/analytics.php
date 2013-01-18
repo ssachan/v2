@@ -215,6 +215,7 @@ function updateResultsForTest($accountId,$quizId,$logs)
         $delta2[] = $delta[$qid];
         $userAbilityRecord2[] = $userAbilityRecord[$qid];
     }
+    echo "hey";
     $response["data"] = array(
         "selectedAnswers"=>json_encode($optionText2),
         "timePerQuestion"=>json_encode($timeTaken2),
@@ -748,7 +749,7 @@ function getVideoArray($accountId, $qDetails, $state, $delta)
             $videoObject->posterSrc = $qDetails[$key]->posterSrc;
         $videoArray[] = $videoObject;
         $count += 1;
-        if($count == 5 or $value > 0)
+        if($count == 5 || $value > 0)
             break;
     }
     return $videoArray;
