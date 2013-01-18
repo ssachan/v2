@@ -74,15 +74,15 @@ class lscoreDataObject{
     public $scoreBefore;
     public $delta;
 
-    function __construct($level, $lid)
+    function __construct($level, $lid, $lscore)
     {
         $this->lId = $lid;
         $this->lType = $level;
+        $this->scoreBefore = $lscore;
         $this->numQ = 0;
         $this->numCorrect = 0;
         $this->numIncorrect = 0;
         $this->numUnattempted = 0;
-        $this->scoreBefore = 0;
         $this->delta = 0;
     }
 
@@ -231,7 +231,7 @@ function updateResultsForTest($accountId,$quizId,$logs)
     }
     setStateOfQuiz($accountId,$quizId,count($questionIds));
     $videoArray = getVideoArray($accountId, $qDetailsRecord, $state, $delta);
-    $l3GraphData = getL3GraphData($accountId, $qDetailsRecord, $state, $delta);
+    $l3GraphData = getL3GraphData($accountId, $qDetailsRecord, $state, $delta, $userAbilityRecord);
 
     $response["status"] = SUCCESS;
 
@@ -753,7 +753,7 @@ function evalIncorrect($qDetails,$userAbility,$timeTaken)
 }
 function adjustDelta($qDetails,$userAbility,$timeTaken,$delta,$state,$attemptedAs)
 {
-    if($attemptedAs = analConst::ATTEMPTED_AS_PRACTICE)
+    if($attemptedAs == analConst::ATTEMPTED_AS_PRACTICE)
     {
         $delta *= 0.5; 
     }
@@ -798,28 +798,30 @@ function getVideoArray($accountId, $qDetails, $state, $delta)
     }
     return $videoArray;
 }
-function getL3GraphData($accountId, $qDetailsRecord, $state, $delta)
+function getL3GraphData($accountId, $qDetailsRecord, $state, $delta, $userAbilityRecord)
 {
     $l3Data = array();
 
     foreach ($qDetailsRecord as $qid => $qDetails) {
-        if(!isset($l3Data[$qDetails->l3Id]))
+        $lid = $qDetails->l3Id;
+        if(!isset($l3Data[$lid]))
         {
-            $l3Data[$qDetails->l3Id] = new lscoreDataObject("l3",$qDetails->l3Id);
+            $lscore = $userAbilityRecord[$qid]->l3score;
+            $l3Data[$lid] = new lscoreDataObject("l3",$lid,$lscore);
         }
         switch($state[$qid])
         {
             case analConst::CORRECT:
-                $l3Data[$qDetails->l3Id]->addCorrect($delta[$qid]);
+                $l3Data[$lid]->addCorrect($delta[$qid]);
             break;
             case analConst::INCORRECT:
-                $l3Data[$qDetails->l3Id]->addIncorrect($delta[$qid]);
+                $l3Data[$lid]->addIncorrect($delta[$qid]);
             break;
             case analConst::SKIPPED:
-                $l3Data[$qDetails->l3Id]->addUnattempted($delta[$qid]);
+                $l3Data[$lid]->addUnattempted($delta[$qid]);
             break;
             case analConst::UNSEEN:
-                $l3Data[$qDetails->l3Id]->addUnattempted($delta[$qid]);
+                $l3Data[$lid]->addUnattempted($delta[$qid]);
             break;
         }
     }
