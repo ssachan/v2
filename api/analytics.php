@@ -153,6 +153,7 @@ function updateResultsForTest($accountId,$quizId,$logs)
     $state = array();
     $delta = array(); //default to 0?
     $userAbilityRecord = array();
+    $qDetailsRecord = array();
     foreach ($questionIds as $key => $qid)
     {
        //Retrieve the final option selected and time taken
@@ -177,6 +178,7 @@ function updateResultsForTest($accountId,$quizId,$logs)
         $delta[$qid] = $result[$qid][0]; $state[$qid] = $result[$qid][1];
         $delta[$qid] = adjustDelta($qDetails,$userAbility,$timeTaken[$qid],$delta[$qid],$state[$qid],$attemptedAs);
         $userAbilityRecord[$qid]=$userAbility;
+        $qDetailsRecord[$qid]=$qDetails;
         //$result[0] is $delta, $result[1] is state;
         // optimization tip:  unseen questions can be evaluated faster.
 
@@ -185,7 +187,7 @@ function updateResultsForTest($accountId,$quizId,$logs)
         updateScore($accountId, $delta[$qid], $userAbility,$state[$qid]);
     }
     setStateOfQuiz($accountId,$quizId,count($questionIds));
-    $videoArray = getVideoArray($accountId, $qDetails, $state, $delta);
+    $videoArray = getVideoArray($accountId, $qDetailsRecord, $state, $delta);
 
     $response["status"] = SUCCESS;
 
@@ -223,7 +225,7 @@ function updateResultsForTest($accountId,$quizId,$logs)
         "userAbilityRecord"=>$userAbilityRecord2,
         "videoArray"=>$videoArray
         );    
-    updateUserResponseinResultsTable($accountId, $quizId, $responses["data"]["selectedAnswers"], $responses["data"]["timePerQuestion"]);
+    updateUserResponseinResultsTable($accountId, $quizId, $response["data"]["selectedAnswers"], $response["data"]["timePerQuestion"]);
     sendResponse($response);
 }
 //<< END FRONT FACING
@@ -449,7 +451,6 @@ function updateUserResponseinResultsTable($accountId, $quizId, $selectedAnswers,
 
     $sql = "UPDATE results SET selectedAnswers = :selectedAnswers, timePerQuestion = :timePerQuestion where accountId=:accountId and quizId=:quizId";
     try {
-        $logsJSON = json_encode($logs);
         $db = getConnection();
         $stmt = $db->prepare($sql);
         $stmt->bindParam("accountId", $accountId);
