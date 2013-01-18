@@ -748,7 +748,7 @@ function getVideoArray($accountId, $qDetails, $state, $delta)
             $videoObject->posterSrc = $qDetails[$key]->posterSrc;
         $videoArray[] = $videoObject;
         $count += 1;
-        if($count == 5 or $value > 0)
+        if($count == 5 || $value > 0)
             break;
     }
     return $videoArray;
