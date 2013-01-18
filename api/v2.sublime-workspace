@@ -1,0 +1,1081 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"l3",
+				"l3Data"
+			],
+			[
+				"qDe",
+				"qDetails"
+			],
+			[
+				"delta",
+				"deltaForQuestion"
+			],
+			[
+				"l3Data",
+				"l3DataObject"
+			],
+			[
+				"qDet",
+				"qDetailsRecord"
+			],
+			[
+				"forea",
+				"foreach	foreach …"
+			],
+			[
+				"vi",
+				"videoArray"
+			],
+			[
+				"video",
+				"videoObject"
+			],
+			[
+				"for",
+				"forEach"
+			],
+			[
+				"time",
+				"timePerQuestion"
+			],
+			[
+				"selected",
+				"selectedAnswers"
+			],
+			[
+				"json",
+				"json_encode"
+			],
+			[
+				"userAbilit",
+				"userAbilityRecord"
+			],
+			[
+				"option",
+				"optionSelected"
+			],
+			[
+				"logs",
+				"logs"
+			],
+			[
+				"log",
+				"logsByQuestion"
+			],
+			[
+				"add",
+				"addEntry"
+			],
+			[
+				"upda",
+				"updateResultsTable"
+			],
+			[
+				"ATT",
+				"ATTEMPTED_AS_TIMED_TEST  (constant)"
+			],
+			[
+				"attemp",
+				"attemptedAs"
+			],
+			[
+				"quiz",
+				"quizId"
+			],
+			[
+				"atte",
+				"attemptedAs"
+			],
+			[
+				"pre",
+				"previousState"
+			],
+			[
+				"IN",
+				"INCORRECT"
+			],
+			[
+				"uns",
+				"UNSEEN"
+			],
+			[
+				"defa",
+				"defaultScore"
+			],
+			[
+				"A",
+				"ABILITY_DEFAULT_SCORE"
+			],
+			[
+				"anal",
+				"analConst"
+			],
+			[
+				"stream",
+				"streamId"
+			],
+			[
+				"ability",
+				"abilityScoreBefore"
+			],
+			[
+				"eval",
+				"evalUnseen"
+			],
+			[
+				"un",
+				"unpack"
+			],
+			[
+				"tmp",
+				"tmpOptionText"
+			],
+			[
+				"correct",
+				"correctArray"
+			],
+			[
+				"options",
+				"optionSuperArray"
+			],
+			[
+				"corre",
+				"correctSuperArray"
+			],
+			[
+				"correc",
+				"correctArray"
+			],
+			[
+				"op",
+				"optionsArray"
+			],
+			[
+				"getOption",
+				"getOptionArrayFromText"
+			],
+			[
+				"answe",
+				"answer1"
+			],
+			[
+				"questi",
+				"questionType"
+			],
+			[
+				"qu",
+				"questionType"
+			],
+			[
+				"this",
+				"thisL3Score"
+			],
+			[
+				"act",
+				"activel3Id"
+			],
+			[
+				"ScoreL3",
+				"ScoreL3Collection"
+			],
+			[
+				"inc",
+				"incorrectlen"
+			],
+			[
+				"question",
+				"questionIds"
+			],
+			[
+				"play",
+				"playlist"
+			],
+			[
+				"pla",
+				"playlist"
+			],
+			[
+				"account",
+				"accounts"
+			],
+			[
+				"print_",
+				"print_r"
+			],
+			[
+				"source",
+				"sources"
+			],
+			[
+				"setUp",
+				"setUpPlaylist"
+			],
+			[
+				"html",
+				"innerHTML  (variable)"
+			],
+			[
+				"analysis",
+				"analysisVideo"
+			],
+			[
+				"analys",
+				"analysisVideo"
+			],
+			[
+				"calc",
+				"calculateVideoArray"
+			],
+			[
+				"render",
+				"renderDefList"
+			],
+			[
+				"curr",
+				"currentFragment"
+			],
+			[
+				"current",
+				"currentFragment"
+			],
+			[
+				"previous",
+				"previousFragment"
+			],
+			[
+				"selec",
+				"selecterr"
+			],
+			[
+				"fragment",
+				"fragment"
+			],
+			[
+				"has",
+				"hasClass  (function)"
+			],
+			[
+				"conten",
+				"contentBox"
+			],
+			[
+				"select",
+				"selecterr"
+			],
+			[
+				"newSe",
+				"newSelector"
+			],
+			[
+				"topic",
+				"topicID"
+			],
+			[
+				"text",
+				"textSelectHandler"
+			],
+			[
+				"backgro",
+				"background-color:   (property)"
+			],
+			[
+				"topict",
+				"topictitle"
+			],
+			[
+				"inse",
+				"insertBefore  (function)"
+			],
+			[
+				"tag",
+				"tagName"
+			],
+			[
+				"curren",
+				"currentMainView"
+			],
+			[
+				"new",
+				"newSection"
+			],
+			[
+				"wid",
+				"widgetConfig"
+			],
+			[
+				"remo",
+				"removeClass"
+			],
+			[
+				"inner",
+				"innerHTML  (variable)"
+			],
+			[
+				"topi",
+				"topicRawData"
+			],
+			[
+				"top",
+				"topicRawData"
+			],
+			[
+				"load",
+				"loadModalBox"
+			],
+			[
+				"att",
+				"attr"
+			],
+			[
+				"con",
+				"contentBox"
+			],
+			[
+				"parse",
+				"parseIntoSections"
+			],
+			[
+				"max",
+				"maxHeight"
+			],
+			[
+				"section",
+				"sectionHTML"
+			],
+			[
+				"T",
+				"TOC"
+			],
+			[
+				"TOC",
+				"TOCData"
+			],
+			[
+				"loadDA",
+				"loadDataFile"
+			],
+			[
+				"cre",
+				"createElement  (function)"
+			],
+			[
+				"chil",
+				"children  (function)"
+			],
+			[
+				"inn",
+				"innerHTML  (variable)"
+			],
+			[
+				"next",
+				"nextFragment"
+			],
+			[
+				"hori",
+				"horizontalSlides"
+			],
+			[
+				"edi",
+				"editionName  (variable)"
+			],
+			[
+				"got",
+				"gotDbDirectory"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"config",
+				"config_android"
+			],
+			[
+				"model",
+				"modelName"
+			],
+			[
+				"Se",
+				"SEPARATOR"
+			],
+			[
+				"fetchQues",
+				"fetchQuestionSetIdsFromModel"
+			],
+			[
+				"fetchQ",
+				"fetchQuizIdsFromServer"
+			],
+			[
+				"id",
+				"id"
+			],
+			[
+				"not",
+				"notOnLocal"
+			],
+			[
+				"loca",
+				"localIds"
+			],
+			[
+				"serve",
+				"serverIds"
+			],
+			[
+				"server",
+				"serverIds"
+			],
+			[
+				"fetch",
+				"fetchQuizIdsFromServer"
+			],
+			[
+				"succ",
+				"success"
+			],
+			[
+				"user",
+				"userAnswer"
+			],
+			[
+				"firs",
+				"firstPage"
+			],
+			[
+				"arg",
+				"argument"
+			],
+			[
+				"answer",
+				"answer-btn"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "/Users/tanujb/Desktop/repos/v2/client/js/views/resultsview.js",
+			"settings":
+			{
+				"buffer_size": 6500,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/Users/tanujb/Desktop/repos/v2/client/js/views/questionview.js",
+			"settings":
+			{
+				"buffer_size": 11580,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "index.php",
+			"settings":
+			{
+				"buffer_size": 21852,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"selected_items":
+		[
+			[
+				"proje",
+				"Project: Save As"
+			],
+			[
+				"packa",
+				"Package Control: Install Package"
+			],
+			[
+				"package in",
+				"Package Control: Install Package"
+			],
+			[
+				"stack",
+				"Stackoverflow: Search Selection"
+			],
+			[
+				"pack",
+				"Package Control: Install Package"
+			],
+			[
+				"",
+				"Snippet: Lorem ipsum"
+			],
+			[
+				"packag",
+				"Package Control: List Packages"
+			],
+			[
+				"ch",
+				"ChangeQuotes"
+			],
+			[
+				"cha",
+				"ChangeQuotes"
+			],
+			[
+				"package",
+				"Package Control: Discover Packages"
+			],
+			[
+				"alignment",
+				"Preferences: Alignment Key Bindings – Default"
+			],
+			[
+				"alignme",
+				"Preferences: Alignment Key Bindings – Default"
+			],
+			[
+				"li",
+				"Closure Linter: Run Closure Linter"
+			],
+			[
+				"bracke",
+				"Bracket Highlighter: Match Brackets"
+			],
+			[
+				"package ",
+				"Package Control: Install Package"
+			],
+			[
+				"package contol",
+				"Package Control: Install Package"
+			],
+			[
+				"package control in",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 472.0
+	},
+	"console":
+	{
+		"height": 125.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/tanujb/Downloads/AnalyticsWorkingDoc.txt",
+		"/Users/tanujb/Desktop/repos/v2/api/analytics.php",
+		"/Users/tanujb/Desktop/repos/v2/v2.sublime-project",
+		"/Users/tanujb/Desktop/repos/v2/api/index.php",
+		"/Users/tanujb/Desktop/repos/v2/client/js/Manager.js",
+		"/Users/tanujb/Desktop/repos/v2/client/js/models/quizzes.js",
+		"/Users/tanujb/Desktop/repos/v2/client/js/views/quizview.js",
+		"/Users/tanujb/Desktop/repos/v2/client/js/views/resultsview.js",
+		"/Users/tanujb/Desktop/repos/v2/client/js/views/questionview.js",
+		"/Users/tanujb/Desktop/repos/v2/client/js/models/questions.js",
+		"/Users/tanujb/Desktop/repos/v2/client/js/models/accounts.js",
+		"/Users/tanujb/Desktop/repos/v2/api/authState.php",
+		"/Users/tanujb/Desktop/repos/v2/client/js/views/dashboardview.js",
+		"/Users/tanujb/Desktop/insertl3.sql",
+		"/Users/tanujb/Desktop/Todos",
+		"/Users/tanujb/Desktop/repos/v2/client/js/models/scores.js",
+		"/Users/tanujb/Desktop/repos/v2/client/js/router.js",
+		"/Users/tanujb/Desktop/repos/v2/client/dashboard.html",
+		"/Users/tanujb/Library/Application Support/Sublime Text 2/Packages/User/Preferences.sublime-settings",
+		"/Users/tanujb/Desktop/PrepSquare Local Files/text files/referencedocs",
+		"/Users/tanujb/Desktop/PrepSquare Local Files/text files/Object List",
+		"/Users/tanujb/Desktop/PrepSquare Local Files/text files/Material for facebook:blog",
+		"/Users/tanujb/Desktop/PrepSquare Local Files/text files/features_doc",
+		"/Users/tanujb/Desktop/PrepSquare Local Files/text files/analytics_doc",
+		"/Users/tanujb/Desktop/Object List",
+		"/Users/tanujb/Desktop/referencedocs",
+		"/Users/tanujb/Desktop/analytics_doc",
+		"/Users/tanujb/Desktop/features_doc",
+		"/Users/tanujb/Desktop/ac.html",
+		"/Users/tanujb/Desktop/repos/v4/app/config.js",
+		"/Users/tanujb/Desktop/repos/v4/assets/js/libs/jquery.js",
+		"/Users/tanujb/Desktop/repos/v4/app/router.js",
+		"/Users/tanujb/Desktop/repos/v4/app/app.js",
+		"/Users/tanujb/Desktop/repos/v4/index.html",
+		"/Users/tanujb/Desktop/repos/v3/app/templates/example.html",
+		"/Users/tanujb/Desktop/repos/v3/index.html",
+		"/Users/tanujb/Desktop/repos/v3/app/config.js",
+		"/Users/tanujb/Desktop/repos/v2/client/js/helper.js",
+		"/Users/tanujb/Desktop/repos/v2/client/templates/ResultsView.html",
+		"/Users/tanujb/Desktop/repos/v2/client/js/utils/charts.js",
+		"/Users/tanujb/Desktop/repos/v2/client/js/lib/playlist.js",
+		"/Users/tanujb/Desktop/repos/v2/client/P5 quizanalytics.html",
+		"/Users/tanujb/Desktop/repos/v2/client/templates/QuizView.html",
+		"/Users/tanujb/Desktop/repos/v2/client/js/views/modalview.js",
+		"/Users/tanujb/Desktop/repos/v2/client/index.html",
+		"/Users/tanujb/Desktop/repos/mathjax/test/sample-tex.html",
+		"/Users/tanujb/Downloads/google.csv",
+		"/Users/tanujb/Desktop/repos/v2/client/templates/QuizResultsView.html",
+		"/Users/tanujb/Desktop/repos/v2/api/.htaccess",
+		"/Users/tanujb/Desktop/repos/prepsquarein/client/quizlibrary.html",
+		"/Users/tanujb/Downloads/accesslog_test-rex.com_11_10_2012",
+		"/Users/tanujb/Dropbox/Prep Square II/Nero/Data/questions",
+		"/Users/tanujb/Downloads/video-js/video.js",
+		"/Users/tanujb/Desktop/repos/v2/client/js/main.js",
+		"/Users/tanujb/Desktop/repos/v2/client/js/lib/json2.js",
+		"/Users/tanujb/Desktop/repos/v2/client/config_t.js",
+		"/Users/tanujb/Desktop/repos/v2/client/config_s.js",
+		"/Users/tanujb/Desktop/repos/v2/client/config.js",
+		"/Users/tanujb/Desktop/repos/v2/api/xkcd.php",
+		"/Users/tanujb/Desktop/repos/v2/api/.gitignore",
+		"/Users/tanujb/Desktop/repos/jwplayer/index.html",
+		"/Users/tanujb/Desktop/repos/src/index.html",
+		"/Users/tanujb/Dropbox/Prep Square II/video Recording",
+		"/Users/tanujb/Desktop/repos/src/js/router-mobile_old.js",
+		"/Users/tanujb/Dropbox/TestRex/Course Marketplace/Content Features",
+		"/Users/tanujb/Desktop/repos/content_src/widgets_definition",
+		"/Users/tanujb/Desktop/repos/api/index.php",
+		"/Users/tanujb/Desktop/repos/content_src/config.js",
+		"/Users/tanujb/Desktop/repos/content_src/index.html",
+		"/Users/tanujb/Desktop/repos/content_src/js/router-mobile.js",
+		"/Users/tanujb/Desktop/repos/src/js/views-mobile/mainview.js",
+		"/Users/tanujb/Desktop/repos/src/tpl-web/MainView.html",
+		"/Users/tanujb/Desktop/repos/src/tpl-web/sample_data_2.xml",
+		"/Users/tanujb/Desktop/repos/src/js/lib/classList.js",
+		"/Users/tanujb/Desktop/repos/src/js/lib/head.min.js",
+		"/Users/tanujb/Desktop/repos/src/css/reveal.main.css",
+		"/Users/tanujb/Desktop/repos/src/css/theme/simple.css",
+		"/Users/tanujb/Desktop/repos/src/js/lib/jquery.textselectevent.js",
+		"/Users/tanujb/Desktop/repos/content_src/tpl-mobile/sample_data_2.xml",
+		"/Users/tanujb/Desktop/repos/content_src/js/lib/reveal.js",
+		"/Users/tanujb/Desktop/repos/content_src/tpl-mobile/MainView.html",
+		"/Users/tanujb/Desktop/repos/content_src/js/views-mobile/mainview.js",
+		"/Users/tanujb/Desktop/repos/content_src/js/views-mobile/wordlistview.js",
+		"/Users/tanujb/Desktop/repos/content_src/css/reveal.main.css",
+		"/Users/tanujb/Desktop/repos/content_src/tpl-mobile/FlashCardListView.html",
+		"/Users/tanujb/Desktop/repos/content_src/js/lib/jquery.textselectevent.js",
+		"/Users/tanujb/Desktop/repos/content_src/js/views-mobile/menuview.js",
+		"/Users/tanujb/Desktop/MISSING",
+		"/Users/tanujb/Desktop/repos/content_src/js/lib/annotator.js",
+		"/Users/tanujb/Desktop/repos/content_src/js/main.js",
+		"/Users/tanujb/Desktop/repos/src/config.js",
+		"/Users/tanujb/Desktop/repos/api/nero.sql",
+		"/Users/tanujb/Documents/ibookshelf/trying.html",
+		"/Users/tanujb/Documents/ibookshelf/trying.csv",
+		"/Users/tanujb/Documents/ibookshelf/iBookshelf Web Access.html",
+		"/Users/tanujb/Desktop/isbn.csv",
+		"/Users/tanujb/Downloads/librarybookdb.sql",
+		"/Users/tanujb/Downloads/config_inc.php",
+		"/Users/tanujb/Desktop/repos/content_src/js/router-web.js",
+		"/Users/tanujb/Desktop/repos/content_src/tpl-mobile/MenuView.html",
+		"/Users/tanujb/Desktop/repos/content_src/js/helper.js",
+		"/Users/tanujb/Desktop/repos/content_src/tpl-mobile/sample_data_1.xml",
+		"/Users/tanujb/Downloads/hakimel-reveal.js-390cdf1/lib/js/html5shiv.js",
+		"/Users/tanujb/Desktop/repos/content_src/js/views-mobile/landingview.js",
+		"/Users/tanujb/Downloads/hakimel-reveal.js-390cdf1/js/reveal.js",
+		"/Users/tanujb/Desktop/repos/content_src/tpl-mobile/LandingView.html",
+		"/Users/tanujb/Desktop/repos/src/js/router-mobile.js",
+		"/Users/tanujb/Desktop/repos/src/js/utils/sync.js",
+		"/Users/tanujb/Desktop/repos/content_src/.project",
+		"/Users/tanujb/Desktop/repos/src/js/utils/config.js",
+		"/Users/tanujb/Desktop/repos/src/js/main.js",
+		"/Users/tanujb/Desktop/repos/src/js/helper.js",
+		"/Users/tanujb/Desktop/repos/src/js/models/bookmarks.js",
+		"/Users/tanujb/Desktop/repos/src/js/models/practice.js",
+		"/Users/tanujb/Desktop/repos/src/js/models/words.js",
+		"/Users/tanujb/Desktop/repos/src/js/models/responses.js",
+		"/Users/tanujb/Desktop/repos/src/js/models/questions.js",
+		"/Users/tanujb/Desktop/repos/src/js/models/resources.js",
+		"/Users/tanujb/Desktop/repos/src/js/models/questionsets.js",
+		"/Users/tanujb/Desktop/repos/src/js/models/quizzes.js",
+		"/Users/tanujb/Desktop/repos/src/js/lib/backbone.dualstorage-modified.js",
+		"/Users/tanujb/Desktop/phonegap docs/File API.html",
+		"/Users/tanujb/Desktop/repos/src/tpl-mobile/MenuView.html",
+		"/Users/tanujb/Desktop/repos/src/tpl-mobile/LandingView.html",
+		"/Users/tanujb/Desktop/repos/src/js/lib/backbone.dualstorage.js",
+		"/Users/tanujb/Desktop/repos/src/js/router-web.js",
+		"/Users/tanujb/Desktop/repos/src/tpl/FlashCardListItemView.html",
+		"/Users/tanujb/Desktop/repos/src/js/views/wordlistview.js"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+			"/Users/tanujb/Desktop/repos/v2",
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"$qDetails->l3Id",
+			"$qDetails->l3Id;",
+			"getuserabilitylevels",
+			"userability",
+			"Correct",
+			";",
+			"public ",
+			"$",
+			"public ",
+			"[];",
+			"userAbility",
+			"getquestion",
+			"forEach",
+			"2",
+			"=",
+			"$optionArray2 =",
+			"status",
+			"data.status",
+			"data.t",
+			"data.d",
+			"{\n",
+			"ajax",
+			"showResults",
+			"showResults(",
+			"status",
+			"?",
+			"getDataforquiz",
+			"getDataForQuiz",
+			"quiz(",
+			"quizHistory",
+			"showResults",
+			"ResultsView",
+			"$",
+			" = array();",
+			"insertIntoResponsesTable",
+			"insertintoresponses",
+			"getOption(",
+			"getOption",
+			"isOptionSelectedCorrect",
+			"logs",
+			"setStateof",
+			"insertintoresponsestable",
+			"resultsTable",
+			"updateResultsTa",
+			"SelectedAnswers",
+			"splitLogsBy",
+			"QUESTION_CLOSE",
+			"QUESTION_OPEN",
+			"renderInfo()",
+			"<video",
+			"video",
+			"../api/",
+			"api/",
+			"api",
+			"apo",
+			"startQuiz",
+			"submitQuiz",
+			"calculateScores",
+			"updateattemptedas",
+			"attemptedas",
+			");\n",
+			"attemptedAs",
+			"updateScores",
+			"getl1bystreamid",
+			"getL1byStreamId",
+			"1",
+			"getL1Performance",
+			"getScores",
+			"performance",
+			"getl1per",
+			"l1performance",
+			"l1performance/",
+			"l1performance",
+			"updateScore",
+			"echo",
+			":",
+			"updateResults",
+			"optionsText",
+			"l3performance",
+			"getL1performance",
+			"scoreL1",
+			"sectionL1",
+			"rsquare",
+			"},\n",
+			"});\n",
+			"processQuiz",
+			"questionsExis",
+			"ResultsView",
+			"require(",
+			"questionIds",
+			"drawTime",
+			": ",
+			"INFO",
+			"j:",
+			"create",
+			"HEAD",
+			"getQuizzeshis",
+			"?",
+			"getQuestion",
+			"ProfTanuj",
+			"http://localhost/v2/client/img/",
+			"name",
+			"playList",
+			"calculateScores",
+			"reveal",
+			"buildDefList",
+			"renderTo",
+			"render",
+			"TOC",
+			"currentMainView",
+			"<a",
+			"updateslide",
+			"<br>",
+			"slide(",
+			"section",
+			"fragment",
+			"toc",
+			"<a",
+			"fix",
+			"render",
+			"fragment",
+			"level",
+			"scrub",
+			"each",
+			"addEvent",
+			"dispatchEve",
+			"widget",
+			"dispatch"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"&",
+			"\"",
+			"&",
+			"\"",
+			"\",\"",
+			",",
+			"",
+			"Searching",
+			"\n",
+			""
+		],
+		"reverse": false,
+		"show_context": false,
+		"use_buffer2": false,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "/Users/tanujb/Desktop/repos/v2/client/js/views/resultsview.js",
+					"settings":
+					{
+						"buffer_size": 6500,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1365,
+								1368
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 452.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/Users/tanujb/Desktop/repos/v2/client/js/views/questionview.js",
+					"settings":
+					{
+						"buffer_size": 11580,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								10094,
+								10094
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 54.0,
+						"translation.y": 4305.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 2,
+					"file": "index.php",
+					"settings":
+					{
+						"buffer_size": 21852,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1644,
+								1644
+							]
+						],
+						"settings":
+						{
+							"is_xml": false,
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 34.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			0.482020738615,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 473.0
+	},
+	"output.gjslint_result_view":
+	{
+		"height": 100.0
+	},
+	"replace":
+	{
+		"height": 64.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"questionview",
+				"v2/client/js/views/questionview.js"
+			],
+			[
+				"main",
+				"js/views-mobile/mainview.js"
+			],
+			[
+				"menu",
+				"js/views-mobile/menuview.js"
+			],
+			[
+				"index",
+				"index.html"
+			],
+			[
+				"s",
+				"js/utils/sync.js"
+			],
+			[
+				"wordl",
+				"js/views/wordlistview.js"
+			],
+			[
+				"flas",
+				"tpl/FlashCardView.html"
+			],
+			[
+				"w",
+				"/Users/tanujb/Desktop/repos/src/js/views/wordlistview.js"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": false,
+	"side_bar_visible": true,
+	"side_bar_width": 202.0,
+	"status_bar_visible": true
+}
