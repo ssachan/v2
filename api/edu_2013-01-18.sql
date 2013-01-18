@@ -1,17 +1,20 @@
-﻿# Sequel Pro dump
-# Version 1630
-# http://code.google.com/p/sequel-pro
-#
-# Host: localhost (MySQL 5.5.9)
-# Database: prod
-# Generation Time: 2013-01-18 10:44:08 +0530
 # ************************************************************
+# Sequel Pro SQL dump
+# Version 3408
+#
+# http://www.sequelpro.com/
+# http://code.google.com/p/sequel-pro/
+#
+# Host: 127.0.0.1 (MySQL 5.5.25)
+# Database: edu
+# Generation Time: 2013-01-18 11:10:09 +0000
+# ************************************************************
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
@@ -38,18 +41,20 @@ CREATE TABLE `accounts` (
   `resetsentOn` datetime DEFAULT NULL,
   `pics` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `accounts` WRITE;
 /*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
-INSERT INTO `accounts` (`id`,`username`,`password`,`firstName`,`lastName`,`email`,`roles`,`createdOn`,`verifiedOn`,`lastsignedinOn`,`deletedOn`,`suspendedOn`,`resetsentOn`,`pics`)
+
+INSERT INTO `accounts` (`id`, `username`, `password`, `firstName`, `lastName`, `email`, `roles`, `createdOn`, `verifiedOn`, `lastsignedinOn`, `deletedOn`, `suspendedOn`, `resetsentOn`, `pics`)
 VALUES
 	(1,NULL,'himanshu','Himanshu','Bhutani','him.bhutani@gmail.com','3',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 	(2,NULL,'ashwin','Ashwin','M','ashwin.rsmd@gmail.com','3',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 	(3,NULL,'tanuj','Tanuj','Bhojwani','tanuj.bhojwani@gmail.com','3',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 	(4,NULL,'aa','aa','aa','a@a.com',NULL,'2012-12-28 20:42:09',NULL,NULL,NULL,NULL,NULL,NULL),
 	(5,NULL,'123456','aa','aa','aa@aa.com',NULL,'2012-12-31 11:09:00',NULL,NULL,NULL,NULL,NULL,NULL),
-	(6,NULL,'anirban','Anirban','Naskar','anirbanaskar@gmail.com','3',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+	(6,NULL,'anirban','Anirban','Naskar','anirbanaskar@gmail.com','3',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+	(7,'arpit','demo1234','Arpit','Agarwal','arpit@tlabs.in','3','2012-12-31 11:09:00',NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -110,7 +115,7 @@ DROP TABLE IF EXISTS `ascores_l1`;
 
 CREATE TABLE `ascores_l1` (
   `accountId` int(11) DEFAULT NULL,
-  `score` int(2) DEFAULT '0',
+  `score` float DEFAULT '0',
   `updatedOn` datetime DEFAULT NULL,
   `l1Id` int(11) DEFAULT NULL,
   `numQuestions` int(11) DEFAULT NULL,
@@ -122,11 +127,18 @@ CREATE TABLE `ascores_l1` (
 
 LOCK TABLES `ascores_l1` WRITE;
 /*!40000 ALTER TABLE `ascores_l1` DISABLE KEYS */;
-INSERT INTO `ascores_l1` (`accountId`,`score`,`updatedOn`,`l1Id`,`numQuestions`,`numCorrect`,`numIncorrect`,`numUnattempted`,`streamId`)
+
+INSERT INTO `ascores_l1` (`accountId`, `score`, `updatedOn`, `l1Id`, `numQuestions`, `numCorrect`, `numIncorrect`, `numUnattempted`, `streamId`)
 VALUES
 	(4,10,'2013-01-08 00:00:00',1,0,0,0,0,1),
-	(4,86,'2013-01-18 10:40:05',2,481,18,85,378,1),
-	(4,62,'2013-01-18 10:27:20',3,286,6,58,222,1);
+	(4,83,'2013-01-18 13:40:41',2,362,16,41,305,1),
+	(4,50,'2013-01-18 10:48:30',3,181,0,28,153,1),
+	(7,55.0548,'0000-00-00 00:00:00',1,10,4,6,0,1),
+	(7,48.7134,'0000-00-00 00:00:00',2,10,3,7,0,1),
+	(7,55.969,'0000-00-00 00:00:00',3,10,7,3,0,1),
+	(7,56.0734,'0000-00-00 00:00:00',4,10,0,10,0,1),
+	(7,55.3601,'0000-00-00 00:00:00',5,10,2,8,0,1),
+	(7,58.6417,'0000-00-00 00:00:00',6,10,2,8,0,1);
 
 /*!40000 ALTER TABLE `ascores_l1` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -139,7 +151,7 @@ DROP TABLE IF EXISTS `ascores_l2`;
 
 CREATE TABLE `ascores_l2` (
   `accountId` int(11) DEFAULT NULL,
-  `score` int(11) DEFAULT '0',
+  `score` float DEFAULT '0',
   `updatedOn` datetime DEFAULT NULL,
   `l2Id` int(11) DEFAULT NULL,
   `numQuestions` int(11) DEFAULT NULL,
@@ -151,13 +163,45 @@ CREATE TABLE `ascores_l2` (
 
 LOCK TABLES `ascores_l2` WRITE;
 /*!40000 ALTER TABLE `ascores_l2` DISABLE KEYS */;
-INSERT INTO `ascores_l2` (`accountId`,`score`,`updatedOn`,`l2Id`,`numQuestions`,`numCorrect`,`numIncorrect`,`numUnattempted`,`streamId`)
+
+INSERT INTO `ascores_l2` (`accountId`, `score`, `updatedOn`, `l2Id`, `numQuestions`, `numCorrect`, `numIncorrect`, `numUnattempted`, `streamId`)
 VALUES
 	(4,10,'2013-01-08 00:00:00',1,0,0,0,0,1),
-	(4,52,'2013-01-18 10:19:08',7,52,1,15,36,1),
-	(4,84,'2013-01-18 10:40:05',6,384,17,70,297,1),
-	(4,50,'2013-01-18 10:40:04',5,45,0,0,45,1),
-	(4,62,'2013-01-18 10:27:20',10,286,6,58,222,1);
+	(4,75,'2013-01-18 13:40:41',7,148,12,15,121,1),
+	(4,58,'2013-01-18 11:45:33',6,187,4,26,157,1),
+	(4,50,'2013-01-18 11:31:40',5,27,0,0,27,1),
+	(4,50,'2013-01-18 10:48:30',10,181,0,28,153,1),
+	(7,54.5,'0000-00-00 00:00:00',1,10,7,3,0,1),
+	(7,58.6,'0000-00-00 00:00:00',2,10,9,1,0,1),
+	(7,52.2857,'0000-00-00 00:00:00',3,10,1,9,0,1),
+	(7,54.8334,'0000-00-00 00:00:00',4,10,8,2,0,1),
+	(7,42.6,'0000-00-00 00:00:00',5,10,1,9,0,1),
+	(7,54.8,'0000-00-00 00:00:00',6,10,7,3,0,1),
+	(7,44.6668,'0000-00-00 00:00:00',7,10,0,10,0,1),
+	(7,52,'0000-00-00 00:00:00',8,10,8,2,0,1),
+	(7,49.5,'0000-00-00 00:00:00',9,10,10,0,0,1),
+	(7,60.6154,'0000-00-00 00:00:00',10,10,9,1,0,1),
+	(7,62.6668,'0000-00-00 00:00:00',11,10,1,9,0,1),
+	(7,44.625,'0000-00-00 00:00:00',12,10,8,2,0,1),
+	(7,49.8,'0000-00-00 00:00:00',13,10,7,3,0,1),
+	(7,58.4,'0000-00-00 00:00:00',14,10,6,4,0,1),
+	(7,65.1668,'0000-00-00 00:00:00',15,10,8,2,0,1),
+	(7,63,'0000-00-00 00:00:00',16,10,1,9,0,1),
+	(7,44,'0000-00-00 00:00:00',17,10,3,7,0,1),
+	(7,51.25,'0000-00-00 00:00:00',18,10,1,9,0,1),
+	(7,64,'0000-00-00 00:00:00',19,10,4,6,0,1),
+	(7,58.8571,'0000-00-00 00:00:00',20,10,10,0,0,1),
+	(7,47.3333,'0000-00-00 00:00:00',21,10,6,4,0,1),
+	(7,34.6666,'0000-00-00 00:00:00',22,10,1,9,0,1),
+	(7,82,'0000-00-00 00:00:00',23,10,5,5,0,1),
+	(7,53.3333,'0000-00-00 00:00:00',24,10,0,10,0,1),
+	(7,62,'0000-00-00 00:00:00',25,10,9,1,0,1),
+	(7,60.1668,'0000-00-00 00:00:00',26,10,10,0,0,1),
+	(7,63.25,'0000-00-00 00:00:00',27,10,7,3,0,1),
+	(7,67.9999,'0000-00-00 00:00:00',28,10,1,9,0,1),
+	(7,57.9999,'0000-00-00 00:00:00',29,10,6,4,0,1),
+	(7,52.5,'0000-00-00 00:00:00',30,10,5,5,0,1),
+	(7,52.5,'0000-00-00 00:00:00',31,10,2,8,0,1);
 
 /*!40000 ALTER TABLE `ascores_l2` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -170,7 +214,7 @@ DROP TABLE IF EXISTS `ascores_l3`;
 
 CREATE TABLE `ascores_l3` (
   `accountId` int(11) NOT NULL,
-  `score` int(11) NOT NULL,
+  `score` float NOT NULL,
   `updatedOn` datetime DEFAULT NULL,
   `l3id` int(11) DEFAULT NULL,
   `numQuestions` int(11) DEFAULT NULL,
@@ -182,7 +226,8 @@ CREATE TABLE `ascores_l3` (
 
 LOCK TABLES `ascores_l3` WRITE;
 /*!40000 ALTER TABLE `ascores_l3` DISABLE KEYS */;
-INSERT INTO `ascores_l3` (`accountId`,`score`,`updatedOn`,`l3id`,`numQuestions`,`numCorrect`,`numIncorrect`,`numUnattempted`,`streamId`)
+
+INSERT INTO `ascores_l3` (`accountId`, `score`, `updatedOn`, `l3id`, `numQuestions`, `numCorrect`, `numIncorrect`, `numUnattempted`, `streamId`)
 VALUES
 	(4,50,'0000-00-00 00:00:00',1,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',2,0,0,0,0,1),
@@ -216,9 +261,9 @@ VALUES
 	(4,50,'0000-00-00 00:00:00',30,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',31,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',32,0,0,0,0,1),
-	(4,50,'2013-01-18 10:40:04',33,45,0,0,45,1),
-	(4,66,'2013-01-18 10:40:04',34,192,8,24,160,1),
-	(4,68,'2013-01-18 10:40:04',35,192,9,46,137,1),
+	(4,50,'2013-01-18 11:31:40',33,27,0,0,27,1),
+	(4,58,'2013-01-18 11:45:33',34,80,4,11,65,1),
+	(4,50,'2013-01-18 11:45:33',35,107,0,15,92,1),
 	(4,50,'0000-00-00 00:00:00',36,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',37,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',38,0,0,0,0,1),
@@ -227,10 +272,10 @@ VALUES
 	(4,50,'0000-00-00 00:00:00',41,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',42,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',43,0,0,0,0,1),
-	(4,48,'2013-01-18 10:19:08',44,14,0,7,7,1),
-	(4,46,'2013-01-18 10:19:08',45,13,0,4,9,1),
-	(4,50,'2013-01-18 10:19:08',46,13,1,3,9,1),
-	(4,48,'2013-01-18 10:19:08',47,12,0,1,11,1),
+	(4,47,'2013-01-18 13:40:41',44,38,0,14,24,1),
+	(4,47,'2013-01-18 13:40:41',45,37,0,0,37,1),
+	(4,74,'2013-01-18 13:40:41',46,37,12,1,24,1),
+	(4,48,'2013-01-18 13:40:41',47,36,0,0,36,1),
 	(4,50,'0000-00-00 00:00:00',48,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',49,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',50,0,0,0,0,1),
@@ -244,9 +289,9 @@ VALUES
 	(4,50,'0000-00-00 00:00:00',58,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',59,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',60,0,0,0,0,1),
-	(4,56,'2013-01-18 10:27:20',61,101,3,23,75,1),
-	(4,54,'2013-01-17 18:47:32',62,70,2,14,54,1),
-	(4,52,'2013-01-17 18:47:32',63,115,1,21,93,1),
+	(4,50,'2013-01-18 10:48:30',61,64,0,10,54,1),
+	(4,50,'2013-01-15 08:36:35',62,45,0,9,36,1),
+	(4,50,'2013-01-15 08:36:35',63,72,0,9,63,1),
 	(4,50,'0000-00-00 00:00:00',64,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',65,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',66,0,0,0,0,1),
@@ -359,7 +404,183 @@ VALUES
 	(4,50,'0000-00-00 00:00:00',173,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',174,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',175,0,0,0,0,1),
-	(4,50,'0000-00-00 00:00:00',176,0,0,0,0,1);
+	(4,50,'0000-00-00 00:00:00',176,0,0,0,0,1),
+	(7,25,'2013-01-18 16:17:02',1,0,0,0,0,1),
+	(7,64,'2013-01-18 16:17:02',2,0,0,0,0,1),
+	(7,70,'2013-01-18 16:17:02',3,0,0,0,0,1),
+	(7,22,'2013-01-18 16:17:02',4,0,0,0,0,1),
+	(7,35,'2013-01-18 16:17:02',5,0,0,0,0,1),
+	(7,81,'2013-01-18 16:17:02',6,0,0,0,0,1),
+	(7,85,'2013-01-18 16:17:02',7,0,0,0,0,1),
+	(7,81,'2013-01-18 16:17:02',8,0,0,0,0,1),
+	(7,20,'2013-01-18 16:17:02',9,0,0,0,0,1),
+	(7,62,'2013-01-18 16:17:02',10,0,0,0,0,1),
+	(7,58,'2013-01-18 16:17:02',11,0,0,0,0,1),
+	(7,52,'2013-01-18 16:17:02',12,0,0,0,0,1),
+	(7,85,'2013-01-18 16:17:02',13,0,0,0,0,1),
+	(7,61,'2013-01-18 16:17:02',14,0,0,0,0,1),
+	(7,37,'2013-01-18 16:17:02',15,0,0,0,0,1),
+	(7,75,'2013-01-18 16:17:02',16,0,0,0,0,1),
+	(7,38,'2013-01-18 16:17:02',17,0,0,0,0,1),
+	(7,76,'2013-01-18 16:17:02',18,0,0,0,0,1),
+	(7,84,'2013-01-18 16:17:02',19,0,0,0,0,1),
+	(7,47,'2013-01-18 16:17:02',20,0,0,0,0,1),
+	(7,23,'2013-01-18 16:17:02',21,0,0,0,0,1),
+	(7,23,'2013-01-18 16:17:02',22,0,0,0,0,1),
+	(7,45,'2013-01-18 16:17:02',23,0,0,0,0,1),
+	(7,82,'2013-01-18 16:17:02',24,0,0,0,0,1),
+	(7,28,'2013-01-18 16:17:02',25,0,0,0,0,1),
+	(7,83,'2013-01-18 16:17:02',26,0,0,0,0,1),
+	(7,63,'2013-01-18 16:17:02',27,0,0,0,0,1),
+	(7,28,'2013-01-18 16:17:02',28,0,0,0,0,1),
+	(7,35,'2013-01-18 16:17:02',29,0,0,0,0,1),
+	(7,36,'2013-01-18 16:17:02',30,0,0,0,0,1),
+	(7,22,'2013-01-18 16:17:02',31,0,0,0,0,1),
+	(7,40,'2013-01-18 16:17:02',32,0,0,0,0,1),
+	(7,80,'2013-01-18 16:17:02',33,0,0,0,0,1),
+	(7,73,'2013-01-18 16:17:02',34,0,0,0,0,1),
+	(7,43,'2013-01-18 16:17:02',35,0,0,0,0,1),
+	(7,24,'2013-01-18 16:17:02',36,0,0,0,0,1),
+	(7,64,'2013-01-18 16:17:02',37,0,0,0,0,1),
+	(7,37,'2013-01-18 16:17:02',38,0,0,0,0,1),
+	(7,85,'2013-01-18 16:17:02',39,0,0,0,0,1),
+	(7,64,'2013-01-18 16:17:02',40,0,0,0,0,1),
+	(7,80,'2013-01-18 16:17:02',41,0,0,0,0,1),
+	(7,53,'2013-01-18 16:17:02',42,0,0,0,0,1),
+	(7,25,'2013-01-18 16:17:02',43,0,0,0,0,1),
+	(7,74,'2013-01-18 16:17:02',44,0,0,0,0,1),
+	(7,23,'2013-01-18 16:17:02',45,0,0,0,0,1),
+	(7,43,'2013-01-18 16:17:02',46,0,0,0,0,1),
+	(7,58,'2013-01-18 16:17:02',47,0,0,0,0,1),
+	(7,42,'2013-01-18 16:17:02',48,0,0,0,0,1),
+	(7,28,'2013-01-18 16:17:02',49,0,0,0,0,1),
+	(7,52,'2013-01-18 16:17:02',50,0,0,0,0,1),
+	(7,69,'2013-01-18 16:17:02',51,0,0,0,0,1),
+	(7,32,'2013-01-18 16:17:02',52,0,0,0,0,1),
+	(7,55,'2013-01-18 16:17:02',53,0,0,0,0,1),
+	(7,24,'2013-01-18 16:17:02',54,0,0,0,0,1),
+	(7,23,'2013-01-18 16:17:02',55,0,0,0,0,1),
+	(7,64,'2013-01-18 16:17:02',56,0,0,0,0,1),
+	(7,87,'2013-01-18 16:17:02',57,0,0,0,0,1),
+	(7,67,'2013-01-18 16:17:02',58,0,0,0,0,1),
+	(7,73,'2013-01-18 16:17:02',59,0,0,0,0,1),
+	(7,31,'2013-01-18 16:17:02',60,0,0,0,0,1),
+	(7,83,'2013-01-18 16:17:02',61,0,0,0,0,1),
+	(7,76,'2013-01-18 16:17:02',62,0,0,0,0,1),
+	(7,52,'2013-01-18 16:17:02',63,0,0,0,0,1),
+	(7,72,'2013-01-18 16:17:02',64,0,0,0,0,1),
+	(7,58,'2013-01-18 16:17:02',65,0,0,0,0,1),
+	(7,75,'2013-01-18 16:17:02',66,0,0,0,0,1),
+	(7,77,'2013-01-18 16:17:02',67,0,0,0,0,1),
+	(7,31,'2013-01-18 16:17:02',68,0,0,0,0,1),
+	(7,22,'2013-01-18 16:17:02',69,0,0,0,0,1),
+	(7,71,'2013-01-18 16:17:02',70,0,0,0,0,1),
+	(7,76,'2013-01-18 16:17:02',71,0,0,0,0,1),
+	(7,82,'2013-01-18 16:17:02',72,0,0,0,0,1),
+	(7,33,'2013-01-18 16:17:02',73,0,0,0,0,1),
+	(7,82,'2013-01-18 16:17:02',74,0,0,0,0,1),
+	(7,66,'2013-01-18 16:17:02',75,0,0,0,0,1),
+	(7,37,'2013-01-18 16:17:02',76,0,0,0,0,1),
+	(7,34,'2013-01-18 16:17:02',77,0,0,0,0,1),
+	(7,33,'2013-01-18 16:17:02',78,0,0,0,0,1),
+	(7,59,'2013-01-18 16:17:02',79,0,0,0,0,1),
+	(7,42,'2013-01-18 16:17:02',80,0,0,0,0,1),
+	(7,66,'2013-01-18 16:17:02',81,0,0,0,0,1),
+	(7,38,'2013-01-18 16:17:02',82,0,0,0,0,1),
+	(7,55,'2013-01-18 16:17:02',83,0,0,0,0,1),
+	(7,30,'2013-01-18 16:17:02',84,0,0,0,0,1),
+	(7,42,'2013-01-18 16:17:02',85,0,0,0,0,1),
+	(7,58,'2013-01-18 16:17:02',86,0,0,0,0,1),
+	(7,75,'2013-01-18 16:17:02',87,0,0,0,0,1),
+	(7,39,'2013-01-18 16:17:02',88,0,0,0,0,1),
+	(7,35,'2013-01-18 16:17:02',89,0,0,0,0,1),
+	(7,58,'2013-01-18 16:17:02',90,0,0,0,0,1),
+	(7,51,'2013-01-18 16:17:02',91,0,0,0,0,1),
+	(7,28,'2013-01-18 16:17:02',92,0,0,0,0,1),
+	(7,43,'2013-01-18 16:17:02',93,0,0,0,0,1),
+	(7,84,'2013-01-18 16:17:02',94,0,0,0,0,1),
+	(7,81,'2013-01-18 16:17:02',95,0,0,0,0,1),
+	(7,82,'2013-01-18 16:17:02',96,0,0,0,0,1),
+	(7,68,'2013-01-18 16:17:02',97,0,0,0,0,1),
+	(7,67,'2013-01-18 16:17:02',98,0,0,0,0,1),
+	(7,22,'2013-01-18 16:17:02',99,0,0,0,0,1),
+	(7,71,'2013-01-18 16:17:02',100,0,0,0,0,1),
+	(7,48,'2013-01-18 16:17:02',101,0,0,0,0,1),
+	(7,79,'2013-01-18 16:17:02',102,0,0,0,0,1),
+	(7,62,'2013-01-18 16:17:02',103,0,0,0,0,1),
+	(7,61,'2013-01-18 16:17:02',104,0,0,0,0,1),
+	(7,70,'2013-01-18 16:17:02',105,0,0,0,0,1),
+	(7,38,'2013-01-18 16:17:02',106,0,0,0,0,1),
+	(7,79,'2013-01-18 16:17:02',107,0,0,0,0,1),
+	(7,84,'2013-01-18 16:17:02',108,0,0,0,0,1),
+	(7,51,'2013-01-18 16:17:02',109,0,0,0,0,1),
+	(7,47,'2013-01-18 16:17:02',110,0,0,0,0,1),
+	(7,36,'2013-01-18 16:17:02',111,0,0,0,0,1),
+	(7,27,'2013-01-18 16:17:02',112,0,0,0,0,1),
+	(7,66,'2013-01-18 16:17:02',113,0,0,0,0,1),
+	(7,71,'2013-01-18 16:17:02',114,0,0,0,0,1),
+	(7,38,'2013-01-18 16:17:02',115,0,0,0,0,1),
+	(7,88,'2013-01-18 16:17:02',116,0,0,0,0,1),
+	(7,39,'2013-01-18 16:17:02',117,0,0,0,0,1),
+	(7,22,'2013-01-18 16:17:02',118,0,0,0,0,1),
+	(7,37,'2013-01-18 16:17:02',119,0,0,0,0,1),
+	(7,55,'2013-01-18 16:17:02',120,0,0,0,0,1),
+	(7,60,'2013-01-18 16:17:02',121,0,0,0,0,1),
+	(7,69,'2013-01-18 16:17:02',122,0,0,0,0,1),
+	(7,63,'2013-01-18 16:17:02',123,0,0,0,0,1),
+	(7,84,'2013-01-18 16:17:02',124,0,0,0,0,1),
+	(7,62,'2013-01-18 16:17:02',125,0,0,0,0,1),
+	(7,54,'2013-01-18 16:17:02',126,0,0,0,0,1),
+	(7,75,'2013-01-18 16:17:02',127,0,0,0,0,1),
+	(7,39,'2013-01-18 16:17:02',128,0,0,0,0,1),
+	(7,31,'2013-01-18 16:17:02',129,0,0,0,0,1),
+	(7,78,'2013-01-18 16:17:02',130,0,0,0,0,1),
+	(7,90,'2013-01-18 16:17:02',131,0,0,0,0,1),
+	(7,59,'2013-01-18 16:17:02',132,0,0,0,0,1),
+	(7,66,'2013-01-18 16:17:02',133,0,0,0,0,1),
+	(7,62,'2013-01-18 16:17:02',134,0,0,0,0,1),
+	(7,30,'2013-01-18 16:17:02',135,0,0,0,0,1),
+	(7,46,'2013-01-18 16:17:02',136,0,0,0,0,1),
+	(7,80,'2013-01-18 16:17:02',137,0,0,0,0,1),
+	(7,89,'2013-01-18 16:17:02',138,0,0,0,0,1),
+	(7,39,'2013-01-18 16:17:02',139,0,0,0,0,1),
+	(7,41,'2013-01-18 16:17:02',140,0,0,0,0,1),
+	(7,46,'2013-01-18 16:17:02',141,0,0,0,0,1),
+	(7,55,'2013-01-18 16:17:02',142,0,0,0,0,1),
+	(7,48,'2013-01-18 16:17:02',143,0,0,0,0,1),
+	(7,21,'2013-01-18 16:17:02',144,0,0,0,0,1),
+	(7,35,'2013-01-18 16:17:02',145,0,0,0,0,1),
+	(7,66,'2013-01-18 16:17:02',146,0,0,0,0,1),
+	(7,90,'2013-01-18 16:17:02',147,0,0,0,0,1),
+	(7,55,'2013-01-18 16:17:02',148,0,0,0,0,1),
+	(7,69,'2013-01-18 16:17:02',149,0,0,0,0,1),
+	(7,36,'2013-01-18 16:17:02',150,0,0,0,0,1),
+	(7,90,'2013-01-18 16:17:02',151,0,0,0,0,1),
+	(7,39,'2013-01-18 16:17:02',152,0,0,0,0,1),
+	(7,85,'2013-01-18 16:17:02',153,0,0,0,0,1),
+	(7,63,'2013-01-18 16:17:02',154,0,0,0,0,1),
+	(7,33,'2013-01-18 16:17:02',155,0,0,0,0,1),
+	(7,57,'2013-01-18 16:17:02',156,0,0,0,0,1),
+	(7,26,'2013-01-18 16:17:02',157,0,0,0,0,1),
+	(7,88,'2013-01-18 16:17:02',158,0,0,0,0,1),
+	(7,76,'2013-01-18 16:17:02',159,0,0,0,0,1),
+	(7,38,'2013-01-18 16:17:02',160,0,0,0,0,1),
+	(7,76,'2013-01-18 16:17:02',161,0,0,0,0,1),
+	(7,76,'2013-01-18 16:17:02',162,0,0,0,0,1),
+	(7,77,'2013-01-18 16:17:02',163,0,0,0,0,1),
+	(7,52,'2013-01-18 16:17:02',164,0,0,0,0,1),
+	(7,48,'2013-01-18 16:17:02',165,0,0,0,0,1),
+	(7,88,'2013-01-18 16:17:02',166,0,0,0,0,1),
+	(7,78,'2013-01-18 16:17:02',167,0,0,0,0,1),
+	(7,38,'2013-01-18 16:17:02',168,0,0,0,0,1),
+	(7,87,'2013-01-18 16:17:02',169,0,0,0,0,1),
+	(7,27,'2013-01-18 16:17:02',170,0,0,0,0,1),
+	(7,60,'2013-01-18 16:17:02',171,0,0,0,0,1),
+	(7,43,'2013-01-18 16:17:02',172,0,0,0,0,1),
+	(7,62,'2013-01-18 16:17:02',173,0,0,0,0,1),
+	(7,88,'2013-01-18 16:17:02',174,0,0,0,0,1),
+	(7,44,'2013-01-18 16:17:02',175,0,0,0,0,1),
+	(7,78,'2013-01-18 16:17:02',176,0,0,0,0,1);
 
 /*!40000 ALTER TABLE `ascores_l3` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -408,11 +629,12 @@ CREATE TABLE `exams` (
   `streamId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `streamId` (`streamId`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `exams` WRITE;
 /*!40000 ALTER TABLE `exams` DISABLE KEYS */;
-INSERT INTO `exams` (`id`,`displayName`,`fullName`,`streamId`)
+
+INSERT INTO `exams` (`id`, `displayName`, `fullName`, `streamId`)
 VALUES
 	(1,NULL,NULL,NULL);
 
@@ -459,10 +681,15 @@ CREATE TABLE `faculty` (
 
 LOCK TABLES `faculty` WRITE;
 /*!40000 ALTER TABLE `faculty` DISABLE KEYS */;
-INSERT INTO `faculty` (`l1Ids`,`l2Ids`,`specialization`,`bioShort`,`bio`,`experience`,`education`,`streamIds`,`totalQuizzes`,`rec`,`subscribers`,`accountId`)
+
+INSERT INTO `faculty` (`l1Ids`, `l2Ids`, `specialization`, `bioShort`, `bio`, `experience`, `education`, `streamIds`, `totalQuizzes`, `rec`, `subscribers`, `accountId`)
 VALUES
 	('3','',NULL,'Physical Chemistry Specialist; B. Tech, IIT Guwahati','Himanshu is a specialist in Physical Chemistry. He completed his B.Tech. from IIT Guwahati in Chemical Engineering. With a combined coaching experience of 3 years, multiple All India Ranks (AIR) under 100 have had the  opportunity to study key physical chemistry concepts with him','Physical Chemistry - 3 years','B. Tech., IIT Guwahati, 2009','1',0,0,0,1),
 	('2','',NULL,'Physics Faculty at Kartikkey Classes;  IIT Madras','Ashwin is a B. Tech. from IIT Madras. He specializes in Physics and is a founding member at Kartikkey classes. His unique approach to teaching physics has got him excellent reviews from all students','Co-founder, Physics faculty - Kartikkey Classes','B. Tech., IIT Madras, 2010','1',0,0,0,2),
+	('2','',NULL,'Physics Faculty at Rise Institute','Tanuj Bhojwani is an IIT Bombay alumnus, and has co-founded the first IIT-JEE training institute in Kashmir: Rise Institute. Though he is a chemical engineer, his area of expertise is physics','Co-founder, Rise Institute','B. Tech., IIT Bombay, 2010','1',0,0,0,3),
+	('2',NULL,NULL,'Physics Faculty at Education Helpline',NULL,NULL,'B. Tech., IIT Delhi, 2010','1',0,0,0,6),
+	('3','',NULL,'Physical Chemistry Specialist; B. Tech, IIT Guwahati','Himanshu is a specialist in Physical Chemistry. He completed his B.Tech. from IIT Guwahati in Chemical Engineering. With a combined coaching experience of 3 years, multiple All India Ranks (AIR) under 100 have had the  opportunity to study key physical chemistry concepts with him','Physical Chemistry - 3 years','B. Tech., IIT Guwahati, 2009','1',0,0,0,1),
+	('2','',NULL,'Physics Faculty at Kartikkey Classes;  IIT Madras','Professor Ashwin is a Physics teacher who has been active in the coaching industry for the last 3 years. He is a B.Tech from IIT Madras in Electrical Engineering. Originally hailing from Chennai, he is the co-founder of Kartikkey Classes in Delhi and his students say he has the most innovative way to teach Physics concepts\n\n','Not satisfied with a corporate career, Ashwin returned to his roots to take up teaching. As a teacher of engineering entrance, he specializes in physics - with a focus on mechanics and electricity. \nHe co-founded Kartikkey classes with Prof Vinod Aagrawal and Prof Rajesh Ramrakhyani and was the head of physics there. His aptitude and sincerity for teaching and mentoring students has to be seen to be believed','Ashwin did his schooling primarily in Chennai itself - he was a topper throughout his school years. Having obtained a rank of 700 in the IIT JEE, he opted for a course in Electrical Engineering at IIT Madras. At the institute, he was a prolific performer and published 2 papers in his final year.','1',0,0,0,2),
 	('2','',NULL,'Physics Faculty at Rise Institute','Tanuj Bhojwani is an IIT Bombay alumnus, and has co-founded the first IIT-JEE training institute in Kashmir: Rise Institute. Though he is a chemical engineer, his area of expertise is physics','Co-founder, Rise Institute','B. Tech., IIT Bombay, 2010','1',0,0,0,3),
 	('2',NULL,NULL,'Physics Faculty at Education Helpline',NULL,NULL,'B. Tech., IIT Delhi, 2010','1',0,0,0,6);
 
@@ -482,7 +709,8 @@ CREATE TABLE `insight_type` (
 
 LOCK TABLES `insight_type` WRITE;
 /*!40000 ALTER TABLE `insight_type` DISABLE KEYS */;
-INSERT INTO `insight_type` (`id`,`type`)
+
+INSERT INTO `insight_type` (`id`, `type`)
 VALUES
 	(1,'post-test'),
 	(2,'dashboard'),
@@ -502,11 +730,12 @@ CREATE TABLE `insights` (
   `text` text NOT NULL,
   `typeId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `insights` WRITE;
 /*!40000 ALTER TABLE `insights` DISABLE KEYS */;
-INSERT INTO `insights` (`id`,`text`,`typeId`)
+
+INSERT INTO `insights` (`id`, `text`, `typeId`)
 VALUES
 	(1,'Your accuracy was very low while you utilized less than half the time. Focus more on accuracy than time',NULL),
 	(2,'Give more time to the questions to improve on your accuracy I <%num%>',NULL),
@@ -547,7 +776,8 @@ CREATE TABLE `package_type` (
 
 LOCK TABLES `package_type` WRITE;
 /*!40000 ALTER TABLE `package_type` DISABLE KEYS */;
-INSERT INTO `package_type` (`id`,`name`)
+
+INSERT INTO `package_type` (`id`, `name`)
 VALUES
 	(1,'Basic'),
 	(2,'Custom');
@@ -572,7 +802,8 @@ CREATE TABLE `packages` (
 
 LOCK TABLES `packages` WRITE;
 /*!40000 ALTER TABLE `packages` DISABLE KEYS */;
-INSERT INTO `packages` (`id`,`name`,`details`,`poolId`,`price`,`streamId`)
+
+INSERT INTO `packages` (`id`, `name`, `details`, `poolId`, `price`, `streamId`)
 VALUES
 	(1,'All Tests','5|:2',1,500,1);
 
@@ -595,11 +826,12 @@ CREATE TABLE `para` (
   `difficulty` int(1) DEFAULT NULL,
   `mobileFlag` int(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `para` WRITE;
 /*!40000 ALTER TABLE `para` DISABLE KEYS */;
-INSERT INTO `para` (`id`,`text`,`questionIds`,`questionCount`,`resources`,`l3Id`,`difficulty`,`mobileFlag`)
+
+INSERT INTO `para` (`id`, `text`, `questionIds`, `questionCount`, `resources`, `l3Id`, `difficulty`, `mobileFlag`)
 VALUES
 	(1,'<p>Two blocks \\\'A\\\' and \\\'B\\\' of mass \\\'m\\\' and \\\'2m\\\' kgs respectively are connected by a light spring and placed on a smooth horizontal surface. The blocks are now pressed towards each other so that the compression in the spring is \\\'x\\\' and then released. </p><img src=\"../api/resources/questions/37img1.jpg\" height = \"200\">','37|:38',2,'../api/resources/questions/p1img1.jpg',34,2,NULL),
 	(2,'<p>A block A of mass 8kg is moving towards the right with a speed of 3m/s on a horizontal frictionless surface. Another block B of mass 4kg with a spring (massless, k = 50000/12 Nm<sup>-1</sup>) attached to it, is moving towards left with speed 2m/s. At some instant, A collides with the spring attached to B. After some time, the spring has maximum compression and then the blocks move independently with their final velocities.</p><img src=\"../api/resources/questions/p1img1.jpg\" height = \"200\"><p>Take the direction towards right as +ve x direction. Assume spring force is conservative and no kinetic energy is converted to internal energy of spring in the form of heat. Assume no sound is generated on collision.</p>','51|:52|:53|:54|:55|:56',7,'../api/resources/questions/p2img1.jpg',34,2,NULL);
@@ -620,7 +852,8 @@ CREATE TABLE `pool` (
 
 LOCK TABLES `pool` WRITE;
 /*!40000 ALTER TABLE `pool` DISABLE KEYS */;
-INSERT INTO `pool` (`id`,`quizIds`)
+
+INSERT INTO `pool` (`id`, `quizIds`)
 VALUES
 	(1,'1|:2|:3');
 
@@ -650,11 +883,12 @@ CREATE TABLE `question_tags` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `question_tags` WRITE;
 /*!40000 ALTER TABLE `question_tags` DISABLE KEYS */;
-INSERT INTO `question_tags` (`id`,`name`)
+
+INSERT INTO `question_tags` (`id`, `name`)
 VALUES
 	(1,'lengthy'),
 	(2,'calculations');
@@ -672,11 +906,12 @@ CREATE TABLE `question_type` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `type` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `question_type` WRITE;
 /*!40000 ALTER TABLE `question_type` DISABLE KEYS */;
-INSERT INTO `question_type` (`id`,`type`)
+
+INSERT INTO `question_type` (`id`, `type`)
 VALUES
 	(1,'single-option'),
 	(2,'multiple-option'),
@@ -721,11 +956,12 @@ CREATE TABLE `questions` (
   `videoSrc` varchar(30) DEFAULT NULL,
   `posterSrc` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=118 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `questions` WRITE;
 /*!40000 ALTER TABLE `questions` DISABLE KEYS */;
-INSERT INTO `questions` (`id`,`text`,`options`,`correctAnswer`,`explanation`,`l3Id`,`typeId`,`tagIds`,`difficulty`,`paraId`,`resources`,`averageTimeCorrect`,`averageTimeIncorrect`,`averageTimeUnattempted`,`averageCorrect`,`averageIncorrect`,`averageUnattempted`,`allotedTime`,`correctScore`,`incorrectScore`,`optionInCorrectScore`,`optionCorrectScore`,`unattemptedScore`,`mobileFlag`,`availableFlag`,`videoSrc`,`posterSrc`)
+
+INSERT INTO `questions` (`id`, `text`, `options`, `correctAnswer`, `explanation`, `l3Id`, `typeId`, `tagIds`, `difficulty`, `paraId`, `resources`, `averageTimeCorrect`, `averageTimeIncorrect`, `averageTimeUnattempted`, `averageCorrect`, `averageIncorrect`, `averageUnattempted`, `allotedTime`, `correctScore`, `incorrectScore`, `optionInCorrectScore`, `optionCorrectScore`, `unattemptedScore`, `mobileFlag`, `availableFlag`, `videoSrc`, `posterSrc`)
 VALUES
 	(1,'<p>Two large vertical and parallel metal plates having a separation of 1 cm are connected to a DC voltage source of potential difference X. A proton is released at rest midway between the two plates. It is found to move at 45<sup>o</sup> to the vertical JUST after release. Then X is nearly</p>','1*10<sup>-5</sup> V |: 1*10<sup>-7</sup> V |: 1*10<sup>-9</sup> V |: 1*10<sup>-10</sup> V','2','<p>Writing the force equations on the particle,</p><img src = \"../api/resources/questions/1img1.jpg\"><p>mg = qE $$1.67 * 10^{-27} * (10) = (1.6 * 10^{-19})\\frac{x}{0.01}$$  $$x =\\frac{1.67 * 10^{-9}}{1.6}$$ $$x=1 * 10^{-9}V$$</p>',44,1,'',1,NULL,'../api/resources/questions/1img1.jpg',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,NULL,NULL),
 	(2,'<p>For the circuit given below which of the following is true:</p> <img src = \"../api/resources/questions/2img1.jpg\">','The current I through the battery is 7.5mA |: The potential difference across RL is 20V|: The ratios of power dissipated in R1 and R2 is 5 |:\n If R1 and R2 are interchanged, magnitude of power dissipated in RL will decrease by a factor of 3','0','<p>R<sub>2</sub> and R<sub>L</sub> are in parallel hence $$R_{2L} = \\frac{6 * 1.5}{6 + 1.5}$$\nR<sub>2L</sub> = 1.2 k~~\\Omega~~ <br>\nR<sub>2L</sub> in turn is in series with R<sub>1</sub> hence the resistance of the circuit is:<br>\nR = 1.2 + 2 = 3.2 k~~\\Omega~~ <br>\nThe current I through battery is $$ i= \\frac{24V}{3.2 * 1000\\Omega} = 7.5 mA $$</p>',45,1,'',2,NULL,'../api/resources/questions/2img1.jpg',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,NULL,NULL),
@@ -877,18 +1113,19 @@ CREATE TABLE `quizzes` (
   `streamId` int(11) DEFAULT NULL,
   `maxScore` int(11) DEFAULT '100',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `quizzes` WRITE;
 /*!40000 ALTER TABLE `quizzes` DISABLE KEYS */;
-INSERT INTO `quizzes` (`id`,`questionIds`,`description`,`descriptionShort`,`conceptsTested`,`tags`,`l3Ids`,`l2Ids`,`questionCount`,`allotedTime`,`difficulty`,`ratings`,`rec`,`typeId`,`facultyId`,`available`,`mobileFlag`,`addedOn`,`totalAttempts`,`streamId`,`maxScore`)
+
+INSERT INTO `quizzes` (`id`, `questionIds`, `description`, `descriptionShort`, `conceptsTested`, `tags`, `l3Ids`, `l2Ids`, `questionCount`, `allotedTime`, `difficulty`, `ratings`, `rec`, `typeId`, `facultyId`, `available`, `mobileFlag`, `addedOn`, `totalAttempts`, `streamId`, `maxScore`)
 VALUES
-	(1,'1|:2|:3|:4|:5|:6|:7|:8|:9|:10|:11|:12','Questions on Electricity & Magnetism from the last 4 years IIT-JEE papers','Advanced questions on Electricity and Magnetism','Electricity & Magnetism','IIT JEE','44|:45|:46|:47','7',12,3600000,2,NULL,0,2,3,NULL,NULL,NULL,0,1,36),
-	(2,'13|:14|:15|:16|:17|:18|:19|:20|:21|:22|:23|:24|:25|:26|:27|:28|:29|:30|:31|:32','Covers Redox Reactions , Stoichiometry, Chemical and Ionic Equilibrium','Advanced questions on Physical Chemistry','Physical Chemistry','','61|:62|:63','10',20,3600000,2,NULL,0,2,1,NULL,NULL,NULL,0,1,100),
-	(3,'33|:34|:35|:36|:37|:38|:39|:40|:41|:42|:43|:44|:45|:46|:47|:48|:49|:50|:51|:52|:53|:54|:55|:56|:57','Medium difficulty question to strengthen the key topics of Kinematics and Collisions','Practice on Kinematics and Collisions','Mechanics','','34|:35','6',25,3600000,2,NULL,0,2,2,NULL,NULL,NULL,0,1,100),
-	(4,'58|:59|:60|:61|:62|:63|:64|:65|:66|:67|:68|:69|:70|:71|:72|:73|:74|:75|:76|:77','JEE advanced level question to strengthen the key topics of Kinematics and Collisions','Advanced problems on Kinematics and Collisions','Mechanics','','34|:35','6',20,3600000,2,NULL,0,2,2,NULL,NULL,NULL,0,1,100),
-	(5,'78|:79|:80|:81|:82|:83|:84|:85|:86|:87|:88|:89|:90|:91|:92|:93|:94|:95|:96|:97','The set includes easy to medium questions on the topics of Relatve Velocity','Basic Question on Kinematics','Mechanics','','34|:35','6',20,3600000,2,NULL,0,2,6,NULL,NULL,NULL,0,1,100),
-	(6,'98|:99|:100|:101|:102|:103|:104|:105|:106|:107|:108|:109|:110|:111|:112|:113|:114|:115|:116|:117','The set includes easy to medium questions on AC circuits. This test is for students comfortable with DC circuits but looking to practice the topic of AC','Basic Question on Alternating Currents / Circuits','Electricity & Magnetism','','45|:46','7',20,3600000,2,NULL,0,2,6,NULL,NULL,NULL,0,1,100);
+	(1,'1|:2|:3|:4|:5|:6|:7|:8|:9|:10|:11|:12','Questions on Electricity & Magnetism from the last 4 years IIT-JEE papers','Advanced questions on Electricity and Magnetism','Electricity & Magnetism','IIT JEE','44|:45|:46|:47','7',12,3600,2,NULL,0,2,3,NULL,NULL,NULL,0,1,36),
+	(2,'13|:14|:15|:16|:17|:18|:19|:20|:21|:22|:23|:24|:25|:26|:27|:28|:29|:30|:31|:32','Covers Redox Reactions , Stoichiometry, Chemical and Ionic Equilibrium','Advanced questions on Physical Chemistry','Physical Chemistry','','61|:62|:63','10',20,3600,2,NULL,0,2,1,NULL,NULL,NULL,0,1,100),
+	(3,'33|:34|:35|:36|:37|:38|:39|:40|:41|:42|:43|:44|:45|:46|:47|:48|:49|:50|:51|:52|:53|:54|:55|:56|:57','Medium difficulty question to strengthen the key topics of Kinematics and Collisions','Practice on Kinematics and Collisions','Mechanics','','34|:35','6',25,3600,2,NULL,0,2,2,NULL,NULL,NULL,0,1,100),
+	(4,'58|:59|:60|:61|:62|:63|:64|:65|:66|:67|:68|:69|:70|:71|:72|:73|:74|:75|:76|:77','JEE advanced level question to strengthen the key topics of Kinematics and Collisions','Advanced problems on Kinematics and Collisions','Mechanics','','34|:35','6',20,3600,2,NULL,0,2,2,NULL,NULL,NULL,0,1,100),
+	(5,'78|:79|:80|:81|:82|:83|:84|:85|:86|:87|:88|:89|:90|:91|:92|:93|:94|:95|:96|:97','The set includes easy to medium questions on the topics of Relatve Velocity','Basic Question on Kinematics','Mechanics','','34|:35','6',20,3600,2,NULL,0,2,6,NULL,NULL,NULL,0,1,100),
+	(6,'98|:99|:100|:101|:102|:103|:104|:105|:106|:107|:108|:109|:110|:111|:112|:113|:114|:115|:116|:117','The set includes easy to medium questions on AC circuits. This test is for students comfortable with DC circuits but looking to practice the topic of AC','Basic Question on Alternating Currents / Circuits','Electricity & Magnetism','','45|:46','7',20,3600,2,NULL,0,2,6,NULL,NULL,NULL,0,1,100);
 
 /*!40000 ALTER TABLE `quizzes` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -924,7 +1161,8 @@ CREATE TABLE `quizzes_type` (
 
 LOCK TABLES `quizzes_type` WRITE;
 /*!40000 ALTER TABLE `quizzes_type` DISABLE KEYS */;
-INSERT INTO `quizzes_type` (`id`,`type`)
+
+INSERT INTO `quizzes_type` (`id`, `type`)
 VALUES
 	(1,'full'),
 	(2,'sectional');
@@ -976,89 +1214,6 @@ CREATE TABLE `responses` (
   `status` varchar(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-LOCK TABLES `responses` WRITE;
-/*!40000 ALTER TABLE `responses` DISABLE KEYS */;
-INSERT INTO `responses` (`accountId`,`questionId`,`optionSelected`,`timeTaken`,`abilityScoreBefore`,`delta`,`timeStamp`,`status`)
-VALUES
-	(4,13,'1',2479,56,-1,'2013-01-18 10:27:20','2'),
-	(4,33,'1',2156,66,-1,'2013-01-18 10:33:19','2'),
-	(4,34,'2',1957,66,-1,'2013-01-18 10:33:19','2'),
-	(4,35,'2',1968,62,2,'2013-01-18 10:33:19','1'),
-	(4,36,'1',2289,64,-1,'2013-01-18 10:33:19','2'),
-	(4,37,'',4463,64,0,'2013-01-18 10:33:19','3'),
-	(4,38,'',0,64,0,'2013-01-18 10:33:19','4'),
-	(4,39,'',0,66,0,'2013-01-18 10:33:19','4'),
-	(4,40,'',0,66,0,'2013-01-18 10:33:19','4'),
-	(4,41,'',0,64,0,'2013-01-18 10:33:19','4'),
-	(4,42,'',0,66,0,'2013-01-18 10:33:19','4'),
-	(4,43,'',0,66,0,'2013-01-18 10:33:19','4'),
-	(4,44,'',0,64,0,'2013-01-18 10:33:19','4'),
-	(4,45,'',0,66,0,'2013-01-18 10:33:19','4'),
-	(4,46,'',0,64,0,'2013-01-18 10:33:19','4'),
-	(4,47,'',0,50,0,'2013-01-18 10:33:19','4'),
-	(4,48,'',0,64,0,'2013-01-18 10:33:19','4'),
-	(4,49,'',0,64,0,'2013-01-18 10:33:19','4'),
-	(4,50,'',0,50,0,'2013-01-18 10:33:19','4'),
-	(4,51,'',0,50,0,'2013-01-18 10:33:19','4'),
-	(4,52,'',0,66,0,'2013-01-18 10:33:19','4'),
-	(4,53,'',0,66,0,'2013-01-18 10:33:19','4'),
-	(4,54,'',0,66,0,'2013-01-18 10:33:19','4'),
-	(4,55,'',0,66,0,'2013-01-18 10:33:19','4'),
-	(4,56,'',0,66,0,'2013-01-18 10:33:19','4'),
-	(4,57,'',0,66,0,'2013-01-18 10:33:19','4'),
-	(4,33,'1',2156,66,-1,'2013-01-18 10:37:37','2'),
-	(4,34,'2',1957,66,-1,'2013-01-18 10:37:37','2'),
-	(4,35,'2',1968,64,2,'2013-01-18 10:37:37','1'),
-	(4,36,'1',2289,66,-1,'2013-01-18 10:37:37','2'),
-	(4,37,'',4463,66,0,'2013-01-18 10:37:37','3'),
-	(4,38,'',0,66,0,'2013-01-18 10:37:37','4'),
-	(4,39,'',0,66,0,'2013-01-18 10:37:37','4'),
-	(4,40,'',0,66,0,'2013-01-18 10:37:37','4'),
-	(4,41,'',0,66,0,'2013-01-18 10:37:37','4'),
-	(4,42,'',0,66,0,'2013-01-18 10:37:37','4'),
-	(4,43,'',0,66,0,'2013-01-18 10:37:37','4'),
-	(4,44,'',0,66,0,'2013-01-18 10:37:37','4'),
-	(4,45,'',0,66,0,'2013-01-18 10:37:37','4'),
-	(4,46,'',0,66,0,'2013-01-18 10:37:37','4'),
-	(4,47,'',0,50,0,'2013-01-18 10:37:37','4'),
-	(4,48,'',0,66,0,'2013-01-18 10:37:37','4'),
-	(4,49,'',0,66,0,'2013-01-18 10:37:37','4'),
-	(4,50,'',0,50,0,'2013-01-18 10:37:37','4'),
-	(4,51,'',0,50,0,'2013-01-18 10:37:37','4'),
-	(4,52,'',0,66,0,'2013-01-18 10:37:37','4'),
-	(4,53,'',0,66,0,'2013-01-18 10:37:37','4'),
-	(4,54,'',0,66,0,'2013-01-18 10:37:37','4'),
-	(4,55,'',0,66,0,'2013-01-18 10:37:37','4'),
-	(4,56,'',0,66,0,'2013-01-18 10:37:37','4'),
-	(4,57,'',0,66,0,'2013-01-18 10:37:38','4'),
-	(4,33,'1',2156,66,-1,'2013-01-18 10:40:04','2'),
-	(4,34,'2',1957,66,-1,'2013-01-18 10:40:04','2'),
-	(4,35,'2',1968,66,2,'2013-01-18 10:40:04','1'),
-	(4,36,'1',2289,68,-1,'2013-01-18 10:40:04','2'),
-	(4,37,'',4463,68,0,'2013-01-18 10:40:04','3'),
-	(4,38,'',0,68,0,'2013-01-18 10:40:04','4'),
-	(4,39,'',0,66,0,'2013-01-18 10:40:04','4'),
-	(4,40,'',0,66,0,'2013-01-18 10:40:04','4'),
-	(4,41,'',0,68,0,'2013-01-18 10:40:04','4'),
-	(4,42,'',0,66,0,'2013-01-18 10:40:04','4'),
-	(4,43,'',0,66,0,'2013-01-18 10:40:04','4'),
-	(4,44,'',0,68,0,'2013-01-18 10:40:04','4'),
-	(4,45,'',0,66,0,'2013-01-18 10:40:04','4'),
-	(4,46,'',0,68,0,'2013-01-18 10:40:04','4'),
-	(4,47,'',0,50,0,'2013-01-18 10:40:04','4'),
-	(4,48,'',0,68,0,'2013-01-18 10:40:04','4'),
-	(4,49,'',0,68,0,'2013-01-18 10:40:04','4'),
-	(4,50,'',0,50,0,'2013-01-18 10:40:04','4'),
-	(4,51,'',0,50,0,'2013-01-18 10:40:04','4'),
-	(4,52,'',0,66,0,'2013-01-18 10:40:04','4'),
-	(4,53,'',0,66,0,'2013-01-18 10:40:04','4'),
-	(4,54,'',0,66,0,'2013-01-18 10:40:04','4'),
-	(4,55,'',0,66,0,'2013-01-18 10:40:04','4'),
-	(4,56,'',0,66,0,'2013-01-18 10:40:04','4'),
-	(4,57,'',0,66,0,'2013-01-18 10:40:04','4');
-
-/*!40000 ALTER TABLE `responses` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table results
@@ -1081,15 +1236,6 @@ CREATE TABLE `results` (
   `state` int(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-LOCK TABLES `results` WRITE;
-/*!40000 ALTER TABLE `results` DISABLE KEYS */;
-INSERT INTO `results` (`quizId`,`accountId`,`selectedAnswers`,`score`,`timePerQuestion`,`timeTaken`,`data`,`timestamp`,`attemptedAs`,`startTime`,`endTime`,`state`)
-VALUES
-	(2,4,NULL,NULL,NULL,NULL,'[{\"t\":\"1358485038314\",\"e\":\"3\",\"q\":\"13\"},{\"t\":\"1358485039673\",\"e\":\"0\",\"q\":\"13\",\"o\":\"1\"},{\"t\":\"1358485040793\",\"e\":\"4\",\"q\":\"13\"}]','2013-01-18 10:27:20',2,'2013-01-18 10:27:16',NULL,0),
-	(3,4,NULL,NULL,NULL,NULL,'[{\"t\":\"1358485386117\",\"e\":\"10\"},{\"t\":\"1358485386163\",\"e\":\"3\",\"q\":\"33\"},{\"t\":\"1358485387241\",\"e\":\"0\",\"q\":\"33\",\"o\":\"1\"},{\"t\":\"1358485388319\",\"e\":\"4\",\"q\":\"33\"},{\"t\":\"1358485388324\",\"e\":\"3\",\"q\":\"34\"},{\"t\":\"1358485389400\",\"e\":\"0\",\"q\":\"34\",\"o\":\"2\"},{\"t\":\"1358485390281\",\"e\":\"4\",\"q\":\"34\"},{\"t\":\"1358485390288\",\"e\":\"3\",\"q\":\"35\"},{\"t\":\"1358485391168\",\"e\":\"0\",\"q\":\"35\",\"o\":\"2\"},{\"t\":\"1358485392256\",\"e\":\"4\",\"q\":\"35\"},{\"t\":\"1358485392265\",\"e\":\"3\",\"q\":\"36\"},{\"t\":\"1358485393321\",\"e\":\"0\",\"q\":\"36\",\"o\":\"1\"},{\"t\":\"1358485394554\",\"e\":\"4\",\"q\":\"36\"},{\"t\":\"1358485394562\",\"e\":\"3\",\"q\":\"37\"},{\"t\":\"1358485399025\",\"e\":\"4\",\"q\":\"37\"},{\"t\":\"1358485399025\",\"e\":\"8\"}]','2013-01-18 10:40:04',1,'2013-01-18 10:32:48',NULL,25);
-
-/*!40000 ALTER TABLE `results` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table roles
@@ -1101,11 +1247,12 @@ CREATE TABLE `roles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `roles` WRITE;
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
-INSERT INTO `roles` (`id`,`name`)
+
+INSERT INTO `roles` (`id`, `name`)
 VALUES
 	(1,'Admin'),
 	(2,'student'),
@@ -1126,11 +1273,12 @@ CREATE TABLE `section_l1` (
   `longName` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `streamId` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `section_l1` WRITE;
 /*!40000 ALTER TABLE `section_l1` DISABLE KEYS */;
-INSERT INTO `section_l1` (`id`,`displayName`,`longName`,`streamId`)
+
+INSERT INTO `section_l1` (`id`, `displayName`, `longName`, `streamId`)
 VALUES
 	(1,'Maths','NULL','1'),
 	(2,'Physics','NULL','1'),
@@ -1154,46 +1302,47 @@ CREATE TABLE `section_l2` (
   `longName` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `l1Id` int(11) DEFAULT NULL,
   `streamId` int(11) DEFAULT NULL,
-  `weightage` int(4) DEFAULT NULL,
+  `weightage` float DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `l1Id` (`l1Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `section_l2` WRITE;
 /*!40000 ALTER TABLE `section_l2` DISABLE KEYS */;
-INSERT INTO `section_l2` (`id`,`displayName`,`longName`,`l1Id`,`streamId`,`weightage`)
+
+INSERT INTO `section_l2` (`id`, `displayName`, `longName`, `l1Id`, `streamId`, `weightage`)
 VALUES
-	(1,'Algebra','NULL',1,1,1),
-	(2,'Trigonometry','NULL',1,1,1),
-	(3,'Coordinate Geometry','NULL',1,1,1),
-	(4,'Calculus','NULL',1,1,1),
-	(5,'General','NULL',2,1,1),
-	(6,'Mechanics','NULL',2,1,1),
-	(7,'Electricity and Magnetism','NULL',2,1,1),
-	(8,'Optics','NULL',2,1,1),
-	(9,'Modern Physics','NULL',2,1,1),
-	(10,'Physical Chemistry','NULL',3,1,1),
-	(11,'Inorganic Chemistry','NULL',3,1,1),
-	(12,'Organic Chemistry','NULL',3,1,1),
-	(13,'General','NULL',4,2,1),
-	(14,'Mechanics','NULL',4,2,1),
-	(15,'Electricity and Magnetism','NULL',4,2,1),
-	(16,'Optics','NULL',4,2,1),
-	(17,'Modern Physics','NULL',4,2,1),
-	(18,'Physical Chemistry','NULL',5,2,1),
-	(19,'Inorganic Chemistry','NULL',5,2,1),
-	(20,'Organic Chemistry','NULL',5,2,1),
-	(21,'Biochemistry','NULL',5,2,1),
-	(22,'Diversity in Living World','NULL',6,2,1),
-	(23,'Structures in Plants and Anima','NULL',6,2,1),
-	(24,'Cell Structure and Function','NULL',6,2,1),
-	(25,'Plant Physiology','NULL',6,2,1),
-	(26,'Human Physiology','NULL',6,2,1),
-	(27,'Reproduction','NULL',6,2,1),
-	(28,'Genetics and Evolution','NULL',6,2,1),
-	(29,'Biology and Human Welfare','NULL',6,2,1),
-	(30,'Biotechnology and its applicat','NULL',6,2,1),
-	(31,'Ecology and Environment','NULL',6,2,1);
+	(1,'Algebra','NULL',1,1,0.25),
+	(2,'Trigonometry','NULL',1,1,0.25),
+	(3,'Coordinate Geometry','NULL',1,1,0.25),
+	(4,'Calculus','NULL',1,1,0.25),
+	(5,'General','NULL',2,1,0.2),
+	(6,'Mechanics','NULL',2,1,0.2),
+	(7,'Electricity and Magnetism','NULL',2,1,0.2),
+	(8,'Optics','NULL',2,1,0.2),
+	(9,'Modern Physics','NULL',2,1,0.2),
+	(10,'Physical Chemistry','NULL',3,1,0.333333),
+	(11,'Inorganic Chemistry','NULL',3,1,0.333333),
+	(12,'Organic Chemistry','NULL',3,1,0.333333),
+	(13,'General','NULL',4,2,0.2),
+	(14,'Mechanics','NULL',4,2,0.2),
+	(15,'Electricity and Magnetism','NULL',4,2,0.2),
+	(16,'Optics','NULL',4,2,0.2),
+	(17,'Modern Physics','NULL',4,2,0.2),
+	(18,'Physical Chemistry','NULL',5,2,0.25),
+	(19,'Inorganic Chemistry','NULL',5,2,0.25),
+	(20,'Organic Chemistry','NULL',5,2,0.25),
+	(21,'Biochemistry','NULL',5,2,0.25),
+	(22,'Diversity in Living World','NULL',6,2,0.1),
+	(23,'Structures in Plants and Anima','NULL',6,2,0.1),
+	(24,'Cell Structure and Function','NULL',6,2,0.1),
+	(25,'Plant Physiology','NULL',6,2,0.1),
+	(26,'Human Physiology','NULL',6,2,0.1),
+	(27,'Reproduction','NULL',6,2,0.1),
+	(28,'Genetics and Evolution','NULL',6,2,0.1),
+	(29,'Biology and Human Welfare','NULL',6,2,0.1),
+	(30,'Biotechnology and its applicat','NULL',6,2,0.1),
+	(31,'Ecology and Environment','NULL',6,2,0.1);
 
 /*!40000 ALTER TABLE `section_l2` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -1210,191 +1359,192 @@ CREATE TABLE `section_l3` (
   `longName` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `l2Id` int(11) DEFAULT NULL,
   `streamId` int(11) DEFAULT NULL,
-  `weightage` int(4) DEFAULT NULL,
+  `weightage` float DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=178 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `section_l3` WRITE;
 /*!40000 ALTER TABLE `section_l3` DISABLE KEYS */;
-INSERT INTO `section_l3` (`id`,`displayName`,`longName`,`l2Id`,`streamId`,`weightage`)
+
+INSERT INTO `section_l3` (`id`, `displayName`, `longName`, `l2Id`, `streamId`, `weightage`)
 VALUES
-	(1,'Sets, Relations & Functions','',1,1,1),
-	(2,'Equations','',1,1,1),
-	(3,'Complex Numbers','',1,1,1),
-	(4,'Progressions','',1,1,1),
-	(5,'Logarithms','',1,1,1),
-	(6,'Permutations and Combinations','',1,1,1),
-	(7,'Binomial Theorem','',1,1,1),
-	(8,'Matrices','',1,1,1),
-	(9,'Probability','',1,1,1),
-	(10,'Mathematical Induction','',1,1,1),
-	(11,'Trigonometric Equations','',2,1,1),
-	(12,'Sine Rule','',2,1,1),
-	(13,'Cosine Rule','',2,1,1),
-	(14,'Half angle formula','',2,1,1),
-	(15,'Inverse Trigonometric functions','',2,1,1),
-	(16,'Cartesian Coordinates','',3,1,1),
-	(17,'Lines','',3,1,1),
-	(18,'Triangles','',3,1,1),
-	(19,'Circle','',3,1,1),
-	(20,'Conic Sections','',3,1,1),
-	(21,'Locus','',3,1,1),
-	(22,'3-D Geometry','',3,1,1),
-	(23,'Limit and Continuity','',4,1,1),
-	(24,'Derivatives','',4,1,1),
-	(25,'Rolle\'s and Lagrange\'s Theorem','',4,1,1),
-	(26,'Indefinite and definite integrals','',4,1,1),
-	(27,'Applications of integrations','',4,1,1),
-	(28,'Ordinary Differential Equations','',4,1,1),
-	(29,'Units and Dimensions','',5,1,1),
-	(30,'Physical Experiments','',5,1,1),
-	(31,'Optics Experiments','',5,1,1),
-	(32,'Electricity experiments','',5,1,1),
-	(33,'Heat Experiments','',5,1,1),
-	(34,'Kinematics','',6,1,1),
-	(35,'Newtons Laws','',6,1,1),
-	(36,'Collisions','',6,1,1),
-	(37,'Gravitation','',6,1,1),
-	(38,'Momentum','',6,1,1),
-	(39,'Bulk Matter','',6,1,1),
-	(40,'Fluid dynamics','',6,1,1),
-	(41,'Wave motion','',6,1,1),
-	(42,'Thermal Physics','',6,1,1),
-	(43,'Perfect Gas and Kinetic Theory','',6,1,1),
-	(44,'Electrostatics','',7,1,1),
-	(45,'Capacitance','',7,1,1),
-	(46,'Electric Current','',7,1,1),
-	(47,'Magnetic effects of current and magnetism','',7,1,1),
-	(48,'Electromagnetic Induction','',7,1,1),
-	(49,'Electromagnetic Waves','',7,1,1),
-	(50,'Reflection and Refraction','',8,1,1),
-	(51,'Lenses','',8,1,1),
-	(52,'Prisms','',8,1,1),
-	(53,'Intereference','',8,1,1),
-	(54,'Atoms and Nuclei','',9,1,1),
-	(55,'Radioactive Decay','',9,1,1),
-	(56,'Dual Nature of Matter and Radiation (incl PE effec','',9,1,1),
-	(57,'Waves','',9,1,1),
-	(58,'Mole Concept','',10,1,1),
-	(59,'Electro Chemistry','',10,1,1),
-	(60,'States of Matter','',10,1,1),
-	(61,'Thermodynamics','',10,1,1),
-	(62,'Chemical Equilibrium','',10,1,1),
-	(63,'Ionic Equilibrium','',10,1,1),
-	(64,'Chemical Kinetics','',10,1,1),
-	(65,'Solutions','',10,1,1),
-	(66,'Surface Chemistry','',10,1,1),
-	(67,'Nuclear Chemistry','',10,1,1),
-	(68,'Stoichiometry','',10,1,1),
-	(69,'Redox Reactions','',10,1,1),
-	(70,'Solid State ','',10,1,1),
-	(71,'Ores and Minerals','',11,1,1),
-	(72,'Extractive Metallurgy','',11,1,1),
-	(73,'Qualitative Analysis','',11,1,1),
-	(74,'S-Block Elements','',11,1,1),
-	(75,'P-Block Elements','',11,1,1),
-	(76,'D and F Block Elements','',11,1,1),
-	(77,'General Concepts','',12,1,1),
-	(78,'Alkanes, Alkenes and Alkynes','',12,1,1),
-	(79,'Isomerism','',12,1,1),
-	(80,'Alcohols, Phenols and Ethers','',12,1,1),
-	(81,'Aldehydes, Ketones and Acids','',12,1,1),
-	(82,'Biomolecules','',12,1,1),
-	(83,'Practical Organic Chemistry','',12,1,1),
-	(84,'Aromatic Compounds','',12,1,1),
-	(85,'Units and Dimensions','NULL',13,2,1),
-	(86,'Physical Experiments','NULL',13,2,1),
-	(87,'Optics Experiments','NULL',13,2,1),
-	(88,'Electricity experiments','NULL',13,2,1),
-	(89,'Heat Experiments','NULL',13,2,1),
-	(90,'Kinematics','NULL',14,2,1),
-	(91,'Newtons Laws','NULL',14,2,1),
-	(92,'Collisions','NULL',14,2,1),
-	(93,'Gravitation','NULL',14,2,1),
-	(94,'Momentum','NULL',14,2,1),
-	(95,'Bulk Matter','NULL',14,2,1),
-	(96,'Fluid dynamics','NULL',14,2,1),
-	(97,'Wave motion','NULL',14,2,1),
-	(98,'Thermal Physics','NULL',14,2,1),
-	(99,'Perfect Gas and Kinetic Theory','NULL',14,2,1),
-	(100,'Electrostatics','NULL',15,2,1),
-	(101,'Capacitance','NULL',15,2,1),
-	(102,'Electric Current','NULL',15,2,1),
-	(103,'Magnetic effects of current and magnetism','NULL',15,2,1),
-	(104,'Electromagnetic induction','NULL',15,2,1),
-	(105,'Electromagnetic waves','NULL',15,2,1),
-	(106,'Reflection and refraction','NULL',16,2,1),
-	(107,'Lenses','NULL',16,2,1),
-	(108,'Prisms','NULL',16,2,1),
-	(109,'Intereference','NULL',16,2,1),
-	(110,'Atoms and Nuclei','NULL',17,2,1),
-	(111,'Radioactive Decay','NULL',17,2,1),
-	(112,'Dual Nature of Matter and Radiation (incl PE effec','NULL',17,2,1),
-	(113,'Electronic Devices','NULL',17,2,1),
-	(114,'Electro Chemistry','',18,2,1),
-	(115,'States of matter','',18,2,1),
-	(116,'Thermodynamics','',18,2,1),
-	(117,'Chemical Equilibrium','',18,2,1),
-	(118,'Chemical Kinetics','',18,2,1),
-	(119,'Solutions','',18,2,1),
-	(120,'Surface Chemistry','',18,2,1),
-	(121,'Nuclear Chemistry','',18,2,1),
-	(122,'Ores and Minerals','',19,2,1),
-	(123,'Oxygen compunds','',19,2,1),
-	(124,'Carbon compounds','',19,2,1),
-	(125,'Chlorine Compounds','',19,2,1),
-	(126,'Sulphur Compounds','',19,2,1),
-	(127,'Transition Elements','',19,2,1),
-	(128,'Extractive Metallurgy','',19,2,1),
-	(129,'Qualitative Analysis','',19,2,1),
-	(130,'S-block Elements','',19,2,1),
-	(131,'P-Block Elements','',19,2,1),
-	(132,'d and f block elements','',19,2,1),
-	(133,'General Concepts','',20,2,1),
-	(134,'Alkanes','',20,2,1),
-	(135,'Alkenes and Alkynes','',20,2,1),
-	(136,'Alcohols, Phenols and Ethers','',20,2,1),
-	(137,'Aldehydes, Ketones and Acids','',20,2,1),
-	(138,'Amino acids and peptides','',20,2,1),
-	(139,'Practical Organic Chemistry','',20,2,1),
-	(140,'Environmental chemistry','',21,2,1),
-	(141,'Biomolecules','',21,2,1),
-	(142,'Polymers','',21,2,1),
-	(143,'Classification ','',22,2,1),
-	(144,'Features and classification of plants','',22,2,1),
-	(145,'Features and classification of animals','',22,2,1),
-	(146,'Morphology and Anatomy (plants)','',23,2,1),
-	(147,'Morphology and Anatomy (animals)','',23,2,1),
-	(148,'Cell theory','',24,2,1),
-	(149,'Chemical Constituents of living cells','',24,2,1),
-	(150,'Cell division','',24,2,1),
-	(151,'Transport in plants','',25,2,1),
-	(152,'Mineral Nutrition','',25,2,1),
-	(153,'Photosynthesis','',25,2,1),
-	(154,'Respiration','',25,2,1),
-	(155,'Plant growth and development','',25,2,1),
-	(156,'Digestion and absorption','',26,2,1),
-	(157,'Breathing and respiration','',26,2,1),
-	(158,'Body fluids and circulation','',26,2,1),
-	(159,'Excretory products','',26,2,1),
-	(160,'Locomotion and movement','',26,2,1),
-	(161,'Neural control and coordination','',26,2,1),
-	(162,'Reproduction in organisms','',27,2,1),
-	(163,'Sexual reproduction in plants','',27,2,1),
-	(164,'Human reproduction','',27,2,1),
-	(165,'Reproductive Health','',27,2,1),
-	(166,'Heredity and Variation','',28,2,1),
-	(167,'Inheritance','',28,2,1),
-	(168,'Evolution','',28,2,1),
-	(169,'Health and disease','',29,2,1),
-	(170,'Improvement in food production','',29,2,1),
-	(171,'Microbes in human welfare','',29,2,1),
-	(172,'Genetic Engineering','',30,2,1),
-	(173,'Applications of biotechnology','',30,2,1),
-	(174,'Organisms and environment','',31,2,1),
-	(175,'Ecosystem','',31,2,1),
-	(176,'Biodiversity','',31,2,1),
-	(177,'Environmental issues','',31,2,1);
+	(1,'Sets, Relations & Functions','',1,1,0.1),
+	(2,'Equations','',1,1,0.1),
+	(3,'Complex Numbers','',1,1,0.1),
+	(4,'Progressions','',1,1,0.1),
+	(5,'Logarithms','',1,1,0.1),
+	(6,'Permutations and Combinations','',1,1,0.1),
+	(7,'Binomial Theorem','',1,1,0.1),
+	(8,'Matrices','',1,1,0.1),
+	(9,'Probability','',1,1,0.1),
+	(10,'Mathematical Induction','',1,1,0.1),
+	(11,'Trigonometric Equations','',2,1,0.2),
+	(12,'Sine Rule','',2,1,0.2),
+	(13,'Cosine Rule','',2,1,0.2),
+	(14,'Half angle formula','',2,1,0.2),
+	(15,'Inverse Trigonometric functions','',2,1,0.2),
+	(16,'Cartesian Coordinates','',3,1,0.142857),
+	(17,'Lines','',3,1,0.142857),
+	(18,'Triangles','',3,1,0.142857),
+	(19,'Circle','',3,1,0.142857),
+	(20,'Conic Sections','',3,1,0.142857),
+	(21,'Locus','',3,1,0.142857),
+	(22,'3-D Geometry','',3,1,0.142857),
+	(23,'Limit and Continuity','',4,1,0.166667),
+	(24,'Derivatives','',4,1,0.166667),
+	(25,'Rolle\'s and Lagrange\'s Theorem','',4,1,0.166667),
+	(26,'Indefinite and definite integrals','',4,1,0.166667),
+	(27,'Applications of integrations','',4,1,0.166667),
+	(28,'Ordinary Differential Equations','',4,1,0.166667),
+	(29,'Units and Dimensions','',5,1,0.2),
+	(30,'Physical Experiments','',5,1,0.2),
+	(31,'Optics Experiments','',5,1,0.2),
+	(32,'Electricity experiments','',5,1,0.2),
+	(33,'Heat Experiments','',5,1,0.2),
+	(34,'Kinematics','',6,1,0.1),
+	(35,'Newtons Laws','',6,1,0.1),
+	(36,'Collisions','',6,1,0.1),
+	(37,'Gravitation','',6,1,0.1),
+	(38,'Momentum','',6,1,0.1),
+	(39,'Bulk Matter','',6,1,0.1),
+	(40,'Fluid dynamics','',6,1,0.1),
+	(41,'Wave motion','',6,1,0.1),
+	(42,'Thermal Physics','',6,1,0.1),
+	(43,'Perfect Gas and Kinetic Theory','',6,1,0.1),
+	(44,'Electrostatics','',7,1,0.166667),
+	(45,'Capacitance','',7,1,0.166667),
+	(46,'Electric Current','',7,1,0.166667),
+	(47,'Magnetic effects of current and magnetism','',7,1,0.166667),
+	(48,'Electromagnetic Induction','',7,1,0.166667),
+	(49,'Electromagnetic Waves','',7,1,0.166667),
+	(50,'Reflection and Refraction','',8,1,0.25),
+	(51,'Lenses','',8,1,0.25),
+	(52,'Prisms','',8,1,0.25),
+	(53,'Intereference','',8,1,0.25),
+	(54,'Atoms and Nuclei','',9,1,0.25),
+	(55,'Radioactive Decay','',9,1,0.25),
+	(56,'Dual Nature of Matter and Radiation (incl PE effec','',9,1,0.25),
+	(57,'Waves','',9,1,0.25),
+	(58,'Mole Concept','',10,1,0.0769231),
+	(59,'Electro Chemistry','',10,1,0.0769231),
+	(60,'States of Matter','',10,1,0.0769231),
+	(61,'Thermodynamics','',10,1,0.0769231),
+	(62,'Chemical Equilibrium','',10,1,0.0769231),
+	(63,'Ionic Equilibrium','',10,1,0.0769231),
+	(64,'Chemical Kinetics','',10,1,0.0769231),
+	(65,'Solutions','',10,1,0.0769231),
+	(66,'Surface Chemistry','',10,1,0.0769231),
+	(67,'Nuclear Chemistry','',10,1,0.0769231),
+	(68,'Stoichiometry','',10,1,0.0769231),
+	(69,'Redox Reactions','',10,1,0.0769231),
+	(70,'Solid State ','',10,1,0.0769231),
+	(71,'Ores and Minerals','',11,1,0.166667),
+	(72,'Extractive Metallurgy','',11,1,0.166667),
+	(73,'Qualitative Analysis','',11,1,0.166667),
+	(74,'S-Block Elements','',11,1,0.166667),
+	(75,'P-Block Elements','',11,1,0.166667),
+	(76,'D and F Block Elements','',11,1,0.166667),
+	(77,'General Concepts','',12,1,0.125),
+	(78,'Alkanes, Alkenes and Alkynes','',12,1,0.125),
+	(79,'Isomerism','',12,1,0.125),
+	(80,'Alcohols, Phenols and Ethers','',12,1,0.125),
+	(81,'Aldehydes, Ketones and Acids','',12,1,0.125),
+	(82,'Biomolecules','',12,1,0.125),
+	(83,'Practical Organic Chemistry','',12,1,0.125),
+	(84,'Aromatic Compounds','',12,1,0.125),
+	(85,'Units and Dimensions','NULL',13,2,0.2),
+	(86,'Physical Experiments','NULL',13,2,0.2),
+	(87,'Optics Experiments','NULL',13,2,0.2),
+	(88,'Electricity experiments','NULL',13,2,0.2),
+	(89,'Heat Experiments','NULL',13,2,0.2),
+	(90,'Kinematics','NULL',14,2,0.1),
+	(91,'Newtons Laws','NULL',14,2,0.1),
+	(92,'Collisions','NULL',14,2,0.1),
+	(93,'Gravitation','NULL',14,2,0.1),
+	(94,'Momentum','NULL',14,2,0.1),
+	(95,'Bulk Matter','NULL',14,2,0.1),
+	(96,'Fluid dynamics','NULL',14,2,0.1),
+	(97,'Wave motion','NULL',14,2,0.1),
+	(98,'Thermal Physics','NULL',14,2,0.1),
+	(99,'Perfect Gas and Kinetic Theory','NULL',14,2,0.1),
+	(100,'Electrostatics','NULL',15,2,0.166667),
+	(101,'Capacitance','NULL',15,2,0.166667),
+	(102,'Electric Current','NULL',15,2,0.166667),
+	(103,'Magnetic effects of current and magnetism','NULL',15,2,0.166667),
+	(104,'Electromagnetic induction','NULL',15,2,0.166667),
+	(105,'Electromagnetic waves','NULL',15,2,0.166667),
+	(106,'Reflection and refraction','NULL',16,2,0.25),
+	(107,'Lenses','NULL',16,2,0.25),
+	(108,'Prisms','NULL',16,2,0.25),
+	(109,'Intereference','NULL',16,2,0.25),
+	(110,'Atoms and Nuclei','NULL',17,2,0.25),
+	(111,'Radioactive Decay','NULL',17,2,0.25),
+	(112,'Dual Nature of Matter and Radiation (incl PE effec','NULL',17,2,0.25),
+	(113,'Electronic Devices','NULL',17,2,0.25),
+	(114,'Electro Chemistry','',18,2,0.125),
+	(115,'States of matter','',18,2,0.125),
+	(116,'Thermodynamics','',18,2,0.125),
+	(117,'Chemical Equilibrium','',18,2,0.125),
+	(118,'Chemical Kinetics','',18,2,0.125),
+	(119,'Solutions','',18,2,0.125),
+	(120,'Surface Chemistry','',18,2,0.125),
+	(121,'Nuclear Chemistry','',18,2,0.125),
+	(122,'Ores and Minerals','',19,2,0.0909091),
+	(123,'Oxygen compunds','',19,2,0.0909091),
+	(124,'Carbon compounds','',19,2,0.0909091),
+	(125,'Chlorine Compounds','',19,2,0.0909091),
+	(126,'Sulphur Compounds','',19,2,0.0909091),
+	(127,'Transition Elements','',19,2,0.0909091),
+	(128,'Extractive Metallurgy','',19,2,0.0909091),
+	(129,'Qualitative Analysis','',19,2,0.0909091),
+	(130,'S-block Elements','',19,2,0.0909091),
+	(131,'P-Block Elements','',19,2,0.0909091),
+	(132,'d and f block elements','',19,2,0.0909091),
+	(133,'General Concepts','',20,2,0.142857),
+	(134,'Alkanes','',20,2,0.142857),
+	(135,'Alkenes and Alkynes','',20,2,0.142857),
+	(136,'Alcohols, Phenols and Ethers','',20,2,0.142857),
+	(137,'Aldehydes, Ketones and Acids','',20,2,0.142857),
+	(138,'Amino acids and peptides','',20,2,0.142857),
+	(139,'Practical Organic Chemistry','',20,2,0.142857),
+	(140,'Environmental chemistry','',21,2,0.333333),
+	(141,'Biomolecules','',21,2,0.333333),
+	(142,'Polymers','',21,2,0.333333),
+	(143,'Classification ','',22,2,0.333333),
+	(144,'Features and classification of plants','',22,2,0.333333),
+	(145,'Features and classification of animals','',22,2,0.333333),
+	(146,'Morphology and Anatomy (plants)','',23,2,0.5),
+	(147,'Morphology and Anatomy (animals)','',23,2,0.5),
+	(148,'Cell theory','',24,2,0.333333),
+	(149,'Chemical Constituents of living cells','',24,2,0.333333),
+	(150,'Cell division','',24,2,0.333333),
+	(151,'Transport in plants','',25,2,0.2),
+	(152,'Mineral Nutrition','',25,2,0.2),
+	(153,'Photosynthesis','',25,2,0.2),
+	(154,'Respiration','',25,2,0.2),
+	(155,'Plant growth and development','',25,2,0.2),
+	(156,'Digestion and absorption','',26,2,0.166667),
+	(157,'Breathing and respiration','',26,2,0.166667),
+	(158,'Body fluids and circulation','',26,2,0.166667),
+	(159,'Excretory products','',26,2,0.166667),
+	(160,'Locomotion and movement','',26,2,0.166667),
+	(161,'Neural control and coordination','',26,2,0.166667),
+	(162,'Reproduction in organisms','',27,2,0.25),
+	(163,'Sexual reproduction in plants','',27,2,0.25),
+	(164,'Human reproduction','',27,2,0.25),
+	(165,'Reproductive Health','',27,2,0.25),
+	(166,'Heredity and Variation','',28,2,0.333333),
+	(167,'Inheritance','',28,2,0.333333),
+	(168,'Evolution','',28,2,0.333333),
+	(169,'Health and disease','',29,2,0.333333),
+	(170,'Improvement in food production','',29,2,0.333333),
+	(171,'Microbes in human welfare','',29,2,0.333333),
+	(172,'Genetic Engineering','',30,2,0.5),
+	(173,'Applications of biotechnology','',30,2,0.5),
+	(174,'Organisms and environment','',31,2,0.25),
+	(175,'Ecosystem','',31,2,0.25),
+	(176,'Biodiversity','',31,2,0.25),
+	(177,'Environmental issues','',31,2,0.25);
 
 /*!40000 ALTER TABLE `section_l3` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -1413,11 +1563,12 @@ CREATE TABLE `streams` (
   `quizIds` text,
   `sampleQuizIds` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `streams` WRITE;
 /*!40000 ALTER TABLE `streams` DISABLE KEYS */;
-INSERT INTO `streams` (`id`,`displayName`,`topFacultyIds`,`basicInfo`,`quizIds`,`sampleQuizIds`)
+
+INSERT INTO `streams` (`id`, `displayName`, `topFacultyIds`, `basicInfo`, `quizIds`, `sampleQuizIds`)
 VALUES
 	(1,'Engineering',NULL,NULL,NULL,NULL),
 	(2,'Medical',NULL,NULL,NULL,NULL),
@@ -1444,22 +1595,21 @@ CREATE TABLE `students` (
 
 LOCK TABLES `students` WRITE;
 /*!40000 ALTER TABLE `students` DISABLE KEYS */;
-INSERT INTO `students` (`ascoreL1`,`ascoreL2`,`quizzesAttempted`,`accountId`,`streamId`)
+
+INSERT INTO `students` (`ascoreL1`, `ascoreL2`, `quizzesAttempted`, `accountId`, `streamId`)
 VALUES
-	(0,0,'[\"2\",\"3\"]',4,1),
-	(0,0,NULL,5,1);
+	(0,0,NULL,4,1),
+	(0,0,NULL,5,1),
+	(0,0,NULL,7,1);
 
 /*!40000 ALTER TABLE `students` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
 
-
-
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

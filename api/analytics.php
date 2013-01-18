@@ -111,7 +111,40 @@ class lscoreDataObject{
 //>> FRONT-FACING Functions
 function testCode()
 {
-   
+    /*
+  for($i=1;$i<=6;$i++)
+  {
+    $rand = rand(0,10);
+    $sql = "insert into ascores_l1 (accountId, score, updatedOn, l1id, numQuestions, numCorrect, numIncorrect, numUnattempted, streamId) values (7,0,".time().",".$i.",10,".$rand.",".(10-$rand).",0,1)";
+    $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("lid", $i);
+        $stmt->execute();
+  }*/
+
+  for($i=1;$i<=31;$i++)
+   {
+        $sql = "select weightage, l1id from section_l2 where id = :lid";
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("lid", $i);
+        $stmt->execute();
+        $results = $stmt->fetch(PDO::FETCH_OBJ);
+        $weightage = $results->weightage;
+        $l2id = $results->l1id;
+        $sql = "select score from ascores_l2 where l2id = :lid and accountId = 7";
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("lid", $i);
+        $stmt->execute();
+        $results = $stmt->fetch(PDO::FETCH_OBJ);
+        $l2score = $results->score*$weightage;
+        $sql = "update ascores_l1 set score = score + ".$l2score." where l1id = :l2id and accountId = 7";
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("l2id", $l2id);
+        $stmt->execute();
+        $db = null;
+   }
 }
 
 function updateResults()
@@ -245,7 +278,7 @@ function updateResultsForTest($accountId,$quizId,$logs)
         );
     
 
-//extracode    
+    //extracode    
         $optionArray2 = array();
         $optionText2 = array();
         $timeTaken2 = array(); //All 4 are per question arrays
@@ -340,7 +373,8 @@ function abilityScoreNotFound($level,$id,$accountId)
 {
     $date = date("Y-m-d H:i:s", time());
     $streamId = 1;
-    $defaultScore = analConst::ABILITY_DEFAULT_SCORE;
+    //$defaultScore = analConst::ABILITY_DEFAULT_SCORE;
+    $defaultScore = rand(20,90);
      $sql = "INSERT INTO ascores_".$level." (accountId, score, updatedOn, ".$level."id, numQuestions, numCorrect, numIncorrect, numUnattempted, streamId) VALUES (:acid,:score,:timeStamp,:id,0,0,0,0,:streamId)";
     try {
         $db = getConnection();
@@ -352,7 +386,7 @@ function abilityScoreNotFound($level,$id,$accountId)
         $stmt->bindParam("score", $defaultScore);
         $stmt->execute();
         $db = null;
-        return analConst::ABILITY_DEFAULT_SCORE;
+        return $defaultScore;
     } catch (PDOException $e) {
         $response["status"] = ERROR;
         $response["data"] = EXCEPTION_MSG;
@@ -831,4 +865,20 @@ function getL3GraphData($accountId, $qDetailsRecord, $state, $delta, $userAbilit
     }
     return $temp;
 }
+
+function generateWeightage($l2id)
+{
+    $sql = "select count(*) c from section_l2 where l1id = :l2id";
+    $db = getConnection();
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam("l2id", $l2id);
+    $stmt->execute();
+    $results = $stmt->fetch(PDO::FETCH_OBJ);
+    $weightage = 1/($results->c);
+    $sql = "update section_l2 set weightage = ".$weightage." where l1id = :l2id";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam("l2id", $l2id);
+    $stmt->execute();
+    $db = null;
+}   
 
