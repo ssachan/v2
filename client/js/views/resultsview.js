@@ -51,7 +51,7 @@ window.ResultAnalysisView = Backbone.View.extend({
 
 	calculateVideoArray : function(options) {
 
-		videoResults = array();
+		var videoResults = [];
 		
 		_.each(options,function(item)
 		{
