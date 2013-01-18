@@ -67,9 +67,7 @@ window.ResultAnalysisView = Backbone.View.extend({
 			};
 			videoResults.push(videoResultObject);
 		});
-
 		return videoResults;
-
 	},
 
 	setUpPlaylist : function(videoResults) {

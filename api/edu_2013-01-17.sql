@@ -1,20 +1,17 @@
-# ************************************************************
-# Sequel Pro SQL dump
-# Version 3408
+﻿# Sequel Pro dump
+# Version 1630
+# http://code.google.com/p/sequel-pro
 #
-# http://www.sequelpro.com/
-# http://code.google.com/p/sequel-pro/
-#
-# Host: 127.0.0.1 (MySQL 5.5.25)
-# Database: edu
-# Generation Time: 2013-01-17 13:51:54 +0000
+# Host: localhost (MySQL 5.5.9)
+# Database: prod
+# Generation Time: 2013-01-18 10:44:08 +0530
 # ************************************************************
-
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
@@ -41,12 +38,11 @@ CREATE TABLE `accounts` (
   `resetsentOn` datetime DEFAULT NULL,
   `pics` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `accounts` WRITE;
 /*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
-
-INSERT INTO `accounts` (`id`, `username`, `password`, `firstName`, `lastName`, `email`, `roles`, `createdOn`, `verifiedOn`, `lastsignedinOn`, `deletedOn`, `suspendedOn`, `resetsentOn`, `pics`)
+INSERT INTO `accounts` (`id`,`username`,`password`,`firstName`,`lastName`,`email`,`roles`,`createdOn`,`verifiedOn`,`lastsignedinOn`,`deletedOn`,`suspendedOn`,`resetsentOn`,`pics`)
 VALUES
 	(1,NULL,'himanshu','Himanshu','Bhutani','him.bhutani@gmail.com','3',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 	(2,NULL,'ashwin','Ashwin','M','ashwin.rsmd@gmail.com','3',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
@@ -126,12 +122,11 @@ CREATE TABLE `ascores_l1` (
 
 LOCK TABLES `ascores_l1` WRITE;
 /*!40000 ALTER TABLE `ascores_l1` DISABLE KEYS */;
-
-INSERT INTO `ascores_l1` (`accountId`, `score`, `updatedOn`, `l1Id`, `numQuestions`, `numCorrect`, `numIncorrect`, `numUnattempted`, `streamId`)
+INSERT INTO `ascores_l1` (`accountId`,`score`,`updatedOn`,`l1Id`,`numQuestions`,`numCorrect`,`numIncorrect`,`numUnattempted`,`streamId`)
 VALUES
 	(4,10,'2013-01-08 00:00:00',1,0,0,0,0,1),
-	(4,54,'2013-01-15 18:41:07',2,33,2,6,25,1),
-	(4,50,'2013-01-15 08:36:35',3,180,0,27,153,1);
+	(4,86,'2013-01-18 10:40:05',2,481,18,85,378,1),
+	(4,62,'2013-01-18 10:27:20',3,286,6,58,222,1);
 
 /*!40000 ALTER TABLE `ascores_l1` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -156,14 +151,13 @@ CREATE TABLE `ascores_l2` (
 
 LOCK TABLES `ascores_l2` WRITE;
 /*!40000 ALTER TABLE `ascores_l2` DISABLE KEYS */;
-
-INSERT INTO `ascores_l2` (`accountId`, `score`, `updatedOn`, `l2Id`, `numQuestions`, `numCorrect`, `numIncorrect`, `numUnattempted`, `streamId`)
+INSERT INTO `ascores_l2` (`accountId`,`score`,`updatedOn`,`l2Id`,`numQuestions`,`numCorrect`,`numIncorrect`,`numUnattempted`,`streamId`)
 VALUES
 	(4,10,'2013-01-08 00:00:00',1,0,0,0,0,1),
-	(4,50,'2013-01-15 18:41:07',7,4,0,3,1,1),
-	(4,54,'2013-01-15 08:23:28',6,26,2,3,21,1),
-	(4,50,'2013-01-15 08:23:28',5,3,0,0,3,1),
-	(4,50,'2013-01-15 08:36:35',10,180,0,27,153,1);
+	(4,52,'2013-01-18 10:19:08',7,52,1,15,36,1),
+	(4,84,'2013-01-18 10:40:05',6,384,17,70,297,1),
+	(4,50,'2013-01-18 10:40:04',5,45,0,0,45,1),
+	(4,62,'2013-01-18 10:27:20',10,286,6,58,222,1);
 
 /*!40000 ALTER TABLE `ascores_l2` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -188,8 +182,7 @@ CREATE TABLE `ascores_l3` (
 
 LOCK TABLES `ascores_l3` WRITE;
 /*!40000 ALTER TABLE `ascores_l3` DISABLE KEYS */;
-
-INSERT INTO `ascores_l3` (`accountId`, `score`, `updatedOn`, `l3id`, `numQuestions`, `numCorrect`, `numIncorrect`, `numUnattempted`, `streamId`)
+INSERT INTO `ascores_l3` (`accountId`,`score`,`updatedOn`,`l3id`,`numQuestions`,`numCorrect`,`numIncorrect`,`numUnattempted`,`streamId`)
 VALUES
 	(4,50,'0000-00-00 00:00:00',1,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',2,0,0,0,0,1),
@@ -223,9 +216,9 @@ VALUES
 	(4,50,'0000-00-00 00:00:00',30,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',31,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',32,0,0,0,0,1),
-	(4,50,'2013-01-15 08:23:28',33,3,0,0,3,1),
-	(4,54,'2013-01-15 08:23:28',34,16,2,2,12,1),
-	(4,50,'2013-01-15 08:23:28',35,10,0,1,9,1),
+	(4,50,'2013-01-18 10:40:04',33,45,0,0,45,1),
+	(4,66,'2013-01-18 10:40:04',34,192,8,24,160,1),
+	(4,68,'2013-01-18 10:40:04',35,192,9,46,137,1),
 	(4,50,'0000-00-00 00:00:00',36,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',37,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',38,0,0,0,0,1),
@@ -234,10 +227,10 @@ VALUES
 	(4,50,'0000-00-00 00:00:00',41,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',42,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',43,0,0,0,0,1),
-	(4,48,'2013-01-15 18:40:39',44,2,0,2,0,1),
-	(4,47,'2013-01-15 18:40:44',45,1,0,0,1,1),
-	(4,48,'2013-01-15 18:41:07',46,1,0,1,0,1),
-	(4,48,'2013-01-14 06:54:35',47,0,0,0,0,1),
+	(4,48,'2013-01-18 10:19:08',44,14,0,7,7,1),
+	(4,46,'2013-01-18 10:19:08',45,13,0,4,9,1),
+	(4,50,'2013-01-18 10:19:08',46,13,1,3,9,1),
+	(4,48,'2013-01-18 10:19:08',47,12,0,1,11,1),
 	(4,50,'0000-00-00 00:00:00',48,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',49,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',50,0,0,0,0,1),
@@ -251,9 +244,9 @@ VALUES
 	(4,50,'0000-00-00 00:00:00',58,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',59,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',60,0,0,0,0,1),
-	(4,50,'2013-01-15 08:36:35',61,63,0,9,54,1),
-	(4,50,'2013-01-15 08:36:35',62,45,0,9,36,1),
-	(4,50,'2013-01-15 08:36:35',63,72,0,9,63,1),
+	(4,56,'2013-01-18 10:27:20',61,101,3,23,75,1),
+	(4,54,'2013-01-17 18:47:32',62,70,2,14,54,1),
+	(4,52,'2013-01-17 18:47:32',63,115,1,21,93,1),
 	(4,50,'0000-00-00 00:00:00',64,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',65,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',66,0,0,0,0,1),
@@ -415,12 +408,11 @@ CREATE TABLE `exams` (
   `streamId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `streamId` (`streamId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `exams` WRITE;
 /*!40000 ALTER TABLE `exams` DISABLE KEYS */;
-
-INSERT INTO `exams` (`id`, `displayName`, `fullName`, `streamId`)
+INSERT INTO `exams` (`id`,`displayName`,`fullName`,`streamId`)
 VALUES
 	(1,NULL,NULL,NULL);
 
@@ -467,8 +459,7 @@ CREATE TABLE `faculty` (
 
 LOCK TABLES `faculty` WRITE;
 /*!40000 ALTER TABLE `faculty` DISABLE KEYS */;
-
-INSERT INTO `faculty` (`l1Ids`, `l2Ids`, `specialization`, `bioShort`, `bio`, `experience`, `education`, `streamIds`, `totalQuizzes`, `rec`, `subscribers`, `accountId`)
+INSERT INTO `faculty` (`l1Ids`,`l2Ids`,`specialization`,`bioShort`,`bio`,`experience`,`education`,`streamIds`,`totalQuizzes`,`rec`,`subscribers`,`accountId`)
 VALUES
 	('3','',NULL,'Physical Chemistry Specialist; B. Tech, IIT Guwahati','Himanshu is a specialist in Physical Chemistry. He completed his B.Tech. from IIT Guwahati in Chemical Engineering. With a combined coaching experience of 3 years, multiple All India Ranks (AIR) under 100 have had the  opportunity to study key physical chemistry concepts with him','Physical Chemistry - 3 years','B. Tech., IIT Guwahati, 2009','1',0,0,0,1),
 	('2','',NULL,'Physics Faculty at Kartikkey Classes;  IIT Madras','Ashwin is a B. Tech. from IIT Madras. He specializes in Physics and is a founding member at Kartikkey classes. His unique approach to teaching physics has got him excellent reviews from all students','Co-founder, Physics faculty - Kartikkey Classes','B. Tech., IIT Madras, 2010','1',0,0,0,2),
@@ -491,8 +482,7 @@ CREATE TABLE `insight_type` (
 
 LOCK TABLES `insight_type` WRITE;
 /*!40000 ALTER TABLE `insight_type` DISABLE KEYS */;
-
-INSERT INTO `insight_type` (`id`, `type`)
+INSERT INTO `insight_type` (`id`,`type`)
 VALUES
 	(1,'post-test'),
 	(2,'dashboard'),
@@ -512,12 +502,11 @@ CREATE TABLE `insights` (
   `text` text NOT NULL,
   `typeId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `insights` WRITE;
 /*!40000 ALTER TABLE `insights` DISABLE KEYS */;
-
-INSERT INTO `insights` (`id`, `text`, `typeId`)
+INSERT INTO `insights` (`id`,`text`,`typeId`)
 VALUES
 	(1,'Your accuracy was very low while you utilized less than half the time. Focus more on accuracy than time',NULL),
 	(2,'Give more time to the questions to improve on your accuracy I <%num%>',NULL),
@@ -558,8 +547,7 @@ CREATE TABLE `package_type` (
 
 LOCK TABLES `package_type` WRITE;
 /*!40000 ALTER TABLE `package_type` DISABLE KEYS */;
-
-INSERT INTO `package_type` (`id`, `name`)
+INSERT INTO `package_type` (`id`,`name`)
 VALUES
 	(1,'Basic'),
 	(2,'Custom');
@@ -584,8 +572,7 @@ CREATE TABLE `packages` (
 
 LOCK TABLES `packages` WRITE;
 /*!40000 ALTER TABLE `packages` DISABLE KEYS */;
-
-INSERT INTO `packages` (`id`, `name`, `details`, `poolId`, `price`, `streamId`)
+INSERT INTO `packages` (`id`,`name`,`details`,`poolId`,`price`,`streamId`)
 VALUES
 	(1,'All Tests','5|:2',1,500,1);
 
@@ -608,12 +595,11 @@ CREATE TABLE `para` (
   `difficulty` int(1) DEFAULT NULL,
   `mobileFlag` int(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `para` WRITE;
 /*!40000 ALTER TABLE `para` DISABLE KEYS */;
-
-INSERT INTO `para` (`id`, `text`, `questionIds`, `questionCount`, `resources`, `l3Id`, `difficulty`, `mobileFlag`)
+INSERT INTO `para` (`id`,`text`,`questionIds`,`questionCount`,`resources`,`l3Id`,`difficulty`,`mobileFlag`)
 VALUES
 	(1,'<p>Two blocks \\\'A\\\' and \\\'B\\\' of mass \\\'m\\\' and \\\'2m\\\' kgs respectively are connected by a light spring and placed on a smooth horizontal surface. The blocks are now pressed towards each other so that the compression in the spring is \\\'x\\\' and then released. </p><img src=\"../api/resources/questions/37img1.jpg\" height = \"200\">','37|:38',2,'../api/resources/questions/p1img1.jpg',34,2,NULL),
 	(2,'<p>A block A of mass 8kg is moving towards the right with a speed of 3m/s on a horizontal frictionless surface. Another block B of mass 4kg with a spring (massless, k = 50000/12 Nm<sup>-1</sup>) attached to it, is moving towards left with speed 2m/s. At some instant, A collides with the spring attached to B. After some time, the spring has maximum compression and then the blocks move independently with their final velocities.</p><img src=\"../api/resources/questions/p1img1.jpg\" height = \"200\"><p>Take the direction towards right as +ve x direction. Assume spring force is conservative and no kinetic energy is converted to internal energy of spring in the form of heat. Assume no sound is generated on collision.</p>','51|:52|:53|:54|:55|:56',7,'../api/resources/questions/p2img1.jpg',34,2,NULL);
@@ -634,8 +620,7 @@ CREATE TABLE `pool` (
 
 LOCK TABLES `pool` WRITE;
 /*!40000 ALTER TABLE `pool` DISABLE KEYS */;
-
-INSERT INTO `pool` (`id`, `quizIds`)
+INSERT INTO `pool` (`id`,`quizIds`)
 VALUES
 	(1,'1|:2|:3');
 
@@ -665,12 +650,11 @@ CREATE TABLE `question_tags` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `question_tags` WRITE;
 /*!40000 ALTER TABLE `question_tags` DISABLE KEYS */;
-
-INSERT INTO `question_tags` (`id`, `name`)
+INSERT INTO `question_tags` (`id`,`name`)
 VALUES
 	(1,'lengthy'),
 	(2,'calculations');
@@ -688,12 +672,11 @@ CREATE TABLE `question_type` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `type` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `question_type` WRITE;
 /*!40000 ALTER TABLE `question_type` DISABLE KEYS */;
-
-INSERT INTO `question_type` (`id`, `type`)
+INSERT INTO `question_type` (`id`,`type`)
 VALUES
 	(1,'single-option'),
 	(2,'multiple-option'),
@@ -738,12 +721,11 @@ CREATE TABLE `questions` (
   `videoSrc` varchar(30) DEFAULT NULL,
   `posterSrc` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=118 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `questions` WRITE;
 /*!40000 ALTER TABLE `questions` DISABLE KEYS */;
-
-INSERT INTO `questions` (`id`, `text`, `options`, `correctAnswer`, `explanation`, `l3Id`, `typeId`, `tagIds`, `difficulty`, `paraId`, `resources`, `averageTimeCorrect`, `averageTimeIncorrect`, `averageTimeUnattempted`, `averageCorrect`, `averageIncorrect`, `averageUnattempted`, `allotedTime`, `correctScore`, `incorrectScore`, `optionInCorrectScore`, `optionCorrectScore`, `unattemptedScore`, `mobileFlag`, `availableFlag`, `videoSrc`, `posterSrc`)
+INSERT INTO `questions` (`id`,`text`,`options`,`correctAnswer`,`explanation`,`l3Id`,`typeId`,`tagIds`,`difficulty`,`paraId`,`resources`,`averageTimeCorrect`,`averageTimeIncorrect`,`averageTimeUnattempted`,`averageCorrect`,`averageIncorrect`,`averageUnattempted`,`allotedTime`,`correctScore`,`incorrectScore`,`optionInCorrectScore`,`optionCorrectScore`,`unattemptedScore`,`mobileFlag`,`availableFlag`,`videoSrc`,`posterSrc`)
 VALUES
 	(1,'<p>Two large vertical and parallel metal plates having a separation of 1 cm are connected to a DC voltage source of potential difference X. A proton is released at rest midway between the two plates. It is found to move at 45<sup>o</sup> to the vertical JUST after release. Then X is nearly</p>','1*10<sup>-5</sup> V |: 1*10<sup>-7</sup> V |: 1*10<sup>-9</sup> V |: 1*10<sup>-10</sup> V','2','<p>Writing the force equations on the particle,</p><img src = \"../api/resources/questions/1img1.jpg\"><p>mg = qE $$1.67 * 10^{-27} * (10) = (1.6 * 10^{-19})\\frac{x}{0.01}$$  $$x =\\frac{1.67 * 10^{-9}}{1.6}$$ $$x=1 * 10^{-9}V$$</p>',44,1,'',1,NULL,'../api/resources/questions/1img1.jpg',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,NULL,NULL),
 	(2,'<p>For the circuit given below which of the following is true:</p> <img src = \"../api/resources/questions/2img1.jpg\">','The current I through the battery is 7.5mA |: The potential difference across RL is 20V|: The ratios of power dissipated in R1 and R2 is 5 |:\n If R1 and R2 are interchanged, magnitude of power dissipated in RL will decrease by a factor of 3','0','<p>R<sub>2</sub> and R<sub>L</sub> are in parallel hence $$R_{2L} = \\frac{6 * 1.5}{6 + 1.5}$$\nR<sub>2L</sub> = 1.2 k~~\\Omega~~ <br>\nR<sub>2L</sub> in turn is in series with R<sub>1</sub> hence the resistance of the circuit is:<br>\nR = 1.2 + 2 = 3.2 k~~\\Omega~~ <br>\nThe current I through battery is $$ i= \\frac{24V}{3.2 * 1000\\Omega} = 7.5 mA $$</p>',45,1,'',2,NULL,'../api/resources/questions/2img1.jpg',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,NULL,NULL),
@@ -895,19 +877,18 @@ CREATE TABLE `quizzes` (
   `streamId` int(11) DEFAULT NULL,
   `maxScore` int(11) DEFAULT '100',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `quizzes` WRITE;
 /*!40000 ALTER TABLE `quizzes` DISABLE KEYS */;
-
-INSERT INTO `quizzes` (`id`, `questionIds`, `description`, `descriptionShort`, `conceptsTested`, `tags`, `l3Ids`, `l2Ids`, `questionCount`, `allotedTime`, `difficulty`, `ratings`, `rec`, `typeId`, `facultyId`, `available`, `mobileFlag`, `addedOn`, `totalAttempts`, `streamId`, `maxScore`)
+INSERT INTO `quizzes` (`id`,`questionIds`,`description`,`descriptionShort`,`conceptsTested`,`tags`,`l3Ids`,`l2Ids`,`questionCount`,`allotedTime`,`difficulty`,`ratings`,`rec`,`typeId`,`facultyId`,`available`,`mobileFlag`,`addedOn`,`totalAttempts`,`streamId`,`maxScore`)
 VALUES
-	(1,'1|:2|:3|:4|:5|:6|:7|:8|:9|:10|:11|:12','Questions on Electricity & Magnetism from the last 4 years IIT-JEE papers','Advanced questions on Electricity and Magnetism','Electricity & Magnetism','IIT JEE','44|:45|:46|:47','7',12,3600,2,NULL,0,2,3,NULL,NULL,NULL,0,1,36),
-	(2,'13|:14|:15|:16|:17|:18|:19|:20|:21|:22|:23|:24|:25|:26|:27|:28|:29|:30|:31|:32','Covers Redox Reactions , Stoichiometry, Chemical and Ionic Equilibrium','Advanced questions on Physical Chemistry','Physical Chemistry','','61|:62|:63','10',20,3600,2,NULL,0,2,1,NULL,NULL,NULL,0,1,100),
-	(3,'33|:34|:35|:36|:37|:38|:39|:40|:41|:42|:43|:44|:45|:46|:47|:48|:49|:50|:51|:52|:53|:54|:55|:56|:57','Medium difficulty question to strengthen the key topics of Kinematics and Collisions','Practice on Kinematics and Collisions','Mechanics','','34|:35','6',25,3600,2,NULL,0,2,2,NULL,NULL,NULL,0,1,100),
-	(4,'58|:59|:60|:61|:62|:63|:64|:65|:66|:67|:68|:69|:70|:71|:72|:73|:74|:75|:76|:77','JEE advanced level question to strengthen the key topics of Kinematics and Collisions','Advanced problems on Kinematics and Collisions','Mechanics','','34|:35','6',20,3600,2,NULL,0,2,2,NULL,NULL,NULL,0,1,100),
-	(5,'78|:79|:80|:81|:82|:83|:84|:85|:86|:87|:88|:89|:90|:91|:92|:93|:94|:95|:96|:97','The set includes easy to medium questions on the topics of Relatve Velocity','Basic Question on Kinematics','Mechanics','','34|:35','6',20,3600,2,NULL,0,2,6,NULL,NULL,NULL,0,1,100),
-	(6,'98|:99|:100|:101|:102|:103|:104|:105|:106|:107|:108|:109|:110|:111|:112|:113|:114|:115|:116|:117','The set includes easy to medium questions on AC circuits. This test is for students comfortable with DC circuits but looking to practice the topic of AC','Basic Question on Alternating Currents / Circuits','Electricity & Magnetism','','45|:46','7',20,3600,2,NULL,0,2,6,NULL,NULL,NULL,0,1,100);
+	(1,'1|:2|:3|:4|:5|:6|:7|:8|:9|:10|:11|:12','Questions on Electricity & Magnetism from the last 4 years IIT-JEE papers','Advanced questions on Electricity and Magnetism','Electricity & Magnetism','IIT JEE','44|:45|:46|:47','7',12,3600000,2,NULL,0,2,3,NULL,NULL,NULL,0,1,36),
+	(2,'13|:14|:15|:16|:17|:18|:19|:20|:21|:22|:23|:24|:25|:26|:27|:28|:29|:30|:31|:32','Covers Redox Reactions , Stoichiometry, Chemical and Ionic Equilibrium','Advanced questions on Physical Chemistry','Physical Chemistry','','61|:62|:63','10',20,3600000,2,NULL,0,2,1,NULL,NULL,NULL,0,1,100),
+	(3,'33|:34|:35|:36|:37|:38|:39|:40|:41|:42|:43|:44|:45|:46|:47|:48|:49|:50|:51|:52|:53|:54|:55|:56|:57','Medium difficulty question to strengthen the key topics of Kinematics and Collisions','Practice on Kinematics and Collisions','Mechanics','','34|:35','6',25,3600000,2,NULL,0,2,2,NULL,NULL,NULL,0,1,100),
+	(4,'58|:59|:60|:61|:62|:63|:64|:65|:66|:67|:68|:69|:70|:71|:72|:73|:74|:75|:76|:77','JEE advanced level question to strengthen the key topics of Kinematics and Collisions','Advanced problems on Kinematics and Collisions','Mechanics','','34|:35','6',20,3600000,2,NULL,0,2,2,NULL,NULL,NULL,0,1,100),
+	(5,'78|:79|:80|:81|:82|:83|:84|:85|:86|:87|:88|:89|:90|:91|:92|:93|:94|:95|:96|:97','The set includes easy to medium questions on the topics of Relatve Velocity','Basic Question on Kinematics','Mechanics','','34|:35','6',20,3600000,2,NULL,0,2,6,NULL,NULL,NULL,0,1,100),
+	(6,'98|:99|:100|:101|:102|:103|:104|:105|:106|:107|:108|:109|:110|:111|:112|:113|:114|:115|:116|:117','The set includes easy to medium questions on AC circuits. This test is for students comfortable with DC circuits but looking to practice the topic of AC','Basic Question on Alternating Currents / Circuits','Electricity & Magnetism','','45|:46','7',20,3600000,2,NULL,0,2,6,NULL,NULL,NULL,0,1,100);
 
 /*!40000 ALTER TABLE `quizzes` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -943,8 +924,7 @@ CREATE TABLE `quizzes_type` (
 
 LOCK TABLES `quizzes_type` WRITE;
 /*!40000 ALTER TABLE `quizzes_type` DISABLE KEYS */;
-
-INSERT INTO `quizzes_type` (`id`, `type`)
+INSERT INTO `quizzes_type` (`id`,`type`)
 VALUES
 	(1,'full'),
 	(2,'sectional');
@@ -996,6 +976,89 @@ CREATE TABLE `responses` (
   `status` varchar(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+LOCK TABLES `responses` WRITE;
+/*!40000 ALTER TABLE `responses` DISABLE KEYS */;
+INSERT INTO `responses` (`accountId`,`questionId`,`optionSelected`,`timeTaken`,`abilityScoreBefore`,`delta`,`timeStamp`,`status`)
+VALUES
+	(4,13,'1',2479,56,-1,'2013-01-18 10:27:20','2'),
+	(4,33,'1',2156,66,-1,'2013-01-18 10:33:19','2'),
+	(4,34,'2',1957,66,-1,'2013-01-18 10:33:19','2'),
+	(4,35,'2',1968,62,2,'2013-01-18 10:33:19','1'),
+	(4,36,'1',2289,64,-1,'2013-01-18 10:33:19','2'),
+	(4,37,'',4463,64,0,'2013-01-18 10:33:19','3'),
+	(4,38,'',0,64,0,'2013-01-18 10:33:19','4'),
+	(4,39,'',0,66,0,'2013-01-18 10:33:19','4'),
+	(4,40,'',0,66,0,'2013-01-18 10:33:19','4'),
+	(4,41,'',0,64,0,'2013-01-18 10:33:19','4'),
+	(4,42,'',0,66,0,'2013-01-18 10:33:19','4'),
+	(4,43,'',0,66,0,'2013-01-18 10:33:19','4'),
+	(4,44,'',0,64,0,'2013-01-18 10:33:19','4'),
+	(4,45,'',0,66,0,'2013-01-18 10:33:19','4'),
+	(4,46,'',0,64,0,'2013-01-18 10:33:19','4'),
+	(4,47,'',0,50,0,'2013-01-18 10:33:19','4'),
+	(4,48,'',0,64,0,'2013-01-18 10:33:19','4'),
+	(4,49,'',0,64,0,'2013-01-18 10:33:19','4'),
+	(4,50,'',0,50,0,'2013-01-18 10:33:19','4'),
+	(4,51,'',0,50,0,'2013-01-18 10:33:19','4'),
+	(4,52,'',0,66,0,'2013-01-18 10:33:19','4'),
+	(4,53,'',0,66,0,'2013-01-18 10:33:19','4'),
+	(4,54,'',0,66,0,'2013-01-18 10:33:19','4'),
+	(4,55,'',0,66,0,'2013-01-18 10:33:19','4'),
+	(4,56,'',0,66,0,'2013-01-18 10:33:19','4'),
+	(4,57,'',0,66,0,'2013-01-18 10:33:19','4'),
+	(4,33,'1',2156,66,-1,'2013-01-18 10:37:37','2'),
+	(4,34,'2',1957,66,-1,'2013-01-18 10:37:37','2'),
+	(4,35,'2',1968,64,2,'2013-01-18 10:37:37','1'),
+	(4,36,'1',2289,66,-1,'2013-01-18 10:37:37','2'),
+	(4,37,'',4463,66,0,'2013-01-18 10:37:37','3'),
+	(4,38,'',0,66,0,'2013-01-18 10:37:37','4'),
+	(4,39,'',0,66,0,'2013-01-18 10:37:37','4'),
+	(4,40,'',0,66,0,'2013-01-18 10:37:37','4'),
+	(4,41,'',0,66,0,'2013-01-18 10:37:37','4'),
+	(4,42,'',0,66,0,'2013-01-18 10:37:37','4'),
+	(4,43,'',0,66,0,'2013-01-18 10:37:37','4'),
+	(4,44,'',0,66,0,'2013-01-18 10:37:37','4'),
+	(4,45,'',0,66,0,'2013-01-18 10:37:37','4'),
+	(4,46,'',0,66,0,'2013-01-18 10:37:37','4'),
+	(4,47,'',0,50,0,'2013-01-18 10:37:37','4'),
+	(4,48,'',0,66,0,'2013-01-18 10:37:37','4'),
+	(4,49,'',0,66,0,'2013-01-18 10:37:37','4'),
+	(4,50,'',0,50,0,'2013-01-18 10:37:37','4'),
+	(4,51,'',0,50,0,'2013-01-18 10:37:37','4'),
+	(4,52,'',0,66,0,'2013-01-18 10:37:37','4'),
+	(4,53,'',0,66,0,'2013-01-18 10:37:37','4'),
+	(4,54,'',0,66,0,'2013-01-18 10:37:37','4'),
+	(4,55,'',0,66,0,'2013-01-18 10:37:37','4'),
+	(4,56,'',0,66,0,'2013-01-18 10:37:37','4'),
+	(4,57,'',0,66,0,'2013-01-18 10:37:38','4'),
+	(4,33,'1',2156,66,-1,'2013-01-18 10:40:04','2'),
+	(4,34,'2',1957,66,-1,'2013-01-18 10:40:04','2'),
+	(4,35,'2',1968,66,2,'2013-01-18 10:40:04','1'),
+	(4,36,'1',2289,68,-1,'2013-01-18 10:40:04','2'),
+	(4,37,'',4463,68,0,'2013-01-18 10:40:04','3'),
+	(4,38,'',0,68,0,'2013-01-18 10:40:04','4'),
+	(4,39,'',0,66,0,'2013-01-18 10:40:04','4'),
+	(4,40,'',0,66,0,'2013-01-18 10:40:04','4'),
+	(4,41,'',0,68,0,'2013-01-18 10:40:04','4'),
+	(4,42,'',0,66,0,'2013-01-18 10:40:04','4'),
+	(4,43,'',0,66,0,'2013-01-18 10:40:04','4'),
+	(4,44,'',0,68,0,'2013-01-18 10:40:04','4'),
+	(4,45,'',0,66,0,'2013-01-18 10:40:04','4'),
+	(4,46,'',0,68,0,'2013-01-18 10:40:04','4'),
+	(4,47,'',0,50,0,'2013-01-18 10:40:04','4'),
+	(4,48,'',0,68,0,'2013-01-18 10:40:04','4'),
+	(4,49,'',0,68,0,'2013-01-18 10:40:04','4'),
+	(4,50,'',0,50,0,'2013-01-18 10:40:04','4'),
+	(4,51,'',0,50,0,'2013-01-18 10:40:04','4'),
+	(4,52,'',0,66,0,'2013-01-18 10:40:04','4'),
+	(4,53,'',0,66,0,'2013-01-18 10:40:04','4'),
+	(4,54,'',0,66,0,'2013-01-18 10:40:04','4'),
+	(4,55,'',0,66,0,'2013-01-18 10:40:04','4'),
+	(4,56,'',0,66,0,'2013-01-18 10:40:04','4'),
+	(4,57,'',0,66,0,'2013-01-18 10:40:04','4');
+
+/*!40000 ALTER TABLE `responses` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table results
@@ -1018,6 +1081,15 @@ CREATE TABLE `results` (
   `state` int(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+LOCK TABLES `results` WRITE;
+/*!40000 ALTER TABLE `results` DISABLE KEYS */;
+INSERT INTO `results` (`quizId`,`accountId`,`selectedAnswers`,`score`,`timePerQuestion`,`timeTaken`,`data`,`timestamp`,`attemptedAs`,`startTime`,`endTime`,`state`)
+VALUES
+	(2,4,NULL,NULL,NULL,NULL,'[{\"t\":\"1358485038314\",\"e\":\"3\",\"q\":\"13\"},{\"t\":\"1358485039673\",\"e\":\"0\",\"q\":\"13\",\"o\":\"1\"},{\"t\":\"1358485040793\",\"e\":\"4\",\"q\":\"13\"}]','2013-01-18 10:27:20',2,'2013-01-18 10:27:16',NULL,0),
+	(3,4,NULL,NULL,NULL,NULL,'[{\"t\":\"1358485386117\",\"e\":\"10\"},{\"t\":\"1358485386163\",\"e\":\"3\",\"q\":\"33\"},{\"t\":\"1358485387241\",\"e\":\"0\",\"q\":\"33\",\"o\":\"1\"},{\"t\":\"1358485388319\",\"e\":\"4\",\"q\":\"33\"},{\"t\":\"1358485388324\",\"e\":\"3\",\"q\":\"34\"},{\"t\":\"1358485389400\",\"e\":\"0\",\"q\":\"34\",\"o\":\"2\"},{\"t\":\"1358485390281\",\"e\":\"4\",\"q\":\"34\"},{\"t\":\"1358485390288\",\"e\":\"3\",\"q\":\"35\"},{\"t\":\"1358485391168\",\"e\":\"0\",\"q\":\"35\",\"o\":\"2\"},{\"t\":\"1358485392256\",\"e\":\"4\",\"q\":\"35\"},{\"t\":\"1358485392265\",\"e\":\"3\",\"q\":\"36\"},{\"t\":\"1358485393321\",\"e\":\"0\",\"q\":\"36\",\"o\":\"1\"},{\"t\":\"1358485394554\",\"e\":\"4\",\"q\":\"36\"},{\"t\":\"1358485394562\",\"e\":\"3\",\"q\":\"37\"},{\"t\":\"1358485399025\",\"e\":\"4\",\"q\":\"37\"},{\"t\":\"1358485399025\",\"e\":\"8\"}]','2013-01-18 10:40:04',1,'2013-01-18 10:32:48',NULL,25);
+
+/*!40000 ALTER TABLE `results` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table roles
@@ -1029,12 +1101,11 @@ CREATE TABLE `roles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `roles` WRITE;
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
-
-INSERT INTO `roles` (`id`, `name`)
+INSERT INTO `roles` (`id`,`name`)
 VALUES
 	(1,'Admin'),
 	(2,'student'),
@@ -1055,12 +1126,11 @@ CREATE TABLE `section_l1` (
   `longName` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `streamId` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `section_l1` WRITE;
 /*!40000 ALTER TABLE `section_l1` DISABLE KEYS */;
-
-INSERT INTO `section_l1` (`id`, `displayName`, `longName`, `streamId`)
+INSERT INTO `section_l1` (`id`,`displayName`,`longName`,`streamId`)
 VALUES
 	(1,'Maths','NULL','1'),
 	(2,'Physics','NULL','1'),
@@ -1087,12 +1157,11 @@ CREATE TABLE `section_l2` (
   `weightage` int(4) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `l1Id` (`l1Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `section_l2` WRITE;
 /*!40000 ALTER TABLE `section_l2` DISABLE KEYS */;
-
-INSERT INTO `section_l2` (`id`, `displayName`, `longName`, `l1Id`, `streamId`, `weightage`)
+INSERT INTO `section_l2` (`id`,`displayName`,`longName`,`l1Id`,`streamId`,`weightage`)
 VALUES
 	(1,'Algebra','NULL',1,1,1),
 	(2,'Trigonometry','NULL',1,1,1),
@@ -1143,12 +1212,11 @@ CREATE TABLE `section_l3` (
   `streamId` int(11) DEFAULT NULL,
   `weightage` int(4) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=178 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `section_l3` WRITE;
 /*!40000 ALTER TABLE `section_l3` DISABLE KEYS */;
-
-INSERT INTO `section_l3` (`id`, `displayName`, `longName`, `l2Id`, `streamId`, `weightage`)
+INSERT INTO `section_l3` (`id`,`displayName`,`longName`,`l2Id`,`streamId`,`weightage`)
 VALUES
 	(1,'Sets, Relations & Functions','',1,1,1),
 	(2,'Equations','',1,1,1),
@@ -1345,12 +1413,11 @@ CREATE TABLE `streams` (
   `quizIds` text,
   `sampleQuizIds` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `streams` WRITE;
 /*!40000 ALTER TABLE `streams` DISABLE KEYS */;
-
-INSERT INTO `streams` (`id`, `displayName`, `topFacultyIds`, `basicInfo`, `quizIds`, `sampleQuizIds`)
+INSERT INTO `streams` (`id`,`displayName`,`topFacultyIds`,`basicInfo`,`quizIds`,`sampleQuizIds`)
 VALUES
 	(1,'Engineering',NULL,NULL,NULL,NULL),
 	(2,'Medical',NULL,NULL,NULL,NULL),
@@ -1377,10 +1444,9 @@ CREATE TABLE `students` (
 
 LOCK TABLES `students` WRITE;
 /*!40000 ALTER TABLE `students` DISABLE KEYS */;
-
-INSERT INTO `students` (`ascoreL1`, `ascoreL2`, `quizzesAttempted`, `accountId`, `streamId`)
+INSERT INTO `students` (`ascoreL1`,`ascoreL2`,`quizzesAttempted`,`accountId`,`streamId`)
 VALUES
-	(0,0,NULL,4,1),
+	(0,0,'[\"2\",\"3\"]',4,1),
 	(0,0,NULL,5,1);
 
 /*!40000 ALTER TABLE `students` ENABLE KEYS */;
@@ -1388,9 +1454,12 @@ UNLOCK TABLES;
 
 
 
+
+
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -625,8 +625,26 @@ h5 {
     border-top:1px solid #f6f6f6;
 }
 
+.level{
+    width:10px;
+    height:36px;
+    float:left;
+}
+
+.bg-yellow{
+    background-color:yellow;
+}
+
+.bg-red{
+    background-color:red;
+}
+
+.bg-green{
+    background-color:green;
+}
+
 .l2>li>a{
-padding: 10px 10px !important;
+padding: 10px 20px !important;
 }
 
 .l2>li.active > a {
@@ -640,7 +658,7 @@ background-color: #08c;
 }
 
 .l3>li>a {
-    padding: 10px 10px !important;
+    padding: 10px 20px !important;
 }
 
 .l3>li.active > a {
@@ -676,6 +694,13 @@ background-color: #08c;
 
 .subject>.row-fluid>[class*="span"]:last-child {
     width: 35%;
+}
+
+/* Activity
+-------------------------------------------------- */
+#donut>div.highcharts-container{
+    margin:0px auto;
+    width:100%;
 }
 
 /* Quiz Library
@@ -1602,17 +1627,8 @@ Clickable Lists
 .c-list>.active>a {
     position: relative;
     z-index: 2;
-    padding: 20px 30px;
-    border: 0;
-    /*text-shadow: 0 1px 0 rgba(0, 0, 0, .15);
-    -webkit-box-shadow: inset 1px 0 0 rgba(0, 0, 0, .1), inset -1px 0 0
-        rgba(0, 0, 0, .1);
-    -moz-box-shadow: inset 1px 0 0 rgba(0, 0, 0, .1), inset -1px 0 0
-        rgba(0, 0, 0, .1);
-    box-shadow: inset 1px 0 0 rgba(0, 0, 0, .1), inset -1px 0 0
-        rgba(0, 0, 0, .1);
-        */
 }
+
 /* Chevrons */
 .c-list .icon-chevron-right {
     float: right;

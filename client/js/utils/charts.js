@@ -491,37 +491,52 @@ window.drawHistoryChart = function() {
 
 window.drawDonutChart = function(divId) {
 	var chart;
-	var colors = Highcharts.getOptions().colors, categories = [ 'Physics',
-			'Chemistry', 'Maths' ], name = 'L3';
+	var colors = Highcharts.getOptions().colors, categories = [ ], name = 'L3';
 	var data = [ {
 		y : 33,
 		color : colors[0],
 		drilldown : {
-			name : 'Physics',
-			categories : [ 'Electrostatics', 'Lenses', 'Prisms', 'Intereference' ],
-			data : [ 1, 2, 3, 1 ],
+			name : '',
+			categories : [],
+			data : [],
 			color : colors[0]
 		}
 	}, {
 		y : 33,
 		color : colors[1],
 		drilldown : {
-			name : 'Chemistry',
-			categories : [ 'Mole Concept', 'States of Matter', 'Ionic Equilibrium','Chemical Equilibrium'  ],
-			data : [ 2, 3, 3, 1],
+			name : '',
+			categories : [],
+			data : [],
 			color : colors[1]
 		}
 	}, {
 		y : 33,
 		color : colors[2],
 		drilldown : {
-			name : 'Maths',
-			categories : [ 'Sets, Relations & Functions', 'Equations', 'Logarithms' ],
-			data : [ 1, 4, 2 ],
+			name : '',
+			categories : [],
+			data : [],
 			color : colors[2]
 		}
 	} ];
-
+	
+	for(var i = 0; i< sectionL1.length; i++){
+		var l1=sectionL1.models[i];
+		data[i].drilldown.name=l1.get('displayName');
+		var l2 = sectionL2.where({
+			l1Id : l1.get('id')
+		});
+		var len = l2.length;
+		for ( var j = 0; j < len; j++) {
+			var name = l2[j].get('displayName');
+			var l2Score = scoreL2.get(l2[j].get('id'));
+			var totalQuestions = l2Score==null?0:l2Score.get('numQuestions');
+			
+			data[i].drilldown.categories[j] = name;
+			data[i].drilldown.data[j] = parseInt(totalQuestions);
+		}
+	}
 	// Build the data arrays
 	var browserData = [];
 	var versionsData = [];
@@ -529,7 +544,7 @@ window.drawDonutChart = function(divId) {
 
 		// add browser data
 		browserData.push({
-			name : categories[i],
+			name : data[i].drilldown.name,
 			y : data[i].y,
 			color : data[i].color
 		});
@@ -566,7 +581,7 @@ window.drawDonutChart = function(divId) {
 			}
 		},
 		tooltip : {
-			valueSuffix : '%'
+			valueSuffix : ''
 		},
 		series : [
 				{
@@ -582,14 +597,14 @@ window.drawDonutChart = function(divId) {
 					}
 				},
 				{
-					name : 'score',
+					name : 'Total Questions',
 					data : versionsData,
 					innerSize : '60%',
 					dataLabels : {
 						formatter : function() {
 							// display only if larger than 1
 							return this.y > 1 ? '<b>' + this.point.name
-									+ ':</b> ' + this.y + '%' : null;
+									+ ':</b> ' + this.y + '' : null;
 						}
 					}
 				} ]

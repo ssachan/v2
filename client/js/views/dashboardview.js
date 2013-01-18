@@ -138,9 +138,19 @@ window.PerformanceView = Backbone.View.extend({
 		});
 		var len = l2.length;
 		for ( var i = 0; i < len; i++) {
-			$('.l2', this.el).append(
-					'<li id="' + l2[i].get('id') + '-l2" lid="'+l2[i].get('id')+'"><a>'
+			$('.l2', this.el).append('<li id="' + l2[i].get('id') + '-l2" lid="'+l2[i].get('id')+'"><div class="level"></div><a>'
 							+ l2[i].get('displayName') + '</a></li>');
+			var l2Score = scoreL2.get(l2[i].get('id'));
+			if(l2Score!=null){
+				var score = parseInt(l2Score.get('score'));
+				if(score>80){
+					$('#'+l2[i].get('id') + '-l2>.level', this.el).addClass('bg-green');
+				}else if(score>40 && score<=80){
+					$('#'+l2[i].get('id') + '-l2>.level', this.el).addClass('bg-yellow');
+				}else if(score<=40){
+					$('#'+l2[i].get('id') + '-l2>.level', this.el).addClass('bg-red');
+				}
+			}
 		}
 	},
 
@@ -152,8 +162,17 @@ window.PerformanceView = Backbone.View.extend({
 		var len = l3.length;
 		for ( var i = 0; i < len; i++) {
 			$('.l3', this.el).append(
-					'<li id="' + l3[i].get('id') + '-l3" lid="'+l3[i].get('id')+'"><a>'
+					'<li id="' + l3[i].get('id') + '-l3" lid="'+l3[i].get('id')+'"><div class="level"></div><a>'
 							+ l3[i].get('displayName') + '</a></li>');
+			var l3Score = scoreL3.get(l3[i].get('id'));
+			var score = parseInt(l3Score.get('score'));
+			if(score>80){
+				$('#'+l3[i].get('id') + '-l3>.level', this.el).addClass('bg-green');
+			}else if(score>40 && score<=80){
+				$('#'+l3[i].get('id') + '-l3>.level', this.el).addClass('bg-yellow');
+			}else if(score<=40){
+				$('#'+l3[i].get('id') + '-l3>.level', this.el).addClass('bg-red');
+			}
 		}
 	},
 
@@ -186,24 +205,3 @@ window.PerformanceView = Backbone.View.extend({
 		$(this.el).find('#l3-stats').html("Score is " + JSON.stringify(thisL2Score) );
 	}
 });
-
-/*
- * window.InfoView = Backbone.View.extend({ initialize : function() { },
- * 
- * uploadImage : function() { var btnUpload = $('#upload'); var status =
- * $('#status'); var that = this; new AjaxUpload(btnUpload, { action :
- * Config.serverUrl + 'uploadImage', name : 'file', type : 'POST', onSubmit :
- * function(file, ext) { if (!(ext && /^(jpg|png|jpeg|gif)$/.test(ext))) { //
- * extension is not allowed status.text('Only JPG, PNG or GIF files are
- * allowed'); return false; } status.text('Uploading...'); }, onComplete :
- * function(file, response) { // On completion clear the status status.text('');
- * that.model.set('dp', true); $("#dp img").attr( "src", that.model.get('dpUrl') +
- * "?timestamp=" + new Date().getTime()); // $('#profile-pic').html('<img
- * class="media-object" // src="<%=dp%>" height="100" width="130">'); // Add
- * uploaded file to list } }); },
- * 
- * render : function() { $(this.el).html(this.template(this.model.toJSON()));
- * return this; },
- * 
- * onRender : function() { this.uploadImage(); } });
- */
