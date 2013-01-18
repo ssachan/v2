@@ -13,14 +13,17 @@ window.Fac = Backbone.Model.extend({
 		this.on('change:id', function(model) {
 			if (model.get('id') != null && model.get('id')!='') {
 				model.set('dpUrl', DP_PATH + model.get('id') + '.jpg');
+				model.set('dpUrlL', DP_PATH + model.get('id') + '-l.jpg');
 			}else{
 				model.set('dpUrl', DP_PATH + 'avatar.jpg');
+				model.set('dpUrlL', DP_PATH + 'avatar.jpg');
 			}
 		});
 	},
 	
 	defaults : {
 		dpUrl : DP_PATH + 'avatar.jpg',
+		dpUrlL : DP_PATH + 'avatar.jpg',
 	}
 });
 
