@@ -130,7 +130,7 @@ window.ResultAnalysisView = Backbone.View.extend({
 				var l3Data = l3GraphData[i];
 				
 				html.push('<div class="grey-box"><div class="row-fluid"><div class="span8">');
-				html.push('<h3><span class="blue">Electrochemistry</span><i class="icon-stop"></i><span style="font-h3  orange">'+l3Data.delta+'</span> </h3><hr>');
+				html.push('<h3><span class="blue">'+(sectionL3.get(l3Data.lId)).get('displayName')+'</span><i class="icon-stop"></i><span style="font-h3  orange">'+l3Data.delta+'</span> </h3><hr>');
 				html.push('<div class="progress outline">');
 				if(parseInt(l3Data.delta)>0){
 				html.push('<div class="bar bar-warning" style="width:'+parseInt(l3Data.scoreBefore)+'%"></div>');
