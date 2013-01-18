@@ -64,6 +64,49 @@ abstract class analConst {
     }    
 }
 
+class lscoreDataObject{
+    public $lId;
+    public $lType;
+    public $numQ;
+    public $numCorrect;
+    public $numIncorrect;
+    public $numUnattempted;
+    public $scoreBefore;
+    public $delta;
+
+    function __construct($level, $lid)
+    {
+        $this->lId = $lid;
+        $this->lType = $level;
+        $this->numQ = 0;
+        $this->numCorrect = 0;
+        $this->numIncorrect = 0;
+        $this->numUnattempted = 0;
+        $this->scoreBefore = 0;
+        $this->delta = 0;
+    }
+
+    public function addCorrect($deltaForQuestion)
+    {
+        $this->numCorrect +=1;
+        $this->numQ += 1;
+        $this->delta += $deltaForQuestion;
+    }
+    public function addIncorrect($deltaForQuestion)
+    {
+        $this->numIncorrect +=1;
+        $this->numQ += 1;
+        $this->delta += $deltaForQuestion;
+    }
+    public function addUnattempted($deltaForQuestion)
+    {
+        $this->numUnattempted +=1;
+        $this->numQ += 1;
+        $this->delta += $deltaForQuestion;
+    }
+
+}
+
 
 //>> FRONT-FACING Functions
 function testCode()
@@ -188,6 +231,7 @@ function updateResultsForTest($accountId,$quizId,$logs)
     }
     setStateOfQuiz($accountId,$quizId,count($questionIds));
     $videoArray = getVideoArray($accountId, $qDetailsRecord, $state, $delta);
+    $l3GraphData = getL3GraphData($accountId, $qDetailsRecord, $state, $delta);
 
     $response["status"] = SUCCESS;
 
@@ -223,7 +267,8 @@ function updateResultsForTest($accountId,$quizId,$logs)
         "state"=>$state2,
         "delta"=>$delta2,
         "userAbilityRecord"=>$userAbilityRecord2,
-        "videoArray"=>$videoArray
+        "videoArray"=>$videoArray,
+        "l3GraphData"=>$l3GraphData
         );    
     updateUserResponseinResultsTable($accountId, $quizId, $response["data"]["selectedAnswers"], $response["data"]["timePerQuestion"]);
     sendResponse($response);
@@ -752,5 +797,36 @@ function getVideoArray($accountId, $qDetails, $state, $delta)
             break;
     }
     return $videoArray;
+}
+function getL3GraphData($accountId, $qDetailsRecord, $state, $delta)
+{
+    $l3Data = array();
+
+    foreach ($qDetailsRecord as $qid => $qDetails) {
+        if(!isset($l3Data[$qDetails->l3Id]))
+        {
+            $l3Data[$qDetails->l3Id] = new lscoreDataObject("l3",$qDetails->l3Id);
+        }
+        switch($state[$qid])
+        {
+            case analConst::CORRECT:
+                $l3Data[$qDetails->l3Id]->addCorrect($delta[$qid]);
+            break;
+            case analConst::INCORRECT:
+                $l3Data[$qDetails->l3Id]->addIncorrect($delta[$qid]);
+            break;
+            case analConst::SKIPPED:
+                $l3Data[$qDetails->l3Id]->addUnattempted($delta[$qid]);
+            break;
+            case analConst::UNSEEN:
+                $l3Data[$qDetails->l3Id]->addUnattempted($delta[$qid]);
+            break;
+        }
+    }
+    $temp = array();
+    foreach ($l3Data as $key => $value) {
+        $temp[] = $value;
+    }
+    return $temp;
 }
 
