@@ -87,7 +87,8 @@ window.ResultAnalysisView = Backbone.View.extend({
 
 	render : function() {
 		// var questionIds = this.model.getQuestionIds();
-		var score = this.model.get('totalScore');
+		//var score = this.model.get('totalScore');
+		var score = 20;
 		var length = quizQuestions.length;
 		var correct = this.model.get('totalCorrect');
 		var incorrect = this.model.get('totalIncorrect');
@@ -109,7 +110,7 @@ window.ResultAnalysisView = Backbone.View.extend({
 			'incorrect' : incorrect,
 			'unattempted' : unattempted,
 			'totalTime' : helper.formatTime(this.model.get('allotedTime')),
-			'timeTaken' : helper.formatTime(this.model.get('timeTaken')),
+			'timeTaken' : helper.formatTime2(this.model.get('timeTaken')),
 			'avgTime' : '1 min 30 secs',
 			'accuracyInsights' : accuracyInsights,
 			'strategicInsights' : strategicInsights,
