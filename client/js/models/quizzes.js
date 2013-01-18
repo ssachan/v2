@@ -117,7 +117,8 @@ window.Quiz = Backbone.Model
 				'logo' : null,
 				'fdpURL' : DP_PATH + 'avatar.jpg',
 				'state' : null,
-				'startTime' : null
+				'startTime' : null,
+				'score' : 20
 			},
 
 			updateAttemptedAs : function() {
