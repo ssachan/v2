@@ -299,6 +299,11 @@ window.QuizQuestionView = Backbone.View
 			renderInfo : function() {
 				// tanujb:TODO:add retrieval of data
 				var html = [];
+				$('#single-type').hide();
+				$('#multiple-type').hide();
+				$('#integer-type').hide();
+				$('#matrix-type').hide();
+				
 				$('#status').show();
 				$('#options').show();
 				$('#video').show();
