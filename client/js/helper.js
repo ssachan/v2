@@ -84,6 +84,7 @@ window.helper = {
 	},
 	
 	formatTime : function(time){
+		time = parseInt(time)/1000;
 		var hrs = ~~ (time / 3600);
 		var mins = ~~ ((time % 3600) / 60);
 		var secs = time % 60;

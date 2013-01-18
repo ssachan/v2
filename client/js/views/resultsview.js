@@ -51,7 +51,7 @@ window.ResultAnalysisView = Backbone.View.extend({
 
 	calculateVideoArray : function(options) {
 
-		videoResults = array();
+		/*videoResults = array();
 		
 		_.each(options,function(item)
 		{
@@ -67,8 +67,8 @@ window.ResultAnalysisView = Backbone.View.extend({
 			};
 			videoResults.push(videoResultObject);
 		}
-
-		return videoResults;
+		
+		return videoResults;*/
 
 	},
 
@@ -101,7 +101,7 @@ window.ResultAnalysisView = Backbone.View.extend({
 		var historyInsights = '';
 
 		// video array containing all data for all questions and analysis
-		var videoResults = this.calculateVideoArray(this,model.get('videoArray'));
+		//var videoResults = this.calculateVideoArray(this,model.get('videoArray'));
 
 		$(this.el).html(this.template({
 			'id' : this.model.get('id'),
