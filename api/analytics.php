@@ -199,6 +199,12 @@ function updateResultsForPractice()
     updateResultsTable($accountId,$quizId,$logs); //tanujb:TODO:this needs to be changed to amend
     updateScore($accountId, $delta, $userAbility,$state);
     setStateOfQuiz($accountId,$quizId,$_POST["state"]);
+    $temp = getUserResponseFromResultsTable($accountId, $quizId);
+    $selectedAnswers = $temp[0]; $timePerQuestion = $temp[1];
+    $selectedAnswers[$_POST["state"]] = $optionText;
+    $timePerQuestion[$_POST["state"]] = $timeTaken;
+    updateUserResponseinResultsTable($accountId, $quizId, $selectedAnswers, $timePerQuestion);
+
     // tanujb:TODO: I can probably do all this updating later, adn send json first.
     $response["status"] = SUCCESS;
     $response["data"] = true;
@@ -567,6 +573,23 @@ function updateUserResponseinResultsTable($accountId, $quizId, $selectedAnswers,
         $response["status"] = ERROR;
         $response["data"] = EXCEPTION_MSG;
         phpLog($e->getMessage());
+    }
+}
+function getUserResponseFromResultsTable($accountId, $quizId)
+{
+    $sql = "SELECT selectedAnswers s, timePerQuestion t, MAX(timeStamp) FROM results WHERE accountId =:acid AND quizID = :qid";
+    try{
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("accountId", $accountId);
+        $stmt->bindParam("quizId", $quizId);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_OBJ);
+        $db = null;
+        return array($result->s,$result->t);
+    }
+    catch (PDOException $e){
+        //
     }
 }
 
