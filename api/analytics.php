@@ -121,7 +121,7 @@ function testCode()
         $stmt->bindParam("lid", $i);
         $stmt->execute();
   }*/
-
+/*
   for($i=1;$i<=31;$i++)
    {
         $sql = "select weightage, l1id from section_l2 where id = :lid";
@@ -144,7 +144,7 @@ function testCode()
         $stmt->bindParam("l2id", $l2id);
         $stmt->execute();
         $db = null;
-   }
+   }*/
 }
 
 function updateResults()
@@ -230,6 +230,10 @@ function updateResultsForTest($accountId,$quizId,$logs)
     $delta = array(); //default to 0?
     $userAbilityRecord = array();
     $qDetailsRecord = array();
+    $testScore = 0;
+    $maxScore = 0;
+    $numCorrect = 0;
+    $numIncorrect = 0;
     foreach ($questionIds as $key => $qid)
     {
        //Retrieve the final option selected and time taken
@@ -261,11 +265,23 @@ function updateResultsForTest($accountId,$quizId,$logs)
         //now adding question to response table;
         insertIntoResponsesTable($accountId, $qid, $optionText[$qid], $timeTaken[$qid],$userAbility->l3score,$delta[$qid],$state[$qid]);
         updateScore($accountId, $delta[$qid], $userAbility,$state[$qid]);
+
+        $testScore += $result[$qid][2];
+        $maxScore += $qDetails->correctScore;
+        switch($state[$qid])
+        {
+            case analConst::CORRECT :
+                $numCorrect += 1;
+            break;
+            case analConst::INCORRECT :
+                $numIncorrect += 1;
+            break;
+        }
     }
     setStateOfQuiz($accountId,$quizId,count($questionIds));
     $videoArray = getVideoArray($accountId, $qDetailsRecord, $state, $delta);
     $l3GraphData = getL3GraphData($accountId, $qDetailsRecord, $state, $delta, $userAbilityRecord);
-
+    /*
     $response["status"] = SUCCESS;
 
     $response["data"] = array(
@@ -275,7 +291,7 @@ function updateResultsForTest($accountId,$quizId,$logs)
         "delta"=>$delta,
         "userAbilityRecord"=>$userAbilityRecord,
         "videoArray"=>$videoArray
-        );
+        ); */
     
 
     //extracode    
@@ -301,7 +317,11 @@ function updateResultsForTest($accountId,$quizId,$logs)
         "delta"=>$delta2,
         "userAbilityRecord"=>$userAbilityRecord2,
         "videoArray"=>$videoArray,
-        "l3GraphData"=>$l3GraphData
+        "l3GraphData"=>$l3GraphData,
+        "totalScore"=>$testScore,
+        "maxScore"=>$maxScore,
+        "numCorrect"=>$numCorrect,
+        "numIncorrect"=>$numIncorrect
         );    
     updateUserResponseinResultsTable($accountId, $quizId, $response["data"]["selectedAnswers"], $response["data"]["timePerQuestion"]);
     sendResponse($response);
@@ -676,6 +696,7 @@ function evaluateQuestion($qDetails, $optionText, $timeTaken, $userAbility)
     $result = array();
     $delta =0;
     $state = "";
+    $score = 0;
     if($optionText == "")
     {
         //unattempted
@@ -684,12 +705,14 @@ function evaluateQuestion($qDetails, $optionText, $timeTaken, $userAbility)
         {
             //question went unseen. Code that way
             $delta = evalUnseen($qDetails,$userAbility);
+            $score = $qDetails->unattemptedScore;
             $state = analConst::UNSEEN;
         }
         else
         {
             //seen but skipped in $timeTaken seconds
             $delta = evalSkip($qDetails,$userAbility,$timeTaken);
+            $score = $qDetails->unattemptedScore;
             $state = analConst::SKIPPED;
         }
     }
@@ -700,6 +723,7 @@ function evaluateQuestion($qDetails, $optionText, $timeTaken, $userAbility)
         {
             //everything correct exactly
             $delta = evalCorrect($qDetails,$userAbility,$timeTaken);
+            $score = $qDetails->correctScore;
             $state = analConst::CORRECT;
         }
         else
@@ -708,14 +732,17 @@ function evaluateQuestion($qDetails, $optionText, $timeTaken, $userAbility)
             {
                 case questionType::SINGLE_CHOICE:
                     $delta = evalIncorrect($qDetails,$userAbility,$timeTaken);
+                    $score = $qDetails->incorrectScore;
                     break;
                 case questionType::MULTIPLE_CHOICE:
                     $optionLength = count(explode("|:",$qDetails->options));
-                    $delta = evalOption($optionText,
+                    $temp = evalOption($optionText,
                                         $qDetails->correctAnswer,
                                         $optionLength,
                                         $qDetails->correctScore,
                                         $qDetails->inCorrectScore);
+                    $delta = $temp[0];
+                    $score = $temp[1];
                     break;
                 case questionType::MATRIX_MATCH:
                     
@@ -729,15 +756,19 @@ function evaluateQuestion($qDetails, $optionText, $timeTaken, $userAbility)
                     foreach ($correctSuperArray as $k => $v) {
                         $tmpCorrectText = $v;
                         $tmpOptionText = $optionSuperArray[$k];
-                        $delta += evalOption($tmpCorrectText,
+                        $temp = evalOption($tmpCorrectText,
                                         $tmpOptionText,
                                         $optionLength,
                                         $qDetails->correctScore,
                                         $qDetails->inCorrectScore);
+
+                        $delta += $temp[0];
+                        $score += $temp[1];
                     }
                     break;
                 case questionType::INTEGER_TYPE:
                     $delta = evalIncorrect($qDetails,$userAbility,$timeTaken);
+                    $score = $qDetails->incorrectScore;
                     break;
             }
             $state = analConst::INCORRECT;
@@ -745,21 +776,26 @@ function evaluateQuestion($qDetails, $optionText, $timeTaken, $userAbility)
             
     }
 
-    return array($delta,$state);
+    return array($delta,$state,$score);
 }
 
 function evalOption($optionText,$correctAnswerText, $optionLength, $correctScore, $incorrectScore)
 {
     $optionsArray = getOptionArrayFromText($optionText,$optionLength);
     $correctArray = getOptionArrayFromText($correctAnswerText,$optionLength);
-    $delta = 0;
     foreach ($correctArray as $key => $value) {
         if($optionsArray[$key] == $correctArray[$key])
-            $delta += $correctScore; // add factor
+        {
+             $score += $correctScore;
+             $delta += $correctScore; // add factor
+        }   
         else
+        {
+            $score += $correctScore;
             $delta += $incorrectScore; //add factor
+        }
     }
-    return $delta;
+    return array($delta,$score);
 }
 
 function evalUnseen($qDetails,$userAbility)
@@ -782,7 +818,7 @@ function evalCorrect($qDetails,$userAbility,$timeTaken)
 
 function evalIncorrect($qDetails,$userAbility,$timeTaken)
 {
-    $delta = $delta = $qDetails->incorrectScore; //add factor
+    $delta = $qDetails->incorrectScore; //add factor
     return $delta;
 }
 function adjustDelta($qDetails,$userAbility,$timeTaken,$delta,$state,$attemptedAs)
@@ -880,5 +916,5 @@ function generateWeightage($l2id)
     $stmt->bindParam("l2id", $l2id);
     $stmt->execute();
     $db = null;
-}   
+}
 
