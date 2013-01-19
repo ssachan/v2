@@ -580,7 +580,7 @@ function updateUserResponseinResultsTable($accountId, $quizId, $selectedAnswers,
         phpLog($e->getMessage());
     }
 }
-function updateScoreinResultsTable($accountId, $quizId, $score, $numCorrect, $numIncorrect);
+function updateScoreinResultsTable($accountId, $quizId, $score, $numCorrect, $numIncorrect)
 {
     $sql = "UPDATE results SET score = :s, numCorrect = :c, numIncorrect = :i where accountId=:accountId and quizId=:quizId";
     try {
