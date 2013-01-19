@@ -335,6 +335,7 @@ function updateResultsForTest()
         );    
     updateResultsTable($accountId,$quizId,$logs);//tanuj:TODO:these two calls should club into one, and add score.
     updateUserResponseinResultsTable($accountId, $quizId, $response["data"]["selectedAnswers"], $response["data"]["timePerQuestion"]);
+    updateScoreinResultsTable($accountId, $quizId, $response["data"]["totalScore"], $response["data"]["numCorrect"], $response["data"]["numIncorrect"]);
     sendResponse($response);
 }
 //<< END FRONT FACING
@@ -567,6 +568,25 @@ function updateUserResponseinResultsTable($accountId, $quizId, $selectedAnswers,
         $stmt->bindParam("quizId", $quizId);
         $stmt->bindParam("timePerQuestion", json_encode($timePerQuestion));
         $stmt->bindParam("selectedAnswers", json_encode($timePerQuestion));
+        $stmt->execute();
+        $db = null;
+    } catch (PDOException $e) {
+        $response["status"] = ERROR;
+        $response["data"] = EXCEPTION_MSG;
+        phpLog($e->getMessage());
+    }
+}
+function updateScoreinResultsTable($accountId, $quizId, $score, $numCorrect, $numIncorrect);
+{
+    $sql = "UPDATE results SET score = :s, numCorrect = :c, numIncorrect = :i where accountId=:accountId and quizId=:quizId";
+    try {
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("accountId", $accountId);
+        $stmt->bindParam("quizId", $quizId);
+        $stmt->bindParam("s", $score);
+        $stmt->bindParam("c", $numCorrect);
+        $stmt->bindParam("i", $numInorrect);
         $stmt->execute();
         $db = null;
     } catch (PDOException $e) {
