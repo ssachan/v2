@@ -1,11 +1,5 @@
 <?php
 
-
-/*
-Functions for analytics
-
-*/
-
 abstract class testEvent {
     
     const OPTION_SELECT = 0;
@@ -121,7 +115,7 @@ function testCode()
         $stmt->bindParam("lid", $i);
         $stmt->execute();
   }*/
-/*
+  /*
   for($i=1;$i<=31;$i++)
    {
         $sql = "select weightage, l1id from section_l2 where id = :lid";
@@ -168,12 +162,16 @@ function updateResults()
     elseif($attemptedAs == analConst::ATTEMPTED_AS_PRACTICE)
     {
         updateResultsForPractice($accountId,$quizId,$logs);
-        setStateOfQuiz($accountId,$quizId,$state);
+        setStateOfQuiz($accountId,$quizId,$state);      
     }
 }
 
-function updateResultsForPractice($accountId,$quizId,$logs)
+function updateResultsForPractice()
 {
+    $accountId = $_POST['accountId']; 
+    $quizId = $_POST['quizId'];
+    $logs = $_POST['logs'];
+    
     $attemptedAs = analConst::ATTEMPTED_AS_PRACTICE;
     $logsByQuestion = splitLogsByQuestion($logs);
     $qid = 0;
@@ -198,8 +196,10 @@ function updateResultsForPractice($accountId,$quizId,$logs)
     $delta = adjustDelta($qDetails,$userAbility,$timeTaken,$delta,$state,$attemptedAs);
 
     insertIntoResponsesTable($accountId, $qid, $optionText, $timeTaken,$userAbility->l3score,$delta,$state);
+    updateResultsTable($accountId,$quizId,$logs); //tanujb:TODO:this needs to be changed to amend
     updateScore($accountId, $delta, $userAbility,$state);
-
+    setStateOfQuiz($accountId,$quizId,$_POST["state"]);
+    // tanujb:TODO: I can probably do all this updating later, adn send json first.
     $response["status"] = SUCCESS;
     $response["data"] = true;
     /*$response["data"] = array(
@@ -212,8 +212,12 @@ function updateResultsForPractice($accountId,$quizId,$logs)
     sendResponse($response);
 }
 
-function updateResultsForTest($accountId,$quizId,$logs)
+function updateResultsForTest()
 {
+    $accountId = $_POST['accountId']; 
+    $quizId = $_POST['quizId'];
+    $logs = $_POST['logs'];
+
     $attemptedAs = analConst::ATTEMPTED_AS_TIMED_TEST;
     $response = array();
     //$streamId = $_POST['streamId']; // why is this required??
@@ -323,6 +327,7 @@ function updateResultsForTest($accountId,$quizId,$logs)
         "numCorrect"=>$numCorrect,
         "numIncorrect"=>$numIncorrect
         );    
+    updateResultsTable($accountId,$quizId,$logs);//tanuj:TODO:these two calls should club into one, and add score.
     updateUserResponseinResultsTable($accountId, $quizId, $response["data"]["selectedAnswers"], $response["data"]["timePerQuestion"]);
     sendResponse($response);
 }
