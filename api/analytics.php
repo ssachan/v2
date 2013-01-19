@@ -332,7 +332,7 @@ function updateResultsForTest()
         "userAbilityRecord"=>$userAbilityRecord2,
         "videoArray"=>$videoArray,
         "l3GraphData"=>$l3GraphData,
-        "totalScore"=>$testScore,
+        "score"=>$testScore,
         "maxScore"=>$maxScore,
         "numCorrect"=>$numCorrect,
         "numIncorrect"=>$numIncorrect
@@ -592,7 +592,7 @@ function updateScoreinResultsTable($accountId, $quizId, $score, $numCorrect, $nu
         $stmt->bindParam("quizId", $quizId);
         $stmt->bindParam("s", $score);
         $stmt->bindParam("c", $numCorrect);
-        $stmt->bindParam("i", $numInorrect);
+        $stmt->bindParam("i", $numIncorrect);
         $stmt->execute();
         $db = null;
     } catch (PDOException $e) {
