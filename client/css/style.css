@@ -210,11 +210,6 @@ h5 {
     border-radius: 6px;
 }
 
-.outline2 /* This one has rectangular edges) */ {
-    border: 1px solid #aaa;
-    padding: 2px;
-}
-
 .yellow-box {
     border: solid 1px #CCC;
     background-color: #FCFDCC;
@@ -378,38 +373,6 @@ h5 {
 .start-btn {
     margin-left: 20px;
     margin-top: -4px;
-}
-
-/* Detail unit
--------------------------------------------------- */
-.detail-unit {
-    margin: 10px 0px;
-    -moz-border-radius: 6px;
-    -webkit-border-radius: 6px;
-    border-radius: 6px;
-    border-left: 1px solid #E4E4E4;
-    border-right: 1px solid #EEE;
-    border-bottom: 1px solid #CCC;
-    background-color: white;
-    -moz-border-radius: 2px;
-    -webkit-border-radius: 2px;
-    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.25);
-    -moz-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.25);
-    -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.25);
-}
-
-.detail-unit .heading {
-    border-bottom: 1px solid #CCC;
-    padding: 5px 20px;
-}
-
-.detail-unit .content {
-    color: #555;
-    padding: 25px 20px 10px 20px;
-}
-
-.detail-unit .content li {
-    margin-bottom: 10px;
 }
 
 /* Sidebar
@@ -801,88 +764,6 @@ background-color: #08c;
     opacity: .6;
 }
 
-/* Fac Directory
--------------------------------------------------- */
-.faclib {
-    width: 93%;
-}
-
-.faclib .box {
-    padding: 5px;
-}
-
-.faclib-heading {
-    margin: -15px 0px 10px 20px;
-}
-
-.faclib-sec1 {
-    padding-bottom: 20px;
-    margin-bottom: 30px;
-}
-
-.faclib-search {
-    position: relative;
-    bottom: 4px;
-    left: 18px;
-}
-
-.faclib-filter1 {
-    position: relative;
-    bottom: 2px;
-    padding-right: 5px;
-    text-align: center;
-    border-right: 1px solid #ccc;
-}
-
-.faclib-filter2 {
-    position: relative;
-    bottom: 2px;
-    text-align: center;
-}
-
-.faclist {
-    margin-bottom: 30px;
-}
-
-.fac-pic {
-    margin-left: 8px;
-    margin-top: 8px;
-    margin-right: -8px;
-}
-
-.faclib-fac {
-    margin-bottom: 5px;
-    padding-left: 20px;
-}
-
-.fac-ind {
-    margin-bottom: -5px;
-}
-
-.faclib-fac div {
-    margin-top: 5px;
-}
-
-.faclib-fac .btn {
-    margin-top: 20px;
-    background: #F4763E;
-    color: white;
-    font-style: normal;
-}
-
-.faclib-fac h4 {
-    padding-left: 23px;
-}
-
-.faclib-details {
-    padding-top: 0px;
-    padding-left: 20px;
-}
-
-.faclib-social {
-    margin-top: 29px !important;
-}
-
 /* Faculty Profile
 ------------------------------------------------- */
 .facpro {
@@ -1143,8 +1024,6 @@ background-color: #08c;
     margin-left: 20px;
 }
 
-/* Review Nav
-------------------------*/
 
 /* Packages Page 
 -------------------------*/
@@ -1406,32 +1285,14 @@ background-color: #08c;
 }
 
 #loading {
-    background: #080808;
+    background: #ffff;
     position: fixed;
     z-index: 99999;
     width: 100%;
     height: 100%;
     top: 0px;
     left: 0px;
-}
-
-#loading ul {
-    padding: 0;
-    margin: 300px auto 0;
-    list-style: none;
-    text-align: center;
-    display: block;
-}
-
-#loading ul li {
-    width: 10px;
-    height: 10px;
-    background-color: white;
-    box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.5);
-    display: inline-block;
-    border-radius: 50%;
-    margin: 0 4px;
-    -webkit-animation: loading 2.5s infinite;
+      -webkit-animation: loading 2.5s infinite;
     -moz-animation: loading 2.5s infinite;
     -o-animation: loading 2.5s infinite;
     -ms-animation: loading 2.5s infinite;
@@ -1446,54 +1307,15 @@ background-color: #08c;
     -o-animation-timing-function: cubic-bezier(0.030, 0.615, 0.995, 0.415);
     -ms-animation-timing-function: cubic-bezier(0.030, 0.615, 0.995, 0.415);
     animation-timing-function: cubic-bezier(0.030, 0.615, 0.995, 0.415);
+        animation-delay: 0.1s;
 }
 
-#loading ul li.li6 {
-    -webkit-animation-delay: 0.1s;
-    -moz-animation-delay: 0.1s;
-    -o-animation-delay: 0.1s;
-    -ms-animation-delay: 0.1s;
-    animation-delay: 0.1s;
-}
-
-#loading ul li.li5 {
-    -webkit-animation-delay: 0.25s;
-    -moz-animation-delay: 0.25s;
-    -o-animation-delay: 0.25s;
-    -ms-animation-delay: 0.25s;
-    animation-delay: 0.25s;
-}
-
-#loading ul li.li4 {
-    -webkit-animation-delay: 0.5s;
-    -moz-animation-delay: 0.5s;
-    -o-animation-delay: 0.5s;
-    -ms-animation-delay: 0.5s;
-    animation-delay: 0.5s;
-}
-
-#loading ul li.li3 {
-    -webkit-animation-delay: 0.75s;
-    -moz-animation-delay: 0.75s;
-    -o-animation-delay: 0.75s;
-    -ms-animation-delay: 0.75s;
-    animation-delay: 0.75s;
-}
-
-#loading ul li.li2 {
-    -webkit-animation-delay: 1s;
-    -moz-animation-delay: 1s;
-    -o-animation-delay: 1s;
-    -ms-animation-delay: 1s;
-    animation-delay: 1s;
-}
-
-#loading ul li.li1 {
-    -webkit-animation-delay: 1.25s;
-    -moz-animation-delay: 1.25s;
-    -o-animation-delay: 1.25s;
-    -ms-animation-delay: 1.25s;
-    animation-delay: 1.25s;
+#loading ul {
+    padding: 0;
+    margin: 300px auto 0;
+    list-style: none;
+    text-align: center;
+    display: block;
 }
 
 /* My PrepSets 

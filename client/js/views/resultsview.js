@@ -87,16 +87,15 @@ window.ResultAnalysisView = Backbone.View.extend({
 
 	render : function() {
 		// var questionIds = this.model.getQuestionIds();
-		//var score = this.model.get('totalScore');
-		var score = 20;
+		var score = this.model.get('totalScore');
 		var length = quizQuestions.length;
-		var correct = this.model.get('totalCorrect');
-		var incorrect = this.model.get('totalIncorrect');
+		var correct = this.model.get('numCorrect');
+		var incorrect = this.model.get('numIncorrect');
 		var unattempted = parseInt(length)
 				- (parseInt(correct) + parseInt(incorrect));
 		var accuracyInsights = '';// insights.accuracyInsights(this.model);
 		var difficultyInsights = '';// insights.difficultyLevelInsights(this.model);
-		var strategicInsights = insights.strategicInsights(this.model);
+		var strategicInsights = ''; //insights.strategicInsights(this.model);
 		var historyInsights = '';
 
 		// video array containing all data for all questions and analysis
@@ -196,14 +195,14 @@ window.SolutionsView = Backbone.View.extend({
 		this.index = this.options.index;
 		this.questionView = null;
 		this.question = null;
-		this.questionIds = this.model.getQuestionIds();
+		this.questionIds = this.model.get('questionIdsArray');
 		this.totalQuestions = this.questionIds.length;
 		this.setUp();
 	},
 
 	setUp : function() {
-		this.answersSelected = this.model.getSelectedAnswers();
-		this.getTimeTakenPerQuestion = this.model.getTimeTakenPerQuestion();
+		this.answersSelected = this.model.get('selectedAnswersArray');
+        this.getTimeTakenPerQuestion = this.model.get('timePerQuestionArray');
 		for ( var i = 0; i < this.totalQuestions; i++) {			
 			var question = quizQuestions.get(this.questionIds[i]);
 	        if (this.getTimeTakenPerQuestion[i] != null) {

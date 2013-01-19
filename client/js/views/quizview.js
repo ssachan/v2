@@ -66,7 +66,7 @@ window.QuizView = Backbone.View.extend({
         this.index = this.options.index;
         this.questionView = null;
         this.question = null;
-        this.questionIds = this.model.getQuestionIds();
+        this.questionIds = this.model.get('questionIdsArray');
         this.totalQuestions = this.questionIds.length;
         timer.setUpdateFunction(context.updateQuizTimer, [context]);
     },
@@ -90,7 +90,6 @@ window.QuizView = Backbone.View.extend({
 		logs.addEntry("TEST_SUBMIT");
 		logs.sort();
         this.model.set('timeTaken', timer.count);
-        //this.model.calculateScores();
         this.model.set('state', this.totalQuestions);
         this.model.set('status', this.model.STATUS_COMPLETED);
         this.model.submitResults();
@@ -193,7 +192,7 @@ window.PracticeView = Backbone.View.extend({
         this.index = this.options.index;
         this.questionView = null;
         this.question = null;
-        this.questionIds = this.model.getQuestionIds();
+        this.questionIds = this.model.get('questionIdsArray');
         this.totalQuestions = this.questionIds.length;
         this.setUp();
         timer.setUpdateFunction(context.updateQuizTimer, [context]);
@@ -201,8 +200,8 @@ window.PracticeView = Backbone.View.extend({
 
     setUp: function () {
         // tanujb:TODO: What is this code supposed to do?
-        this.answersSelected = this.model.getSelectedAnswers();
-        this.getTimeTakenPerQuestion = this.model.getTimeTakenPerQuestion();
+        this.answersSelected = this.model.get('selectedAnswersArray');
+        this.getTimeTakenPerQuestion = this.model.get('timePerQuestionArray');
         for (var i = 0; i <= this.index; i++) {
             var question = quizQuestions.get(this.questionIds[i]);
             if (this.getTimeTakenPerQuestion[i] != null) {

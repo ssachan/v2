@@ -281,9 +281,9 @@ function updateResultsForTest($accountId,$quizId,$logs)
     setStateOfQuiz($accountId,$quizId,count($questionIds));
     $videoArray = getVideoArray($accountId, $qDetailsRecord, $state, $delta);
     $l3GraphData = getL3GraphData($accountId, $qDetailsRecord, $state, $delta, $userAbilityRecord);
-    /*
+    
     $response["status"] = SUCCESS;
-
+    /*
     $response["data"] = array(
         "optionText"=>$optionText,
         "timeTaken "=>$timeTaken,

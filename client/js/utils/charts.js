@@ -55,9 +55,9 @@ window.drawTimeChart = function(quiz) {
 	var series = {
 		data : []
 	};
-	var questionIds = quiz.getQuestionIds();
-	var timePerQuestion = quiz.getTimeTakenPerQuestion();
-	var answers = quiz.getSelectedAnswers();
+	var questionIds = quiz.get('questionIdsArray');
+    this.timePerQuestion = quiz.get('timePerQuestionArray');
+	var answers = quiz.get('selectedAnswersArray');
 	var len = questionIds.length;
 	for ( var i = 0; i < len; i++) {
 		var question = quizQuestions.get(questionIds[i]);
@@ -232,8 +232,8 @@ window.drawDifficultyChart = function(quiz) {
 	};
 
 	var series = [];
-	var questionIds = quiz.getQuestionIds();
-	var answers = quiz.getSelectedAnswers();
+	var questionIds = quiz.get('questionIdsArray');;
+	var answers = quiz.get('selectedAnswersArray');
 	var len = questionIds.length;
 	for ( var i = 0; i < len; i++) {
 		var question = quizQuestions.get(questionIds[i]);
@@ -371,7 +371,7 @@ window.drawStratChart = function(quiz) {
 		data : [],
 	} ];
 
-	var questionIds = activeQuiz.getQuestionIds();
+	var questionIds = activeQuiz.get('questionIdsArray');
 	var len = questionIds.length;
 	var offset = quizQuestions.get(questionIds[0]).get('openTimeStamps')[0];
 	for ( var i = 0; i < len; i++) {
