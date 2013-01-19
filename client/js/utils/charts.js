@@ -499,6 +499,7 @@ window.drawDonutChart = function(divId) {
 			name : '',
 			categories : [],
 			data : [],
+			actual : [],
 			color : colors[0]
 		}
 	}, {
@@ -508,6 +509,7 @@ window.drawDonutChart = function(divId) {
 			name : '',
 			categories : [],
 			data : [],
+			actual : [],
 			color : colors[1]
 		}
 	}, {
@@ -517,24 +519,42 @@ window.drawDonutChart = function(divId) {
 			name : '',
 			categories : [],
 			data : [],
+			actual : [],
 			color : colors[2]
 		}
 	} ];
 	
+	// get the sum total at scoreL2 level
+	var numQArray = scoreL2.pluck('numQuestions');
+	var totalQ = 0;
+	for(var k = 0; k < numQArray.length; k++) {
+		v = parseInt(numQArray[k]);
+		if (!isNaN(v)) totalQ += v;
+	}
 	for(var i = 0; i< sectionL1.length; i++){
 		var l1=sectionL1.models[i];
 		data[i].drilldown.name=l1.get('displayName');
 		var l2 = sectionL2.where({
 			l1Id : l1.get('id')
 		});
+		var totalL1 =0;
+		//sum total for specific L1
 		var len = l2.length;
+		for ( var j = 0; j < len; j++) {
+			var l2Score = scoreL2.get(l2[j].get('id'));
+			var numQuestions = l2Score==null?0:l2Score.get('numQuestions');
+			v = parseInt(numQuestions);
+			if (!isNaN(v)) totalL1 += v;
+		}
+		data[i].y = totalL1;
 		for ( var j = 0; j < len; j++) {
 			var name = l2[j].get('displayName');
 			var l2Score = scoreL2.get(l2[j].get('id'));
 			var totalQuestions = l2Score==null?0:l2Score.get('numQuestions');
 			
 			data[i].drilldown.categories[j] = name;
-			data[i].drilldown.data[j] = parseInt(totalQuestions);
+			data[i].drilldown.actual[j] = parseInt(totalQuestions);
+			data[i].drilldown.data[j] = (parseInt(totalQuestions)/totalQ);
 		}
 	}
 	// Build the data arrays
@@ -555,8 +575,10 @@ window.drawDonutChart = function(divId) {
 			versionsData.push({
 				name : data[i].drilldown.categories[j],
 				y : data[i].drilldown.data[j],
+				a : data[i].drilldown.actual[j],
 				color : Highcharts.Color(data[i].color).brighten(brightness)
 						.get()
+						
 			});
 		}
 	}
@@ -590,10 +612,10 @@ window.drawDonutChart = function(divId) {
 					size : '60%',
 					dataLabels : {
 						formatter : function() {
-							return this.y > 5 ? this.point.name : null;
+							return this.y >=0 ? this.point.name : null;
 						},
 						color : 'white',
-						distance : -30
+	                    distance: -30
 					}
 				},
 				{
@@ -603,59 +625,10 @@ window.drawDonutChart = function(divId) {
 					dataLabels : {
 						formatter : function() {
 							// display only if larger than 1
-							return this.y > 1 ? '<b>' + this.point.name
-									+ ':</b> ' + this.y + '' : null;
+							return this.y >=0 ? '<b>' + this.point.name
+									+ ':</b> ' + this.point.a + '' : null;
 						}
 					}
 				} ]
 	});
-};
-
-window.drawL3Chart = function(divId) {
-	var chart;
-	$(document).ready(
-			function() {
-				chart = new Highcharts.Chart({
-					chart : {
-						renderTo : divId,
-						type : 'bar'
-					},
-					title : {
-						text : 'Performance'
-					},
-					xAxis : {
-						categories : [ 'Electrochemistry', 'Thermodynamics', 'Stoichiometry' ]
-					},
-					yAxis : {
-						min : 0,
-						title : {
-							text : 'Increment/decrement'
-						}
-					},
-					legend : {
-						backgroundColor : '#FFFFFF',
-						reversed : true
-					},
-					tooltip : {
-						formatter : function() {
-							return '' + this.series.name + ': ' + this.y + '';
-						}
-					},
-					plotOptions : {
-						series : {
-							stacking : 'normal'
-						}
-					},
-					series : [ {
-						name : 'Normal',
-						data : [ 5, 3, 4, 7, 2 ]
-					}, {
-						name : 'Increment',
-						data : [ 2, 2, 3, 2, 1 ]
-					}, {
-						name : 'Decrement',
-						data : [ 3, 4, 4, 2, 5 ]
-					} ]
-				});
-			});
 };
