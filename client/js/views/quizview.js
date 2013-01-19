@@ -92,7 +92,7 @@ window.QuizView = Backbone.View.extend({
         this.model.set('timeTaken', timer.count);
         this.model.set('state', this.totalQuestions);
         this.model.set('status', this.model.STATUS_COMPLETED);
-        this.model.submitResults();
+        this.model.submitQuiz();
     },
 
     updateQuizTimer: function (context) {
@@ -239,7 +239,7 @@ window.PracticeView = Backbone.View.extend({
         } 
         this.model.set('state', this.index);
         //this.model.calculateScores();
-        this.model.submitResults();
+        this.model.submitPractice();
         this.renderQuestion();
     },
 
