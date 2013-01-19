@@ -105,6 +105,7 @@ class lscoreDataObject{
 //>> FRONT-FACING Functions
 function testCode()
 {
+    updateScoreinResultsTableBy(4,5, 1, 1, 0);
     /*
   for($i=1;$i<=6;$i++)
   {
@@ -165,6 +166,72 @@ function updateResults()
         setStateOfQuiz($accountId,$quizId,$state);      
     }
 }
+function processPractice()
+{
+    if($_POST["isLast"])
+    {
+        $response = updateResultsForPractice();
+        $response2 = practiceResultsView();
+        sendResponse($response2);
+    }
+    else
+    {
+        $response = updateResultsForPractice();
+        sendResponse($response);
+    }
+}
+
+function practiceResultsView()
+{
+    $accountId = $_POST['accountId']; 
+    $quizId = $_POST['quizId'];
+    $questionIds = getQuestionIdsForQuiz($quizId);
+    $maxScore = 0;
+    $numCorrect = 0;
+    $numIncorrect = 0;
+    $delta = array();
+    $state = array();
+    $aScoreRecord= array();
+    $l3GraphData = null;
+    foreach($questionIds as $key=>$qid)
+    {
+        $qDetails[] = getQuestionDetails($qid);
+        $maxScore += $qDetails->correctScore;
+        $qrecord = getQuestionResponse($accountId, $qid);
+        $delta[] = $qrecord->d;
+        $state[] = $qrecord->s;
+        $currentState = $qrecord->s;
+        $aScoreBefore->l3score = $qrecord->a;
+        $aScoreRecord[] = $aScoreBefore;
+    }
+    $l3GraphData = getL3GraphData($accountId, $qDetails, $state, $delta, $aScoreRecord);
+    $videoArray = getVideoArray($accountId, $qDetails, $state, $delta);
+    $temp = getUserResponseFromResultsTable($accountId, $quizId);
+    $selectedAnswers = $temp[0];
+    $timePerQuestion = $temp[1];
+    $testScore = $temp[2];
+    $numCorrect = $temp[3];
+    $numIncorrect = $temp[4];
+
+    $response["status"] = SUCCESS;
+    $response["data"] = array(
+
+        "state"=>$state,
+        "delta"=>$delta,
+        //"userAbilityRecord"=>$userAbilityRecord2,
+        "maxScore"=>$maxScore,
+
+        "videoArray"=>$videoArray,
+        "l3GraphData"=>$l3GraphData,
+
+        "selectedAnswers"=>$selectedAnswers,
+        "timePerQuestion"=>$timePerQuestion,
+        "score"=>$testScore,
+        "numCorrect"=>$numCorrect,
+        "numIncorrect"=>$numIncorrect
+        );
+    return $response;
+}
 
 function updateResultsForPractice()
 {
@@ -193,6 +260,7 @@ function updateResultsForPractice()
     $result = evaluateQuestion($qDetails,$optionText, $timeTaken,$userAbility);
     $delta = $result[0];
     $state = $result[1];
+    $score = $result[2]; //do something with this
     $delta = adjustDelta($qDetails,$userAbility,$timeTaken,$delta,$state,$attemptedAs);
 
     insertIntoResponsesTable($accountId, $qid, $optionText, $timeTaken,$userAbility->l3score,$delta,$state);
@@ -207,7 +275,20 @@ function updateResultsForPractice()
     }
     $selectedAnswers[intval($_POST["state"])] = $optionText;
     $timePerQuestion[intval($_POST["state"])] = $timeTaken;
-    updateUserResponseinResultsTable($accountId, $quizId, $selectedAnswers, $timePerQuestion);
+    updateUserResponseinResultsTable($accountId, $quizId, json_encode($selectedAnswers), json_encode($timePerQuestion));
+
+    switch($state)
+    {
+        case analConst::CORRECT:
+            updateScoreinResultsTableBy($accountId,$quizId, $score, 1, 0);
+        break;
+        case analConst::INCORRECT:
+            updateScoreinResultsTableBy($accountId,$quizId, $score, 0, 1);
+        break;
+        default:
+            updateScoreinResultsTableBy($accountId,$quizId, $score, 0, 0);
+        break;
+    }
 
     // tanujb:TODO: I can probably do all this updating later, adn send json first.
     $response["status"] = SUCCESS;
@@ -340,7 +421,7 @@ function updateResultsForTest()
     updateResultsTable($accountId,$quizId,$logs);//tanuj:TODO:these two calls should club into one, and add score.
     updateUserResponseinResultsTable($accountId, $quizId, $response["data"]["selectedAnswers"], $response["data"]["timePerQuestion"]);
     updateScoreinResultsTable($accountId, $quizId, $response["data"]["score"], $response["data"]["numCorrect"], $response["data"]["numIncorrect"]);
-    sendResponse($response);
+    return $response;
 }
 //<< END FRONT FACING
 
@@ -601,9 +682,28 @@ function updateScoreinResultsTable($accountId, $quizId, $score, $numCorrect, $nu
         phpLog($e->getMessage());
     }
 }
+function updateScoreinResultsTableBy($accountId, $quizId, $score, $numCorrect, $numIncorrect)
+{
+    $sql = "UPDATE results SET score =  score + :s, numCorrect = numCorrect + :c, numIncorrect = numIncorrect +  :i where accountId=:accountId and quizId=:quizId";
+    try {
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("accountId", $accountId);
+        $stmt->bindParam("quizId", $quizId);
+        $stmt->bindParam("s", $score);
+        $stmt->bindParam("c", $numCorrect);
+        $stmt->bindParam("i", $numIncorrect);
+        $stmt->execute();
+        $db = null;
+    } catch (PDOException $e) {
+        $response["status"] = ERROR;
+        $response["data"] = EXCEPTION_MSG;
+        phpLog($e->getMessage());
+    }
+}
 function getUserResponseFromResultsTable($accountId, $quizId)
 {
-    $sql = "SELECT selectedAnswers s, timePerQuestion t FROM results WHERE accountId =:accountId AND quizID = :quizId";
+    $sql = "SELECT selectedAnswers s, timePerQuestion t, score sc, numCorrect c, numIncorrect i FROM results WHERE accountId =:accountId AND quizID = :quizId";
     try{
         $db = getConnection();
         $stmt = $db->prepare($sql);
@@ -614,7 +714,7 @@ function getUserResponseFromResultsTable($accountId, $quizId)
         $db = null;
         $s = json_decode($result->s);
         $t = json_decode($result->t);
-        return array($s,$t);
+        return array($s, $t, $result->sc, $result->c, $result->i);
     }
     catch (PDOException $e){
         //
@@ -905,6 +1005,23 @@ function returnQuestionData()
     $response["status"] = SUCCESS;
     $response["data"] = $record;
     sendResponse($response);
+}
+
+function getQuestionResponse($accountId, $qid)
+{
+    $sql = "select optionSelected as o, timeTaken as t, abilityScoreBefore as a, delta as d, MAX(timeStamp) as m, status as s from responses where accountId :acid AND questionId = :qid GROUP BY questionId";
+
+    try {
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("acid", $accountId);
+        $stmt->bindParam("qid", $qid);
+        $stmt->execute();
+        $record = $stmt->fetch(PDO::FETCH_OBJ);
+        return $record;
+    } catch (PDOException $e) {
+        phpLog($e->getMessage());
+    }
 }
 //<< QUESTION EVALAUATION FUNCTIONS END
 
