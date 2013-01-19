@@ -191,6 +191,7 @@ window.ResultGraphsView = Backbone.View.extend({
 });
 
 window.SolutionsView = Backbone.View.extend({
+	
 	initialize : function() {
 		this.index = this.options.index;
 		this.questionView = null;

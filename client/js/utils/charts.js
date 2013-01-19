@@ -627,7 +627,7 @@ window.drawDonutChart = function(divId) {
 							// display only if larger than 1
 							return this.y >=0 ? '<b>' + this.point.name
 									+ ':</b> ' + this.point.a + '' : null;
-						}
+						},
 					}
 				} ]
 	});

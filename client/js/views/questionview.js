@@ -120,7 +120,7 @@ window.QuizQuestionView = Backbone.View.extend({
         this.renderOptions();
         $('#status').hide();
         $('#solution').hide();
-        $('#video').hide();
+        $('#q-video').hide();
         if (this.model.get('hasAttempted')) {
             this.renderInfo();
             $('#analytics').show();
@@ -254,7 +254,7 @@ window.QuizQuestionView = Backbone.View.extend({
 
         $('#status').show();
         $('#options').show();
-        $('#video').show();
+        $('#q-video').show();
 
         var status = this.model.get('status');
         if (status == null) {
@@ -277,7 +277,7 @@ window.QuizQuestionView = Backbone.View.extend({
         $('#avgTime').html(this.model.get('timeTaken'));
         $('#solutionText').html(this.model.get('explanation'));
         $('#solution').show();
-        $('#video')
+        $('#q-video')
             .html(
             '<video id="analysis_video" class="video-js vjs-default-skin" controls preload="none" width="640" height="264" data-setup="{}"><source src="../../video/q' + this.model.get('id') + 'vid1.mp4" type="video/mp4" /> </video>');
 
