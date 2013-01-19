@@ -38,15 +38,24 @@ window.Quiz = Backbone.Model.extend({
         }
         if (this.get('timePerQuestion') != null) {
             this.get('timePerQuestionArray').push.apply(this.get('timePerQuestionArray'), JSON.parse(this.get('timePerQuestion')));
+            //sum the time to get timeTaken
+            var timeTaken = 0;
+            var len = this.get('timePerQuestionArray').length;
+        	for(var k = 0; k < len; k++) {
+        		v = parseInt(this.get('timePerQuestionArray')[k]);
+        		if (!isNaN(v)) timeTaken += v;
+        	}
+        	this.set('timeTaken',timeTaken);
         }
         if (this.get('statusPerQuestion') != null) {
             this.get('statusPerQuestionArray').push.apply(this.get('statusPerQuestionArray'), JSON.parse(this.get('statusPerQuestion')));
         }
         if (this.get('score') != null) {
-            var score = JSON.parse(this.get('score'));
+            /*var score = JSON.parse(this.get('score'));
             this.set('totalCorrect', score[0]);
             this.set('totalIncorrect', score[1]);
             this.set('totalScore', score[2]);
+            */
         }
         if (this.get('fid') != null) {
             this.set('fdpURL', DP_PATH + this.get('fid') + '.jpg');
@@ -102,7 +111,8 @@ window.Quiz = Backbone.Model.extend({
         'statusPerQuestion': null,
         'descriptionShort': null,
         'maxScore': 0,
-        'totalScore': 0,
+        'score': 0,
+        'timeTaken':0,
         'topics': '',
         'l1': null,
         'fid': null,

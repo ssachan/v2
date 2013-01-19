@@ -87,7 +87,7 @@ window.ResultAnalysisView = Backbone.View.extend({
 
 	render : function() {
 		// var questionIds = this.model.getQuestionIds();
-		var score = this.model.get('totalScore');
+		var score = this.model.get('score');
 		var length = quizQuestions.length;
 		var correct = this.model.get('numCorrect');
 		var incorrect = this.model.get('numIncorrect');
