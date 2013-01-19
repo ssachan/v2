@@ -162,7 +162,7 @@ window.Quiz = Backbone.Model.extend({
                 streamId: streamId,
                 state: this.get('state'),
                 logs: logs.toJSON(),
-                isLast : this.get('state')
+                isLast : this.get('state')==(this.get('questionIdsArray').length)?false:true
             },
             success: function (data) {
                 // tanujb:TODO :what does this code do?
