@@ -201,8 +201,12 @@ function updateResultsForPractice()
     setStateOfQuiz($accountId,$quizId,$_POST["state"]);
     $temp = getUserResponseFromResultsTable($accountId, $quizId);
     $selectedAnswers = $temp[0]; $timePerQuestion = $temp[1];
-    $selectedAnswers[$_POST["state"]] = $optionText;
-    $timePerQuestion[$_POST["state"]] = $timeTaken;
+    if($selectedAnswers==null && $timePerQuestion==null){
+        $selectedAnswers = array();
+        $timePerQuestion = array();
+    }
+    $selectedAnswers[intval($_POST["state"])] = $optionText;
+    $timePerQuestion[intval($_POST["state"])] = $timeTaken;
     updateUserResponseinResultsTable($accountId, $quizId, $selectedAnswers, $timePerQuestion);
 
     // tanujb:TODO: I can probably do all this updating later, adn send json first.
@@ -566,8 +570,8 @@ function updateUserResponseinResultsTable($accountId, $quizId, $selectedAnswers,
         $stmt = $db->prepare($sql);
         $stmt->bindParam("accountId", $accountId);
         $stmt->bindParam("quizId", $quizId);
+        $stmt->bindParam("selectedAnswers", json_encode($selectedAnswers));
         $stmt->bindParam("timePerQuestion", json_encode($timePerQuestion));
-        $stmt->bindParam("selectedAnswers", json_encode($timePerQuestion));
         $stmt->execute();
         $db = null;
     } catch (PDOException $e) {
@@ -597,7 +601,7 @@ function updateScoreinResultsTable($accountId, $quizId, $score, $numCorrect, $nu
 }
 function getUserResponseFromResultsTable($accountId, $quizId)
 {
-    $sql = "SELECT selectedAnswers s, timePerQuestion t, MAX(timeStamp) FROM results WHERE accountId =:acid AND quizID = :qid";
+    $sql = "SELECT selectedAnswers s, timePerQuestion t FROM results WHERE accountId =:accountId AND quizID = :quizId";
     try{
         $db = getConnection();
         $stmt = $db->prepare($sql);
