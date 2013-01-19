@@ -209,6 +209,7 @@ window.SolutionsView = Backbone.View.extend({
 	            // mark this question
 	            question.set('timeTaken', this.getTimeTakenPerQuestion[i]);
 	            question.set('optionSelected', this.answersSelected[i]);
+                question.setStatus();
 	            question.set('hasAttempted', true);
 	        }
 		}

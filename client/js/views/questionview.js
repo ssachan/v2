@@ -4,334 +4,284 @@
  * @author ssachan
  * 
  */
+window.QuizQuestionView = Backbone.View.extend({
 
-window.QuizQuestionView = Backbone.View
-		.extend({
+    initialize: function () {},
 
-			initialize : function() {
-			},
+    events: {
+        'click #single-type button': 'handleSingleType',
+        'click #multiple-type button': 'handleMultipleType',
+        'keypress #integer-type': 'checkIntegerType',
+        'keyup #integer-type': 'handleIntegerType',
+        'click #matrix-type input': 'handleMatrixType',
+    },
 
-			events : {
-				'click #single-type button' : 'handleSingleType',
-				'click #multiple-type button' : 'handleMultipleType',
-				'keypress #integer-type' : 'checkIntegerType',
-				'keyup #integer-type' : 'handleIntegerType',
-				'click #matrix-type input' : 'handleMatrixType',
-			},
+    handleSingleType: function (e) {
+        var oldOptionSelected = this.model.get('optionSelected');
+        var optionSelected = e.target.value;
+        if (optionSelected === oldOptionSelected) {
+            logs.addEntry("OPTION_DESELECT", this.model.get('id'),
+            oldOptionSelected);
+            this.model.set('optionSelected', null);
+            $(e.target).removeClass('active');
+            e.stopPropagation();
+        } else {
+            if (oldOptionSelected !== null) logs.addEntry("OPTION_DESELECT", this.model.get('id'),
+            oldOptionSelected);
+            logs.addEntry("OPTION_SELECT", this.model.get('id'),
+            optionSelected);
+            this.model.set('optionSelected', optionSelected);
+        }
+    },
 
-			handleSingleType : function(e) {
-				var oldOptionSelected = this.model.get('optionSelected');
-				var optionSelected = e.target.value;
-				if (optionSelected === oldOptionSelected) {
-					logs.addEntry("OPTION_DESELECT", this.model.get('id'),
-							oldOptionSelected);
-					this.model.set('optionSelected', null);
-					$(e.target).removeClass('active');
-					e.stopPropagation();
-				} else {
-					if (oldOptionSelected !== null)
-						logs.addEntry("OPTION_DESELECT", this.model.get('id'),
-								oldOptionSelected);
-					logs.addEntry("OPTION_SELECT", this.model.get('id'),
-							optionSelected);
-					this.model.set('optionSelected', optionSelected);
-				}
-			},
+    handleMultipleType: function (e) {
+        var optionSelectedArray = [];
+        var optionSelected = this.model.get('optionSelected');
+        var optionLength = ((this.model.get('options'))
+            .split(SEPARATOR)).length;
+        if (optionSelected != null) {
+            var temp = (optionSelected).split(SEPARATOR); // (SEPARATOR.SEPARATOR);
+            for (var j = 0; j < optionLength; j++) {
+                optionSelectedArray[j] = (temp.indexOf(j) != -1) ? 1 : 0;
+            }
+        } else {
+            // fill all the fields with null
+            for (var j = 0; j < len; j++) {
+                optionSelectedArray[j] = 0;
+            }
+        }
 
-			handleMultipleType : function(e) {
-				var optionSelectedArray = [];
-				var optionSelected = this.model.get('optionSelected');
-				var optionLength = ((this.model.get('options'))
-						.split(SEPARATOR)).length;
-				if (optionSelected != null) {
-					var temp = (optionSelected).split(SEPARATOR); // (SEPARATOR.SEPARATOR);
-					for ( var j = 0; j < optionLength; j++) {
-						optionSelectedArray[j] = (temp.indexOf(j) != -1) ? 1
-								: 0;
-					}
-				} else {
-					// fill all the fields with null
-					for ( var j = 0; j < len; j++) {
-						optionSelectedArray[j] = 0;
-					}
-				}
+        // get the class for selected button...if its active then it has
+        // been clicked again.
+        var currentClass = e.target.getAttribute('class');
+        var value = parseInt(e.target.getAttribute('value'));
+        if (currentClass.indexOf('active') != -1) {
+            // unselect this
+            logs.addEntry("OPTION_DESELECT", this.model.get('id'),
+            value);
+            optionSelectedArray[value] = 0;
+            // optionSelectedArray[value] = "";
+        } else {
+            logs.addEntry("OPTION_SELECT", this.model.get('id'), value);
+            optionSelectedArray[value] = 1;
+        }
+        var temp = [];
+        for (i = 0; i < optionLength; i++) {
+            if (optionSelectedArray[i]) {
+                temp.push(i);
+            }
+        }
+        optionSelected = temp.join(SEPARATOR);
+        this.model.set('optionSelected', optionSelected);
+    },
 
-				// get the class for selected button...if its active then it has
-				// been clicked again.
-				var currentClass = e.target.getAttribute('class');
-				var value = parseInt(e.target.getAttribute('value'));
-				if (currentClass.indexOf('active') != -1) {
-					// unselect this
-					logs.addEntry("OPTION_DESELECT", this.model.get('id'),
-							value);
-					optionSelectedArray[value] = 0;
-					// optionSelectedArray[value] = "";
-				} else {
-					logs.addEntry("OPTION_SELECT", this.model.get('id'), value);
-					optionSelectedArray[value] = 1;
-				}
-				var temp = [];
-				for (i = 0; i < optionLength; i++) {
-					if (optionSelectedArray[i]) {
-						temp.push(i);
-					}
-				}
-				optionSelected = temp.join(SEPARATOR);
-				this.model.set('optionSelected', optionSelected);
-			},
+    checkIntegerType: function (e) {
+        // we need to use a plug-in
+        // https://github.com/SamWM/jQuery-Plugins/blob/master/numeric/jquery.numeric.js
+        // or http://www.texotela.co.uk/code/jquery/numeric/
+        // other scripts are buggy
+    },
 
-			checkIntegerType : function(e) {
-				// we need to use a plug-in
-				// https://github.com/SamWM/jQuery-Plugins/blob/master/numeric/jquery.numeric.js
-				// or http://www.texotela.co.uk/code/jquery/numeric/
-				// other scripts are buggy
-			},
+    handleIntegerType: function (e) {
+        this.model.set('optionSelected', $('#integer-type').val());
+        logs.addEntry("OPTION_SELECT", this.model.get('id'), this.model.get('optionSelected'));
+    },
 
-			handleIntegerType : function(e) {
-				this.model.set('optionSelected', $('#integer-type').val());
-				logs.addEntry("OPTION_SELECT", this.model.get('id'), this.model
-						.get('optionSelected'));
-			},
+    handleMatrixType: function (e) {
+        // tanujb:TODO:add logs
+        var optionSelectedArray = [];
+        var optionSelected = this.model.get('optionSelected');
+        if (optionSelected != null) {
+            optionSelectedArray = (optionSelected).split(SEPARATOR + SEPARATOR); // (SEPARATOR.SEPARATOR);
+        } else {
+            // fill all the fields with null
+            var len = (((this.model.get('options')).split(SEPARATOR + SEPARATOR))[0]).split(SEPARATOR).length;
+            for (var j = 0; j < len; j++) {
+                optionSelectedArray[j] = null;
+            }
+        }
+        // get all checks for this particular row and add to the
+        // solution
+        var checkboxSelected = (e.target).getAttribute('name');
+        var index = parseInt((checkboxSelected.split('-'))[1]);
+        // var checks = $('.myCheckbox').attr('checked','checked');
+        var selectedChecks = $("." + checkboxSelected + ":checked");
+        var optionAtIndex = [];
+        var len = selectedChecks.length;
+        for (var i = 0; i < len; i++) {
+            optionAtIndex.push(selectedChecks[i].value);
+        }
+        optionSelectedArray[index] = optionAtIndex.join(SEPARATOR);
+        this.model.set('optionSelected', optionSelectedArray.join(SEPARATOR + SEPARATOR));
+    },
 
-			handleMatrixType : function(e) {
-				// tanujb:TODO:add logs
-				var optionSelectedArray = [];
-				var optionSelected = this.model.get('optionSelected');
-				if (optionSelected != null) {
-					optionSelectedArray = (optionSelected).split(SEPARATOR
-							+ SEPARATOR); // (SEPARATOR.SEPARATOR);
-				} else {
-					// fill all the fields with null
-					var len = (((this.model.get('options')).split(SEPARATOR
-							+ SEPARATOR))[0]).split(SEPARATOR).length;
-					for ( var j = 0; j < len; j++) {
-						optionSelectedArray[j] = null;
-					}
-				}
-				// get all checks for this particular row and add to the
-				// solution
-				var checkboxSelected = (e.target).getAttribute('name');
-				var index = parseInt((checkboxSelected.split('-'))[1]);
-				// var checks = $('.myCheckbox').attr('checked','checked');
-				var selectedChecks = $("." + checkboxSelected + ":checked");
-				var optionAtIndex = [];
-				var len = selectedChecks.length;
-				for ( var i = 0; i < len; i++) {
-					optionAtIndex.push(selectedChecks[i].value);
-				}
-				optionSelectedArray[index] = optionAtIndex.join(SEPARATOR);
-				this.model.set('optionSelected', optionSelectedArray
-						.join(SEPARATOR + SEPARATOR));
-			},
+    render: function () {
+        $('#question').html(this.template(this.model.toJSON()));
+        this.renderOptions();
+        $('#status').hide();
+        $('#solution').hide();
+        $('#video').hide();
+        if (this.model.get('hasAttempted')) {
+            this.renderInfo();
+            $('#analytics').show();
+            // disable buttons
+        } else {
+            logs.addEntry("QUESTION_OPEN", this.model.get('id'));
+            $('#analytics').hide();
+        }
+        // diable right click for this page
+        $('.quizview').bind("contextmenu", function (e) {
+            e.preventDefault();
+        });
+        var math = document.getElementById('quiz-view');
+        MathJax.Hub.Queue(["Typeset", MathJax.Hub, math]);
+        return this;
+    },
 
-			render : function() {
-				$('#question').html(this.template(this.model.toJSON()));
-				this.renderOptions();
-				$('#status').hide();
-				$('#solution').hide();
-				$('#video').hide();
-				if (this.model.get('hasAttempted')) {
-					this.renderInfo();
-					$('#analytics').show();
-					// disable buttons
-				} else {
-					logs.addEntry("QUESTION_OPEN", this.model.get('id'));
-					$('#analytics').hide();
-				}
-				// diable right click for this page
-				$('.quizview').bind("contextmenu", function(e) {
-					e.preventDefault();
-				});
-				var math = document.getElementById('quiz-view');
-				MathJax.Hub.Queue([ "Typeset", MathJax.Hub, math ]);
-				return this;
-			},
+    renderOptions: function () {
+        var htmlOpt = [];
+        var buttonOpt = [];
+        var options = this.model.get('options');
+        var optionSelected = this.model.get('optionSelected');
+        switch (this.model.get('typeId')) {
+            case "1":
+                // single option
+                htmlOpt.push('<div class="span10"><div class="option-box"><ol type="A">');
+                buttonOpt.push('<div class="span2 btn-group" data-toggle="buttons-radio" id="single-type">');
+                var optionsArray = options.split(SEPARATOR);
+                var len = optionsArray.length;
+                for (var i = 0; i < len; i++) {
+                    htmlOpt.push('<li>' + optionsArray[i] + '</li>');
+                    if (optionSelected != null && optionSelected == i) {
+                        buttonOpt.push('<button type="button" name="option" value="' + i + '" class="btn btn-large btn-block active">' + String.fromCharCode(65 + i) + '</button>');
+                    } else {
+                        buttonOpt.push('<button type="button" name="option" value="' + i + '" class="btn btn-large btn-block">' + String.fromCharCode(65 + i) + '</button>');
+                    }
+                }
+                htmlOpt.push('</ol></div></div>');
+                buttonOpt.push('</div>');
+                $('#options').html(htmlOpt.join(''));
+                $('#options').append(buttonOpt.join(''));
+                break;
+            case "2":
+                // multiple option
+                htmlOpt.push('<div class="span10"><div class="option-box"><ol type="A">');
+                buttonOpt.push('<div class="span2 btn-group" data-toggle="buttons-checkbox" id="multiple-type">');
+                var optionsArray = options.split(SEPARATOR);
+                var len = optionsArray.length;
+                var optionSelectedArray = [];
+                if (optionSelected != null) {
+                    optionSelectedArray = optionSelected.split(SEPARATOR);
+                }
+                for (var i = 0; i < len; i++) {
+                    htmlOpt.push('<li>' + optionsArray[i] + '</li>');
+                    if (jQuery.inArray(i.toString(), optionSelectedArray) >= 0) {
+                        buttonOpt.push('<button type="button" name="mult" value="' + i + '" class="btn btn-large btn-block active">' + String.fromCharCode(65 + i) + '</button>');
+                    } else {
+                        buttonOpt.push('<button type="button" name="mult" value="' + i + '" class="btn btn-large btn-block">' + String.fromCharCode(65 + i) + '</button>');
+                    }
+                }
+                htmlOpt.push('</ol></div></div>');
+                buttonOpt.push('</div>');
+                $('#options').html(htmlOpt.join(''));
+                $('#options').append(buttonOpt.join(''));
+                break;
+            case "3":
+                // integer type
+                htmlOpt.push('<input type="number" id="integer-type" value="' + optionSelected + '">');
+                $('#options').html(htmlOpt);
+                break;
+            case "4":
+                // matrix type
+                var optionsArray = options.split(SEPARATOR + SEPARATOR);
+                var leftList = optionsArray[0].split(SEPARATOR);
+                var rightList = optionsArray[1].split(SEPARATOR);
+                var lLen = leftList.length;
+                var rLen = rightList.length;
+                // create the left right table
+                htmlOpt.push('<div class="span6">');
+                htmlOpt.push('<table class="table"><tr><td>');
+                htmlOpt.push('<ol type="1">');
+                for (var i = 0; i < lLen; i++) {
+                    htmlOpt.push('<li>' + leftList[i] + '</li>');
+                }
+                htmlOpt.push('</ol></td><td>');
+                htmlOpt.push('<ol type="A">');
+                for (var i = 0; i < rLen; i++) {
+                    htmlOpt.push('<li>' + rightList[i] + '</li>');
+                }
+                htmlOpt.push('</ol></td></tr></table>');
+                htmlOpt.push('</div>');
 
-			renderOptions : function() {
-				var htmlOpt = [];
-				var buttonOpt = [];
-				var options = this.model.get('options');
-				var optionSelected = this.model.get('optionSelected');
-				switch (this.model.get('typeId')) {
-				case "1":
-					// single option
-					htmlOpt
-							.push('<div class="span10"><div class="option-box"><ol type="A">');
-					buttonOpt
-							.push('<div class="span2 btn-group" data-toggle="buttons-radio" id="single-type">');
-					var optionsArray = options.split(SEPARATOR);
-					var len = optionsArray.length;
-					for ( var i = 0; i < len; i++) {
-						htmlOpt.push('<li>' + optionsArray[i] + '</li>');
-						if (optionSelected != null && optionSelected == i) {
-							buttonOpt
-									.push('<button type="button" name="option" value="'
-											+ i
-											+ '" class="btn btn-large btn-block active">'
-											+ String.fromCharCode(65 + i)
-											+ '</button>');
-						} else {
-							buttonOpt
-									.push('<button type="button" name="option" value="'
-											+ i
-											+ '" class="btn btn-large btn-block">'
-											+ String.fromCharCode(65 + i)
-											+ '</button>');
-						}
-					}
-					htmlOpt.push('</ol></div></div>');
-					buttonOpt.push('</div>');
-					$('#options').html(htmlOpt.join(''));
-					$('#options').append(buttonOpt.join(''));
-					break;
-				case "2":
-					// multiple option
-					htmlOpt
-							.push('<div class="span10"><div class="option-box"><ol type="A">');
-					buttonOpt
-							.push('<div class="span2 btn-group" data-toggle="buttons-checkbox" id="multiple-type">');
-					var optionsArray = options.split(SEPARATOR);
-					var len = optionsArray.length;
-					var optionSelectedArray = [];
-					if (optionSelected != null) {
-						optionSelectedArray = optionSelected.split(SEPARATOR);
-					}
-					for ( var i = 0; i < len; i++) {
-						htmlOpt.push('<li>' + optionsArray[i] + '</li>');
-						if (jQuery.inArray(i.toString(), optionSelectedArray) >= 0) {
-							buttonOpt
-									.push('<button type="button" name="mult" value="'
-											+ i
-											+ '" class="btn btn-large btn-block active">'
-											+ String.fromCharCode(65 + i)
-											+ '</button>');
-						} else {
-							buttonOpt
-									.push('<button type="button" name="mult" value="'
-											+ i
-											+ '" class="btn btn-large btn-block">'
-											+ String.fromCharCode(65 + i)
-											+ '</button>');
-						}
-					}
-					htmlOpt.push('</ol></div></div>');
-					buttonOpt.push('</div>');
-					$('#options').html(htmlOpt.join(''));
-					$('#options').append(buttonOpt.join(''));
-					break;
-				case "3":
-					// integer type
-					htmlOpt
-							.push('<input type="number" id="integer-type" value="'
-									+ optionSelected + '">');
-					$('#options').html(htmlOpt);
-					break;
-				case "4":
-					// matrix type
-					var optionsArray = options.split(SEPARATOR + SEPARATOR);
-					var leftList = optionsArray[0].split(SEPARATOR);
-					var rightList = optionsArray[1].split(SEPARATOR);
-					var lLen = leftList.length;
-					var rLen = rightList.length;
-					// create the left right table
-					htmlOpt.push('<div class="span6">');
-					htmlOpt.push('<table class="table"><tr><td>');
-					htmlOpt.push('<ol type="1">');
-					for ( var i = 0; i < lLen; i++) {
-						htmlOpt.push('<li>' + leftList[i] + '</li>');
-					}
-					htmlOpt.push('</ol></td><td>');
-					htmlOpt.push('<ol type="A">');
-					for ( var i = 0; i < rLen; i++) {
-						htmlOpt.push('<li>' + rightList[i] + '</li>');
-					}
-					htmlOpt.push('</ol></td></tr></table>');
-					htmlOpt.push('</div>');
+                // create the checkboxes table
+                var optionSelectedArray = [];
+                if (optionSelected != null) {
+                    optionSelectedArray = optionSelected.split(SEPARATOR + SEPARATOR);
+                }
+                buttonOpt.push('<div class="span6">');
+                buttonOpt.push('<table class="table" id="matrix-type">');
+                // define the top row
+                buttonOpt.push('<tr><td></td>');
+                for (var j = 0; j < rLen; j++) {
+                    buttonOpt.push('<td>' + String.fromCharCode(65 + j) + '</td>');
+                }
+                buttonOpt.push('</tr>');
+                // create checkboxes
+                for (i = 0; i < lLen; i++) {
+                    buttonOpt.push('<tr><td>' + (i) + '</td>');
+                    for (var j = 0; j < rLen; j++) {
+                        if (optionSelectedArray[i] != null && optionSelectedArray[i].indexOf(j) != -1) {
+                            buttonOpt.push('<td><input type="checkbox" name="multicheck-' + i + '" class="multicheck-' + i + '" value="' + j + '" checked></td>');
+                        } else {
+                            buttonOpt.push('<td><input type="checkbox" name="multicheck-' + i + '" class="multicheck-' + i + '" value="' + j + '"></td>');
+                        }
+                    }
+                    buttonOpt.push('</tr>');
+                }
+                buttonOpt.push('</div>');
+                $('#options').html(htmlOpt.join(''));
+                $('#options').append(buttonOpt.join(''));
+                break;
+        }
+    },
+    renderInfo: function () {
+        // tanujb:TODO:add retrieval of data
+        var html = [];
+        $('#single-type').hide();
+        $('#multiple-type').hide();
+        $('#integer-type').hide();
+        $('#matrix-type').hide();
 
-					// create the checkboxes table
-					var optionSelectedArray = [];
-					if (optionSelected != null) {
-						optionSelectedArray = optionSelected.split(SEPARATOR
-								+ SEPARATOR);
-					}
-					buttonOpt.push('<div class="span6">');
-					buttonOpt.push('<table class="table" id="matrix-type">');
-					// define the top row
-					buttonOpt.push('<tr><td></td>');
-					for ( var j = 0; j < rLen; j++) {
-						buttonOpt.push('<td>' + String.fromCharCode(65 + j)
-								+ '</td>');
-					}
-					buttonOpt.push('</tr>');
-					// create checkboxes
-					for (i = 0; i < lLen; i++) {
-						buttonOpt.push('<tr><td>' + (i) + '</td>');
-						for ( var j = 0; j < rLen; j++) {
-							if (optionSelectedArray[i] != null
-									&& optionSelectedArray[i].indexOf(j) != -1) {
-								buttonOpt
-										.push('<td><input type="checkbox" name="multicheck-'
-												+ i
-												+ '" class="multicheck-'
-												+ i
-												+ '" value="'
-												+ j
-												+ '" checked></td>');
-							} else {
-								buttonOpt
-										.push('<td><input type="checkbox" name="multicheck-'
-												+ i
-												+ '" class="multicheck-'
-												+ i
-												+ '" value="'
-												+ j
-												+ '"></td>');
-							}
-						}
-						buttonOpt.push('</tr>');
-					}
-					buttonOpt.push('</div>');
-					$('#options').html(htmlOpt.join(''));
-					$('#options').append(buttonOpt.join(''));
-					break;
-				}
-			},
-			renderInfo : function() {
-				// tanujb:TODO:add retrieval of data
-				var html = [];
-				$('#single-type').hide();
-				$('#multiple-type').hide();
-				$('#integer-type').hide();
-				$('#matrix-type').hide();
-				
-				$('#status').show();
-				$('#options').show();
-				$('#video').show();
-				
-				var status = this.model.isOptionSelectedCorrect(this.model.get('optionSelected'));
-				if (status==true) {
-					html.push('<img src="img/cross.png" width="33px" style="float:left">');
-					html.push('<h3>YOU MARKED OPTION '+ String.fromCharCode(65 + parseInt(this.model.get('optionSelected'))) + '</h3>');
-				}else if(status==false){
-					html.push('<h3>YOU MARKED OPTION '+ String.fromCharCode(65 + parseInt(this.model.get('optionSelected'))) + '</h3>');
-					html.push('<img src="img/cross.png" width="33px">');
-					html.push('<h3>CORRECT OPTION '+String.fromCharCode(65 + parseInt(this.model.get('correctAnswer'))) + '</h3>');	
-				}else{
-					html.push('<h3>YOU SELECTED NONE</h3>');
-					html.push('<img src="img/cross.png" width="33px">');
-					html.push('<h3>CORRECT OPTION '+String.fromCharCode(65 + parseInt(this.model.get('correctAnswer'))) + '</h3>');	
-				}	
-				$('#stathead').html(html.join(' '));
-				$('#diff').html(this.model.get('difficulty'));
-				$('#avgAcc').html('30%');
-				$('#avgTime').html(this.model.get('timeTaken'));
-				$('#solutionText').html(this.model.get('explanation'));
-				$('#solution').show();
-				$('#video')
-						.html(
-								'<video id="analysis_video" class="video-js vjs-default-skin" controls preload="none" width="640" height="264" data-setup="{}"><source src="../../video/q'+this.model.get('id')+'vid1.mp4" type="video/mp4" /> </video>');
+        $('#status').show();
+        $('#options').show();
+        $('#video').show();
 
-				$('#time').html(helper.formatTime(this.model.get('timeTaken')));
-				$('#submit').hide();
-			}
-		});
+        var status = this.model.get('status');
+        if (status == null) {
+            html.push('<h3>YOU SELECTED NONE</h3>');
+            html.push('<img src="img/cross.png" width="33px">');
+            html.push('<h3>CORRECT OPTION ' + String.fromCharCode(65 + parseInt(this.model.get('correctAnswer'))) + '</h3>');
+        } else {
+            if (status == true) {
+                html.push('<img src="img/cross.png" width="33px" style="float:left">');
+                html.push('<h3>YOU MARKED OPTION ' + String.fromCharCode(65 + parseInt(this.model.get('optionSelected'))) + '</h3>');
+            } else if(status==false) {
+                html.push('<h3>YOU MARKED OPTION ' + String.fromCharCode(65 + parseInt(this.model.get('optionSelected'))) + '</h3>');
+                html.push('<img src="img/cross.png" width="33px">');
+                html.push('<h3>CORRECT OPTION ' + String.fromCharCode(65 + parseInt(this.model.get('correctAnswer'))) + '</h3>');
+            }
+        }
+        $('#stathead').html(html.join(' '));
+        $('#diff').html(this.model.get('difficulty'));
+        $('#avgAcc').html('30%');
+        $('#avgTime').html(this.model.get('timeTaken'));
+        $('#solutionText').html(this.model.get('explanation'));
+        $('#solution').show();
+        $('#video')
+            .html(
+            '<video id="analysis_video" class="video-js vjs-default-skin" controls preload="none" width="640" height="264" data-setup="{}"><source src="../../video/q' + this.model.get('id') + 'vid1.mp4" type="video/mp4" /> </video>');
+
+        $('#time').html(helper.formatTime(this.model.get('timeTaken')));
+        $('#submit').hide();
+    }
+});

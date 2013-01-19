@@ -113,32 +113,22 @@ window.Question = Backbone.Model.extend({
 		return isCorrect; 
 	},
 	
-	/*getResults : function()
-	{
-		var url = Config.serverUrl + 'questions/result-data/';
-		return $.ajax({
-			url : url,
-			data : {
-				accountId : account.get('id'),
-				qid : this.get('id')
-			},
-			dataType : "json",
-			success : function(data) {
-				if(data.status == STATUS.SUCCESS ){
-						this.set('timeTaken') = data.t;
-						this.set('abilityScoreBefore') = data.a;
-						this.set('delta') = data.d;
-						this.set('optionSelected') = data.o;
-				} else { // If not, send them back to the home page
-					helper.showError(data.data);
-				}
-			}
-		});
+	/**
+     * returns true, false and null depending on whether the option selected was right, wrong or not selected at all. 
+     **/
+	setStatus : function (){
+		var status = null; 
+		var answer = this.get('correctAnswer');
+		var optionSelected = this.get('optionSelected');
+		if(optionSelected && optionSelected!=null){
+			status = (optionSelected==answer)?true:false;
+		}
+		this.set('status',status);
 	},
-*/
+	
     defaults: {
         'correctAnswer': null,
-        'status': null,
+        'status': null, // null not attempted, true correct, false incorrect
         'timeTaken': null,
         'hasAttempted':false,
         'optionSelected':null,
