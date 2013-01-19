@@ -29,7 +29,9 @@ $app->post('/attemptedAs/', 'updateAttemptedAs');
 $app->get('/processQuiz/', $authenticate($app), 'processQuiz');
 
 // responses
-$app->post('/results', 'updateResults');
+$app->post('/submitQuiz', 'updateResultsForTest');
+$app->post('/submitPractice', 'updateResultsForPractice');
+
 $app->get('/testcode', 'testCode');
 
 $app->get('/attemptedQuestions/', 'getAttemptedQuestions');
