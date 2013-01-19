@@ -586,7 +586,9 @@ function getUserResponseFromResultsTable($accountId, $quizId)
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_OBJ);
         $db = null;
-        return array($result->s,$result->t);
+        $s = json_decode($result->s);
+        $t = json_decode($result->t);
+        return array($s,$t);
     }
     catch (PDOException $e){
         //
