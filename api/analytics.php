@@ -570,8 +570,10 @@ function updateUserResponseinResultsTable($accountId, $quizId, $selectedAnswers,
         $stmt = $db->prepare($sql);
         $stmt->bindParam("accountId", $accountId);
         $stmt->bindParam("quizId", $quizId);
-        $stmt->bindParam("selectedAnswers", json_encode($selectedAnswers));
-        $stmt->bindParam("timePerQuestion", json_encode($timePerQuestion));
+        //$stmt->bindParam("selectedAnswers", json_encode($selectedAnswers));
+        //$stmt->bindParam("timePerQuestion", json_encode($timePerQuestion));
+        $stmt->bindParam("selectedAnswers", $selectedAnswers);
+        $stmt->bindParam("timePerQuestion", $timePerQuestion);
         $stmt->execute();
         $db = null;
     } catch (PDOException $e) {
