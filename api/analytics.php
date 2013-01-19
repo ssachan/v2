@@ -339,7 +339,7 @@ function updateResultsForTest()
         );    
     updateResultsTable($accountId,$quizId,$logs);//tanuj:TODO:these two calls should club into one, and add score.
     updateUserResponseinResultsTable($accountId, $quizId, $response["data"]["selectedAnswers"], $response["data"]["timePerQuestion"]);
-    updateScoreinResultsTable($accountId, $quizId, $response["data"]["totalScore"], $response["data"]["numCorrect"], $response["data"]["numIncorrect"]);
+    updateScoreinResultsTable($accountId, $quizId, $response["data"]["score"], $response["data"]["numCorrect"], $response["data"]["numIncorrect"]);
     sendResponse($response);
 }
 //<< END FRONT FACING
