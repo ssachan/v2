@@ -236,8 +236,8 @@ function practiceResultsView()
         "videoArray"=>$videoArray,
         "l3GraphData"=>$l3GraphData,
 
-        "selectedAnswers"=>$selectedAnswers,
-        "timePerQuestion"=>$timePerQuestion,
+        "selectedAnswers"=>json_encode($selectedAnswers),
+        "timePerQuestion"=>json_encode($timePerQuestion),
         "score"=>$testScore,
         "numCorrect"=>$numCorrect,
         "numIncorrect"=>$numIncorrect
