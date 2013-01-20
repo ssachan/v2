@@ -171,7 +171,7 @@ window.Quiz = Backbone.Model.extend({
                 streamId: streamId,
                 state: this.get('state'),
                 logs: logs.toJSON(),
-                isLast : this.get('state')==this.get('questionIdsArray').length
+                isLast : 0
             },
             success: function (data) {
                 // tanujb:TODO :what does this code do?
@@ -206,23 +206,17 @@ window.Quiz = Backbone.Model.extend({
                 streamId: streamId,
                 state: this.get('state'),
                 logs: logs.toJSON(),
-                isLast : this.get('state')==this.get('questionIdsArray').length
+                isLast : 1
             },
             success: function (data) {
                 // tanujb:TODO :what does this code do?
                 //I need to forward the data coming from here to ResultsView
             	 if (data.status == STATUS.SUCCESS) {
-                     if (that.get('status') == that.STATUS_COMPLETED) {
                          that.set(data.data);
-                         that.get('selectedAnswersArray').push.apply(that.get('selectedAnswersArray'), JSON.parse(
-                         data.data['selectedAnswers']));
-                         that.get('timePerQuestionArray').push.apply(that.get('timePerQuestionArray'), JSON.parse(
-                         data.data['timePerQuestion']));
+                         that.get('selectedAnswersArray').push.apply(that.get('selectedAnswersArray'), JSON.parse(data.data['selectedAnswers']));
+                         that.get('timePerQuestionArray').push.apply(that.get('timePerQuestionArray'), JSON.parse(data.data['timePerQuestion']));
                          //set the status for all questions
                          app.quiz(that.get('id'));
-                     } else {
-                         // continue the quiz
-                     }
                 } else {
                     helper.showError(data.data);
                 }

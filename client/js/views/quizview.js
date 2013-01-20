@@ -286,10 +286,11 @@ window.PracticeView = Backbone.View.extend({
     onNextClick: function () {
         this.index++;
         if (this.index == this.totalQuestions) {
-            // show results
-            this.model.set('state', this.index);
+            logs.reset();
+        	// show results
+        	this.model.set('state', this.index);
+            this.model.set('status', this.model.STATUS_COMPLETED);
             this.model.submitPracticeResults();
-        	//Manager.showResults(this.model);
         	return;
         }
         this.renderQuestion();
