@@ -263,7 +263,7 @@ window.PracticeView = Backbone.View.extend({
         } 
         this.model.set('state', this.index);
         //this.model.calculateScores();
-        this.model.submitPractice();
+        this.model.submitPracticeQuestion();
         this.renderQuestion();
     },
 
@@ -287,7 +287,9 @@ window.PracticeView = Backbone.View.extend({
         this.index++;
         if (this.index == this.totalQuestions) {
             // show results
-        	Manager.showResults(this.model);
+            this.model.set('state', this.index);
+            this.model.submitPracticeResults();
+        	//Manager.showResults(this.model);
         	return;
         }
         this.renderQuestion();

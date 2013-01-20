@@ -153,13 +153,12 @@ window.Quiz = Backbone.Model.extend({
         });
     },
     
-    
     /**
      * Data uploaded to results.
      * 
      * @param quiz
      */
-    submitPractice: function () {
+    submitPracticeQuestion: function () {
         var url = Config.serverUrl + 'submitPractice';
         var that = this;
         $.ajax({
@@ -179,6 +178,51 @@ window.Quiz = Backbone.Model.extend({
                 //I need to forward the data coming from here to ResultsView
                 if (data.status == STATUS.SUCCESS) {
                   
+                } else {
+                    helper.showError(data.data);
+                }
+            },
+            error: function (data) {
+                console.log(data);
+            },
+        });
+    },
+    
+    /**
+     * Data uploaded to results.
+     * 
+     * @param quiz
+     */
+    submitPracticeResults: function () {
+        var url = Config.serverUrl + 'submitPractice';
+        var that = this;
+        $.ajax({
+            url: url,
+            type: 'POST',
+            dataType: "json",
+            data: {
+                accountId: account.get('id'),
+                quizId: this.get('id'),
+                streamId: streamId,
+                state: this.get('state'),
+                logs: logs.toJSON(),
+                isLast : this.get('state')==this.get('questionIdsArray').length
+            },
+            success: function (data) {
+                // tanujb:TODO :what does this code do?
+                //I need to forward the data coming from here to ResultsView
+            	 if (data.status == STATUS.SUCCESS) {
+                     if (that.get('status') == that.STATUS_COMPLETED) {
+                         that.set(data.data);
+                         that.get('selectedAnswersArray').push.apply(that.get('selectedAnswersArray'), JSON.parse(
+                         data.data['selectedAnswers']));
+                         that.get('timePerQuestionArray').push.apply(that.get('timePerQuestionArray'), JSON.parse(
+                         data.data['timePerQuestion']));
+                         //set the status for all questions
+                         app.quiz(that.get('id'));
+                     } else {
+                         // continue the quiz
+                     }
                 } else {
                     helper.showError(data.data);
                 }
