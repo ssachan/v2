@@ -167,10 +167,9 @@ function updateResults()
     }
 }
 function processPractice()
-{
-    if($_POST["isLast"] === true)
+{    
+    if($_POST["isLast"] == '1')
     {
-        $response = updateResultsForPractice();
         $response2 = practiceResultsView();
         sendResponse($response2);
     }
@@ -198,7 +197,7 @@ function practiceResultsView()
     $qDetails = array();
     foreach($questionIds as $key=>$qid)
     {
-        echo "The question id is".$qid;
+        //echo "The question id is".$qid;
         $qDetails[$qid] = getQuestionDetails($qid);
         $maxScore += intval($qDetails[$qid]->correctScore);
         $qrecord = getQuestionResponse($accountId, $qid);
@@ -228,8 +227,8 @@ function practiceResultsView()
     $response["status"] = SUCCESS;
     $response["data"] = array(
 
-        "state"=>$state,
-        "delta"=>$delta,
+        "state"=>$state2,
+        "delta"=>$delta2,
         //"userAbilityRecord"=>$userAbilityRecord2,
         "maxScore"=>$maxScore,
 
