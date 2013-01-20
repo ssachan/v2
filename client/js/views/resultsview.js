@@ -212,6 +212,15 @@ window.SolutionsView = Backbone.View.extend({
 	            question.set('optionSelected', this.answersSelected[i]);
                 question.setStatus();
 	            question.set('hasAttempted', true);
+	            switch(question.get('status')){
+	            	case true:$('#'+i).addClass('right');
+	            	break;
+	            	case false:$('#'+i).addClass('wrong');
+	            	break;
+	            	default : 
+	            		$('#'+i).addClass('unattempted');
+	            	break;
+	            }
 	        }
 		}
 	},

@@ -210,6 +210,17 @@ window.PracticeView = Backbone.View.extend({
                 question.set('optionSelected', this.answersSelected[i]);
                 question.setStatus();
                 question.set('hasAttempted', true);
+                switch(question.get('status')){
+            		case true:
+            			$('#'+i).addClass('right');
+            			break;
+            		case false:
+            			$('#'+i).addClass('wrong');
+            			break;
+            		default : 
+            			$('#'+i).addClass('unattempted');
+            		break;
+                }
             }
         }
     },
@@ -229,6 +240,18 @@ window.PracticeView = Backbone.View.extend({
 
     submitQuestion: function () {
         this.question.set('hasAttempted', true);
+        this.question.setStatus();
+        switch(this.question.get('status')){
+		case true:
+			$('#'+this.index).addClass('right');
+			break;
+		case false:
+			$('#'+this.index).addClass('wrong');
+			break;
+		default : 
+			$('#'+this.index).addClass('unattempted');
+		break;
+        }
         logs.addEntry("QUESTION_CLOSE",this.question.get('id'));
         timer.stop();
         timer.reset();

@@ -106,9 +106,11 @@ window.QuizItemView = Backbone.View.extend({
 		if (this.model.get('hasAttempted') == true) {
 			alert('quiz purchased. Access it from My PrepSets space');
 			//window.location = '#quiz/' + this.model.get('id');
-		} else {
+		} else if(this.model.get('status')==this.model.STATUS_NOTSTARTED){
 			mView.model = this.model;
 			mView.show();
+		}else{
+			app.startQuiz(this.model.get('id'));
 		}
 	},
 

@@ -27,11 +27,11 @@
             <div class="box center" style="min-height: 200px; background: #ddd">
                 <h3>Question No</h3>
                 <div class="pagination" style="margin: 0px !important; padding: 20px 0px 10px 0px;">
-                    <ul>
+                   <ul>
                         <% for(var i=0; i
                         <totalQuestions; i++){
             %>
-                        <li><a id="<%=i %>" class="qnolist"> <% if(i<9){%> <%=0+''+(i+1) %></a></li>
+                        <li id="<%=i %>" class="qnolist"><a > <% if(i<9){%> <%=0+''+(i+1) %></a></li>
                         <% }else{ %> <%=(i+1) %></a>
                         </li>
                         <% } } %> 
