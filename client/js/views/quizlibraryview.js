@@ -110,7 +110,7 @@ window.QuizItemView = Backbone.View.extend({
 			mView.model = this.model;
 			mView.show();
 		}else{
-			app.startQuiz(this.model.get('id'));
+			app.quiz(this.model.get('id'));
 		}
 	},
 

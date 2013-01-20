@@ -12,7 +12,6 @@ window.ModalView = Backbone.View.extend({
 
 	events : {
 		'click .close' : 'close',
-		'click #start-quiz' : 'startQuiz'	
 	},
 
 	render : function() {
@@ -34,10 +33,4 @@ window.ModalView = Backbone.View.extend({
 		$('#modal').modal('hide');
 		this.remove();
 	},
-	
-	startQuiz : function(){
-		this.close();
-		app.startQuiz(this.model.get('id'));
-	}
-
 });
