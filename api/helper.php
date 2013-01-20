@@ -75,4 +75,3 @@ function getQ($id){
         echo '{"error":{"text":' . $e->getMessage() . '}}';
     }
 }
-

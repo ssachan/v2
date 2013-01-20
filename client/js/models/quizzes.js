@@ -39,13 +39,7 @@ window.Quiz = Backbone.Model.extend({
         if (this.get('timePerQuestion') != null) {
             this.get('timePerQuestionArray').push.apply(this.get('timePerQuestionArray'), JSON.parse(this.get('timePerQuestion')));
             //sum the time to get timeTaken
-            var timeTaken = 0;
-            var len = this.get('timePerQuestionArray').length;
-        	for(var k = 0; k < len; k++) {
-        		v = parseInt(this.get('timePerQuestionArray')[k]);
-        		if (!isNaN(v)) timeTaken += v;
-        	}
-        	this.set('timeTaken',timeTaken);
+            this.setTimeTaken();
         }
         if (this.get('statusPerQuestion') != null) {
             this.get('statusPerQuestionArray').push.apply(this.get('statusPerQuestionArray'), JSON.parse(this.get('statusPerQuestion')));
@@ -124,6 +118,18 @@ window.Quiz = Backbone.Model.extend({
         'state': null,
         'startTime': null,
     },
+    
+    
+    setTimeTaken : function(){
+    	 //sum the time to get timeTaken
+        var timeTaken = 0;
+        var len = this.get('timePerQuestionArray').length;
+    	for(var k = 0; k < len; k++) {
+    		v = parseInt(this.get('timePerQuestionArray')[k]);
+    		if (!isNaN(v)) timeTaken += v;
+    	}
+    	this.set('timeTaken',timeTaken);
+    },
 
     updateAttemptedAs: function () {
         // Do a POST
@@ -160,7 +166,6 @@ window.Quiz = Backbone.Model.extend({
      */
     submitPracticeQuestion: function () {
         var url = Config.serverUrl + 'submitPractice';
-        var that = this;
         $.ajax({
             url: url,
             type: 'POST',
@@ -215,7 +220,7 @@ window.Quiz = Backbone.Model.extend({
                          that.set(data.data);
                          that.get('selectedAnswersArray').push.apply(that.get('selectedAnswersArray'), JSON.parse(data.data['selectedAnswers']));
                          that.get('timePerQuestionArray').push.apply(that.get('timePerQuestionArray'), JSON.parse(data.data['timePerQuestion']));
-                         //set the status for all questions
+                         that.setTimeTaken();
                          app.quiz(that.get('id'));
                 } else {
                     helper.showError(data.data);
@@ -226,7 +231,7 @@ window.Quiz = Backbone.Model.extend({
             },
         });
     },
-    
+
     /**
      * Data uploaded to results.
      * 
@@ -258,7 +263,7 @@ window.Quiz = Backbone.Model.extend({
                         data.data['selectedAnswers']));
                         that.get('timePerQuestionArray').push.apply(that.get('timePerQuestionArray'), JSON.parse(
                         data.data['timePerQuestion']));
-                        //set the status for all questions
+                        that.setTimeTaken();
                         app.quiz(that.get('id'));
                     } else {
                         // continue the quiz
