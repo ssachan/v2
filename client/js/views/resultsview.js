@@ -23,6 +23,7 @@ window.ResultsView = Backbone.View.extend({
 		graphsView.onRender();
 		var solutionView = new SolutionsView({model:this.model, index : 0,});
 		$('#solutions-div').html(solutionView.render().el);
+		solutionView.onRender();
 		solutionView.renderQuestion();
 		$('#analysis-div').hide();
 		$('#graphs-div').hide();
@@ -212,15 +213,6 @@ window.SolutionsView = Backbone.View.extend({
 	            question.set('optionSelected', this.answersSelected[i]);
                 question.setStatus();
 	            question.set('hasAttempted', true);
-	            switch(question.get('status')){
-	            	case true:$('#'+i).addClass('right');
-	            	break;
-	            	case false:$('#'+i).addClass('wrong');
-	            	break;
-	            	default : 
-	            		$('#'+i).addClass('unattempted');
-	            	break;
-	            }
 	        }
 		}
 	},
@@ -261,6 +253,24 @@ window.SolutionsView = Backbone.View.extend({
 		return this;
 	},
 
+	onRender : function (){
+		var len = this.questionIds.length;
+		for(var i=0;i<len;i++){
+			var question = quizQuestions.get(this.questionIds[i]);
+			switch(question.get('status')){
+				case true:
+					$('#'+i).addClass('right');
+					break;
+				case false:
+					$('#'+i).addClass('wrong');
+					break;
+				default : 
+					$('#'+i).addClass('unattempted');
+					break;
+			}
+		}
+    },
+	
 	/**
 	 * TODO:video - just store the reference of the current video
 	 */

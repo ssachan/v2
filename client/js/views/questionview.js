@@ -263,7 +263,7 @@ window.QuizQuestionView = Backbone.View.extend({
             html.push('<h3>CORRECT OPTION ' + String.fromCharCode(65 + parseInt(this.model.get('correctAnswer'))) + '</h3>');
         } else {
             if (status == true) {
-                html.push('<img src="img/cross.png" width="33px" style="float:left">');
+                html.push('<img src="img/tick.png" width="33px">');
                 html.push('<h3>YOU MARKED OPTION ' + String.fromCharCode(65 + parseInt(this.model.get('optionSelected'))) + '</h3>');
             } else if(status==false) {
                 html.push('<h3>YOU MARKED OPTION ' + String.fromCharCode(65 + parseInt(this.model.get('optionSelected'))) + '</h3>');
