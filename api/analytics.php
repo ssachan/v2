@@ -168,18 +168,16 @@ function updateResults()
 }
 function processPractice()
 {
-    if($_POST["isLast"])
+    if($_POST["isLast"] === true)
     {
         $response = updateResultsForPractice();
-        echo 'h1'.$response;
         $response2 = practiceResultsView();
         sendResponse($response2);
     }
     else
     {
         $response = updateResultsForPractice();
-        echo 'h2'.$response;
-       sendResponse($response);
+        sendResponse($response);
     }
 }
 
@@ -192,19 +190,24 @@ function practiceResultsView()
     $numCorrect = 0;
     $numIncorrect = 0;
     $delta = array();
+    $delta2 = array();
     $state = array();
+    $state2 = array();
     $aScoreRecord= array();
     $l3GraphData = null;
+    $qDetails = array();
     foreach($questionIds as $key=>$qid)
     {
-        $qDetails[] = getQuestionDetails($qid);
-        $maxScore += $qDetails->correctScore;
+        echo "The question id is".$qid;
+        $qDetails[$qid] = getQuestionDetails($qid);
+        $maxScore += intval($qDetails[$qid]->correctScore);
         $qrecord = getQuestionResponse($accountId, $qid);
-        $delta[] = $qrecord->d;
-        $state[] = $qrecord->s;
+        $delta[$qid] = $qrecord->d;
+        $state[$qid] = $qrecord->s;
         $currentState = $qrecord->s;
+        $aScoreBefore = new stdClass();
         $aScoreBefore->l3score = $qrecord->a;
-        $aScoreRecord[] = $aScoreBefore;
+        $aScoreRecord[$qid] = $aScoreBefore;
     }
     $l3GraphData = getL3GraphData($accountId, $qDetails, $state, $delta, $aScoreRecord);
     $videoArray = getVideoArray($accountId, $qDetails, $state, $delta);
@@ -214,6 +217,13 @@ function practiceResultsView()
     $testScore = $temp[2];
     $numCorrect = $temp[3];
     $numIncorrect = $temp[4];
+
+    foreach ($questionIds as $key => $value) {
+        
+        $delta2[] = $delta[$value];
+        $state2[] = $state[$value];
+
+    }
 
     $response["status"] = SUCCESS;
     $response["data"] = array(
@@ -992,7 +1002,7 @@ function returnQuestionData()
 {
     $accountId = $_POST['accountId']; 
     $qid = $_POST['qid'];
-    $sql = "select optionSelected as o, timeTaken as t, abilityScoreBefore as a, delta as d, MAX(timeStamp) as m from responses where accountId :acid AND questionId = :qid GROUP BY questionId";
+    $sql = "select optionSelected as o, timeTaken as t, abilityScoreBefore as a, delta as d, MAX(timeStamp) as m from responses where accountId = :acid AND questionId = :qid GROUP BY questionId";
 
     try {
         $db = getConnection();
@@ -1011,7 +1021,7 @@ function returnQuestionData()
 
 function getQuestionResponse($accountId, $qid)
 {
-    $sql = "select optionSelected as o, timeTaken as t, abilityScoreBefore as a, delta as d, MAX(timeStamp) as m, status as s from responses where accountId :acid AND questionId = :qid GROUP BY questionId";
+    $sql = "select optionSelected as o, timeTaken as t, abilityScoreBefore as a, delta as d, MAX(timeStamp) as m, status as s FROM responses WHERE accountId = :acid AND questionId = :qid GROUP BY questionId";
 
     try {
         $db = getConnection();
