@@ -162,7 +162,7 @@ h5 {
 }
 
 .red {
-    color: #C6264C
+    color: #C6264C;
 }
 
 .maroon {
@@ -931,7 +931,7 @@ background-color: #08c;
     width: 45%;
 }
 
-#quiz-div #video {
+#quiz-div #q-video {
     border-bottom: 1px solid #ccc;
     padding-bottom: 20px;
 }
@@ -1515,13 +1515,13 @@ Pagination classes
 }
 
 .pagination ul>.right>a,.pagination ul>.right>span {
-    background-color: green;
+    background-color:#06947A;
     color: #999999;
     cursor: default;
 }
 
 .pagination ul>.wrong>a,.pagination ul>.wrong>span {
-    background-color: red;
+    background-color: #C6264C;
     color: #999999;
     cursor: default;
 }

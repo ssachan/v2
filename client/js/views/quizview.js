@@ -254,6 +254,7 @@ window.PracticeView = Backbone.View.extend({
         }
         logs.addEntry("QUESTION_CLOSE",this.question.get('id'));
         timer.stop();
+        
         timer.reset();
         $('#previous').show();
         $('#next').show();
