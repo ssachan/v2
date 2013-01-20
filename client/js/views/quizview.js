@@ -239,7 +239,10 @@ window.PracticeView = Backbone.View.extend({
     },
 
     submitQuestion: function () {
-        this.question.set('hasAttempted', true);
+        timer.stop();        
+        timer.reset();
+    	this.question.set('timeTaken',(timer.count*1000));
+    	this.question.set('hasAttempted', true);
         this.question.setStatus();
         switch(this.question.get('status')){
 		case true:
@@ -253,9 +256,6 @@ window.PracticeView = Backbone.View.extend({
 		break;
         }
         logs.addEntry("QUESTION_CLOSE",this.question.get('id'));
-        timer.stop();
-        
-        timer.reset();
         $('#previous').show();
         $('#next').show();
         if (this.index == 0) {
@@ -273,9 +273,6 @@ window.PracticeView = Backbone.View.extend({
 
     updateQuizTimer: function (context) {
         $('#time').html(helper.formatTime((timer.count*1000)));
-        var qtimer = context.question.get('timeTaken');
-        qtimer++;
-        context.question.set('timeTaken', qtimer);
     },
 
     onPreviousClick: function () {

@@ -110,7 +110,7 @@ window.ResultAnalysisView = Backbone.View.extend({
 			'incorrect' : incorrect,
 			'unattempted' : unattempted,
 			'totalTime' : helper.formatTime(this.model.get('allotedTime')),
-			'timeTaken' : helper.formatTime2(this.model.get('timeTaken')),
+			'timeTaken' : helper.formatTime(this.model.get('timeTaken')),
 			'avgTime' : '1 min 30 secs',
 			'accuracyInsights' : accuracyInsights,
 			'strategicInsights' : strategicInsights,
