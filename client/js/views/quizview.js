@@ -240,8 +240,8 @@ window.PracticeView = Backbone.View.extend({
 
     submitQuestion: function () {
         timer.stop();        
-        timer.reset();
     	this.question.set('timeTaken',(timer.count*1000));
+        timer.reset();
     	this.question.set('hasAttempted', true);
         this.question.setStatus();
         switch(this.question.get('status')){
