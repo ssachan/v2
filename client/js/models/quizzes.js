@@ -172,42 +172,7 @@ window.Quiz = Backbone.Model.extend({
                 streamId: streamId,
                 state: this.get('state'),
                 logs: logs.toJSON(),
-                isLast : this.get('state')==(this.get('questionIdsArray').length)?false:true
-            },
-            success: function (data) {
-                // tanujb:TODO :what does this code do?
-                //I need to forward the data coming from here to ResultsView
-                if (data.status == STATUS.SUCCESS) {
-                  
-                } else {
-                    helper.showError(data.data);
-                }
-            },
-            error: function (data) {
-                console.log(data);
-            },
-        });
-    },
-    
-    
-    /**
-     * Data uploaded to results.
-     * 
-     * @param quiz
-     */
-    submitPractice: function () {
-        var url = Config.serverUrl + 'submitPractice';
-        var that = this;
-        $.ajax({
-            url: url,
-            type: 'POST',
-            dataType: "json",
-            data: {
-            	accountId: account.get('id'),
-                quizId: this.get('id'),
-                streamId: streamId,
-                state: this.get('state'),
-                logs: logs.toJSON()
+                isLast : this.get('state')==this.get('questionIdsArray').length
             },
             success: function (data) {
                 // tanujb:TODO :what does this code do?

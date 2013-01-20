@@ -30,7 +30,7 @@ $app->get('/processQuiz/', $authenticate($app), 'processQuiz');
 
 // responses
 $app->post('/submitQuiz', 'updateResultsForTest');
-$app->post('/submitPractice', 'updateResultsForPractice');
+$app->post('/submitPractice', 'processPractice');
 
 $app->get('/testcode', 'testCode');
 

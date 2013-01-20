@@ -171,13 +171,15 @@ function processPractice()
     if($_POST["isLast"])
     {
         $response = updateResultsForPractice();
+        echo 'h1'.$response;
         $response2 = practiceResultsView();
         sendResponse($response2);
     }
     else
     {
         $response = updateResultsForPractice();
-        sendResponse($response);
+        echo 'h2'.$response;
+       sendResponse($response);
     }
 }
 
@@ -300,7 +302,7 @@ function updateResultsForPractice()
         "delta"=>$delta,
         "userAbilityRecord"=>$userAbility
         );*/
-    sendResponse($response);
+    return $response;
 }
 
 function updateResultsForTest()
