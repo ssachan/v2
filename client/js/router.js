@@ -181,6 +181,7 @@ var AppRouter = Backbone.Router.extend({
 		if (activeView)
 			activeView.close();
 		$(selector).html(view.render().el);
+        $(window).scrollTop(0);
 		activeView = view;
 		return view;
 	},

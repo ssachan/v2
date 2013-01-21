@@ -282,6 +282,27 @@ window.QuizQuestionView = Backbone.View.extend({
             }
         	break;
         case "2":
+        	var status = this.model.get('status');
+            if (status == null) {
+            	html.push('<a class="pull-left" ><img class="media-object" src="img/cross.png"></a>');
+                html.push('<div class="media-body">');
+                html.push('<h3>YOU SELECTED NONE</h3>');
+                html.push('<h3>CORRECT OPTION ' + this.model.get('correctAnswer') + '</h3>');
+                html.push('</div>');
+            } else {
+                if (status == true) {
+                    html.push('<img class="media-object pull-left" src="img/tick.png">');
+                    html.push('<div class="media-body">');
+                    html.push('<h3>YOU MARKED OPTION ' + this.model.get('optionSelected') + '</h3>');
+                    html.push('</div>');
+                } else if(status==false) {
+                    html.push('<img class="media-object pull-left" src="img/cross.png">');
+                    html.push('<div class="media-body">');
+                    html.push('<h3>YOU MARKED OPTION ' + this.model.get('optionSelected') + '</h3>');
+                    html.push('<h3>CORRECT OPTION ' + this.model.get('correctAnswer') + '</h3>');
+                    html.push('</div>');
+                }
+            }
         	break;
         case "3":
         	var status = this.model.get('status');
@@ -314,7 +335,7 @@ window.QuizQuestionView = Backbone.View.extend({
         $('#stathead').html(html.join(' '));
         $('#diff').html(this.model.get('difficulty'));
         $('#avgAcc').html('30%');
-        $('#avgTime').html(this.model.get('timeTaken'));
+        $('#avgTime').html(helper.formatTime(this.model.get('timeTaken')));
         $('#solutionText').html(this.model.get('explanation'));
         $('#solution').show();
         $('#q-video')
