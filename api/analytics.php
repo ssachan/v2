@@ -208,6 +208,8 @@ function practiceResultsView()
         $qDetails[$qid] = getQuestionDetails($qid);
         $maxScore += intval($qDetails[$qid]->correctScore);
         $qrecord = getQuestionResponse($accountId, $qid);
+        /*echo "QID: $qid";
+        var_dump($qrecord);*/
         $delta[$qid] = $qrecord->d;
         $state[$qid] = $qrecord->s;
         $currentState = $qrecord->s;
@@ -913,8 +915,8 @@ function evaluateQuestion($qDetails, $optionText, $timeTaken, $userAbility)
                     $temp = evalOption($optionText,
                                         $qDetails->correctAnswer,
                                         $optionLength,
-                                        $qDetails->correctScore,
-                                        $qDetails->incorrectScore);
+                                        $qDetails->optionCorrectScore,
+                                        $qDetails->optionInCorrectScore);
                     $delta = $temp[0];
                     $score = $temp[1];
                     break;
@@ -933,8 +935,8 @@ function evaluateQuestion($qDetails, $optionText, $timeTaken, $userAbility)
                         $temp = evalOption($tmpCorrectText,
                                         $tmpOptionText,
                                         $optionLength,
-                                        $qDetails->correctScore,
-                                        $qDetails->incorrectScore);
+                                        $qDetails->optionCorrectScore,
+                                        $qDetails->optionInCorrectScore);
 
                         $delta += $temp[0];
                         $score += $temp[1];
