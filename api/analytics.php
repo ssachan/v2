@@ -101,6 +101,13 @@ class lscoreDataObject{
 
 }
 
+function videoList() {
+    $response = array();
+    $accountId = $_GET['accountId'];
+    $quizId = $_GET['quizId'];
+    $streamId = $_GET['streamId'];
+
+}
 
 //>> FRONT-FACING Functions
 function testCode()
@@ -907,7 +914,7 @@ function evaluateQuestion($qDetails, $optionText, $timeTaken, $userAbility)
                                         $qDetails->correctAnswer,
                                         $optionLength,
                                         $qDetails->correctScore,
-                                        $qDetails->inCorrectScore);
+                                        $qDetails->incorrectScore);
                     $delta = $temp[0];
                     $score = $temp[1];
                     break;
@@ -927,7 +934,7 @@ function evaluateQuestion($qDetails, $optionText, $timeTaken, $userAbility)
                                         $tmpOptionText,
                                         $optionLength,
                                         $qDetails->correctScore,
-                                        $qDetails->inCorrectScore);
+                                        $qDetails->incorrectScore);
 
                         $delta += $temp[0];
                         $score += $temp[1];

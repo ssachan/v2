@@ -113,8 +113,7 @@ window.ResultAnalysisView = Backbone.View.extend({
 			'accuracyInsights' : accuracyInsights,
 			'strategicInsights' : strategicInsights,
 			'historyInsights' : historyInsights,
-			'difficultyInsights' : difficultyInsights,
-			'videoResults' : videoResults
+			'difficultyInsights' : difficultyInsights
 		}));
 		
 		return this;
