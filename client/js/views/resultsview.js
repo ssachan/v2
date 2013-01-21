@@ -100,7 +100,6 @@ window.ResultAnalysisView = Backbone.View.extend({
 		var historyInsights = '';
 
 		// video array containing all data for all questions and analysis
-		console.log(JSON.stringify(videoResults));
 		$(this.el).html(this.template({
 			'id' : this.model.get('id'),
 			'totalQuestions' : length,
