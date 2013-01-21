@@ -283,24 +283,42 @@ window.QuizQuestionView = Backbone.View.extend({
         	break;
         case "2":
         	var status = this.model.get('status');
+        	var correctAnswerArray = (this.model.get('correctAnswer')).split(SEPARATOR);
+        	var optionSelectedArray = null;
+        	if(this.model.get('optionSelected')!=null){
+        		optionSelectedArray = (this.model.get('optionSelected')).split(SEPARATOR);
+        	}
             if (status == null) {
             	html.push('<a class="pull-left" ><img class="media-object" src="img/cross.png"></a>');
                 html.push('<div class="media-body">');
                 html.push('<h3>YOU SELECTED NONE</h3>');
-                html.push('<h3>CORRECT OPTION ' + this.model.get('correctAnswer') + '</h3>');
-                html.push('</div>');
+                html.push('<h3>CORRECT OPTION ');
+                for(var i = 0; i<correctAnswerArray.length;i++){
+                	html.push(String.fromCharCode(65 + parseInt(correctAnswerArray[i]))+',');
+                }
+                html.push('</h3></div>');
             } else {
                 if (status == true) {
                     html.push('<img class="media-object pull-left" src="img/tick.png">');
                     html.push('<div class="media-body">');
-                    html.push('<h3>YOU MARKED OPTION ' + this.model.get('optionSelected') + '</h3>');
-                    html.push('</div>');
+                    html.push('<h3>YOU MARKED OPTION ');
+                    for(var i = 0; i<correctAnswerArray.length;i++){
+                    	html.push(String.fromCharCode(65 + parseInt(correctAnswerArray[i]))+',');
+                    }
+                    html.push('</h3></div>');
                 } else if(status==false) {
                     html.push('<img class="media-object pull-left" src="img/cross.png">');
                     html.push('<div class="media-body">');
-                    html.push('<h3>YOU MARKED OPTION ' + this.model.get('optionSelected') + '</h3>');
-                    html.push('<h3>CORRECT OPTION ' + this.model.get('correctAnswer') + '</h3>');
-                    html.push('</div>');
+                    html.push('<h3>YOU MARKED OPTION ');
+                    for(var i = 0; i<optionSelectedArray.length;i++){
+                    	html.push(String.fromCharCode(65 + parseInt(optionSelectedArray[i]))+',');
+                    }
+                    html.push('</h3>');
+                    html.push('<h3>CORRECT OPTION ');
+                    for(var i = 0; i<correctAnswerArray.length;i++){
+                    	html.push(String.fromCharCode(65 + parseInt(correctAnswerArray[i]))+',');
+                    }
+                    html.push('</h3></div>');
                 }
             }
         	break;
