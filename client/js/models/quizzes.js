@@ -182,7 +182,8 @@ window.Quiz = Backbone.Model.extend({
                 // tanujb:TODO :what does this code do?
                 //I need to forward the data coming from here to ResultsView
                 if (data.status == STATUS.SUCCESS) {
-                  
+                    quizHistory.unshift(that);
+                    account.get('quizzesAttemptedArray').unshift(that.get('id'));
                 } else {
                     helper.showError(data.data);
                 }

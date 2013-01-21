@@ -165,6 +165,7 @@ window.PerformanceView = Backbone.View.extend({
 					'<li id="' + l3[i].get('id') + '-l3" lid="'+l3[i].get('id')+'"><div class="level"></div><a>'
 							+ l3[i].get('displayName') + '</a></li>');
 			var l3Score = scoreL3.get(l3[i].get('id'));
+			if(l3Score!=null){
 			var score = parseInt(l3Score.get('score'));
 			if(score>80){
 				$('#'+l3[i].get('id') + '-l3>.level', this.el).addClass('bg-green');
@@ -172,6 +173,7 @@ window.PerformanceView = Backbone.View.extend({
 				$('#'+l3[i].get('id') + '-l3>.level', this.el).addClass('bg-yellow');
 			}else if(score<=40){
 				$('#'+l3[i].get('id') + '-l3>.level', this.el).addClass('bg-red');
+			}
 			}
 		}
 	},
