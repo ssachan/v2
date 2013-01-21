@@ -284,7 +284,10 @@ window.QuizQuestionView = Backbone.View.extend({
         case "2":
         	var status = this.model.get('status');
         	var correctAnswerArray = (this.model.get('correctAnswer')).split(SEPARATOR);
-        	var optionSelectedArray = (this.model.get('optionSelected')).split(SEPARATOR);
+        	var optionSelectedArray = null;
+        	if(this.model.get('optionSelected')!=null){
+        		optionSelectedArray = (this.model.get('optionSelected')).split(SEPARATOR);
+        	}
             if (status == null) {
             	html.push('<a class="pull-left" ><img class="media-object" src="img/cross.png"></a>');
                 html.push('<div class="media-body">');
