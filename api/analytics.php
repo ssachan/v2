@@ -1111,7 +1111,7 @@ function generateWeightage($l2id)
 
 function getPQ($accountId)
 {
-    $sql = "select average(score) as s from ascores_l1 where accountId = :acid";
+    $sql = "select avg(score) as s from ascores_l1 where accountId = :acid";
     $db = getConnection();
     $stmt = $db->prepare($sql);
     $stmt->bindParam("acid", $accountId);
