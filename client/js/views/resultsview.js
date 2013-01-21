@@ -76,7 +76,7 @@ window.ResultAnalysisView = Backbone.View.extend({
 		var videoOptions = {
 			"playlist" : videoResults
 		}
-		var myPlayer = _V_("video_analysis", videoOptions);
+		var myPlayer = _V_("results_video", videoOptions);
 
 		myPlayer.addEvent("ended", function() {
 
@@ -100,8 +100,6 @@ window.ResultAnalysisView = Backbone.View.extend({
 		var historyInsights = '';
 
 		// video array containing all data for all questions and analysis
-		var videoResults = this.calculateVideoArray(this.model.get('videoArray'));
-		console.log(JSON.stringify(videoResults));
 		$(this.el).html(this.template({
 			'id' : this.model.get('id'),
 			'totalQuestions' : length,
@@ -118,11 +116,14 @@ window.ResultAnalysisView = Backbone.View.extend({
 			'difficultyInsights' : difficultyInsights,
 			'videoResults' : videoResults
 		}));
-		this.setUpPlaylist(videoResults);
+		
 		return this;
 	},
 	
 	onRender : function(){
+		$("#video").html('<video id="results_video" class="video-js vjs-default-skin" controls preload="none" width="640" height="264" data-setup="{}"></video>');
+		var videoResults = this.calculateVideoArray(this.model.get('videoArray'));
+		this.setUpPlaylist(videoResults);
 		var l3GraphData = this.model.get('l3GraphData');
 		if(l3GraphData){
 			var html=[];
