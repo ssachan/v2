@@ -65,6 +65,7 @@ function getStudentByAccountId($accountId, $streamId) {
         $stmt = $db->query($sql);
         $account = $stmt->fetch(PDO::FETCH_OBJ);
         $db = null;
+        $account->pq = getPQ($accountId);
         return $account;
     } catch (PDOException $e) {
         phpLog($e->getMessage());
@@ -489,4 +490,3 @@ $app->post("/uploadImage", $authenticate($app), function () use ($app) {
     }
     sendResponse($response);
 });
-

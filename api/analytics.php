@@ -1109,3 +1109,15 @@ function generateWeightage($l2id)
     $db = null;
 }
 
+function getPQ($accountId)
+{
+    $sql = "select average(score) as s from ascores_l1 where accountId = :acid";
+    $db = getConnection();
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam("acid", $accountId);
+    $stmt->execute();
+    $results = $stmt->fetch(PDO::FETCH_OBJ);
+    $db = null;   
+    return $results->s;
+}
+
