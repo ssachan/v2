@@ -211,10 +211,9 @@ h5 {
 }
 
 .yellow-box {
-    border: solid 1px #CCC;
+    border-left: solid 1px #CCC;
+    border-right: solid 1px #CCC;
     background-color: #FCFDCC;
-    padding: 10px;
-    margin-top: 10px;
 }
 
 .credits {
@@ -911,6 +910,15 @@ background-color: #08c;
     text-align: center;
 }
 
+#status .media-body{
+width:60%;
+}
+
+#status .media-object{
+    margin-top:20px;
+    margin-left:40px;
+}
+    
 #status .g-stats {
     background: #F0F0F0;
     background: #F0F4F5;
