@@ -124,10 +124,11 @@ window.QuizQuestionView = Backbone.View.extend({
         if (this.model.get('hasAttempted')) {
             this.renderInfo();
             $('#analytics').show();
-            // disable buttons
+            $('#hq').html('Solution');
         } else {
             logs.addEntry("QUESTION_OPEN", this.model.get('id'));
             $('#analytics').hide();
+            $('#hq').html('Question');
         }
         // diable right click for this page
         $('.quizview').bind("contextmenu", function (e) {
