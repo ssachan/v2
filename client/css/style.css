@@ -900,6 +900,7 @@ background-color: #08c;
     font-size: 16px;
     line-height: 25px;
     color: #666;
+    min-height:200px;
 }
 
 #status {
