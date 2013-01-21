@@ -209,7 +209,7 @@ function practiceResultsView()
         $aScoreRecord[$qid] = $aScoreBefore;
     }
     $l3GraphData = getL3GraphData($accountId, $qDetails, $state, $delta, $aScoreRecord);
-    $videoArray = getVideoArray($accountId, $qDetails, $state, $delta);
+    $videoArray = getVideoArray($accountId, $qDetails, $delta);
     $temp = getUserResponseFromResultsTable($accountId, $quizId);
     $selectedAnswers = $temp[0];
     $timePerQuestion = $temp[1];
@@ -385,7 +385,7 @@ function updateResultsForTest()
         }
     }
     setStateOfQuiz($accountId,$quizId,count($questionIds));
-    $videoArray = getVideoArray($accountId, $qDetailsRecord, $state, $delta);
+    $videoArray = getVideoArray($accountId, $qDetailsRecord, $delta);
     $l3GraphData = getL3GraphData($accountId, $qDetailsRecord, $state, $delta, $userAbilityRecord);
     
     $response["status"] = SUCCESS;
@@ -1036,7 +1036,7 @@ function getQuestionResponse($accountId, $qid)
 }
 //<< QUESTION EVALAUATION FUNCTIONS END
 
-function getVideoArray($accountId, $qDetails, $state, $delta)
+function getVideoArray($accountId, $qDetails, $delta)
 {
     $videoArray = array();
     asort($delta);

@@ -27,6 +27,7 @@ $app->get('/historyById/', $authenticate($app), 'getQuizzesHistory');
 //quiz
 $app->post('/attemptedAs/', 'updateAttemptedAs');
 $app->get('/processQuiz/', $authenticate($app), 'processQuiz');
+$app->get('/getVideos/', $authenticate($app), 'videoList');
 
 // responses
 $app->post('/submitQuiz', 'updateResultsForTest');

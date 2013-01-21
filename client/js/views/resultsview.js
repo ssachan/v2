@@ -101,7 +101,7 @@ window.ResultAnalysisView = Backbone.View.extend({
 
 		// video array containing all data for all questions and analysis
 		var videoResults = this.calculateVideoArray(this.model.get('videoArray'));
-
+		console.log(JSON.stringify(videoResults));
 		$(this.el).html(this.template({
 			'id' : this.model.get('id'),
 			'totalQuestions' : length,
@@ -118,7 +118,7 @@ window.ResultAnalysisView = Backbone.View.extend({
 			'difficultyInsights' : difficultyInsights,
 			'videoResults' : videoResults
 		}));
-		//this.setUpPlaylist(videoResults);
+		this.setUpPlaylist(videoResults);
 		return this;
 	},
 	
