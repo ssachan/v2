@@ -894,12 +894,15 @@ background-color: #08c;
     margin: 0px;
 }
 
+#question {
+    min-height:450px;
+}
+
 .qtext {
     margin: 25px 0px;
     font-size: 16px;
     line-height: 25px;
     color: #666;
-    min-height:200px;
 }
 
 #status {
@@ -1369,6 +1372,10 @@ width:60%;
 
 .results .btn-group {
     margin-top: 20px;
+}
+
+.video-js{
+    margin:0px auto;
 }
 
 .stat-gradient {

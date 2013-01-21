@@ -256,27 +256,61 @@ window.QuizQuestionView = Backbone.View.extend({
         $('#status').show();
         $('#options').show();
         $('#q-video').show();
-        var status = this.model.get('status');
-        if (status == null) {
-        	html.push('<a class="pull-left" ><img class="media-object" src="img/cross.png"></a>');
-            html.push('<div class="media-body">');
-            html.push('<h3>YOU SELECTED NONE</h3>');
-            html.push('<h3>CORRECT OPTION ' + String.fromCharCode(65 + parseInt(this.model.get('correctAnswer'))) + '</h3>');
-            html.push('</div>');
-        } else {
-            if (status == true) {
-                html.push('<img class="media-object pull-left" src="img/tick.png">');
+        
+        switch (this.model.get('typeId')) {
+        case "1":
+        	var status = this.model.get('status');
+            if (status == null) {
+            	html.push('<a class="pull-left" ><img class="media-object" src="img/cross.png"></a>');
                 html.push('<div class="media-body">');
-                html.push('<h3>YOU MARKED OPTION ' + String.fromCharCode(65 + parseInt(this.model.get('optionSelected'))) + '</h3>');
-                html.push('</div>');
-            } else if(status==false) {
-                html.push('<img class="media-object pull-left" src="img/cross.png">');
-                html.push('<div class="media-body">');
-                html.push('<h3>YOU MARKED OPTION ' + String.fromCharCode(65 + parseInt(this.model.get('optionSelected'))) + '</h3>');
+                html.push('<h3>YOU SELECTED NONE</h3>');
                 html.push('<h3>CORRECT OPTION ' + String.fromCharCode(65 + parseInt(this.model.get('correctAnswer'))) + '</h3>');
                 html.push('</div>');
+            } else {
+                if (status == true) {
+                    html.push('<img class="media-object pull-left" src="img/tick.png">');
+                    html.push('<div class="media-body">');
+                    html.push('<h3>YOU MARKED OPTION ' + String.fromCharCode(65 + parseInt(this.model.get('optionSelected'))) + '</h3>');
+                    html.push('</div>');
+                } else if(status==false) {
+                    html.push('<img class="media-object pull-left" src="img/cross.png">');
+                    html.push('<div class="media-body">');
+                    html.push('<h3>YOU MARKED OPTION ' + String.fromCharCode(65 + parseInt(this.model.get('optionSelected'))) + '</h3>');
+                    html.push('<h3>CORRECT OPTION ' + String.fromCharCode(65 + parseInt(this.model.get('correctAnswer'))) + '</h3>');
+                    html.push('</div>');
+                }
             }
+        	break;
+        case "2":
+        	break;
+        case "3":
+        	var status = this.model.get('status');
+            if (status == null) {
+            	html.push('<a class="pull-left" ><img class="media-object" src="img/cross.png"></a>');
+                html.push('<div class="media-body">');
+                html.push('<h3>YOU ANSWERED NONE</h3>');
+                html.push('<h3>CORRECT ANSWER ' + this.model.get('correctAnswer') + '</h3>');
+                html.push('</div>');
+            } else {
+                if (status == true) {
+                    html.push('<img class="media-object pull-left" src="img/tick.png">');
+                    html.push('<div class="media-body">');
+                    html.push('<h3>YOU ANSWERED ' + this.model.get('optionSelected') + '</h3>');
+                    html.push('</div>');
+                } else if(status==false) {
+                    html.push('<img class="media-object pull-left" src="img/cross.png">');
+                    html.push('<div class="media-body">');
+                    html.push('<h3>YOU ANSWERED ' + this.model.get('optionSelected') + '</h3>');
+                    html.push('<h3>CORRECT ANSWER ' + this.model.get('correctAnswer') + '</h3>');
+                    html.push('</div>');
+                }
+            }
+        	break;
+        case "4":
+        	break;
+        	
         }
+        
         $('#stathead').html(html.join(' '));
         $('#diff').html(this.model.get('difficulty'));
         $('#avgAcc').html('30%');

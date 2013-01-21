@@ -4,7 +4,7 @@
 #
 # Host: localhost (MySQL 5.5.9)
 # Database: prod
-# Generation Time: 2013-01-21 08:30:14 +0530
+# Generation Time: 2013-01-21 11:37:02 +0530
 # ************************************************************
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -126,8 +126,8 @@ LOCK TABLES `ascores_l1` WRITE;
 INSERT INTO `ascores_l1` (`accountId`,`score`,`updatedOn`,`l1Id`,`numQuestions`,`numCorrect`,`numIncorrect`,`numUnattempted`,`streamId`)
 VALUES
 	(4,10,'2013-01-08 00:00:00',1,0,0,0,0,1),
-	(4,82.99,'2013-01-20 23:07:38',2,436,21,62,353,1),
-	(4,49.9487,'2013-01-19 22:05:25',3,201,0,30,171,1),
+	(4,82.8033,'2013-01-21 11:26:15',2,521,22,74,425,1),
+	(4,49.8974,'2013-01-21 11:01:30',3,224,0,33,191,1),
 	(7,55.0548,'0000-00-00 00:00:00',1,10,4,6,0,1),
 	(7,48.7534,'2013-01-21 05:01:35',2,35,4,9,22,1),
 	(7,55.9434,'2013-01-18 17:33:34',3,30,7,4,19,1),
@@ -161,10 +161,10 @@ LOCK TABLES `ascores_l2` WRITE;
 INSERT INTO `ascores_l2` (`accountId`,`score`,`updatedOn`,`l2Id`,`numQuestions`,`numCorrect`,`numIncorrect`,`numUnattempted`,`streamId`)
 VALUES
 	(4,10,'2013-01-08 00:00:00',1,0,0,0,0,1),
-	(4,74.75,'2013-01-20 23:07:38',7,174,12,18,144,1),
-	(4,58.3,'2013-01-20 05:26:08',6,229,9,43,177,1),
-	(4,49.9,'2013-01-20 05:25:13',5,33,0,1,32,1),
-	(4,49.8462,'2013-01-19 22:05:25',10,201,0,30,171,1),
+	(4,74.4167,'2013-01-21 10:03:06',7,186,12,20,154,1),
+	(4,57.7,'2013-01-21 11:26:15',6,296,10,53,233,1),
+	(4,49.9,'2013-01-21 10:47:06',5,39,0,1,38,1),
+	(4,49.6924,'2013-01-21 11:01:30',10,224,0,33,191,1),
 	(7,54.5,'0000-00-00 00:00:00',1,10,7,3,0,1),
 	(7,58.6,'0000-00-00 00:00:00',2,10,9,1,0,1),
 	(7,52.2857,'0000-00-00 00:00:00',3,10,1,9,0,1),
@@ -254,9 +254,9 @@ VALUES
 	(4,50,'0000-00-00 00:00:00',30,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',31,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',32,0,0,0,0,1),
-	(4,49.5,'2013-01-20 05:25:13',33,33,0,1,32,1),
-	(4,55.5,'2013-01-20 05:26:08',34,101,5,19,77,1),
-	(4,55.5,'2013-01-20 05:25:04',35,128,4,24,100,1),
+	(4,49.5,'2013-01-21 10:47:06',33,39,0,1,38,1),
+	(4,52.5,'2013-01-21 11:17:58',34,131,5,23,103,1),
+	(4,52.5,'2013-01-21 11:26:15',35,165,5,30,130,1),
 	(4,50,'0000-00-00 00:00:00',36,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',37,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',38,0,0,0,0,1),
@@ -265,10 +265,10 @@ VALUES
 	(4,50,'0000-00-00 00:00:00',41,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',42,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',43,0,0,0,0,1),
-	(4,45.5,'2013-01-20 23:06:47',44,45,0,17,28,1),
-	(4,47,'2013-01-20 23:07:12',45,43,0,0,43,1),
-	(4,74,'2013-01-20 23:07:15',46,43,12,1,30,1),
-	(4,48,'2013-01-20 23:07:38',47,43,0,0,43,1),
+	(4,44.5,'2013-01-21 10:03:06',44,48,0,18,30,1),
+	(4,46,'2013-01-21 10:03:06',45,46,0,1,45,1),
+	(4,74,'2013-01-21 10:03:06',46,46,12,1,33,1),
+	(4,48,'2013-01-21 10:03:06',47,46,0,0,46,1),
 	(4,50,'0000-00-00 00:00:00',48,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',49,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',50,0,0,0,0,1),
@@ -282,9 +282,9 @@ VALUES
 	(4,50,'0000-00-00 00:00:00',58,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',59,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',60,0,0,0,0,1),
-	(4,48,'2013-01-19 22:05:25',61,71,0,12,59,1),
-	(4,50,'2013-01-19 22:05:25',62,50,0,9,41,1),
-	(4,50,'2013-01-19 22:05:25',63,80,0,9,71,1),
+	(4,46,'2013-01-21 11:01:30',61,80,0,15,65,1),
+	(4,50,'2013-01-21 11:01:30',62,55,0,9,46,1),
+	(4,50,'2013-01-21 11:01:30',63,89,0,9,80,1),
 	(4,50,'0000-00-00 00:00:00',64,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',65,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',66,0,0,0,0,1),
@@ -659,7 +659,7 @@ DROP TABLE IF EXISTS `faculty`;
 CREATE TABLE `faculty` (
   `l1Ids` text,
   `l2Ids` text,
-  `specialization` varchar(20) DEFAULT NULL,
+  `specialization` varchar(40) DEFAULT NULL,
   `bioShort` varchar(120) DEFAULT NULL,
   `bio` text,
   `experience` text,
@@ -677,10 +677,10 @@ LOCK TABLES `faculty` WRITE;
 /*!40000 ALTER TABLE `faculty` DISABLE KEYS */;
 INSERT INTO `faculty` (`l1Ids`,`l2Ids`,`specialization`,`bioShort`,`bio`,`experience`,`education`,`streamIds`,`totalQuizzes`,`rec`,`subscribers`,`accountId`,`earlyLife`,`teachingJourney`)
 VALUES
-	('3','',NULL,'Physical Chemistry Specialist; B. Tech, IIT Guwahati','Himanshu is a specialist in Physical Chemistry. He completed his B.Tech. from IIT Guwahati in Chemical Engineering. With a combined coaching experience of 3 years, multiple All India Ranks (AIR) under 100 have had the  opportunity to study key physical chemistry concepts with him','Physical Chemistry - 3 years','B. Tech., IIT Guwahati, 2009','1',0,0,0,1,'Himanshu did his schooling from Delhi - he was a topper throughout his school years. Having obtained a rank of 2000 in the IIT JEE, he opted for a course in Chemical Engineering at IIT Madras. At the institute, he was a prolific performer.\n','Not satisfied with a corporate career, Himanshu returned to his roots to take up teaching. As a teacher of engineering entrance, he specializes in chemistry - with a focus on physical chemistry. \nHe is presently with VMC classes. His aptitude and sincerity for teaching and mentoring students has to be seen to be believed.'),
-	('2','',NULL,'Physics Faculty at Kartikkey Classes;  IIT Madras','Ashwin is a B. Tech. from IIT Madras. He specializes in Physics and is a founding member at Kartikkey classes. His unique approach to teaching physics has got him excellent reviews from all students','Co-founder, Physics faculty - Kartikkey Classes','B. Tech., IIT Madras, 2010','1',0,0,0,2,'Ashwin did his schooling primarily in Chennai itself - he was a topper throughout his school years. Having obtained a rank of 700 in the IIT JEE, he opted for a course in Electrical Engineering at IIT Madras. At the institute, he was a prolific performer and published 2 papers in his final year','Not satisfied with a corporate career, Ashwin returned to his roots to take up teaching. As a teacher of engineering entrance, he specializes in physics - with a focus on mechanics and electricity. \nHe co-founded Kartikkey classes with Prof Vinod Aagrawal and Prof Rajesh Ramrakhyani and was the head of physics there. His aptitude and sincerity for teaching and mentoring students has to be seen to be believed.'),
-	('2','',NULL,'Physics Faculty at Rise Institute','Tanuj Bhojwani is an IIT Bombay alumnus, and has co-founded the first IIT-JEE training institute in Kashmir: Rise Institute. Though he is a chemical engineer, his area of expertise is physics','Co-founder, Rise Institute','B. Tech., IIT Bombay, 2010','1',0,0,0,3,'Tanuj did his schooling primarily in Chennai itself - he was a topper throughout his school years. Having obtained a rank of 600 in the IIT JEE, he opted for a course in Chemical Engineering at IIT Bombay. At the institute, he was a prolific performer and published 2 papers in his final year\n\n','Not satisfied with a corporate career, Tanuj returned to his roots to take up teaching. As a teacher of engineering entrance, he specializes in physics - with a focus on mechanics and electricity. \nHe co-founded RISE institute and was the head of physics there. His aptitude and sincerity for teaching and mentoring students has to be seen to be believed.'),
-	('2','',NULL,'Physics Faculty at Education Helpline',NULL,NULL,'B. Tech., IIT Delhi, 2010','1',0,0,0,6,'Anirban did his schooling primarily in Chennai itself - he was a topper throughout his school years. Having obtained a rank of 700 in the IIT JEE, he opted for a course in Electrical Engineering at IIT Delhi. At the institute, he was a prolific performer.','Not satisfied with a corporate career, Anirban returned to his roots to take up teaching. As a teacher of engineering entrance, he specializes in physics - with a focus on mechanics and electricity. \nHe co-founded Education Helpline and was the head of physics there. His aptitude and sincerity for teaching and mentoring students has to be seen to be believed.');
+	('3','','Physical Chemistry','Physical Chemistry Specialist; B. Tech, IIT Guwahati','Himanshu is a specialist in Physical Chemistry. He completed his B.Tech. from IIT Guwahati in Chemical Engineering. With a combined coaching experience of 3 years, multiple All India Ranks (AIR) under 100 have had the  opportunity to study key physical chemistry concepts with him','Physical Chemistry - 3 years','B. Tech., IIT Guwahati, 2009','1',0,0,0,1,'Himanshu did his schooling from Delhi - he was a topper throughout his school years. Having obtained a rank of 2000 in the IIT JEE, he opted for a course in Chemical Engineering at IIT Madras. At the institute, he was a prolific performer.\n','Not satisfied with a corporate career, Himanshu returned to his roots to take up teaching. As a teacher of engineering entrance, he specializes in chemistry - with a focus on physical chemistry. \nHe is presently with VMC classes. His aptitude and sincerity for teaching and mentoring students has to be seen to be believed.'),
+	('2','','Mechanics','Physics Faculty at Kartikkey Classes;  IIT Madras','Ashwin is a B. Tech. from IIT Madras. He specializes in Physics and is a founding member at Kartikkey classes. His unique approach to teaching physics has got him excellent reviews from all students','Co-founder, Physics faculty - Kartikkey Classes','B. Tech., IIT Madras, 2010','1',0,0,0,2,'Ashwin did his schooling primarily in Chennai itself - he was a topper throughout his school years. Having obtained a rank of 700 in the IIT JEE, he opted for a course in Electrical Engineering at IIT Madras. At the institute, he was a prolific performer and published 2 papers in his final year','Not satisfied with a corporate career, Ashwin returned to his roots to take up teaching. As a teacher of engineering entrance, he specializes in physics - with a focus on mechanics and electricity. \nHe co-founded Kartikkey classes with Prof Vinod Aagrawal and Prof Rajesh Ramrakhyani and was the head of physics there. His aptitude and sincerity for teaching and mentoring students has to be seen to be believed.'),
+	('2','','Electricity, Magnetism','Physics Faculty at Rise Institute','Tanuj Bhojwani is an IIT Bombay alumnus, and has co-founded the first IIT-JEE training institute in Kashmir: Rise Institute. Though he is a chemical engineer, his area of expertise is physics','Co-founder, Rise Institute','B. Tech., IIT Bombay, 2010','1',0,0,0,3,'Tanuj did his schooling primarily in Chennai itself - he was a topper throughout his school years. Having obtained a rank of 600 in the IIT JEE, he opted for a course in Chemical Engineering at IIT Bombay. At the institute, he was a prolific performer and published 2 papers in his final year\n\n','Not satisfied with a corporate career, Tanuj returned to his roots to take up teaching. As a teacher of engineering entrance, he specializes in physics - with a focus on mechanics and electricity. \nHe co-founded RISE institute and was the head of physics there. His aptitude and sincerity for teaching and mentoring students has to be seen to be believed.'),
+	('2','','Newton Laws','Physics Faculty at Education Helpline',NULL,NULL,'B. Tech., IIT Delhi, 2010','1',0,0,0,6,'Anirban did his schooling primarily in Chennai itself - he was a topper throughout his school years. Having obtained a rank of 700 in the IIT JEE, he opted for a course in Electrical Engineering at IIT Delhi. At the institute, he was a prolific performer.','Not satisfied with a corporate career, Anirban returned to his roots to take up teaching. As a teacher of engineering entrance, he specializes in physics - with a focus on mechanics and electricity. \nHe co-founded Education Helpline and was the head of physics there. His aptitude and sincerity for teaching and mentoring students has to be seen to be believed.');
 
 /*!40000 ALTER TABLE `faculty` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -1100,11 +1100,11 @@ LOCK TABLES `quizzes` WRITE;
 INSERT INTO `quizzes` (`id`,`questionIds`,`description`,`descriptionShort`,`conceptsTested`,`tags`,`l3Ids`,`l2Ids`,`questionCount`,`allotedTime`,`difficulty`,`ratings`,`rec`,`typeId`,`facultyId`,`available`,`mobileFlag`,`addedOn`,`totalAttempts`,`streamId`,`maxScore`)
 VALUES
 	(1,'1|:2|:3|:4|:5|:6|:7|:8|:9|:10|:11|:12','Questions on Electricity & Magnetism from the last 4 years IIT-JEE papers','Advanced questions on Electricity and Magnetism','Electricity & Magnetism','IIT JEE','44|:45|:46|:47','7',12,3600,2,NULL,0,2,3,NULL,NULL,NULL,0,1,36),
-	(2,'13|:14|:15|:16|:17|:18|:19|:20|:21|:22|:23|:24|:25|:26|:27|:28|:29|:30|:31|:32','Covers Redox Reactions , Stoichiometry, Chemical and Ionic Equilibrium','Advanced questions on Physical Chemistry','Physical Chemistry','','61|:62|:63','10',20,3600,2,NULL,0,2,1,NULL,NULL,NULL,0,1,100),
-	(3,'33|:34|:35|:36|:37|:38|:39|:40|:41|:42|:43|:44|:45|:46|:47|:48|:49|:50|:51|:52|:53|:54|:55|:56|:57','Medium difficulty question to strengthen the key topics of Kinematics and Collisions','Practice on Kinematics and Collisions','Mechanics','','34|:35','6',25,3600,2,NULL,0,2,2,NULL,NULL,NULL,0,1,100),
-	(4,'58|:59|:60|:61|:62|:63|:64|:65|:66|:67|:68|:69|:70|:71|:72|:73|:74|:75|:76|:77','JEE advanced level question to strengthen the key topics of Kinematics and Collisions','Advanced problems on Kinematics and Collisions','Mechanics','','34|:35','6',20,3600,2,NULL,0,2,2,NULL,NULL,NULL,0,1,100),
-	(5,'78|:79|:80|:81|:82|:83|:84|:85|:86|:87|:88|:89|:90|:91|:92|:93|:94|:95|:96|:97','The set includes easy to medium questions on the topics of Relatve Velocity','Basic Question on Kinematics','Mechanics','','34|:35','6',20,3600,2,NULL,0,2,6,NULL,NULL,NULL,0,1,100),
-	(6,'98|:99|:100|:101|:102|:103|:104|:105|:106|:107|:108|:109|:110|:111|:112|:113|:114|:115|:116|:117','The set includes easy to medium questions on AC circuits. This test is for students comfortable with DC circuits but looking to practice the topic of AC','Basic Question on Alternating Currents / Circuits','Electricity & Magnetism','','45|:46','7',20,3600,2,NULL,0,2,6,NULL,NULL,NULL,0,1,100);
+	(2,'13|:14|:15|:16|:17|:18|:19|:20|:21|:22|:23|:24|:25|:26|:27|:28|:29|:30|:31|:32','Covers Redox Reactions , Stoichiometry, Chemical and Ionic Equilibrium','Advanced questions on Physical Chemistry','Physical Chemistry','','61|:62|:63','10',20,3600,2,NULL,0,2,1,NULL,NULL,NULL,0,1,80),
+	(3,'33|:34|:35|:36|:37|:38|:39|:40|:41|:42|:43|:44|:45|:46|:47|:48|:49|:50|:51|:52|:53|:54|:55|:56|:57','Medium difficulty question to strengthen the key topics of Kinematics and Collisions','Practice on Kinematics and Collisions','Mechanics','','34|:35','6',25,3600,2,NULL,0,2,2,NULL,NULL,NULL,0,1,80),
+	(4,'58|:59|:60|:61|:62|:63|:64|:65|:66|:67|:68|:69|:70|:71|:72|:73|:74|:75|:76|:77','JEE advanced level question to strengthen the key topics of Kinematics and Collisions','Advanced problems on Kinematics and Collisions','Mechanics','','34|:35','6',20,3600,2,NULL,0,2,2,NULL,NULL,NULL,0,1,80),
+	(5,'78|:79|:80|:81|:82|:83|:84|:85|:86|:87|:88|:89|:90|:91|:92|:93|:94|:95|:96|:97','The set includes easy to medium questions on the topics of Relatve Velocity','Basic Question on Kinematics','Mechanics','','34|:35','6',20,3600,2,NULL,0,2,6,NULL,NULL,NULL,0,1,80),
+	(6,'98|:99|:100|:101|:102|:103|:104|:105|:106|:107|:108|:109|:110|:111|:112|:113|:114|:115|:116|:117','The set includes easy to medium questions on AC circuits. This test is for students comfortable with DC circuits but looking to practice the topic of AC','Basic Question on Alternating Currents / Circuits','Electricity & Magnetism','','45|:46','7',20,3600,2,NULL,0,2,6,NULL,NULL,NULL,0,1,80);
 
 /*!40000 ALTER TABLE `quizzes` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -1196,44 +1196,52 @@ LOCK TABLES `responses` WRITE;
 /*!40000 ALTER TABLE `responses` DISABLE KEYS */;
 INSERT INTO `responses` (`accountId`,`questionId`,`optionSelected`,`timeTaken`,`abilityScoreBefore`,`delta`,`timeStamp`,`status`)
 VALUES
-	(4,1,'0',8533,46,-1,'2013-01-20 23:06:13','2'),
-	(4,2,'',1535,47,0,'2013-01-20 23:06:24','4'),
-	(4,3,'',1358,74,0,'2013-01-20 23:06:27','4'),
-	(4,4,'',1537,48,0,'2013-01-20 23:06:29','4'),
-	(4,5,'',799,46,0,'2013-01-20 23:06:31','4'),
-	(4,6,'',671,47,0,'2013-01-20 23:06:33','4'),
-	(4,7,'',744,74,0,'2013-01-20 23:06:35','4'),
-	(4,8,'',1209,48,0,'2013-01-20 23:06:40','4'),
-	(4,9,'',1571,46,0,'2013-01-20 23:06:47','4'),
-	(4,10,'',3959,47,0,'2013-01-20 23:07:12','3'),
-	(4,11,'',1392,74,0,'2013-01-20 23:07:15','4'),
-	(4,12,'',2252,48,0,'2013-01-20 23:07:34','3'),
-	(4,12,'',2252,48,0,'2013-01-20 23:07:38','3'),
-	(7,33,'1',1291,73,-1,'2013-01-21 05:01:35','2'),
-	(7,34,'',0,72,0,'2013-01-21 05:01:35','4'),
-	(7,35,'',0,43,0,'2013-01-21 05:01:35','4'),
-	(7,36,'',0,43,0,'2013-01-21 05:01:35','4'),
-	(7,37,'',0,43,0,'2013-01-21 05:01:35','4'),
-	(7,38,'',0,43,0,'2013-01-21 05:01:35','4'),
-	(7,39,'',0,72,0,'2013-01-21 05:01:35','4'),
-	(7,40,'',0,72,0,'2013-01-21 05:01:35','4'),
-	(7,41,'',0,43,0,'2013-01-21 05:01:35','4'),
-	(7,42,'',664,72,0,'2013-01-21 05:01:35','4'),
-	(7,43,'',0,72,0,'2013-01-21 05:01:35','4'),
-	(7,44,'',0,43,0,'2013-01-21 05:01:35','4'),
-	(7,45,'',0,72,0,'2013-01-21 05:01:35','4'),
-	(7,46,'',0,43,0,'2013-01-21 05:01:35','4'),
-	(7,47,'',0,80,0,'2013-01-21 05:01:35','4'),
-	(7,48,'0',3824,43,-1,'2013-01-21 05:01:35','2'),
-	(7,49,'',0,42,0,'2013-01-21 05:01:35','4'),
-	(7,50,'',0,80,0,'2013-01-21 05:01:35','4'),
-	(7,51,'',0,80,0,'2013-01-21 05:01:35','4'),
-	(7,52,'',0,72,0,'2013-01-21 05:01:35','4'),
-	(7,53,'',0,72,0,'2013-01-21 05:01:35','4'),
-	(7,54,'',0,72,0,'2013-01-21 05:01:35','4'),
-	(7,55,'',0,72,0,'2013-01-21 05:01:35','4'),
-	(7,56,'',0,72,0,'2013-01-21 05:01:35','4'),
-	(7,57,'3',2909,72,4,'2013-01-21 05:01:35','1');
+	(4,13,'',1531,47,0,'2013-01-21 11:01:30','4'),
+	(4,14,'',907,50,0,'2013-01-21 11:01:30','4'),
+	(4,15,'',0,50,0,'2013-01-21 11:01:30','4'),
+	(4,16,'',0,47,0,'2013-01-21 11:01:30','4'),
+	(4,17,'',0,47,0,'2013-01-21 11:01:30','4'),
+	(4,18,'',0,50,0,'2013-01-21 11:01:30','4'),
+	(4,19,'',0,50,0,'2013-01-21 11:01:30','4'),
+	(4,20,'',0,50,0,'2013-01-21 11:01:30','4'),
+	(4,21,'|:5',141670,47,-1,'2013-01-21 11:01:30','2'),
+	(4,22,'',0,50,0,'2013-01-21 11:01:30','4'),
+	(4,23,'',0,50,0,'2013-01-21 11:01:30','4'),
+	(4,24,'',0,46,0,'2013-01-21 11:01:30','4'),
+	(4,25,'',0,50,0,'2013-01-21 11:01:30','4'),
+	(4,26,'',0,50,0,'2013-01-21 11:01:30','4'),
+	(4,27,'',0,50,0,'2013-01-21 11:01:30','4'),
+	(4,28,'',0,46,0,'2013-01-21 11:01:30','4'),
+	(4,29,'',0,46,0,'2013-01-21 11:01:30','4'),
+	(4,30,'',0,50,0,'2013-01-21 11:01:30','4'),
+	(4,31,'',0,50,0,'2013-01-21 11:01:30','4'),
+	(4,32,'',0,50,0,'2013-01-21 11:01:30','4'),
+	(4,78,'',1969,53,0,'2013-01-21 11:17:58','4'),
+	(4,79,'',1104,53,0,'2013-01-21 11:17:58','4'),
+	(4,80,'',1537,53,0,'2013-01-21 11:17:58','4'),
+	(4,81,'',799,53,0,'2013-01-21 11:17:58','4'),
+	(4,82,'',0,53,0,'2013-01-21 11:17:58','4'),
+	(4,83,'',0,53,0,'2013-01-21 11:17:58','4'),
+	(4,84,'',522,53,0,'2013-01-21 11:17:58','4'),
+	(4,85,'',658,53,0,'2013-01-21 11:17:58','4'),
+	(4,86,'',1238,53,0,'2013-01-21 11:17:58','4'),
+	(4,87,'',668,53,0,'2013-01-21 11:17:58','4'),
+	(4,88,'',572,53,0,'2013-01-21 11:17:58','4'),
+	(4,89,'',1016,53,0,'2013-01-21 11:17:58','4'),
+	(4,90,'5',25375,53,-1,'2013-01-21 11:17:58','2'),
+	(4,91,'',0,53,0,'2013-01-21 11:17:58','4'),
+	(4,92,'',0,53,0,'2013-01-21 11:17:58','4'),
+	(4,93,'',0,52,0,'2013-01-21 11:17:58','4'),
+	(4,94,'',0,52,0,'2013-01-21 11:17:58','4'),
+	(4,95,'',0,52,0,'2013-01-21 11:17:58','4'),
+	(4,96,'',0,52,0,'2013-01-21 11:17:58','4'),
+	(4,97,'',0,53,0,'2013-01-21 11:17:58','4'),
+	(4,58,'1',2799,52,-1,'2013-01-21 11:20:29','2'),
+	(4,59,'2',2833,51,-1,'2013-01-21 11:20:36','2'),
+	(4,59,'',16316,51,0,'2013-01-21 11:21:03','3'),
+	(4,60,'',2290,51,0,'2013-01-21 11:26:04','3'),
+	(4,61,'',1766,51,0,'2013-01-21 11:26:09','4'),
+	(4,62,'1',3864,51,2,'2013-01-21 11:26:15','1');
 
 /*!40000 ALTER TABLE `responses` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -1265,9 +1273,9 @@ LOCK TABLES `results` WRITE;
 /*!40000 ALTER TABLE `results` DISABLE KEYS */;
 INSERT INTO `results` (`quizId`,`accountId`,`selectedAnswers`,`score`,`timePerQuestion`,`timeTaken`,`data`,`timestamp`,`attemptedAs`,`startTime`,`endTime`,`state`,`numCorrect`,`numIncorrect`)
 VALUES
-	(1,4,'[\"0\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\"]',-1,'[8533,1535,1358,1537,799,671,744,1209,1571,3959,1392,2252,2252]',NULL,'[{\"t\":\"1358703451699\",\"e\":\"3\",\"q\":\"12\"},{\"t\":\"1358703453951\",\"e\":\"4\",\"q\":\"12\"}]','2013-01-20 23:07:38',2,'2013-01-20 23:06:03',NULL,12,0,1),
-	(3,7,'[\"1\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"0\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"3\"]',2,'[1291,0,0,0,0,0,0,0,0,664,0,0,0,0,0,3824,0,0,0,0,0,0,0,0,2909]',NULL,'[{\"t\":\"1358724686758\",\"e\":\"10\"},{\"t\":\"1358724686781\",\"e\":\"3\",\"q\":\"33\"},{\"t\":\"1358724687612\",\"e\":\"0\",\"q\":\"33\",\"o\":\"1\"},{\"t\":\"1358724688072\",\"e\":\"4\",\"q\":\"33\"},{\"t\":\"1358724688076\",\"e\":\"3\",\"q\":\"42\"},{\"t\":\"1358724688740\",\"e\":\"4\",\"q\":\"42\"},{\"t\":\"1358724688742\",\"e\":\"3\",\"q\":\"48\"},{\"t\":\"1358724690674\",\"e\":\"0\",\"q\":\"48\",\"o\":\"0\"},{\"t\":\"1358724692566\",\"e\":\"4\",\"q\":\"48\"},{\"t\":\"1358724692572\",\"e\":\"3\",\"q\":\"57\"},{\"t\":\"1358724694035\",\"e\":\"0\",\"q\":\"57\",\"o\":\"3\"},{\"t\":\"1358724695481\",\"e\":\"4\",\"q\":\"57\"},{\"t\":\"1358724695481\",\"e\":\"8\"}]','2013-01-21 05:01:35',1,'2013-01-21 05:01:24',NULL,25,1,2),
-	(4,4,NULL,0,NULL,NULL,NULL,NULL,1,'2013-01-21 07:46:14',NULL,NULL,0,0);
+	(2,4,'[\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"|:5\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\"]',-1,'[1531,907,0,0,0,0,0,0,141670,0,0,0,0,0,0,0,0,0,0,0]',NULL,'[{\"t\":\"1358746146341\",\"e\":\"10\"},{\"t\":\"1358746146392\",\"e\":\"3\",\"q\":\"13\"},{\"t\":\"1358746147923\",\"e\":\"4\",\"q\":\"13\"},{\"t\":\"1358746147927\",\"e\":\"3\",\"q\":\"14\"},{\"t\":\"1358746148834\",\"e\":\"4\",\"q\":\"14\"},{\"t\":\"1358746148928\",\"e\":\"3\",\"q\":\"21\"},{\"t\":\"1358746252299\",\"e\":\"0\",\"q\":\"21\",\"o\":\"\"},{\"t\":\"1358746256850\",\"e\":\"0\",\"q\":\"21\",\"o\":\"\"},{\"t\":\"1358746262233\",\"e\":\"0\",\"q\":\"21\",\"o\":\"5\"},{\"t\":\"1358746278673\",\"e\":\"0\",\"q\":\"21\",\"o\":\"\"},{\"t\":\"1358746284097\",\"e\":\"0\",\"q\":\"21\",\"o\":\"5\"},{\"t\":\"1358746290598\",\"e\":\"4\",\"q\":\"21\"},{\"t\":\"1358746290598\",\"e\":\"8\"}]','2013-01-21 11:01:30',1,'2013-01-21 10:59:05',NULL,20,0,1),
+	(5,4,'[\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"5\",\"\",\"\",\"\",\"\",\"\",\"\",\"\"]',-1,'[1969,1104,1537,799,0,0,522,658,1238,668,572,1016,25375,0,0,0,0,0,0,0]',NULL,'[{\"t\":\"1358747242782\",\"e\":\"10\"},{\"t\":\"1358747242828\",\"e\":\"3\",\"q\":\"78\"},{\"t\":\"1358747244797\",\"e\":\"4\",\"q\":\"78\"},{\"t\":\"1358747244806\",\"e\":\"3\",\"q\":\"79\"},{\"t\":\"1358747245910\",\"e\":\"4\",\"q\":\"79\"},{\"t\":\"1358747245915\",\"e\":\"3\",\"q\":\"80\"},{\"t\":\"1358747247452\",\"e\":\"4\",\"q\":\"80\"},{\"t\":\"1358747247461\",\"e\":\"3\",\"q\":\"81\"},{\"t\":\"1358747248260\",\"e\":\"4\",\"q\":\"81\"},{\"t\":\"1358747248266\",\"e\":\"3\",\"q\":\"84\"},{\"t\":\"1358747248788\",\"e\":\"4\",\"q\":\"84\"},{\"t\":\"1358747248794\",\"e\":\"3\",\"q\":\"85\"},{\"t\":\"1358747249452\",\"e\":\"4\",\"q\":\"85\"},{\"t\":\"1358747249460\",\"e\":\"3\",\"q\":\"86\"},{\"t\":\"1358747250698\",\"e\":\"4\",\"q\":\"86\"},{\"t\":\"1358747250704\",\"e\":\"3\",\"q\":\"87\"},{\"t\":\"1358747251372\",\"e\":\"4\",\"q\":\"87\"},{\"t\":\"1358747251379\",\"e\":\"3\",\"q\":\"88\"},{\"t\":\"1358747251951\",\"e\":\"4\",\"q\":\"88\"},{\"t\":\"1358747251956\",\"e\":\"3\",\"q\":\"89\"},{\"t\":\"1358747252972\",\"e\":\"4\",\"q\":\"89\"},{\"t\":\"1358747252981\",\"e\":\"3\",\"q\":\"90\"},{\"t\":\"1358747274572\",\"e\":\"0\",\"q\":\"90\",\"o\":\"5\"},{\"t\":\"1358747278356\",\"e\":\"4\",\"q\":\"90\"},{\"t\":\"1358747278356\",\"e\":\"8\"}]','2013-01-21 11:17:58',1,'2013-01-21 11:17:21',NULL,20,0,1),
+	(4,4,'[\"1\",\"\",\"\",\"\",\"1\"]',2,'[2799,16316,2290,1766,3864]',NULL,'[{\"t\":\"1358747771357\",\"e\":\"3\",\"q\":\"62\"},{\"t\":\"1358747774067\",\"e\":\"0\",\"q\":\"62\",\"o\":\"1\"},{\"t\":\"1358747775221\",\"e\":\"4\",\"q\":\"62\"}]','2013-01-21 11:26:15',2,'2013-01-21 11:20:25',NULL,4,1,2);
 
 /*!40000 ALTER TABLE `results` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -1627,7 +1635,7 @@ LOCK TABLES `students` WRITE;
 /*!40000 ALTER TABLE `students` DISABLE KEYS */;
 INSERT INTO `students` (`ascoreL1`,`ascoreL2`,`quizzesAttempted`,`accountId`,`streamId`)
 VALUES
-	(0,0,'[\"1\",\"4\"]',4,1),
+	(0,0,'[\"2\",\"5\",\"4\"]',4,1),
 	(0,0,NULL,5,1),
 	(0,0,'[\"1\",\"2\",\"3\"]',7,1);
 

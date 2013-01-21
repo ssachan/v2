@@ -107,6 +107,7 @@ window.ResultAnalysisView = Backbone.View.extend({
 			'correct' : correct,
 			'incorrect' : incorrect,
 			'unattempted' : unattempted,
+			'maxScore' : this.model.get('maxScore'),
 			'totalTime' : helper.formatTime(this.model.get('allotedTime')),
 			'timeTaken' : helper.formatTime(this.model.get('timeTaken')),
 			'avgTime' : '1 min 30 secs',
