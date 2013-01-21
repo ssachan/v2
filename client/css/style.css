@@ -1371,6 +1371,10 @@ width:60%;
     margin-top: 20px;
 }
 
+.video-js{
+    margin:0px auto;
+}
+
 .stat-gradient {
     background-color: #FCFCFC !important;
     background-image: -webkit-gradient(linear, 0 0%, 0 100%, from(#FCFCFC),

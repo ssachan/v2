@@ -2,7 +2,7 @@
     <div class="span4 outline stat-gradient"
         style="margin-top: 20px; padding: 18px; min-height: 135px;">
         <p class="font-h2 bold red">
-            <%= score %>/200</p> was your score 
+            <%= score %>/<%=maxScore%></p> was your score 
         <p>    <strong class="red">20</strong> Attempted <strong
                 class="red"><%=correct %></strong> Correct <strong class="red"><%=incorrect
                 %></strong> Incorrect
@@ -30,7 +30,7 @@
 <h3>Video</h3>
 <hr class="soften">
 <br>
-<div id="video" class="center top-margin bottom-margin">
+<div id="video">
     <a href="#myModal" data-toggle="modal"> <img src="img/video1.jpg" width="200px"
         height="150px">
     </a>
