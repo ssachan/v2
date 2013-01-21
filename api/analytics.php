@@ -957,6 +957,8 @@ function evalOption($optionText,$correctAnswerText, $optionLength, $correctScore
 {
     $optionsArray = getOptionArrayFromText($optionText,$optionLength);
     $correctArray = getOptionArrayFromText($correctAnswerText,$optionLength);
+    $score = 0;
+    $delta = 0;
     foreach ($correctArray as $key => $value) {
         if($optionsArray[$key] == $correctArray[$key])
         {
