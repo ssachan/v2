@@ -607,7 +607,7 @@ window.drawDonutChart = function(divId) {
 		},
 		series : [
 				{
-					name : '',
+					name : 'Questions',
 					data : browserData,
 					size : '60%',
 					dataLabels : {
@@ -619,7 +619,7 @@ window.drawDonutChart = function(divId) {
 					}
 				},
 				{
-					name : 'Total Questions',
+					name : 'Questions',
 					data : versionsData,
 					innerSize : '60%',
 					dataLabels : {
