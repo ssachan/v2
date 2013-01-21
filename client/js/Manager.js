@@ -225,6 +225,7 @@ window.Manager = {
 						.get('state')),
 			});
 			app.showView('#content', pView);
+			pView.onRender();
 			pView.startQuiz();
 		}
 	},

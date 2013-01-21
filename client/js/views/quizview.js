@@ -202,27 +202,6 @@ window.PracticeView = Backbone.View.extend({
         // tanujb:TODO: What is this code supposed to do?
         this.answersSelected = this.model.get('selectedAnswersArray');
         this.getTimeTakenPerQuestion = this.model.get('timePerQuestionArray');
-        for (var i = 0; i <= this.index; i++) {
-            var question = quizQuestions.get(this.questionIds[i]);
-            if (this.getTimeTakenPerQuestion[i] != null) {
-                // mark this question
-                question.set('timeTaken', this.getTimeTakenPerQuestion[i]);
-                question.set('optionSelected', this.answersSelected[i]);
-                question.setStatus();
-                question.set('hasAttempted', true);
-                switch(question.get('status')){
-            		case true:
-            			$('#'+i).addClass('right');
-            			break;
-            		case false:
-            			$('#'+i).addClass('wrong');
-            			break;
-            		default : 
-            			$('#'+i).addClass('unattempted');
-            		break;
-                }
-            }
-        }
     },
 
     events: {
@@ -303,7 +282,26 @@ window.PracticeView = Backbone.View.extend({
         }));
         return this;
     },
-
+    
+    onRender : function(){
+    	for (var i = 0; i <= this.index; i++) {
+            var question = quizQuestions.get(this.questionIds[i]);
+            if (this.getTimeTakenPerQuestion[i] != null) {
+               switch(question.get('status')){
+            		case true:
+            			$('#'+i).addClass('right');
+            			break;
+            		case false:
+            			$('#'+i).addClass('wrong');
+            			break;
+            		default : 
+            			$('#'+i).addClass('unattempted');
+            		break;
+                }
+            }
+    	}
+    },
+    
     /**
      * TODO:video - just store the reference of the current video
      */
