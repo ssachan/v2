@@ -27,7 +27,7 @@ window.InstructionsView = Backbone.View.extend({
 	render : function() {
 		$(this.el).html(this.template({
 			'totalQuestions' : this.model.get('questionIdsArray').length,
-			'totalTime' : helper.formatTime(this.model.get('totalTime')),
+			'totalTime' : helper.formatTime(this.model.get('allotedTime')),
 			'descriptionShort' : this.model.get('descriptionShort'),
 		}));
 		return this;
