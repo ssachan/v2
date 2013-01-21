@@ -76,7 +76,8 @@ window.ResultAnalysisView = Backbone.View.extend({
 		var videoOptions = {
 			"playlist" : videoResults
 		}
-		var myPlayer = _V_("video_analysis", videoOptions);
+		$("#video").html('<video id="results_video" class="video-js vjs-default-skin" controls preload="none" width="640" height="264" data-setup="{}"></video>');
+		var myPlayer = _V_("results_video", videoOptions);
 
 		myPlayer.addEvent("ended", function() {
 
