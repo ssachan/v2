@@ -525,6 +525,7 @@ window.Manager = {
 			.append('<div class="row-fluid"><div class="page-title"><h2>Activity</h2></div><br></div><div id="donut"></div>');
 			// plot the graph here, no need to create a view for this purpose;
 			drawDonutChart('donut');
+			$("tspan:contains('Highcharts.com')").hide();
 		});
 	}
 
