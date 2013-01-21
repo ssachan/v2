@@ -628,7 +628,15 @@ window.drawDonutChart = function(divId) {
 							return this.y >=1 ? '<b>' + this.point.name
 									+ ':</b> ' + this.point.a + '' : null;
 						},
+					},
+					tooltip : {
+						formatter : function() {
+							// display only if larger than 1
+							return this.y >=1 ? '<b>' + this.point.name
+									+ ':</b> ' + this.point.a + '' : null;
+						},
 					}
+				
 				} ]
 	});
 };
