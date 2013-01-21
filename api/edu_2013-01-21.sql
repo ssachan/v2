@@ -1,20 +1,17 @@
-# ************************************************************
-# Sequel Pro SQL dump
-# Version 3408
+﻿# Sequel Pro dump
+# Version 1630
+# http://code.google.com/p/sequel-pro
 #
-# http://www.sequelpro.com/
-# http://code.google.com/p/sequel-pro/
-#
-# Host: 127.0.0.1 (MySQL 5.5.25)
-# Database: edu
-# Generation Time: 2013-01-21 00:16:57 +0000
+# Host: localhost (MySQL 5.5.9)
+# Database: prod
+# Generation Time: 2013-01-21 08:30:14 +0530
 # ************************************************************
-
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
@@ -41,12 +38,11 @@ CREATE TABLE `accounts` (
   `resetsentOn` datetime DEFAULT NULL,
   `pics` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `accounts` WRITE;
 /*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
-
-INSERT INTO `accounts` (`id`, `username`, `password`, `firstName`, `lastName`, `email`, `roles`, `createdOn`, `verifiedOn`, `lastsignedinOn`, `deletedOn`, `suspendedOn`, `resetsentOn`, `pics`)
+INSERT INTO `accounts` (`id`,`username`,`password`,`firstName`,`lastName`,`email`,`roles`,`createdOn`,`verifiedOn`,`lastsignedinOn`,`deletedOn`,`suspendedOn`,`resetsentOn`,`pics`)
 VALUES
 	(1,NULL,'himanshu','Himanshu','Bhutani','him.bhutani@gmail.com','3',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 	(2,NULL,'ashwin','Ashwin','M','ashwin.rsmd@gmail.com','3',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
@@ -127,8 +123,7 @@ CREATE TABLE `ascores_l1` (
 
 LOCK TABLES `ascores_l1` WRITE;
 /*!40000 ALTER TABLE `ascores_l1` DISABLE KEYS */;
-
-INSERT INTO `ascores_l1` (`accountId`, `score`, `updatedOn`, `l1Id`, `numQuestions`, `numCorrect`, `numIncorrect`, `numUnattempted`, `streamId`)
+INSERT INTO `ascores_l1` (`accountId`,`score`,`updatedOn`,`l1Id`,`numQuestions`,`numCorrect`,`numIncorrect`,`numUnattempted`,`streamId`)
 VALUES
 	(4,10,'2013-01-08 00:00:00',1,0,0,0,0,1),
 	(4,82.99,'2013-01-20 23:07:38',2,436,21,62,353,1),
@@ -163,8 +158,7 @@ CREATE TABLE `ascores_l2` (
 
 LOCK TABLES `ascores_l2` WRITE;
 /*!40000 ALTER TABLE `ascores_l2` DISABLE KEYS */;
-
-INSERT INTO `ascores_l2` (`accountId`, `score`, `updatedOn`, `l2Id`, `numQuestions`, `numCorrect`, `numIncorrect`, `numUnattempted`, `streamId`)
+INSERT INTO `ascores_l2` (`accountId`,`score`,`updatedOn`,`l2Id`,`numQuestions`,`numCorrect`,`numIncorrect`,`numUnattempted`,`streamId`)
 VALUES
 	(4,10,'2013-01-08 00:00:00',1,0,0,0,0,1),
 	(4,74.75,'2013-01-20 23:07:38',7,174,12,18,144,1),
@@ -226,8 +220,7 @@ CREATE TABLE `ascores_l3` (
 
 LOCK TABLES `ascores_l3` WRITE;
 /*!40000 ALTER TABLE `ascores_l3` DISABLE KEYS */;
-
-INSERT INTO `ascores_l3` (`accountId`, `score`, `updatedOn`, `l3id`, `numQuestions`, `numCorrect`, `numIncorrect`, `numUnattempted`, `streamId`)
+INSERT INTO `ascores_l3` (`accountId`,`score`,`updatedOn`,`l3id`,`numQuestions`,`numCorrect`,`numIncorrect`,`numUnattempted`,`streamId`)
 VALUES
 	(4,50,'0000-00-00 00:00:00',1,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',2,0,0,0,0,1),
@@ -629,12 +622,11 @@ CREATE TABLE `exams` (
   `streamId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `streamId` (`streamId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `exams` WRITE;
 /*!40000 ALTER TABLE `exams` DISABLE KEYS */;
-
-INSERT INTO `exams` (`id`, `displayName`, `fullName`, `streamId`)
+INSERT INTO `exams` (`id`,`displayName`,`fullName`,`streamId`)
 VALUES
 	(1,NULL,NULL,NULL);
 
@@ -676,22 +668,19 @@ CREATE TABLE `faculty` (
   `totalQuizzes` int(5) DEFAULT '0',
   `rec` int(11) DEFAULT '0',
   `subscribers` int(11) DEFAULT '0',
-  `accountId` int(11) DEFAULT NULL
+  `accountId` int(11) DEFAULT NULL,
+  `earlyLife` text,
+  `teachingJourney` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `faculty` WRITE;
 /*!40000 ALTER TABLE `faculty` DISABLE KEYS */;
-
-INSERT INTO `faculty` (`l1Ids`, `l2Ids`, `specialization`, `bioShort`, `bio`, `experience`, `education`, `streamIds`, `totalQuizzes`, `rec`, `subscribers`, `accountId`)
+INSERT INTO `faculty` (`l1Ids`,`l2Ids`,`specialization`,`bioShort`,`bio`,`experience`,`education`,`streamIds`,`totalQuizzes`,`rec`,`subscribers`,`accountId`,`earlyLife`,`teachingJourney`)
 VALUES
-	('3','',NULL,'Physical Chemistry Specialist; B. Tech, IIT Guwahati','Himanshu is a specialist in Physical Chemistry. He completed his B.Tech. from IIT Guwahati in Chemical Engineering. With a combined coaching experience of 3 years, multiple All India Ranks (AIR) under 100 have had the  opportunity to study key physical chemistry concepts with him','Physical Chemistry - 3 years','B. Tech., IIT Guwahati, 2009','1',0,0,0,1),
-	('2','',NULL,'Physics Faculty at Kartikkey Classes;  IIT Madras','Ashwin is a B. Tech. from IIT Madras. He specializes in Physics and is a founding member at Kartikkey classes. His unique approach to teaching physics has got him excellent reviews from all students','Co-founder, Physics faculty - Kartikkey Classes','B. Tech., IIT Madras, 2010','1',0,0,0,2),
-	('2','',NULL,'Physics Faculty at Rise Institute','Tanuj Bhojwani is an IIT Bombay alumnus, and has co-founded the first IIT-JEE training institute in Kashmir: Rise Institute. Though he is a chemical engineer, his area of expertise is physics','Co-founder, Rise Institute','B. Tech., IIT Bombay, 2010','1',0,0,0,3),
-	('2',NULL,NULL,'Physics Faculty at Education Helpline',NULL,NULL,'B. Tech., IIT Delhi, 2010','1',0,0,0,6),
-	('3','',NULL,'Physical Chemistry Specialist; B. Tech, IIT Guwahati','Himanshu is a specialist in Physical Chemistry. He completed his B.Tech. from IIT Guwahati in Chemical Engineering. With a combined coaching experience of 3 years, multiple All India Ranks (AIR) under 100 have had the  opportunity to study key physical chemistry concepts with him','Physical Chemistry - 3 years','B. Tech., IIT Guwahati, 2009','1',0,0,0,1),
-	('2','',NULL,'Physics Faculty at Kartikkey Classes;  IIT Madras','Professor Ashwin is a Physics teacher who has been active in the coaching industry for the last 3 years. He is a B.Tech from IIT Madras in Electrical Engineering. Originally hailing from Chennai, he is the co-founder of Kartikkey Classes in Delhi and his students say he has the most innovative way to teach Physics concepts\n\n','Not satisfied with a corporate career, Ashwin returned to his roots to take up teaching. As a teacher of engineering entrance, he specializes in physics - with a focus on mechanics and electricity. \nHe co-founded Kartikkey classes with Prof Vinod Aagrawal and Prof Rajesh Ramrakhyani and was the head of physics there. His aptitude and sincerity for teaching and mentoring students has to be seen to be believed','Ashwin did his schooling primarily in Chennai itself - he was a topper throughout his school years. Having obtained a rank of 700 in the IIT JEE, he opted for a course in Electrical Engineering at IIT Madras. At the institute, he was a prolific performer and published 2 papers in his final year.','1',0,0,0,2),
-	('2','',NULL,'Physics Faculty at Rise Institute','Tanuj Bhojwani is an IIT Bombay alumnus, and has co-founded the first IIT-JEE training institute in Kashmir: Rise Institute. Though he is a chemical engineer, his area of expertise is physics','Co-founder, Rise Institute','B. Tech., IIT Bombay, 2010','1',0,0,0,3),
-	('2',NULL,NULL,'Physics Faculty at Education Helpline',NULL,NULL,'B. Tech., IIT Delhi, 2010','1',0,0,0,6);
+	('3','',NULL,'Physical Chemistry Specialist; B. Tech, IIT Guwahati','Himanshu is a specialist in Physical Chemistry. He completed his B.Tech. from IIT Guwahati in Chemical Engineering. With a combined coaching experience of 3 years, multiple All India Ranks (AIR) under 100 have had the  opportunity to study key physical chemistry concepts with him','Physical Chemistry - 3 years','B. Tech., IIT Guwahati, 2009','1',0,0,0,1,'Himanshu did his schooling from Delhi - he was a topper throughout his school years. Having obtained a rank of 2000 in the IIT JEE, he opted for a course in Chemical Engineering at IIT Madras. At the institute, he was a prolific performer.\n','Not satisfied with a corporate career, Himanshu returned to his roots to take up teaching. As a teacher of engineering entrance, he specializes in chemistry - with a focus on physical chemistry. \nHe is presently with VMC classes. His aptitude and sincerity for teaching and mentoring students has to be seen to be believed.'),
+	('2','',NULL,'Physics Faculty at Kartikkey Classes;  IIT Madras','Ashwin is a B. Tech. from IIT Madras. He specializes in Physics and is a founding member at Kartikkey classes. His unique approach to teaching physics has got him excellent reviews from all students','Co-founder, Physics faculty - Kartikkey Classes','B. Tech., IIT Madras, 2010','1',0,0,0,2,'Ashwin did his schooling primarily in Chennai itself - he was a topper throughout his school years. Having obtained a rank of 700 in the IIT JEE, he opted for a course in Electrical Engineering at IIT Madras. At the institute, he was a prolific performer and published 2 papers in his final year','Not satisfied with a corporate career, Ashwin returned to his roots to take up teaching. As a teacher of engineering entrance, he specializes in physics - with a focus on mechanics and electricity. \nHe co-founded Kartikkey classes with Prof Vinod Aagrawal and Prof Rajesh Ramrakhyani and was the head of physics there. His aptitude and sincerity for teaching and mentoring students has to be seen to be believed.'),
+	('2','',NULL,'Physics Faculty at Rise Institute','Tanuj Bhojwani is an IIT Bombay alumnus, and has co-founded the first IIT-JEE training institute in Kashmir: Rise Institute. Though he is a chemical engineer, his area of expertise is physics','Co-founder, Rise Institute','B. Tech., IIT Bombay, 2010','1',0,0,0,3,'Tanuj did his schooling primarily in Chennai itself - he was a topper throughout his school years. Having obtained a rank of 600 in the IIT JEE, he opted for a course in Chemical Engineering at IIT Bombay. At the institute, he was a prolific performer and published 2 papers in his final year\n\n','Not satisfied with a corporate career, Tanuj returned to his roots to take up teaching. As a teacher of engineering entrance, he specializes in physics - with a focus on mechanics and electricity. \nHe co-founded RISE institute and was the head of physics there. His aptitude and sincerity for teaching and mentoring students has to be seen to be believed.'),
+	('2','',NULL,'Physics Faculty at Education Helpline',NULL,NULL,'B. Tech., IIT Delhi, 2010','1',0,0,0,6,'Anirban did his schooling primarily in Chennai itself - he was a topper throughout his school years. Having obtained a rank of 700 in the IIT JEE, he opted for a course in Electrical Engineering at IIT Delhi. At the institute, he was a prolific performer.','Not satisfied with a corporate career, Anirban returned to his roots to take up teaching. As a teacher of engineering entrance, he specializes in physics - with a focus on mechanics and electricity. \nHe co-founded Education Helpline and was the head of physics there. His aptitude and sincerity for teaching and mentoring students has to be seen to be believed.');
 
 /*!40000 ALTER TABLE `faculty` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -709,8 +698,7 @@ CREATE TABLE `insight_type` (
 
 LOCK TABLES `insight_type` WRITE;
 /*!40000 ALTER TABLE `insight_type` DISABLE KEYS */;
-
-INSERT INTO `insight_type` (`id`, `type`)
+INSERT INTO `insight_type` (`id`,`type`)
 VALUES
 	(1,'post-test'),
 	(2,'dashboard'),
@@ -730,12 +718,11 @@ CREATE TABLE `insights` (
   `text` text NOT NULL,
   `typeId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `insights` WRITE;
 /*!40000 ALTER TABLE `insights` DISABLE KEYS */;
-
-INSERT INTO `insights` (`id`, `text`, `typeId`)
+INSERT INTO `insights` (`id`,`text`,`typeId`)
 VALUES
 	(1,'Your accuracy was very low while you utilized less than half the time. Focus more on accuracy than time',NULL),
 	(2,'Give more time to the questions to improve on your accuracy I <%num%>',NULL),
@@ -776,8 +763,7 @@ CREATE TABLE `package_type` (
 
 LOCK TABLES `package_type` WRITE;
 /*!40000 ALTER TABLE `package_type` DISABLE KEYS */;
-
-INSERT INTO `package_type` (`id`, `name`)
+INSERT INTO `package_type` (`id`,`name`)
 VALUES
 	(1,'Basic'),
 	(2,'Custom');
@@ -802,8 +788,7 @@ CREATE TABLE `packages` (
 
 LOCK TABLES `packages` WRITE;
 /*!40000 ALTER TABLE `packages` DISABLE KEYS */;
-
-INSERT INTO `packages` (`id`, `name`, `details`, `poolId`, `price`, `streamId`)
+INSERT INTO `packages` (`id`,`name`,`details`,`poolId`,`price`,`streamId`)
 VALUES
 	(1,'All Tests','5|:2',1,500,1);
 
@@ -826,12 +811,11 @@ CREATE TABLE `para` (
   `difficulty` int(1) DEFAULT NULL,
   `mobileFlag` int(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `para` WRITE;
 /*!40000 ALTER TABLE `para` DISABLE KEYS */;
-
-INSERT INTO `para` (`id`, `text`, `questionIds`, `questionCount`, `resources`, `l3Id`, `difficulty`, `mobileFlag`)
+INSERT INTO `para` (`id`,`text`,`questionIds`,`questionCount`,`resources`,`l3Id`,`difficulty`,`mobileFlag`)
 VALUES
 	(1,'<p>Two blocks \\\'A\\\' and \\\'B\\\' of mass \\\'m\\\' and \\\'2m\\\' kgs respectively are connected by a light spring and placed on a smooth horizontal surface. The blocks are now pressed towards each other so that the compression in the spring is \\\'x\\\' and then released. </p><img src=\"../api/resources/questions/37img1.jpg\" height = \"200\">','37|:38',2,'../api/resources/questions/p1img1.jpg',34,2,NULL),
 	(2,'<p>A block A of mass 8kg is moving towards the right with a speed of 3m/s on a horizontal frictionless surface. Another block B of mass 4kg with a spring (massless, k = 50000/12 Nm<sup>-1</sup>) attached to it, is moving towards left with speed 2m/s. At some instant, A collides with the spring attached to B. After some time, the spring has maximum compression and then the blocks move independently with their final velocities.</p><img src=\"../api/resources/questions/p1img1.jpg\" height = \"200\"><p>Take the direction towards right as +ve x direction. Assume spring force is conservative and no kinetic energy is converted to internal energy of spring in the form of heat. Assume no sound is generated on collision.</p>','51|:52|:53|:54|:55|:56',7,'../api/resources/questions/p2img1.jpg',34,2,NULL);
@@ -852,8 +836,7 @@ CREATE TABLE `pool` (
 
 LOCK TABLES `pool` WRITE;
 /*!40000 ALTER TABLE `pool` DISABLE KEYS */;
-
-INSERT INTO `pool` (`id`, `quizIds`)
+INSERT INTO `pool` (`id`,`quizIds`)
 VALUES
 	(1,'1|:2|:3');
 
@@ -883,12 +866,11 @@ CREATE TABLE `question_tags` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `question_tags` WRITE;
 /*!40000 ALTER TABLE `question_tags` DISABLE KEYS */;
-
-INSERT INTO `question_tags` (`id`, `name`)
+INSERT INTO `question_tags` (`id`,`name`)
 VALUES
 	(1,'lengthy'),
 	(2,'calculations');
@@ -906,12 +888,11 @@ CREATE TABLE `question_type` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `type` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `question_type` WRITE;
 /*!40000 ALTER TABLE `question_type` DISABLE KEYS */;
-
-INSERT INTO `question_type` (`id`, `type`)
+INSERT INTO `question_type` (`id`,`type`)
 VALUES
 	(1,'single-option'),
 	(2,'multiple-option'),
@@ -956,12 +937,11 @@ CREATE TABLE `questions` (
   `videoSrc` varchar(30) DEFAULT NULL,
   `posterSrc` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=118 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `questions` WRITE;
 /*!40000 ALTER TABLE `questions` DISABLE KEYS */;
-
-INSERT INTO `questions` (`id`, `text`, `options`, `correctAnswer`, `explanation`, `l3Id`, `typeId`, `tagIds`, `difficulty`, `paraId`, `resources`, `averageTimeCorrect`, `averageTimeIncorrect`, `averageTimeUnattempted`, `averageCorrect`, `averageIncorrect`, `averageUnattempted`, `allotedTime`, `correctScore`, `incorrectScore`, `optionInCorrectScore`, `optionCorrectScore`, `unattemptedScore`, `mobileFlag`, `availableFlag`, `videoSrc`, `posterSrc`)
+INSERT INTO `questions` (`id`,`text`,`options`,`correctAnswer`,`explanation`,`l3Id`,`typeId`,`tagIds`,`difficulty`,`paraId`,`resources`,`averageTimeCorrect`,`averageTimeIncorrect`,`averageTimeUnattempted`,`averageCorrect`,`averageIncorrect`,`averageUnattempted`,`allotedTime`,`correctScore`,`incorrectScore`,`optionInCorrectScore`,`optionCorrectScore`,`unattemptedScore`,`mobileFlag`,`availableFlag`,`videoSrc`,`posterSrc`)
 VALUES
 	(1,'<p>Two large vertical and parallel metal plates having a separation of 1 cm are connected to a DC voltage source of potential difference X. A proton is released at rest midway between the two plates. It is found to move at 45<sup>o</sup> to the vertical JUST after release. Then X is nearly</p>','1*10<sup>-5</sup> V |: 1*10<sup>-7</sup> V |: 1*10<sup>-9</sup> V |: 1*10<sup>-10</sup> V','2','<p>Writing the force equations on the particle,</p><img src = \"../api/resources/questions/1img1.jpg\"><p>mg = qE $$1.67 * 10^{-27} * (10) = (1.6 * 10^{-19})\\frac{x}{0.01}$$  $$x =\\frac{1.67 * 10^{-9}}{1.6}$$ $$x=1 * 10^{-9}V$$</p>',44,1,'',1,NULL,'../api/resources/questions/1img1.jpg',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,'../../video/q1vid1.mp4',NULL),
 	(2,'<p>For the circuit given below which of the following is true:</p> <img src = \"../api/resources/questions/2img1.jpg\">','The current I through the battery is 7.5mA |: The potential difference across RL is 20V|: The ratios of power dissipated in R1 and R2 is 5 |:\n If R1 and R2 are interchanged, magnitude of power dissipated in RL will decrease by a factor of 3','0','<p>R<sub>2</sub> and R<sub>L</sub> are in parallel hence $$R_{2L} = \\frac{6 * 1.5}{6 + 1.5}$$\nR<sub>2L</sub> = 1.2 k~~\\Omega~~ <br>\nR<sub>2L</sub> in turn is in series with R<sub>1</sub> hence the resistance of the circuit is:<br>\nR = 1.2 + 2 = 3.2 k~~\\Omega~~ <br>\nThe current I through battery is $$ i= \\frac{24V}{3.2 * 1000\\Omega} = 7.5 mA $$</p>',45,1,'',2,NULL,'../api/resources/questions/2img1.jpg',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,'../../video/q2vid1.mp4',NULL),
@@ -973,14 +953,14 @@ VALUES
 	(8,'<p>A thin flexible wire of length L is connected to two adjacent fixed points and carries a current I in the clockwise direction, as shown in the figure. When the system is put in a uniform magnetic field of strength B going into the plane of the paper, the wire takes the shape of a circle. The tension in the wire is:</p>  <img src = \"../api/resources/questions/8img1.jpg\">','IBL |: IBL / ~~\\pi~~ |: IBL /2~~\\pi~~ |: IBL / 4~~\\pi~~\n','2','<img src = \"../api/resources/questions/8img2.jpg\"> <p>Magnetic force acting upwards ~~=Bl * dl = Bl * Rd\\Theta~~ <br> Tension (Vertical) acting downwards = ~~2T * sin \\frac{d\\Theta}{2}~~<br> Applying force balance - <br> $$2 T sin(\\frac{d\\Theta}{2}) = B I (R d\\Theta)~~ &nbsp&nbsp&nbsp&nbsp  ~~sin\\frac{d\\Theta}{2} = \\frac{d\\Theta}{2}$$ $$T (d\\Theta) = B I R (d\\Theta)$$ Integrating over ~~\\Theta~~ from 0 to ~~2\\pi~~ $$ T= \\frac{IBL}{2\\pi}$$',47,1,'',3,NULL,'../api/resources/questions/8img1.jpg|:../api/resources/questions/8img2.jpg',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,'../../video/q8vid1.mp4',NULL),
 	(9,'<p>A few electric field lines for a system of two charges Q<sub>1</sub> and Q<sub>2</sub> fixed at two different points on the x-axis are shown in the figure. These lines suggest that:</p>  <img src = \"../api/resources/questions/9img1.jpg\">','~~\\left|Q1\\right|~~ > ~~\\left|Q2\\right|~~|: ~~\\left|Q1\\right|~~ < ~~\\left|Q2\\right|~~ |: At a finite distance to the left of Q1 the electric field is zero |:  None of the above\n','0','<p>Since the number of electric field lines of forces emerging from Q<sub>1</sub> is larger than terminating at Q<sub>2</sub>, the value of absolute charge Q<sub>1</sub> would be greater than the absolute value of Q<sub>2</sub><br>\nLet us assume the distance between the 2 charges is d\nAt any distance y, left of Q<sub>1</sub>, the electric field will be: $$E_{left} = \\frac{Q_1}{4\\pi\\epsilon_oy^2} - \\frac{Q_2}{4\\pi\\epsilon_o(y+d)^2}$$ Since Q<sub>1</sub> > Q<sub>2</sub> and y<sub>2</sub> < (y+d)<sup>2</sup> for a positive y, this term cannot be 0 for any value of y</p>',44,1,'',2,NULL,'../api/resources/questions/9img1.jpg',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,'../../video/q9vid1.mp4',NULL),
 	(10,'<p>When two identical batteries of internal resistance 1~~\\Omega~~ each are connected in series across a resistor R, the rate of heat produced in R is J<sub>1</sub>. When the same batteries are connected in parallel across R, the rate is J<sub>2</sub>. If J<sub>1</sub> = 2.25J<sub>2</sub>  then the value of R in ~~\\Omega~~ is</p>','2.5 |: 4 |: 5 |: 4.3\n','1','<p>Let the potential difference of each battery be V <br>\nFor series - <br>\nV<sub>1</sub> = 2V <br>\nR<sub>1</sub> = R+2<br>\nHence, $$J_1 = (\\frac{2V}{R + 2})^2 * R$$ For parallel - <br>\nV<sub>2</sub> = V\nR<sub>2</sub> = (1 * 1)/(1+1) + R <br> = 1/2 + R <br> Hence,  $$J_2 = (\\frac{V}{R+1/2})^2 * R$$ Since J<sub>1</sub>/J<sub>2</sub> = 2.25,    R=4~~\\Omega~~</p>',45,1,'',3,NULL,'',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,'../../video/q10vid1.mp4',NULL),
-	(11,'<p>A uniformly charged thin spherical shell of radius R carries uniform surface charge density of σ per unit area. It is made of two hemispherical shells, held together by pressing them with force F (see figure). F is proportional to: <br><img src = \"../api/resources/questions/11img1.jpg\"></p>','$$\\frac{\\sigma^2R^2}{\\epsilon_o}$$|:$$\\frac{\\sigma^2R}{\\epsilon_o}$$|:$$\\frac{\\sigma^2}{\\epsilon_oR}$$|:$$\\frac{\\sigma^2}{\\epsilon_o^2R^2}$$','0','<p>Electrostatic Repulsive Force: $$F_{ele} \\propto = \\frac{\\sigma^2\\pi R^2}{\\epsilon_o}$$ Since F balances this force, hence it is proportional to $$\\frac{\\sigma^2R^2}{\\epsilon_o}$$</p>',46,1,'',3,NULL,'../api/resources/questions/11img1.jpg',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,'../../video/q11vid1.mp4',NULL),
+	(11,'<p>A uniformly charged thin spherical shell of radius R carries uniform surface charge density of ? per unit area. It is made of two hemispherical shells, held together by pressing them with force F (see figure). F is proportional to: <br><img src = \"../api/resources/questions/11img1.jpg\"></p>','$$\\frac{\\sigma^2R^2}{\\epsilon_o}$$|:$$\\frac{\\sigma^2R}{\\epsilon_o}$$|:$$\\frac{\\sigma^2}{\\epsilon_oR}$$|:$$\\frac{\\sigma^2}{\\epsilon_o^2R^2}$$','0','<p>Electrostatic Repulsive Force: $$F_{ele} \\propto = \\frac{\\sigma^2\\pi R^2}{\\epsilon_o}$$ Since F balances this force, hence it is proportional to $$\\frac{\\sigma^2R^2}{\\epsilon_o}$$</p>',46,1,'',3,NULL,'../api/resources/questions/11img1.jpg',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,'../../video/q11vid1.mp4',NULL),
 	(12,'<p>A series R-C combination is connected to an AC voltage of angular frequency ~~\\omega~~ = 500 radian/s. If the impedance of the R-C circuit is R ~~\\sqrt{1.25}~~, the time constant (in millisecond) of the circuit is: </p>','5 |: 2.6 |:  4|:  6\n','2','<p>$$Z = R\\sqrt{1.25} = (\\sqrt{R^2 + \\frac{1}{\\omega C}})^2$$ $$\\frac{1}{4}R^2 = (\\frac{1}{\\omega C})^2$$ $$ \\frac{1}{4}R^2 = \\frac{1}{500C}$$ $$\\therefore\\tau = RC = \\frac{1}{250}s = 4 ms$$ </p>',47,1,'',3,NULL,'',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,'../../video/q12vid1.mp4',NULL),
 	(13,'<p>How many milliliters of 0.1M H<sub>2</sub>SO<sub>4</sub> must be added to 50mL of 0.1M NaOH to give a solution that has a concentration of 0.05M in H<sub>2</sub>SO<sub>4</sub></p>','400 mL|:50 mL|:200 mL|:100 mL','3','<p>Vml 0.1M H<sub>2</sub>SO<sub>4</sub> + 50ml 0.1M NaOH ~~\\rightarrow~~ (V + 50)ml 0.05M H<sub>2</sub>SO<sub>4</sub><br><br>0.1 X V = (V + 50) X 0.05 + 2.5<br><br>\nV = 100ml</p>',61,1,'',1,NULL,'',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,'../../video/q13vid1.mp4',NULL),
 	(14,'<p>An unknown amino acid has 0.032% Sulphur. If each molecule has one S-atom only, 1.0 g of amino acid has ____ molecules:</p>','6.02 X 10<sup>18</sup>|:\n6.02 X 10<sup>19</sup>|:\n6.02 X 10<sup>21</sup>|:\n6.02 X 10<sup>23</sup>','0','<p>Weight of sulpher in 1 gram <br><br>= 0.032 * 1 * 1/100 <br><br>= 3.2 * 10<sup>-4</sup> g<br><br>Mol of S = 3.2 * 10<sup>-4</sup>/32 = 10<sup>-5</sup><br><br>\nNo. of S atoms = 10<sup>-5</sup> * 6.023 * 10<sup>23</sup> <br><br> = 6.023 * 10<sup>18</sup> </p>',63,1,'',2,NULL,'',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,'../../video/q14vid1.mp4',NULL),
 	(15,'<p>In the reaction, 8 Al + 3 Fe<sub>3</sub>O<sub>4</sub> ~~\\rightarrow~~ 4 Al<sub>2</sub>O<sub>3</sub> + 9 Fe, the number of electrons transferred from reductant to oxidant is: </p>','8|:4|:7|:24','3','<p>8 Al + 3 Fe<sub>3</sub>O<sub>4</sub> ~~\\rightarrow~~ 4 Al<sub>2</sub>O<sub>3</sub> + 9 Fe <br><br> Oxidation state of Al changes from 0 to +3 <br><br>=> No. of e<sup>-</sup> lost by 8 Al is 3 * 8 = 24 </p>',63,1,'',1,NULL,'',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,'../../video/q15vid1.mp4',NULL),
 	(16,'<p>In the reaction, H<sub>3</sub>PO<sub>4</sub> + Ca(OH)<sub>2</sub>~~\\rightarrow~~ CaHPO<sub>4</sub> + 2H<sub>2</sub>O, the equivalent mass of H<sub>3</sub>PO<sub>4</sub> is: </p>','49|:32.7|:196|:98','0','<p>H<sub>3</sub>PO<sub>4</sub> + Ca(OH)<sub>2</sub>~~\\rightarrow~~ CaHPO<sub>4</sub> + 2H<sub>2</sub>O <br><br> In the given reaction H<sub>3</sub>PO<sub>4</sub> reacts as a dibasic acid, hence x = 2  <br><br>=> E(H<sub>3</sub>PO<sub>4</sub>) = M(H<sub>3</sub>PO<sub>4</sub>) / 2 = 98/2 = 49  </p>',61,1,'',1,NULL,'',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,'../../video/q16vid1.mp4',NULL),
 	(17,'<p>Oxidation States of Chlorine in CaOCl<sub>2</sub> (bleaching powder) is/ are: </p>','+1 and -1|:+1 only|:-1 only|:None of these','0','<p>CaOCl<sub>2</sub> (bleaching powder), the structure is: <br> <br> One Cl exists as Chloride (CL<sup>-</sup>) and the other as OCl<sup>-</sup> (Oxy Chloride) </p>',61,1,'',2,NULL,'',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,'../../video/q17vid1.mp4',NULL),
-	(18,'<p>6.54 g of Zn reacts with 0.25 M HNO3 solution. Volume of HNO3 consumed is: </p>','0.8 L|:0.25 L|:1.6 L|:None of these','2','<p>Zn + 4 HNO<sub>3</sub> → Zn(NO<sub>3</sub>)<sub>2</sub> + 2NO<sub>2</sub> + H<sub>2</sub>O<br><br>\nThe above equation is not of the type X + Y ~~\\rightarrow~~ A + B <br><br> In X + Y ~~\\rightarrow~~A + B type of reactions, central atoms of oxidizing agent and reducing agent should be in single molecules in product; for example, <br> <br>\n FeSO<sub>4</sub> + KMnO<sub>4</sub> + H<sub>2</sub>SO<sub>4</sub> ~~\\rightarrow~~ Fe<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub> + MnSO<sub>4</sub> + K<sub>2</sub>SO<sub>4</sub> + H<sub>2</sub>0</p>',62,1,'',3,NULL,'',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,'../../video/q18vid1.mp4',NULL),
+	(18,'<p>6.54 g of Zn reacts with 0.25 M HNO3 solution. Volume of HNO3 consumed is: </p>','0.8 L|:0.25 L|:1.6 L|:None of these','2','<p>Zn + 4 HNO<sub>3</sub> ? Zn(NO<sub>3</sub>)<sub>2</sub> + 2NO<sub>2</sub> + H<sub>2</sub>O<br><br>\nThe above equation is not of the type X + Y ~~\\rightarrow~~ A + B <br><br> In X + Y ~~\\rightarrow~~A + B type of reactions, central atoms of oxidizing agent and reducing agent should be in single molecules in product; for example, <br> <br>\n FeSO<sub>4</sub> + KMnO<sub>4</sub> + H<sub>2</sub>SO<sub>4</sub> ~~\\rightarrow~~ Fe<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub> + MnSO<sub>4</sub> + K<sub>2</sub>SO<sub>4</sub> + H<sub>2</sub>0</p>',62,1,'',3,NULL,'',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,'../../video/q18vid1.mp4',NULL),
 	(19,'<p>The molar ratio of Fe<sup>2+</sup> to Fe<sup>3+</sup> in a mixture of FeSO<sub>4</sub> and Fe<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub> having equal number of sulphate ions is:</p>','1:2|:3:2|:2:3|:None of these','3','<p>FeSO<sub>4</sub> ~~\\rightarrow~~ Fe<sub>2+</sub> + S0<sub>4</sub><sup>2-</sup> <br><br>Fe<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub> ~~\\rightarrow~~  2Fe<sup>3+</sup> + 3SO<sub>4</sub><sup>2-</sup><br><br>Ratio of Fe<sup>2+</sup> to Fe<sup>3+</sup>=  ~~\\frac{3}{2}~~</p>',62,1,'',2,NULL,'',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,'../../video/q19vid1.mp4',NULL),
 	(20,'<p>To remove permanent hardness (due to presence of CaSO<sub>4</sub>) of a 1 L sample of water, 10 mL of N/50 washing soda (Na<sub>2</sub>CO<sub>3</sub>) solution was added and the mixture was boiled and filtered. The filtrate was neutralized with 6 mL of N/50 HCl. The degree of hardness of water in ppm is ___.</p>','','4','<p>CaSO<sub>4</sub> + Na<sub>2</sub>CO<sub>3</sub> ~~\\rightarrow~~ CaCO<sub>3</sub> + Na<sub>2</sub>SO<sub>4</sub><br><br>  meq of HCl = meq of Na<sub>2</sub>CO<sub>3</sub> (excess) = 6/50<br><br>  meq of Na<sub>2</sub>CO<sub>3</sub> used with CaCO<sub>3</sub> = total meq of Na<sub>2</sub>CO<sub>3</sub> - excess meqs<br><br> = 10 X (1/50) - 6 X (1/50) = 2/25 = meq of CaCO<sub>3</sub><br><br> => wt. of CaCO<sub>3</sub> in 1 L sample = 2/25 X 50 = 4 mg<br><br> => degree of hardness = 4 ppm </p>',63,3,'',3,NULL,'',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,'../../video/q20vid1.mp4',NULL),
 	(21,'<p>KMnO<sub>4</sub> reacts with KHC<sub>2</sub>O<sub>4</sub> in absence of any external acid. If stoichiometric co-efficient of KMnO<sub>4</sub> is 1 in the balanced reaction, then the co-efficient of KHC<sub>2</sub>O<sub>4</sub> is ___. </p>','','8','<p>$$( 8H^+ + 5e^- + MnO4^- \\rightarrow Mn^{2+} + 4H_20) * 2 $$ $$(C_2O_4^{2-} \\rightarrow 2CO_2 + 2e^- ) * 5$$  <table  style=\"text-align: center\"><tr><td>~~2MnO_4^-~~</td><td> +</td> <td>~~16 H^+~~</td><td> +</td> <td>~~5C_2O_4^{2-}~~</td> <td>~~\\rightarrow~~</td> <td>~~2Mn^{2+}~~</td> <td>+</td> <td>~~8H_2O~~</td> <td>+</td> <td>~~10CO_2~~</td></tr><tr><td>~~2MnO_4^-~~</td> <td>+</td> <td>~~11H^+~~</td> <td>+</td> <td>~~5HC_2O_4^-~~</td><td> ~~\\rightarrow~~</td> <td>~~2Mn^{2+}~~</td><td> +</td> <td>~~8H_2O~~</td> <td>+</td> <td>~~10CO_2~~</td></tr><tr><td>~~2K^+~~</td><td></td><td>~~11K^+ + 11C_2O_4^{2-}~~</td><td></td><td>~~5K^+~~</td><td></td><td>~~2K^+~~</td><td></td><td> ~~11K^+~~</td><td></td><td>~~ 11C_2O_4^{2-}~~</td><td></td><td> ~~ 5K^+~~</td></tr></table> $$ 2KMnO_4 + 16 KHC_2O_4\\rightarrow 2MnC_2O_4 + 8H_2O + 10CO_2 + 9K_2C_2O_4$$   Answer: 8 </p>',61,3,'',2,NULL,'',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,'../../video/q21vid1.mp4',NULL),
@@ -992,7 +972,7 @@ VALUES
 	(27,'<p>For the reaction in equilibrium<br><br> &nbsp  ~~2NOBr_{(g)} \\rightleftharpoons 2NO_{(g)} + Br_{2(g)}~~   if ~~P_{(Br2)} = P/9~~ at equilibrium and P is the total pressure. The ratio of K<sub>p</sub> / P is equal to: </p>','1/9|:1/81|:1/27|:1/5','1','<p><table style=\"text-align: center\"><tr><td></td><td>~~2NOBr_{(g)}~~</td> <td>&nbsp&nbsp&nbsp~~\\rightleftharpoons~~&nbsp&nbsp&nbsp</td> <td>~~2NO_{(g)}~~</td> <td>+</td> <td>~~Br_{2(g)}~~</td></tr><tr><td>t = t<sub>eq</sub> &nbsp</td> <td>~~P_o - x~~</td><td></td><td> x </td><td></td> <td>x/2<td> </tr></table><br> We are given:$$P_{(Br_2)eq} = x/2 = P/9 => x = 2P/9  $$ $$P_{(NO)eq} = 2P/9$$ $$ P_{(T)eq} = P_o + x/2 = P $$ $$ =>P_o = 8P/9$$ $$=> P_o - x = 2P/3$$ $$K_p = \\frac{P(NO)^2 P(Br_2)^1}{P(NOBr)^2} =\\frac {(\\frac{2P}{9})^2.(\\frac{P}{9})}{(\\frac{2P}{3})^2} = \\frac{1}{81}.P$$</p>',62,1,'',2,NULL,'',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,'../../video/q27vid1.mp4',NULL),
 	(28,'<p>~~PCl_5~~ dissociates in a closed container as:$$PCl_{5(g)} \\rightleftharpoons  PCl_{3(g)} + Cl_{2(g)}$$ If total pressure at equilibrium of the reaction mixture is P, and the degree of dissociation of ~~PCl_5~~ is ~~\\alpha~~ , the partial pressure of ~~PCl_3~~ will be:</p>','~~P.[\\frac{\\alpha}{\\alpha +1}]~~|:~~P.[\\frac{2\\alpha}{\\alpha -1}]~~|:~~P.[\\frac{\\alpha}{\\alpha -1}]~~|:~~P.[\\frac{\\alpha}{1 - \\alpha}]~~','0','<table style=\"text-align: center\"><tr><td>~~PCl_{5(g)}~~</td><td> ~~\\rightleftharpoons~~</td><td> ~~PCl_{3(g)}~~</td><td> + </td><td>~~Cl_{2(g)}~~</td></tr><tr><td>~~a - a\\alpha~~</td><td></td><td>~~a\\alpha~~</td><td></td><td>~~a\\alpha~~</td><td></tr></table>$$P(PCl_{3(g)})_{eq} = \\frac{a\\alpha}{a + a\\alpha}.P$$ $$\\frac {\\alpha}{1 + 1\\alpha}.P$$',61,1,'',3,NULL,'',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,'../../video/q28vid1.mp4',NULL),
 	(29,'<p>Equal volumes of two solutions of HCl are mixed. One solution has a pH 1 while the other has a pH 6. The pH of the resulting solution is:</p>','Less than 1|:Between 1 & 2|:4|:7','1','<p>1L of (pH=1) solution + 1L of (pH=6) solution <br>$$=>[H^+]mix = \\frac{10^{-1} +10^{-6}}{2}\\approx\\frac{10^{-1}}{2}$$ <br>pH = 1.3</p>',61,1,'',3,NULL,'',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,'../../video/q29vid1.mp4',NULL),
-	(30,'<p>The equilibrium constants K<sub>p1</sub> and K<sub>p2</sub> for the reactions X -> 2Y and Z -> P + Q, respectively are in the ratio of 1:9. If the degree of dissociation of X and Z are equal, then the ratio of total pressures at these equilibria is:  (Assume all species to be gaseous)</p>','1:9|:1:1|:1:3|:1:36','3','<p><table style=\"text-align: center\"><tr><td></td><td>&nbspX&nbsp</td><td>&nbsp&nbsp&nbsp~~\\rightleftharpoons~~&nbsp&nbsp&nbsp</td><td>&nbsp2Y&nbsp</td></tr><tr><td>t=teq&nbsp</td><td>(a - a ~~\\alpha~~)</td> <td></td><td>2aα</td></tr></table>$$Kp_1 = \\frac{(\\frac{2a\\alpha P1}{a+a\\alpha})^2}{(\\frac{(a-a\\alpha) P1}{a+a\\alpha})^1} \\Rightarrow Kp_1 = \\frac{4\\alpha^2}{1 - \\alpha^2}P_1$$ <table style=\"text-align: center\"><tr><td></td> <td>Z</td><td>&nbsp&nbsp&nbsp~~\\rightleftharpoons~~&nbsp&nbsp&nbsp</td><td>P</td><td>+</td><td>Q</td></tr><tr><td>t=t<sub>eq</sub>&nbsp</td><td>~~c-c\\alpha~~</td> <td></td> <td>~~c\\alpha~~</td><td></td><td>~~c\\alpha~~</td></tr></table> $$Kp_2 = \\frac{(\\frac{c\\alpha P2}{c+a\\alpha})^2}{(\\frac{(c-c\\alpha) P2}{c+c\\alpha})^1} \\Rightarrow Kp_2 = \\frac{4\\alpha^2}{1-\\alpha^2}P_2$$ $$\\frac{Kp_1}{Kp_2} = \\frac{4P_1}{P_2} \\Rightarrow \\frac{1}{9} = \\frac{4P_1}{P_2} \\Rightarrow \\frac{P_1}{P_2} = \\frac{1}{36} $$</p>',63,1,'',2,NULL,'',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,'../../video/q30vid1.mp4',NULL),
+	(30,'<p>The equilibrium constants K<sub>p1</sub> and K<sub>p2</sub> for the reactions X -> 2Y and Z -> P + Q, respectively are in the ratio of 1:9. If the degree of dissociation of X and Z are equal, then the ratio of total pressures at these equilibria is:  (Assume all species to be gaseous)</p>','1:9|:1:1|:1:3|:1:36','3','<p><table style=\"text-align: center\"><tr><td></td><td>&nbspX&nbsp</td><td>&nbsp&nbsp&nbsp~~\\rightleftharpoons~~&nbsp&nbsp&nbsp</td><td>&nbsp2Y&nbsp</td></tr><tr><td>t=teq&nbsp</td><td>(a - a ~~\\alpha~~)</td> <td></td><td>2a?</td></tr></table>$$Kp_1 = \\frac{(\\frac{2a\\alpha P1}{a+a\\alpha})^2}{(\\frac{(a-a\\alpha) P1}{a+a\\alpha})^1} \\Rightarrow Kp_1 = \\frac{4\\alpha^2}{1 - \\alpha^2}P_1$$ <table style=\"text-align: center\"><tr><td></td> <td>Z</td><td>&nbsp&nbsp&nbsp~~\\rightleftharpoons~~&nbsp&nbsp&nbsp</td><td>P</td><td>+</td><td>Q</td></tr><tr><td>t=t<sub>eq</sub>&nbsp</td><td>~~c-c\\alpha~~</td> <td></td> <td>~~c\\alpha~~</td><td></td><td>~~c\\alpha~~</td></tr></table> $$Kp_2 = \\frac{(\\frac{c\\alpha P2}{c+a\\alpha})^2}{(\\frac{(c-c\\alpha) P2}{c+c\\alpha})^1} \\Rightarrow Kp_2 = \\frac{4\\alpha^2}{1-\\alpha^2}P_2$$ $$\\frac{Kp_1}{Kp_2} = \\frac{4P_1}{P_2} \\Rightarrow \\frac{1}{9} = \\frac{4P_1}{P_2} \\Rightarrow \\frac{P_1}{P_2} = \\frac{1}{36} $$</p>',63,1,'',2,NULL,'',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,'../../video/q30vid1.mp4',NULL),
 	(31,'<p>XY<sub>2</sub> dissociates as:$$XY_{2(g)} \\rightleftharpoons XY_{(g)} + Y_{(g)}$$ When the initial pressure of XY<sub>2</sub> is 600 mm of Hg, the total equilibrium pressure is 800 mm Hg. Calculate K<sub>P</sub> for the reaction, assuming that the volume of the system remains unchanged</p>','50|:100|:166.6|:400','2','<p><table style=\"text-align: center\"><tr><td></td><td> ~~XY_{2(g)}~~</td><td>~~\\rightleftharpoons~~</td> <td> ~~XY_{(g)}~~</td><td> +</td><td>~~Y_{(g)}~~</td></tr><tr><td>t=0&nbsp</td><td>600</td><td></td><td>-</td><td></td><td>-</td></tr><tr><td>t=t<sub>eq</sub>&nbsp</td><td>600-x</td><td></td><td>x</td><td></td><td>x</td></tr></table> $$(P_T)_{eq} = 600 + x = 800 $$ $$\\Rightarrow x = 200$$ $$K_{p} = \\frac{x.x}{600-x} = \\frac{200.200}{600-200} = 100mm Hg$$</p>',63,1,'',2,NULL,'',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,'../../video/q31vid1.mp4',NULL),
 	(32,'<p>Consider the reaction, $$A^- + H_2O \\rightleftharpoons  HA + OH^-$$ The K_a value for acid HA is 1.0 X 10<sup>-6</sup>. What is the value of K for this reaction?</p>','1.0 X 10<sup>6</sup>|:1.0 X 10<sup>-8</sup>|:1.0 X 10<sup>8</sup>|:1.0 X 10<sup>-5</sup>','1','<p> $$ A^- + H_2O \\rightleftharpoons HA + OH^-$$ K<sub>c</sub> = K<sub>w</sub> / K<sub>a</sub><br>= 10<sup>-14</sup> / 10<sup>-6</sup> <br> = 10<sup>-8</sup> </p>',63,1,'',3,NULL,'',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,'../../video/q32vid1.mp4',NULL),
 	(33,'<p>A ball thrown vertically upwards with a velocity \'u\' reaches a maximum height of \'h\'. If the maximum height reached by the ball is to be doubled, then it should be thrown up with velocity</p>','2u|:4u|:~~\\sqrt2u~~|:~~\\sqrt3u~~','2','<img src=\"../api/resources/questions/33img1.jpg\"\n><p>By conservation of mechanical energy $$mgh = \\frac{1}{2}mu^2$$ For double height:$$mg(2h) = \\frac{1}{2}mv^2$$ $$\\Rightarrow v^2 = 2u^2 $$ $$ v = \\sqrt2 u $$</p>',34,1,'',1,NULL,'../api/resources/questions/33img1.jpg',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,'../../video/q33vid1.mp4',NULL),
@@ -1047,21 +1027,21 @@ VALUES
 	(82,'<p>Which of the following do not represent uniformly accelerated motion ?</p>','$$x = \\sqrt{\\frac{(t+a)}{b}}$$|:\n$$x = \\frac{(t+a)}{b}$$|:\n$$t = \\sqrt{\\frac{(x+a)}{b}}$$|:\n$$x = \\sqrt{(t+a)}$$','0|:1|:3','<p>In the case of uniform acceleration, x can be expressed as a function of t of the form:<br>\nx = at<sup>2</sup> + bt + c<br>\nOnly in option ( C ) is the equation of the above form: bt<sup>2</sup> = x + a </p>',34,2,'',2,0,'',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,'../../video/q82vid1.mp4',NULL),
 	(83,'<p>3 particles A, B and C are projected from the top of a tower with the same speed - A is thrown straight upwards, B straight down and C horizontally. They hit the ground with speeds v<sub>A</sub>, v<sub>B</sub> and v<sub>C</sub> Which of the following is correct?</p>','~~v_A = v_B = v_C~~|:~~v_A = v_B > v_C~~|:~~v_A > v_B = v_C~~|:~~v_B > v_C > v_A~~','0','<p><img src=\"../api/resources/questions/q83img1.jpg\" />\n<img src=\"../api/resources/questions/q83img2.jpg\" />\n<img src=\"../api/resources/questions/q83img3.jpg\" /> <br> \nIn all cases particle was projected from a same height and with same speed but different direction. From the work energy theorem - \nCase A: ~~\\frac{1}{2}mv^2 + mgh = \\frac{1}{2}mv_a^2~~<br>\nCase B: ~~\\frac{1}{2}mv^2 + mgh = \\frac{1}{2}mv_b^2~~<br>\nCase C: ~~\\frac{1}{2}mv^2 + mgh = \\frac{1}{2}mv_c^2~~<br>\n\nFrom the above equations, we see that - \n~~v_A = v_B = v_C~~\n</p>',34,1,'',3,0,'../api/resources/questions/q83img1.jpg|:\n../api/resources/questions/q83img2.jpg|:\n../api/resources/questions/q83img3.jpg',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,'../../video/q83vid1.mp4',NULL),
 	(84,'<p>A particle moves in the x-y plane according to the equations\n~~x = a\\: sinwt \\; y = bsin \\: wt~~ </p>','A parabolic path|:A circular path|:A straight line having slope b/a|:An elliptical path','3','<p>~~x = a\\: sinwt \\; y = bcos \\: wt~~\nSquaring both sides - <br>\n~~x^2 = a^2\\: sin^2wt \\;\\: y^2 = b^2cos^2wt~~ \n\n$$\\frac{x^2}{a^2} = \\: sin^2wt \\;\\: \\frac{y^2}{b^2} = cos^2wt$$\n\nAdding the 2 equations  - \n$$\\frac{x^2}{a^2}+\\frac{y^2}{b^2} = 1$$ <br>\nWhich is the equation of an elliptical path\n</p>',35,1,'',2,0,'',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,'../../video/q84vid1.mp4',NULL),
-	(85,'<p>A projectile can have same range from 2 angles of projection with same initial speed. If h1 and h2 be the maximum heights, then\n</p>','R = ~~\\sqrt{h_1h_2}~~|:~~R = \\sqrt{2h_1h_2}~~|:R = ~~2\\sqrt{h_1h_2}~~|:R =~~ 4\\sqrt{h_1h_2}~~','2','<p>For same range, angle of projection should be θ and (90 - \\theta)\n$$R_1 = \\frac{u^2 sin2\\theta}{g} \\;  R_2 = \\frac{u^2 sin[2(90 - \\theta)]}{g}$$\n\n$$R_1 = R_2 = \\frac{u^2 sin2\\theta}{g}$$\n\n$$h_1 = \\frac{u^2 sin^2\\theta}{g}$$\n$$h_2 = \\frac{u^2 sin^2(90 - \\theta)}{g} = \\frac{u^2 cos^2\\theta}{g}$$\n\nMultiplying h<sub>1</sub> and h<sub>2</sub>, we get -\n$$h_1h_2 = \\frac{u^4 sin^2\\theta cost^2\\theta}{g^2} = \\frac{u^4 (sin2\\theta)^2}{g^2} = \\frac{R^2}{4}$$\n\n$$R = 2\\sqrt{h_1h_2}$$\n\n</p>',35,1,'',3,0,'',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,'../../video/q85vid1.mp4',NULL),
+	(85,'<p>A projectile can have same range from 2 angles of projection with same initial speed. If h1 and h2 be the maximum heights, then\n</p>','R = ~~\\sqrt{h_1h_2}~~|:~~R = \\sqrt{2h_1h_2}~~|:R = ~~2\\sqrt{h_1h_2}~~|:R =~~ 4\\sqrt{h_1h_2}~~','2','<p>For same range, angle of projection should be ? and (90 - \\theta)\n$$R_1 = \\frac{u^2 sin2\\theta}{g} \\;  R_2 = \\frac{u^2 sin[2(90 - \\theta)]}{g}$$\n\n$$R_1 = R_2 = \\frac{u^2 sin2\\theta}{g}$$\n\n$$h_1 = \\frac{u^2 sin^2\\theta}{g}$$\n$$h_2 = \\frac{u^2 sin^2(90 - \\theta)}{g} = \\frac{u^2 cos^2\\theta}{g}$$\n\nMultiplying h<sub>1</sub> and h<sub>2</sub>, we get -\n$$h_1h_2 = \\frac{u^4 sin^2\\theta cost^2\\theta}{g^2} = \\frac{u^4 (sin2\\theta)^2}{g^2} = \\frac{R^2}{4}$$\n\n$$R = 2\\sqrt{h_1h_2}$$\n\n</p>',35,1,'',3,0,'',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,'../../video/q85vid1.mp4',NULL),
 	(86,'<p>A particle A moves due north at 3 km/hr; another particle due west at 4 km/hr. Find the relative velocity of A w.r.t. B, and its direction\n </p>','5 km/hr, 37<sup>o</sup> north of east of B|:\n5 km/hr, 37<sup>o</sup> east of north of B|:\n5 km/hr, 45<sup>o</sup> east of north of B|:\n5 km/hr, 53<sup>o</sup> north of east of B','3','<p>Draw vector diagram - \n\n<img src =\"../api/resources/questions/q86img1.jpg\" />\n\n~~\\underset{v_A}{\\rightarrow}~~ = 3 km/hr towards North\n~~\\underset{v_B}{\\rightarrow} ~~ = 4 km/hr towards West\n~~\\underset{v_AB}{\\rightarrow} ~~ = 5 km/hr towards 37<sup>o</sup> North of East (from the figure)</p>',35,1,'',2,0,'../api/resources/questions/q86img1.jpg',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,'../../video/q86vid1.mp4',NULL),
 	(87,'<p>A body moving with a uniform acceleration has velocities of u and v when passing through points A and B in its path. The velocity of the body midway between A and B is</p> \n ','$$\\frac{u+v}{2}$$|:$$\\frac{\\sqrt{uv}}{2}$$|:$$\\frac{\\sqrt{u^2 + v^2}}{2}$$|:None of these','2','<p> <img src= \"../api/resources/questions/q87img1.jpg\" /> <br>\n\n$$a = \\frac{{v^2 - u^2}}{2S}$$\n<br>\nFor a distance S/2:\n$$v\'^2 = u^2 + 2a\\frac{S}{2}$$\n$$v\'^2 = u^2 + 2\\frac{v^2 - u^2}{2S}\\frac{S}{2}$$\n$$v\'^2 = u^2 + \\frac{v^2 - u^2}{2}$$\n\n$$v\' = \\sqrt{\\frac{u^2 + v^2}{2}}$$</p>',34,1,'',1,0,'../api/resources/questions/q87img1.jpg',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,'../../video/q87vid1.mp4',NULL),
 	(88,'<p>2 cars are moving in the same direction with same speed of 30 km/h. They are separated by a distance of 5 km. What is the speed of a car moving in the opposite direction if  it crosses the 2 cars at an interval of 4 minutes?\n</p>','45 km/hr|:35 km/hr|:25km/hr|:12.5 km/h','0|:3','<p>The distance between the 2 cars = 5 km<br>Let the speed of the car is v. So,<br>\n$$ \\frac{5}{30+v} = 4\\; mins = \\frac{1}{15} \\;hr$$\nv + 30 = 75\n<br>v = 45 km/hr\n<br>Converting to m/s, we get - <br>v = 12.5 m/s</p>',34,2,'',2,0,'',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,'../../video/q88vid1.mp4',NULL),
-	(89,'<p>2 ships are resting on sea at distances a and b from a fixed point O respectively. They start moving towards the point O with constant velocities v1 and v2. If the ships subtend an angle θ at O, find the shortest distance of their separation\n </p>','$$\\frac{(av_2 - bv_1)sin\\theta}{\\sqrt{v_1^2 + v_2^2 - 2v_1v_2cos\\theta}}$$|:\n$$\\frac{(av_2 - bv_1)cos\\theta}{\\sqrt{v_1^2 + v_2^2 - 2v_1v_2cos\\theta}}$$|:\n$$\\frac{(av_2sin\\theta - bv_1cos\\theta)}{\\sqrt{v_1^2 + v_2^2 - 2v_1v_2cos\\theta}}$$|:\n$$\\frac{(av_2cos\\theta - bv_1sin\\theta)}{\\sqrt{v_1^2 + v_2^2 - 2v_1v_2cos\\theta}}$$','0','<p><img src= \"../api/resources/questions/q89img1.jpg\" /> <br>Separation S = AB\n~~=OA^2 + OB^2 - 2OAOBcos\\theta~~\n\nwhere OA = (a - v<sub>1</sub>t) ; OB  = (b - v<sub>2</sub>t)\n\nFor S to be least -\n$$\\frac{\\mathrm{d}S^2 }{\\mathrm{d} t} = 0  \\;\\;\\;(i) $$\n$$ \\frac{\\mathrm{d^2}S^2 }{\\mathrm{d} t^2} > 0 \\;\\;\\;(ii)$$\n\nDifferentiating both sides wrt t and applying condition (i) -\n\n~~2 (a - v_1t) (-v_1) + 2 (-v2) (b - v2t) \n          + 2av_2 (cosθ) + 2bv_1cos θ  - 4v_1v_2(cos θ)t  = 0~~\n<br> Solving for t, \n$$t = \\frac{av_1 + bv_2  - (av1+bv2)cos\\theta}{v_1^2 + v_2^2 - 2v_1v_2cos\\theta}$$\n<br>\nSubstituting values for S, we get - \n $$S = \\frac{(av_2 - bv_1)sin\\theta}{\\sqrt{v_1^2 + v_2^2 - 2v_1v_2cos\\theta}}$$\n</p>',35,1,'',3,0,'../api/resources/questions/q89img1.jpg',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,'../../video/q89vid1.mp4',NULL),
+	(89,'<p>2 ships are resting on sea at distances a and b from a fixed point O respectively. They start moving towards the point O with constant velocities v1 and v2. If the ships subtend an angle ? at O, find the shortest distance of their separation\n </p>','$$\\frac{(av_2 - bv_1)sin\\theta}{\\sqrt{v_1^2 + v_2^2 - 2v_1v_2cos\\theta}}$$|:\n$$\\frac{(av_2 - bv_1)cos\\theta}{\\sqrt{v_1^2 + v_2^2 - 2v_1v_2cos\\theta}}$$|:\n$$\\frac{(av_2sin\\theta - bv_1cos\\theta)}{\\sqrt{v_1^2 + v_2^2 - 2v_1v_2cos\\theta}}$$|:\n$$\\frac{(av_2cos\\theta - bv_1sin\\theta)}{\\sqrt{v_1^2 + v_2^2 - 2v_1v_2cos\\theta}}$$','0','<p><img src= \"../api/resources/questions/q89img1.jpg\" /> <br>Separation S = AB\n~~=OA^2 + OB^2 - 2OAOBcos\\theta~~\n\nwhere OA = (a - v<sub>1</sub>t) ; OB  = (b - v<sub>2</sub>t)\n\nFor S to be least -\n$$\\frac{\\mathrm{d}S^2 }{\\mathrm{d} t} = 0  \\;\\;\\;(i) $$\n$$ \\frac{\\mathrm{d^2}S^2 }{\\mathrm{d} t^2} > 0 \\;\\;\\;(ii)$$\n\nDifferentiating both sides wrt t and applying condition (i) -\n\n~~2 (a - v_1t) (-v_1) + 2 (-v2) (b - v2t) \n          + 2av_2 (cos?) + 2bv_1cos ?  - 4v_1v_2(cos ?)t  = 0~~\n<br> Solving for t, \n$$t = \\frac{av_1 + bv_2  - (av1+bv2)cos\\theta}{v_1^2 + v_2^2 - 2v_1v_2cos\\theta}$$\n<br>\nSubstituting values for S, we get - \n $$S = \\frac{(av_2 - bv_1)sin\\theta}{\\sqrt{v_1^2 + v_2^2 - 2v_1v_2cos\\theta}}$$\n</p>',35,1,'',3,0,'../api/resources/questions/q89img1.jpg',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,'../../video/q89vid1.mp4',NULL),
 	(90,'<p>On a cricket field, the batsman is at the origin of co-ordinates and a fielder stands in position ~~(46 \\vec{i} + 28 \\vec{j})~~ m. The batsman hits the ball so it rolls along the ground with constant velocity (7.5i  + 10j ) m/s. The fielder can run with a speed of 5 m/s. If he starts to run immediately after the ball is hit, what is the shortest time in which he could intercept the ball?\n</p>','','4','<p>The ball\'s position at time t, ~~(7.5) t \\hat{ i}  +  (10)t \\hat{j}~~ <br>\nLet the fielder run with velocity  ~~5(cos\\theta \\vec{i} + sin\\theta \\vec{j})~~ <br>\n\nAt interception of ball by fielder, we can equate components - <br>\n~~7.5t = 46 + 5tcos\\theta~~ <br>\n~~10t = 28 + 5tsin\\theta~~ <br>\n\nUsing ~~cos^2\\theta + sin^2\\theta = 1~~ <br>\n~~(\\frac{7.5t - 46}{5t})^2 + (\\frac{10t - 28}{5t})^2 = 1~~ <br>\nWhich simplifies to ~~t\\approx4s~~</p>',35,3,'',3,0,'',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,'../../video/q90vid1.mp4',NULL),
 	(91,'<p>The driver of a train moving at a speed v1 sights a goods train a distance \'d\' ahead of him on the same track moving in the same direction with a slower speed v2. He puts on brakes and gives his train a constant retardation \'a\'. There will be no collision for a minimum distance of \n</p>','$$\\frac{at^2}{2}$$|:$$2(v_1  - v_2)t - \\frac{at^2}{2}$$|:$$(v_1  - v_2)t - \\frac{at^2}{4}$$|:$$(v_1  - v_2)t - \\frac{at^2}{2}$$','3','<p>Train A has retardation \'a\' and a relative velocity ~~v_1 - v_2~~\n<br>\nIf the train has to stop (w.r.t. train B) before distance \'d\' - <br><br>\n\n~~S = (v_1 - v_2)t - \\frac{at^2}{2}~~<br><br>\nThe minimum distance \'d\' is \n~~(v_1 - v_2)t - \\frac{at^2}{2}~~\n</p>',34,1,'',2,0,'',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,'../../video/q91vid1.mp4',NULL),
 	(92,'<p>A motor boat with its engine on, running along the river and blown over by a horizontal wind, is observed to travel at 20km/hr in a direction 53<sup>o</sup> east of north. The velocity of the boat with its engine on, in still water and blown over by the horizontal wind is 4 km/hr eastward and the velocity of the boat with its engine on, over the running river in the absence of wind is 8 km/hr south. The velocity of the boat in magnitude is </p>','13.75 km/hr|:29 km.hr|:23.3 km/hr|:31.1 km/hr','2','<p>~~\\vec{v_b}~~ = Velocity of boat over still water <br>\n~~\\vec{v_w}~~  = Velocity of wind wrt ground <br>\n~~\\vec{v_r}~~ = Velocity of river wrt ground <br>\n<br>~~\\vec{v_b} + \\vec{v_w} +\\vec{v_r} = 20(sin 53^o \\vec{i} + cos 53^o \\vec{j})~~ <br>\n~~\\vec{v_b} + \\vec{v_w} = 4 \\vec{i}~~\n~~\\vec{v_b} + \\vec{v_r} = -8 \\vec{j}~~\n<br>\nSolving equations, we get - <br>\n~~v_b = -12\\vec{i} - 20\\vec{j}~~<br>\n\n~~\\left |\\vec{v_b}  \\right | = 23.32 km/hr~~</p>',34,1,'',2,0,'',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,'../../video/q92vid1.mp4',NULL),
 	(93,'<p>An observer in a train moving with a uniform velocity finds that a car moving parallel to the train has a speed of 10 km/hr in the direction of motion of the train. An object falls from the car and the observer in the train notices that the car has moved on for one minute, turned back, and moved with a speed of 10 km/hr and picked up the object 2 minutes after turning. Find the velocity of the train relative to the ground. \nAssume that the object comes to rest immediately after fall from the point of view of the observer on the ground\n</p>','3.34 km/hr|:6.67 km/hr|:13.34 km/hr|:None of these','0','<p>Velocity of train wrt ground                         = ~~v_T~~ <br>\nVelocity of car in the first part of journey    = ~~v_e~~ <br>\nVelocity of car in the first part of journey    = ~~v\'_e~~ <br>\nDistance of the point where the object fell  = xkm <br>\n\n~~v_e - v_T = \\frac{1}{6}~~  (km/min) <br>\n ~~v\'_e + v_T = \\frac{1}{6}~~  (km/min) <br>\n~~(\\frac{x}{v_e} = 1~~ <br>\n~~(\\frac{x}{v\'_e} = 2~~<br>\nSolving these, we get - \n~~v_T  = 3.34 km/hr~~\n</p>',35,1,'',3,0,'',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,'../../video/q93vid1.mp4',NULL),
 	(94,'<p>An elevator ascends with an upward acceleration of 1.2 m/s<sup>2</sup>. At the instant when its upward speed is 2.4 m/s, a loose bolt drops from the ceiling of the elevator 2.7m above the floor of the elevator. Calculate the time of flight of the bolt from the ceiling to the floor \n</p>','0.7s|:0.3s|:0.9s|:0.5s','0','<p>Let <br>\nDownward displacement of bolt relative to shaft       = ~~r_1~~ <br>\nUpward displacement of lift before bolt reaches floor=  ~~r_2~~<br>\n\nThen ~~r_1 = -2.4t + \\frac{1}{2} 9.8 t^2 = -2.4t + 4.9t^2~~  <br>\n~~r_2 = 2.4t + \\frac{1}{2} 1.2 t^2 = 2.4t + 0.6t^2~~ <br>\n\nBut ~~r_1 + r_2~~ = 2.7m <br>\n\n~~5.5t^2 = 2.7~~ <br>\n~~t = 0.7s~~    (neglecting negative value)\n   \n</p>',35,1,'',3,0,'',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,'../../video/q94vid1.mp4',NULL),
-	(95,'<p>A 2m wide truck is moving with uniform speed 8m/s along a straight horizontal road. A man starts to cross the road with a uniform speed v when the truck is 4m away from him. What is the minimum value of v, so that the man can cross the road safely?</p>','~~\\frac{6}{\\sqrt{5}}m/s~~|:\n~~\\frac{4}{\\sqrt{5}}m/s~~|:\n~~\\frac{3}{\\sqrt{5}}m/s~~|:\n~~\\frac{8}{\\sqrt{5}}m/s~~','3','<img src=\"../api/resources/questions/q95img1.jpg\" />\n<p>For safe crossing, the man must reach R by the time truck covers a distance equal to  (4 + 2cotθ)\n\nSo,\n$$\\frac{4+2cot\\theta }{8} = \\frac{2}{vsin\\theta}$$\n$$\\Rightarrow v = \\frac{ 8}{2sin\\theta + cos\\theta}$$\nFor v to be minimum,<br>\n$$ \\frac{\\mathrm{d}v }{\\mathrm{d} \\theta} = 0$$\n$$\\Rightarrow  2 cos\\theta  - sin\\theta  = 0$$\n$$\\Rightarrow tan\\theta  = 2$$\nSubstituting values, we get\nv = ~~\\frac{8}{\\sqrt{5}}~~ m/s\n</p>',35,1,'',2,0,'../api/resources/questions/q95img1.jpg',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,'../../video/q95vid1.mp4',NULL),
+	(95,'<p>A 2m wide truck is moving with uniform speed 8m/s along a straight horizontal road. A man starts to cross the road with a uniform speed v when the truck is 4m away from him. What is the minimum value of v, so that the man can cross the road safely?</p>','~~\\frac{6}{\\sqrt{5}}m/s~~|:\n~~\\frac{4}{\\sqrt{5}}m/s~~|:\n~~\\frac{3}{\\sqrt{5}}m/s~~|:\n~~\\frac{8}{\\sqrt{5}}m/s~~','3','<img src=\"../api/resources/questions/q95img1.jpg\" />\n<p>For safe crossing, the man must reach R by the time truck covers a distance equal to  (4 + 2cot?)\n\nSo,\n$$\\frac{4+2cot\\theta }{8} = \\frac{2}{vsin\\theta}$$\n$$\\Rightarrow v = \\frac{ 8}{2sin\\theta + cos\\theta}$$\nFor v to be minimum,<br>\n$$ \\frac{\\mathrm{d}v }{\\mathrm{d} \\theta} = 0$$\n$$\\Rightarrow  2 cos\\theta  - sin\\theta  = 0$$\n$$\\Rightarrow tan\\theta  = 2$$\nSubstituting values, we get\nv = ~~\\frac{8}{\\sqrt{5}}~~ m/s\n</p>',35,1,'',2,0,'../api/resources/questions/q95img1.jpg',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,'../../video/q95vid1.mp4',NULL),
 	(96,'<p>A boy is running on a horizontal road with a velocity of 5 m/s. At what angle should he hold his umbrella in order to protect himself from the rain, if the rain is falling vertically with a velocity of 10 m/s\n</p>','~~tan^{-2}~~|:\n~~cos^{-1}({\\frac{1}{\\sqrt{5}}})~~|:\n~~sin^{-1}({\\frac{1}{\\sqrt{5}}})~~|:\n~~cos^{-1}(\\sqrt{5})~~','0|:1','<p> To obtain the relative velocity of rain w.r.t boy, a velocity triangle is formed between v<sub>b</sub> and v<sub>r</sub> as shown:\n<img src=\"../api/resources/questions/q96img1.jpg\" />\n<br>\n~~tan\\Theta~~ = (10/5) = 2<br>\n~~\\Theta~~ = tan<sup>-1</sup>(2)\n</p>',35,2,'',2,0,'../api/resources/questions/q96img1.jpg',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,'../../video/q96vid1.mp4',NULL),
 	(97,'<p>A train moves due east with a velocity of <sub>v_1</sub>  = 20 m/s and a car moves due north with a velocity of <sub>v_2</sub> = 15 m/s. Find the velocity of the car as observed by a passenger sitting in the train\n</p>','25 m/s at an angle tan<sup>-1</sup>(4/3) north of west|:\n25 m/s at an angle tan<sup>-1</sup>(4/3) west of north|:\n25 m/s at an angle tan<sup>-1</sup>(5/3) west of north|:\n25 m/s at an angle tan<sup>-1</sup>(5/3) north of west\n\n','1','<p> <img src=\"../api/resources/questions/q97img1.jpg\" />\n\nMagnitude: ~~\\vec{v_21} = \\left |\\vec{v_2} - \\vec{v_1}  \\right |~~ <br>\n ~~\\vec{v_21} = \\sqrt{v_1^2 + v_2^2} ~~\n ~~\\vec{v_21} = 25m/s~~\n\nDirection:  ~~\\vec{v_21}~~ <br> \n~~tan^{-1}(20/15)~~ <br>\n~~tan^{-1}(4/3)~~ west of north\n\n</p>',34,1,'',3,0,'../api/resources/questions/q97img1.jpg',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,'../../video/q97vid1.mp4',NULL),
 	(98,'<p>If potential difference across ~~3\\mu~~ F is 4V, then total energy stored in all capacitors is:\n<img src=\"../api/resources/questions/q98img1.jpg\" />\n </p>','~~400\\mu~~ J|:~~800\\mu~~ J|:~~1200\\mu~~ J|:Cannot be calculated as emf of cell is not given','1','<p><img src=\"../api/resources/questions/q98img2.jpg\" />\n~~V_{BC}  = 4V~~ <br>\n~~C_{eq} (B,C) = 3\\mu F + 5\\mu F + 2\\mu F = 10\\mu F~~ <br>\nq stored in ~~10\\mu F~~ is: <br>\n~~q = 10\\mu F. 4V = 40\\mu C~~ <br>\nNow  5~~\\mu~~ F,  10~~\\mu~~ F and  10/7~~\\mu~~ F are in series combination. <br>\nHence q through them is the same, i.e. 40~~\\mu~~ C <br>\nAlso ~~C_{eq}~~ across AB is <br>\n$$\\frac{1}{C_{eq}} = \\frac{1}{5} + \\frac{1}{10} + \\frac{1}{\\frac{10}{7}}$$\n~~C_{eq} = 1\\mu F~~ <br>\n\nTherefore, energy stored is - <br>\n~~\\frac{q^2}{2C} = \\frac{(40\\mu C)^2}{(2.1\\mu F)} = 800\\mu J~~</p>',61,1,'',1,0,'../api/resources/questions/q98img1',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,'../../video/q98vid1.mp4',NULL),
-	(99,'<p>The equivalent capacitance between the points A and B of a combination shown in the figure is: \n<img src=\"../api/resources/questions/q99img1.jpg\" />\n</p>','C|:2C|:C/2|:None of these','1','<p><img src=\"../api/resources/questions/q99img2.jpg\" /> <br>\nUsing series combination of capacitors, this can be modified into - <br>\n<img src=\"../api/resources/questions/q99img3.jpg\" /> <br>\nFurther simplifies to - \n<img src=\"../api/resources/questions/q99img4.jpg\" /> <br>\nNow since points ‘A’, ‘B’, ‘C’ and ‘D’ are all connected by superconductors. Hence potential is same for all. Hence ~~C_A~~ and ~~C_B~~ are short circuited.\n<img src=\"../api/resources/questions/q99img5.jpg\" /> <br>\n~~\\Rightarrow C_{eq} = 2C~~</p>',63,1,'',2,0,'../api/resources/questions/q99img1|:../api/resources/questions/q99img2|:../api/resources/questions/q99img3|:../api/resources/questions/q99img4|:../api/resources/questions/q99img5',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,'../../video/q99vid1.mp4',NULL),
+	(99,'<p>The equivalent capacitance between the points A and B of a combination shown in the figure is: \n<img src=\"../api/resources/questions/q99img1.jpg\" />\n</p>','C|:2C|:C/2|:None of these','1','<p><img src=\"../api/resources/questions/q99img2.jpg\" /> <br>\nUsing series combination of capacitors, this can be modified into - <br>\n<img src=\"../api/resources/questions/q99img3.jpg\" /> <br>\nFurther simplifies to - \n<img src=\"../api/resources/questions/q99img4.jpg\" /> <br>\nNow since points ?A?, ?B?, ?C? and ?D? are all connected by superconductors. Hence potential is same for all. Hence ~~C_A~~ and ~~C_B~~ are short circuited.\n<img src=\"../api/resources/questions/q99img5.jpg\" /> <br>\n~~\\Rightarrow C_{eq} = 2C~~</p>',63,1,'',2,0,'../api/resources/questions/q99img1|:../api/resources/questions/q99img2|:../api/resources/questions/q99img3|:../api/resources/questions/q99img4|:../api/resources/questions/q99img5',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,'../../video/q99vid1.mp4',NULL),
 	(100,'<p>A capacitor of capacitance ~~C_1~~ and potential difference \nV is connected across an uncharged capacitor of capacity ~~C_2~~. The new potential difference across each capacitor is:\n </p>','$$\\frac{C_1V}{C_1 + C_2}$$|:\n$$\\frac{C_2V}{C_1 + C_2}$$|:\n$$\\frac{C_1 + C_2}{V}$$|:\nNone of these','0','<p><img src=\"../api/resources/questions/q100img1.jpg\" /> <br>\n~~C_1~~ is charged to potential difference V, hence it has q=~~C_1~~V\n<img src=\"../api/resources/questions/q100img2.jpg\" /> <br>\nNow when they are connected, q flows out of ~~C_1~~ and stores at ~~C_2~~ such that potential across them becomes same\n$$\\frac{C_1V - q}{C_1} = \\frac{q}{C_2}$$\n$$q = \\frac{C_1C_2V}{C_1 + C_2}$$\n$$\\therefore  V_{C_2} = \\frac{q}{C_2} $$\n\n$$=\\frac{C_1V}{C_1 + C_2}$$\n </p>',63,1,'',1,0,'../api/resources/questions/q100img1.jpg|:\n../api/resources/questions/q100img2.jpg|:',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,'../../video/q100vid1.mp4',NULL),
 	(101,'<p>There are two concentric metallic spherical shells A and B as shown in the figure.  If A is earthed and shell B is given a charge \'Q\' then the \'E\' and \'V\' at ~~r( a\\leq  r \\leq  b)~~ <img src=\"../api/resources/questions/q101img1.jpg\" />\n</p>','$$\\frac{-aQ}{4\\pi \\epsilon b r^2}\\; , \\;  \\frac{Q}{4\\pi \\epsilon b }(1 + \\frac{b}{r})$$|:\n$$\\frac{-aQ}{4\\pi \\epsilon b r^2}\\; , \\;  \\frac{Q}{4\\pi \\epsilon b }(1 - \\frac{b}{r})$$|:\n$$\\frac{-aQ}{4\\pi \\epsilon b r^2}\\; , \\;  \\frac{Q}{4\\pi \\epsilon b }(1 - \\frac{a}{r})$$|:\nNone of these','2','<p>Lets assume charge ~~q~~ accumulates on the small sphere <br>\n<img src=\"../api/resources/questions/q101img1.jpg\" />\n$$V_p = \\frac{q}{4\\pi \\epsilon a} + \\frac{Q}{4\\pi \\epsilon b}$$\n$$V_p = 0$$\n$$\\therefore \\frac{q}{4\\pi \\epsilon a} + \\frac{Q}{4\\pi \\epsilon b} = 0$$\n$$q =  - \\frac{aQ}{b}$$\n<br>\n~~E~~ at ~~r~~ (~~a\\leq r\\leq b~~) <br>\n$$ = \\frac{-aQ}{4\\pi \\epsilon b r^2} $$\n\n<br>Now calculating ~~V~~ at ~~r~~ (~~a\\leq r\\leq b~~) <br>\n$$=\\frac{q}{4\\pi \\epsilon r} + \\frac{Q}{4\\pi \\epsilon b}$$\n$$=\\frac{aQ}{4\\pi \\epsilon b r} + \\frac{Q}{4\\pi \\epsilon b}$$\n$$\\frac{Q}{4\\pi \\epsilon b }(1 - \\frac{a}{r})$$\n</p>',61,1,'',1,0,'../api/resources/questions/q101img1.jpg',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,'../../video/q101vid1.mp4',NULL),
 	(102,'<p>The equivalent capacitance of a combination shown in the figure:\n<img src=\"../api/resources/questions/q102img1.jpg\" />\n </p>','C|:\n2C|:\nC/2|:\nNone of these','1','<p><img src=\"../api/resources/questions/q102img2.jpg\" /> \n<br>\n~~C_{AB}~~ is short-circuited. Therefore the circuit becomes :  \n<img src=\"../api/resources/questions/q102img3.jpg\" /> \n~~\\therefore C_{eq} = 2C~~\n</p>',61,1,'',2,0,'../api/resources/questions/q102img1.jpg|:../api/resources/questions/q102img2.jpg|:../api/resources/questions/q102img3.jpg',0,0,0,0,0,0,0,4,-1,0,0,0,0,0,'../../video/q102vid1.mp4',NULL),
@@ -1113,12 +1093,11 @@ CREATE TABLE `quizzes` (
   `streamId` int(11) DEFAULT NULL,
   `maxScore` int(11) DEFAULT '100',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `quizzes` WRITE;
 /*!40000 ALTER TABLE `quizzes` DISABLE KEYS */;
-
-INSERT INTO `quizzes` (`id`, `questionIds`, `description`, `descriptionShort`, `conceptsTested`, `tags`, `l3Ids`, `l2Ids`, `questionCount`, `allotedTime`, `difficulty`, `ratings`, `rec`, `typeId`, `facultyId`, `available`, `mobileFlag`, `addedOn`, `totalAttempts`, `streamId`, `maxScore`)
+INSERT INTO `quizzes` (`id`,`questionIds`,`description`,`descriptionShort`,`conceptsTested`,`tags`,`l3Ids`,`l2Ids`,`questionCount`,`allotedTime`,`difficulty`,`ratings`,`rec`,`typeId`,`facultyId`,`available`,`mobileFlag`,`addedOn`,`totalAttempts`,`streamId`,`maxScore`)
 VALUES
 	(1,'1|:2|:3|:4|:5|:6|:7|:8|:9|:10|:11|:12','Questions on Electricity & Magnetism from the last 4 years IIT-JEE papers','Advanced questions on Electricity and Magnetism','Electricity & Magnetism','IIT JEE','44|:45|:46|:47','7',12,3600,2,NULL,0,2,3,NULL,NULL,NULL,0,1,36),
 	(2,'13|:14|:15|:16|:17|:18|:19|:20|:21|:22|:23|:24|:25|:26|:27|:28|:29|:30|:31|:32','Covers Redox Reactions , Stoichiometry, Chemical and Ionic Equilibrium','Advanced questions on Physical Chemistry','Physical Chemistry','','61|:62|:63','10',20,3600,2,NULL,0,2,1,NULL,NULL,NULL,0,1,100),
@@ -1161,8 +1140,7 @@ CREATE TABLE `quizzes_type` (
 
 LOCK TABLES `quizzes_type` WRITE;
 /*!40000 ALTER TABLE `quizzes_type` DISABLE KEYS */;
-
-INSERT INTO `quizzes_type` (`id`, `type`)
+INSERT INTO `quizzes_type` (`id`,`type`)
 VALUES
 	(1,'full'),
 	(2,'sectional');
@@ -1216,8 +1194,7 @@ CREATE TABLE `responses` (
 
 LOCK TABLES `responses` WRITE;
 /*!40000 ALTER TABLE `responses` DISABLE KEYS */;
-
-INSERT INTO `responses` (`accountId`, `questionId`, `optionSelected`, `timeTaken`, `abilityScoreBefore`, `delta`, `timeStamp`, `status`)
+INSERT INTO `responses` (`accountId`,`questionId`,`optionSelected`,`timeTaken`,`abilityScoreBefore`,`delta`,`timeStamp`,`status`)
 VALUES
 	(4,1,'0',8533,46,-1,'2013-01-20 23:06:13','2'),
 	(4,2,'',1535,47,0,'2013-01-20 23:06:24','4'),
@@ -1286,11 +1263,11 @@ CREATE TABLE `results` (
 
 LOCK TABLES `results` WRITE;
 /*!40000 ALTER TABLE `results` DISABLE KEYS */;
-
-INSERT INTO `results` (`quizId`, `accountId`, `selectedAnswers`, `score`, `timePerQuestion`, `timeTaken`, `data`, `timestamp`, `attemptedAs`, `startTime`, `endTime`, `state`, `numCorrect`, `numIncorrect`)
+INSERT INTO `results` (`quizId`,`accountId`,`selectedAnswers`,`score`,`timePerQuestion`,`timeTaken`,`data`,`timestamp`,`attemptedAs`,`startTime`,`endTime`,`state`,`numCorrect`,`numIncorrect`)
 VALUES
 	(1,4,'[\"0\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\"]',-1,'[8533,1535,1358,1537,799,671,744,1209,1571,3959,1392,2252,2252]',NULL,'[{\"t\":\"1358703451699\",\"e\":\"3\",\"q\":\"12\"},{\"t\":\"1358703453951\",\"e\":\"4\",\"q\":\"12\"}]','2013-01-20 23:07:38',2,'2013-01-20 23:06:03',NULL,12,0,1),
-	(3,7,'[\"1\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"0\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"3\"]',2,'[1291,0,0,0,0,0,0,0,0,664,0,0,0,0,0,3824,0,0,0,0,0,0,0,0,2909]',NULL,'[{\"t\":\"1358724686758\",\"e\":\"10\"},{\"t\":\"1358724686781\",\"e\":\"3\",\"q\":\"33\"},{\"t\":\"1358724687612\",\"e\":\"0\",\"q\":\"33\",\"o\":\"1\"},{\"t\":\"1358724688072\",\"e\":\"4\",\"q\":\"33\"},{\"t\":\"1358724688076\",\"e\":\"3\",\"q\":\"42\"},{\"t\":\"1358724688740\",\"e\":\"4\",\"q\":\"42\"},{\"t\":\"1358724688742\",\"e\":\"3\",\"q\":\"48\"},{\"t\":\"1358724690674\",\"e\":\"0\",\"q\":\"48\",\"o\":\"0\"},{\"t\":\"1358724692566\",\"e\":\"4\",\"q\":\"48\"},{\"t\":\"1358724692572\",\"e\":\"3\",\"q\":\"57\"},{\"t\":\"1358724694035\",\"e\":\"0\",\"q\":\"57\",\"o\":\"3\"},{\"t\":\"1358724695481\",\"e\":\"4\",\"q\":\"57\"},{\"t\":\"1358724695481\",\"e\":\"8\"}]','2013-01-21 05:01:35',1,'2013-01-21 05:01:24',NULL,25,1,2);
+	(3,7,'[\"1\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"0\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"3\"]',2,'[1291,0,0,0,0,0,0,0,0,664,0,0,0,0,0,3824,0,0,0,0,0,0,0,0,2909]',NULL,'[{\"t\":\"1358724686758\",\"e\":\"10\"},{\"t\":\"1358724686781\",\"e\":\"3\",\"q\":\"33\"},{\"t\":\"1358724687612\",\"e\":\"0\",\"q\":\"33\",\"o\":\"1\"},{\"t\":\"1358724688072\",\"e\":\"4\",\"q\":\"33\"},{\"t\":\"1358724688076\",\"e\":\"3\",\"q\":\"42\"},{\"t\":\"1358724688740\",\"e\":\"4\",\"q\":\"42\"},{\"t\":\"1358724688742\",\"e\":\"3\",\"q\":\"48\"},{\"t\":\"1358724690674\",\"e\":\"0\",\"q\":\"48\",\"o\":\"0\"},{\"t\":\"1358724692566\",\"e\":\"4\",\"q\":\"48\"},{\"t\":\"1358724692572\",\"e\":\"3\",\"q\":\"57\"},{\"t\":\"1358724694035\",\"e\":\"0\",\"q\":\"57\",\"o\":\"3\"},{\"t\":\"1358724695481\",\"e\":\"4\",\"q\":\"57\"},{\"t\":\"1358724695481\",\"e\":\"8\"}]','2013-01-21 05:01:35',1,'2013-01-21 05:01:24',NULL,25,1,2),
+	(4,4,NULL,0,NULL,NULL,NULL,NULL,1,'2013-01-21 07:46:14',NULL,NULL,0,0);
 
 /*!40000 ALTER TABLE `results` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -1305,12 +1282,11 @@ CREATE TABLE `roles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `roles` WRITE;
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
-
-INSERT INTO `roles` (`id`, `name`)
+INSERT INTO `roles` (`id`,`name`)
 VALUES
 	(1,'Admin'),
 	(2,'student'),
@@ -1331,12 +1307,11 @@ CREATE TABLE `section_l1` (
   `longName` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `streamId` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `section_l1` WRITE;
 /*!40000 ALTER TABLE `section_l1` DISABLE KEYS */;
-
-INSERT INTO `section_l1` (`id`, `displayName`, `longName`, `streamId`)
+INSERT INTO `section_l1` (`id`,`displayName`,`longName`,`streamId`)
 VALUES
 	(1,'Maths','NULL','1'),
 	(2,'Physics','NULL','1'),
@@ -1363,12 +1338,11 @@ CREATE TABLE `section_l2` (
   `weightage` float DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `l1Id` (`l1Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `section_l2` WRITE;
 /*!40000 ALTER TABLE `section_l2` DISABLE KEYS */;
-
-INSERT INTO `section_l2` (`id`, `displayName`, `longName`, `l1Id`, `streamId`, `weightage`)
+INSERT INTO `section_l2` (`id`,`displayName`,`longName`,`l1Id`,`streamId`,`weightage`)
 VALUES
 	(1,'Algebra','NULL',1,1,0.25),
 	(2,'Trigonometry','NULL',1,1,0.25),
@@ -1419,12 +1393,11 @@ CREATE TABLE `section_l3` (
   `streamId` int(11) DEFAULT NULL,
   `weightage` float DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=178 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `section_l3` WRITE;
 /*!40000 ALTER TABLE `section_l3` DISABLE KEYS */;
-
-INSERT INTO `section_l3` (`id`, `displayName`, `longName`, `l2Id`, `streamId`, `weightage`)
+INSERT INTO `section_l3` (`id`,`displayName`,`longName`,`l2Id`,`streamId`,`weightage`)
 VALUES
 	(1,'Sets, Relations & Functions','',1,1,0.1),
 	(2,'Equations','',1,1,0.1),
@@ -1621,12 +1594,11 @@ CREATE TABLE `streams` (
   `quizIds` text,
   `sampleQuizIds` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `streams` WRITE;
 /*!40000 ALTER TABLE `streams` DISABLE KEYS */;
-
-INSERT INTO `streams` (`id`, `displayName`, `topFacultyIds`, `basicInfo`, `quizIds`, `sampleQuizIds`)
+INSERT INTO `streams` (`id`,`displayName`,`topFacultyIds`,`basicInfo`,`quizIds`,`sampleQuizIds`)
 VALUES
 	(1,'Engineering',NULL,NULL,NULL,NULL),
 	(2,'Medical',NULL,NULL,NULL,NULL),
@@ -1653,10 +1625,9 @@ CREATE TABLE `students` (
 
 LOCK TABLES `students` WRITE;
 /*!40000 ALTER TABLE `students` DISABLE KEYS */;
-
-INSERT INTO `students` (`ascoreL1`, `ascoreL2`, `quizzesAttempted`, `accountId`, `streamId`)
+INSERT INTO `students` (`ascoreL1`,`ascoreL2`,`quizzesAttempted`,`accountId`,`streamId`)
 VALUES
-	(0,0,'[\"1\"]',4,1),
+	(0,0,'[\"1\",\"4\"]',4,1),
 	(0,0,NULL,5,1),
 	(0,0,'[\"1\",\"2\",\"3\"]',7,1);
 
@@ -1665,9 +1636,12 @@ UNLOCK TABLES;
 
 
 
+
+
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
