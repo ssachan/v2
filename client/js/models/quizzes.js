@@ -166,6 +166,7 @@ window.Quiz = Backbone.Model.extend({
      */
     submitPracticeQuestion: function () {
         var url = Config.serverUrl + 'submitPractice';
+        var that = this;
         $.ajax({
             url: url,
             type: 'POST',
