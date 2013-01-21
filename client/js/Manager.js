@@ -8,10 +8,12 @@ var STATUS = {
  * the generic loaders
  */
 $(document).ajaxStart(function() {
-	$('#content').hide();
+	$('body').css({ opacity: 0.5 });
+	//$('#content').hide();
 	$('#loading').show();
 }).ajaxStop(function() {
-	$('#content').show();
+	$('body').css({ opacity: 1 });
+	//$('#content').show();
 	$('#loading').hide();
 });
 
