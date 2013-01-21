@@ -149,6 +149,7 @@ window.Manager = {
 						quizLibrary.reset(data.data);
 					} else {
 						// set the hasAttempted flag to true.
+						quizLibrary.reset();
 						var len = data.data.length;
 						for ( var i = 0; i < len; i++) {
 							var quiz = new Quiz(data.data[i]);
