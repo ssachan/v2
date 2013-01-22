@@ -101,79 +101,78 @@ class lscoreDataObject{
 }
 
 class questionObject{
-public $id = null;
-public $text = null;
-public $options = null;
-public $correctAnswer = null;
-public $explanation = null;
-public $l3Id = null;
-public $typeId = null;
-public $tagIds = null;
-public $difficulty = null;
-public $paraId = null;
-public $resources = null;
-public $averageTimeCorrect = null;
-public $averageTimeIncorrect = null;
-public $averageTimeUnattempted = null;
-public $averageCorrect = null;
-public $averageIncorrect = null;
-public $averageUnattempted = null;
-public $allotedTime = null;
-public $correctScore = null;
-public $incorrectScore = null;
-public $optionInCorrectScore = null;
-public $optionCorrectScore = null;
-public $unattemptedScore = null;
-public $mobileFlag = null;
-public $availableFlag = null;
-public $videoSrc = null;
-public $posterSrc = null;
-public $id = null;
-public $text = null;
-public $options = null;
-public $correctAnswer = null;
-public $explanation = null;
-public $l3Id = null;
-public $typeId = null;
-public $tagIds = null;
-public $difficulty = null;
-public $paraId = null;
-public $resources = null;
-public $averageTimeCorrect = null;
-public $averageTimeIncorrect = null;
-public $averageTimeUnattempted = null;
-public $averageCorrect = null;
-public $averageIncorrect = null;
-public $averageUnattempted = null;
-public $allotedTime = null;
-public $correctScore = null;
-public $incorrectScore = null;
-public $optionScore = null;
-public $unattemptedScore = null;
-public $mobileFlag = null;
-public $availableFlag = null;
+    public $id;
+    public $text;
+    public $options;
+    public $correctAnswer;
+    public $explanation;
+    public $l3Id;
+    public $typeId;
+    public $tagIds;
+    public $difficulty;
+    public $paraId;
+    public $resources;
+    public $averageTimeCorrect;
+    public $averageTimeIncorrect;
+    public $averageTimeUnattempted;
+    public $averageCorrect;
+    public $averageIncorrect;
+    public $averageUnattempted;
+    public $allotedTime;
+    public $correctScore;
+    public $incorrectScore;
+    public $optionInCorrectScore;
+    public $optionCorrectScore;
+    public $unattemptedScore;
+    public $mobileFlag;
+    public $availableFlag;
+    public $videoSrc;
+    public $posterSrc;
 
-function __construct($qid)
-{
-    $this->id = $qid;
-    $getQuestionDetails($this->id);
+    function __construct($qid)
+    {
+        $this->id = $qid;
+        $this->getQuestionDetails($this->id);
+    }
+
+    function getQuestionDetails($qid)
+    {
+        $query = array(
+            "qid" => $qid,
+            "SQL" => "SELECT * FROM questions WHERE id=:qid");
+        $results =  doSQL($query, true);
+        foreach ($results as $key => $value) {
+            $this->{$key} = $value;
+        }
+    }
 }
 
-}
+class abilityScoreObject{
+    
+    public $accountId;
+    public $level;
+    public $id;
 
-function videoList() {
-    $response = array();
-    $accountId = $_GET['accountId'];
-    $quizId = $_GET['quizId'];
-    $streamId = $_GET['streamId'];
+    function getAbilityScore($level, $id, $accountId)
+    {
+            $query = array(
+            "id"=> $this->id,
+            "acid"=> $this->accountId,
+            "SQL" => "SELECT score FROM ascores_".$level." WHERE ".$level."id=:id AND accountId = :acid" );
+            $result = doSQL($query, true);
+            if($result === false)
+                return $this->abilityScoreNotFound($level,$id,$accountId);
+            else
+                return $result->score;
+    }
 }
 
 //>> FRONT-FACING Functions
 function testCode()
 {
-    $sql = "SELECT * FROM questions WHERE id=:qid";
-    var_dump(doSQL($sql,true));
-    /*
+    $var = new questionObject(1);
+
+/*
   for($i=1;$i<=6;$i++)
   {
     $rand = rand(0,10);
@@ -512,60 +511,38 @@ function getUserAbilityLevels($accountId, $l3id)
 {
     $sql = "SELECT l1.id 'l1', l2.id 'l2', l2.weightage 'l2w', l3.weightage 'l3w' FROM " .
            "section_l1 l1, section_l2 l2, section_l3 l3 WHERE l3.id=:l3id AND l3.l2id = l2.id AND l2.l1id = l1.id";
-    $l1id = 0;
-    $l2id = 0;
-    $l2w = 0;
-    $l3w = 0;
-    try {
-        $db = getConnection();
-        $stmt = $db->prepare($sql);
-        $stmt->bindParam("l3id", $l3id);
-        $stmt->execute();
-        $ids = $stmt->fetch(PDO::FETCH_OBJ);
-        $l1id = $ids->l1;
-        $l2id = $ids->l2;
-        $l2w = $ids->l2w;
-        $l3w = $ids->l3w;
-        $db = null;
+        
+    $query= array(
+        "l3id"=> $l3id,
+        "SQL"=>$sql);
 
-    } catch (PDOException $e) {
-        phpLog($e->getMessage());
-    }
+    $ids = doSQL($query, true);
     
     $score = new stdClass();
-    $score->l1id = $l1id;
-    $score->l2id = $l2id;
-    $score->l3id = $l3id;
+    $score->l1id = $ids->l1;
+    $score->l2id = $ids->l2;
+    $score->l3id = $ids->l3;
     $score->l1score = getAbilityScore("l1",$l1id,$accountId);
     $score->l2score = getAbilityScore("l2",$l2id,$accountId);
     $score->l3score = getAbilityScore("l3",$l3id,$accountId);
-    $score->l2weightage = $l2w;
-    $score->l3weightage = $l3w;
+    $score->l2weightage = $ids->l2w;
+    $score->l3weightage = $ids->l3w;
 
     return $score;
 }
 
 function getAbilityScore($level, $id, $accountId)
 {
-    $sql = "SELECT score FROM ascores_".$level." WHERE ".$level."id=:id AND accountId = :acid"; 
-   try {
-        $db = getConnection();
-        $stmt = $db->prepare($sql);
-        $stmt->bindParam("id", $id);
-        $stmt->bindParam("acid", $accountId);
-        $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_OBJ);
-        $db = null;
+        $query = array(
+        "id"=> $id,
+        "acid"=> $accountId,
+        "SQL" => "SELECT score FROM ascores_".$level." WHERE ".$level."id=:id AND accountId = :acid" );
+        $result = doSQL($query, true);
+
         if($result === false)
             return abilityScoreNotFound($level,$id,$accountId);
         else
             return $result->score;
-
-    } catch (PDOException $e) {
-        //in case the ability score does not exist
-        
-        phpLog($e->getMessage());
-    }
 }
 
 function abilityScoreNotFound($level,$id,$accountId)
@@ -575,22 +552,15 @@ function abilityScoreNotFound($level,$id,$accountId)
     //$defaultScore = analConst::ABILITY_DEFAULT_SCORE;
     $defaultScore = rand(20,90);
      $sql = "INSERT INTO ascores_".$level." (accountId, score, updatedOn, ".$level."id, numQuestions, numCorrect, numIncorrect, numUnattempted, streamId) VALUES (:acid,:score,:timeStamp,:id,0,0,0,0,:streamId)";
-    try {
-        $db = getConnection();
-        $stmt = $db->prepare($sql);
-        $stmt->bindParam("acid", $accountId);
-        $stmt->bindParam("id", $id);
-        $stmt->bindParam("timeStamp", $date);
-        $stmt->bindParam("streamId",$streamId);
-        $stmt->bindParam("score", $defaultScore);
-        $stmt->execute();
-        $db = null;
-        return $defaultScore;
-    } catch (PDOException $e) {
-        $response["status"] = ERROR;
-        $response["data"] = EXCEPTION_MSG;
-        phpLog($e->getMessage());
-    }
+        $query = array(
+        "acid"=> $accountId,
+        "id"=> $id,
+        "timeStamp"=> $date,
+        "streamId"=>$streamId,
+        "score"=> $defaultScore,
+        "SQL"=>$sql);
+    doSQL($query,false);
+    return $defaultScore;
 }
 
 function updateScore($accountId, $delta, $userAbility, $state)
@@ -616,76 +586,44 @@ function updateAbility($accountId,$level,$id,$delta,$state)
             break;
     }
     $sql = "UPDATE ascores_".$level." SET numQuestions = numQuestions + 1,".$switched." score = score + :delta, updatedOn = :timeStamp WHERE accountId = :acid AND ".$level."id = :id";
-    try {
-        $db = getConnection();
-        $stmt = $db->prepare($sql);
-        $stmt->bindParam("acid", $accountId);
-        $stmt->bindParam("id", $id);
-        $stmt->bindParam("timeStamp", $date);
-        $stmt->bindParam("delta", $delta);
-        $stmt->execute();
-        $db = null;
-    } catch (PDOException $e) {
-        $response["status"] = ERROR;
-        $response["data"] = EXCEPTION_MSG;
-        phpLog($e->getMessage());
-    }
+    
+    $query = array("acid" => $accountId,
+        "id" => $id,
+        "timeStamp" => $date,
+        "delta" => $delta,
+        "SQL" => $sql);
+    doSQL($query, false);
+    
 }
 //<< END RETRIEVING, UPDATING SCORES AND ABILITY
 
 //>> QUIZ/QUESTION DETAIL RETRIEVERS
 function getStateOfQuiz($accountId, $quizId)
 {
-    $sql = "SELECT state,attemptedAs from results where accountId=:accountId and quizId=:quizId";
-    $previousState = null;
-    $attemptedAs = null;
-    try {
-        $db = getConnection();
-        $stmt = $db->prepare($sql);
-        $stmt->bindParam("accountId", $accountId);
-        $stmt->bindParam("quizId", $quizId);
-        $stmt->execute();
-        $record = $stmt->fetch(PDO::FETCH_OBJ);
-        $previousState = $record->state;
-        $attemptedAs = $record->attemptedAs;
-    } catch (PDOException $e) {
-        phpLog($e->getMessage());
-    }
-    return array("state"=>$previousState,"attemptedAs"=>$attemptedAs);
- // Code to get state and attempted as if needed.
+    $query = array(
+            "accountId"=> $accountId,
+            "quizId"=> $quizId,
+            "SQL" => "SELECT state as s,attemptedAs as a from results where accountId=:accountId and quizId=:quizId");
+    $record = doSQL($query, true);
+    return array("state"=>$record->s,"attemptedAs"=>$record->a);
 }
 
 function setStateOfQuiz($accountId, $quizId, $state)
 {
-    $sql = "UPDATE results SET state=:state where accountId=:accountId and quizId=:quizId";
-    try {
-        $db = getConnection();
-        $stmt = $db->prepare($sql);
-        $stmt->bindParam("accountId", $accountId);
-        $stmt->bindParam("quizId", $quizId);
-        $stmt->bindParam("state", $state);
-        $stmt->execute();
-        $db=null;
-    } catch (PDOException $e) {
-        phpLog($e->getMessage());
-    }
+        $query = array(
+            "accountId"=> $accountId,
+            "quizId"=> $quizId,
+            "state"=> $state,
+            "SQL"=>"UPDATE results SET state=:state where accountId=:accountId and quizId=:quizId");
+        doSQL($query, false);
 }
 
 function getQuestionDetails($qid)
 {
-    $sql = "SELECT * FROM questions WHERE id=:qid";
-    try {
-        $db = getConnection();
-        $stmt = $db->prepare($sql);
-        $stmt->bindParam("qid", $qid);
-        $stmt->execute();
-        $results = $stmt->fetch(PDO::FETCH_OBJ);        
-        $db = null;
-        return $results;
-
-    } catch (PDOException $e) {
-        phpLog($e->getMessage());
-    }
+    $query = array(
+        "qid" => $qid,
+        "SQL" => "SELECT * FROM questions WHERE id=:qid");
+    return doSQL($query, true);
 }
 
 function doSQL($params,$returnsData)
@@ -724,129 +662,83 @@ function splitLogsByQuestion($logData)
 function updateResultsTable($accountId, $quizId, $logs)
 {
     $date = date("Y-m-d H:i:s", time());  // tanujb:TODO: arbitrary?????
-
-    $sql = "UPDATE results SET timestamp=:timeStamp, data=:data where accountId=:accountId and quizId=:quizId";
-    try {
-        $logsJSON = json_encode($logs);
-        $db = getConnection();
-        $stmt = $db->prepare($sql);
-        $stmt->bindParam("accountId", $accountId);
-        $stmt->bindParam("quizId", $quizId);
-        $stmt->bindParam("timeStamp", $date);
-        $stmt->bindParam("data", $logsJSON);
-        $stmt->execute();
-        $db = null;
-    } catch (PDOException $e) {
-        $response["status"] = ERROR;
-        $response["data"] = EXCEPTION_MSG;
-        phpLog($e->getMessage());
-    }
+    $query = array(
+        "accountId"=> $accountId,
+        "quizId"=> $quizId,
+        "timeStamp"=> $date,
+        "data"=> json_encode($logs),
+        "SQL" => "UPDATE results SET timestamp=:timeStamp, data=:data where accountId=:accountId and quizId=:quizId");
+    doSQL($query, false);
 }
 
 function updateUserResponseinResultsTable($accountId, $quizId, $selectedAnswers, $timePerQuestion)
 {
     $date = date("Y-m-d H:i:s", time());  // tanujb:TODO: arbitrary?????
 
-    $sql = "UPDATE results SET selectedAnswers = :selectedAnswers, timePerQuestion = :timePerQuestion where accountId=:accountId and quizId=:quizId";
-    try {
-        $db = getConnection();
-        $stmt = $db->prepare($sql);
-        $stmt->bindParam("accountId", $accountId);
-        $stmt->bindParam("quizId", $quizId);
-        //$stmt->bindParam("selectedAnswers", json_encode($selectedAnswers));
-        //$stmt->bindParam("timePerQuestion", json_encode($timePerQuestion));
-        $stmt->bindParam("selectedAnswers", $selectedAnswers);
-        $stmt->bindParam("timePerQuestion", $timePerQuestion);
-        $stmt->execute();
-        $db = null;
-    } catch (PDOException $e) {
-        $response["status"] = ERROR;
-        $response["data"] = EXCEPTION_MSG;
-        phpLog($e->getMessage());
-    }
+    
+   $query = array(
+        "accountId" => $accountId,
+        "quizId" => $quizId,
+        "selectedAnswers" => $selectedAnswers,
+        "timePerQuestion" => $timePerQuestion,
+        "SQL" => "UPDATE results SET selectedAnswers = :selectedAnswers, timePerQuestion = :timePerQuestion where accountId=:accountId and quizId=:quizId" );
+   doSQL($query, false);
 }
 function updateScoreinResultsTable($accountId, $quizId, $score, $numCorrect, $numIncorrect)
 {
-    $sql = "UPDATE results SET score = :s, numCorrect = :c, numIncorrect = :i where accountId=:accountId and quizId=:quizId";
-    try {
-        $db = getConnection();
-        $stmt = $db->prepare($sql);
-        $stmt->bindParam("accountId", $accountId);
-        $stmt->bindParam("quizId", $quizId);
-        $stmt->bindParam("s", $score);
-        $stmt->bindParam("c", $numCorrect);
-        $stmt->bindParam("i", $numIncorrect);
-        $stmt->execute();
-        $db = null;
-    } catch (PDOException $e) {
-        $response["status"] = ERROR;
-        $response["data"] = EXCEPTION_MSG;
-        phpLog($e->getMessage());
-    }
+   $query = array( 
+        "accountId"=> $accountId,
+        "quizId"=> $quizId,
+        "s"=> $score,
+        "c"=> $numCorrect,
+        "i"=> $numIncorrect,
+        "SQL" => "UPDATE results SET score = :s, numCorrect = :c, numIncorrect = :i where accountId=:accountId and quizId=:quizId");
+    doSQL($query, false);
 }
 function updateScoreinResultsTableBy($accountId, $quizId, $score, $numCorrect, $numIncorrect)
 {
-    $sql = "UPDATE results SET score =  score + :s, numCorrect = numCorrect + :c, numIncorrect = numIncorrect +  :i where accountId=:accountId and quizId=:quizId";
-    try {
-        $db = getConnection();
-        $stmt = $db->prepare($sql);
-        $stmt->bindParam("accountId", $accountId);
-        $stmt->bindParam("quizId", $quizId);
-        $stmt->bindParam("s", $score);
-        $stmt->bindParam("c", $numCorrect);
-        $stmt->bindParam("i", $numIncorrect);
-        $stmt->execute();
-        $db = null;
-    } catch (PDOException $e) {
-        $response["status"] = ERROR;
-        $response["data"] = EXCEPTION_MSG;
-        phpLog($e->getMessage());
-    }
+    $query = array( 
+        "accountId"=> $accountId,
+        "quizId"=> $quizId,
+        "s"=> $score,
+        "c"=> $numCorrect,
+        "i"=> $numIncorrect,
+        "SQL" => "UPDATE results SET score = score + :s, numCorrect = numCorrect + :c, numIncorrect = numIncorrect + :i where accountId=:accountId and quizId=:quizId");
+    doSQL($query, false);
 }
 function getUserResponseFromResultsTable($accountId, $quizId)
 {
-    $sql = "SELECT selectedAnswers s, timePerQuestion t, score sc, numCorrect c, numIncorrect i FROM results WHERE accountId =:accountId AND quizID = :quizId";
-    try{
-        $db = getConnection();
-        $stmt = $db->prepare($sql);
-        $stmt->bindParam("accountId", $accountId);
-        $stmt->bindParam("quizId", $quizId);
-        $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_OBJ);
-        $db = null;
-        $s = json_decode($result->s);
-        $t = json_decode($result->t);
-        return array($s, $t, $result->sc, $result->c, $result->i);
-    }
-    catch (PDOException $e){
-        //
-    }
+    $query = array(
+        "acid" => $accountId,
+        "qid" => $qid,
+        "SQL" => "SELECT selectedAnswers s, timePerQuestion t, score sc, numCorrect c, numIncorrect i FROM results WHERE accountId =:acid AND quizID = :qid");
+        
+        $result = doSQL($query,true);
+
+        return array(
+            json_decode($result->s),
+            json_decode($result->t),
+            $result->sc,
+            $result->c,
+            $result->i );
 }
 
 function insertIntoResponsesTable($accountId, $qid, $optionText, $timeTaken,$abilityScore,$delta,$state)
 {
     $date = date("Y-m-d H:i:s", time());
 
-    $sql = "INSERT INTO responses (accountId,questionID, optionSelected, timeTaken, abilityScoreBefore, delta, status, timestamp) VALUES (:accountId,:qid,:otxt,:ttk,:ascore,:delta,:sts,:tstmp)";
-    try {
-        $db = getConnection();
-        $stmt = $db->prepare($sql);
-        $stmt->bindParam("accountId", $accountId);
-        $stmt->bindParam("qid", $qid);
-        $stmt->bindParam("tstmp", $date);
-        $stmt->bindParam("otxt", $optionText);
-        $stmt->bindParam("ttk", $timeTaken);
-        $stmt->bindParam("ascore", $abilityScore);
-        $stmt->bindParam("delta", $delta);
-        $stmt->bindParam("sts", $state);
-        
-        $stmt->execute();
-        $db = null;
-    } catch (PDOException $e) {
-        $response["status"] = ERROR;
-        $response["data"] = EXCEPTION_MSG;
-        phpLog($e->getMessage());
-    }
+    $query = array(
+        "accountId"=> $accountId,
+        "qid"=> $qid,
+        "tstmp"=> $date,
+        "otxt"=> $optionText,
+        "ttk"=> $timeTaken,
+        "ascore"=> $abilityScore,
+        "delta"=> $delta,
+        "sts"=> $state,
+        "SQL" => "INSERT INTO responses (accountId,questionID, optionSelected, timeTaken, abilityScoreBefore, delta, status, timestamp) VALUES (:accountId,:qid,:otxt,:ttk,:ascore,:delta,:sts,:tstmp)"
+        );
+    doSQL($query,false);
 }
 //<< END FUNCTIONS THAT OPERATE ON RAW LOGS
 
@@ -895,20 +787,11 @@ function getFinalOptionArray($questionData)
 
 function getQuestionIdsForQuiz($quizId)
 {
-    $questionIds = "";
-    $sql = "SELECT questionIds FROM quizzes WHERE id=:id ";
-    try {
-        $db = getConnection();
-        $stmt = $db->prepare($sql);
-        $stmt->bindParam("id", $quizId);
-        $stmt->execute();
-        $questionIds = $stmt->fetch(PDO::FETCH_OBJ);
-        $db = null;
-        return explode("|:",$questionIds->questionIds);
-
-    } catch (PDOException $e) {
-        phpLog($e->getMessage());
-    }
+    $query = array(
+        "id"=>$quizID,
+        "SQL"=>"SELECT questionIds FROM quizzes WHERE id=:id ");
+    
+        return explode("|:",doSQL($query, true));
 }
 
 function getOptionTextFromArray($optionsArray)
@@ -1095,18 +978,12 @@ function returnQuestionData()
 {
     $accountId = $_POST['accountId']; 
     $qid = $_POST['qid'];
-    $sql = "select optionSelected as o, timeTaken as t, abilityScoreBefore as a, delta as d, MAX(timeStamp) as m from responses where accountId = :acid AND questionId = :qid GROUP BY questionId";
+    
+    $query = array(
+        "acid"=>$accountId,
+        "qid"=>$qid,
+        "SQL"=>"select optionSelected as o, timeTaken as t, abilityScoreBefore as a, delta as d, MAX(timeStamp) as m from responses where accountId = :acid AND questionId = :qid GROUP BY questionId");
 
-    try {
-        $db = getConnection();
-        $stmt = $db->prepare($sql);
-        $stmt->bindParam("acid", $accountId);
-        $stmt->bindParam("qid", $qid);
-        $stmt->execute();
-        $record = $stmt->fetch(PDO::FETCH_OBJ);
-    } catch (PDOException $e) {
-        phpLog($e->getMessage());
-    }
     $response["status"] = SUCCESS;
     $response["data"] = $record;
     sendResponse($response);
@@ -1114,19 +991,12 @@ function returnQuestionData()
 
 function getQuestionResponse($accountId, $qid)
 {
-    $sql = "select optionSelected as o, timeTaken as t, abilityScoreBefore as a, delta as d, MAX(timeStamp) as m, status as s FROM responses WHERE accountId = :acid AND questionId = :qid GROUP BY questionId";
-
-    try {
-        $db = getConnection();
-        $stmt = $db->prepare($sql);
-        $stmt->bindParam("acid", $accountId);
-        $stmt->bindParam("qid", $qid);
-        $stmt->execute();
-        $record = $stmt->fetch(PDO::FETCH_OBJ);
-        return $record;
-    } catch (PDOException $e) {
-        phpLog($e->getMessage());
-    }
+    $query = array(
+        "acid"=>$accountId,
+        "qid"=>$qid,
+        "SQL"=>"SELECT optionSelected as o, timeTaken as t, abilityScoreBefore as a, delta as d, MAX(timeStamp) as m, status as s FROM responses WHERE accountId = :acid AND questionId = :qid GROUP BY questionId"
+        );
+    return doSQL($query, true);
 }
 //<< QUESTION EVALAUATION FUNCTIONS END
 
@@ -1180,31 +1050,28 @@ function getL3GraphData($accountId, $qDetailsRecord, $state, $delta, $userAbilit
     return $temp;
 }
 
-function generateWeightage($l2id)
+function generateWeightage($lid)
 {
-    $sql = "select count(*) c from section_l2 where l1id = :l2id";
-    $db = getConnection();
-    $stmt = $db->prepare($sql);
-    $stmt->bindParam("l2id", $l2id);
-    $stmt->execute();
-    $results = $stmt->fetch(PDO::FETCH_OBJ);
+    $query = array(
+        "lid"=>$lid,
+        "SQL"=>"SELECT count(*) c FROM section_l2 WHERE l1id = :lid");
+    $results = doSql($query,true);
+    
     $weightage = 1/($results->c);
-    $sql = "update section_l2 set weightage = ".$weightage." where l1id = :l2id";
-    $stmt = $db->prepare($sql);
-    $stmt->bindParam("l2id", $l2id);
-    $stmt->execute();
-    $db = null;
+
+    $query = array(
+        "wt"=>$weightage,
+        "lid"=>$lid,
+        "SQL"=>"update section_l2 set weightage =:wt where l1id = :l2id");
+    doSQL($query, false);
 }
 
 function getPQ($accountId)
 {
-    $sql = "select avg(score) as s from ascores_l1 where accountId = :acid";
-    $db = getConnection();
-    $stmt = $db->prepare($sql);
-    $stmt->bindParam("acid", $accountId);
-    $stmt->execute();
-    $results = $stmt->fetch(PDO::FETCH_OBJ);
-    $db = null;   
+    $query = array(
+        "acid"=>$accountId,
+        "SQL"=>"select avg(score) as s from ascores_l1 where accountId = :acid");
+    $results = doSQL($query, true);
     return $results->s;
 }
 
