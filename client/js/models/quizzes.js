@@ -183,11 +183,7 @@ window.Quiz = Backbone.Model.extend({
                 // tanujb:TODO :what does this code do?
                 //I need to forward the data coming from here to ResultsView
                 if (data.status == STATUS.SUCCESS) {
-                	if ($.inArray(that.get('id'), account
-							.get('quizzesAttemptedArray')) == -1) {
-                		quizHistory.unshift(that);
-                    	account.get('quizzesAttemptedArray').unshift(that.get('id'));
-                	}
+                
                 } else {
                     helper.showError(data.data);
                 }
@@ -260,8 +256,6 @@ window.Quiz = Backbone.Model.extend({
                 // tanujb:TODO :what does this code do?
                 //I need to forward the data coming from here to ResultsView
                 if (data.status == STATUS.SUCCESS) {
-                    quizHistory.unshift(that);
-                    account.get('quizzesAttemptedArray').unshift(that.get('id'));
                     if (that.get('status') == that.STATUS_COMPLETED) {
                         that.set(data.data);
                         that.get('selectedAnswersArray').push.apply(that.get('selectedAnswersArray'), JSON.parse(
