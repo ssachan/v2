@@ -368,10 +368,15 @@ window.Manager = {
 				success : function(data) {
 					if (data.status == STATUS.SUCCESS) {
 						quizQuestions.reset(data.data);
+						if ($.inArray(quiz.get('id'), account
+								.get('quizzesAttemptedArray')) == -1) {
+	                		quizHistory.unshift(quiz);
+	                    	account.get('quizzesAttemptedArray').unshift(quiz.get('id'));
+	                	}
 					} else { // If not, send them back to the home page
 						helper.showError(data.data);
 					}
-				}
+				},
 			});
 		}
 	},
