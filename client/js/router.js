@@ -66,6 +66,9 @@ var AppRouter = Backbone.Router.extend({
 		this.footerView = new FooterView({
 			el : $('footer'),
 		});
+		if(account.get('id')!=null){
+			$('#signup-menu>a').html('Log Out');
+		}
 	},
 
 	landing : function() {
@@ -81,11 +84,9 @@ var AppRouter = Backbone.Router.extend({
 		if(account.get('id')!=null){
 			Manager.getDashboardData();
 			$('#signup-menu>a').html('Log Out');
-			$('#myprepset-menu').show();
 		}else{
 			window.location = '#landing';
 			$('#signup-menu>a').html('Sign Up');
-			$('#myprepset-menu').hide();
 		}
 	},
 

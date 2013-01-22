@@ -603,23 +603,30 @@ window.drawDonutChart = function(divId) {
 			}
 		},
 		tooltip : {
-			valueSuffix : ''
+			valueSuffix : '',
+			formatter : function() {
+				if(this.series.name=='L1'){
+					return this.y >0 ? this.point.name+'('+this.point.y+')' : null;
+				}else{
+					return this.y >0 ? this.point.name+'<br>Total Questions :'+this.point.a+'' : null;
+				}
+			},
 		},
 		series : [
 				{
-					name : 'Questions',
+					name : 'L1',
 					data : browserData,
 					size : '60%',
 					dataLabels : {
 						formatter : function() {
-							return this.y >=0 ? this.point.name : null;
+							return this.y >0 ? this.point.name+'('+this.point.y+')' : null;
 						},
 						color : 'white',
 	                    distance: -30
 					}
 				},
 				{
-					name : 'Questions',
+					name : 'L2',
 					data : versionsData,
 					innerSize : '60%',
 					dataLabels : {
@@ -629,14 +636,7 @@ window.drawDonutChart = function(divId) {
 									+ ':</b> ' + this.point.a + '' : null;
 						},
 					},
-					tooltip : {
-						formatter : function() {
-							// display only if larger than 1
-							return this.point.a >=1 ? '<b>' + this.point.name
-									+ ':</b> ' + this.point.a + '' : null;
-						},
-					}
-				
+					
 				} ]
 	});
 };
