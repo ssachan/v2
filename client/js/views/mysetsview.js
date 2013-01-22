@@ -6,7 +6,6 @@
  */
 
 window.MySetsView = Backbone.View.extend({
-	className : "container mysets",
 	
 	initialize : function() {
 		this.historyView = new HistoryView({collection:this.collection});
