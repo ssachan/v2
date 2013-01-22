@@ -98,6 +98,66 @@ class lscoreDataObject{
         $this->numQ += 1;
         $this->delta += $deltaForQuestion;
     }
+}
+
+class questionObject{
+public $id = null;
+public $text = null;
+public $options = null;
+public $correctAnswer = null;
+public $explanation = null;
+public $l3Id = null;
+public $typeId = null;
+public $tagIds = null;
+public $difficulty = null;
+public $paraId = null;
+public $resources = null;
+public $averageTimeCorrect = null;
+public $averageTimeIncorrect = null;
+public $averageTimeUnattempted = null;
+public $averageCorrect = null;
+public $averageIncorrect = null;
+public $averageUnattempted = null;
+public $allotedTime = null;
+public $correctScore = null;
+public $incorrectScore = null;
+public $optionInCorrectScore = null;
+public $optionCorrectScore = null;
+public $unattemptedScore = null;
+public $mobileFlag = null;
+public $availableFlag = null;
+public $videoSrc = null;
+public $posterSrc = null;
+public $id = null;
+public $text = null;
+public $options = null;
+public $correctAnswer = null;
+public $explanation = null;
+public $l3Id = null;
+public $typeId = null;
+public $tagIds = null;
+public $difficulty = null;
+public $paraId = null;
+public $resources = null;
+public $averageTimeCorrect = null;
+public $averageTimeIncorrect = null;
+public $averageTimeUnattempted = null;
+public $averageCorrect = null;
+public $averageIncorrect = null;
+public $averageUnattempted = null;
+public $allotedTime = null;
+public $correctScore = null;
+public $incorrectScore = null;
+public $optionScore = null;
+public $unattemptedScore = null;
+public $mobileFlag = null;
+public $availableFlag = null;
+
+function __construct($qid)
+{
+    $this->id = $qid;
+    $getQuestionDetails($this->id);
+}
 
 }
 
@@ -106,13 +166,13 @@ function videoList() {
     $accountId = $_GET['accountId'];
     $quizId = $_GET['quizId'];
     $streamId = $_GET['streamId'];
-
 }
 
 //>> FRONT-FACING Functions
 function testCode()
 {
-    updateScoreinResultsTableBy(4,5, 1, 1, 0);
+    $sql = "SELECT * FROM questions WHERE id=:qid";
+    var_dump(doSQL($sql,true));
     /*
   for($i=1;$i<=6;$i++)
   {
@@ -174,7 +234,7 @@ function updateResults()
     }
 }
 function processPractice()
-{    
+{
     if($_POST["isLast"] == '1')
     {
         $response2 = practiceResultsView();
@@ -192,6 +252,7 @@ function practiceResultsView()
     $accountId = $_POST['accountId']; 
     $quizId = $_POST['quizId'];
     $questionIds = getQuestionIdsForQuiz($quizId);
+
     $maxScore = 0;
     $numCorrect = 0;
     $numIncorrect = 0;
@@ -202,6 +263,7 @@ function practiceResultsView()
     $aScoreRecord= array();
     $l3GraphData = null;
     $qDetails = array();
+
     foreach($questionIds as $key=>$qid)
     {
         //echo "The question id is".$qid;
@@ -612,8 +674,6 @@ function setStateOfQuiz($accountId, $quizId, $state)
 function getQuestionDetails($qid)
 {
     $sql = "SELECT * FROM questions WHERE id=:qid";
-    $l1id = 0;
-    $l2id = 0;
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
@@ -625,6 +685,28 @@ function getQuestionDetails($qid)
 
     } catch (PDOException $e) {
         phpLog($e->getMessage());
+    }
+}
+
+function doSQL($params,$returnsData)
+{
+    $sql = array_pop($params);
+   try{
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        foreach ($params as $key => $value) {
+            $stmt->bindParam($key,$value);
+        }
+        $stmt->execute();
+        $db = null;
+        if($returnsData == true)
+        {
+            $results = $stmt->fetch(PDO::FETCH_OBJ);        
+            return $results;
+        }
+    }
+    catch (PDOException $e) {
+        phpLog("doSqlError:".$sql.$e->getMessage());
     }
 }
 //<< END QUIZ/QUESTION DETAIL RETRIEVERS
@@ -999,6 +1081,7 @@ function evalIncorrect($qDetails,$userAbility,$timeTaken)
     $delta = $qDetails->incorrectScore; //add factor
     return $delta;
 }
+
 function adjustDelta($qDetails,$userAbility,$timeTaken,$delta,$state,$attemptedAs)
 {
     if($attemptedAs == analConst::ATTEMPTED_AS_PRACTICE)
