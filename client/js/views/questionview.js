@@ -349,7 +349,6 @@ window.QuizQuestionView = Backbone.View.extend({
         	break;
         	
         }
-        
         $('#stathead').html(html.join(' '));
         $('#diff').html(this.model.get('difficulty'));
         $('#avgAcc').html('30%');
