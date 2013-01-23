@@ -1454,8 +1454,10 @@ Clickable Lists
     float: none !important;
     margin: auto 0px;
     padding: 0;
-    border: 1px solid #e5e5e5 !important;
+    border-left: 1px solid #e5e5e5 !important;
     height: 100%;
+    border-right: 1px solid #e5e5e5 !important;
+    border-bottom: 1px solid #e5e5e5 !important;
 }
 
 .c-list>li.unc>a {
@@ -1463,7 +1465,7 @@ Clickable Lists
     width: 190px \9;
     margin: 0 0 -1px;
     padding: 15px 5px;
-    border-bottom: 2px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
     cursor: default;
 }
 
@@ -1484,7 +1486,7 @@ Clickable Lists
     width: 190px \9;
     margin: 0 0 -1px;
     padding: 20px 30px;
-    border-bottom: 2px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
 }
 
 .c-list>li {
