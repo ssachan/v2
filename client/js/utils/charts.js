@@ -61,7 +61,7 @@ window.drawTimeChart = function(quiz) {
 	var len = questionIds.length;
 	for ( var i = 0; i < len; i++) {
 		var question = quizQuestions.get(questionIds[i]);
-		var timeTaken = timePerQuestion[i];// question.get('timeTaken');
+		var timeTaken = parseInt(timePerQuestion[i])/1000;// question.get('timeTaken');
 		if (timeTaken == null) {
 			series.data.push({
 				x : i + 1,
