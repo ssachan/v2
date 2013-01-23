@@ -120,11 +120,9 @@ window.Manager = {
         var dfd = [this.getTopics("l1", id), this.getTopics("l2", id),
         this.getTopics("l3", id)];
         var pakka = new jQuery.Deferred();
-
         $.when.apply(null, dfd).then(function (data) {
             pakka.resolve("Subjects Fetched");
         });
-
         return pakka.promise();
     },
 
@@ -171,7 +169,7 @@ window.Manager = {
                         for (var i = 0; i < len; i++) {
                             var quiz = new Quiz(data.data[i]);
                             if (!account.get('quizzesAttemptedArray')) {
-                            	account.set('quizzesAttemptedArray',[]);
+                                account.set('quizzesAttemptedArray', []);
                             }
                             if ($.inArray(quiz.get('id'), account.get('quizzesAttemptedArray')) != -1) {
                                 quiz.set('hasAttempted', true);
@@ -223,7 +221,6 @@ window.Manager = {
                     });
                     app.showView('#content', facDirectoryView);
                     facDirectoryView.onRender();
-
                 } else { // If not, send them back to the home page
                     helper.showError(data.data);
                 }
@@ -430,7 +427,7 @@ window.Manager = {
                     activeQuiz = new Quiz(data.data.quiz);
                     quizQuestions.reset(data.data.questions);
                     if (!account.get('quizzesAttemptedArray')) {
-                    	account.set('quizzesAttemptedArray',[]);
+                        account.set('quizzesAttemptedArray', []);
                     }
                     if ($.inArray(activeQuiz.get('id'), account.get('quizzesAttemptedArray')) == -1) {
                         quizHistory.unshift(activeQuiz);
@@ -477,7 +474,7 @@ window.Manager = {
         }
     },
 	*/
-    
+
     getDataForMySets: function () {
         var dfd = [];
         if (!(activeView instanceof DashboardView)) {
