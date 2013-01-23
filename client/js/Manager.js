@@ -104,6 +104,12 @@ window.Manager = {
                             break;
                         case "l2":
                             scoreL2.reset(data.data);
+                            var totalQuestions = 0;
+                            // calculate totalQuestions attempted
+                        	for(var i = 0; i< scoreL2.length; i++){
+                        		totalQuestions=+ parseInt(scoreL2.models[i].get('numQuestions'));
+                        	}
+                        	account.set('totalQ',totalQuestions);
                             break;
                         case "l3":
                             scoreL3.reset(data.data);
@@ -322,9 +328,18 @@ window.Manager = {
 
         function (data) {
             activeView.switchMenu('rsquare');
-            $('#main-content')
-                .append(
-                '<div class="row-fluid"><div class="page-title"><h2>Results Square</h2></div><br></div>');
+            $('#main-content').append('<div class="row-fluid"><div class="page-title"><h2>Results Square</h2></div><br></div>');
+            var html = [];
+            html.push('<div class="row-fluid"><div class="center span3">');
+            html.push('<strong>How to understand this chart</strong></div>');
+            html.push('<div class="span7 center">');
+            html.push('<div class="span3" style="background: #C4DDDA">Not Started</div>');
+            html.push('<div class="span3" style="background: #FFFDC7">');
+            html.push('Getting There</div>');
+            html.push('<div class="span3" style="background: #FFB58B">Needs Improvement</div>');
+            html.push('<div class="span3" style="background: #B7E6A8">Achiever!</div></div>');
+            html.push('<div class="span1"></div></div>');
+            $('#main-content').append(html.join(''));
             var l1 = sectionL1.models;
             var len = l1.length;
             for (var i = 0; i < len; i++) {
@@ -334,6 +349,7 @@ window.Manager = {
                 $('#main-content').append(pView.render().el);
                 pView.onRender();
             }
+            
         });
     },
 
@@ -441,39 +457,6 @@ window.Manager = {
             },
         });
     },
-
-    /*processQuiz: function (quiz) {
-        // check if the questions are present before hand
-        if (!this.questionsExist(quiz)) {
-            var url = Config.serverUrl + 'processQuiz/';
-            return $.ajax({
-                url: url,
-                type: 'GET',
-                dataType: "json",
-                data: {
-                    quizId: quiz.get('id'),
-                    accountId: account.get('id'),
-                    streamId: streamId
-                },
-                success: function (data) {
-                    if (data.status == STATUS.SUCCESS) {
-                        quizQuestions.reset(data.data.questions);
-                        if (data.data.quiz) {
-
-                        }
-                        if ($.inArray(quiz.get('id'), account.get('quizzesAttemptedArray')) == -1) {
-                            quizHistory.unshift(quiz);
-                            account.get('quizzesAttemptedArray').unshift(
-                            quiz.get('id'));
-                        }
-                    } else { // If not, send them back to the home page
-                        helper.showError(data.data);
-                    }
-                },
-            });
-        }
-    },
-	*/
 
     getDataForMySets: function () {
         var dfd = [];

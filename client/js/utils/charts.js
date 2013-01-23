@@ -551,7 +551,6 @@ window.drawDonutChart = function(divId) {
 			var name = l2[j].get('displayName');
 			var l2Score = scoreL2.get(l2[j].get('id'));
 			var totalQuestions = l2Score==null?0:l2Score.get('numQuestions');
-			
 			data[i].drilldown.categories[j] = name;
 			data[i].drilldown.actual[j] = parseInt(totalQuestions);
 			data[i].drilldown.data[j] = (parseInt(totalQuestions)/totalQ);
