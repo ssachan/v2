@@ -1004,7 +1004,7 @@ function adjustDelta($qDetails,$userAbility,$timeTaken,$delta,$state,$attemptedA
 {
     if($attemptedAs == analConst::ATTEMPTED_AS_PRACTICE)
     {
-        $delta *= 0.5; 
+        $delta *= rand(2,30)/10.0;//0.5; 
     }
     return $delta;
 }
