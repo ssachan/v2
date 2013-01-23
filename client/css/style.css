@@ -1541,25 +1541,21 @@ Pagination classes
 .pagination ul>.attempted>a,.pagination ul>.attempted>span {
     background-color: yellow;
     color: #999999;
-    cursor: default;
 }
 
 .pagination ul>.right>a,.pagination ul>.right>span {
     background-color:#06947A;
     color: #fff;
-    cursor: default;
 }
 
 .pagination ul>.wrong>a,.pagination ul>.wrong>span {
     background-color: #C6264C;
     color: #fff;
-    cursor: default;
 }
 
 .pagination ul>.unattempted>a,.pagination ul>.unattempted>span {
     background-color: grey;
     color: #fff;
-    cursor: default;
 }
 
 .modal.fade.in {
