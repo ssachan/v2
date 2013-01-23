@@ -81,7 +81,9 @@ window.Account = Backbone.Model.extend({
 					console.log('log out');
 					//window.location.replace('#landing');
 					account.clear();
-					user.clear();
+					if(user){
+						user.clear();
+					}
 					var signUpView = new SignUpView({
 						model : account
 					});

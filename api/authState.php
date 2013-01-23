@@ -64,8 +64,8 @@ function getStudentByAccountId($accountId, $streamId) {
         $db = getConnection();
         $stmt = $db->query($sql);
         $account = $stmt->fetch(PDO::FETCH_OBJ);
-        $db = null;
         $account->ascore = round(getPQ($accountId));
+        $db = null;
         return $account;
     } catch (PDOException $e) {
         phpLog($e->getMessage());

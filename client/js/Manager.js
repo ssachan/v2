@@ -160,6 +160,11 @@ window.Manager = {
 							quizLibrary.push(quiz);
 						}
 					}
+					var quizLibraryView = new QuizLibraryView({
+						collection : quizLibrary,
+					});
+					app.showView('#content', quizLibraryView);
+					quizLibraryView.onRender();
 				} else { // If not, send them back to the home page
 					helper.showError(data.data);
 				}
@@ -427,13 +432,9 @@ window.Manager = {
 			// @ssachan You can check on the status of a promise - tanujb
 			dfd.push(this.getSubjectsByStreamId(streamId));
 		}
-		dfd.push(this.getQuizzesByStreamId(streamId));
+		var that = this;
 		$.when.apply(null, dfd).then(function(data) {
-			var quizLibraryView = new QuizLibraryView({
-				collection : quizLibrary,
-			});
-			app.showView('#content', quizLibraryView);
-			quizLibraryView.onRender();
+			that.getQuizzesByStreamId(streamId);
 		});
 	},
 

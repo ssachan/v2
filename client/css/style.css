@@ -671,29 +671,29 @@ background-color: #08c;
     width: 90%;
 }
 
-.quizlib-filter {
-    text-align: left;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    margin-bottom: 30px;
-    border-bottom: 1px dotted #555;
-}
-
-.quiz-box {
+.alive{
     width: 85%;
     margin-bottom: 10px;
     margin-left: 20px;
     padding: 5px;
     cursor: pointer;
+    postion:relative !important;
 }
 
-.quiz-box:hover {
+.alive:hover {
+    width: 85%;
     box-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
     -moz-box-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
     -webkit-box-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
     background: #f1f1f1;
-    position: relative;
+    position: relative !important;
     bottom: 1px;
+}
+
+.dim{
+    width: 85%;
+    opacity: .7;
+    postion:relative !important;
 }
 
 .quiz-box .l1 {
@@ -757,10 +757,6 @@ background-color: #08c;
 
 .quiz-box  .pstats .span6:last-child {
     border-left: 1px solid #ccc;
-}
-
-.dim {
-    opacity: .6;
 }
 
 /* Faculty Profile
@@ -945,7 +941,7 @@ width:60%;
 
 #quiz-div #q-video {
     border-bottom: 1px solid #ccc;
-    padding-bottom: 20px;
+    padding: 20px 0px;
 }
 
 #status .stat:first-child {

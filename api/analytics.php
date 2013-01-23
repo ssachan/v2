@@ -177,6 +177,7 @@ function processPractice()
 {    
     if($_POST["isLast"] == '1')
     {
+        setStateOfQuiz($_POST["accountId"],$_POST["quizId"],$_POST["state"]);
         $response2 = practiceResultsView();
         sendResponse($response2);
     }
