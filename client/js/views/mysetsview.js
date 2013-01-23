@@ -65,7 +65,7 @@ window.HistoryView = Backbone.View.extend({
         len = interruped.length;
         i = 0;
         if (len == 0) {
-            $("#interruped").append('You dont have any interrupted tests');
+            //$("#interruped").append('You dont have any interrupted tests');
         }
         while (i < len) {
             $('#interruped').append('<ul class="thumbnails"></ul>');
