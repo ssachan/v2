@@ -138,17 +138,19 @@ window.PerformanceView = Backbone.View.extend({
 		});
 		var len = l2.length;
 		for ( var i = 0; i < len; i++) {
-			$('.l2', this.el).append('<li id="' + l2[i].get('id') + '-l2" lid="'+l2[i].get('id')+'"><div class="level"></div><a>'
+			$('.l2', this.el).append('<li id="' + l2[i].get('id') + '-l2" lid="'+l2[i].get('id')+'"><a>'
 							+ l2[i].get('displayName') + '</a></li>');
 			var l2Score = scoreL2.get(l2[i].get('id'));
 			if(l2Score!=null){
 				var score = parseInt(l2Score.get('score'));
 				if(score>80){
-					$('#'+l2[i].get('id') + '-l2>.level', this.el).addClass('bg-green');
+					$('#'+l2[i].get('id') + '-l2>a', this.el).addClass('bg-green');
 				}else if(score>40 && score<=80){
-					$('#'+l2[i].get('id') + '-l2>.level', this.el).addClass('bg-yellow');
-				}else if(score<=40){
-					$('#'+l2[i].get('id') + '-l2>.level', this.el).addClass('bg-red');
+					$('#'+l2[i].get('id') + '-l2>a', this.el).addClass('bg-yellow');
+				}else if(score<=40 && score>0){
+					$('#'+l2[i].get('id') + '-l2>a', this.el).addClass('bg-red');
+				}else if(score==0){
+					$('#'+l3[i].get('id') + '-l3>a', this.el).addClass('bg-grey');
 				}
 			}
 		}
@@ -162,17 +164,19 @@ window.PerformanceView = Backbone.View.extend({
 		var len = l3.length;
 		for ( var i = 0; i < len; i++) {
 			$('.l3', this.el).append(
-					'<li id="' + l3[i].get('id') + '-l3" lid="'+l3[i].get('id')+'"><div class="level"></div><a>'
+					'<li id="' + l3[i].get('id') + '-l3" lid="'+l3[i].get('id')+'"><a>'
 							+ l3[i].get('displayName') + '</a></li>');
 			var l3Score = scoreL3.get(l3[i].get('id'));
 			if(l3Score!=null){
 			var score = parseInt(l3Score.get('score'));
 			if(score>80){
-				$('#'+l3[i].get('id') + '-l3>.level', this.el).addClass('bg-green');
+				$('#'+l3[i].get('id') + '-l3>a', this.el).addClass('bg-green');
 			}else if(score>40 && score<=80){
-				$('#'+l3[i].get('id') + '-l3>.level', this.el).addClass('bg-yellow');
-			}else if(score<=40){
-				$('#'+l3[i].get('id') + '-l3>.level', this.el).addClass('bg-red');
+				$('#'+l3[i].get('id') + '-l3>a', this.el).addClass('bg-yellow');
+			}else if(score<=40 && score>0){
+				$('#'+l3[i].get('id') + '-l3>a', this.el).addClass('bg-red');
+			}else if(score==0){
+				$('#'+l3[i].get('id') + '-l3>a', this.el).addClass('bg-grey');
 			}
 			}
 		}

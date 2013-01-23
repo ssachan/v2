@@ -594,29 +594,41 @@ h5 {
 }
 
 .bg-yellow{
-    background-color:yellow;
+    background-color:#FFFDC7;
 }
 
 .bg-red{
-    background-color:red;
+    background-color:#FFB58B;
 }
 
 .bg-green{
-    background-color:green;
+    background-color:#B7E6A8;
+}
+
+.bg-grey{
+    background-color:#757575;
+}
+
+.bg-blue{
+    background-color:#C4DDDA;
 }
 
 .l2>li>a{
-padding: 10px 20px !important;
+    padding: 10px 20px !important;
 }
 
 .l2>li.active > a {
-color: #fff;
-text-shadow: 0 -1px 0 rgba(0,0,0,0.2);
-background-color: #08c;
+    color: #fff;
+    text-shadow: 0 -1px 0 rgba(0,0,0,0.2);
+    background-color: #757575;
+}
+
+.l3 > li.active > a:hover {
+    
 }
 
 .l3{
-    min-height:270px;    
+    /*min-height:150px;    */
 }
 
 .l3>li>a {
@@ -626,13 +638,13 @@ background-color: #08c;
 .l3>li.active > a {
 color: #fff;
 text-shadow: 0 -1px 0 rgba(0,0,0,0.2);
-background-color: #08c;
+background-color: #757575;
 }
 
 .nav-list > .active > a, .nav-list > .active > a:hover {
 color: #fff;
 text-shadow: 0 -1px 0 rgba(0,0,0,0.2);
-background-color: #08c;
+background-color: #757575;
 }
 
 .subject>div {
@@ -1447,7 +1459,7 @@ Clickable Lists
     width: 190px \9;
     margin: 0 0 -1px;
     padding: 15px 5px;
-    border-bottom: 1px solid #e5e5e5;
+    border-bottom: 2px solid #e5e5e5;
     cursor: default;
 }
 
@@ -1468,7 +1480,7 @@ Clickable Lists
     width: 190px \9;
     margin: 0 0 -1px;
     padding: 20px 30px;
-    border-bottom: 1px solid #e5e5e5;
+    border-bottom: 2px solid #e5e5e5;
 }
 
 .c-list>li {
