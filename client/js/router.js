@@ -16,7 +16,7 @@ var accountId = account.get('id');
 var activeMenu = null;
 var mView = new ModalView();
 var timer = new Timer(1000, null, []); // we will have just one global timer
-
+var activeQuiz = null;
 var activeView = null;
 
 $(document).ready(function() {

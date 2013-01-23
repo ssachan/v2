@@ -1,7 +1,13 @@
 window.Account = Backbone.Model.extend({
 
-	urlRoot : ' ',
+	defaults : {
+		id : null,
+		quizzesAttempted : null,
+		dpUrl : DP_PATH+'avatar.jpg'
+	},
 
+	urlRoot : ' ',
+	
 	initialize : function() {
 		if (!this.get('quizzesAttemptedArray')) {
 			this.set({
@@ -177,12 +183,6 @@ window.Account = Backbone.Model.extend({
 				Backbone.history.start();
 			}
 		});
-	},
-
-	defaults : {
-		id : null,
-		quizzesAttempted : null,
-		dpUrl : DP_PATH+'avatar.jpg'
 	},
 
 

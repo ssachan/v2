@@ -90,7 +90,7 @@ window.QuizView = Backbone.View.extend({
 		logs.sort();
 		this.model.set('timeTaken', timer.count);
 		this.model.set('state', this.totalQuestions);
-		this.model.set('status', this.model.STATUS_COMPLETED);
+		//this.model.set('status', this.model.STATUS_COMPLETED);
 		this.model.submitQuiz();
 	},
 

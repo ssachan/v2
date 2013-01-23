@@ -1,7 +1,9 @@
 <div class="thumbnail box quiz-box <% if(hasAttempted){ %>dim<% }else{ %>alive<% } %>" >
-    <div class="" style="opacity:.6;position:absolute;height:20px;top:0px;left:0px">
+    <% if(hasAttempted){ %>
+    <div class="purchased">
         Attempted
     </div>
+    <% } %>
     <div class="media l1">
         <a class="pull-left"> <img class="media-object" alt="64x64"
             style="width: 35px;" src="<%=logo%>">

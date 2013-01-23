@@ -673,11 +673,7 @@ background-color: #08c;
 
 .alive{
     width: 85%;
-    margin-bottom: 10px;
-    margin-left: 20px;
-    padding: 5px;
     cursor: pointer;
-    postion:relative !important;
 }
 
 .alive:hover {
@@ -686,14 +682,36 @@ background-color: #08c;
     -moz-box-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
     -webkit-box-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
     background: #f1f1f1;
-    position: relative !important;
     bottom: 1px;
 }
 
 .dim{
     width: 85%;
-    opacity: .7;
-    postion:relative !important;
+    opacity: .8;
+}
+
+.quiz-box .purchased{
+    position:absolute;
+    color: #fff;
+    font-weight: bold;
+    background: #31859C;
+    filter: alpha(opacity=50);
+    overflow: hidden;
+    white-space: nowrap;
+    word-wrap: normal;  
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    top:0px;
+    left:0px;
+    z-index:100;
+    padding:8px 0px;
+    width:100%;
+    text-align:center;
+    text-transform: uppercase;
+}
+
+.quiz-box {
+    position:relative !important;
 }
 
 .quiz-box .l1 {
