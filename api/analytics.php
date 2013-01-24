@@ -155,21 +155,21 @@ class questionObject{
 }
 
 class abilityScoreObject{
-    
-    public $accountId;
-    public $id;
-    public $currentDate;
-    public $score;
-    public $numQuestions;
-    public $numCorrect;
-    public $numIncorrect;
-    public $numUnattempted;
-    public $updatedOn;
-    public $streamId;
+ //{Declarations 
+        public $accountId;
+        public $id;
+        public $currentDate;
+        public $score;
+        public $numQuestions;
+        public $numCorrect;
+        public $numIncorrect;
+        public $numUnattempted;
+        public $updatedOn;
+        public $streamId;
 
-    public $level;
-    public $delta;
-
+        public $level;
+        public $delta;
+ //}Declarations 
     function __construct($level, $id, $accountId)
     {
         $this->currentDate = date("Y-m-d H:i:s", time());
@@ -227,6 +227,7 @@ class abilityScoreObject{
         $this->numQ += 1;
         $this->delta += $deltaForQuestion;
     }
+    public function 
 }
 
 //>> FRONT-FACING Functions
