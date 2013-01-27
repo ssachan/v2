@@ -151,7 +151,6 @@ class questionObject{
         $this->optionLength = count(explode("|:",$this->options));
         $this->correctArray = getOptionArrayFromText($this->correctAnswer,$this->optionLength);
     }
-
 }
 
 class abilityScoreObject{
@@ -179,7 +178,6 @@ class abilityScoreObject{
 
         $this->getAbilityScore();
     }
-
     function getAbilityScore()
     {
             $query = array(
@@ -227,8 +225,381 @@ class abilityScoreObject{
         $this->numQ += 1;
         $this->delta += $deltaForQuestion;
     }
-    public function 
+    public function updateScore()
+    {
+        $this->currentDate = date("Y-m-d H:i:s", time());
+        $this->score += $this->delta;
+
+        $sql = "UPDATE ascores_" . $level .
+        " SET score = :s , updatedOn = :u, ".$level.
+        "id = :lid, numQuestions = :nQ, numCorrect = :nC, numIncorrect = :nI, numUnattempted = :nU" ;
+
+        $query = array(
+            "s"=>$this->score,
+            "u"=>$this->currentDate,
+            "lid"=>$this->id,
+            "nQ"=>$this->numQuestions,
+            "nC"=>$this->numCorrect,
+            "nU"=>$this->numUnattempted,
+            "nI"=>$this->numIncorrect);
+    }
 }
+
+class quizResponseDetails{
+
+    //{ Declarations  
+        public $accountId;
+        public $id;
+        public $questionIds;
+        public $state;
+        public $attemptedAs;
+        public $logs;
+        public $logsByQuestion;
+        public $selectedAnswers;
+        public $timePerQuestion;
+        public $numCorrect;
+        public $numIncorrect;
+    // } Declarations End
+    function __construct($accountId, $quizId)
+    {
+        $this->accountId = $accountId;
+        $this->id = $quizId;
+        $this->questionIds = $this->getQuestionIdsForQuiz();
+    }
+    function __construct($accountId, $quizId, $logs)
+    {
+        $this->accountId = $accountId;
+        $this->id = $quizId;
+        $this->logs = $logs;
+        $this->questionIds = $this->getQuestionIdsForQuiz();
+        $this->updateResultsTable();
+        $this->logsByQuestion = $this->splitLogsByQuestion();
+        $this->evaluateQuestions();
+
+    }
+    private function getQuestionIdsForQuiz()
+    {
+        $query = array(
+            "id"=>$this->id,
+            "SQL"=>"SELECT questionIds FROM quizzes WHERE id=:id ");
+        return explode("|:",doSQL($query, true));
+    }
+    public function getStateOfQuiz()
+    {
+        $query = array(
+                "accountId"=> $accountId,
+                "quizId"=> $quizId,
+                "SQL" => "SELECT state as s,attemptedAs as a from results where accountId=:accountId and quizId=:quizId");
+        $record = doSQL($query, true);
+        $this->state = $record->s;
+        $this->attemptedAs = $record->a;
+    }
+    public function setStateOfQuiz($state)
+    {
+        $this->state = $state;
+        $this->updateStateOfQuiz();
+    }
+    public function updateStateOfQuiz()
+    {
+        $query = array(
+            "accountId"=> $this->accountId,
+            "quizId"=> $this->id,
+            "state"=> $this->state,
+            "SQL"=>"UPDATE results SET state=:state where accountId=:accountId and quizId=:quizId");
+        doSQL($query, false);
+    }
+    public function updateResultsTable() //logs
+    {
+        $date = date("Y-m-d H:i:s", time());  // tanujb:TODO: arbitrary?????
+        $query = array(
+            "accountId"=> $this->accountId,
+            "quizId"=> $this->id,
+            "timeStamp"=> $date,
+            "data"=> json_encode($logs),
+            "SQL" => "UPDATE results SET timestamp=:timeStamp, data=:data where accountId=:accountId and quizId=:quizId");
+        doSQL($query, false);
+    }    
+    public function updateUserResponseinResultsTable($accountId, $quizId, $selectedAnswers, $timePerQuestion)
+    {
+       $query = array(
+            "accountId" => $this->accountId,
+            "quizId" => $this->id,
+            "selectedAnswers" => $this->selectedAnswers,
+            "timePerQuestion" => $this->timePerQuestion,
+            "SQL" => "UPDATE results SET selectedAnswers = :selectedAnswers, timePerQuestion = :timePerQuestion where accountId=:accountId and quizId=:quizId" );
+       doSQL($query, false);
+    }
+    public function updateScoreinResultsTable($accountId, $quizId, $score, $numCorrect, $numIncorrect)
+    {
+       $query = array( 
+            "accountId"=> $this->accountId,
+            "quizId"=> $this->id,
+            "s"=> $this->score,
+            "c"=> $this->numCorrect,
+            "i"=> $this->numIncorrect,
+            "SQL" => "UPDATE results SET score = :s, numCorrect = :c, numIncorrect = :i where accountId=:accountId and quizId=:quizId");
+        doSQL($query, false);
+    }
+    public function updateScoreinResultsTableBy($accountId, $quizId, $score, $numCorrect, $numIncorrect)
+    {
+        $query = array( 
+            "accountId"=> $this->accountId,
+            "quizId"=> $this->id,
+            "s"=> $this->score,
+            "c"=> $this->numCorrect,
+            "i"=> $this->numIncorrect,
+            "SQL" => "UPDATE results SET score = score + :s, numCorrect = numCorrect + :c, numIncorrect = numIncorrect + :i where accountId=:accountId and quizId=:quizId");
+        doSQL($query, false);
+    }
+    public function getUserResponseFromResultsTable($accountId, $quizId)
+    {
+        $query = array(
+            "acid" => $accountId,
+            "qid" => $qid,
+            "SQL" => "SELECT selectedAnswers s, timePerQuestion t, score sc, numCorrect c, numIncorrect i FROM results WHERE accountId =:acid AND quizID = :qid");
+            
+            $result = doSQL($query,true);
+
+            return array(
+                json_decode($result->s),
+                json_decode($result->t),
+                $result->sc,
+                $result->c,
+                $result->i );
+    }
+    function splitLogsByQuestion()
+    {
+        $questionDataSet = array();
+        foreach ($this->logs as $key => $value)
+            if(isset($value['q']))
+                $questionDataSet[$value['q']][]=$value;
+        return $questionDataSet;
+    }
+    function evaluateQuestions()
+    {
+        $qEvaluated = array();
+        foreach ($this->questionIds as $key => $qid) {
+            if(isset($this->logsByQuestion[$qid]))
+                $qEvaluated[$qid] = new questionEvalution($this->accountId,$this->id,$this->logsByQuestion[$qid]);
+        }
+    }
+}
+
+class questionEvalution
+{
+    //{ Declarations      
+        public $accountId;
+        public $quizId;
+        public $qid;
+        public $qDetails;
+        public $optionArray;
+        public $optionText;
+        public $optionLength;
+        public $timeTaken;
+        public $logs;
+        public $delta;
+        public $state;
+        public $score;
+        public $abilityScoreBefore;
+    // } Declarations End    
+    function __construct($accountId,$quizId,$logs)
+    {
+        $this->accountId = $accountId;
+        $this->quizId = $quizId;
+        $this->qid = $logs[0]['q'];
+        $qDetails = new questionObject($this->qid);
+        $this->optionLength = count(explode("|:",$qDetails->options));
+
+        $this->getFinalOptionArray();
+        $this->getOptionTextFromArray();
+        $this->getTotalTime();
+
+    }
+    function __construct($accountId,$quizId,$qid)
+    {
+        $this->accountId = $accountId;
+        $this->quizId = $quizId;
+        $this->qid = $logs[0]['q'];
+        $qDetails = new questionObject($this->qid);
+        $this->optionLength = count(explode("|:",$qDetails->options));
+
+        $this->getFinalOptionArray();
+        $this->getOptionTextFromArray();
+        $this->getTotalTime();
+
+    }
+
+    function getFinalOptionArray()
+    {
+        $optionsArray = array();
+        foreach ($this->logs as $key => $value)
+        {
+            if($value['e']==testEvent::OPTION_SELECT)
+            {
+                   $optionsArray[$value['o']] = true;
+            }
+            elseif($value['e']==testEvent::OPTION_DESELECT)
+            {
+                    $optionsArray[$value['o']] = false;   
+            }
+        }
+        $this->optionsArray = $optionsArray;
+    }
+
+    private function getOptionTextFromArray()
+    {
+        $optionText = array();
+        foreach ($this->optionsArray as $key => $value)
+            if($value)
+                $optionText[]=$key;
+
+        $optionText = implode("|:",$optionText);
+        $this->optionText = $optionText;
+    }
+
+    public function set($key, $value)
+    {
+        $this->{$key} = $value;
+    }
+    public function get($key)
+    {
+        return $this->{$key};
+    }
+    private function getTotalTime() //Can be optimized by combining these into one large loop.
+    {
+        $prevTimeStamp = 0;
+        $totalTime = 0;
+        foreach ($this->logs as $key => $value)
+        {
+            if($value['e']==testEvent::QUESTION_OPEN)
+            {
+                 $prevTimeStamp = $value['t'];
+            }
+            elseif($value['e']==testEvent::QUESTION_CLOSE)
+            {
+                 $totalTime += $value['t']-$prevTimeStamp;
+            }
+        }
+        $this->timeTaken = $totalTime;
+    }
+
+    public function evaluateQuestion($userAbility)
+    {
+
+        //Code here to calculate scores based on certain factors.
+        //First check if attempted or not
+        if($this->optionText == "")
+        {
+            //unattempted
+            //If not attempted see if any time was spent on the question
+            if($this->timeTaken <= analConst::UNSEEN_TOLERANCE)
+            {
+                //question went unseen. Code that way
+                //$delta = evalUnseen($qDetails,$userAbility);
+                $this->score = $this->qDetails->unattemptedScore;
+                $this->state = analConst::UNSEEN;
+            }
+            else
+            {
+                //seen but skipped in $timeTaken seconds
+                //$delta = evalSkip($qDetails,$userAbility,$timeTaken);
+                $this->score = $this->qDetails->unattemptedScore;
+                $this->state = analConst::SKIPPED;
+            }
+        }
+        else
+        {
+            //If attempted, check if each option is in the state it is supposed to be
+            if($this->optionText == $this->qDetails->correctAnswer)
+            {
+                //everything correct exactly
+                //$delta = evalCorrect($qDetails,$userAbility,$timeTaken);
+                $this->score = $this->$qDetails->correctScore;
+                $this->state = analConst::CORRECT;
+            }
+            else
+            {
+                switch($this->qDetails->typeId)
+                {
+                    case questionType::SINGLE_CHOICE:
+                        $this->score = $qDetails->incorrectScore;
+                    break;
+                    case questionType::MULTIPLE_CHOICE:
+                        $this->evalOption();
+                    break;
+                    case questionType::MATRIX_MATCH:
+                        //tanujb:TODO: figure out how this will work
+                        $tmpOption = explode("|:|:",$qDetails->options);
+                        $optionLength = count(explode("|:",$tmpOption[0]));
+
+                        $optionSuperArray =  getOptionArrayFromText($optionText,$optionLength);
+                        $correctSuperArray = getOptionArrayFromText($qDetails->correctAnswer,$optionLength);
+                        
+                        $delta = 0;
+                        foreach ($correctSuperArray as $k => $v) {
+                            $tmpCorrectText = $v;
+                            $tmpOptionText = $optionSuperArray[$k];
+                            $temp = evalOption($tmpCorrectText,
+                                            $tmpOptionText,
+                                            $optionLength,
+                                            $qDetails->optionCorrectScore,
+                                            $qDetails->optionInCorrectScore);
+                        }
+                        break;
+                    case questionType::INTEGER_TYPE:
+                        $this->score = $this->qDetails->incorrectScore;
+                    break;
+                }
+                $state = analConst::INCORRECT;
+            }
+                
+        }
+
+        return array($delta,$state,$score);
+    }
+    function evalOption()
+    {
+        foreach ($this->qDetails->correctArray as $key => $value) {
+            if($optionsArray[$key] == $correctArray[$key])
+                 $this->score += $this->qDetails->optionCorrectScore;
+            else
+                $this->score += $this->qDetails->optionInCorrectScore;
+        }
+    }
+    function adjustDelta($userAbility,$attemptedAs)
+    {
+        //$qDetails
+        //$timeTaken
+        //$attemptedAs
+        switch($this->state)
+        {
+
+        }
+
+        if($attemptedAs == analConst::ATTEMPTED_AS_PRACTICE)
+        {
+            $delta *= 0.5; 
+        }
+        return $delta;
+    }
+    function insertIntoResponsesTable()
+    {
+        $date = date("Y-m-d H:i:s", time());
+        $query = array(
+            "accountId"=> $this->accountId,
+            "qid"=> $this->qid,
+            "tstmp"=> $date,
+            "otxt"=> $this->optionText,
+            "ttk"=> $this->timeTaken,
+            "ascore"=> $this->abilityScoreBefore,
+            "delta"=> $this->delta,
+            "sts"=> $this->state,
+            "SQL" => "INSERT INTO responses (accountId,questionID, optionSelected, timeTaken, abilityScoreBefore, delta, status, timestamp) VALUES (:accountId,:qid,:otxt,:ttk,:ascore,:delta,:sts,:tstmp)"
+            );
+        doSQL($query,false);
+    }
+}
+
 
 //>> FRONT-FACING Functions
 function testCode()
@@ -534,208 +905,6 @@ function updateResultsForTest()
     sendResponse($response);
 }
 
-class questionEvalution
-{
-    //{ Declarations      
-        public $accountId;
-        public $quizId;
-        public $qid;
-        public $qDetails;
-        public $optionArray;
-        public $optionText;
-        public $optionLength;
-        public $timeTaken;
-        public $logs;
-        public $delta;
-        public $state;
-        public $score;
-        public $abilityScoreBefore;
-    // } Declarations End    
-    function __construct($accountId,$quizId,$logs)
-    {
-        $this->accountId = $accountId;
-        $this->quizId = $quizId;
-        $this->qid = $logs[0]['q'];
-        $qDetails = new questionObject($this->qid);
-        $this->optionLength = count(explode("|:",$qDetails->options));
-
-        $this->getFinalOptionArray();
-        $this->getOptionTextFromArray();
-        $this->getTotalTime();
-
-    }
-
-    function getFinalOptionArray()
-    {
-        $optionsArray = array();
-        foreach ($this->logs as $key => $value)
-        {
-            if($value['e']==testEvent::OPTION_SELECT)
-            {
-                   $optionsArray[$value['o']] = true;
-            }
-            elseif($value['e']==testEvent::OPTION_DESELECT)
-            {
-                    $optionsArray[$value['o']] = false;   
-            }
-        }
-        $this->optionsArray = $optionsArray;
-    }
-
-    private function getOptionTextFromArray()
-    {
-        $optionText = array();
-        foreach ($this->optionsArray as $key => $value)
-            if($value)
-                $optionText[]=$key;
-
-        $optionText = implode("|:",$optionText);
-        $this->optionText = $optionText;
-    }
-
-    public function set($key, $value)
-    {
-        $this->{$key} = $value;
-    }
-    public function get($key)
-    {
-        return $this->{$key};
-    }
-    private function getTotalTime() //Can be optimized by combining these into one large loop.
-    {
-        $prevTimeStamp = 0;
-        foreach ($questionData as $key => $value)
-        {
-            if($value['e']==testEvent::QUESTION_OPEN)
-            {
-                 $prevTimeStamp = $value['t'];
-            }
-            elseif($value['e']==testEvent::QUESTION_CLOSE)
-            {
-                 $totalTime += $value['t']-$prevTimeStamp;
-            }
-        }
-        $this->timeTaken = $totalTime;
-    }
-
-    public function evaluateQuestion($userAbility)
-    {
-
-        //Code here to calculate scores based on certain factors.
-        //First check if attempted or not
-        if($this->optionText == "")
-        {
-            //unattempted
-            //If not attempted see if any time was spent on the question
-            if($this->timeTaken <= analConst::UNSEEN_TOLERANCE)
-            {
-                //question went unseen. Code that way
-                //$delta = evalUnseen($qDetails,$userAbility);
-                $this->score = $this->qDetails->unattemptedScore;
-                $this->state = analConst::UNSEEN;
-            }
-            else
-            {
-                //seen but skipped in $timeTaken seconds
-                //$delta = evalSkip($qDetails,$userAbility,$timeTaken);
-                $this->score = $this->qDetails->unattemptedScore;
-                $this->state = analConst::SKIPPED;
-            }
-        }
-        else
-        {
-            //If attempted, check if each option is in the state it is supposed to be
-            if($this->optionText == $this->qDetails->correctAnswer)
-            {
-                //everything correct exactly
-                //$delta = evalCorrect($qDetails,$userAbility,$timeTaken);
-                $this->score = $this->$qDetails->correctScore;
-                $this->state = analConst::CORRECT;
-            }
-            else
-            {
-                switch($this->qDetails->typeId)
-                {
-                    case questionType::SINGLE_CHOICE:
-                        $this->score = $qDetails->incorrectScore;
-                    break;
-                    case questionType::MULTIPLE_CHOICE:
-                        $this->evalOption();
-                    break;
-                    case questionType::MATRIX_MATCH:
-                        //tanujb:TODO: figure out how this will work
-                        $tmpOption = explode("|:|:",$qDetails->options);
-                        $optionLength = count(explode("|:",$tmpOption[0]));
-
-                        $optionSuperArray =  getOptionArrayFromText($optionText,$optionLength);
-                        $correctSuperArray = getOptionArrayFromText($qDetails->correctAnswer,$optionLength);
-                        
-                        $delta = 0;
-                        foreach ($correctSuperArray as $k => $v) {
-                            $tmpCorrectText = $v;
-                            $tmpOptionText = $optionSuperArray[$k];
-                            $temp = evalOption($tmpCorrectText,
-                                            $tmpOptionText,
-                                            $optionLength,
-                                            $qDetails->optionCorrectScore,
-                                            $qDetails->optionInCorrectScore);
-                        }
-                        break;
-                    case questionType::INTEGER_TYPE:
-                        $this->score = $this->qDetails->incorrectScore;
-                    break;
-                }
-                $state = analConst::INCORRECT;
-            }
-                
-        }
-
-        return array($delta,$state,$score);
-    }
-    function evalOption()
-    {
-        foreach ($this->qDetails->correctArray as $key => $value) {
-            if($optionsArray[$key] == $correctArray[$key])
-                 $this->score += $this->qDetails->optionCorrectScore;
-            else
-                $this->score += $this->qDetails->optionInCorrectScore;
-        }
-    }
-    function adjustDelta($userAbility,$attemptedAs)
-    {
-        //$qDetails
-        //$timeTaken
-        //$attemptedAs
-        switch($this->state)
-        {
-
-        }
-
-        if($attemptedAs == analConst::ATTEMPTED_AS_PRACTICE)
-        {
-            $delta *= 0.5; 
-        }
-        return $delta;
-    }
-    function insertIntoResponsesTable()
-    {
-        $date = date("Y-m-d H:i:s", time());
-        $query = array(
-            "accountId"=> $this->accountId,
-            "qid"=> $this->qid,
-            "tstmp"=> $date,
-            "otxt"=> $this->optionText,
-            "ttk"=> $this->timeTaken,
-            "ascore"=> $this->abilityScoreBefore,
-            "delta"=> $this->delta,
-            "sts"=> $this->state,
-            "SQL" => "INSERT INTO responses (accountId,questionID, optionSelected, timeTaken, abilityScoreBefore, delta, status, timestamp) VALUES (:accountId,:qid,:otxt,:ttk,:ascore,:delta,:sts,:tstmp)"
-            );
-        doSQL($query,false);
-    }
-}
-//<< END FRONT FACING
-
 //>> RETRIEVING, UPDATING SCORES AND ABILITY
 function getUserAbilityLevels($accountId, $l3id)
 {
@@ -759,40 +928,7 @@ function getUserAbilityLevels($accountId, $l3id)
     $score->l3weightage = $ids->l3w;
 
     return $score;
-}
-/*
-    function getAbilityScore($level, $id, $accountId)
-    {
-            $query = array(
-            "id"=> $id,
-            "acid"=> $accountId,
-            "SQL" => "SELECT score FROM ascores_".$level." WHERE ".$level."id=:id AND accountId = :acid" );
-            $result = doSQL($query, true);
 
-            if($result === false)
-                return abilityScoreNotFound($level,$id,$accountId);
-            else
-                return $result->score;
-    }
-
-    function abilityScoreNotFound($level,$id,$accountId)
-    {
-        $date = date("Y-m-d H:i:s", time());
-        $streamId = 1;
-        //$defaultScore = analConst::ABILITY_DEFAULT_SCORE;
-        $defaultScore = rand(20,90);
-         $sql = "INSERT INTO ascores_".$level." (accountId, score, updatedOn, ".$level."id, numQuestions, numCorrect, numIncorrect, numUnattempted, streamId) VALUES (:acid,:score,:timeStamp,:id,0,0,0,0,:streamId)";
-            $query = array(
-            "acid"=> $accountId,
-            "id"=> $id,
-            "timeStamp"=> $date,
-            "streamId"=>$streamId,
-            "score"=> $defaultScore,
-            "SQL"=>$sql);
-        doSQL($query,false);
-        return $defaultScore;
-    }
-*/
 function updateScore($accountId, $delta, $userAbility, $state)
 {
     //this function updates l1, l2, l3 based on delta
@@ -825,128 +961,6 @@ function updateAbility($accountId,$level,$id,$delta,$state)
     doSQL($query, false);
 }
 //<< END RETRIEVING, UPDATING SCORES AND ABILITY
-
-//>> QUIZ/QUESTION DETAIL RETRIEVERS
-class quizResponseDetails{
-
-    //{ Declarations  
-        public $accountId;
-        public $id;
-        public $questionIds;
-        public $state;
-        public $attemptedAs;
-        public $logs;
-        public $selectedAnswers;
-        public $timePerQuestion;
-        public $numCorrect;
-        public $numIncorrect;
-    // } Declarations End
-    function __construct($accountId, $quizId)
-    {
-        $this->accountId = $accountId;
-        $this->id = $quizId;
-        $this->questionIds = $this->getQuestionIdsForQuiz();
-    }
-    function __construct($accountId, $quizId, $logs)
-    {
-        $this->accountId = $accountId;
-        $this->id = $quizId;
-        $this->logs = $logs;
-        $this->questionIds = $this->getQuestionIdsForQuiz();
-        $this->updateResultsTable();
-    }
-    private function getQuestionIdsForQuiz()
-    {
-        $query = array(
-            "id"=>$this->id,
-            "SQL"=>"SELECT questionIds FROM quizzes WHERE id=:id ");
-        return explode("|:",doSQL($query, true));
-    }
-    public function getStateOfQuiz()
-    {
-        $query = array(
-                "accountId"=> $accountId,
-                "quizId"=> $quizId,
-                "SQL" => "SELECT state as s,attemptedAs as a from results where accountId=:accountId and quizId=:quizId");
-        $record = doSQL($query, true);
-        $this->state = $record->s;
-        $this->attemptedAs = $record->a;
-    }
-    public function setStateOfQuiz($state)
-    {
-        $this->state = $state;
-        $this->updateStateOfQuiz();
-    }
-    public function updateStateOfQuiz()
-    {
-        $query = array(
-            "accountId"=> $this->accountId,
-            "quizId"=> $this->id,
-            "state"=> $this->state,
-            "SQL"=>"UPDATE results SET state=:state where accountId=:accountId and quizId=:quizId");
-        doSQL($query, false);
-    }
-    public function updateResultsTable() //logs
-    {
-        $date = date("Y-m-d H:i:s", time());  // tanujb:TODO: arbitrary?????
-        $query = array(
-            "accountId"=> $this->accountId,
-            "quizId"=> $this->id,
-            "timeStamp"=> $date,
-            "data"=> json_encode($logs),
-            "SQL" => "UPDATE results SET timestamp=:timeStamp, data=:data where accountId=:accountId and quizId=:quizId");
-        doSQL($query, false);
-    }    
-    public function updateUserResponseinResultsTable($accountId, $quizId, $selectedAnswers, $timePerQuestion)
-    {
-       $query = array(
-            "accountId" => $this->accountId,
-            "quizId" => $this->id,
-            "selectedAnswers" => $this->selectedAnswers,
-            "timePerQuestion" => $this->timePerQuestion,
-            "SQL" => "UPDATE results SET selectedAnswers = :selectedAnswers, timePerQuestion = :timePerQuestion where accountId=:accountId and quizId=:quizId" );
-       doSQL($query, false);
-    }
-    public function updateScoreinResultsTable($accountId, $quizId, $score, $numCorrect, $numIncorrect)
-    {
-       $query = array( 
-            "accountId"=> $this->accountId,
-            "quizId"=> $this->id,
-            "s"=> $this->score,
-            "c"=> $this->numCorrect,
-            "i"=> $this->numIncorrect,
-            "SQL" => "UPDATE results SET score = :s, numCorrect = :c, numIncorrect = :i where accountId=:accountId and quizId=:quizId");
-        doSQL($query, false);
-    }
-    public function updateScoreinResultsTableBy($accountId, $quizId, $score, $numCorrect, $numIncorrect)
-    {
-        $query = array( 
-            "accountId"=> $this->accountId,
-            "quizId"=> $this->id,
-            "s"=> $this->score,
-            "c"=> $this->numCorrect,
-            "i"=> $this->numIncorrect,
-            "SQL" => "UPDATE results SET score = score + :s, numCorrect = numCorrect + :c, numIncorrect = numIncorrect + :i where accountId=:accountId and quizId=:quizId");
-        doSQL($query, false);
-    }
-    public function getUserResponseFromResultsTable($accountId, $quizId)
-    {
-        $query = array(
-            "acid" => $accountId,
-            "qid" => $qid,
-            "SQL" => "SELECT selectedAnswers s, timePerQuestion t, score sc, numCorrect c, numIncorrect i FROM results WHERE accountId =:acid AND quizID = :qid");
-            
-            $result = doSQL($query,true);
-
-            return array(
-                json_decode($result->s),
-                json_decode($result->t),
-                $result->sc,
-                $result->c,
-                $result->i );
-    }
-}
-//<< END QUIZ/QUESTION DETAIL RETRIEVERS
 
 function insertIntoResponsesTable($accountId, $qid, $optionText, $timeTaken,$abilityScore,$delta,$state)
 {
@@ -1053,15 +1067,6 @@ function getPQ($accountId)
 }
 
 //***Functions that will remain
-
-function splitLogsByQuestion($logData)
-{
-    $questionDataSet = array();
-    foreach ($logData as $key => $value)
-        if(isset($value['q']))
-            $questionDataSet[$value['q']][]=$value;
-    return $questionDataSet;
-}
 
 function getOptionArrayFromText($optionText, $optionLength)
 {
