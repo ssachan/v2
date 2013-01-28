@@ -128,7 +128,7 @@ function getQuizzesHistory() {
     $response = array();
     $accountId = $_GET['accountId'];
     $streamId = $_GET['streamId'];
-    $sql = "select r.selectedAnswers,r.timePerQuestion,r.score,r.startTime,r.state, r.attemptedAs, q.*,a.id as fid, a.firstName,a.lastName,f.bioShort from results r,quizzes q,accounts a,faculty f where r.accountId=:accountId and q.streamId=:streamId and r.quizId=q.id and q.facultyId=a.id and f.accountId=a.id order by timestamp";
+    $sql = "select r.selectedAnswers,r.timePerQuestion,r.score,r.startTime,r.state, r.attemptedAs,r.numCorrect,r.numIncorrect, q.*,a.id as fid, a.firstName,a.lastName,f.bioShort from results r,quizzes q,accounts a,faculty f where r.accountId=:accountId and q.streamId=:streamId and r.quizId=q.id and q.facultyId=a.id and f.accountId=a.id order by timestamp";
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
@@ -339,6 +339,8 @@ function getAttemptedQuestions() {
  */
 function processQuiz() {
     $response = array();
+    $sucessData = array();
+    $response['data'] = array();
     $accountId = $_GET['accountId'];
     $quizId = $_GET['quizId'];
     $streamId = $_GET['streamId'];
@@ -413,7 +415,40 @@ function processQuiz() {
             $response["data"] = EXCEPTION_MSG;
             phpLog($e->getMessage());
         }
+        $sql = "select q.id,q.questionIds,q.description,q.descriptionShort,q.difficulty,q.allotedTime,q.maxScore,q.rec,q.conceptsTested, q.l2Ids, q.l3Ids, q.typeId, a.id as fid, a.firstName,a.lastName,f.bioShort from quizzes q, accounts a, faculty f where q.facultyId=a.id and q.streamId=:streamId and f.accountId=a.id and q.id=:quizId";
+        try {
+            $db = getConnection();
+            $stmt = $db->prepare($sql);
+            $stmt->bindParam("streamId", $streamId);
+            $stmt->bindParam("quizId", $quizId);
+            $stmt->execute();
+            $record = $stmt->fetch(PDO::FETCH_OBJ);
+            $db = null;
+            $sucessData['quiz'] = $record;
+        } catch (PDOException $e) {
+            $response["status"] = ERROR;
+            $response["data"] = EXCEPTION_MSG;
+            phpLog($e->getMessage());
+        }
     } else {
+        $sql = "select r.selectedAnswers,r.timePerQuestion,r.score,r.startTime,r.state, r.attemptedAs, r.numCorrect, r.numIncorrect, q.*,a.id as fid, a.firstName,a.lastName,f.bioShort from results r,quizzes q,accounts a,faculty f where r.accountId=:accountId and q.streamId=:streamId and r.quizId=q.id and q.facultyId=a.id and f.accountId=a.id and r.quizId=:quizId";
+        try {
+            $db = getConnection();
+            $stmt = $db->prepare($sql);
+            $stmt->bindParam("accountId", $accountId);
+            $stmt->bindParam("streamId", $streamId);
+            $stmt->bindParam("quizId", $quizId);
+            $stmt->execute();
+            $record = $stmt->fetch(PDO::FETCH_OBJ);
+            $db = null;
+            $sucessData['quiz'] = $record;
+            //$response["status"] = SUCCESS;
+            //$response["data"]["quiz"] = $record;
+        } catch (PDOException $e) {
+            $response["status"] = ERROR;
+            $response["data"] = EXCEPTION_MSG;
+            phpLog($e->getMessage());
+        }
         // you have already taken this quiz, this seems to be a call for fetching questions 
         // for the results
     }
@@ -427,8 +462,9 @@ function processQuiz() {
         $db = null;
         if ($questionIds->questionIds != null) {
             $questions = getQuestions($questionIds->questionIds);
+            $sucessData["questions"]=$questions;
             $response["status"] = "success";
-            $response["data"] = $questions;
+            $response["data"] = $sucessData;
         } else {
             $response["status"] = "fail";
             $response["data"] = "Something went wrong! Please drop in an email to admin@ps.com";

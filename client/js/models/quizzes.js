@@ -13,7 +13,6 @@ window.Quiz = Backbone.Model.extend({
     STATUS_INTERRUPTED: 3, // when the attemptedAs is not set
 
     initialize: function () {
-        this.set('status', this.STATUS_NOTSTARTED);
         if (!this.get('questionIdsArray')) {
             this.set({
                 questionIdsArray: new Array()
@@ -72,27 +71,49 @@ window.Quiz = Backbone.Model.extend({
                 }
                 this.set('topics', topics.join(','));
             }
-        } else {
-            this.set('l1', 2);
         }
-        this.set('l1DisplayName', (sectionL1.get(this.get('l1')))
-            .get('displayName'));
-        this.set('logo', 'img/l1-' + this.get('l1') + '.png');
+
+        if (this.get('l1') != null) {
+            this.set('l1DisplayName', (sectionL1.get(this.get('l1')))
+                .get('displayName'));
+            this.set('logo', 'img/l1-' + this.get('l1') + '.png');
+        }
         if (this.get('startTime') != null) {
-            // quiz was downloaded
-            if (this.get('attemptedAs') == null) {
-                // attemptedAs was not set
-                this.set('status', this.STATUS_INTERRUPTED);
-            } else {
-                if (this.get('state') == null) {
-                    this.set('status', this.STATUS_INPROGRESS);
-                } else if (this.get('state') == this.get('questionIdsArray').length) {
-                    this.set('status', this.STATUS_COMPLETED);
-                } else {
-                    this.set('status', this.STATUS_INPROGRESS);
-                }
-            }
+        	this.setStatus();
+        } else {
+            this.set('status', this.STATUS_NOTSTARTED);
         }
+        //onChange functions 
+        this.on('change:questionIds', function (model) {
+            if (model.get('questionIds') != null && model.get('questionIdsArray')) {
+                model.get('questionIdsArray').push.apply(this.get('questionIdsArray'), (model.get('questionIds')).split(SEPARATOR));
+                model.setTimeTaken();
+            }
+        });
+
+        this.on('change:selectedAnswers', function (model) {
+            if (model.get('selectedAnswers') != null && model.get('selectedAnswersArray')) {
+                model.get('selectedAnswersArray').push.apply(this.get('selectedAnswersArray'), JSON.parse(model.get('selectedAnswers')));
+            }
+        });
+
+        this.on('change:timePerQuestion', function (model) {
+            if (model.get('timePerQuestion') != null && model.get('timePerQuestionArray')) {
+                model.get('timePerQuestionArray').push.apply(this.get('timePerQuestionArray'), JSON.parse(model.get('timePerQuestion')));
+                model.setTimeTaken();
+            }
+        });
+
+        this.on('change:startTime', function (model) {
+            model.setStatus();
+        });
+        this.on('change:attemptedAs', function (model) {
+            model.setStatus();
+        });
+        this.on('change:state', function (model) {
+            model.setStatus();
+        });
+
     },
 
     defaults: {
@@ -106,7 +127,7 @@ window.Quiz = Backbone.Model.extend({
         'descriptionShort': null,
         'maxScore': 0,
         'score': 0,
-        'timeTaken':0,
+        'timeTaken': 0,
         'topics': '',
         'l1': null,
         'fid': null,
@@ -118,17 +139,33 @@ window.Quiz = Backbone.Model.extend({
         'state': null,
         'startTime': null,
     },
-    
-    
-    setTimeTaken : function(){
-    	 //sum the time to get timeTaken
+
+
+    setTimeTaken: function () {
+        //sum the time to get timeTaken
         var timeTaken = 0;
         var len = this.get('timePerQuestionArray').length;
-    	for(var k = 0; k < len; k++) {
-    		v = parseInt(this.get('timePerQuestionArray')[k]);
-    		if (!isNaN(v)) timeTaken += v;
-    	}
-    	this.set('timeTaken',timeTaken);
+        for (var k = 0; k < len; k++) {
+            v = parseInt(this.get('timePerQuestionArray')[k]);
+            if (!isNaN(v)) timeTaken += v;
+        }
+        this.set('timeTaken', timeTaken);
+    },
+
+    setStatus: function () {
+            // quiz was downloaded
+            if (this.get('attemptedAs') == null) {
+                // attemptedAs was not set
+                this.set('status', this.STATUS_INTERRUPTED);
+            } else {
+                if (this.get('state') == null) {
+                    this.set('status', this.STATUS_INPROGRESS);
+                } else if (this.get('state') == this.get('questionIdsArray').length) {
+                    this.set('status', this.STATUS_COMPLETED);
+                } else {
+                    this.set('status', this.STATUS_INPROGRESS);
+                }
+            }
     },
 
     updateAttemptedAs: function () {
@@ -158,7 +195,7 @@ window.Quiz = Backbone.Model.extend({
             }
         });
     },
-    
+
     /**
      * Data uploaded to results.
      * 
@@ -177,17 +214,13 @@ window.Quiz = Backbone.Model.extend({
                 streamId: streamId,
                 state: this.get('state'),
                 logs: logs.toJSON(),
-                isLast : 0
+                isLast: 0
             },
             success: function (data) {
                 // tanujb:TODO :what does this code do?
                 //I need to forward the data coming from here to ResultsView
                 if (data.status == STATUS.SUCCESS) {
-                	if ($.inArray(that.get('id'), account
-							.get('quizzesAttemptedArray')) == -1) {
-                		quizHistory.unshift(that);
-                    	account.get('quizzesAttemptedArray').unshift(that.get('id'));
-                	}
+
                 } else {
                     helper.showError(data.data);
                 }
@@ -197,7 +230,7 @@ window.Quiz = Backbone.Model.extend({
             },
         });
     },
-    
+
     /**
      * Data uploaded to results.
      * 
@@ -216,17 +249,15 @@ window.Quiz = Backbone.Model.extend({
                 streamId: streamId,
                 state: this.get('state'),
                 logs: logs.toJSON(),
-                isLast : 1
+                isLast: 1
             },
             success: function (data) {
                 // tanujb:TODO :what does this code do?
                 //I need to forward the data coming from here to ResultsView
-            	 if (data.status == STATUS.SUCCESS) {
-                         that.set(data.data);
-                         that.get('selectedAnswersArray').push.apply(that.get('selectedAnswersArray'), JSON.parse(data.data['selectedAnswers']));
-                         that.get('timePerQuestionArray').push.apply(that.get('timePerQuestionArray'), JSON.parse(data.data['timePerQuestion']));
-                         that.setTimeTaken();
-                         app.quiz(that.get('id'));
+                if (data.status == STATUS.SUCCESS) {
+                    that.set(data.data);
+                    that.set('status', that.STATUS_COMPLETED);
+                    app.quiz(that.get('id'));
                 } else {
                     helper.showError(data.data);
                 }
@@ -260,19 +291,9 @@ window.Quiz = Backbone.Model.extend({
                 // tanujb:TODO :what does this code do?
                 //I need to forward the data coming from here to ResultsView
                 if (data.status == STATUS.SUCCESS) {
-                    quizHistory.unshift(that);
-                    account.get('quizzesAttemptedArray').unshift(that.get('id'));
-                    if (that.get('status') == that.STATUS_COMPLETED) {
-                        that.set(data.data);
-                        that.get('selectedAnswersArray').push.apply(that.get('selectedAnswersArray'), JSON.parse(
-                        data.data['selectedAnswers']));
-                        that.get('timePerQuestionArray').push.apply(that.get('timePerQuestionArray'), JSON.parse(
-                        data.data['timePerQuestion']));
-                        that.setTimeTaken();
-                        app.quiz(that.get('id'));
-                    } else {
-                        // continue the quiz
-                    }
+                    that.set(data.data);
+                    that.set('status', that.STATUS_COMPLETED);
+                    app.quiz(that.get('id'));
                 } else {
                     helper.showError(data.data);
                 }

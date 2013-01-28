@@ -61,7 +61,7 @@ window.drawTimeChart = function(quiz) {
 	var len = questionIds.length;
 	for ( var i = 0; i < len; i++) {
 		var question = quizQuestions.get(questionIds[i]);
-		var timeTaken = timePerQuestion[i];// question.get('timeTaken');
+		var timeTaken = parseInt(timePerQuestion[i])/1000;// question.get('timeTaken');
 		if (timeTaken == null) {
 			series.data.push({
 				x : i + 1,
@@ -551,7 +551,6 @@ window.drawDonutChart = function(divId) {
 			var name = l2[j].get('displayName');
 			var l2Score = scoreL2.get(l2[j].get('id'));
 			var totalQuestions = l2Score==null?0:l2Score.get('numQuestions');
-			
 			data[i].drilldown.categories[j] = name;
 			data[i].drilldown.actual[j] = parseInt(totalQuestions);
 			data[i].drilldown.data[j] = (parseInt(totalQuestions)/totalQ);

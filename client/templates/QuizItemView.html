@@ -1,16 +1,21 @@
-<div class="thumbnail box quiz-box <% if(hasAttempted){ %>dim<% } %>" >
+<div class="thumbnail box quiz-box <% if(hasAttempted){ %>dim<% }else{ %>alive<% } %>" >
+    <% if(hasAttempted){ %>
+    <div class="purchased">
+        Attempted
+    </div>
+    <% } %>
     <div class="media l1">
         <a class="pull-left"> <img class="media-object" alt="64x64"
             style="width: 35px;" src="<%=logo%>">
         </a>
-        <div class="media-body"><%=l1DisplayName%> Sectional Test</div>
+        <div class="media-body"><b style="text-transform: uppercase;"><%=l1DisplayName%></b></div>
     </div>
     <div class="topic"><%=descriptionShort%></div>
         <% if(fid){ %>
     
     <div class="media fac">
-        <a class="pull-left" href="#"> <img class="media-object" alt="fac-image"
-           src="<%=fdpURL%>" width="50px">
+        <a class="pull-left"> <img class="media-object" alt="fac-image"
+           src="<%=fdpURL%>" style="height:45px !important">
         </a>
         <div class="media-body">
             <span class="name"><%= firstName %> <%= lastName %></span><br>
@@ -21,10 +26,10 @@
     
     <div class="row-fluid pstats">
         <div class="span6 center">
-            <i class="icon-search" /> </i> <%=rec%> recommenders
+            <i class="icon-thumbs-up" /> </i> <%=rec%> recommenders
         </div>
         <div class="span6 center">
-            <i class="icon-arrow-up" /> </i> <%=difficulty %>
+            <i class="icon-search" /> </i> <%=difficulty %>
         </div>
     </div>
 </div>

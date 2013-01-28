@@ -21,6 +21,7 @@ window.ModalView = Backbone.View.extend({
 
 	show : function() {
 		$(document.body).append(this.render().el);
+		//_V_("intro-vid-"+this.model.get('id'), {}, function(){ });
 		if(account.get('id')!=null){
 			$('#take-btn').append('<a href="#quiz/'+this.model.get('id')+'" class="btn blue-btn">Redeem your package and take PrepSet</a>');
 		}else{

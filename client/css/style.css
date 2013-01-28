@@ -594,29 +594,41 @@ h5 {
 }
 
 .bg-yellow{
-    background-color:yellow;
+    background-color:#FFFDC7;
 }
 
 .bg-red{
-    background-color:red;
+    background-color:#FFB58B;
 }
 
 .bg-green{
-    background-color:green;
+    background-color:#B7E6A8;
+}
+
+.bg-grey{
+    background-color:#757575;
+}
+
+.bg-blue{
+    background-color:#C4DDDA;
 }
 
 .l2>li>a{
-padding: 10px 20px !important;
+    padding: 10px 20px !important;
 }
 
 .l2>li.active > a {
-color: #fff;
-text-shadow: 0 -1px 0 rgba(0,0,0,0.2);
-background-color: #08c;
+    color: #fff;
+    text-shadow: 0 -1px 0 rgba(0,0,0,0.2);
+    background-color: #757575;
+}
+
+.l3 > li.active > a:hover {
+    
 }
 
 .l3{
-    min-height:270px;    
+    /*min-height:150px;    */
 }
 
 .l3>li>a {
@@ -626,17 +638,21 @@ background-color: #08c;
 .l3>li.active > a {
 color: #fff;
 text-shadow: 0 -1px 0 rgba(0,0,0,0.2);
-background-color: #08c;
+background-color: #757575;
 }
 
 .nav-list > .active > a, .nav-list > .active > a:hover {
 color: #fff;
 text-shadow: 0 -1px 0 rgba(0,0,0,0.2);
-background-color: #08c;
+background-color: #757575;
+}
+
+.subject a {
+    color:#444    
 }
 
 .subject>div {
-    background-color: #f5f5f5;
+    background-color: #fafafa;
     border-bottom: 1px solid #e5e5e5;
 }
 
@@ -671,29 +687,47 @@ background-color: #08c;
     width: 90%;
 }
 
-.quizlib-filter {
-    text-align: left;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    margin-bottom: 30px;
-    border-bottom: 1px dotted #555;
-}
-
-.quiz-box {
+.alive{
     width: 85%;
-    margin-bottom: 10px;
-    margin-left: 20px;
-    padding: 5px;
     cursor: pointer;
 }
 
-.quiz-box:hover {
+.alive:hover {
+    width: 85%;
     box-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
     -moz-box-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
     -webkit-box-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
     background: #f1f1f1;
-    position: relative;
     bottom: 1px;
+}
+
+.dim{
+    width: 85%;
+    opacity: .7;
+}
+
+.quiz-box .purchased{
+    position:absolute;
+    color: #fff;
+    font-weight: bold;
+    background: #31859C;
+    filter: alpha(opacity=50);
+    overflow: hidden;
+    white-space: nowrap;
+    word-wrap: normal;  
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    top:0px;
+    left:0px;
+    z-index:100;
+    padding:8px 0px;
+    width:100%;
+    text-align:center;
+    text-transform: uppercase;
+}
+
+.quiz-box {
+    position:relative !important;
 }
 
 .quiz-box .l1 {
@@ -757,10 +791,6 @@ background-color: #08c;
 
 .quiz-box  .pstats .span6:last-child {
     border-left: 1px solid #ccc;
-}
-
-.dim {
-    opacity: .6;
 }
 
 /* Faculty Profile
@@ -945,7 +975,7 @@ width:60%;
 
 #quiz-div #q-video {
     border-bottom: 1px solid #ccc;
-    padding-bottom: 20px;
+    padding: 20px 0px;
 }
 
 #status .stat:first-child {
@@ -1424,8 +1454,10 @@ Clickable Lists
     float: none !important;
     margin: auto 0px;
     padding: 0;
-    border: 1px solid #e5e5e5 !important;
+    border-left: 1px solid #e5e5e5 !important;
     height: 100%;
+    border-right: 1px solid #e5e5e5 !important;
+    border-bottom: 1px solid #e5e5e5 !important;
 }
 
 .c-list>li.unc>a {
@@ -1527,25 +1559,21 @@ Pagination classes
 .pagination ul>.attempted>a,.pagination ul>.attempted>span {
     background-color: yellow;
     color: #999999;
-    cursor: default;
 }
 
 .pagination ul>.right>a,.pagination ul>.right>span {
     background-color:#06947A;
     color: #fff;
-    cursor: default;
 }
 
 .pagination ul>.wrong>a,.pagination ul>.wrong>span {
     background-color: #C6264C;
     color: #fff;
-    cursor: default;
 }
 
 .pagination ul>.unattempted>a,.pagination ul>.unattempted>span {
     background-color: grey;
     color: #fff;
-    cursor: default;
 }
 
 .modal.fade.in {
