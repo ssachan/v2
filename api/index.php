@@ -7,6 +7,7 @@ $app = new \Slim\Slim();
 
 include 'helper.php';
 include 'authState.php';
+include 'testfp.php';
 
 // the L1,L2,L3
 $app->get('/topics/:level/:id', 'getTopics');
@@ -30,7 +31,7 @@ $app->get('/processQuiz/', $authenticate($app), 'processQuiz');
 $app->get('/getVideos/', $authenticate($app), 'videoList');
 
 // responses
-$app->post('/submitQuiz', 'updateResultsForTest');
+$app->post('/submitQuiz', 'testCode');
 $app->post('/submitPractice', 'processPractice');
 
 $app->get('/testcode', 'testCode');
