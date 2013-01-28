@@ -31,7 +31,7 @@ $app->get('/processQuiz/', $authenticate($app), 'processQuiz');
 $app->get('/getVideos/', $authenticate($app), 'videoList');
 
 // responses
-$app->post('/submitQuiz', 'testCode');
+$app->post('/submitQuiz', 'updateResultsForTest');
 $app->post('/submitPractice', 'processPractice');
 
 $app->get('/testcode', 'testCode');
