@@ -7,7 +7,6 @@ $app = new \Slim\Slim();
 
 include 'helper.php';
 include 'authState.php';
-include 'testfp.php';
 
 // the L1,L2,L3
 $app->get('/topics/:level/:id', 'getTopics');
@@ -24,6 +23,7 @@ $app->post('/facContact/', 'facContact');
 //dashboard page
 $app->get('/scores/:level', $authenticate($app), 'getScores');
 $app->get('/historyById/', $authenticate($app), 'getQuizzesHistory');
+$app->get('/pq/:id', $authenticate($app), 'getPQ');
 
 //quiz
 $app->post('/attemptedAs/', 'updateAttemptedAs');
