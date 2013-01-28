@@ -623,13 +623,17 @@ class quizResponseDetails{
         $this->id = $quizId;
         $this->logs = $logs;
         $this->attemptedAs = $attemptedAs;
+        $this->logsByQuestion = $this->splitLogsByQuestion();
         if($attemptedAs == analConst::ATTEMPTED_AS_TIMED_TEST)
         {
             $this->questionIds = $this->getQuestionIdsForQuiz();
-            $this->logsByQuestion = $this->splitLogsByQuestion();
             $this->evaluateQuestions();
             $this->generateQuizSummary();
             $this->updateResultsTable();
+        }
+        elseif($attemptedAs == analConst::ATTEMPTED_AS_PRACTICE)
+        {
+
         }
     }
     private function getQuestionIdsForQuiz(){
@@ -751,7 +755,7 @@ class quizResponseDetails{
         foreach ($this->questionIds as $key => $qid) {
             if(isset($this->logsByQuestion[$qid]))
                 $qEvaluated[$qid] = new questionEvalution($this->accountId,$this->logsByQuestion[$qid]);
-            else
+            elseif($this->attemptedAs == analConst::ATTEMPTED_AS_TIMED_TEST)
                 $qEvaluated[$qid] = new questionEvalution($this->accountId,$qid,$dummy);
         }
         $this->qEvaluated = $qEvaluated;
@@ -800,7 +804,6 @@ class quizResponseDetails{
 //>> FRONT-FACING Functions
 function testCode()
 {
-    return getPQ(4);
 }
 
 function processPractice()
@@ -883,16 +886,9 @@ function updateResultsForPractice()
     $accountId = $_POST['accountId']; 
     $quizId = $_POST['quizId'];
     $logs = $_POST['logs'];
-    $attemptedAs = analConst::ATTEMPTED_AS_PRACTICE;
+
+    $quiz =  new quizResponseDetails($accountId, $quizId, $logs,analConst::ATTEMPTED_AS_PRACTICE);
     $logsByQuestion = splitLogsByQuestion($logs);
-    $qid = 0;
-    foreach($logsByQuestion as $key => $value)
-    {
-        $qid = $key;
-        $logsByQuestion = $value;
-    }
-    
-    $qEvaluated = new questionEvalution($accountId, $logs);
     $aScores = new abilityScoreCollections($accountId);
     $aScores->addL3($qEvaulated->qDetails->l3Id);
     
@@ -903,6 +899,8 @@ function updateResultsForPractice()
     $aScores->updateScore();
 
     //updating response table here state selectedAnswers, timeperquestion, totaltime,
+
+
 
     $response["status"] = SUCCESS;
     $response["data"] = true;
@@ -932,11 +930,6 @@ function updateResultsForPractice()
             updateScoreinResultsTableBy($accountId,$quizId, $score, 0, 0);
         break;
     }
-
-    // tanujb:TODO: I can probably do all this updating later, adn send json first.
-    $response["status"] = SUCCESS;
-    $response["data"] = true;
-    return $response;
 }
 
 function updateResultsForTest()
@@ -946,33 +939,33 @@ function updateResultsForTest()
     $logs = $_POST['logs'];
     //$attemptedAs = $_POST['attemptedAs'];
     $aScores = new abilityScoreCollections($accountId);
-    $quizResponses = new quizResponseDetails($accountId, $quizId, $logs, analConst::ATTEMPTED_AS_TIMED_TEST);
+    $quiz = new quizResponseDetails($accountId, $quizId, $logs, analConst::ATTEMPTED_AS_TIMED_TEST);
 
-    foreach ($quizResponses->qEvaluated as $qid => $qEvaulated){
+    foreach ($quiz->qEvaluated as $qid => $qEvaulated){
         $aScores->addL3($qEvaulated->qDetails->l3Id);
-        $quizResponses->qEvaluated[$qid]->setAbilityScoreBefore($aScores->getScoresOf("l3",$qEvaulated->qDetails->l3Id));
+        $quiz->qEvaluated[$qid]->setAbilityScoreBefore($aScores->getScoresOf("l3",$qEvaulated->qDetails->l3Id));
         $aScores->addAnswer($qEvaulated->state,$qEvaulated->qDetails->l3Id,$qEvaulated->delta);
     }
     
-    $quizResponses->updateResponsesTable();
+    $quiz->updateResponsesTable();
     $l3GraphData = $aScores->getL3GraphData();
-    $videoArray = $quizResponses->getVideoArray();
+    $videoArray = $quiz->getVideoArray();
     $aScores->updateScore();
     
     $response["status"] = SUCCESS;
 
     $response["data"] = array(
-        "selectedAnswers"=>$quizResponses->selectedAnswers,
-        "timePerQuestion"=>$quizResponses->timePerQuestion,
-        "state"=>$quizResponses->state,
-        "delta"=>$quizResponses->delta,
+        "selectedAnswers"=>$quiz->selectedAnswers,
+        "timePerQuestion"=>$quiz->timePerQuestion,
+        "state"=>$quiz->state,
+        "delta"=>$quiz->delta,
        // "userAbilityRecord"=>$userAbilityRecord2,
         "videoArray"=>$videoArray,
         "l3GraphData"=>$l3GraphData,
-        "score"=>$quizResponses->testScore,
-        "maxScore"=>$quizResponses->maxScore,
-        "numCorrect"=>$quizResponses->numCorrect,
-        "numIncorrect"=>$quizResponses->numIncorrect
+        "score"=>$quiz->testScore,
+        "maxScore"=>$quiz->maxScore,
+        "numCorrect"=>$quiz->numCorrect,
+        "numIncorrect"=>$quiz->numIncorrect
         );
     sendResponse($response);
 }
