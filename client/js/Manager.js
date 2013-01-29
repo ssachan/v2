@@ -233,7 +233,29 @@ window.Manager = {
             }
         });
     },
-
+    
+    getQuestion : function (qId){
+    	var url = Config.serverUrl + 'facByStreamId/' + id;
+        $.ajax({
+            url: url,
+            dataType: "json",
+            success: function (data) {
+                if (data.status == STATUS.SUCCESS) {
+                	question.set(data.data);
+                	var qView = new QuizQuestionView({
+                        model: question,
+                    });
+                    app.showView('#content', qView);
+                    qView.renderQuizzes();
+                	app.showView('#content', facDirectoryView);
+                    facDirectoryView.onRender();
+                } else { // If not, send them back to the home page
+                    helper.showError(data.data);
+                }
+            }
+        });	
+    },
+    
     showInstructions: function (quiz) {
         if (quizQuestions.length > 0) {
             var instructionsView = new InstructionsView({
@@ -588,7 +610,6 @@ window.Manager = {
         dfd.push(this.getAttemptedQuestions());
         $.when.apply(null, dfd)
             .then(
-
         function (data) {
             activeView.switchMenu('activity');
             $('#main-content')

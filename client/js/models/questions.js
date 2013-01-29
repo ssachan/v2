@@ -6,6 +6,16 @@
 window.Question = Backbone.Model.extend({
 
     urlRoot: Config.serverUrl+'questions/',
+    
+    defaults: {
+        'correctAnswer': null,
+        'status': null, // null not attempted, true correct, false incorrect
+        'timeTaken': null,
+        'hasAttempted':false,
+        'optionSelected':null,
+        'isCorrect':null,
+        'videoData' : null //am adding this to load video for each question
+    },
 
     initialize: function () {
       var l3Id=this.get('l3Id');
@@ -20,7 +30,6 @@ window.Question = Backbone.Model.extend({
         	this.set('isCorrect',this.isOptionSelectedCorrect(this.get('optionSelected')));
         }
     },
-	
 	
 	getOption : function (index){
 		var type = this.get('typeId');
@@ -125,16 +134,6 @@ window.Question = Backbone.Model.extend({
 		}
 		this.set('status',status);
 	},
-	
-    defaults: {
-        'correctAnswer': null,
-        'status': null, // null not attempted, true correct, false incorrect
-        'timeTaken': null,
-        'hasAttempted':false,
-        'optionSelected':null,
-        'isCorrect':null,
-        'videoData' : null //am adding this to load video for each question
-    }
 });
 
 window.QuestionCollection = Backbone.Collection.extend({
@@ -144,4 +143,4 @@ window.QuestionCollection = Backbone.Collection.extend({
 
 var quizQuestions = new QuestionCollection();
 var attemptedQuestions = new QuestionCollection();
-
+var question = new Question();

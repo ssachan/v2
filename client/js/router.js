@@ -45,6 +45,7 @@ var AppRouter = Backbone.Router.extend({
 		"library" : "library",
 		"facs" : "facs",
 		"quiz/:id" : "quiz",
+		"question/:id" : "question",		
 		"fac/:id" : "fac",
 		"packages" : "packages",
 		"forgotpass" : "forgotPass",
@@ -143,7 +144,16 @@ var AppRouter = Backbone.Router.extend({
 			window.location = '#quizLibrary';
 		}
 	},
-
+	
+	question : function (id){
+		if (account.get('id') != null) {
+			mView.close();
+			Manager.getDataForQuiz(id);
+		} else {
+			window.location = '#quizLibrary';
+		}
+	},
+	
 	changePass : function() {
 		console.log('changing pass');
 		// load forgot password page
