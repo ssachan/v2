@@ -138,7 +138,6 @@ var AppRouter = Backbone.Router.extend({
 	
 	quiz : function(id) {
 		if (account.get('id') != null) {
-			mView.close();
 			Manager.getDataForQuiz(id);
 		} else {
 			window.location = '#quizLibrary';
@@ -147,7 +146,6 @@ var AppRouter = Backbone.Router.extend({
 	
 	question : function (id){
 		if (account.get('id') != null) {
-			mView.close();
 			Manager.getDataForQuiz(id);
 		} else {
 			window.location = '#quizLibrary';
@@ -173,7 +171,6 @@ var AppRouter = Backbone.Router.extend({
 	},
 
 	signUp : function() {
-		mView.close();
 		this.changeMenu('signup-menu');
 		$('#signup-menu>a').html('Sign Up');
 		$('#myprepset-menu').hide();
