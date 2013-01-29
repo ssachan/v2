@@ -188,9 +188,21 @@ function testDelta()
 	$file = fopen("data.csv", "r") or exit("Unable to open file!");
 	$fp = fopen('data-op.csv', 'w') or exit("Unable to write to file");
 	//Output a line of the file until the end is reached
+
+    //Writing Constants
+        fwrite($fp, "Bases => \n");
+        foreach (bases::$values as $key => $value)
+            fwrite($fp,$key.",".$value."\n");
+        fwrite($fp, "\nTime Ranges => \n");
+        foreach (timeRanges::$values as $key => $value)
+            fwrite($fp,$key.",".$value."\n");
+        fwrite($fp, "\nability factors => \n");
+        foreach (bases::$values as $key => $value)
+            fwrite($fp,$key.",".$value."\n");
+        fwrite($fp,"\nData\nstate,qScore,timeTaken,avgTime,sigmaTime,score,delta\n");
 		$currentLine = fgets($file);
 	  	$vars = explode(",",$currentLine);
-		$delta = deltaCalculator::calculate($vars[0], $vars[5], $vars[1], $vars[2], $vars[3], $vars[4]);
+		$delta = round(deltaCalculator::calculate($vars[0], $vars[5], $vars[1], $vars[2], $vars[3], $vars[4]),2);
 		$vars[] = $delta;
 		$score = $vars[5];
 		$vars = implode(",", $vars);
@@ -201,7 +213,7 @@ function testDelta()
 	  {
 	  	$currentLine = fgets($file);
 	  	$vars = explode(",",$currentLine);
-		$delta = deltaCalculator::calculate($vars[0], $score, $vars[1], $vars[2], $vars[3], $vars[4]);
+		$delta = round(deltaCalculator::calculate($vars[0], $score, $vars[1], $vars[2], $vars[3], $vars[4]),2);
 		$vars[]= $score;
 		$vars[] = $delta;
 		$vars = implode(",", $vars);
