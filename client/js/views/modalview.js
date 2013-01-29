@@ -11,7 +11,8 @@ window.ModalView = Backbone.View.extend({
 	},
 
 	events : {
-		'click .close' : 'close',
+	//	'click .close' : 'close',
+		'hidden #modal' : 'close'
 	},
 
 	render : function() {
@@ -31,7 +32,9 @@ window.ModalView = Backbone.View.extend({
 	},
 
 	close : function() {
-		$('#modal').modal('hide');
+		//$('#modal').modal('hide');
 		this.remove();
+		//$('video>source')[0].setAttribute('src','');
+		//$('#intro-vid-'+this.model.get('id'))[0].setAttr('src','');
 	},
 });
