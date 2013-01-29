@@ -103,18 +103,16 @@ window.PerformanceView = Backbone.View.extend({
 	},
 
 	onL2Click : function(e) {
-		if (this.activel2Id != e.target.parentElement.getAttribute('lid')) {
-			$('.l3', this.el).empty();
-			$('.l3-stats', this.el).hide();
-			this.activel3Id = '0';
-			$('#' + this.activel2Id + '-l2').removeClass('active');
-			this.activel2Id = (e.target.parentElement.getAttribute('lid'));
+		$('.l3', this.el).empty();
+		$('.l3-stats', this.el).hide();
+		this.activel3Id = '0';
+		$('#' + this.activel2Id + '-l2').removeClass('active');
+		this.activel2Id = (e.target.parentElement.getAttribute('lid'));
 
-			// this.activel2Id = e.target.getAttribute('id');
-			$('#' + this.activel2Id + '-l2').addClass('active');
-			this.renderL3();
-			this.renderL2Stats();
-		}
+		// this.activel2Id = e.target.getAttribute('id');
+		$('#' + this.activel2Id + '-l2').addClass('active');
+		this.renderL3();
+		this.renderL2Stats();
 	},
 
 	onL3Click : function(e) {
