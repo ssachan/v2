@@ -194,6 +194,7 @@ function testDelta()
 		$vars[] = $delta;
 		$score = $vars[5];
 		$vars = implode(",", $vars);
+		$vars = str_replace("\n","",$vars);
 		fwrite($fp, $vars."\n");
 		$score += $delta; 
 	while(!feof($file))
@@ -204,12 +205,11 @@ function testDelta()
 		$vars[]= $score;
 		$vars[] = $delta;
 		$vars = implode(",", $vars);
+		$vars = str_replace("\n","",$vars);
 		fwrite($fp, $vars."\n");
 		$score += $delta;
 	  }
-	fclose($file);
-
-	
+	fclose($file);	
 }
 
 //Possible values for $state = analConst::CORRECT, ::INCORRECT, etc.
