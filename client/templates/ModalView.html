@@ -2,22 +2,20 @@
     aria-hidden="true">
     <div class="modal-header" style="background-color: #DAE4E6">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-        <h3 id="modalLabel">
-            <div class="media">
-                <a class="pull-left" href="#fac/<%=id %>"> <img class="media-object"
-                    src="<%=fdpURL%>" style="height:80px !important">
-                </a>
-                <div class="media-body">
-                    <h3 class="media-heading"><%= firstName%> <%= lastName%></h3>
-                    <h4 class="italics"><%=bioShort %></h4>
-                </div>
+        <div class="media">
+            <a class="pull-left" href="#fac/<%=id %>"> <img class="media-object"
+                src="<%=fdpURL%>" style="height: 80px !important">
+            </a>
+            <div class="media-body">
+                <h3 class="media-heading"><%= firstName%> <%= lastName%></h3>
+                <h4 class="italics"><%=bioShort %></h4>
             </div>
-        </h3>
+        </div>
     </div>
     <div class="modal-body">
         <div class="media">
             <a class="pull-left" href="#fac/<%=id %>"> <img class="media-object" src="<%=logo%>"
-                style="height:20px !important">
+                style="height: 20px !important">
             </a>
             <div class="media-body">
                 <h3 class="blue  font-h3"><%= descriptionShort %></h3>
@@ -25,12 +23,14 @@
         </div>
         <div class="center">
             <div id="video">
-                <video id="intro-vid-<%=id%>" class="video-js vjs-default-skin" controls preload="none" width="480"
-                    height="270" data-setup="{}">
-                    <source src="http://prod.prepsquare.com/video/s<%=id%>intro.mp4" type="video/mp4" />
+                <video id="intro-vid-<%=id%>" class="video-js vjs-default-skin" controls
+                    preload="none" width="480" height="270" data-setup="{}">
+                    <source src="http://prod.prepsquare.com/video/s<%=id%>intro.mp4"
+                        type="video/mp4" />
                 </video>
             </div>
-            <p style="text-align: left; margin-top: 25px; padding: 10px 0px; margin-bottom: 20px; background-color: #ECECEC">
+            <p
+                style="text-align: left; margin-top: 25px; padding: 10px 0px; margin-bottom: 20px; background-color: #ECECEC">
                 <strong>Description: </strong><%= description %>
             </p>
         </div>
