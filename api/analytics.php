@@ -50,44 +50,6 @@ abstract class questionType {
     const MATRIX_MATCH = 4;
 }
 
-abstract class bases {
-    static $UNSEEN = 0;
-    static $CORRECT_L_1 = 5;
-    static $CORRECT_L_2 = 4;
-    static $CORRECT_L_3 = 3;
-    static $CORRECT_L_4 = 2;
-    static $CORRECT_L_5 = 1;
-    static $INCORRECT_L_1 = 5;
-    static $INCORRECT_L_2 = 4;
-    static $INCORRECT_L_3 = 3;
-    static $INCORRECT_L_4 = 2;
-    static $INCORRECT_L_5 = 1;
-    static $SKIPPED_L_1 = 5;
-    static $SKIPPED_L_2 = 4;
-    static $SKIPPED_L_3 = 3;
-    static $SKIPPED_L_4 = 2;
-    static $SKIPPED_L_5 = 1;
-
-    static $L_1 = 20;
-    static $L_2 = 40;
-    static $L_3 = 60;
-    static $L_4 = 80;
-}
-
-abstract class timeRanges {
-    static $CORRECT_HIGH = 0.5;
-    static $CORRECT_LOW = 2;
-    static $INCORRECT_HIGH = 0.5;
-    static $INCORRECT_LOW = 2;
-    static $SKIPPED_HIGH = 0.5;
-    static $SKIPPED_LOW = 2;
-}
-
-abstract class abilityFactors{
-    static $M1 = 0.2;
-    static $M2 = 0.01;
-}
-
 abstract class analConst {
     const ABILITY_DEFAULT_SCORE = 50;
     const UNSEEN_TOLERANCE = 2000;
@@ -98,115 +60,15 @@ abstract class analConst {
     const ATTEMPTED_AS_TIMED_TEST = 1;
     const ATTEMPTED_AS_PRACTICE = 2;
 
-    public static function stateStr($state){
-        switch($state){
-            case self::CORRECT :
-                return "CORRECT";
-            break;
-            case self::INCORRECT :
-                return "INCORRECT";
-            break;
-            case self::UNSEEN :
-                return "UNSEEN";
-            break;
-            case self::SKIPPED :
-                return "SKIPPED";
-            break;
-        }
-    }
+    public static $enums = array(
+        self::CORRECT => "CORRECT",
+        self::INCORRECT => "INCORRECT",
+        self::SKIPPED => "SKIPPED",
+        self::UNSEEN => "UNSEEN"
+        );
 }
 
-class deltaCalculator{
-    
-    public static function calculate($state, $score, $qScore, $timeTaken, $avgTime, $sigmaTime){
-        $base = analConst::stateStr($state)."_".self::getLevel($score);
-        $base = bases::{$base};
-        $timeFactor = self::timeFactor($state, $timeTaken, $avgTime, $sigmaTime);
-        $abilityFactor = self::abilityFactor($score, $qScore, $state );
-        
-        return $base * $timeFactor * $abilityFactor;
-    }
-    public static function timeFactor($state, $value, $mu, $sigma,){
-        $percentile = self::getPercentile($value, $mu, $sigma);
-        $percentile = ceil($percentile/5);
-        $range = (timeRanges::{analConst::stateStr($state)."_HIGH"} - timeRanges::{analConst::stateStr($state)."_LOW"});
-        $low = timeRanges::{analConst::stateStr($state)."_LOW"};
-        return ($low + ($percentile/20 * $range));
-    }
-    public static function abilityFactor($score, $qScore, $state){
-        $x = $qScore - $score;
-        if($x>=0){
-            switch($state){
-                case analConst::CORRECT :
-                    return ((abilityFactors::M1 * x) + 1);
-                break;
-                case analConst::INCORRECT :
-                    return (1 - (abilityFactors::M2 * x))/2;
-                break;
-                default:
-                   return 1; 
-                break;
-            }
-        }
-        else{
-            switch($state){
-                case analConst::CORRECT :
-                    return (1 - (abilityFactors::M2 * x));
-                break;
-                case analConst::INCORRECT :
-                    return ((abilityFactors::M1 * x) + 1)/2;
-                break;
-                default:
-                   return 1; 
-                break;
-            }
-        }
-    }
-    public static function getPercentile($value, $mu, $sigma){
-        return cdf(($value-$mu)/$sigma)*100;
-    }
-    public static function getLevel($score){
-        switch($score)
-        {
-            case ($score < bases::$L_1):
-                return "L_1";
-            break;
-            case ($score < bases::$L_2):
-                return "L_2";
-            break;
-            case ($score < bases::$L_3):
-                return "L_3";
-            break;
-            case ($score < bases::$L_4):
-                return "L_4";
-            break;
-            case ($score < bases::$L_5):
-                return "L_5";
-            break;
-        }
-    }
-    function erf($x) { 
-        $pi = 3.1415927; 
-        $a = (8*($pi - 3))/(3*$pi*(4 - $pi)); 
-        $x2 = $x * $x; 
-        $ax2 = $a * $x2; 
-        $num = (4/$pi) + $ax2; 
-        $denom = 1 + $ax2; 
-        $inner = (-$x2)*$num/$denom; 
-        $erf2 = 1 - exp($inner); 
-        return sqrt($erf2); 
-    } 
-    function cdf($n) { 
-        if($n < 0) 
-        { 
-                return (1 - erf($n / sqrt(2)))/2; 
-        } 
-        else 
-        { 
-                return (1 + erf($n / sqrt(2)))/2; 
-        } 
-    } 
-}
+include ('constants.php');
 
 class lscoreDataObject{
     public $lId;
@@ -715,7 +577,7 @@ class questionEvalution{
                     case analConst::INCORRECT:
                     break;
                 }
-        }
+    
         if($this->attemptedAs == analConst::ATTEMPTED_AS_PRACTICE)
         {
             $delta *= 0.5; 

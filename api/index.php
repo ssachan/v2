@@ -40,6 +40,9 @@ $app->get('/testcode', 'testCode');
 
 $app->get('/attemptedQuestions/', 'getAttemptedQuestions');
 
+//testing
+$app->get('/testDelta', 'testDelta');
+
 //packages
 $app->get('/packagesByStreamId/:id', 'getPackagesByStreamId');
 $app->post('/purchase/:id', 'addPurchase');
