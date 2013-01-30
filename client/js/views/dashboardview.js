@@ -159,10 +159,10 @@ window.PerformanceView = Backbone.View.extend({
 				}else if(score<=40 && score>0){
 					$('#'+l2[i].get('id') + '-l2>a', this.el).addClass('bg-red');
 				}else if(score==0){
-					$('#'+l2[i].get('id') + '-l3>a', this.el).addClass('bg-grey');
+					$('#'+l2[i].get('id') + '-l2>a', this.el).addClass('bg-grey');
 				}
 			}else{
-				$('#'+l2[i].get('id') + '-l3>a', this.el).addClass('bg-grey');
+				$('#'+l2[i].get('id') + '-l2>a', this.el).addClass('bg-grey');
 			}
 		}
 	},

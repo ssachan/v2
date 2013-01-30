@@ -608,7 +608,7 @@ margin-bottom:40px
 }
 
 .bg-grey {
-    background-color: #757575 !important;
+    background-color: #c4ddda !important;
     border:1px solid #f1f1f1;
 }
 
@@ -663,15 +663,13 @@ margin-bottom:40px
 }
 
 .subject>div {
-    background-color: #f9f9f9;
-    border-bottom: 1px solid #e5e5e5;
+    background-color: #fCfCfC;
+    border: 1px solid #e5e5e5;
 }
 
 .subject h2 {
     padding: 10px 0px 5px 10px;
     margin-bottom: 0px;
-    font-size: 28px;
-    border-bottom: 1.5px solid #999;
     color: #31859C;
 }
 
