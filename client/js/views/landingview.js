@@ -11,6 +11,7 @@ window.LandingView = Backbone.View.extend({
 });
 
 window.LearnMoreView = Backbone.View.extend({
+	className :'container learn',
 	
 	initialize : function() {
 		this.active = this.options.menu;
