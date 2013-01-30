@@ -48,6 +48,7 @@ body {
     padding-left: 20px;
     min-height: 530px;
     background: #fff;
+    padding-bottom:10px;
 }
 
 .new-ac {
@@ -443,7 +444,7 @@ h5 {
     text-decoration: underline;;
 }
 
-.feature-row li {
+.feature-row li,p {
     font-family: Georgia, serif;
     font-size: 16px;
     line-height: 25px;
@@ -1073,24 +1074,13 @@ background: linear-gradient(#f8f9fa, #f0f3f6);
     width: 80%;
 }
 
-.learn h2 {
-    margin-top: 20px;
-    margin-bottom: 40px;
+.learn .box{
+    padding-bottom:10px;
+    margin-bottom:10px
 }
 
-.learn-text2 {
-    color: #525252;
-    font-family: Georgia, serif;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 30px;
-    margin-top: 0px;
-    margin-bottom: 40px;
-    text-align: left;
-}
-
-.learn-filter {
-    margin-left: 20px;
+.learn .menu{
+    padding: 15px;
 }
 
 /* Packages Page 

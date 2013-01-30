@@ -59,7 +59,9 @@ window.helper = {
 	 * field).parent().parent(); controlGroup.removeClass('error');
 	 * $('.help-inline', controlGroup).html(''); },
 	 */
-	/*showAlert : function(title, text, klass) {
+	
+    showInfo : function(title, text, klass) {
+		clearTimeout(this.timeout);
 		$('.alert').removeClass(
 				"alert-error alert-warning alert-success alert-info");
 		$('.alert').addClass(klass);
@@ -68,7 +70,10 @@ window.helper = {
 		setTimeout(function(){
 			$('.alert').hide();
 		}, 6000);
-	},*/
+		this.timeout = setTimeout(function(){
+			$('.alert').slideUp();
+		}, 6000);
+    },
 	
 	showError : function(text) {
 		clearTimeout(this.timeout);
