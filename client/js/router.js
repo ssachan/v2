@@ -41,6 +41,7 @@ var AppRouter = Backbone.Router.extend({
 	routes : {
 		"" : "dashboard",
 		"landing" : "landing",
+		"learn/:id":"learn",
 		"signup" : "signUp",
 		"library" : "library",
 		"facs" : "facs",
@@ -169,7 +170,16 @@ var AppRouter = Backbone.Router.extend({
 		});
 		this.showView('#content',forgotPassView);
 	},
-
+	
+	learn : function(id) {
+		this.changeMenu('lib-menu');
+		var learnMoreView = new LearnMoreView({
+			menu : id
+		});
+		app.showView('#content', learnMoreView);
+		learnMoreView.onRender();
+	},
+	
 	signUp : function() {
 		this.changeMenu('signup-menu');
 		$('#signup-menu>a').html('Sign Up');
