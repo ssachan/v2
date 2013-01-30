@@ -86,7 +86,7 @@ window.Account = Backbone.Model.extend({
 				if (data.status == STATUS.SUCCESS) {
 					console.log('log out');
 					//window.location.replace('#landing');
-					account.clear();
+					account.set('id',null);
 					if(user){
 						user.clear();
 					}

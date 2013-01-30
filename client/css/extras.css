@@ -6,7 +6,7 @@
 header {
 
 margin-top: 10px;
-height: 72px;
+height: 68px;
 background: #fff; !important;
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e6ffffff', endColorstr='#e6ffffff',GradientType=0 ); /* IE6-8 */
 position: relative;
@@ -141,11 +141,11 @@ border-top:4px solid transparent;
 
 text-shadow: none;
 
-font-size: 16px;
+font-size: 15px;
 
-padding: 24px 20px;
+padding: 22px 15px;
 
-padding: 24px 10px \9;
+padding: 22px 15px \9;
 
 -webkit-transition: all 0.3s ease-in-out;
 
