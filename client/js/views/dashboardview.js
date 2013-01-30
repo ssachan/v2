@@ -86,7 +86,18 @@ window.OverView = Backbone.View.extend({
 
 	onRender : function() {
 		// this.uploadImage();
+		$('#result-square').empty();
+		var l1 = sectionL1.models;
+        var len = l1.length;
+        for (var i = 0; i < len; i++) {
+            var pView = new PerformanceView({
+                model: l1[i]
+            });
+            $('#result-square').append(pView.render().el);
+            pView.onRender();
+        }		
 	}
+	
 });
 
 window.PerformanceView = Backbone.View.extend({
@@ -148,8 +159,10 @@ window.PerformanceView = Backbone.View.extend({
 				}else if(score<=40 && score>0){
 					$('#'+l2[i].get('id') + '-l2>a', this.el).addClass('bg-red');
 				}else if(score==0){
-					$('#'+l3[i].get('id') + '-l3>a', this.el).addClass('bg-grey');
+					$('#'+l2[i].get('id') + '-l3>a', this.el).addClass('bg-grey');
 				}
+			}else{
+				$('#'+l2[i].get('id') + '-l3>a', this.el).addClass('bg-grey');
 			}
 		}
 	},
@@ -199,6 +212,8 @@ window.PerformanceView = Backbone.View.extend({
 			}else if(score==0){
 				$('#'+l3[i].get('id') + '-l3>a', this.el).addClass('bg-grey');
 			}
+			}else{
+				$('#'+l3[i].get('id') + '-l3>a', this.el).addClass('bg-grey');
 			}
 		}
 	},
