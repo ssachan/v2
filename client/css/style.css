@@ -604,6 +604,7 @@ h5 {
 
 .bg-grey {
     background-color: #757575 !important;
+    border:1px solid #f1f1f1;
 }
 
 .bg-blue {
@@ -692,13 +693,17 @@ h5 {
     width: 90%;
 }
 
+.thumbnails{
+    margin-bottom:0px;
+}
+
 .alive {
-    width: 85%;
+    width:100%;
     cursor: pointer;
 }
 
 .alive:hover {
-    width: 85%;
+    width:100%;
     box-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
     -moz-box-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
     -webkit-box-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
@@ -707,7 +712,7 @@ h5 {
 }
 
 .dim {
-    width: 85%;
+    width:100%;
     opacity: .7;
 }
 
@@ -727,11 +732,12 @@ h5 {
     z-index: 100;
     padding: 8px 0px;
     width: 100%;
-    text-align: center;
     text-transform: uppercase;
+    text-align:center;
 }
 
 .quiz-box {
+    width:100%;
     position: relative !important;
 }
 
@@ -762,19 +768,34 @@ h5 {
     margin: 0px auto;
     font-weight: bold;
     -webkit-font-smoothing: antialiased;
-    text-align: center;
+    padding: 8px;
 }
 
 .quiz-box .fac {
-    margin-top: 0px;
+color: #999;
+font-style: italic;
+font-weight: normal;
+font-size: 15px;
+padding: 8px 7px;
+height: 52px;
+margin: 0;
+background: #f8f9fa;
+background: -moz-linear-gradient(#f8f9fa, #f0f3f6);
+background: -webkit-linear-gradient(#f8f9fa, #f0f3f6);
+background: -o-linear-gradient(#f8f9fa, #f0f3f6);
+background: -ms-linear-gradient(#f8f9fa, #f0f3f6);
+background: linear-gradient(#f8f9fa, #f0f3f6);
+/*    margin-top: 0px;
     background-color: #DDD;
     font-size: 15px;
-    padding: 10px;
+    padding: 10px;*/
 }
 
 .quiz-box .fac .name {
+    font-size: 13px;
+    color: #555;
+    font-style: normal;
     font-weight: bold;
-    padding-bottom: 10px;
 }
 
 .quiz-box .fac .bio {

@@ -196,6 +196,7 @@ var AppRouter = Backbone.Router.extend({
 	},
 
 	showView : function(selector, view) {
+		mView.close();
 		if (activeView)
 			activeView.close();
 		$(selector).html(view.render().el);
