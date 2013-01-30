@@ -21,6 +21,7 @@ window.LearnMoreView = Backbone.View.extend({
 		$('#' + this.active+'-div').hide();
 		this.active = id;
 		$('#' + this.active+'-div').show();
+		$('#' + this.active+'-menu').addClass('active');
 	},
 	
 	render : function() {

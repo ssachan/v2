@@ -434,6 +434,10 @@ h5 {
     padding-bottom: 30px;
 }
 
+.feature-row h2{
+margin-bottom:40px
+}
+
 .feature-row a {
     color: #F4763E;
     float: right;
