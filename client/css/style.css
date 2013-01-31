@@ -578,6 +578,16 @@ margin-bottom:40px
     background-color: #757575;
 }
 
+.subject {
+ /*   background:url('../img/bg_sectionh.jpg');
+    padding:10px;
+    border:1px solid #ccc;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+*/
+}
+
 .subject a {
     color: #444
 }
