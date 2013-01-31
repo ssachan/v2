@@ -16,6 +16,7 @@ window.Account = Backbone.Model.extend({
 		}
 		
 		this.on('change:quizzesAttempted', function(model){
+			model.get('quizzesAttemptedArray').length=0;
 			if(model.get('quizzesAttempted')!=null && model.get('quizzesAttemptedArray')){
 				model.get('quizzesAttemptedArray').push.apply(this.get('quizzesAttemptedArray'), JSON.parse(model.get('quizzesAttempted')));
 			}
@@ -86,7 +87,7 @@ window.Account = Backbone.Model.extend({
 				if (data.status == STATUS.SUCCESS) {
 					console.log('log out');
 					//window.location.replace('#landing');
-					account.set('id',null);
+					account.reset();
 					if(user){
 						user.clear();
 					}

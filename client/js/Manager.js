@@ -174,9 +174,6 @@ window.Manager = {
                         var len = data.data.length;
                         for (var i = 0; i < len; i++) {
                             var quiz = new Quiz(data.data[i]);
-                            if (!account.get('quizzesAttemptedArray')) {
-                                account.set('quizzesAttemptedArray', []);
-                            }
                             if ($.inArray(quiz.get('id'), account.get('quizzesAttemptedArray')) != -1) {
                                 quiz.set('hasAttempted', true);
                             }

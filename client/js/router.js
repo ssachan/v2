@@ -178,8 +178,6 @@ var AppRouter = Backbone.Router.extend({
 	
 	signUp : function() {
 		this.changeMenu('signup-menu');
-		$('#signup-menu>a').html('Sign Up');
-		$('#myprepset-menu').hide();
 		if (account.get('id') != null) {
 			account.logout();
 		}else{
@@ -192,6 +190,7 @@ var AppRouter = Backbone.Router.extend({
 	},
 
 	showView : function(selector, view) {
+		$('.alert').hide();
 		mView.close();
 		if (activeView)
 			activeView.close();
@@ -207,15 +206,14 @@ var AppRouter = Backbone.Router.extend({
 		}
 		activeMenu = newMenu;
 		$('#' + activeMenu).addClass('active');
-		if (account.get('id') == null) {
-			$('#sign-up').html('<a href="#signUp">Sign-Up</a>');
-		} else {
-			$('#sign-up').html('<a href="#signUp">Log Out</a>');
-		}
 	}
 });
 
 Backbone.View.prototype.close = function() {
 	this.remove();
 	this.unbind();
+};
+
+Backbone.Model.prototype.reset = function (options) {
+	  this.set(this.defaults);
 };
