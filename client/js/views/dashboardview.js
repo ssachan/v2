@@ -242,3 +242,20 @@ window.PerformanceView = Backbone.View.extend({
 	},
 	
 });
+
+window.ActivityView = Backbone.View.extend({
+	className : "overall",
+
+	initialize : function() {
+	},
+	
+	render : function() {
+		$(this.el).html(this.template());
+		return this;
+	},
+
+	onRender : function() {
+		 drawDonutChart('donut');
+         $("tspan:contains('Highcharts.com')").hide();
+	}
+});

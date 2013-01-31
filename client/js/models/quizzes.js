@@ -5,6 +5,31 @@
  * 
  */
 window.Quiz = Backbone.Model.extend({
+	
+    defaults: {
+        'hasAttempted': false,
+        'numCorrect': 0,
+        'numIncorrect': 0,
+        'numTotal': 0,
+        'selectedAnswers': null,
+        'timePerQuestion': null,
+        'statusPerQuestion': null,
+        'descriptionShort': null,
+        'maxScore': 0,
+        'score': 0,
+        'timeTaken': 0,
+        'topics': '',
+        'l1': null,
+        'fid': null,
+        'firstName': null,
+        'lastName': null,
+        'attemptedAs': null,
+        'logo': null,
+        'fdpURL': DP_PATH + 'avatar.jpg',
+        'state': null,
+        'startTime': null,
+    },
+    
     urlRoot: Config.serverUrl + 'quizzes/',
     // tanujb:TODO: this model is a mess, needs cleanup badly.
     STATUS_NOTSTARTED: 0, // when the quiz is fresh from the library
@@ -115,31 +140,6 @@ window.Quiz = Backbone.Model.extend({
         });
 
     },
-
-    defaults: {
-        'hasAttempted': false,
-        'numCorrect': 0,
-        'numIncorrect': 0,
-        'numTotal': 0,
-        'selectedAnswers': null,
-        'timePerQuestion': null,
-        'statusPerQuestion': null,
-        'descriptionShort': null,
-        'maxScore': 0,
-        'score': 0,
-        'timeTaken': 0,
-        'topics': '',
-        'l1': null,
-        'fid': null,
-        'firstName': null,
-        'lastName': null,
-        'attemptedAs': null,
-        'logo': null,
-        'fdpURL': DP_PATH + 'avatar.jpg',
-        'state': null,
-        'startTime': null,
-    },
-
 
     setTimeTaken: function () {
         //sum the time to get timeTaken

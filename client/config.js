@@ -42,6 +42,7 @@ var Config = {
                     'FacContactView',
                     'FooterView',
                     'OverView',
-                    'LearnMoreView'
+                    'LearnMoreView',
+                    'ActivityView'
                   ]
 };

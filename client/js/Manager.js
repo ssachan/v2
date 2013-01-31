@@ -612,16 +612,10 @@ window.Manager = {
             .then(
         function (data) {
             activeView.switchMenu('activity');
-            $('#main-content')
-                .append(
-                '<div class="row-fluid"><div class="page-title"><h2>Activity</h2></div><br></div>');
-            $('#main-content').append('<div class="row-fluid"><h3>Your focus has been mainly on Chemistry. Why dont you practice  some Maths and Physics as well?</h3></div>');
-            $('#main-content').append('<div id="donut"></div>');
-            // plot the graph here, no need to create a view for
-            // this purpose;
-            drawDonutChart('donut');
-            $("tspan:contains('Highcharts.com')").hide();
+            var activityView = new ActivityView({});
+            activeView.switchView(activityView);
         });
+        
     }
 
 };
