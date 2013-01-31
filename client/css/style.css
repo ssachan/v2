@@ -360,7 +360,7 @@ margin-bottom:40px
     text-decoration: underline;;
 }
 
-.feature-row li,p {
+.feature-row li,.feature-row p {
     font-family: Georgia, serif;
     font-size: 16px;
     line-height: 25px;
