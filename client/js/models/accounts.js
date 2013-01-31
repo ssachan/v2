@@ -118,7 +118,7 @@ window.Account = Backbone.Model.extend({
 					account.set(data.data);
 					window.location = '#';
 				} else {
-					helper.showError(data.data);
+					helper.processStatus(data);
 				}
 			},
 			error : function(data) {
@@ -142,7 +142,7 @@ window.Account = Backbone.Model.extend({
 				if (data.status == STATUS.SUCCESS) {
 					account.set(data.data);
 				} else {
-					helper.showError(data.data);
+					helper.processStatus(data);
 				}
 			}
 		});
