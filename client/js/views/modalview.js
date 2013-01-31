@@ -38,6 +38,7 @@ window.ModalView = Backbone.View.extend({
 		if(this.state != true){
 			return;
 		}
+		$('#modal').modal('hide');
 		this.state =false;
 		myPlayer = _V_("intro-vid-"+this.model.get('id'));
 		myPlayer.pause();
