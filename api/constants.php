@@ -27,7 +27,8 @@ class bases{
     "L_1" => 20,
     "L_2" => 40,
     "L_3" => 60,
-    "L_4" => 80 );
+    "L_4" => 80,
+    "L_5" => 100 );
 
     public static function set($key, $value, $default = null)
     {
@@ -199,12 +200,17 @@ function testDelta()
         fwrite($fp, "\nability factors => \n");
         foreach (bases::$values as $key => $value)
             fwrite($fp,$key.",".$value."\n");
-        fwrite($fp,"\nData\nstate,qScore,timeTaken,avgTime,sigmaTime,score,delta\n");
+        fwrite($fp,"\nData\nstate,qScore,timeTaken,avgTime,sigmaTime,score,delta,base,timeFactor,abilityFactor\n");
 		$currentLine = fgets($file);
 	  	$vars = explode(",",$currentLine);
-		$delta = round(deltaCalculator::calculate($vars[0], $vars[5], $vars[1], $vars[2], $vars[3], $vars[4]),2);
-		$vars[] = $delta;
-		$score = $vars[5];
+        $score = $vars[5];
+        $state = $vars[0]; $qScore = $vars[1]; $timeTaken = $vars[2]; $avgTime = $vars[3]; $sigmaTime = $vars[4];
+		$delta = round(deltaCalculator::calculate($state, $score, $qScore, $timeTaken, $avgTime, $sigmaTime),2);
+        $tmp = new bases;
+        $base = $tmp->get(deltaCalculator::getBase($state,$score,$qScore)."_".deltaCalculator::getLevel($score));
+        $timeFactor = deltaCalculator::timeFactor($state, $timeTaken, $avgTime, $sigmaTime, $score, $qScore);
+        $abilityFactor = deltaCalculator::abilityFactor($score, $qScore, $state);
+		$vars[] = $delta; $vars[] = $base; $vars[] = $timeFactor; $vars[] = $abilityFactor;
 		$vars = implode(",", $vars);
 		$vars = str_replace("\n","",$vars);
 		fwrite($fp, $vars."\n");
@@ -213,9 +219,16 @@ function testDelta()
 	  {
 	  	$currentLine = fgets($file);
 	  	$vars = explode(",",$currentLine);
-		$delta = round(deltaCalculator::calculate($vars[0], $score, $vars[1], $vars[2], $vars[3], $vars[4]),2);
-		$vars[]= $score;
-		$vars[] = $delta;
+
+		        $state = $vars[0]; $qScore = $vars[1]; $timeTaken = $vars[2]; $avgTime = $vars[3]; $sigmaTime = $vars[4];
+        $delta = round(deltaCalculator::calculate($state, $score, $qScore, $timeTaken, $avgTime, $sigmaTime),2);
+        $tmp = new bases;
+        $base = $tmp->get(deltaCalculator::getBase($state,$score,$qScore)."_".deltaCalculator::getLevel($score));
+        $timeFactor = deltaCalculator::timeFactor($state, $timeTaken, $avgTime, $sigmaTime, $score, $qScore);
+        $abilityFactor = deltaCalculator::abilityFactor($score, $qScore, $state);
+        $vars[]= $score;
+        $vars[] = $delta; $vars[] = $base; $vars[] = $timeFactor; $vars[] = $abilityFactor;
+		
 		$vars = implode(",", $vars);
 		$vars = str_replace("\n","",$vars);
 		fwrite($fp, $vars."\n");
