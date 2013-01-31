@@ -95,10 +95,8 @@ window.Account = Backbone.Model.extend({
 					});
 					app.showView('#content', signUpView);
 					signUpView.onRender();
-					helper.showError(data.data);
-				} else {
-					helper.showError(data.data);
 				}
+				helper.processStatus(data);
 			},
 			error : function(data) {
 				console.log(data);

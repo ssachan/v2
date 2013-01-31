@@ -1252,12 +1252,17 @@ background: linear-gradient(#f8f9fa, #f0f3f6);
     font-family: Arial, sans-serif;
     font-size: 12px;
     line-height: 18px;
-    margin-bottom: 15px;
     position: relative;
     padding: 14px 40px 14px 18px;
     -webkit-box-shadow: 0px 1px 1px 0px rgba(180, 180, 180, 0.1);
     box-shadow: 0px 1px 1px 0px rgba(180, 180, 180, 0.1);
     z-index: 1;
+    border: 1px solid #fbeed5;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
+    text-align:center;
+    margin:0px auto
 }
 
 .alert.alert-success {

@@ -41,7 +41,7 @@ window.ResultsView = Backbone.View.extend({
 			$('#' + this.activeView + '-div').hide();
 		}
 		this.activeView = view;
-		$('#' + this.activeView + '-div').show();
+		$('#' + this.activeView + '-div').slideDown();
 		$('#' + this.activeView).addClass('active');
 	}
 });
