@@ -32,11 +32,6 @@ body {
     font-style: italic;
 }
 
-.pw {
-    position: relative;
-    left: 10px;
-}
-
 .login {
     position: relative;
     right: 9px;
@@ -70,10 +65,6 @@ hr {
 
 .right {
     text-align: right;
-}
-
-.margin-0 {
-    margin-left: 0px;
 }
 
 h2,h3,h4,h5 {
@@ -166,18 +157,6 @@ h5 {
     color: #C6264C;
 }
 
-.maroon {
-    color: #C0504D
-}
-
-.gold {
-    color: #A8A38D
-}
-
-.purple {
-    color: #3C0E5D;
-}
-
 .orange {
     color: #F4763E;
 }
@@ -223,61 +202,6 @@ h5 {
     text-align: center;
 }
 
-/* Connect with facebook button */
-.fb-connect-button {
-    width: 80% !important;
-    height: 40px !important;
-    color: white;
-    text-align: center;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
-    background: #77A9D7 !important;
-    background: -moz-linear-gradient(#77A9D7, #548BC6) !important;
-    background: -webkit-linear-gradient(#77A9D7, #548BC6) !important;
-    background: -o-linear-gradient(#77A9D7, #548BC6) !important;
-    background: -ms-linear-gradient(#77A9D7, #548BC6) !important;
-    background: linear-gradient(#77A9D7, #548BC6) !important;
-    margin: 22px !important;
-    margin-bottom: -12px !important;
-    padding: 0px !important;
-    line-height: 38px;
-    overflow: hidden;
-    border: 1px solid #47637A !important;
-    border-radius: 6px;
-    text-shadow: 0 1px #333 !important;
-    position: relative;
-    box-shadow: 0 1px rgba(255, 255, 255, 0.3) inset, 1px 0 0 #89B4DC, 0 1px
-        3px #CCC;
-    font-size: 17px !important;
-    display: block;
-    border: 1px solid #47637A;
-    width: 80%;
-    border-radius: 4px;
-    font-weight: bold
-}
-
-.fb-connect-button::before {
-    content: '';
-    background: #698DA9 url("../images/v3/sprites.png?v=20121116.2");
-    background: url("../img/fb-icon.png"),
-        -moz-linear-gradient(#698DA9, #466B8B);
-    background: url("../img/fb-icon.png"),
-        -moz-linear-gradient(#698DA9, #466B8B);
-    background: url("../img/fb-icon.png"),
-        -moz-linear-gradient(#698DA9, #466B8B);
-    background: url("../img/fb-icon.png"),
-        -moz-linear-gradient(#698DA9, #466B8B);
-    background: url("../img/fb-icon.png"),
-        -linear-gradient(#698DA9, #466B8B);
-    width: 45px;
-    height: 38px;
-    margin-right: 0px;
-    float: left;
-    border-right: 1px solid #456178;
-    box-shadow: 0px 1px rgba(255, 255, 255, 0.3) inset, 1px 0 0 #89B4DC;
-    border-radius: 3px 0 0 3px;
-}
-
-/*End of connect with facebook button*/
 
 /* Buttons
  ------------------------------------------------ */
@@ -365,25 +289,6 @@ h5 {
         , 242, 242) ), color-stop(0.68, rgb(247, 244, 247) ),
         color-stop(0.84, rgb(250, 247, 250) ) );
     color: black;
-}
-
-/* Sidebar
--------------------------------------------------- */
-.sidebar {
-    width: 60%;
-    min-height: 400px;
-    background: url('../img/linen.png') repeat-y;
-    margin-top: 10px;
-    margin-left: -15px;
-    padding-top: 5px;
-    background-size: 100% auto;
-    -webkit-background-size: 100% auto; /*  Safari  */
-    -khtml-background-size: 100% auto; /*  Konqueror  */
-    -moz-background-size: 100% auto;
-    background-size: 100% auto; /*  Firefox  */
-    -webkit-box-shadow: #ccc 3px 0px 6px;
-    box-shadow: #ccc 3px 0px 6px;
-    border-radius: 10px;
 }
 
 /* Landing
@@ -520,6 +425,14 @@ margin-bottom:40px
 .login-head {
     margin-top: 20px;
 }
+
+
+.fb-connect-button-wrapper{margin-top:5px; width: 80%;}
+.fb-connect-button{width:100% !important;height:40px !important;color:#fff;position:relative;text-align:left;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif !important;background:#77a9d7 !important;background:-moz-linear-gradient(#77a9d7, #548bc6) !important;background:-webkit-linear-gradient(#77a9d7, #548bc6) !important;background:-o-linear-gradient(#77a9d7, #548bc6) !important;background:-ms-linear-gradient(#77a9d7, #548bc6) !important;background:linear-gradient(#77a9d7, #548bc6) !important;margin:0 !important;padding:0 !important;line-height:38px;overflow:hidden;border:1px solid #47637a !important;border-radius:6px;text-shadow:0 1px #333 !important;position:relative;box-shadow:0 1px rgba(255, 255, 255, 0.3) inset,1px 0 0 #89b4dc,0 1px 3px #cccccc;font-size:17px !important;display:block;border:1px solid #47637A;width:100%;border-radius:4px;font-weight:bold;}
+.fb-connect-button:before{content:'';background:#698da9 url("../images/v3/sprites.png?v=9");background:url("../images/v3/sprites.png?v=9"),-moz-linear-gradient(#698da9, #466b8b);background:url("../images/v3/sprites.png?v=9"),-webkit-linear-gradient(#698da9, #466b8b);background:url("../images/v3/sprites.png?v=9"),-o-linear-gradient(#698da9, #466b8b);background:url("../images/v3/sprites.png?v=9"),-ms-linear-gradient(#698da9, #466b8b);background:url("../images/v3/sprites.png?v=9"),linear-gradient(#698da9, #466b8b);width:45px;height:38px;margin-right:10px;float:left;border-right:1px solid #456178;box-shadow:0px 1px rgba(255, 255, 255, 0.3) inset,1px 0 0 #89b4dc;border-radius:3px 0 0 3px;}
+.fb-connect-button:active{top:1px;}
+.fb-connect-button:hover{color:#fff;text-decoration: none;}
+.fb-connect-button:after{content:'';width:100%;height:100%;background:url("../images/v3/noise.png");position:absolute;left:0;top:0;}
 
 /* Dashboard
 -------------------------------------------------- */
