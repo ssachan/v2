@@ -183,8 +183,6 @@ window.Account = Backbone.Model.extend({
 			}
 		});
 	},
-
-
 });
 
 var account = new Account();

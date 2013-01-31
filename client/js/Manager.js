@@ -618,7 +618,5 @@ window.Manager = {
             var activityView = new ActivityView({});
             activeView.switchView(activityView);
         });
-        
     }
-
 };

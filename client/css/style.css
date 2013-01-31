@@ -677,7 +677,6 @@ margin-bottom:40px
     left: 0px;
     z-index: 100;
     padding: 8px 0px;
-    width: 100%;
     text-transform: uppercase;
     text-align:center;
 }
@@ -760,6 +759,10 @@ background: linear-gradient(#f8f9fa, #f0f3f6);
 
 .quiz-box  .pstats .span6:last-child {
     border-left: 1px solid #ccc;
+}
+
+#rec-quizzes .quiz-box{
+    width: 90%;
 }
 
 /* Faculty Profile
