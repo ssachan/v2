@@ -71,24 +71,15 @@ window.helper = {
 		}, 6000);
 	},
 
-	showError : function(text) {
-		clearTimeout(this.timeout);
-		$('.alert p').html('<strong>ERROR :</strong>' + text);
-		$('.alert').slideDown();
-		this.timeout = setTimeout(function() {
-			$('.alert').slideUp();
-		}, 6000);
-	},
-
 	processStatus : function(data) {
 		switch (data.status) {
 		case STATUS.SUCCESS:
-			this.showInfo('Success',data.data,'alert-success');
+			this.showInfo('SUCCESS',data.data,'alert-success');
 			break;
 		case STATUS.FAIL:
-			this.showInfo('Error',data.data,'alert-error');
+			this.showInfo('ERROR',data.data,'alert-error');
 			break;
-			this.showInfo('Error',data.data,'alert-error');
+			this.showInfo('ERROR',data.data,'alert-error');
 		case STATUS.ERROR:
 			break;
 		case STATUS.EXCEPTION:
