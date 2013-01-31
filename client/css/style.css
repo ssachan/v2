@@ -2,6 +2,12 @@
 -------------------------------------------------- */
 a {
     cursor: pointer;
+    color:inherit;
+}
+
+a:hover {
+    cursor: pointer;
+    text-decoration: none;
 }
 
 html,body,.container {
@@ -132,14 +138,6 @@ h5 {
     border: 0;
 }
 
-.top-margin {
-    margin-top: 30px;
-}
-
-.bottom-margin {
-    margin-bottom: 30px;
-}
-
 /* Define the color palette */
 .green {
     color: #06947A;
@@ -202,6 +200,17 @@ h5 {
     text-align: center;
 }
 
+/* Page widths all at one central place
+ ------------------------------------------------ */
+.landing {
+        width: 100%;
+}
+
+.quiz-library {
+    width: 90%;
+}
+
+/* ------------------------------------------------ */
 
 /* Buttons
  ------------------------------------------------ */
@@ -295,8 +304,6 @@ h5 {
 -------------------------------------------------- */
 .landing {
     background: rgba(255, 255, 255, 0.9);
-    width: 100%;
-    margin-bottom: 20px;
 }
 
 .banner {
@@ -605,9 +612,22 @@ margin-bottom:40px
 
 /* Quiz Library
 -------------------------------------------------- */
-.quiz-library {
-    width: 90%;
-}
+.course-ribbon{position:absolute;right:-11px;top:20px;z-index:1;}
+.course-ribbon:before{background:#666666;background:-moz-linear-gradient(#666666, #000000);background:-webkit-linear-gradient(#666666, #000000);background:-o-linear-gradient(#666666, #000000);background:-ms-linear-gradient(#666666, #000000);background:linear-gradient(#666666, #000000);bottom:-7px;content:"";height:6px;position:absolute;right:1px;-moz-transform:skewy(-20deg);-webkit-transform:skewy(-20deg);-o-transform:skewy(-20deg);-ms-transform:skewy(-20deg);transform:skewy(-20deg);-webkit-backface-visibility:hidden;width:10px;display:block;}
+.course-ribbon b{border:1px solid #4F2C1D;border-radius:4px;color:#fff;padding:7px 10px 7px 8px;position:relative;box-shadow:0 1px rgba(255, 255, 255, 0.5) inset,0 3px 2px rgba(0, 0, 0, 0.2);text-shadow:0 -1px 1px rgba(0, 0, 0, 0.5);}
+.course-ribbon b:before,.course-ribbon b:after{border-color:#4F2C1D;border-style:solid;content:"";height:50%;left:-4px;position:absolute;width:8px;}
+.course-ribbon b:before{border-width:1px 0 0 1px;box-shadow:0 1px rgba(255, 255, 255, 0.5) inset;top:-1px;-moz-transform:skewx(21deg);-webkit-transform:skewx(21deg);-o-transform:skewx(21deg);-ms-transform:skewx(21deg);transform:skewx(21deg);-webkit-backface-visibility:hidden;}
+.course-ribbon b:after{border-width:0 0 1px 1px;bottom:-1px;-moz-transform:skewx(-21deg);-webkit-transform:skewx(-21deg);-o-transform:skewx(-21deg);-ms-transform:skewx(-21deg);transform:skewx(-21deg);-webkit-backface-visibility:hidden;box-shadow:0 5px 2px -2px rgba(0, 0, 0, 0.2);}
+.course-ribbon b i{font-style:normal;font-size:20px;}
+.course-ribbon.orange b{background:#f79f4f;background:-moz-linear-gradient(#f79f4f, #aa0642);background:-webkit-linear-gradient(#f79f4f, #aa0642);background:-o-linear-gradient(#f79f4f, #aa0642);background:-ms-linear-gradient(#f79f4f, #aa0642);background:linear-gradient(#f79f4f, #aa0642);}
+.course-ribbon.orange b:before{background:#f79f4f;background:-moz-linear-gradient(#f79f4f, #d0684a);background:-webkit-linear-gradient(#f79f4f, #d0684a);background:-o-linear-gradient(#f79f4f, #d0684a);background:-ms-linear-gradient(#f79f4f, #d0684a);background:linear-gradient(#f79f4f, #d0684a);}
+.course-ribbon.orange b:after{background:#d0684a;background:-moz-linear-gradient(#d0684a, #aa0642);background:-webkit-linear-gradient(#d0684a, #aa0642);background:-o-linear-gradient(#d0684a, #aa0642);background:-ms-linear-gradient(#d0684a, #aa0642);background:linear-gradient(#d0684a, #aa0642);}
+.course-ribbon.green b{background:#8ab933;background:-moz-linear-gradient(#8ab933, #4a631c);background:-webkit-linear-gradient(#8ab933, #4a631c);background:-o-linear-gradient(#8ab933, #4a631c);background:-ms-linear-gradient(#8ab933, #4a631c);background:linear-gradient(#8ab933, #4a631c);}
+.course-ribbon.green b:before{background:#8ab933;background:-moz-linear-gradient(#8ab933, #688b29);background:-webkit-linear-gradient(#8ab933, #688b29);background:-o-linear-gradient(#8ab933, #688b29);background:-ms-linear-gradient(#8ab933, #688b29);background:linear-gradient(#8ab933, #688b29);}
+.course-ribbon.green b:after{background:#688b29;background:-moz-linear-gradient(#688b29, #4a631c);background:-webkit-linear-gradient(#688b29, #4a631c);background:-o-linear-gradient(#688b29, #4a631c);background:-ms-linear-gradient(#688b29, #4a631c);background:linear-gradient(#688b29, #4a631c);}
+.course-ribbon.blue b{background:#f79f4f;background:-moz-linear-gradient(#f79f4f, #aa0642);background:-webkit-linear-gradient(#f79f4f, #aa0642);background:-o-linear-gradient(#f79f4f, #aa0642);background:-ms-linear-gradient(#f79f4f, #aa0642);background:linear-gradient(#f79f4f, #aa0642);}
+.course-ribbon.blue b:before{background:#f79f4f;background:-moz-linear-gradient(#f79f4f, #d0684a);background:-webkit-linear-gradient(#f79f4f, #d0684a);background:-o-linear-gradient(#f79f4f, #d0684a);background:-ms-linear-gradient(#f79f4f, #d0684a);background:linear-gradient(#f79f4f, #d0684a);}
+.course-ribbon.blue b:after{background:#d0684a;background:-moz-linear-gradient(#d0684a, #aa0642);background:-webkit-linear-gradient(#d0684a, #aa0642);background:-o-linear-gradient(#d0684a, #aa0642);background:-ms-linear-gradient(#d0684a, #aa0642);background:linear-gradient(#d0684a, #aa0642);}
 
 .thumbnails{
     margin-bottom:0px;
@@ -701,10 +721,6 @@ background: -webkit-linear-gradient(#f8f9fa, #f0f3f6);
 background: -o-linear-gradient(#f8f9fa, #f0f3f6);
 background: -ms-linear-gradient(#f8f9fa, #f0f3f6);
 background: linear-gradient(#f8f9fa, #f0f3f6);
-/*    margin-top: 0px;
-    background-color: #DDD;
-    font-size: 15px;
-    padding: 10px;*/
 }
 
 .quiz-box .fac .name {
@@ -868,7 +884,8 @@ background: linear-gradient(#f8f9fa, #f0f3f6);
 }
 
 #question {
-    min-height: 450px;
+    min-height: 80%; 
+    height: 80%"
 }
 
 .qtext {
@@ -1551,20 +1568,3 @@ Pagination classes
 .footer-links li:first-child {
   padding-left: 0;
 }
-
-.course-ribbon{position:absolute;right:-11px;top:20px;z-index:1;}
-.course-ribbon:before{background:#666666;background:-moz-linear-gradient(#666666, #000000);background:-webkit-linear-gradient(#666666, #000000);background:-o-linear-gradient(#666666, #000000);background:-ms-linear-gradient(#666666, #000000);background:linear-gradient(#666666, #000000);bottom:-7px;content:"";height:6px;position:absolute;right:1px;-moz-transform:skewy(-20deg);-webkit-transform:skewy(-20deg);-o-transform:skewy(-20deg);-ms-transform:skewy(-20deg);transform:skewy(-20deg);-webkit-backface-visibility:hidden;width:10px;display:block;}
-.course-ribbon b{border:1px solid #4F2C1D;border-radius:4px;color:#fff;padding:7px 10px 7px 8px;position:relative;box-shadow:0 1px rgba(255, 255, 255, 0.5) inset,0 3px 2px rgba(0, 0, 0, 0.2);text-shadow:0 -1px 1px rgba(0, 0, 0, 0.5);}
-.course-ribbon b:before,.course-ribbon b:after{border-color:#4F2C1D;border-style:solid;content:"";height:50%;left:-4px;position:absolute;width:8px;}
-.course-ribbon b:before{border-width:1px 0 0 1px;box-shadow:0 1px rgba(255, 255, 255, 0.5) inset;top:-1px;-moz-transform:skewx(21deg);-webkit-transform:skewx(21deg);-o-transform:skewx(21deg);-ms-transform:skewx(21deg);transform:skewx(21deg);-webkit-backface-visibility:hidden;}
-.course-ribbon b:after{border-width:0 0 1px 1px;bottom:-1px;-moz-transform:skewx(-21deg);-webkit-transform:skewx(-21deg);-o-transform:skewx(-21deg);-ms-transform:skewx(-21deg);transform:skewx(-21deg);-webkit-backface-visibility:hidden;box-shadow:0 5px 2px -2px rgba(0, 0, 0, 0.2);}
-.course-ribbon b i{font-style:normal;font-size:20px;}
-.course-ribbon.orange b{background:#f79f4f;background:-moz-linear-gradient(#f79f4f, #aa0642);background:-webkit-linear-gradient(#f79f4f, #aa0642);background:-o-linear-gradient(#f79f4f, #aa0642);background:-ms-linear-gradient(#f79f4f, #aa0642);background:linear-gradient(#f79f4f, #aa0642);}
-.course-ribbon.orange b:before{background:#f79f4f;background:-moz-linear-gradient(#f79f4f, #d0684a);background:-webkit-linear-gradient(#f79f4f, #d0684a);background:-o-linear-gradient(#f79f4f, #d0684a);background:-ms-linear-gradient(#f79f4f, #d0684a);background:linear-gradient(#f79f4f, #d0684a);}
-.course-ribbon.orange b:after{background:#d0684a;background:-moz-linear-gradient(#d0684a, #aa0642);background:-webkit-linear-gradient(#d0684a, #aa0642);background:-o-linear-gradient(#d0684a, #aa0642);background:-ms-linear-gradient(#d0684a, #aa0642);background:linear-gradient(#d0684a, #aa0642);}
-.course-ribbon.green b{background:#8ab933;background:-moz-linear-gradient(#8ab933, #4a631c);background:-webkit-linear-gradient(#8ab933, #4a631c);background:-o-linear-gradient(#8ab933, #4a631c);background:-ms-linear-gradient(#8ab933, #4a631c);background:linear-gradient(#8ab933, #4a631c);}
-.course-ribbon.green b:before{background:#8ab933;background:-moz-linear-gradient(#8ab933, #688b29);background:-webkit-linear-gradient(#8ab933, #688b29);background:-o-linear-gradient(#8ab933, #688b29);background:-ms-linear-gradient(#8ab933, #688b29);background:linear-gradient(#8ab933, #688b29);}
-.course-ribbon.green b:after{background:#688b29;background:-moz-linear-gradient(#688b29, #4a631c);background:-webkit-linear-gradient(#688b29, #4a631c);background:-o-linear-gradient(#688b29, #4a631c);background:-ms-linear-gradient(#688b29, #4a631c);background:linear-gradient(#688b29, #4a631c);}
-.course-ribbon.blue b{background:#f79f4f;background:-moz-linear-gradient(#f79f4f, #aa0642);background:-webkit-linear-gradient(#f79f4f, #aa0642);background:-o-linear-gradient(#f79f4f, #aa0642);background:-ms-linear-gradient(#f79f4f, #aa0642);background:linear-gradient(#f79f4f, #aa0642);}
-.course-ribbon.blue b:before{background:#f79f4f;background:-moz-linear-gradient(#f79f4f, #d0684a);background:-webkit-linear-gradient(#f79f4f, #d0684a);background:-o-linear-gradient(#f79f4f, #d0684a);background:-ms-linear-gradient(#f79f4f, #d0684a);background:linear-gradient(#f79f4f, #d0684a);}
-.course-ribbon.blue b:after{background:#d0684a;background:-moz-linear-gradient(#d0684a, #aa0642);background:-webkit-linear-gradient(#d0684a, #aa0642);background:-o-linear-gradient(#d0684a, #aa0642);background:-ms-linear-gradient(#d0684a, #aa0642);background:linear-gradient(#d0684a, #aa0642);}

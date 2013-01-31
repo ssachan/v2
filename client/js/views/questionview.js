@@ -50,7 +50,6 @@ window.QuizQuestionView = Backbone.View.extend({
                 optionSelectedArray[j] = 0;
             }
         }
-
         // get the class for selected button...if its active then it has
         // been clicked again.
         var currentClass = e.target.getAttribute('class');
@@ -66,7 +65,7 @@ window.QuizQuestionView = Backbone.View.extend({
             optionSelectedArray[value] = 1;
         }
         var temp = [];
-        for (i = 0; i < optionLength; i++) {
+        for (var i = 0; i < optionLength; i++) {
             if (optionSelectedArray[i]) {
                 temp.push(i);
             }
@@ -116,29 +115,32 @@ window.QuizQuestionView = Backbone.View.extend({
     },
 
     render: function () {
-        $('#question').html(this.template(this.model.toJSON()));
-        this.renderOptions();
-        $('#status').hide();
-        $('#solution').hide();
-        $('#q-video').hide();
-        if (this.model.get('hasAttempted')) {
-            this.renderInfo();
-            $('#analytics').show();
-            $('#hq').html('Solution');
-        } else {
-            logs.addEntry("QUESTION_OPEN", this.model.get('id'));
-            $('#analytics').hide();
-            $('#hq').html('Question');
-        }
-        // diable right click for this page
-        $('.quizview').bind("contextmenu", function (e) {
-            e.preventDefault();
-        });
-        var math = document.getElementById('quiz-view');
-        MathJax.Hub.Queue(["Typeset", MathJax.Hub, math]);
+    	$(this.el).html(this.template(this.model.toJSON()));
         return this;
     },
-
+    
+    onRender : function (){
+    	 this.renderOptions();
+         $('#status').hide();
+         $('#solution').hide();
+         $('#q-video').hide();
+         if (this.model.get('hasAttempted')) {
+             this.renderInfo();
+             $('#analytics').show();
+             $('#hq').html('Solution');
+         } else {
+             logs.addEntry("QUESTION_OPEN", this.model.get('id'));
+             $('#analytics').hide();
+             $('#hq').html('Question');
+         }
+         // diable right click for this page
+         $('.quizview').bind("contextmenu", function (e) {
+             e.preventDefault();
+         });
+         var math = document.getElementById('quiz-view');
+         MathJax.Hub.Queue(["Typeset", MathJax.Hub, math]);
+    },
+    
     renderOptions: function () {
         var htmlOpt = [];
         var buttonOpt = [];

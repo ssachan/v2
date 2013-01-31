@@ -235,20 +235,23 @@ window.Manager = {
     },
     
     getQuestion : function (qId){
-    	var url = Config.serverUrl + 'facByStreamId/' + id;
+    	var url = Config.serverUrl + 'question/' + qId;
         $.ajax({
             url: url,
             dataType: "json",
+            data: {
+                accountId: account.get('id'),
+                streamId: streamId
+            },
             success: function (data) {
                 if (data.status == STATUS.SUCCESS) {
                 	question.set(data.data);
+                	question.set('hasAttempted',true);
                 	var qView = new QuizQuestionView({
                         model: question,
                     });
                     app.showView('#content', qView);
-                    qView.renderQuizzes();
-                	app.showView('#content', facDirectoryView);
-                    facDirectoryView.onRender();
+                    qView.onRender();
                 } else { // If not, send them back to the home page
                     helper.showError(data.data);
                 }
@@ -266,7 +269,6 @@ window.Manager = {
     },
 
     showResume: function (quiz) {
-        // var dfd = [];
         if (quizQuestions.length > 0) {
             var resumeView = new ResumeView({
                 model: quiz
@@ -534,6 +536,10 @@ window.Manager = {
 
     getDataForQuiz: function (quizId) {
         this.processQuiz(quizId);
+    },
+
+    getDataForQuestion: function (qId) {
+        this.getQuestion(qId);
     },
 
     loadQuiz2: function (quiz) {

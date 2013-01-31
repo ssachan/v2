@@ -252,15 +252,18 @@ function getQuizzesByFac($id) {
 
 function getQuestion($id) {
     $response = array();
-    $sql = "SELECT q.*,r.optionSelected,r.timeTaken,p.id as paraId, p.text as para from questions q left join para p on (p.id=q.paraId) left join responses r on (q.id=r.questionId) where q.id=:qId";
+    $accountId = $_GET['accountId'];
+    $sql = "SELECT q.*,r.optionSelected,r.timeTaken,p.id as paraId, p.text as para from questions q left join para p on (p.id=q.paraId) left join responses r on (q.id=r.questionId) where q.id=:qId and r.accountId=:accountId";
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
-        $stmt->bindParam("qId", $qId);
-        $questions = $stmt->fetch(PDO::FETCH_OBJ);
+        $stmt->bindParam("qId", $id);
+        $stmt->bindParam("accountId", $accountId);
+        $stmt->execute();
+        $record = $stmt->fetch(PDO::FETCH_OBJ);
         $db = null;
         $response["status"] = SUCCESS;
-        $response["data"] = $records;
+        $response["data"] = $record;
     } catch (PDOException $e) {
         $response["status"] = ERROR;
         $response["data"] = EXCEPTION_MSG;

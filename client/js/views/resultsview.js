@@ -196,7 +196,7 @@ window.SolutionsView = Backbone.View.extend({
 	
 	initialize : function() {
 		this.index = this.options.index;
-		this.questionView = null;
+		this.questionView = new QuizQuestionView();
 		this.question = null;
 		this.questionIds = this.model.get('questionIdsArray');
 		this.totalQuestions = this.questionIds.length;
@@ -280,14 +280,9 @@ window.SolutionsView = Backbone.View.extend({
 		if (this.question.get('timeTaken') == null) {
 			this.question.set('timeTaken', 0);
 		}
-		if (this.questionView == null) {
-			this.questionView = new QuizQuestionView({
-				el : $('#question'),
-			});
-		}
-		this.question.set('hasAttempted',true);
 		this.questionView.model = this.question;
-		this.questionView.render();
+		$('#question').html(this.questionView.render().el);
+		this.questionView.onRender();
 		$("#qnum").html((parseInt(this.index) + 1));
 		$("#qtotal").html((this.totalQuestions));
 		$('#previous').show();

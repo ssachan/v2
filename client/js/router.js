@@ -146,11 +146,7 @@ var AppRouter = Backbone.Router.extend({
 	},
 	
 	question : function (id){
-		if (account.get('id') != null) {
-			Manager.getDataForQuiz(id);
-		} else {
-			window.location = '#quizLibrary';
-		}
+		Manager.getDataForQuestion(id);
 	},
 	
 	changePass : function() {

@@ -27,8 +27,8 @@ window.FacView = Backbone.View.extend({
         	for (var j = 0; j < 4&&i<len; j++) {
         		quizzes[i].set('fid',this.model.get('id'));
         		quizzes[i].set('fdpURL',this.model.get('dpUrl'));
-        		quizzes[i].set('firstname',this.model.get('firstName'));
-        		quizzes[i].set('lastname',this.model.get('lastName'));
+        		quizzes[i].set('firstName',this.model.get('firstName'));
+        		quizzes[i].set('lastName',this.model.get('lastName'));
         		quizzes[i].set('bioShort',this.model.get('bioShort'));
         		$(".thumbnails:last").append(new QuizItemView({model: quizzes[i]}).render().el);
         		i++;
