@@ -4,6 +4,218 @@
 		"selected_items":
 		[
 			[
+				"time",
+				"timeFactor"
+			],
+			[
+				"delta",
+				"deltaCalculator"
+			],
+			[
+				"abil",
+				"abilityFactor"
+			],
+			[
+				"sigma",
+				"sigmaTime"
+			],
+			[
+				"avg",
+				"avgTime"
+			],
+			[
+				"abili",
+				"abilityFactors"
+			],
+			[
+				"option",
+				"optionsArray"
+			],
+			[
+				"num",
+				"numUnattempted"
+			],
+			[
+				"ability",
+				"abilityScores"
+			],
+			[
+				"get",
+				"getMaxScore  (function)"
+			],
+			[
+				"tim",
+				"timeTaken  (variable)"
+			],
+			[
+				"logs",
+				"logs"
+			],
+			[
+				"val",
+				"value"
+			],
+			[
+				"json_",
+				"json_decode"
+			],
+			[
+				"json",
+				"json_decode"
+			],
+			[
+				"correcr",
+				"correctScore"
+			],
+			[
+				"updateRe",
+				"updateResultsTable  (function)"
+			],
+			[
+				"AAT",
+				"ATTEMPTED_AS_PRACTICE  (constant)"
+			],
+			[
+				"quiz",
+				"quizId"
+			],
+			[
+				"S",
+				"SUCCESS"
+			],
+			[
+				"score",
+				"scoreObj"
+			],
+			[
+				"up",
+				"updateResponsesTable  (function)"
+			],
+			[
+				"valu",
+				"valuesString"
+			],
+			[
+				"abi",
+				"abilityScoreBefore"
+			],
+			[
+				"ATTEM",
+				"ATTEMPTED_AS_TIMED_TEST"
+			],
+			[
+				"attempte",
+				"attemptedAs"
+			],
+			[
+				"firep",
+				"firephp"
+			],
+			[
+				"correc",
+				"correctScore"
+			],
+			[
+				"abilit",
+				"abilityScores  (variable)"
+			],
+			[
+				"l2",
+				"l2Id  (variable)"
+			],
+			[
+				"tmp",
+				"tmpAbilityLevels"
+			],
+			[
+				"l3",
+				"l3Id  (variable)"
+			],
+			[
+				"origina",
+				"originalOptionText"
+			],
+			[
+				"evaluate",
+				"evaluateQuestion"
+			],
+			[
+				"log",
+				"logsByQuestion"
+			],
+			[
+				"curren",
+				"currentDate"
+			],
+			[
+				"upda",
+				"updateStateOfQuiz  (function)"
+			],
+			[
+				"correct",
+				"correctAnswer"
+			],
+			[
+				"getArra",
+				"getOptionArrayFromText"
+			],
+			[
+				"q",
+				"questionObject  (class)"
+			],
+			[
+				"doSq",
+				"doSQL"
+			],
+			[
+				"for",
+				"foreach	foreach …"
+			],
+			[
+				"acco",
+				"accountId"
+			],
+			[
+				"updateSco",
+				"updateScoreinResultsTableBy"
+			],
+			[
+				"as",
+				"aScoreBefore"
+			],
+			[
+				"getQues",
+				"getQuestionResponse"
+			],
+			[
+				"send",
+				"sendResponse"
+			],
+			[
+				"select",
+				"selectedAnswers"
+			],
+			[
+				"ac",
+				"accountId"
+			],
+			[
+				"anal",
+				"analConst"
+			],
+			[
+				"res",
+				"result"
+			],
+			[
+				"unatt",
+				"unattemptedScore"
+			],
+			[
+				"def",
+				"defaultScore"
+			],
+			[
 				"video",
 				"videoResults"
 			],
@@ -12,16 +224,8 @@
 				"incorrectlen"
 			],
 			[
-				"time",
-				"timePerQuestion"
-			],
-			[
 				"question",
 				"questionIds"
-			],
-			[
-				"quiz",
-				"quizQuestions"
 			],
 			[
 				"play",
@@ -100,10 +304,6 @@
 				"contentBox"
 			],
 			[
-				"select",
-				"selecterr"
-			],
-			[
 				"newSe",
 				"newSelector"
 			],
@@ -130,10 +330,6 @@
 			[
 				"tag",
 				"tagName"
-			],
-			[
-				"curren",
-				"currentMainView"
 			],
 			[
 				"new",
@@ -292,10 +488,6 @@
 				"argument"
 			],
 			[
-				"for",
-				"forEach"
-			],
-			[
 				"answer",
 				"answer-btn"
 			]
@@ -392,10 +584,23 @@
 	},
 	"file_history":
 	[
-		"/Users/tanujb/Desktop/repos/v2/api/analytics.php",
-		"/Users/tanujb/Desktop/repos/v2/api/index.php",
+		"/Users/tanujb/Desktop/repos/v2/api/data.csv",
+		"/Users/tanujb/Desktop/repos/v2/api/data-op.csv",
+		"/Users/tanujb/Desktop/repos/v2/api/constants.php",
+		"/Users/tanujb/Desktop/repos/v2/api/data1.csv",
+		"/Users/tanujb/Desktop/repos/v2/client/js/views/modalview.js",
 		"/Users/tanujb/Desktop/repos/v2/client/js/views/resultsview.js",
+		"/Users/tanujb/Desktop/repos/v2/api/xkcd.php",
 		"/Users/tanujb/Desktop/repos/v2/client/js/Manager.js",
+		"/Users/tanujb/Desktop/repos/v2/api/authState.php",
+		"/Users/tanujb/Desktop/repos/v2/api/index.php",
+		"/Users/tanujb/Desktop/repos/v2/api/analytics.php",
+		"/Users/tanujb/Desktop/repos/v2/api/testfp.php",
+		"/Users/tanujb/Desktop/repos/v2/client/templates/QuizResultsView.html",
+		"/Users/tanujb/Desktop/repos/v2/client/templates/ModalView.html",
+		"/Users/tanujb/Desktop/repos/v2/client/css/video-js.min.css",
+		"/Users/tanujb/Desktop/repos/v2/api/helper.php",
+		"/Users/tanujb/Desktop/repos/v2/client/js/helper.js",
 		"/Users/tanujb/Desktop/repos/v2/client/dashboard.html",
 		"/Users/tanujb/Library/Application Support/Sublime Text 2/Packages/User/Preferences.sublime-settings",
 		"/Users/tanujb/Desktop/PrepSquare Local Files/text files/referencedocs",
@@ -416,19 +621,15 @@
 		"/Users/tanujb/Desktop/repos/v3/app/templates/example.html",
 		"/Users/tanujb/Desktop/repos/v3/index.html",
 		"/Users/tanujb/Desktop/repos/v3/app/config.js",
-		"/Users/tanujb/Desktop/repos/v2/client/js/helper.js",
 		"/Users/tanujb/Desktop/repos/v2/client/templates/ResultsView.html",
 		"/Users/tanujb/Desktop/repos/v2/client/js/utils/charts.js",
 		"/Users/tanujb/Desktop/repos/v2/client/js/views/quizview.js",
 		"/Users/tanujb/Desktop/repos/v2/client/js/lib/playlist.js",
 		"/Users/tanujb/Desktop/repos/v2/client/P5 quizanalytics.html",
 		"/Users/tanujb/Desktop/repos/v2/client/templates/QuizView.html",
-		"/Users/tanujb/Desktop/repos/v2/client/js/views/modalview.js",
 		"/Users/tanujb/Desktop/repos/v2/client/index.html",
 		"/Users/tanujb/Desktop/repos/mathjax/test/sample-tex.html",
 		"/Users/tanujb/Downloads/google.csv",
-		"/Users/tanujb/Desktop/repos/v2/api/authState.php",
-		"/Users/tanujb/Desktop/repos/v2/client/templates/QuizResultsView.html",
 		"/Users/tanujb/Desktop/repos/v2/client/js/models/quizzes.js",
 		"/Users/tanujb/Desktop/repos/v2/client/js/router.js",
 		"/Users/tanujb/Desktop/repos/v2/api/.htaccess",
@@ -442,7 +643,6 @@
 		"/Users/tanujb/Desktop/repos/v2/client/config_t.js",
 		"/Users/tanujb/Desktop/repos/v2/client/config_s.js",
 		"/Users/tanujb/Desktop/repos/v2/client/config.js",
-		"/Users/tanujb/Desktop/repos/v2/api/xkcd.php",
 		"/Users/tanujb/Desktop/repos/v2/api/.gitignore",
 		"/Users/tanujb/Desktop/repos/jwplayer/index.html",
 		"/Users/tanujb/Desktop/repos/src/index.html",
@@ -511,15 +711,7 @@
 		"/Users/tanujb/Desktop/repos/src/js/lib/backbone.dualstorage.js",
 		"/Users/tanujb/Desktop/repos/src/js/router-web.js",
 		"/Users/tanujb/Desktop/repos/src/tpl/FlashCardListItemView.html",
-		"/Users/tanujb/Desktop/repos/src/js/views/wordlistview.js",
-		"/Users/tanujb/Desktop/repos/src/js/router.js",
-		"/Users/tanujb/Desktop/repos/src/tpl/FlashCardView.html",
-		"/Users/tanujb/Desktop/repos/src/tpl/FlashCardListView.html",
-		"/Users/tanujb/Library/Application Support/Sublime Text 2/Packages/Alignment/Default (OSX).sublime-keymap",
-		"/Users/tanujb/Library/Application Support/Sublime Text 2/Packages/User/Default (OSX).sublime-keymap",
-		"/Users/tanujb/Library/Application Support/Sublime Text 2/Packages/User/Plain text.sublime-settings",
-		"/Users/tanujb/Library/Application Support/Sublime Text 2/Packages/Terminal/Base File.sublime-settings",
-		"/Users/tanujb/Desktop/repos/src/js/views/quizview.js"
+		"/Users/tanujb/Desktop/repos/src/js/views/wordlistview.js"
 	],
 	"find":
 	{
@@ -539,124 +731,134 @@
 		"case_sensitive": false,
 		"find_history":
 		[
-			"},\n",
-			"});\n",
-			"processQuiz",
-			"questionsExis",
-			"ResultsView",
-			"require(",
-			"questionIds",
-			"drawTime",
-			": ",
-			"INFO",
-			"j:",
-			"create",
-			"HEAD",
-			"getQuizzeshis",
-			"?",
-			"getQuestion",
-			"ProfTanuj",
-			"http://localhost/v2/client/img/",
-			"name",
-			"playList",
-			"calculateScores",
-			"reveal",
-			"buildDefList",
-			"renderTo",
-			"render",
-			"TOC",
-			"currentMainView",
-			"<a",
-			"updateslide",
-			"<br>",
-			"slide(",
-			"section",
-			"fragment",
-			"toc",
-			"<a",
-			"fix",
-			"render",
-			"fragment",
-			"level",
-			"scrub",
-			"each",
-			"addEvent",
-			"dispatchEve",
-			"widget",
-			"dispatch",
-			"script",
-			"Text",
-			"&amp;",
-			"</td></tr>",
-			"<br><b>ISBN: </b>",
-			"<br><b>Genre: </b>",
-			"<br><b>Author: </b>",
-			"<b>Title: </b>",
-			"<b>Title: </b>\n",
-			"\n",
-			"&amp;",
-			"</td></tr>",
-			",",
-			"<br>",
-			"<b>ISBN: </b>",
-			"<b>Genre: </b>",
-			"<b>Author: </b>",
-			"<b>Title: </b>",
-			"<br><br></td><td>",
-			"<br><br>",
-			"</tr>",
-			">",
-			"td",
-			"/",
-			"<",
-			"<b>ISBN: </b>",
-			"this",
-			"fragments[i]",
-			".html",
-			"words",
-			"pageText",
-			"betterPageText",
-			"item",
-			"fragment",
-			"div",
-			"<fragment",
-			"section",
-			"start",
-			"navigate",
-			"writeURL",
-			"controlsDown",
-			"keydown",
-			"url",
-			"timeout",
-			"queryselectorall",
-			"mobile",
-			"serverUrl",
-			"../api/",
-			"serverUrl",
-			"erverUrl",
-			"serverUrl",
-			"server",
-			",",
-			"phonegap",
-			"edition",
-			"'\n",
+			"vars",
+			"self",
+			"_LOW",
+			"_HIGH",
+			"HIGH",
+			"L",
+			"ABOVE",
+			"echo \"hi\";",
+			"echo \"hello\";",
+			"echo \"hello cdf",
+			"$enums($state)",
+			";",
+			"public $",
+			"public",
+			";",
+			"public ",
+			"=>",
 			"=",
 			";",
-			"var",
-			"=",
-			"sync",
-			"../api/",
-			"¶\n",
-			"()",
-			";",
-			"=",
-			"u",
-			"U",
-			"u",
-			"this.",
-			"false",
-			"function",
-			"reset"
+			"public ",
+			"CORRECT",
+			"analCONST",
+			"public function get",
+			"static",
+			"stateStr",
+			"CORRECT",
+			"::",
+			"BASE",
+			"const ",
+			"UNATTEMPTED",
+			"_",
+			"default",
+			"default :",
+			"default:",
+			"case default",
+			"CORRECT",
+			"EVEL",
+			"_1",
+			"INCORRECT",
+			"COR",
+			"adjustDelta",
+			"getWeightageOf",
+			"abilityScorenotFoun",
+			",",
+			"addAnswer",
+			"quizSummar",
+			"$quiz->qEvaluated[$quiz->questionIds[$quiz->state]]",
+			"$qEvaluated",
+			"selectedAnswers",
+			"\" ",
+			",",
+			"quizResponses",
+			"quizResponseDetails",
+			"($qEvaulated->qDetails->l3Id, $qEvaulated->delta)",
+			"public function",
+			"array()",
+			"= 0",
+			"=0",
+			"$this->state",
+			"setStateOFQuiz",
+			"getStateof",
+			"$state",
+			"pq",
+			"getPQ",
+			"returnQuestionData",
+			"getPQ",
+			"tanujb",
+			"$firephp",
+			"firephp",
+			"updateResultsForTest",
+			"testCode",
+			"QuizSummary",
+			"key",
+			"videoArray",
+			"ability",
+			"l3graphdata",
+			"response[\"status\"]",
+			"selectedAnswers",
+			"doSQL($pa",
+			"doSQL",
+			"getScore",
+			"getscore",
+			"attempted_AS_TIMED_",
+			"ATTEMPTED_AS",
+			"ATTEMPTED",
+			"Timed",
+			"}",
+			"{",
+			"insertintoresponses",
+			"quizresponse",
+			"insertinto",
+			"\"=",
+			"videoarray(",
+			"quizResponses",
+			"attemptedAs",
+			"insertintore",
+			"doSQl($para",
+			"insertintoresponses",
+			"doSQL",
+			"testcode",
+			"doSql",
+			"doSQL",
+			"quizresponse",
+			"quizResponse",
+			"firephp",
+			"}{",
+			"insertintoresponsesTable",
+			"addIncorrect",
+			"addL3",
+			"hello38",
+			"qDetails->delta",
+			"->$",
+			"getIdOf",
+			"questionEvalution",
+			"hello",
+			"optionsarray",
+			"testCode",
+			"selectedAnswers",
+			"|:",
+			"Id",
+			"l1",
+			"score",
+			"Score",
+			"score",
+			"Score",
+			"score",
+			"Score",
+			"score"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -722,7 +924,7 @@
 		"cols":
 		[
 			0.0,
-			0.5,
+			0.409147324601,
 			1.0
 		],
 		"rows":
@@ -734,7 +936,7 @@
 	"menu_visible": true,
 	"output.find_results":
 	{
-		"height": 100.0
+		"height": 183.0
 	},
 	"output.gjslint_result_view":
 	{
@@ -750,6 +952,14 @@
 		"height": 0.0,
 		"selected_items":
 		[
+			[
+				"anal",
+				"v2/api/analytics.php"
+			],
+			[
+				"analyt",
+				"v2/api/analytics.php"
+			],
 			[
 				"main",
 				"js/views-mobile/mainview.js"

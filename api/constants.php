@@ -198,7 +198,7 @@ function testDelta()
         foreach (timeRanges::$values as $key => $value)
             fwrite($fp,$key.",".$value."\n");
         fwrite($fp, "\nability factors => \n");
-        foreach (bases::$values as $key => $value)
+        foreach (abilityFactors::$values as $key => $value)
             fwrite($fp,$key.",".$value."\n");
         fwrite($fp,"\nData\nstate,qScore,timeTaken,avgTime,sigmaTime,score,delta,base,timeFactor,abilityFactor\n");
 		$currentLine = fgets($file);
