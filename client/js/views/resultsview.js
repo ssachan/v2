@@ -193,6 +193,7 @@ window.ResultGraphsView = Backbone.View.extend({
 });
 
 window.SolutionsView = Backbone.View.extend({
+	className : 'container quizview',
 	
 	initialize : function() {
 		this.index = this.options.index;

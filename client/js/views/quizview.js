@@ -59,6 +59,7 @@ window.ResumeView = Backbone.View.extend({
 });
 
 window.QuizView = Backbone.View.extend({
+	className : 'container quizview',
 
 	initialize : function() {
 		var context = this;
@@ -183,7 +184,7 @@ window.QuizView = Backbone.View.extend({
 });
 
 window.PracticeView = Backbone.View.extend({
-
+	className : 'container quizview',
 	initialize : function() {
 		var context = this;
 		this.index = this.options.index;
