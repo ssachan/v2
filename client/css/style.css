@@ -132,6 +132,41 @@ h5 {
     text-align: center;
 }
 
+ul.stats {
+    background: #F0F4F5;
+    border: 1px solid #DAE4E6;
+    overflow: hidden;
+    padding: 5px 0px 0px 0px;
+    text-align: center;
+    font-size: 12px;
+}
+
+ul.stats li {
+    border-bottom: 1px solid #DAE4E6;
+    overflow: hidden;
+}
+
+ul.stats li:last-child {
+    border-bottom: none;
+}
+
+ul.stats li>span {
+    display: inline-block;
+}
+
+ul.stats .key {
+    width: 50%;
+    border-right: 1px solid #DAE4E6;
+    font-weight: bold;
+    padding:5px 0px;
+}
+
+ul.stats .value {
+    width: 35%;
+    color: #31859C;
+    font-weight: bold;
+    padding:5px 0px;
+}
 /* Page widths all at one central place
  ------------------------------------------------ */
 .page-title {
@@ -596,26 +631,26 @@ h5 {
     background-color: #757575;
 }
 
-.subject { 
-    margin-top:30px;
+.subject {
+    margin-top: 30px;
 }
 
-.subject .header{ 
+.subject .header {
     border: 1px solid #bbb;
     -webkit-border-top-left-radius: 6px;
     border-top-left-radius: 6px;
     -webkit-border-top-right-radius: 6px;
     border-top-right-radius: 6px;
-    padding-left:30px;
+    padding-left: 30px;
     background: url("../img/bg_section.jpg");
-    
 }
-.subject .content{
+
+.subject .content {
     background-color: #fCfCfC;
     border-left: 1px solid #e5e5e5;
     border-right: 1px solid #e5e5e5;
     border-bottom: 1px solid #e5e5e5;
-    padding:10px;
+    padding: 10px;
 }
 
 .subject a {
@@ -835,7 +870,7 @@ h5 {
     color: #fff;
     font-weight: bold;
     background: #31859C;
-    filter: alpha(opacity =     50);
+    filter: alpha(opacity =       50);
     overflow: hidden;
     white-space: nowrap;
     word-wrap: normal;
@@ -944,10 +979,6 @@ h5 {
     top: 25px;
 }
 
-.comp-stats {
-    padding-left: 37px;
-}
-
 .scorebar {
     padding: 0px;
     margin-top: -10px;
@@ -1022,7 +1053,6 @@ h5 {
 
 #status {
     border-bottom: 1px solid #ccc;
-    background: #F0F4F5;    
 }
 
 #status h3 {
@@ -1239,7 +1269,7 @@ h5 {
     color: #666;
 }
 
-.fac-item .stats {
+/*.fac-item .stats {
     padding: 10px 0px 5px 0px;
     color: #666;
     background: #F7F7F7;
@@ -1258,6 +1288,7 @@ h5 {
 .fac-item .stats button {
     margin: 5px 0px 5px 10%;
 }
+*/
 
 /* Fac Profile
 -------------------------------------------------- */
