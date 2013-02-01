@@ -71,24 +71,6 @@ h5 {
     font-size: 11px;
 }
 
-span>h1{
-display:inline;
-margin:0px;
-}
-
-span>h2{
-display:inline;
-margin:0px;
-}
-span>h3{
-display:inline;
-margin:0px;
-}
-span>h4{
-display:inline;
-margin:0px;
-}
-
 /* Faded out hr */
 .soften hr {
     margin-top: 20px;
@@ -103,11 +85,6 @@ margin:0px;
     background-image: -o-linear-gradient(left, rgba(0, 0, 0, 1),
         rgba(0, 0, 0, .9), rgba(0, 0, 0, 0.9) );
     border: 0;
-}
-
-/* Define the color palette */
-.green {
-    color: #06947A;
 }
 
 .yellow {
