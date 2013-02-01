@@ -525,49 +525,12 @@ ul.stats .value {
     width: 100px;
 }
 
-.l3-stats {
-    background: #F0F0F0;
-    background: #F0F4F5;
-    border: 1px solid #DAE4E6;
-    overflow: hidden;
-    padding: 5px 0px 0px 0px;
-    text-align: center;
-    color: #4D4D4D;
-}
-
 .l3-stats .progress {
     -webkit-border-radius: 0px;
     -moz-border-radius: 0px;
     border-radius: 0px;
     top: 0px;
     border: 1px solid #DAE4E6;
-}
-
-.val {
-    font-weight: bold;
-}
-
-.val .row-fluid {
-    border-top: 1px solid #DAE4E6;
-}
-
-.val .row-fluid>[class*="span"] {
-    padding-top: 5px;
-}
-
-.val .row-fluid>[class*="span"]:last-child {
-    border-left: 1px solid #DAE4E6;
-}
-
-.val>.row-fluid {
-    padding-top: 5px;
-    border-top: 1px solid #f6f6f6;
-}
-
-.level {
-    width: 10px;
-    height: 36px;
-    float: left;
 }
 
 .bg-yellow {
@@ -676,6 +639,11 @@ ul.stats .value {
 
 .subject>.row-fluid>[class*="span"]:last-child {
     width: 35%;
+}
+
+.activty-chart{
+    border-right: 8px solid #eee;
+    min-height: 600px;
 }
 
 /* Activity
