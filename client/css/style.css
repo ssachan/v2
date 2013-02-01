@@ -39,6 +39,10 @@ hr {
     text-align: center;
 }
 
+.zero-margin{
+    margin:0px;
+}
+
 h2,h3,h4,h5 {
     font-weight: normal;
 }
@@ -67,25 +71,22 @@ h5 {
     font-size: 11px;
 }
 
-.font-h1 {
-    font-size: 45px;
+span>h1{
+display:inline;
+margin:0px;
 }
 
-.font-h2 {
-    font-size: 30px;
+span>h2{
+display:inline;
+margin:0px;
 }
-
-.font-h3 {
-    font-size: 20px;
-    font-weight: bold;
+span>h3{
+display:inline;
+margin:0px;
 }
-
-.font-h4 {
-    font-size: 15px;
-}
-
-.font-h5 {
-    font-size: 11px;
+span>h4{
+display:inline;
+margin:0px;
 }
 
 /* Faded out hr */
