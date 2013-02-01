@@ -130,7 +130,7 @@ function getQuizzesHistory() {
     $response = array();
     $accountId = $_GET['accountId'];
     $streamId = $_GET['streamId'];
-    $sql = "select r.selectedAnswers,r.timePerQuestion,r.score,r.startTime,r.state, r.attemptedAs,r.numCorrect,r.numIncorrect, q.*,a.id as fid, a.firstName,a.lastName,f.bioShort from results r,quizzes q,accounts a,faculty f where r.accountId=:accountId and q.streamId=:streamId and r.quizId=q.id and q.facultyId=a.id and f.accountId=a.id order by timestamp";
+    $sql = "select r.selectedAnswers,r.timePerQuestion,r.score,r.startTime,r.state, r.attemptedAs,r.numCorrect,r.numIncorrect, q.*,a.id as fid, a.firstName,a.lastName,f.bioShort from results r,quizzes q,accounts a,faculty f where r.accountId=:accountId and q.streamId=:streamId and r.quizId=q.id and q.facultyId=a.id and q.available=1 and f.accountId=a.id order by timestamp";
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
@@ -154,7 +154,7 @@ function getQuizzesHistory() {
 //
 function getQuizzesByStreamId($id) {
     $response = array();
-    $sql = "select q.id,q.questionIds,q.description,q.descriptionShort,q.difficulty,q.allotedTime,q.maxScore,q.rec,q.conceptsTested, q.l2Ids, q.l3Ids, q.typeId, a.id as fid, a.firstName,a.lastName,f.bioShort from quizzes q, accounts a, faculty f where q.facultyId=a.id and q.streamId=:id and f.accountId=a.id order by q.id";
+    $sql = "select q.id,q.questionIds,q.description,q.descriptionShort,q.difficulty,q.allotedTime,q.maxScore,q.rec,q.conceptsTested, q.l2Ids, q.l3Ids, q.typeId, a.id as fid, a.firstName,a.lastName,f.bioShort from quizzes q, accounts a, faculty f where q.facultyId=a.id and q.streamId=:id and f.accountId=a.id and q.available=1 order by q.id";
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
