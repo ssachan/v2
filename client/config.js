@@ -30,7 +30,6 @@ var Config = {
                     'PracticeView',
                     'ForgotPassView',
                     'ChangePassView',
-                    'FacQuizView',
                     'ReviewView',
                     'ResultsView',
                     'ResumeView',

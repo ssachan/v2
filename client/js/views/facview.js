@@ -36,23 +36,3 @@ window.FacView = Backbone.View.extend({
         }
 	}
 });
-
-/**
- * Not being used now. will be deleted
- */
-window.FacQuizView = Backbone.View.extend({
-
-	tagName: "li",
-
-	className: "span4",
-
-	initialize: function () {
-	       this.render();
-	},
-	
-	render : function() {
-		$(this.el).html(this.template(this.model.toJSON()));
-		return this;
-	},
-
-});
