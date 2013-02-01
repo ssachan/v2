@@ -163,7 +163,7 @@ var AppRouter = Backbone.Router.extend({
 	},
 	
 	learn : function(id) {
-		this.changeMenu('lib-menu');
+		this.changeMenu('hiw-menu');
 		var learnMoreView = new LearnMoreView({
 			menu : id
 		});

@@ -165,7 +165,9 @@ window.QuizView = Backbone.View.extend({
 		}
 		this.question.set('hasAttempted', false);
 		this.questionView.model = this.question;
-		$('#question').html(this.questionView.render().el);
+		this.questionView.el=$('#question');
+		//$('#question').html(this.questionView.render().el);
+		this.questionView.render();
 		this.questionView.onRender();
 		$("#qnum").html((parseInt(this.index) + 1));
 		$("#qtotal").html((this.totalQuestions));
@@ -329,6 +331,7 @@ window.PracticeView = Backbone.View.extend({
 	 * TODO:video - just store the reference of the current video
 	 */
 	renderQuestion : function() {
+		this.questionView.close();
 		this.question = quizQuestions.get(this.questionIds[this.index]);
 		if (this.question.get('timeTaken') == null) {
 			this.question.set('timeTaken', 0);

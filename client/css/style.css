@@ -180,6 +180,7 @@ h5 {
 
 .landing {
     width: 100%;
+    margin:-20px 0px;
 }
 
 .login {
@@ -328,6 +329,7 @@ h5 {
     background: url(../img/divider.jpg) 0 0 no-repeat;
     padding-top: 30px;
     padding-bottom: 30px;
+    font-size:16px;
 }
 
 .feature-row h2 {
@@ -346,8 +348,7 @@ h5 {
 
 .feature-row li,.feature-row p {
     font-family: Georgia, serif;
-    font-size: 16px;
-    line-height: 25px;
+        line-height: 25px;
 }
 
 .feature-row img {
