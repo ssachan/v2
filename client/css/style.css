@@ -143,6 +143,7 @@ ul.stats {
     padding: 5px 0px 0px 0px;
     text-align: center;
     font-size: 12px;
+    margin: 0px;
 }
 
 ul.stats li {
@@ -170,6 +171,12 @@ ul.stats .value {
     color: #31859C;
     font-weight: bold;
     padding: 5px 0px;
+}
+
+ul.stats .level{
+width:80%;
+margin:0px auto;
+
 }
 
 .rounded {
@@ -561,14 +568,11 @@ ul.stats .value {
     padding: 10px 20px !important;
 }
 
-.l2>li>a:hover {
-    background-color: none;
-}
-
 .l2>li.active>a {
-    color: #fff;
-    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
     background-color: #757575;
+    border-top:2px solid #e5e5e5 !important;
+    border-bottom: 2px solid #e5e5e5 !important;
+    font-weight: bold;
 }
 
 .c-list>li>a {
@@ -583,14 +587,11 @@ ul.stats .value {
     padding: 10px 20px !important;
 }
 
-.l3>li>a:hover {
-    background-color: none;
-}
-
 .l3>li.active>a {
-    color: #fff;
-    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
     background-color: #757575;
+    border-top:2px solid #e5e5e5 !important;
+    border-bottom: 2px solid #e5e5e5 !important;
+    font-weight: bold;
 }
 
 .nav-list>.active>a,.nav-list>.active>a:hover {
@@ -1506,10 +1507,10 @@ Clickable Lists
     float: none !important;
     margin: auto 0px;
     padding: 0;
-    border-left: 1px solid #e5e5e5 !important;
+    border-left: 1px solid #e5e5e5;
     height: 100%;
-    border-right: 1px solid #e5e5e5 !important;
-    border-bottom: 1px solid #e5e5e5 !important;
+    border-right: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
 }
 
 .c-list>li.unc>a {
