@@ -1,7 +1,7 @@
 <?php
 /** Comments:
 Tanujb : Matrix type questions, code not tested.
-adjustDelta needs to be written.
+adjustDelta needs to be modified.
 */
 /*
 set_include_path("..:.");
@@ -91,6 +91,7 @@ class lscoreDataObject{
         $this->delta = $scoreObj->delta;
     }
 }
+
 class abilityLevels{
 
     public $l3Id;
@@ -565,24 +566,40 @@ class questionEvalution{
         }
     }
     function adjustDelta($userAbility,$attemptedAs){
-                switch($this->state)
-                {
-                    case analConst::UNSEEN:
-                        analConst::evalUnseen();
-                    break;
-                    case analConst::SKIPPED:
-                    break;
-                    case analConst::CORRECT:
-                    break;
-                    case analConst::INCORRECT:
-                    break;
-                }
-    
-        if($this->attemptedAs == analConst::ATTEMPTED_AS_PRACTICE)
+        
+        $state =& $this->state;
+        $aScore =& $this->userAbility->score;
+        $timeTaken =& $this->timeTaken;
+        //$qScore =& $this->qDetails->qScore;
+        switch($attemptedAs)
         {
-            $delta *= 0.5; 
+
+        case analConst::ATTEMPTED_AS_TIMED_TEST :    
+            switch ($state)
+            {
+                case analConst::CORRECT : 
+                    $avgTime =& $this->qDetails->averageTimeCorrect;
+                    //$sigmaTime =& $this->qDetails->sigmaTimeCorrect;
+                break;
+                case analConst::INCORRECT :
+                    $avgTime =& $this->qDetails->averageTimeIncorrect
+                    //$sigmaTime =& $this->qDetails->sigmaTimeIncorrect;
+                break;
+                case analConst::SKIPPED :
+                    $avgTime =& $this->qDetails->averageTimeUnattempted
+                    //$sigmaTime =& $this->qDetails->sigmaTimeUnattempted;
+                break;
+                case analConst::UNSEEN :
+                    $avgTime =& $this->qDetails->averageTimeUnattempted
+                    //$sigmaTime =& $this->qDetails->sigmaTimeUnattempted;
+                break;
+            }
+            return deltaCalculator::calculate($state, $aScore, $qScore, $timeTaken, $avgTime, $sigmaTime);
+        break;
+        case analConst::ATTEMPTED_AS_PRACTICE :
+
+        break;
         }
-        return $delta;
     }
     public function insertIntoResponsesTable(){
         $date = date("Y-m-d H:i:s", time());
@@ -632,9 +649,11 @@ class quizResponseDetails{
         public $testScore;
         public $maxScore;
         public $qEvaluated;
+        public $videoArray;
+        public $l3GraphData;
     // } Declarations End
 
-    function __construct($accountId, $quizId, $logs, $attemptedAs){
+    function __construct($accountId, $quizId, $logs, $attemptedAs, $isLast = 0){
         $this->accountId = $accountId;
         $this->id = $quizId;
         $this->logs = $logs;
@@ -650,7 +669,15 @@ class quizResponseDetails{
         {
             $this->state = $_POST['state'];
             $this->getQuizSummary();
-            $this->updateQuizSummary();
+            if($isLast == 0)
+            {
+                $this->updateQuizSummary();
+            }
+            else
+            {
+                $this->generateVideoArray();
+                
+            }
         }
         $this->updateResultsTable();
     }
@@ -733,8 +760,7 @@ class quizResponseDetails{
             break;
         }
     }
-    public function updateResultsTable()
-    {
+    public function updateResultsTable(){
         $date = date("Y-m-d H:i:s", time());
         $query = array(
             "accountId"=> $this->accountId,
@@ -751,16 +777,14 @@ class quizResponseDetails{
             "SQL" => "UPDATE results SET selectedAnswers = :selectedAnswers, timePerQuestion = :timePerQuestion, timestamp=:timeStamp, data=:data, score = :s, numCorrect = :c, numIncorrect = :i, state = :st, timeTaken = :ttk where accountId=:accountId and quizId=:quizId");
         doSQL($query, false);
     }
-    function splitLogsByQuestion()
-    {
+    function splitLogsByQuestion(){
         $questionDataSet = array();
         foreach ($this->logs as $key => $value)
             if(isset($value['q']))
                 $questionDataSet[$value['q']][]=$value;
         return $questionDataSet;
     }
-    function evaluateQuestions()
-    {
+    function evaluateQuestions(){
         $qEvaluated = array(); $dummy = 0;
         foreach ($this->questionIds as $key => $qid) {
             if(isset($this->logsByQuestion[$qid]))
@@ -770,8 +794,7 @@ class quizResponseDetails{
         }
         $this->qEvaluated = $qEvaluated;
     }
-    public function updateResponsesTable()
-    {
+    public function updateResponsesTable(){
         $date = date("Y-m-d H:i:s", time());
         $query = array("tstmp" => $date);
         $valuesString = "";
@@ -785,8 +808,7 @@ class quizResponseDetails{
         
         doSQL($query, false);
     }
-    public function getVideoArray()
-    {
+    public function generateVideoArray(){
         $videoArray = array();
         $deltas = $this->getDeltas();
         asort($deltas);
@@ -800,7 +822,25 @@ class quizResponseDetails{
             if($count == 5 || $value > 0)
                 break;
         }
-        return $videoArray;
+        $this->videoArray = $videoArray;
+    }
+    public function sendResponse(){
+        $response["status"] = SUCCESS;
+
+        $response["data"] = array(
+            "selectedAnswers"=>$this->selectedAnswers,
+            "timePerQuestion"=>$this->timePerQuestion,
+            "state"=>$this->state,
+            "delta"=>$this->delta,
+           // "userAbilityRecord"=>$userAbilityRecord,
+            "videoArray"=>$this->videoArray,
+            "l3GraphData"=>$this->l3GraphData,
+            "score"=>$this->testScore,
+            "maxScore"=>$this->maxScore,
+            "numCorrect"=>$this->numCorrect,
+            "numIncorrect"=>$this->numIncorrect
+            );
+        sendResponse($response);
     }
     function getDeltas()
     {
@@ -812,29 +852,20 @@ class quizResponseDetails{
     }
 }
 //>> FRONT-FACING Functions
-function testCode()
-{
+function testCode(){
 }
 
-function processPractice()
-{
+function processPractice(){
     if($_POST["isLast"] == '1')
-    {
-        $response2 = practiceResultsView();
-        sendResponse($response2);
-    }
+        sendResponse(practiceResultsView());
     else
-    {
-        $response = updateResultsForPractice();
-        sendResponse($response);
-    }
+        sendResponse(updateResultsForPractice());
 }
 
-function practiceResultsView()
-{
-    $accountId = $_POST['accountId']; 
-    $quizId = $_POST['quizId'];
+function practiceResultsView(){
+    $accountId = $_POST['accountId']; $quizId = $_POST['quizId'];
     $questionIds = getQuestionIdsForQuiz($quizId);
+
 
     $maxScore = $numCorrect = $numIncorrect = 0;
     $delta = $delta2 = $state = $state2 = $aScoreRecord = $qDetails = array();
@@ -842,12 +873,9 @@ function practiceResultsView()
 
     foreach($questionIds as $key=>$qid)
     {
-        //echo "The question id is".$qid;
         $qDetails[$qid] = getQuestionDetails($qid);
         $maxScore += intval($qDetails[$qid]->correctScore);
-        $qrecord = getQuestionResponse($accountId, $qid);
-        /*echo "QID: $qid";
-        var_dump($qrecord);*/
+        $qrecord = getQuestionResponse($accountId, $qid);   
         $delta[$qid] = $qrecord->d;
         $state[$qid] = $qrecord->s;
         $currentState = $qrecord->s;
@@ -871,86 +899,50 @@ function practiceResultsView()
 
     }
 
-    $response["status"] = SUCCESS;
-    $response["data"] = array(
-
-        "state"=>$state2,
-        "delta"=>$delta2,
-        //"userAbilityRecord"=>$userAbilityRecord2,
-        "maxScore"=>$maxScore,
-
-        "videoArray"=>$videoArray,
-        "l3GraphData"=>$l3GraphData,
-
-        "selectedAnswers"=>json_encode($selectedAnswers),
-        "timePerQuestion"=>json_encode($timePerQuestion),
-        "score"=>$testScore,
-        "numCorrect"=>$numCorrect,
-        "numIncorrect"=>$numIncorrect
-        );
-    return $response;
+    $quiz->sendResponse();
 }
 
-function updateResultsForPractice()
-{
-    $accountId = $_POST['accountId']; 
-    $quizId = $_POST['quizId'];
-    $logs = $_POST['logs'];
+function updateResultsForPractice(){
+    $accountId = $_POST['accountId']; $quizId = $_POST['quizId']; $logs = $_POST['logs'];
 
-    $quiz =  new quizResponseDetails($accountId, $quizId, $logs,analConst::ATTEMPTED_AS_PRACTICE);
     $aScores = new abilityScoreCollections($accountId);
+    $quiz =  new quizResponseDetails($accountId, $quizId, $logs, analConst::ATTEMPTED_AS_PRACTICE);
+    
     $qEvaluated =& $quiz->qEvaluated[$quiz->questionIds[$quiz->state]];
-    $aScores->addL3($qEvaluated->qDetails->l3Id);
-    $qEvaluated->setAbilityScoreBefore($aScores->getScoresOf("l3",$qEvaluated->qDetails->l3Id));
+        $aScores->addL3($qEvaluated->qDetails->l3Id);
+        $qEvaluated->setAbilityScoreBefore($aScores->getScoresOf("l3",$qEvaluated->qDetails->l3Id));
+        $aScores->addAnswer($qEvaluated->state,$qEvaluated->qDetails->l3Id,$qEvaluated->delta);
+
     $qEvaluated->insertIntoResponsesTable();
-    $aScores->addAnswer($qEvaluated->state,$qEvaluated->qDetails->l3Id,$qEvaluated->delta);
+    
     $aScores->updateScore();
 
-    $response["status"] = SUCCESS;
-    $response["data"] = true;
-    return $response;
+    return array("status" => SUCCESS, "data" => true);
 }
 
-function updateResultsForTest()
-{
-    $accountId = $_POST['accountId']; 
-    $quizId = $_POST['quizId'];
-    $logs = $_POST['logs'];
-    //$attemptedAs = $_POST['attemptedAs'];
+function updateResultsForTest(){
+    $accountId = $_POST['accountId']; $quizId = $_POST['quizId']; $logs = $_POST['logs'];
+
     $aScores = new abilityScoreCollections($accountId);
     $quiz = new quizResponseDetails($accountId, $quizId, $logs, analConst::ATTEMPTED_AS_TIMED_TEST);
 
-    foreach ($quiz->qEvaluated as $qid => $qEvaulated){
+    foreach ($quiz->qEvaluated as $qid => &$qEvaulated){
         $aScores->addL3($qEvaulated->qDetails->l3Id);
-        $quiz->qEvaluated[$qid]->setAbilityScoreBefore($aScores->getScoresOf("l3",$qEvaulated->qDetails->l3Id));
+        $qEvaluated->setAbilityScoreBefore($aScores->getScoresOf("l3",$qEvaulated->qDetails->l3Id));
         $aScores->addAnswer($qEvaulated->state,$qEvaulated->qDetails->l3Id,$qEvaulated->delta);
     }
     
     $quiz->updateResponsesTable();
-    $l3GraphData = $aScores->getL3GraphData();
-    $videoArray = $quiz->getVideoArray();
+
+    $quiz->l3GraphData = $aScores->getL3GraphData();
+    $quiz->generateVideoArray();
+
     $aScores->updateScore();
     
-    $response["status"] = SUCCESS;
-
-    $response["data"] = array(
-        "selectedAnswers"=>$quiz->selectedAnswers,
-        "timePerQuestion"=>$quiz->timePerQuestion,
-        "state"=>$quiz->state,
-        "delta"=>$quiz->delta,
-       // "userAbilityRecord"=>$userAbilityRecord2,
-        "videoArray"=>$videoArray,
-        "l3GraphData"=>$l3GraphData,
-        "score"=>$quiz->testScore,
-        "maxScore"=>$quiz->maxScore,
-        "numCorrect"=>$quiz->numCorrect,
-        "numIncorrect"=>$quiz->numIncorrect
-        );
-    sendResponse($response);
+    $quiz->sendResponse();
 }
 
-function getPQ($accountId)
-{
+function getPQ($accountId){
     $query = array(
         "acid"=>$accountId,
         "SQL"=>"select avg(score) as s from ascores_l1 where accountId = :acid");
@@ -962,8 +954,7 @@ function getPQ($accountId)
 
 //***Functions that will remain
 
-function getOptionArrayFromText($optionText, $optionLength)
-{
+function getOptionArrayFromText($optionText, $optionLength){
     $answer = array();
     if(strpos($optionText,"|:|:") !== false)
     {
@@ -984,8 +975,7 @@ function getOptionArrayFromText($optionText, $optionLength)
     return $answer;
 }
 
-function doSQL($params,$returnsData)
-{   /*
+function doSQL($params,$returnsData){   /*
     $firephp = FirePHP::getInstance(true);
     $firephp->log($params, "SQL:");*/
     $sql = array_pop($params);
@@ -1007,22 +997,4 @@ function doSQL($params,$returnsData)
         //phpLog("doSqlError:".$sql.$e->getMessage());
         //echo("doSqlError:".$sql.$e->getMessage());
     }
-}
-///HELPER FUNCTIONS END
-
-//Functions that are temp
-function generateWeightage($lid)
-{
-    $query = array(
-        "lid"=>$lid,
-        "SQL"=>"SELECT count(*) c FROM section_l2 WHERE l1id = :lid");
-    $results = doSql($query,true);
-    
-    $weightage = 1/($results->c);
-
-    $query = array(
-        "wt"=>$weightage,
-        "lid"=>$lid,
-        "SQL"=>"update section_l2 set weightage =:wt where l1id = :l2id");
-    doSQL($query, false);
 }

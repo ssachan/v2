@@ -85,7 +85,7 @@ class deltaCalculator{
         $timeFactor = self::timeFactor($state, $timeTaken, $avgTime, $sigmaTime, $score, $qScore);
         $abilityFactor = self::abilityFactor($score, $qScore, $state );
         
-        return $base * $timeFactor * $abilityFactor;
+        return round($base * $timeFactor * $abilityFactor,2);
     }
     public static function getBase($state,$score,$qScore)
     {
@@ -205,7 +205,7 @@ function testDelta()
 	  	$vars = explode(",",$currentLine);
         $score = $vars[5];
         $state = $vars[0]; $qScore = $vars[1]; $timeTaken = $vars[2]; $avgTime = $vars[3]; $sigmaTime = $vars[4];
-		$delta = round(deltaCalculator::calculate($state, $score, $qScore, $timeTaken, $avgTime, $sigmaTime),2);
+		$delta = deltaCalculator::calculate($state, $score, $qScore, $timeTaken, $avgTime, $sigmaTime);
         $tmp = new bases;
         $base = $tmp->get(deltaCalculator::getBase($state,$score,$qScore)."_".deltaCalculator::getLevel($score));
         $timeFactor = deltaCalculator::timeFactor($state, $timeTaken, $avgTime, $sigmaTime, $score, $qScore);
@@ -221,7 +221,7 @@ function testDelta()
 	  	$vars = explode(",",$currentLine);
 
 		        $state = $vars[0]; $qScore = $vars[1]; $timeTaken = $vars[2]; $avgTime = $vars[3]; $sigmaTime = $vars[4];
-        $delta = round(deltaCalculator::calculate($state, $score, $qScore, $timeTaken, $avgTime, $sigmaTime),2);
+        $delta = deltaCalculator::calculate($state, $score, $qScore, $timeTaken, $avgTime, $sigmaTime);
         $tmp = new bases;
         $base = $tmp->get(deltaCalculator::getBase($state,$score,$qScore)."_".deltaCalculator::getLevel($score));
         $timeFactor = deltaCalculator::timeFactor($state, $timeTaken, $avgTime, $sigmaTime, $score, $qScore);
