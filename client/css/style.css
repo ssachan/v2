@@ -39,8 +39,8 @@ hr {
     text-align: center;
 }
 
-.zero-margin{
-    margin:0px;
+.zero-margin {
+    margin: 0px;
 }
 
 h2,h3,h4,h5 {
@@ -134,7 +134,7 @@ h5 {
 
 /* Page widths all at one central place
  ------------------------------------------------ */
- .page-title {
+.page-title {
     color: white;
     background-color: #4F4F4F;
     -webkit-border-radius: 9px;
@@ -150,7 +150,7 @@ h5 {
 
 .landing {
     width: 100%;
-    margin:-20px 0px;
+    margin: -20px 0px;
 }
 
 .login {
@@ -299,7 +299,7 @@ h5 {
     background: url(../img/divider.jpg) 0 0 no-repeat;
     padding-top: 30px;
     padding-bottom: 30px;
-    font-size:16px;
+    font-size: 16px;
 }
 
 .feature-row h2 {
@@ -318,7 +318,7 @@ h5 {
 
 .feature-row li,.feature-row p {
     font-family: Georgia, serif;
-        line-height: 25px;
+    line-height: 25px;
 }
 
 .feature-row img {
@@ -526,24 +526,28 @@ h5 {
 .bg-yellow {
     background-color: #fffee1 !important;
     color: #daac50 !important;
-    border: 1px solid #f5c056;
+    border-top: 1px solid #f5c056;
+    border-bottom: 1px solid #f5c056;
 }
 
 .bg-red {
     background-color: #fdeaea !important;
     color: #ca6f74 !important;
-    border: 1px solid #f27b81 !important
+    border-top: 1px solid #f27b81 !important;
+    border-bottom: 1px solid #f27b81 !important
 }
 
 .bg-green {
     background-color: #edf6e5 !important;
     color: #7a9659 !important;
-    border: 1px solid #9fc76f !important;
+    border-top: 1px solid #9fc76f !important;
+    border-bottom: 1px solid #9fc76f !important;
 }
 
 .bg-grey {
     background-color: #EEECE1 !important;
-    border: 1px solid #CCCCE1;
+    border-top: 1px solid #CCCCE1;
+    border-bottom: 1px solid #CCCCE1;
 }
 
 .bg-blue {
@@ -592,23 +596,30 @@ h5 {
     background-color: #757575;
 }
 
-.subject { /*   background:url('../img/bg_sectionh.jpg');
-    padding:10px;
-    border:1px solid #ccc;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
-*/
+.subject { 
+    margin-top:30px;
+}
+
+.subject .header{ 
+    border: 1px solid #bbb;
+    -webkit-border-top-left-radius: 6px;
+    border-top-left-radius: 6px;
+    -webkit-border-top-right-radius: 6px;
+    border-top-right-radius: 6px;
+    padding-left:30px;
+    background: url("../img/bg_section.jpg");
     
+}
+.subject .content{
+    background-color: #fCfCfC;
+    border-left: 1px solid #e5e5e5;
+    border-right: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
+    padding:10px;
 }
 
 .subject a {
     color: #444
-}
-
-.subject>div {
-    background-color: #fCfCfC;
-    border: 1px solid #e5e5e5;
 }
 
 .subject h2 {
@@ -824,7 +835,7 @@ h5 {
     color: #fff;
     font-weight: bold;
     background: #31859C;
-    filter: alpha(opacity =   50);
+    filter: alpha(opacity =     50);
     overflow: hidden;
     white-space: nowrap;
     word-wrap: normal;

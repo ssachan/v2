@@ -1,55 +1,63 @@
-<h3><%= displayName %></h3>
 <!--Level 2 -->
-<div class="row-fluid">
-    <div class="span4">
-        <ul class="nav nav-list c-list l2">
-        </ul>
-    </div>
-    <div class="span4">
-        <ul class="nav nav-list c-list l3">
-        </ul>
-    </div>
-    <!--Detailed Info -->
-    <div class="span4">
-        <div class="l3-stats">
-            <div class="row-fluid">
-                <div class="span8">
-                    <h3 id="topic"></h3>
-                </div>
-                <div class="span4">
-                    <h3>
-                        <span id="pts"></span> pts
-                    </h3>
-                </div>
-            </div>
-            <div class="progress" id="bar">
-                <div class="bar bar-warning" style="width: 45%"></div>
-                <div class="bar bar-success" style="width: 1%;"></div>
-            </div>
-            <div class="val">
+<div class="header">
+    <h3>
+        <%= displayName %> <span class="pull-right" style="position: relative; bottom: 8px">
+            <img src="img/star-icon.png" height="27px"> <img src="img/star-icon.png"
+            height="27px"> <img src="img/star-icon.png" height="27px">
+        </span>
+    </h3>
+</div>
+<div class="content">
+    <div class="row-fluid">
+        <div class="span4">
+            <ul class="nav nav-list c-list l2">
+            </ul>
+        </div>
+        <div class="span4">
+            <ul class="nav nav-list c-list l3">
+            </ul>
+        </div>
+        <!--Detailed Info -->
+        <div class="span4">
+            <div class="l3-stats">
                 <div class="row-fluid">
-                    <div class="span8">Total Questions</div>
-                    <span class="span4" id="total"></span>
+                    <div class="span8">
+                        <h3 id="topic"></h3>
+                    </div>
+                    <div class="span4">
+                        <h3>
+                            <span id="pts"></span> pts
+                        </h3>
+                    </div>
+                </div>
+                <div class="progress" id="bar">
+                    <div class="bar bar-warning" style="width: 45%"></div>
+                    <div class="bar bar-success" style="width: 1%;"></div>
+                </div>
+                <div class="val">
+                    <div class="row-fluid">
+                        <div class="span8">Total Questions</div>
+                        <span class="span4" id="total"></span>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8">Correct</div>
+                        <span class="span4" id="correct"></span>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8">Incorrect</div>
+                        <span class="span4" id="incorrect"></span>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span8">Unattempted</div>
+                        <span class="span4" id="unattempted"></span>
+                    </div>
                 </div>
                 <div class="row-fluid">
-                    <div class="span8">Correct</div>
-                    <span class="span4" id="correct"></span>
+                    <a class="btn blue-btn span6 start-quiz" id="2"> <span class="">Review</span>
+                    </a> <a class="btn orange-btn span6 start-quiz" id="1"> <span class="">Take
+                            Quiz</span>
+                    </a>
                 </div>
-                <div class="row-fluid">
-                    <div class="span8">Incorrect</div>
-                    <span class="span4" id="incorrect"></span>
-                </div>
-                <div class="row-fluid">
-                    <div class="span8">Unattempted</div>
-                    <span class="span4" id="unattempted"></span>
-                </div>
-            </div>
-            <div class="row-fluid">
-                <a class="btn blue-btn span6 start-quiz" id="2"> <span class="">Review</span>
-                </a> 
-                <a class="btn orange-btn span6 start-quiz" id="1"> <span
-                    class="">Take Quiz</span>
-                </a>
             </div>
         </div>
     </div>
