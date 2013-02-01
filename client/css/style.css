@@ -43,6 +43,10 @@ hr {
     margin: 0px;
 }
 
+.bold{
+    font-weight: bold;
+}
+
 h2,h3,h4,h5 {
     font-weight: normal;
 }
@@ -158,15 +162,23 @@ ul.stats .key {
     width: 50%;
     border-right: 1px solid #DAE4E6;
     font-weight: bold;
-    padding:5px 0px;
+    padding: 5px 0px;
 }
 
 ul.stats .value {
     width: 35%;
     color: #31859C;
     font-weight: bold;
-    padding:5px 0px;
+    padding: 5px 0px;
 }
+
+.rounded {
+    border: 1px solid #bbb;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+}
+
 /* Page widths all at one central place
  ------------------------------------------------ */
 .page-title {
@@ -561,28 +573,21 @@ ul.stats .value {
 .bg-yellow {
     background-color: #fffee1 !important;
     color: #daac50 !important;
-    border-top: 1px solid #f5c056;
-    border-bottom: 1px solid #f5c056;
 }
 
 .bg-red {
     background-color: #fdeaea !important;
     color: #ca6f74 !important;
-    border-top: 1px solid #f27b81 !important;
-    border-bottom: 1px solid #f27b81 !important
 }
 
 .bg-green {
     background-color: #edf6e5 !important;
     color: #7a9659 !important;
-    border-top: 1px solid #9fc76f !important;
-    border-bottom: 1px solid #9fc76f !important;
 }
 
 .bg-grey {
     background-color: #EEECE1 !important;
-    border-top: 1px solid #CCCCE1;
-    border-bottom: 1px solid #CCCCE1;
+    color: #444 !important;
 }
 
 .bg-blue {
@@ -870,7 +875,7 @@ ul.stats .value {
     color: #fff;
     font-weight: bold;
     background: #31859C;
-    filter: alpha(opacity =       50);
+    filter: alpha(opacity =         50);
     overflow: hidden;
     white-space: nowrap;
     word-wrap: normal;

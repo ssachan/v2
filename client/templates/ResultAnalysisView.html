@@ -1,28 +1,27 @@
 <div class="row-fluid">
-    <div class="span4 outline stat-gradient"
-        style="margin-top: 20px; padding: 18px; min-height: 135px;">
-        <p class="font-h2 bold red">
-            <%= score %>/<%=maxScore%></p> was your score 
-        <p>    <strong class="red">20</strong> Attempted <strong
-                class="red"><%=correct %></strong> Correct <strong class="red"><%=incorrect
-                %></strong> Incorrect
+    <div class="span4 rounded center stat-gradient"
+        style="margin-top: 20px; min-height: 135px;">
+        <h2 class="bold red"><%= score %>/<%=maxScore%></h2>
+        was your score
+        <p>
+            <strong class="red">20</strong> Attempted <strong class="red"><%=correct %></strong>
+            Correct <strong class="red"><%=incorrect %></strong> Incorrect
         </p>
     </div>
-    <div class="span4 outline center stat-gradient"
-        style="margin-top: 20px; padding: 18px; min-height: 135px;">
-        <p class="font-h2 bold blue center"><%=timeTaken %></p>
-        <p>was the time you took</p>
+    <div class="span4 rounded center stat-gradient"
+        style="margin-top: 20px; min-height: 135px;">
+        <h2 class="bold blue center"><%=timeTaken %></h2>
+        was the time you took
         <p>
             Others finished this in <span class="blue bold"> 25 minutes </span>
-    </div>
-    <div class="span4 outline stat-gradient"
-        style="margin-top: 20px; padding: 18px; min-height: 135px;">
-        <p>
-            You're in the <strong class="font-h2 orange">Top 20%!</strong>
         </p>
-        <p>of people who gave this set</p>
+    </div>
+    <div class="span4 rounded center stat-gradient"
+        style="margin-top: 20px; min-height: 135px;">
+        <h2 class="red orange bold">80 percentile</h2>
+        of people who gave this set
         <p>
-            Average Set Score was <strong class="orange bold"> 75</strong>
+            Average Set Score was <strong class="orange"> 75</strong>
         </p>
     </div>
 </div>
@@ -37,10 +36,8 @@
 </div>
 <br>
 <div id="topic-performance">
-<h3>Topic-wise performance</h3>
-<hr class="soften">
-<br>
-<div id="topic-wise">
-    
-</div>
+    <h3>Topic-wise performance</h3>
+    <hr class="soften">
+    <br>
+    <div id="topic-wise"></div>
 </div>
