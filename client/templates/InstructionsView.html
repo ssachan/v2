@@ -1,8 +1,8 @@
 <div class="row-fluid">
-    <div class="span6 offset3 center">
-        <h2 class="blue"><%=descriptionShort%></h2>
+    <div class="span6 offset3">
+        <h2 class="blue center"><%=descriptionShort%></h2>
         <hr class="soften">
-        <ul class="font-h4 left">
+        <ul>
             <li>This problem set consists of <strong><%=totalQuestions %> questions</strong></li>
             <li><strong>Practice</strong> mode gives you the solution after you solve every
                 question, while test mode is a timed test in which your strategy is tested</li>
@@ -17,11 +17,14 @@
         </ul>
         <br>
         <div class="row-fluid">
-            <a class="btn btn-large blue-btn span6 start-quiz" id="2"> <span class="font-h3">Practice Mode</span><br>
-                <span class="font-h4">Learn concepts as you practice</span>
-            </a> <a class="btn btn-large orange-btn span6 start-quiz" id="1"> <span class="font-h3">Test Mode</span><br>
-                <span class="font-h4">Test your exam strategy</span>
-            </a>
+            <button class="btn btn-large blue-btn span6 start-quiz" id="2">
+                <h3 class="zero-margin"><strong>Practice Mode</strong></h3>
+                <h4 class="zero-margin">Learn concepts as you practice</h4>
+            </button>
+            <button class="btn btn-large orange-btn span6 start-quiz" id="1">
+                <h3 class="zero-margin"><strong>Test Mode</strong></h3>
+                <h4 class="zero-margin">Test your exam strategy</h4>
+            </button>
         </div>
     </div>
 </div>

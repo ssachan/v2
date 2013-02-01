@@ -86,7 +86,18 @@ window.OverView = Backbone.View.extend({
 
 	onRender : function() {
 		// this.uploadImage();
+		$('#result-square').empty();
+		var l1 = sectionL1.models;
+        var len = l1.length;
+        for (var i = 0; i < len; i++) {
+            var pView = new PerformanceView({
+                model: l1[i]
+            });
+            $('#result-square').append(pView.render().el);
+            pView.onRender();
+        }		
 	}
+	
 });
 
 window.PerformanceView = Backbone.View.extend({
@@ -103,18 +114,16 @@ window.PerformanceView = Backbone.View.extend({
 	},
 
 	onL2Click : function(e) {
-		if (this.activel2Id != e.target.parentElement.getAttribute('lid')) {
-			$('.l3', this.el).empty();
-			$('.l3-stats', this.el).hide();
-			this.activel3Id = '0';
-			$('#' + this.activel2Id + '-l2').removeClass('active');
-			this.activel2Id = (e.target.parentElement.getAttribute('lid'));
+		$('.l3', this.el).empty();
+		$('.l3-stats', this.el).hide();
+		this.activel3Id = '0';
+		$('#' + this.activel2Id + '-l2').removeClass('active');
+		this.activel2Id = (e.target.parentElement.getAttribute('lid'));
 
-			// this.activel2Id = e.target.getAttribute('id');
-			$('#' + this.activel2Id + '-l2').addClass('active');
-			this.renderL3();
-			this.renderL2Stats();
-		}
+		// this.activel2Id = e.target.getAttribute('id');
+		$('#' + this.activel2Id + '-l2').addClass('active');
+		this.renderL3();
+		this.renderL2Stats();
 	},
 
 	onL3Click : function(e) {
@@ -150,12 +159,37 @@ window.PerformanceView = Backbone.View.extend({
 				}else if(score<=40 && score>0){
 					$('#'+l2[i].get('id') + '-l2>a', this.el).addClass('bg-red');
 				}else if(score==0){
-					$('#'+l3[i].get('id') + '-l3>a', this.el).addClass('bg-grey');
+					$('#'+l2[i].get('id') + '-l2>a', this.el).addClass('bg-grey');
 				}
+			}else{
+				$('#'+l2[i].get('id') + '-l2>a', this.el).addClass('bg-grey');
 			}
 		}
 	},
-
+	
+	renderL2Stats : function (){
+		var context = this;
+		var thisL2Score = scoreL2.get(context.activel2Id);
+		var l2Name = (sectionL2.get(context.activel2Id)).get('displayName');
+		$('.l3-stats #topic', this.el).html(l2Name);
+		if(thisL2Score!=null){
+			$('.l3-stats #bar', this.el).html('<div class="bar bar-warning" style="width:'+parseInt(thisL2Score.get('score'))+'%"></div>');
+			$('.l3-stats #pts', this.el).html(thisL2Score.get('score'));
+			$('.l3-stats #total', this.el).html(thisL2Score.get('numQuestions'));
+			$('.l3-stats #correct', this.el).html(thisL2Score.get('numCorrect'));
+			$('.l3-stats #incorrect', this.el).html(thisL2Score.get('numIncorrect'));
+			$('.l3-stats #unattempted', this.el).html(thisL2Score.get('numUnattempted'));
+		}else{
+			$('.l3-stats #bar', this.el).html('<div class="bar bar-warning" style="width:'+parseInt('0')+'%"></div>');
+			$('.l3-stats #pts', this.el).html('0');
+			$('.l3-stats #total', this.el).html('0');
+			$('.l3-stats #correct', this.el).html('0');
+			$('.l3-stats #incorrect', this.el).html('0');
+			$('.l3-stats #unattempted', this.el).html('0');
+		}
+		$('.l3-stats', this.el).show();
+	},
+	
 	renderL3 : function() {
 		$('.l3', this.el).empty();
 		var l3 = sectionL3.where({
@@ -178,6 +212,8 @@ window.PerformanceView = Backbone.View.extend({
 			}else if(score==0){
 				$('#'+l3[i].get('id') + '-l3>a', this.el).addClass('bg-grey');
 			}
+			}else{
+				$('#'+l3[i].get('id') + '-l3>a', this.el).addClass('bg-grey');
 			}
 		}
 	},
@@ -205,9 +241,21 @@ window.PerformanceView = Backbone.View.extend({
 		$('.l3-stats', this.el).show();
 	},
 	
-	renderL2Stats : function() {
-		var context = this;
-		var thisL2Score = scoreL2.get(context.activel2Id);
-		$(this.el).find('#l3-stats').html("Score is " + JSON.stringify(thisL2Score) );
+});
+
+window.ActivityView = Backbone.View.extend({
+	className : "overall",
+
+	initialize : function() {
+	},
+	
+	render : function() {
+		$(this.el).html(this.template());
+		return this;
+	},
+
+	onRender : function() {
+		 drawDonutChart('donut');
+         $("tspan:contains('Highcharts.com')").hide();
 	}
 });

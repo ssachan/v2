@@ -41,10 +41,12 @@ var AppRouter = Backbone.Router.extend({
 	routes : {
 		"" : "dashboard",
 		"landing" : "landing",
+		"learn/:id":"learn",
 		"signup" : "signUp",
 		"library" : "library",
 		"facs" : "facs",
 		"quiz/:id" : "quiz",
+		"question/:id" : "question",		
 		"fac/:id" : "fac",
 		"packages" : "packages",
 		"forgotpass" : "forgotPass",
@@ -66,9 +68,6 @@ var AppRouter = Backbone.Router.extend({
 		this.footerView = new FooterView({
 			el : $('footer'),
 		});
-		if(account.get('id')!=null){
-			$('#signup-menu>a').html('Log Out');
-		}
 	},
 
 	landing : function() {
@@ -83,10 +82,8 @@ var AppRouter = Backbone.Router.extend({
 		// page
 		if(account.get('id')!=null){
 			Manager.getDashboardData();
-			$('#signup-menu>a').html('Log Out');
 		}else{
 			window.location = '#landing';
-			$('#signup-menu>a').html('Sign Up');
 		}
 	},
 
@@ -137,13 +134,16 @@ var AppRouter = Backbone.Router.extend({
 	
 	quiz : function(id) {
 		if (account.get('id') != null) {
-			mView.close();
 			Manager.getDataForQuiz(id);
 		} else {
 			window.location = '#quizLibrary';
 		}
 	},
-
+	
+	question : function (id){
+		Manager.getDataForQuestion(id);
+	},
+	
 	changePass : function() {
 		console.log('changing pass');
 		// load forgot password page
@@ -161,12 +161,18 @@ var AppRouter = Backbone.Router.extend({
 		});
 		this.showView('#content',forgotPassView);
 	},
-
+	
+	learn : function(id) {
+		this.changeMenu('hiw-menu');
+		var learnMoreView = new LearnMoreView({
+			menu : id
+		});
+		app.showView('#content', learnMoreView);
+		learnMoreView.onRender();
+	},
+	
 	signUp : function() {
-		mView.close();
-		this.changeMenu('signup-menu');
-		$('#signup-menu>a').html('Sign Up');
-		$('#myprepset-menu').hide();
+		this.changeMenu('dash-menu');
 		if (account.get('id') != null) {
 			account.logout();
 		}else{
@@ -179,6 +185,8 @@ var AppRouter = Backbone.Router.extend({
 	},
 
 	showView : function(selector, view) {
+		$('.alert').hide();
+		mView.close();
 		if (activeView)
 			activeView.close();
 		$(selector).html(view.render().el);
@@ -193,15 +201,14 @@ var AppRouter = Backbone.Router.extend({
 		}
 		activeMenu = newMenu;
 		$('#' + activeMenu).addClass('active');
-		if (account.get('id') == null) {
-			$('#sign-up').html('<a href="#signUp">Sign-Up</a>');
-		} else {
-			$('#sign-up').html('<a href="#signUp">Log Out</a>');
-		}
 	}
 });
 
 Backbone.View.prototype.close = function() {
 	this.remove();
 	this.unbind();
+};
+
+Backbone.Model.prototype.reset = function (options) {
+	  this.set(this.defaults);
 };

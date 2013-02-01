@@ -63,7 +63,7 @@ window.QuizView = Backbone.View.extend({
 	initialize : function() {
 		var context = this;
 		this.index = this.options.index;
-		this.questionView = null;
+		this.questionView = new QuizQuestionView();
 		this.question = null;
 		this.questionIds = this.model.get('questionIdsArray');
 		this.totalQuestions = this.questionIds.length;
@@ -163,14 +163,12 @@ window.QuizView = Backbone.View.extend({
 		if (this.question.get('timeTaken') == null) {
 			this.question.set('timeTaken', 0);
 		}
-		if (this.questionView == null) {
-			this.questionView = new QuizQuestionView({
-				el : $('#question'),
-			});
-		}
 		this.question.set('hasAttempted', false);
 		this.questionView.model = this.question;
+		this.questionView.el=$('#question');
+		//$('#question').html(this.questionView.render().el);
 		this.questionView.render();
+		this.questionView.onRender();
 		$("#qnum").html((parseInt(this.index) + 1));
 		$("#qtotal").html((this.totalQuestions));
 		$('#previous').show();
@@ -189,7 +187,7 @@ window.PracticeView = Backbone.View.extend({
 	initialize : function() {
 		var context = this;
 		this.index = this.options.index;
-		this.questionView = null;
+		this.questionView = new QuizQuestionView();
 		this.question = null;
 		this.questionIds = this.model.get('questionIdsArray');
 		this.totalQuestions = this.questionIds.length;
@@ -333,17 +331,14 @@ window.PracticeView = Backbone.View.extend({
 	 * TODO:video - just store the reference of the current video
 	 */
 	renderQuestion : function() {
+		this.questionView.close();
 		this.question = quizQuestions.get(this.questionIds[this.index]);
 		if (this.question.get('timeTaken') == null) {
 			this.question.set('timeTaken', 0);
 		}
-		if (this.questionView == null) {
-			this.questionView = new QuizQuestionView({
-				el : $('#question')
-			});
-		}
 		this.questionView.model = this.question;
-		this.questionView.render();
+		$('#question').html(this.questionView.render().el);
+		this.questionView.onRender();
 		if (this.question.get('hasAttempted') == false) {
 			logs.reset();
 			logs.addEntry("QUESTION_OPEN", this.question.get('id'));

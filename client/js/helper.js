@@ -32,11 +32,10 @@ window.helper = {
 
 		$.when.apply(null, deferreds).done(callback);
 	},
-	completeHTML : function(object)
-    {
-        return html = $('<div>').append($(object).clone()).remove().html();
-    },
-	
+	completeHTML : function(object) {
+		return html = $('<div>').append($(object).clone()).remove().html();
+	},
+
 	/*
 	 * uploadFile: function (file, callbackSuccess) { var self = this; var data =
 	 * new FormData(); data.append('file', file); $.ajax({ url:
@@ -59,64 +58,67 @@ window.helper = {
 	 * field).parent().parent(); controlGroup.removeClass('error');
 	 * $('.help-inline', controlGroup).html(''); },
 	 */
-	/*showAlert : function(title, text, klass) {
+
+	showInfo : function(title, text, klass) {
+		clearTimeout(this.timeout);
 		$('.alert').removeClass(
 				"alert-error alert-warning alert-success alert-info");
 		$('.alert').addClass(klass);
-		$('.alert').html('<strong>' + title + '</strong> ' + text);
-		$('.alert').show();
-		setTimeout(function(){
-			$('.alert').hide();
-		}, 6000);
-	},*/
-	
-	showError : function(text) {
-		clearTimeout(this.timeout);
-		$('.alert p').html('<strong>ERROR :</strong>'+text);
+		$('.alert p').html('<strong>' + title + ':</strong> ' + text);
 		$('.alert').slideDown();
-		this.timeout = setTimeout(function(){
+		this.timeout = setTimeout(function() {
 			$('.alert').slideUp();
 		}, 6000);
 	},
-	
-	hideAlert : function() {
-		$('.alert').hide();
+
+	processStatus : function(data) {
+		switch (data.status) {
+		case STATUS.SUCCESS:
+			this.showInfo('SUCCESS',data.data,'alert-success');
+			break;
+		case STATUS.FAIL:
+			this.showInfo('ERROR',data.data,'alert-error');
+			break;
+			this.showInfo('ERROR',data.data,'alert-error');
+		case STATUS.ERROR:
+			break;
+		case STATUS.EXCEPTION:
+			break;
+		}
 	},
-	
-	formatTime : function(time){
-		time = parseInt(time)/1000;
+
+	formatTime : function(time) {
+		time = parseInt(time) / 1000;
 		time = time.toFixed(0);
-		var hrs = ~~ (time / 3600);
-		var mins = ~~ ((time % 3600) / 60);
+		var hrs = ~~(time / 3600);
+		var mins = ~~((time % 3600) / 60);
 		var secs = time % 60;
 		var formattedTime = '';
-		if(hrs!=null && hrs!='' ){
-			formattedTime += ' ' +hrs;
-			if(hrs=='1'){
+		if (hrs != null && hrs != '') {
+			formattedTime += ' ' + hrs;
+			if (hrs == '1') {
 				formattedTime += ' hr';
-			}else{
-				formattedTime += ' hrs';			
+			} else {
+				formattedTime += ' hrs';
 			}
 		}
-		if(mins!=null && mins!='' ){
-			formattedTime += ' ' +mins;
-			if(mins=='1'){
+		if (mins != null && mins != '') {
+			formattedTime += ' ' + mins;
+			if (mins == '1') {
 				formattedTime += ' min';
-			}else{
-				formattedTime += ' mins';			
+			} else {
+				formattedTime += ' mins';
 			}
 		}
-		if(secs!=null && secs!='' ){
-			formattedTime += ' ' +secs;
-			if(secs=='1'){
+		if (secs != null && secs != '') {
+			formattedTime += ' ' + secs;
+			if (secs == '1') {
 				formattedTime += ' sec';
-			}else{
-				formattedTime += ' secs';			
+			} else {
+				formattedTime += ' secs';
 			}
 		}
 		return formattedTime;
-	}, 
-	
+	},
+
 };
-
-

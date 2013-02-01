@@ -174,9 +174,6 @@ window.Manager = {
                         var len = data.data.length;
                         for (var i = 0; i < len; i++) {
                             var quiz = new Quiz(data.data[i]);
-                            if (!account.get('quizzesAttemptedArray')) {
-                                account.set('quizzesAttemptedArray', []);
-                            }
                             if ($.inArray(quiz.get('id'), account.get('quizzesAttemptedArray')) != -1) {
                                 quiz.set('hasAttempted', true);
                             }
@@ -233,7 +230,32 @@ window.Manager = {
             }
         });
     },
-
+    
+    getQuestion : function (qId){
+    	var url = Config.serverUrl + 'question/' + qId;
+        $.ajax({
+            url: url,
+            dataType: "json",
+            data: {
+                accountId: account.get('id'),
+                streamId: streamId
+            },
+            success: function (data) {
+                if (data.status == STATUS.SUCCESS) {
+                	question.set(data.data);
+                	question.set('hasAttempted',true);
+                	var qView = new QuizQuestionView({
+                        model: question,
+                    });
+                    app.showView('#content', qView);
+                    qView.onRender();
+                } else { // If not, send them back to the home page
+                    helper.showError(data.data);
+                }
+            }
+        });	
+    },
+    
     showInstructions: function (quiz) {
         if (quizQuestions.length > 0) {
             var instructionsView = new InstructionsView({
@@ -244,7 +266,6 @@ window.Manager = {
     },
 
     showResume: function (quiz) {
-        // var dfd = [];
         if (quizQuestions.length > 0) {
             var resumeView = new ResumeView({
                 model: quiz
@@ -514,6 +535,10 @@ window.Manager = {
         this.processQuiz(quizId);
     },
 
+    getDataForQuestion: function (qId) {
+        this.getQuestion(qId);
+    },
+
     loadQuiz2: function (quiz) {
         if (quiz != null) {
             switch (quiz.get('status')) {
@@ -588,19 +613,10 @@ window.Manager = {
         dfd.push(this.getAttemptedQuestions());
         $.when.apply(null, dfd)
             .then(
-
         function (data) {
             activeView.switchMenu('activity');
-            $('#main-content')
-                .append(
-                '<div class="row-fluid"><div class="page-title"><h2>Activity</h2></div><br></div>');
-            $('#main-content').append('<div class="row-fluid"><h3>Your focus has been mainly on Chemistry. Why dont you practice  some Maths and Physics as well?</h3></div>');
-            $('#main-content').append('<div id="donut"></div>');
-            // plot the graph here, no need to create a view for
-            // this purpose;
-            drawDonutChart('donut');
-            $("tspan:contains('Highcharts.com')").hide();
+            var activityView = new ActivityView({});
+            activeView.switchView(activityView);
         });
     }
-
 };

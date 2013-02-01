@@ -24,14 +24,12 @@ var Config = {
                     'FacView',
                     'ModalView',
                     'MySetsView',
-//                    'InfoView',
                     'InstructionsView',
                     'PackagesView',
                     'PackageItemView',
                     'PracticeView',
                     'ForgotPassView',
                     'ChangePassView',
-                    'FacQuizView',
                     'ReviewView',
                     'ResultsView',
                     'ResumeView',
@@ -42,6 +40,8 @@ var Config = {
                     'PerformanceView',
                     'FacContactView',
                     'FooterView',
-                    'OverView'
+                    'OverView',
+                    'LearnMoreView',
+                    'ActivityView'
                   ]
 };

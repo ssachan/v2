@@ -16,6 +16,7 @@ window.Account = Backbone.Model.extend({
 		}
 		
 		this.on('change:quizzesAttempted', function(model){
+			model.get('quizzesAttemptedArray').length=0;
 			if(model.get('quizzesAttempted')!=null && model.get('quizzesAttemptedArray')){
 				model.get('quizzesAttemptedArray').push.apply(this.get('quizzesAttemptedArray'), JSON.parse(model.get('quizzesAttempted')));
 			}
@@ -86,7 +87,7 @@ window.Account = Backbone.Model.extend({
 				if (data.status == STATUS.SUCCESS) {
 					console.log('log out');
 					//window.location.replace('#landing');
-					account.clear();
+					account.reset();
 					if(user){
 						user.clear();
 					}
@@ -95,10 +96,8 @@ window.Account = Backbone.Model.extend({
 					});
 					app.showView('#content', signUpView);
 					signUpView.onRender();
-					helper.showError(data.data);
-				} else {
-					helper.showError(data.data);
 				}
+				helper.processStatus(data);
 			},
 			error : function(data) {
 				console.log(data);
@@ -120,7 +119,7 @@ window.Account = Backbone.Model.extend({
 					account.set(data.data);
 					window.location = '#';
 				} else {
-					helper.showError(data.data);
+					helper.processStatus(data);
 				}
 			},
 			error : function(data) {
@@ -144,7 +143,7 @@ window.Account = Backbone.Model.extend({
 				if (data.status == STATUS.SUCCESS) {
 					account.set(data.data);
 				} else {
-					helper.showError(data.data);
+					helper.processStatus(data);
 				}
 			}
 		});
@@ -184,8 +183,6 @@ window.Account = Backbone.Model.extend({
 			}
 		});
 	},
-
-
 });
 
 var account = new Account();

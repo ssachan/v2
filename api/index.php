@@ -16,6 +16,9 @@ $app->get('/topics/:level/:id', 'getTopics');
 //quiz library
 $app->get('/quizzesByStreamId/:id', 'getQuizzesByStreamId');
 
+//questions
+$app->get('/question/:id', 'getQuestion');
+
 // the fac pages
 $app->get('/facByStreamId/:id', 'getFacByStreamId');
 $app->get('/fac/:id', 'getFac');
@@ -251,6 +254,29 @@ function getQuizzesByFac($id) {
     sendResponse($response);
 }
 
+
+function getQuestion($id) {
+    $response = array();
+    $accountId = $_GET['accountId'];
+    $sql = "SELECT q.*,r.optionSelected,r.timeTaken,p.id as paraId, p.text as para from questions q left join para p on (p.id=q.paraId) left join responses r on (q.id=r.questionId) where q.id=:qId and r.accountId=:accountId";
+    try {
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("qId", $id);
+        $stmt->bindParam("accountId", $accountId);
+        $stmt->execute();
+        $record = $stmt->fetch(PDO::FETCH_OBJ);
+        $db = null;
+        $response["status"] = SUCCESS;
+        $response["data"] = $record;
+    } catch (PDOException $e) {
+        $response["status"] = ERROR;
+        $response["data"] = EXCEPTION_MSG;
+        phpLog($e->getMessage());
+    }
+    sendResponse($response);
+}
+
 function getQuestions($qids) {
     $qids = explode("|:", $qids);
     $sql = "SELECT q.*,p.id as paraId, p.text as para from questions q left join para p on (p.id=q.paraId) where q.id IN(" . implode(",", $qids) . ")";
@@ -262,7 +288,7 @@ function getQuestions($qids) {
         $db = null;
         return $questions;
     } catch (PDOException $e) {
-        echo '{"error":{"text":' . $e->getMessage() . '}}';
+        phpLog($e->getMessage());
     }
 }
 
