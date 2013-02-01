@@ -317,29 +317,6 @@ color: #555;
 
 }
 
-/*
-*/
-
-/* slide typography */
-.slide h1 {
-  line-height:62pt;
-  font-size:48pt;
-  padding-top:5px;
-}
-.slide p {
-  line-height:20px;
-  color:#ddd;
-}
-
-.slide h3{
-  color:#EEE;
-}
-
-.slide img{
-  height: 130px;
-  width:110px;
-}
-
 /* show of */
 
 .show-of h1 {
@@ -387,33 +364,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#45484d', end
   font-weight:400;
   line-height:15pt;
 }
-
-#slide {
-  min-height:320px;
-  border-bottom:1px solid #343038;
-  padding-top:20px;
-} /* slide section */
-
-/* front-page slider */
-#sliding {
-  border-bottom:1px solid #f4763E;
-  padding-top:20px;
-} /* slide object */
-#sliding .item {
-  height:280px;
-  padding-top:20px;
-}
-#sliding .item img {
-  float:left;
-  padding:20px;
-}
-#sliding .carousel-control {
-  font-size:20pt;
-  font-weight:500;
-  margin-top:50px;
-  line-height:25pt;
-}
-
 
 /* Stat boxes and quick actions */
 .stat-boxes, .quick-actions, .quick-actions-horizontal, .stats-plain {
@@ -651,3 +601,43 @@ footer
 footer end
 -----------------------
 */
+
+
+#myCarousel{
+    height:250px;
+    background: rgb(40,37,45);
+    background: -moz-linear-gradient(-45deg, rgba(40,37,45,1) 0%, rgba(47,43,53,1) 36%, rgba(38,34,42,1) 99%);
+    background: -webkit-gradient(linear, left top, right bottom, color-stop(0%, rgba(40,37,45,1)), color-stop(36%, rgba(47,43,53,1)), color-stop(99%, rgba(38,34,42,1)));
+    background: -webkit-linear-gradient(-45deg, rgba(40,37,45,1) 0%, rgba(47,43,53,1) 36%, rgba(38,34,42,1) 99%);
+    background: -o-linear-gradient(-45deg, rgba(40,37,45,1) 0%, rgba(47,43,53,1) 36%, rgba(38,34,42,1) 99%);
+    background: -ms-linear-gradient(-45deg, rgba(40,37,45,1) 0%, rgba(47,43,53,1) 36%, rgba(38,34,42,1) 99%);
+    background: linear-gradient(-45deg, rgba(40,37,45,1) 0%, rgba(47,43,53,1) 36%, rgba(38,34,42,1) 99%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#28252d', endColorstr='#26222a', GradientType=1 );
+}
+
+#myCarousel .content-left{margin:60px 0 0 120px;color:#fff;}
+#myCarousel .content-left h2{color:#98bf21;padding:10px;font-size:29px;font-size:2.9rem;}
+#myCarousel .content-left p{line-height:16px;padding:10px;}
+#myCarousel .content-right{margin:60px 120px 0 0;color:#fff;}
+#myCarousel .content-right h2{color:#98bf21;padding:10px;font-size:29px;font-size:2.9rem;}
+#myCarousel .content-right p{line-height:16px;padding:10px;}
+.carousel-control{background:none;border:none;font-size:24px;font-size:2.4rem;}
+.carousel{position:relative;margin-bottom:1px;line-height:1;}
+.carousel-inner{overflow:hidden;width:100%;position:relative;}
+.carousel-inner>.item{display:none;position:relative;-webkit-transition:0.6s ease-in-out left;-moz-transition:0.6s ease-in-out left;-o-transition:0.6s ease-in-out left;transition:0.6s ease-in-out left;}
+.carousel-inner>.item>img{display:block;line-height:1;}
+.carousel-inner>.active,.carousel-inner>.next,.carousel-inner>.prev{display:block;}
+.carousel-inner>.active{left:0;}
+.carousel-inner>.next,.carousel-inner>.prev{position:absolute;top:0;width:100%;}
+.carousel-inner>.next{left:100%;}
+.carousel-inner>.prev{left:-100%;}
+.carousel-inner>.next.left,.carousel-inner>.prev.right{left:0;}
+.carousel-inner>.active.left{left:-100%;}
+.carousel-inner>.active.right{left:100%;}
+.carousel-control{position:absolute;top:40%;left:15px;width:40px;height:40px;margin-top:-20px;font-size:60px;font-weight:100;line-height:30px;color:#ffffff;text-align:center;background:#222222;border:3px solid #ffffff;-webkit-border-radius:23px;-moz-border-radius:23px;border-radius:23px;opacity:0.5;filter:alpha(opacity=50);}.carousel-control.right{left:auto;right:15px;}
+.carousel-control:hover{color:#ffffff;text-decoration:none;opacity:0.9;filter:alpha(opacity=90);}
+.carousel-caption{position:absolute;left:0;right:0;bottom:0;padding:15px;background:#333333;background:rgba(0, 0, 0, 0.75);}
+.carousel-caption h4,.carousel-caption p{color:#ffffff;line-height:20px;}
+.carousel-caption h4{margin:0 0 5px;}
+.carousel-caption p{margin-bottom:0;}
+
