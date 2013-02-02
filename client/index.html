@@ -6,13 +6,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-        displayAlign: "left",
-    tex2jax: {inlineMath: [["~~","~~"],["\\(","\\)"]]}
-  });
-</script>
-<script type="text/javascript" src="../../mathjax/MathJax.js?config=TeX-AMS_HTML-full"></script>
 <script src="js/lib/jquery-1.8.3.js"></script>
 
 <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -38,9 +31,6 @@
 <script src="js/lib/backbone.js"></script>
 <script src="js/lib/upload.js"></script>
 
-<script src="js/lib/highcharts.js"></script>
-<script src="js/lib/highcharts-more.js"></script>
-<script src="js/lib/exporting.js"></script>
 <script src="js/lib/FacebookUser.js"></script>
 
 <script src="js/helper.js"></script>
@@ -102,9 +92,17 @@ _.each(views,function(item){
     <!-- <div id="loading" ><img src="img/loader.gif" ></div> -->
     <div id="content"></div>
     <footer class="footer"></footer>
-<script>
-$("#overlay").delay(1250).fadeOut(500);
+    <script src="js/lib/highcharts.js"></script>
+<script src="js/lib/highcharts-more.js"></script>
+<script src="js/lib/exporting.js"></script>
+    
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+      displayAlign: "left",
+  tex2jax: {inlineMath: [["~~","~~"],["\\(","\\)"]]}
+});
 </script>
+<script type="text/javascript" src="../../mathjax/MathJax.js?config=TeX-AMS_HTML-full"></script>
 </body>
 
 </html>
