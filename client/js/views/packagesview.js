@@ -22,7 +22,7 @@ window.PackagesView = Backbone.View.extend({
 		var i = 0;
 		while (i < len) {
 			$("#package-list").append('<ul class="thumbnails"></ul>');
-			for ( var j = 0; j < 4 && i < len; j++) {
+			for ( var j = 0; j < 3 && i < len; j++) {
 				$(".thumbnails:last").append(new PackageItemView({
 					model : packages[i]
 				}).render().el);

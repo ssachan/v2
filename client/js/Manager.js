@@ -365,6 +365,9 @@ window.Manager = {
             dataType: "json",
             success: function (data) {
                 packages.reset(data);
+                packages.add(new Package());
+                packages.add(new Package());
+                packages.add(new Package());
                 var packagesView = new PackagesView({
                     collection: packages,
                 });
@@ -485,9 +488,6 @@ window.Manager = {
     getDataForQuizLibrary: function (streamId) {
         var dfd = [];
         if (sectionL1.length == 0 || sectionL2.length == 0) {
-            // what if the data is already is being fetched???I think jquery
-            // makes sure with promises that it is not fetched again
-            // @ssachan You can check on the status of a promise - tanujb
             dfd.push(this.getSubjectsByStreamId(streamId));
         }
         var that = this;
@@ -525,31 +525,7 @@ window.Manager = {
             window.location = '#library';
         }
     },
-
-    getDataForQuiz2: function (quizId) {
-        var quiz = null;
-        quiz = quizHistory.get(quizId) == null ? quizLibrary.get(quizId) : quizHistory.get(quizId);
-        if (quiz != null) {
-            switch (quiz.get('status')) {
-                case quiz.STATUS_NOTSTARTED:
-                    this.showInstructions(quiz);
-                    break;
-                case quiz.STATUS_INPROGRESS:
-                    this.showResume(quiz);
-                    break;
-                case quiz.STATUS_INTERRUPTED:
-                    this.showInstructions(quiz);
-                    break;
-                case quiz.STATUS_COMPLETED:
-                    this.showResults(quiz);
-                    break;
-            }
-        } else {
-            // for now redirect to the quiz library page
-            window.location = '#library';
-        }
-    },
-
+    
     getDataForReview: function () {
         var dfd = [];
         if (!(activeView instanceof DashboardView)) {
