@@ -166,8 +166,7 @@ window.QuizView = Backbone.View.extend({
 		}
 		this.question.set('hasAttempted', false);
 		this.questionView.model = this.question;
-		this.questionView.el=$('#question');
-		//$('#question').html(this.questionView.render().el);
+		$('#question').html(this.questionView.render().el);
 		this.questionView.render();
 		this.questionView.onRender();
 		$("#qnum").html((parseInt(this.index) + 1));
