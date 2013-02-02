@@ -103,7 +103,7 @@ window.ReviewQuestionView = Backbone.View.extend({
 	
 	onRender : function(){
 		this.qView.model = this.model;
-		$('#question').html(this.qView.render().el);
+		$('#r-question').html(this.qView.render().el);
 		this.qView.onRender();
 	}
 });

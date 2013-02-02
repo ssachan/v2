@@ -944,6 +944,17 @@ margin:0px auto;
 
 /* Analytics View 
 -------------------------------------------------*/
+#r-question{
+    width:80%;
+    margin:0px auto;
+    padding: 5px 10px;
+}
+
+/* End 
+-------------------------------------------------*/
+
+/* Analytics View 
+-------------------------------------------------*/
 .analytics-view {
     width: 70%;
 }
@@ -1063,7 +1074,7 @@ margin:0px auto;
     width: 45%;
 }
 
-#quiz-div #q-video {
+#q-video {
     border-bottom: 1px solid #ccc;
     padding: 20px 0px;
 }
