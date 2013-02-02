@@ -19,17 +19,25 @@ window.PackagesView = Backbone.View.extend({
     onRender : function (){
      	var packages = this.collection.models;
         var len = packages.length;
-        for (var i = 0; i < len; i++) {
-            $('#package-list', this.el).append(new PackageItemView({model: packages[i]}).render().el);
-        }
+		var i = 0;
+		while (i < len) {
+			$("#package-list").append('<ul class="thumbnails"></ul>');
+			for ( var j = 0; j < 4 && i < len; j++) {
+				$(".thumbnails:last").append(new PackageItemView({
+					model : packages[i]
+				}).render().el);
+				i++;
+			}
+		}
     }
 });
 
 window.PackageItemView = Backbone.View.extend({
-	el : '<tr>',
+	tagName : "li",
 
+	className : "span4",
+	
 	initialize: function () {
-	       this.render();
 	},
 	
 	render : function() {
