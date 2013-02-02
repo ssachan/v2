@@ -90,3 +90,16 @@ window.QuestionItemView = Backbone.View.extend({
 	},
 
 });
+
+window.ReviewQuestionView = Backbone.View.extend({
+	tagName :'tr',
+	initialize : function() {
+		this.render();
+	},
+
+	render : function() {
+		$(this.el).html(this.template(this.model.toJSON()));
+		return this;
+	},
+
+});
