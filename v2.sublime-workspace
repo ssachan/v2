@@ -4,8 +4,32 @@
 		"selected_items":
 		[
 			[
+				"gen",
+				"generateVideoArray  (function)"
+			],
+			[
+				"A",
+				"ATTEMPTED_AS_PRACTICE"
+			],
+			[
+				"averageTime",
+				"averageTimeIncorrect"
+			],
+			[
+				"av",
+				"averageTimeCorrect  (variable)"
+			],
+			[
 				"time",
-				"timeFactor"
+				"timeTaken"
+			],
+			[
+				"user",
+				"userAbility"
+			],
+			[
+				"ability",
+				"abilityFactors"
 			],
 			[
 				"delta",
@@ -34,10 +58,6 @@
 			[
 				"num",
 				"numUnattempted"
-			],
-			[
-				"ability",
-				"abilityScores"
 			],
 			[
 				"get",
@@ -476,10 +496,6 @@
 				"success"
 			],
 			[
-				"user",
-				"userAnswer"
-			],
-			[
 				"firs",
 				"firstPage"
 			],
@@ -504,7 +520,7 @@
 		[
 			[
 				"packa",
-				"Package Control: Install Package"
+				"Package Control: List Packages"
 			],
 			[
 				"package in",
@@ -584,9 +600,11 @@
 	},
 	"file_history":
 	[
+		"/Users/tanujb/Desktop/repos/v2/api/constants.php",
+		"/Users/tanujb/Desktop/repos/v2/api/analytics.php",
+		"/Users/tanujb/Desktop/repos/v2/termsheet",
 		"/Users/tanujb/Desktop/repos/v2/api/data.csv",
 		"/Users/tanujb/Desktop/repos/v2/api/data-op.csv",
-		"/Users/tanujb/Desktop/repos/v2/api/constants.php",
 		"/Users/tanujb/Desktop/repos/v2/api/data1.csv",
 		"/Users/tanujb/Desktop/repos/v2/client/js/views/modalview.js",
 		"/Users/tanujb/Desktop/repos/v2/client/js/views/resultsview.js",
@@ -594,7 +612,6 @@
 		"/Users/tanujb/Desktop/repos/v2/client/js/Manager.js",
 		"/Users/tanujb/Desktop/repos/v2/api/authState.php",
 		"/Users/tanujb/Desktop/repos/v2/api/index.php",
-		"/Users/tanujb/Desktop/repos/v2/api/analytics.php",
 		"/Users/tanujb/Desktop/repos/v2/api/testfp.php",
 		"/Users/tanujb/Desktop/repos/v2/client/templates/QuizResultsView.html",
 		"/Users/tanujb/Desktop/repos/v2/client/templates/ModalView.html",
@@ -710,8 +727,7 @@
 		"/Users/tanujb/Desktop/repos/src/tpl-mobile/LandingView.html",
 		"/Users/tanujb/Desktop/repos/src/js/lib/backbone.dualstorage.js",
 		"/Users/tanujb/Desktop/repos/src/js/router-web.js",
-		"/Users/tanujb/Desktop/repos/src/tpl/FlashCardListItemView.html",
-		"/Users/tanujb/Desktop/repos/src/js/views/wordlistview.js"
+		"/Users/tanujb/Desktop/repos/src/tpl/FlashCardListItemView.html"
 	],
 	"find":
 	{
@@ -731,6 +747,11 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"quiz",
+			"getvideoarra",
+			"getQuestionResponse",
+			"avg",
+			"adjustDelta",
 			"vars",
 			"self",
 			"_LOW",
@@ -853,12 +874,7 @@
 			"Id",
 			"l1",
 			"score",
-			"Score",
-			"score",
-			"Score",
-			"score",
-			"Score",
-			"score"
+			"Score"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -924,7 +940,7 @@
 		"cols":
 		[
 			0.0,
-			0.409147324601,
+			0.577900155713,
 			1.0
 		],
 		"rows":
