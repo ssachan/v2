@@ -81,7 +81,6 @@ window.ReviewView = Backbone.View.extend({
 window.QuestionItemView = Backbone.View.extend({
 	tagName :'tr',
 	initialize : function() {
-		this.render();
 	},
 
 	render : function() {
@@ -92,14 +91,19 @@ window.QuestionItemView = Backbone.View.extend({
 });
 
 window.ReviewQuestionView = Backbone.View.extend({
-	tagName :'tr',
+	className :'container reviewq',
 	initialize : function() {
-		this.render();
+		this.qView = new QuizQuestionView();
 	},
 
 	render : function() {
 		$(this.el).html(this.template(this.model.toJSON()));
 		return this;
 	},
-
+	
+	onRender : function(){
+		this.qView.model = this.model;
+		$('#question').html(this.qView.render().el);
+		this.qView.onRender();
+	}
 });

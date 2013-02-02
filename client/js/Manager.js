@@ -244,7 +244,7 @@ window.Manager = {
                 if (data.status == STATUS.SUCCESS) {
                 	question.set(data.data);
                 	question.set('hasAttempted',true);
-                	var qView = new QuizQuestionView({
+                	var qView = new ReviewQuestionView({
                         model: question,
                     });
                     app.showView('#content', qView);
@@ -338,39 +338,6 @@ window.Manager = {
                     helper.showError(data.data);
                 }
             }
-        });
-    },
-
-    getRSquareData: function () {
-        var dfd = [];
-        dfd.push(this.getDashboardData());
-        $.when.apply(null, dfd)
-            .then(
-
-        function (data) {
-            activeView.switchMenu('rsquare');
-            $('#main-content').append('<div class="row-fluid"><div class="page-title"><h2>Results Square</h2></div><br></div>');
-            var html = [];
-            html.push('<div class="row-fluid"><div class="center span3">');
-            html.push('<strong>How to understand this chart</strong></div>');
-            html.push('<div class="span7 center">');
-            html.push('<div class="span3" style="background: #C4DDDA">Not Started</div>');
-            html.push('<div class="span3" style="background: #FFFDC7">');
-            html.push('Getting There</div>');
-            html.push('<div class="span3" style="background: #FFB58B">Needs Improvement</div>');
-            html.push('<div class="span3" style="background: #B7E6A8">Achiever!</div></div>');
-            html.push('<div class="span1"></div></div>');
-            $('#main-content').append(html.join(''));
-            var l1 = sectionL1.models;
-            var len = l1.length;
-            for (var i = 0; i < len; i++) {
-                var pView = new PerformanceView({
-                    model: l1[i]
-                });
-                $('#main-content').append(pView.render().el);
-                pView.onRender();
-            }
-            
         });
     },
 
