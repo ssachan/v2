@@ -77,9 +77,9 @@ function phpLog($msg) {
     echo $msg;
 }
 
-function getTopics($level,$id) {
+function getTopics($level, $id) {
     $response = array();
-    $sql = "SELECT * from section_".$level." where streamId=:id";
+    $sql = "SELECT * from section_" . $level . " where streamId=:id";
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
@@ -101,12 +101,14 @@ function getTopics($level,$id) {
 // The dashboard page 
 //
 
-
-function getScores($level){
+function getScores($level) {
     $response = array();
     $accountId = $_GET['accountId'];
-    $streamId = $_GET['streamId'];   
-    $sql = "select *, ".$level."id as id, MAX(updatedOn) as timeUpdated from ascores_".$level." a where a.accountId=:accountId and streamId=:streamId group by ".$level."Id";
+    $streamId = $_GET['streamId'];
+    $sql = "select *, " . $level
+            . "id as id, MAX(updatedOn) as timeUpdated from ascores_" . $level
+            . " a where a.accountId=:accountId and streamId=:streamId group by "
+            . $level . "Id";
 
     try {
         $db = getConnection();
@@ -249,7 +251,6 @@ function getQuizzesByFac($id) {
     sendResponse($response);
 }
 
-
 function getQuestion($id) {
     $response = array();
     $accountId = $_GET['accountId'];
@@ -262,8 +263,13 @@ function getQuestion($id) {
         $stmt->execute();
         $record = $stmt->fetch(PDO::FETCH_OBJ);
         $db = null;
-        $response["status"] = SUCCESS;
-        $response["data"] = $record;
+        if ($record) {
+            $response["status"] = SUCCESS;
+            $response["data"] = $record;
+        } else {
+            $response["status"] = FAIL;
+            $response["data"] = "No record found";
+        }
     } catch (PDOException $e) {
         $response["status"] = ERROR;
         $response["data"] = EXCEPTION_MSG;
@@ -274,7 +280,8 @@ function getQuestion($id) {
 
 function getQuestions($qids) {
     $qids = explode("|:", $qids);
-    $sql = "SELECT q.*,p.id as paraId, p.text as para from questions q left join para p on (p.id=q.paraId) where q.id IN(" . implode(",", $qids) . ")";
+    $sql = "SELECT q.*,p.id as paraId, p.text as para from questions q left join para p on (p.id=q.paraId) where q.id IN("
+            . implode(",", $qids) . ")";
     //echo $sql;
     try {
         $db = getConnection();
@@ -487,7 +494,7 @@ function processQuiz() {
         $db = null;
         if ($questionIds->questionIds != null) {
             $questions = getQuestions($questionIds->questionIds);
-            $sucessData["questions"]=$questions;
+            $sucessData["questions"] = $questions;
             $response["status"] = "success";
             $response["data"] = $sucessData;
         } else {

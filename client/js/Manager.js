@@ -66,7 +66,7 @@ window.Manager = {
                             break;
                     }
                 } else { // If not, send them back to the home page
-                    helper.showError(data.data);
+                    helper.processStatus(data);
                 }
             }
         });
@@ -81,7 +81,7 @@ window.Manager = {
                 if (data.status == STATUS.SUCCESS) {
                     account.set('ascore', data.data);
                 } else { // If not, send them back to the home page
-                    helper.showError(data.data);
+                    helper.processStatus(data);
                 }
             }
         });
@@ -116,7 +116,7 @@ window.Manager = {
                             break;
                     }
                 } else { // If not, send them back to the home page
-                    helper.showError(data.data);
+                    helper.processStatus(data);
                 }
             }
         });
@@ -186,7 +186,7 @@ window.Manager = {
                     app.showView('#content', quizLibraryView);
                     quizLibraryView.onRender();
                 } else { // If not, send them back to the home page
-                    helper.showError(data.data);
+                    helper.processStatus(data);
                 }
             }
         });
@@ -205,7 +205,7 @@ window.Manager = {
                 if (data.status == STATUS.SUCCESS) {
                     quizHistory.reset(data.data);
                 } else { // If not, send them back to the home page
-                    helper.showError(data.data);
+                    helper.processStatus(data);
                 }
             }
         });
@@ -225,7 +225,7 @@ window.Manager = {
                     app.showView('#content', facDirectoryView);
                     facDirectoryView.onRender();
                 } else { // If not, send them back to the home page
-                    helper.showError(data.data);
+                    helper.processStatus(data);
                 }
             }
         });
@@ -250,7 +250,7 @@ window.Manager = {
                     app.showView('#content', qView);
                     qView.onRender();
                 } else { // If not, send them back to the home page
-                    helper.showError(data.data);
+                    helper.processStatus(data);
                 }
             }
         });	
@@ -319,7 +319,7 @@ window.Manager = {
                     console.log("faculty fetched: " + data);
                     fac.set(data.data);
                 } else { // If not, show error
-                    helper.showError(data.data);
+                    helper.processStatus(data);
                 }
             }
         });
@@ -335,7 +335,7 @@ window.Manager = {
                     console.log("faculty fetched: " + data);
                     facQuizzes.reset(data.data); // facDirectory.reset(data);
                 } else { // If not, show error
-                    helper.showError(data.data);
+                    helper.processStatus(data);
                 }
             }
         });
@@ -364,7 +364,6 @@ window.Manager = {
             url: url,
             dataType: "json",
             success: function (data) {
-                console.log("questions fetched: " + data.length);
                 packages.reset(data);
                 var packagesView = new PackagesView({
                     collection: packages,
@@ -386,10 +385,9 @@ window.Manager = {
             dataType: "json",
             success: function (data) {
                 if (data.status == STATUS.SUCCESS) {
-                    console.log("review questions fetched: " + data);
                     attemptedQuestions.reset(data.data); // facDirectory.reset(data);
                 } else { // If not, show error
-                    helper.showError(data.data);
+                    helper.processStatus(data);
                 }
             }
         });
@@ -440,7 +438,7 @@ window.Manager = {
                     }
                     that.loadQuiz2(activeQuiz);
                 } else { // If not, send them back to the home page
-                    helper.showError(data.data);
+                    helper.processStatus(data);
                 }
             },
         });
