@@ -3,17 +3,17 @@
 class bases{
 
  public static $values = array(
-    "UNSEEN" => 0,
-    "CORRECT_L_1" => 5,
-    "CORRECT_L_2" => 4,
-    "CORRECT_L_3" => 3,
-    "CORRECT_L_4" => 2,
-    "CORRECT_L_5" => 1,
-    "INCORRECT_L_1" => -5,
-    "INCORRECT_L_2" => -4,
-    "INCORRECT_L_3" => -3,
-    "INCORRECT_L_4" => -2,
-    "INCORRECT_L_5" => -1,
+    "UNSEEN"            => 0,
+    "CORRECT_L_1"       => 5,
+    "CORRECT_L_2"       => 4,
+    "CORRECT_L_3"       => 3,
+    "CORRECT_L_4"       => 2,
+    "CORRECT_L_5"       => 1,
+    "INCORRECT_L_1"     => -5,
+    "INCORRECT_L_2"     => -4,
+    "INCORRECT_L_3"     => -3,
+    "INCORRECT_L_4"     => -2,
+    "INCORRECT_L_5"     => -1,
     "SKIPPED_ABOVE_L_1" => 2.5,
     "SKIPPED_ABOVE_L_2" => 2.0,
     "SKIPPED_ABOVE_L_3" => 1.5,
@@ -24,11 +24,11 @@ class bases{
     "SKIPPED_BELOW_L_3" => 1.5,
     "SKIPPED_BELOW_L_4" => 1,
     "SKIPPED_BELOW_L_5" => 0.5,
-    "L_1" => 20,
-    "L_2" => 40,
-    "L_3" => 60,
-    "L_4" => 80,
-    "L_5" => 100 );
+    "L_1"               => 20,
+    "L_2"               => 40,
+    "L_3"               => 60,
+    "L_4"               => 80,
+    "L_5"               => 100 );
 
     public static function set($key, $value, $default = null)
     {
@@ -43,14 +43,14 @@ class bases{
 
 class timeRanges {
     public static $values = array(
-	    "CORRECT_HIGH" => 0.5,
-	    "CORRECT_LOW" => 2,
-	    "INCORRECT_HIGH" => 0.5,
-	    "INCORRECT_LOW" => 2,
-	    "SKIPPED_ABOVE_HIGH" => 0.5,
-	    "SKIPPED_ABOVE_LOW" => 2,
-	    "SKIPPED_BELOW_HIGH" => 2,
-	    "SKIPPED_BELOW_LOW" => 0.5 );
+        "CORRECT_HIGH"       => 0.5,
+        "CORRECT_LOW"        => 2,
+        "INCORRECT_HIGH"     => 0.5,
+        "INCORRECT_LOW"      => 2,
+        "SKIPPED_ABOVE_HIGH" => 0.5,
+        "SKIPPED_ABOVE_LOW"  => 2,
+        "SKIPPED_BELOW_HIGH" => 2,
+        "SKIPPED_BELOW_LOW"  => 0.5 );
 
     public static function set($key, $value, $default = null)
     {
@@ -201,36 +201,34 @@ function testDelta()
         foreach (abilityFactors::$values as $key => $value)
             fwrite($fp,$key.",".$value."\n");
         fwrite($fp,"\nData\nstate,qScore,timeTaken,avgTime,sigmaTime,score,delta,base,timeFactor,abilityFactor\n");
-		$currentLine = fgets($file);
-	  	$vars = explode(",",$currentLine);
-        $score = $vars[5];
-        $state = $vars[0]; $qScore = $vars[1]; $timeTaken = $vars[2]; $avgTime = $vars[3]; $sigmaTime = $vars[4];
-		$delta = deltaCalculator::calculate($state, $score, $qScore, $timeTaken, $avgTime, $sigmaTime);
-        $tmp = new bases;
-        $base = $tmp->get(deltaCalculator::getBase($state,$score,$qScore)."_".deltaCalculator::getLevel($score));
-        $timeFactor = deltaCalculator::timeFactor($state, $timeTaken, $avgTime, $sigmaTime, $score, $qScore);
-        $abilityFactor = deltaCalculator::abilityFactor($score, $qScore, $state);
-		$vars[] = $delta; $vars[] = $base; $vars[] = $timeFactor; $vars[] = $abilityFactor;
-		$vars = implode(",", $vars);
-		$vars = str_replace("\n","",$vars);
+          $currentLine   = fgets($file);
+          $vars          = explode(",",$currentLine);
+          $score         = $vars[5];
+          $state         = $vars[0]; $qScore = $vars[1]; $timeTaken = $vars[2]; $avgTime = $vars[3]; $sigmaTime = $vars[4];
+          $delta         = deltaCalculator::calculate($state, $score, $qScore, $timeTaken, $avgTime, $sigmaTime);
+          $tmp           = new bases;
+          $base          = $tmp->get(deltaCalculator::getBase($state,$score,$qScore)."_".deltaCalculator::getLevel($score));
+          $timeFactor    = deltaCalculator::timeFactor($state, $timeTaken, $avgTime, $sigmaTime, $score, $qScore);
+          $abilityFactor = deltaCalculator::abilityFactor($score, $qScore, $state);
+          $vars[]        = $delta; $vars[] = $base; $vars[] = $timeFactor; $vars[] = $abilityFactor;
+          $vars          = implode(",", $vars);
+          $vars          = str_replace("\n","",$vars);
 		fwrite($fp, $vars."\n");
 		$score += $delta; 
 	while(!feof($file))
-	  {
-	  	$currentLine = fgets($file);
-	  	$vars = explode(",",$currentLine);
-
-		        $state = $vars[0]; $qScore = $vars[1]; $timeTaken = $vars[2]; $avgTime = $vars[3]; $sigmaTime = $vars[4];
-        $delta = deltaCalculator::calculate($state, $score, $qScore, $timeTaken, $avgTime, $sigmaTime);
-        $tmp = new bases;
-        $base = $tmp->get(deltaCalculator::getBase($state,$score,$qScore)."_".deltaCalculator::getLevel($score));
-        $timeFactor = deltaCalculator::timeFactor($state, $timeTaken, $avgTime, $sigmaTime, $score, $qScore);
+	  {   
+        $state         = $vars[0]; $qScore = $vars[1]; $timeTaken = $vars[2]; $avgTime = $vars[3]; $sigmaTime = $vars[4];
+        $currentLine   = fgets($file);
+        $vars          = explode(",",$currentLine);
+        $delta         = deltaCalculator::calculate($state, $score, $qScore, $timeTaken, $avgTime, $sigmaTime);
+        $tmp           = new bases;
+        $base          = $tmp->get(deltaCalculator::getBase($state,$score,$qScore)."_".deltaCalculator::getLevel($score));
+        $timeFactor    = deltaCalculator::timeFactor($state, $timeTaken, $avgTime, $sigmaTime, $score, $qScore);
         $abilityFactor = deltaCalculator::abilityFactor($score, $qScore, $state);
-        $vars[]= $score;
-        $vars[] = $delta; $vars[] = $base; $vars[] = $timeFactor; $vars[] = $abilityFactor;
-		
-		$vars = implode(",", $vars);
-		$vars = str_replace("\n","",$vars);
+        $vars[]        = $score;
+        $vars[]        = $delta; $vars[] = $base; $vars[] = $timeFactor; $vars[] = $abilityFactor;
+        $vars          = implode(",", $vars);
+        $vars          = str_replace("\n","",$vars);
 		fwrite($fp, $vars."\n");
 		$score += $delta;
 	  }
