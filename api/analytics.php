@@ -582,15 +582,15 @@ class questionEvalution{
                     //$sigmaTime =& $this->qDetails->sigmaTimeCorrect;
                 break;
                 case analConst::INCORRECT :
-                    $avgTime =& $this->qDetails->averageTimeIncorrect
+                    $avgTime =& $this->qDetails->averageTimeIncorrect;
                     //$sigmaTime =& $this->qDetails->sigmaTimeIncorrect;
                 break;
                 case analConst::SKIPPED :
-                    $avgTime =& $this->qDetails->averageTimeUnattempted
+                    $avgTime =& $this->qDetails->averageTimeUnattempted;
                     //$sigmaTime =& $this->qDetails->sigmaTimeUnattempted;
                 break;
                 case analConst::UNSEEN :
-                    $avgTime =& $this->qDetails->averageTimeUnattempted
+                    $avgTime =& $this->qDetails->averageTimeUnattempted;
                     //$sigmaTime =& $this->qDetails->sigmaTimeUnattempted;
                 break;
             }
