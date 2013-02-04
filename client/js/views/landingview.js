@@ -30,6 +30,7 @@ window.LearnMoreView = Backbone.View.extend({
 	},
 	
 	onRender : function (){
+		$('#pq-div').hide();
 		$('#tests-div').hide();
 		$('#faculty-div').hide();
 		$('#feedback-div').hide();
