@@ -158,7 +158,6 @@ class abilityScoreObject{
         public $numUnattempted;
         public $updatedOn;
         public $streamId;
-
         public $level;
         public $delta;
  //}Declarations 
@@ -248,14 +247,14 @@ class abilityScoreCollections{
     private $levels;
 
     function __construct($accountId){
-        $this->accountId = $accountId;
+        $this->accountId     = $accountId;
         $this->abilityLevels = $this->abilityScores = array();
-        $this->levels = array("l1","l2","l3");
+        $this->levels        = array("l1","l2","l3");
     }
     function addL3($l3Id){
         if(!isset($this->abilityScores["l3".$l3Id]))
         {
-            $tmpAbilityLevels = new abilityLevels($l3Id);
+            $tmpAbilityLevels                = new abilityLevels($l3Id);
             $this->abilityLevels["l3".$l3Id] = $tmpAbilityLevels;
             foreach ($this->levels as $level)
                 $this->abilityScores[$level.$tmpAbilityLevels->getIdOf($level)] =
@@ -271,21 +270,18 @@ class abilityScoreCollections{
     }
     public function addCorrect($l3Id, $deltaForQuestion){
         $tmpAbilityLevels =& $this->abilityLevels["l3".$l3Id];
-        foreach ($this->levels as $level) {
+        foreach ($this->levels as $level)
             $this->abilityScores[$level.$tmpAbilityLevels->getIdOf($level)]->addCorrect($deltaForQuestion*$tmpAbilityLevels->getWeightageOf($level));
-        }
     }
     public function addIncorrect($l3Id, $deltaForQuestion){
         $tmpAbilityLevels = $this->abilityLevels["l3".$l3Id];
-        foreach ($this->levels as $level) {
+        foreach ($this->levels as $level)
             $this->abilityScores[$level.$tmpAbilityLevels->getIdOf($level)]->addIncorrect($deltaForQuestion*$tmpAbilityLevels->getWeightageOf($level));
-        }
     }
     public function addUnattempted($l3Id, $deltaForQuestion){
         $tmpAbilityLevels = $this->abilityLevels["l3".$l3Id];
-        foreach ($this->levels as $level) {
+        foreach ($this->levels as $level)
             $this->abilityScores[$level.$tmpAbilityLevels->getIdOf($level)]->addUnattempted($deltaForQuestion*$tmpAbilityLevels->getWeightageOf($level));
-        }
     }
     public function addAnswer($state, $l3Id, $delta){
         switch ($state)
@@ -310,7 +306,6 @@ class abilityScoreCollections{
     }
     public function getL3GraphData(){
         $l3Data = array();
-
         foreach ($this->abilityScores as $key => $scoreObj)
             if($scoreObj->level == "l3")
                 $l3Data[] = new lscoreDataObject($scoreObj);
@@ -372,7 +367,6 @@ class questionObject{
 class questionEvalution{
     //{ Declarations      
         public $accountId;
-        public $quizId;
         public $qid;
         public $qDetails;
         public $optionArray;
@@ -463,7 +457,7 @@ class questionEvalution{
     public function get($key){
         return $this->{$key};
     }
-    private function getTotalTime() //Can be optimized by combining these into one large loop.
+    private function getTotalTime() //tanujb: TODO: Can be optimized by combining these into one large loop.
     {
         $prevTimeStamp = $totalTime = 0;
         foreach ($this->logs as $key => $value)
@@ -484,70 +478,48 @@ class questionEvalution{
         //Code here to calculate scores based on certain factors.
         //First check if attempted or not
         if($this->optionText == "")
-        {
-            //unattempted
-            //If not attempted see if any time was spent on the question
+        {   //If not attempted see if any time was spent on the question
             $this->score = $this->qDetails->unattemptedScore;
-            if($this->timeTaken <= analConst::UNSEEN_TOLERANCE)
-            {
-                //question went unseen. Code that way
-                $this->state = analConst::UNSEEN;
-            }
-            else
-            {
-                //seen but skipped in $timeTaken seconds
+            if($this->timeTaken <= analConst::UNSEEN_TOLERANCE) //question went unseen. Code that way
+                $this->state = analConst::UNSEEN; 
+            else                                                //seen but skipped in $timeTaken seconds
                 $this->state = analConst::SKIPPED;
-            }
-        }
-        else
-        {
-
-            //If attempted, check if each option is in the state it is supposed to be
-            if($this->optionText == $this->qDetails->correctAnswer)
+        }elseif($this->optionText == $this->qDetails->correctAnswer){//everything correct exactly
+            $this->score = $this->qDetails->correctScore;
+            $this->state = analConst::CORRECT;
+        }else{
+            switch($this->qDetails->typeId)
             {
+                case questionType::SINGLE_CHOICE:
+                    $this->score = $this->qDetails->incorrectScore;
+                break;
+                case questionType::MULTIPLE_CHOICE:
+                    $this->evalOption();
+                break;
+                case questionType::MATRIX_MATCH:
+                    //tanujb:TODO: following code may or may not work. needs unit tests.
 
-                //everything correct exactly
-                $this->score = $this->qDetails->correctScore;
-                $this->state = analConst::CORRECT;
+                   /* $tmpOption = explode("|:|:",$qDetails->options);
+                    $originalOptionText = $this->optionText;
+                    $originalCorrectAnswer = $this->qDetails->correctAnswer;
+                    $optionSuperArray =  getOptionArrayFromText($this->optionText,$this->optionLength);
+                    $correctSuperArray = getOptionArrayFromText($this->qDetails->correctAnswer,$this->optionLength);
+                    
+                    foreach ($correctSuperArray as $k => $v) {
 
-            }
-            else
-            {
-                
-                switch($this->qDetails->typeId)
-                {
-                    case questionType::SINGLE_CHOICE:
-                        $this->score = $this->qDetails->incorrectScore;
-                    break;
-                    case questionType::MULTIPLE_CHOICE:
+                        $this->qDetails->correctAnswer = $v;
+                        $this->optionText = $optionSuperArray[$k];
                         $this->evalOption();
-                    break;
-                    case questionType::MATRIX_MATCH:
-                        //tanujb:TODO: following code may or may not work. needs unit tests.
-
-                       /* $tmpOption = explode("|:|:",$qDetails->options);
-                        $originalOptionText = $this->optionText;
-                        $originalCorrectAnswer = $this->qDetails->correctAnswer;
-                        $optionSuperArray =  getOptionArrayFromText($this->optionText,$this->optionLength);
-                        $correctSuperArray = getOptionArrayFromText($this->qDetails->correctAnswer,$this->optionLength);
-                        
-                        foreach ($correctSuperArray as $k => $v) {
-
-                            $this->qDetails->correctAnswer = $v;
-                            $this->optionText = $optionSuperArray[$k];
-                            $this->evalOption();
-                        }
-                        $this->qDetails->correctArray = $originalCorrectAnswer;
-                        $this->optionText = $originalOptionText;
-                        */
-                    break;
-                    case questionType::INTEGER_TYPE:
-                        $this->score = $this->qDetails->incorrectScore;
-                    break;
-                }
-                $this->state = analConst::INCORRECT;
+                    }
+                    $this->qDetails->correctArray = $originalCorrectAnswer;
+                    $this->optionText = $originalOptionText;
+                    */
+                break;
+                case questionType::INTEGER_TYPE:
+                    $this->score = $this->qDetails->incorrectScore;
+                break;
             }
-                
+            $this->state = analConst::INCORRECT;
         }
     }
     function evaluateAsUnseen(){
@@ -597,7 +569,7 @@ class questionEvalution{
             return deltaCalculator::calculate($state, $aScore, $qScore, $timeTaken, $avgTime, $sigmaTime);
         break;
         case analConst::ATTEMPTED_AS_PRACTICE :
-
+            //tanujb : TODO : Make adjustDelta function for practice
         break;
         }
     }
@@ -620,14 +592,14 @@ class questionEvalution{
     }
     public function generateInsert(){
         return array(
-            ("acid".$this->qid) => $this->accountId,
-            ("qid".$this->qid) => $this->qid,
-            ("otxt".$this->qid) => $this->optionText,
-            ("ttk".$this->qid) => $this->timeTaken,
+            ("acid"  .$this->qid) => $this->accountId,
+            ("qid"   .$this->qid) => $this->qid,
+            ("otxt"  .$this->qid) => $this->optionText,
+            ("ttk"   .$this->qid) => $this->timeTaken,
             ("ascore".$this->qid) => $this->abilityScoreBefore,
-            ("delta".$this->qid) => $this->delta,
-            ("sts".$this->qid) => $this->state,
-            "INSERT" => "(:acid".$this->qid.",:qid".$this->qid.",:otxt".$this->qid.",:ttk".$this->qid.",:ascore".$this->qid.",:delta".$this->qid.",:sts".$this->qid.",:tstmp)"
+            ("delta" .$this->qid) => $this->delta,
+            ("sts"   .$this->qid) => $this->state,
+            "INSERT"              => "(:acid".$this->qid.",:qid".$this->qid.",:otxt".$this->qid.",:ttk".$this->qid.",:ascore".$this->qid.",:delta".$this->qid.",:sts".$this->qid.",:tstmp)"
             );
     }
 }
@@ -654,11 +626,11 @@ class quizResponseDetails{
     // } Declarations End
 
     function __construct($accountId, $quizId, $logs, $attemptedAs, $isLast = 0){
-        $this->accountId = $accountId;
-        $this->id = $quizId;
-        $this->logs = $logs;
-        $this->attemptedAs = $attemptedAs;
-        $this->questionIds = $this->getQuestionIdsForQuiz();
+        $this->accountId      = $accountId;
+        $this->id             = $quizId;
+        $this->logs           = $logs;
+        $this->attemptedAs    = $attemptedAs;
+        $this->questionIds    = $this->getQuestionIdsForQuiz();
         $this->logsByQuestion = $this->splitLogsByQuestion();
         $this->evaluateQuestions();
         if($attemptedAs == analConst::ATTEMPTED_AS_TIMED_TEST)
@@ -670,9 +642,7 @@ class quizResponseDetails{
             $this->state = $_POST['state'];
             $this->getQuizSummary();
             if($isLast == 0)
-            {
                 $this->updateQuizSummary();
-            }
             else
             {
                 $this->generateVideoArray();
@@ -697,12 +667,12 @@ class quizResponseDetails{
         $score = $maxScore = $numCorrect = $numIncorrect = $delta = $timeTaken = 0;
 
         foreach ($this->qEvaluated as $qid => $q) {
-            $selectedAnswers[]= $q->optionText;
-            $timePerQuestion[] = $q->timeTaken;
-            $delta += $q->delta; 
-            $score += $q->score;
-            $maxScore += $q->qDetails->correctScore;
-            $timeTaken += $q->timeTaken; 
+            $selectedAnswers[]  = $q->optionText;
+            $timePerQuestion[]  = $q->timeTaken;
+            $delta             += $q->delta; 
+            $score             += $q->score;
+            $maxScore          += $q->qDetails->correctScore;
+            $timeTaken         += $q->timeTaken; 
             switch($q->state)
             {
                 case analConst::CORRECT:
@@ -738,6 +708,15 @@ class quizResponseDetails{
         if(!is_null($oldLogs) && is_array($oldLogs))
             $this->logs = array_merge($oldLogs,$this->logs);
     }
+    function getEvaluatedQuestions()
+    {
+        $result = doSQL(array(
+            "acid"=>$this->accountId,
+            "qids" => implode(",",$this->questionIds),
+            "SQL" => "SELECT * FROM responses WHERE accountId = :acid AND questionId IN (:qids)"
+            ),true);
+        var_dump($result);
+    }
     function updateQuizSummary(){
         $qid                                         =$this->questionIds[intval($this->state)];
         $this->testScore                            += $this->qEvaluated[$qid]->score;
@@ -748,7 +727,7 @@ class quizResponseDetails{
         $this->selectedAnswers                       = json_encode($this->selectedAnswers);
         $this->timePerQuestion                       = json_encode($this->timePerQuestion);
         $this->timeTaken                             = is_null($this->timeTaken)?0:$this->timeTaken;
-        $this->timeTaken                             += $this->qEvaluated[$qid]->timeTaken;
+        $this->timeTaken                            += $this->qEvaluated[$qid]->timeTaken;
 
         switch ($this->qEvaluated[$qid]->state) {
             case analConst::CORRECT:
@@ -840,17 +819,29 @@ class quizResponseDetails{
             );
         sendResponse($response);
     }
-    function getDeltas()
-    {
+    function getDeltas(){
         $deltas = array();
-        foreach ($this->qEvaluated as $qid => $q) {
+        foreach ($this->qEvaluated as $qid => $q)
            $deltas[$qid] = $q->delta;
-        }
         return $deltas;
     }
 }
 //>> FRONT-FACING Functions
 function testCode(){
+   /* $result = doSQL(array(
+            "acid"=>4,
+            "qids" => "78,79,80,81",
+            "SQL" => "SELECT * FROM responses WHERE accountId = :acid AND questionId IN (:qids)"
+            ),true);
+    var_dump($result);*/
+
+    $result = doSQL(array(
+            "acid"=>"4",
+            "qids" => "78,79,80,81",
+            "SQL" => "SELECT * FROM responses WHERE accountId = 4"
+            ),true);
+    var_dump($result);
+
 }
 
 function processPractice(){
@@ -863,7 +854,6 @@ function processPractice(){
 function practiceResultsView(){
     $accountId = $_POST['accountId']; $quizId = $_POST['quizId'];
     $questionIds = getQuestionIdsForQuiz($quizId);
-
 
     $maxScore = $numCorrect = $numIncorrect = 0;
     $delta = $delta2 = $state = $state2 = $aScoreRecord = $qDetails = array();
@@ -903,7 +893,7 @@ function updateResultsForPractice(){
     $accountId = $_POST['accountId']; $quizId = $_POST['quizId']; $logs = $_POST['logs'];
 
     $aScores = new abilityScoreCollections($accountId);
-    $quiz =  new quizResponseDetails($accountId, $quizId, $logs, analConst::ATTEMPTED_AS_PRACTICE);
+    $quiz    = new quizResponseDetails($accountId, $quizId, $logs, analConst::ATTEMPTED_AS_PRACTICE);
     
     $qEvaluated =& $quiz->qEvaluated[$quiz->questionIds[$quiz->state]];
         $aScores->addL3($qEvaluated->qDetails->l3Id);
@@ -911,7 +901,7 @@ function updateResultsForPractice(){
         $aScores->addAnswer($qEvaluated->state,$qEvaluated->qDetails->l3Id,$qEvaluated->delta);
 
     $qEvaluated->insertIntoResponsesTable();
-    
+
     $aScores->updateScore();
 
     return array("status" => SUCCESS, "data" => true);
@@ -935,15 +925,15 @@ function updateResultsForTest(){
     $quiz->generateVideoArray();
 
     $aScores->updateScore();
-    
+
     $quiz->sendResponse();
 }
 
 function getPQ($accountId){
-    $query = array(
-        "acid"=> $accountId,
-        "SQL" => "SELECT avg(score) AS s FROM ascores_l1 WHERE accountId = :acid");
-    $results = doSQL($query, true);
+    $results = doSQL(array(
+                        "acid"=> $accountId,
+                        "SQL" => "SELECT avg(score) AS s FROM ascores_l1 WHERE accountId = :acid")
+                    ,true);
     $response["status"] = SUCCESS;
     $response["data"] = round($results->s);
     sendResponse($response);
@@ -954,8 +944,7 @@ function getPQ($accountId){
 function getOptionArrayFromText($optionText, $optionLength){
     $answer = array();
     if(strpos($optionText,"|:|:") !== false)
-    {
-        //matrix type
+    {   //matrix type
         $optionText = explode("|:|:",$optionText);
         foreach ($optionText as $key => $value) {
             $temp     = $optionText[$key];
@@ -972,7 +961,7 @@ function getOptionArrayFromText($optionText, $optionLength){
     return $answer;
 }
 
-function doSQL($params,$returnsData){   /*
+function doSQL($params,$returnsData,$fetchAs = "obj",$callBack = ""){   /*
     $firephp = FirePHP::getInstance(true);
     $firephp->log($params, "SQL:");*/
     $sql = array_pop($params);
@@ -984,11 +973,13 @@ function doSQL($params,$returnsData){   /*
         }
         $stmt->execute();
         $db = null;
-        if($returnsData == true)
-        {
-            $results = $stmt->fetch(PDO::FETCH_OBJ);        
+        if($returnsData === true)
+            if($fetchAs === "obj")
+                $results = $stmt->fetch(PDO::FETCH_OBJ);
+            elseif($fetchAs === "all_func")
+                $results = $stmt->fetchAll(PDO::FETCH_FUNC, $callBack);
+            
             return $results;
-        }
     }
     catch (PDOException $e) {
         //phpLog("doSqlError:".$sql.$e->getMessage());

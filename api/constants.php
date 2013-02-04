@@ -217,9 +217,9 @@ function testDelta()
 		$score += $delta; 
 	while(!feof($file))
 	  {   
-        $state         = $vars[0]; $qScore = $vars[1]; $timeTaken = $vars[2]; $avgTime = $vars[3]; $sigmaTime = $vars[4];
         $currentLine   = fgets($file);
         $vars          = explode(",",$currentLine);
+        $state         = $vars[0]; $qScore = $vars[1]; $timeTaken = $vars[2]; $avgTime = $vars[3]; $sigmaTime = $vars[4];
         $delta         = deltaCalculator::calculate($state, $score, $qScore, $timeTaken, $avgTime, $sigmaTime);
         $tmp           = new bases;
         $base          = $tmp->get(deltaCalculator::getBase($state,$score,$qScore)."_".deltaCalculator::getLevel($score));
