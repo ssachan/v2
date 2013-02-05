@@ -85,7 +85,7 @@ window.OverView = Backbone.View.extend({
 	},
 
 	onRender : function() {
-		// this.uploadImage();
+		//this.uploadImage();
 		$('#result-square').empty();
 		var l1 = sectionL1.models;
         var len = l1.length;
