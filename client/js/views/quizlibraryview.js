@@ -38,7 +38,7 @@ window.QuizLibraryView = Backbone.View.extend({
 	},
 
 	recSort : function(e) {
-		this.rec = (this.rec=='1')?0:1;
+		this.rec = (this.rec == '1') ? 0 : 1;
 		this.renderQuizItems();
 	},
 
@@ -51,8 +51,8 @@ window.QuizLibraryView = Backbone.View.extend({
 		$('.selectpicker').selectpicker();
 		this.renderQuizItems();
 	},
-	
-	renderQuizItems : function(){
+
+	renderQuizItems : function() {
 		$("#quizzes").empty();
 		this.filtered.reset(this.collection.models);
 		if (this.l1 != '0') {
@@ -75,6 +75,11 @@ window.QuizLibraryView = Backbone.View.extend({
 		}
 		var quizzes = this.filtered.models;
 		var len = quizzes.length;
+		if (len == 0) {
+			$("#quizzes").html('<h3>No quizzes found. Try again...</h3>');
+			return;
+		}
+		$("#quizzes").html('');
 		var i = 0;
 		while (i < len) {
 			$("#quizzes").append('<ul class="thumbnails"></ul>');
@@ -104,19 +109,19 @@ window.QuizItemView = Backbone.View.extend({
 
 	onQuizItemClick : function() {
 		if (this.model.get('hasAttempted') == true) {
-			return ;
-			//alert('quiz purchased. Access it from My PrepSets space');
-			//window.location = '#quiz/' + this.model.get('id');
-		} else if(this.model.get('status')==this.model.STATUS_NOTSTARTED){
+			return;
+			// alert('quiz purchased. Access it from My PrepSets space');
+			// window.location = '#quiz/' + this.model.get('id');
+		} else if (this.model.get('status') == this.model.STATUS_NOTSTARTED) {
 			mView.model = this.model;
 			mView.show();
-		}else{
+		} else {
 			window.location = '#quiz/' + this.model.get('id');
 		}
 	},
 
 	render : function() {
 		$(this.el).html(this.template(this.model.toJSON()));
-        return this;
+		return this;
 	},
 });

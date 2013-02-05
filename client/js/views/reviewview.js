@@ -68,6 +68,11 @@ window.ReviewView = Backbone.View.extend({
     	
     	var questions = this.filtered.models;
         var len = questions.length;
+		if (len == 0) {
+			$('#q-list', this.el).html('<h3>No questions found. Try again...</h3>');
+			return;
+		}
+		$('#q-list', this.el).html('');
     	for ( var i = 0; i < len; i++) {
 			$('#q-list', this.el).append(new QuestionItemView({
 				model : questions[i]
