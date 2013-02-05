@@ -2,7 +2,7 @@ window.fbAsyncInit = function() {
 
 	console.info('FB jssdk loaded');
 	FB.init({
-		appId : '345218642220354', // App ID
+		appId : '471575209563142', // App ID
 		status : true, // check login status
 		cookie : true, // enable cookies to allow the server to access
 		xfbml : true
