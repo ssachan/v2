@@ -38,7 +38,7 @@ window.fbAsyncInit = function() {
 				user.attributes.type=2;
 				user.attributes.streamId=streamId;
 				account.signUp(user.attributes);
-				account.set('dp',user.get('pictures').square);
+				account.set('dpUrl',user.get('pictures').square);
 		}
 		
 		/*var table = $('.table tbody').empty();
@@ -61,8 +61,3 @@ window.fbAsyncInit = function() {
 	
 	//user.updateLoginStatus();
 };
-
-/*$('#login').click(function(){ user.login(); });
-
-$('#logout').click(function(){ user.logout(); });
-*/
