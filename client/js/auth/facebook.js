@@ -38,7 +38,7 @@ window.fbAsyncInit = function() {
 				user.attributes.type=2;
 				user.attributes.streamId=streamId;
 				account.signUp(user.attributes);
-				account.setAttribute('dp',user.get('pictures').square);
+				account.set('dp',user.get('pictures').square);
 		}
 		
 		/*var table = $('.table tbody').empty();
