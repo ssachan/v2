@@ -87,10 +87,10 @@ window.Account = Backbone.Model.extend({
 				if (data.status == STATUS.SUCCESS) {
 					console.log('log out');
 					//window.location.replace('#landing');
-					account.reset();
 					if(user){
 						user.clear();
 					}
+					account.reset();
 					var signUpView = new SignUpView({
 						model : account
 					});
