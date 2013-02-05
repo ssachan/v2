@@ -1,7 +1,10 @@
 <div id="modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
     aria-hidden="true">
-    <div class="modal-header" style="background-color: #DAE4E6">
+    <div class="modal-header center" style="background-color: #DAE4E6">
+        <span id="take-btn"></span>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+    </div>
+    <div class="modal-body" style="overflow-y:hidden">
         <div class="media">
             <a class="pull-left" href="#fac/<%=id %>"> <img class="media-object"
                 src="<%=fdpURL%>" style="height: 80px !important">
@@ -11,11 +14,10 @@
                 <h4 class="italics"><%=bioShort %></h4>
             </div>
         </div>
-    </div>
-    <div class="modal-body" style="overflow-y:hidden">
+        <hr class="soften">
         <div class="media">
             <a class="pull-left" href="#fac/<%=id %>"> <img class="media-object" src="<%=logo%>"
-                style="height: 20px !important">
+                style="height: 30px !important">
             </a>
             <div class="media-body">
                 <h3 class="blue"><%= descriptionShort %></h3>
@@ -33,5 +35,4 @@
             </p>
         </div>
     </div>
-    <div class="modal-footer" id="take-btn"></div>
 </div>
