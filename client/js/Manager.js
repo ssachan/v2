@@ -366,7 +366,6 @@ window.Manager = {
             success: function (data) {
                 packages.reset(data);
                 packages.add(new Package());
-                packages.add(new Package());
                 var packagesView = new PackagesView({
                     collection: packages,
                 });
