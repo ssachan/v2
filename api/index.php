@@ -635,7 +635,7 @@ function purchasePackage() {
     }
     if(array_key_exists("status",$response)!=ERROR){
         $response["status"] = SUCCESS;
-        $response["data"] = 'Added package for '.$number.' tests. Your account now has '.$quizzesRemaining.' remaining';
+        $response["data"] = $quizzesRemaining;
     }
     sendResponse($response);
 }

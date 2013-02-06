@@ -46,6 +46,9 @@ window.OverView = Backbone.View.extend({
 	className : "overall",
 
 	initialize : function() {
+		_.bindAll(this, "render");
+		this.model.bind('change', this.render);
+		this.model.bind('change', this.onRender);
 	},
 
 	uploadImage : function() {

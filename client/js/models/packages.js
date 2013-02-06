@@ -27,7 +27,9 @@ window.Package = Backbone.Model.extend({
             dataType: "json",
             success: function (data) {
                 if (data.status == STATUS.SUCCESS) {
-                    helper.processStatus(data);
+                	account.set('quizzesRemaining',data.data);
+                    data.data = 'Added package. Your account now has '+data.data+' tests.';
+                	helper.processStatus(data);
                 }
             }
         });

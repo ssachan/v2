@@ -520,6 +520,7 @@ window.Manager = {
         if (quiz != null) {
             switch (quiz.get('status')) {
                 case quiz.STATUS_NOTSTARTED:
+                	account.set('quizzesRemaining',parseInt(account.get('quizzesRemaining'))-1);
                     this.showInstructions(quiz);
                     break;
                 case quiz.STATUS_INPROGRESS:
