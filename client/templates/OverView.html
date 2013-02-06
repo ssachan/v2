@@ -1,63 +1,44 @@
 <div class="row-fluid">
     <div class="page-title">
-        <h3>Dashboard</h3>
+        <h3>Performance</h3>
     </div>
     <br>
 </div>
 <div class="well">
     <div class="row-fluid">
         <div class="span2">
-            <div class="rounded center" style="padding: 10px; min-height: 50px;background:#F4763E">
-                <h1 class="blue bold" style="color:white"><%=ascore%></h1>
+            <div class="rounded center" style="padding: 10px; min-height: 50px; background: #F4763E">
+                <h1 class="blue bold" style="color: white"><%=ascore%></h1>
             </div>
         </div>
         <div class="span4">
-            <img class="dp" alt="" src="<%=dpUrl%>" style="float: left;margin-right:15px">
+            <img class="dp" alt="" src="<%=dpUrl%>" style="float: left; margin-right: 15px">
             <!-- <button class="pull-left" id="upload">Upload</button> -->
             <h3><%=firstName%></h3>
         </div>
-        <div class="span2 rounded stat-gradient center"
-            style="margin-top: 5px; padding: 10px; min-height: 50px;">
+        <div class="span2 rounded center" style="min-height: 80px;">
             <h2 class="blue bold"><%=totalQ%></h2>
             <p>Questions Attempted</p>
         </div>
-        <div class="span2 rounded stat-gradient center"
-            style="margin-top: 5px; padding: 10px; min-height: 80px;">
+        <div class="span2 rounded center" style="min-height: 80px;">
             <h2 class="blue bold"><%=quizzesRemaining%></h2>
             <p>Problem Sets Remaining</p>
         </div>
-        <div class="span2 rounded stat-gradient center"
-            style="margin-top: 5px; padding: 10px; min-height: 80px;">
-            <h2 class="blue bold">250</h2>
+        <div class="span2 rounded center" style="min-height: 80px;">
+            <h2 class="blue bold">2</h2>
             <p>
                 Days since last attempt<br>
             </p>
         </div>
     </div>
 </div>
+<br>
+<div class="row-fluid center">
+<span class="span4" ><h4 class="bold">Check your performance for each topic</h4></span>
+<span class="span2 bg-grey" style="margin-left:10px; padding: 10px; ">Not Started</span>
+<span class="span2 bg-red" style="margin-left:10px; padding: 10px">Struggling</span>
+<span class="span2 bg-yellow" style="margin-left:10px; padding: 10px">Getting There</span>
+<span class="span2 bg-green" style="margin-left:10px; padding: 10px">Awesome!</span>
+</div>
+<br>
 <div id="result-square"></div>
-<table style="position: absolute; top: 9px; right: 9px;; font-size: smaller; color: #545454">
-    <tbody>
-        <tr>
-            <td class="legendColorBox"><div style="border: 1px solid #ccc; padding: 1px">
-                    <div
-                        style="width: 4px; height: 0; border: 5px solid rgb(73, 175, 205); overflow: hidden"></div>
-                </div></td>
-            <td class="legendLabel">Data set 1</td>
-        </tr>
-        <tr>
-            <td class="legendColorBox"><div style="border: 1px solid #ccc; padding: 1px">
-                    <div
-                        style="width: 4px; height: 0; border: 5px solid rgb(255, 99, 71); overflow: hidden"></div>
-                </div></td>
-            <td class="legendLabel">Data set 2</td>
-        </tr>
-        <tr>
-            <td class="legendColorBox"><div style="border: 1px solid #ccc; padding: 1px">
-                    <div
-                        style="width: 4px; height: 0; border: 5px solid rgb(56, 132, 154); overflow: hidden"></div>
-                </div></td>
-            <td class="legendLabel">Data set 3</td>
-        </tr>
-    </tbody>
-</table>
