@@ -368,15 +368,15 @@ class questionEvalution{
     //{ Declarations      
         public $accountId;
         public $qid;
-        public $qDetails;
+        public $qDetails; //not available when retrieving from DB??
         public $optionArray;
         public $optionText;
         public $optionLength;
         public $timeTaken;
-        public $logs;
+        public $logs;  //not available when retrieving from DB
         public $delta;
-        public $state;
-        public $score;
+        public $state; 
+        public $score; //not available when retrieving from DB
         public $abilityScoreBefore;
     // } Declarations End    
 
@@ -384,13 +384,11 @@ class questionEvalution{
          $a = func_get_args();
          $i = func_num_args();
          if($i==2)
-         {
             $this->constructWithLogs($a[0],$a[1]);
-         }
-         else
-         {
+         elseif($i == 3)
             $this->constructWithoutLogs($a[0],$a[1]);
-         }   
+         elseif($i==1)
+            $this->constructFromDatabase($a[0]);   
     }
     function constructWithLogs($accountId,$logs){
         $this->accountId    = $accountId;
@@ -419,6 +417,15 @@ class questionEvalution{
         $this->delta = 0;    //temp
      //   $this->adjustDelta(); //needs UserAbility and attempted as
         //$this->insertIntoResponsesTable();
+    }
+    function constructFromDatabase($row)
+    {
+        $vars = array("accountId", "questionId", "timeTaken", "delta", "status", "abilityScoreBefore");
+
+        foreach ($vars as $value)
+            $this->{$key} = $row[$key];
+
+        $this->optionText = $row["optionSelected"];
     }
 
     function getFinalOptionArray(){
@@ -715,7 +722,8 @@ class quizResponseDetails{
             "qids" => implode(",",$this->questionIds),
             "SQL" => "SELECT * FROM responses WHERE accountId = :acid AND questionId IN (:qids)"
             ),true);
-        var_dump($result);
+        foreach ($result as $row)
+            $this->qEvaluated[$row["questionId"]] = new questionEvalution($row);
     }
     function updateQuizSummary(){
         $qid                                         =$this->questionIds[intval($this->state)];
@@ -838,10 +846,10 @@ function testCode(){
     $result = doSQL(array(
             "acid"=>"4",
             "qids" => "78,79,80,81",
-            "SQL" => "SELECT * FROM responses WHERE accountId = 4"
-            ),true);
-    var_dump($result);
-
+            "SQL" => "SELECT * FROM responses WHERE accountId = 4 AND questionId IN (1,2,3);"
+            ),true,"all_array");
+    foreach ($result as $row)
+            $a = new questionEvalution($row);
 }
 
 function processPractice(){
@@ -975,11 +983,11 @@ function doSQL($params,$returnsData,$fetchAs = "obj",$callBack = ""){   /*
         $db = null;
         if($returnsData === true)
             if($fetchAs === "obj")
-                $results = $stmt->fetch(PDO::FETCH_OBJ);
-            elseif($fetchAs === "all_func")
-                $results = $stmt->fetchAll(PDO::FETCH_FUNC, $callBack);
-            
-            return $results;
+                return $stmt->fetch(PDO::FETCH_OBJ);
+            elseif($fetchAs === "all_array")
+                return $stmt->fetchAll();
+            elseif($fetchAS === "all_func")
+                return $stmt->fetchAll(PDO::FETCH_FUNC,$callBack);
     }
     catch (PDOException $e) {
         //phpLog("doSqlError:".$sql.$e->getMessage());
