@@ -4,7 +4,7 @@
 #
 # Host: localhost (MySQL 5.5.9)
 # Database: prod
-# Generation Time: 2013-01-21 11:37:02 +0530
+# Generation Time: 2013-02-06 14:26:01 +0530
 # ************************************************************
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -38,7 +38,7 @@ CREATE TABLE `accounts` (
   `resetsentOn` datetime DEFAULT NULL,
   `pics` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `accounts` WRITE;
 /*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
@@ -50,7 +50,39 @@ VALUES
 	(4,NULL,'aa','aa','aa','a@a.com',NULL,'2012-12-28 20:42:09',NULL,NULL,NULL,NULL,NULL,NULL),
 	(5,NULL,'123456','aa','aa','aa@aa.com',NULL,'2012-12-31 11:09:00',NULL,NULL,NULL,NULL,NULL,NULL),
 	(6,NULL,'anirban','Anirban','Naskar','anirbanaskar@gmail.com','3',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-	(7,'arpit','demo1234','Arpit','Agarwal','arpit@tlabs.in','3','2012-12-31 11:09:00',NULL,NULL,NULL,NULL,NULL,NULL);
+	(7,'arpit','demo1234','Demo Demo','Agarwal','demo@demo.in','3','2012-12-31 11:09:00',NULL,NULL,NULL,NULL,NULL,NULL),
+	(8,NULL,'rs','RS','dummy','rs@rs.com',NULL,'2013-01-21 13:16:47',NULL,NULL,NULL,NULL,NULL,NULL),
+	(9,NULL,'rst','RST','dummy','rst@rst.com',NULL,'2013-01-21 14:13:02',NULL,NULL,NULL,NULL,NULL,NULL),
+	(10,NULL,'abc','s@s.com','dummy','sho@g.com',NULL,'2013-01-21 14:13:51',NULL,NULL,NULL,NULL,NULL,NULL),
+	(11,NULL,'abc','ab@a.com','dummy','ab@a.com',NULL,'2013-01-21 14:14:26',NULL,NULL,NULL,NULL,NULL,NULL),
+	(12,NULL,'asd','asd','dummy','asd@asd.com',NULL,'2013-01-21 14:41:06',NULL,NULL,NULL,NULL,NULL,NULL),
+	(13,NULL,'rr','Raghav','dummy','r@r.com',NULL,'2013-01-22 16:52:51',NULL,NULL,NULL,NULL,NULL,NULL),
+	(14,NULL,'RV','Raghav','dummy','raghav@prepsquare.com',NULL,'2013-01-22 17:27:40',NULL,NULL,NULL,NULL,NULL,NULL),
+	(15,NULL,'rv','RV','dummy','rv@rv.com',NULL,'2013-01-22 17:55:38',NULL,NULL,NULL,NULL,NULL,NULL),
+	(16,NULL,'aa','AA','dummy','a@aa.com',NULL,'2013-01-22 18:23:03',NULL,NULL,NULL,NULL,NULL,NULL),
+	(17,NULL,'kk','kk','dummy','k@k.com',NULL,'2013-01-22 18:24:35',NULL,NULL,NULL,NULL,NULL,NULL),
+	(18,NULL,'tt','T','dummy','t@t.com',NULL,'2013-01-22 19:49:22',NULL,NULL,NULL,NULL,NULL,NULL),
+	(19,NULL,'ss','Shikhar','dummy','ss@ss.com',NULL,'2013-01-22 20:16:47',NULL,NULL,NULL,NULL,NULL,NULL),
+	(20,NULL,'rr','Raghav','dummy','rr@rr.com',NULL,'2013-01-23 19:02:05',NULL,NULL,NULL,NULL,NULL,NULL),
+	(21,NULL,'ra','ra','dummy','ra@ra.com',NULL,'2013-01-23 19:33:06',NULL,NULL,NULL,NULL,NULL,NULL),
+	(22,NULL,'rt','rt','dummy','rt@rt.com',NULL,'2013-01-23 22:47:41',NULL,NULL,NULL,NULL,NULL,NULL),
+	(23,NULL,'ll','LL','dummy','ll@ll.com',NULL,'2013-01-24 10:06:37',NULL,NULL,NULL,NULL,NULL,NULL),
+	(24,NULL,'ry','ry','dummy','ry@ry.com',NULL,'2013-01-24 10:55:53',NULL,NULL,NULL,NULL,NULL,NULL),
+	(25,NULL,'tanuj','tanuj','dummy','tanuj@tanuj.com',NULL,'2013-01-24 11:17:27',NULL,NULL,NULL,NULL,NULL,NULL),
+	(26,NULL,'sss','sss','dummy','sss@sss.com',NULL,'2013-01-24 12:01:43',NULL,NULL,NULL,NULL,NULL,NULL),
+	(27,NULL,'abc','Vinod','Agrawal','va@p.com','3',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+	(28,NULL,'abc','Gaurav','Talwar','gt@p.com','3',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+	(29,NULL,'abc','Binny','Marwaha','bm@p.com','3',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+	(31,NULL,'demo1234','R Sundar','dummy','r.sundar@timesgroup.com',NULL,'2013-01-24 13:09:58',NULL,NULL,NULL,NULL,NULL,NULL),
+	(32,NULL,'sonali123','Sonali Khandelwal','dummy','sonali.khandelwal9@gmail.com',NULL,'2013-01-25 11:52:44',NULL,NULL,NULL,NULL,NULL,NULL),
+	(33,NULL,'oo','oo','dummy','o@o.com',NULL,'2013-01-28 10:04:02',NULL,NULL,NULL,NULL,NULL,NULL),
+	(34,NULL,'pp','Raghav Verma','dummy','p@p.com',NULL,'2013-01-29 13:04:50',NULL,NULL,NULL,NULL,NULL,NULL),
+	(35,NULL,'ra','Raghav Verma','dummy','raghavverma1@gmail.com',NULL,'2013-01-31 12:54:14',NULL,NULL,NULL,NULL,NULL,NULL),
+	(36,NULL,'ss','Shikhar Sachan','dummy','shikhar.sachan@gmail.com',NULL,'2013-01-31 12:55:12',NULL,NULL,NULL,NULL,NULL,NULL),
+	(37,NULL,'aa','asgs','dummy','asasd@asdas.com',NULL,'2013-01-31 12:56:04',NULL,NULL,NULL,NULL,NULL,NULL),
+	(38,NULL,'rrs','rr','dummy','rrs@rrs.com',NULL,'2013-01-31 13:53:36',NULL,NULL,NULL,NULL,NULL,NULL),
+	(39,NULL,'rs','rs','dummy','ff@ff.com',NULL,'2013-01-31 15:21:00',NULL,NULL,NULL,NULL,NULL,NULL),
+	(40,NULL,'ggg','ggg','dummy','ggg@g.com',NULL,'2013-02-05 05:57:16',NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -126,14 +158,56 @@ LOCK TABLES `ascores_l1` WRITE;
 INSERT INTO `ascores_l1` (`accountId`,`score`,`updatedOn`,`l1Id`,`numQuestions`,`numCorrect`,`numIncorrect`,`numUnattempted`,`streamId`)
 VALUES
 	(4,10,'2013-01-08 00:00:00',1,0,0,0,0,1),
-	(4,82.8033,'2013-01-21 11:26:15',2,521,22,74,425,1),
-	(4,49.8974,'2013-01-21 11:01:30',3,224,0,33,191,1),
+	(4,82.4434,'2013-02-02 10:25:56',2,649,32,115,502,1),
+	(4,49.9487,'2013-02-02 10:23:56',3,304,8,63,233,1),
 	(7,55.0548,'0000-00-00 00:00:00',1,10,4,6,0,1),
-	(7,48.7534,'2013-01-21 05:01:35',2,35,4,9,22,1),
-	(7,55.9434,'2013-01-18 17:33:34',3,30,7,4,19,1),
+	(7,49.4468,'2013-01-31 15:37:32',2,205,22,51,132,1),
+	(7,55.8639,'2013-01-24 18:56:38',3,85,12,24,49,1),
 	(7,56.0734,'0000-00-00 00:00:00',4,10,0,10,0,1),
 	(7,55.3601,'0000-00-00 00:00:00',5,10,2,8,0,1),
-	(7,58.6417,'0000-00-00 00:00:00',6,10,2,8,0,1);
+	(7,58.6417,'0000-00-00 00:00:00',6,10,2,8,0,1),
+	(8,42.16,'2013-01-21 13:19:17',2,20,3,17,0,1),
+	(9,55.3077,'2013-01-21 14:14:35',3,20,6,12,2,1),
+	(11,81.9615,'2013-01-21 14:21:10',3,3,0,3,0,1),
+	(10,59.0256,'2013-01-21 14:15:50',3,20,2,7,11,1),
+	(9,49.9733,'2013-01-21 14:34:27',2,77,7,31,39,1),
+	(11,42,'2013-01-21 14:22:26',2,25,0,0,25,1),
+	(10,38.38,'2013-01-21 14:30:15',2,34,4,6,24,1),
+	(12,37.9134,'2013-01-22 14:05:50',2,24,4,20,0,1),
+	(12,47.0897,'2013-01-21 15:12:36',3,20,5,13,2,1),
+	(13,32.2167,'2013-01-22 17:15:45',2,53,5,12,36,1),
+	(13,40.9487,'2013-01-22 17:21:58',3,40,3,14,23,1),
+	(14,54.9872,'2013-01-22 17:35:56',3,1,0,1,0,1),
+	(14,60.02,'2013-01-22 17:46:12',2,65,1,3,61,1),
+	(15,23.9872,'2013-02-01 14:31:58',3,4,0,1,3,1),
+	(15,85.0333,'2013-01-23 10:48:38',2,77,11,52,14,1),
+	(16,37,'2013-01-22 18:24:20',3,5,1,4,0,1),
+	(17,66.8719,'2013-01-22 19:47:35',3,20,2,18,0,1),
+	(18,71.04,'2013-01-22 19:50:23',2,25,2,5,18,1),
+	(17,29.87,'2013-01-22 20:13:44',2,77,4,21,52,1),
+	(19,47.86,'2013-01-22 21:06:53',2,49,1,7,41,1),
+	(19,57.9487,'2013-01-22 20:20:12',3,20,0,2,18,1),
+	(18,64.6666,'2013-01-28 10:01:40',3,40,10,14,16,1),
+	(20,36.8733,'2013-01-23 19:03:54',2,4,0,4,0,1),
+	(20,89.0769,'2013-01-23 19:09:49',3,20,1,1,18,1),
+	(21,45.0933,'2013-01-23 19:44:21',2,37,4,10,23,1),
+	(21,46.8769,'2013-01-23 19:43:15',3,11,1,9,1,1),
+	(22,24.8718,'2013-01-23 22:48:39',3,20,0,5,15,1),
+	(23,68.3707,'2013-01-24 10:27:51',2,55,9,20,26,1),
+	(23,63.9744,'2013-01-24 10:14:15',3,20,1,5,14,1),
+	(24,54.9867,'2013-01-24 10:57:32',2,27,1,4,22,1),
+	(24,78,'2013-01-24 10:56:51',3,20,1,4,15,1),
+	(25,52.8527,'2013-01-24 11:57:47',2,49,1,11,37,1),
+	(25,80.0513,'2013-01-24 11:58:55',3,40,2,6,32,1),
+	(31,40.8613,'2013-01-29 16:11:59',2,49,0,3,46,1),
+	(33,46.8436,'2013-01-28 18:18:45',3,10,2,8,0,1),
+	(34,88.3447,'2013-01-31 19:17:06',2,61,7,16,38,1),
+	(34,24.1615,'2013-01-30 14:10:04',3,22,6,16,0,1),
+	(31,49.9744,'2013-01-29 21:56:50',3,20,0,1,19,1),
+	(38,54.9233,'2013-01-31 13:54:45',2,2,0,1,1,1),
+	(35,65.9667,'2013-01-31 19:20:30',2,12,0,1,11,1),
+	(40,39.98,'2013-02-05 05:58:31',2,25,0,1,24,1),
+	(40,35.9795,'2013-02-05 06:27:40',3,1,0,1,0,1);
 
 /*!40000 ALTER TABLE `ascores_l1` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -161,20 +235,20 @@ LOCK TABLES `ascores_l2` WRITE;
 INSERT INTO `ascores_l2` (`accountId`,`score`,`updatedOn`,`l2Id`,`numQuestions`,`numCorrect`,`numIncorrect`,`numUnattempted`,`streamId`)
 VALUES
 	(4,10,'2013-01-08 00:00:00',1,0,0,0,0,1),
-	(4,74.4167,'2013-01-21 10:03:06',7,186,12,20,154,1),
-	(4,57.7,'2013-01-21 11:26:15',6,296,10,53,233,1),
-	(4,49.9,'2013-01-21 10:47:06',5,39,0,1,38,1),
-	(4,49.6924,'2013-01-21 11:01:30',10,224,0,33,191,1),
+	(4,73.1668,'2013-02-02 10:23:18',7,199,13,32,154,1),
+	(4,57.05,'2013-02-02 10:25:56',6,403,19,79,305,1),
+	(4,50,'2013-01-24 16:54:22',5,47,0,4,43,1),
+	(4,49.8462,'2013-02-02 10:23:56',10,304,8,63,233,1),
 	(7,54.5,'0000-00-00 00:00:00',1,10,7,3,0,1),
 	(7,58.6,'0000-00-00 00:00:00',2,10,9,1,0,1),
 	(7,52.2857,'0000-00-00 00:00:00',3,10,1,9,0,1),
 	(7,54.8334,'0000-00-00 00:00:00',4,10,8,2,0,1),
-	(7,42.6,'2013-01-21 05:01:35',5,13,1,9,3,1),
-	(7,55,'2013-01-21 05:01:35',6,32,8,5,19,1),
-	(7,44.6668,'0000-00-00 00:00:00',7,10,0,10,0,1),
+	(7,42.6,'2013-01-24 18:57:46',5,25,1,9,15,1),
+	(7,57.3501,'2013-01-24 18:57:47',6,175,22,36,117,1),
+	(7,45.7835,'2013-01-31 15:37:32',7,25,4,21,0,1),
 	(7,52,'0000-00-00 00:00:00',8,10,8,2,0,1),
 	(7,49.5,'0000-00-00 00:00:00',9,10,10,0,0,1),
-	(7,60.5385,'2013-01-18 17:33:34',10,30,9,2,19,1),
+	(7,60.3001,'2013-01-24 18:56:38',10,85,14,22,49,1),
 	(7,62.6668,'0000-00-00 00:00:00',11,10,1,9,0,1),
 	(7,44.625,'0000-00-00 00:00:00',12,10,8,2,0,1),
 	(7,49.8,'0000-00-00 00:00:00',13,10,7,3,0,1),
@@ -195,7 +269,78 @@ VALUES
 	(7,67.9999,'0000-00-00 00:00:00',28,10,1,9,0,1),
 	(7,57.9999,'0000-00-00 00:00:00',29,10,6,4,0,1),
 	(7,52.5,'0000-00-00 00:00:00',30,10,5,5,0,1),
-	(7,52.5,'0000-00-00 00:00:00',31,10,2,8,0,1);
+	(7,52.5,'0000-00-00 00:00:00',31,10,2,8,0,1),
+	(8,82.8,'2013-01-21 13:19:17',6,20,3,17,0,1),
+	(9,73.9231,'2013-01-21 14:14:35',10,20,6,12,2,1),
+	(11,31.8846,'2013-01-21 14:21:10',10,3,0,3,0,1),
+	(10,65.077,'2013-01-21 14:15:50',10,20,2,7,11,1),
+	(9,19.6,'2013-01-21 14:34:27',6,59,5,24,30,1),
+	(9,88.6,'2013-01-21 14:34:11',5,6,1,1,4,1),
+	(11,68,'2013-01-21 14:22:26',6,22,0,0,22,1),
+	(11,86,'2013-01-21 14:22:26',5,3,0,0,3,1),
+	(10,26.9,'2013-01-21 14:25:31',6,19,0,2,17,1),
+	(10,50,'2013-01-21 14:25:03',5,3,0,0,3,1),
+	(9,29.6667,'2013-01-21 14:27:13',7,12,1,6,5,1),
+	(10,65,'2013-01-21 14:30:15',7,12,4,4,4,1),
+	(12,89.6667,'2013-01-21 14:49:06',7,12,2,10,0,1),
+	(12,46.2693,'2013-01-21 15:12:36',10,20,5,13,2,1),
+	(12,24.9,'2013-01-22 14:05:50',6,12,2,10,0,1),
+	(13,29.8333,'2013-01-22 16:55:57',7,2,0,2,0,1),
+	(13,59.8462,'2013-01-22 17:21:58',10,40,3,14,23,1),
+	(13,79.25,'2013-01-22 17:15:45',6,48,5,10,33,1),
+	(13,77,'2013-01-22 17:05:11',5,3,0,0,3,1),
+	(14,48.9615,'2013-01-22 17:35:56',10,1,0,1,0,1),
+	(14,64.1,'2013-01-22 17:46:12',6,59,1,3,55,1),
+	(14,24,'2013-01-22 17:45:37',5,6,0,0,6,1),
+	(15,40.9615,'2013-02-01 14:31:58',10,4,0,1,3,1),
+	(15,29.6667,'2013-01-22 18:14:58',7,12,3,8,1,1),
+	(15,32.8,'2013-01-23 10:48:38',6,59,8,41,10,1),
+	(15,73.7,'2013-01-22 18:22:14',5,6,0,3,3,1),
+	(16,56,'2013-01-22 18:24:20',10,5,1,4,0,1),
+	(17,37.6154,'2013-01-22 19:47:35',10,20,2,18,0,1),
+	(18,59.4,'2013-01-22 19:50:23',6,22,2,4,16,1),
+	(18,80.8,'2013-01-22 19:50:22',5,3,0,1,2,1),
+	(17,40.25,'2013-01-22 20:03:24',7,12,3,9,0,1),
+	(17,19.3,'2013-01-22 20:13:44',6,59,1,11,47,1),
+	(17,55.8,'2013-01-22 20:10:52',5,6,0,1,5,1),
+	(19,76.3,'2013-01-22 20:17:29',6,22,1,1,20,1),
+	(19,55,'2013-01-22 20:17:29',5,3,0,0,3,1),
+	(19,20.8462,'2013-01-22 20:20:12',10,20,0,2,18,1),
+	(19,54,'2013-01-22 21:06:53',7,24,0,6,18,1),
+	(18,34,'2013-01-28 10:01:40',10,40,10,14,16,1),
+	(20,88.3667,'2013-01-23 19:03:54',7,4,0,4,0,1),
+	(20,41.2308,'2013-01-23 19:09:49',10,20,1,1,18,1),
+	(21,52.8,'2013-01-23 19:34:23',6,22,3,4,15,1),
+	(21,55,'2013-01-23 19:34:22',5,3,0,0,3,1),
+	(21,57.6308,'2013-01-23 19:43:15',10,11,1,9,1,1),
+	(21,63.6667,'2013-01-23 19:44:21',7,12,1,6,5,1),
+	(22,34.6154,'2013-01-23 22:48:39',10,20,0,5,15,1),
+	(23,57.2833,'2013-01-24 10:12:35',7,3,1,2,0,1),
+	(23,54.9231,'2013-01-24 10:14:15',10,20,1,5,14,1),
+	(23,72.57,'2013-01-24 10:27:51',6,49,8,18,23,1),
+	(23,75,'2013-01-24 10:24:04',5,3,0,0,3,1),
+	(24,47.7333,'2013-01-24 10:56:24',7,2,0,2,0,1),
+	(24,68,'2013-01-24 10:56:51',10,20,1,4,15,1),
+	(24,50.2,'2013-01-24 10:57:32',6,22,1,2,19,1),
+	(24,80,'2013-01-24 10:57:32',5,3,0,0,3,1),
+	(25,85.6833,'2013-01-24 11:20:42',7,2,0,2,0,1),
+	(25,81.1539,'2013-01-24 11:58:55',10,40,2,6,32,1),
+	(25,48.58,'2013-01-24 11:57:47',6,44,1,9,34,1),
+	(25,76,'2013-01-24 11:33:19',5,3,0,0,3,1),
+	(31,64.79,'2013-01-29 14:58:05',6,43,0,2,41,1),
+	(31,55,'2013-01-24 13:12:07',5,3,0,0,3,1),
+	(31,54.5167,'2013-01-29 16:11:59',7,3,0,1,2,1),
+	(33,23.5308,'2013-01-28 18:18:45',10,10,2,8,0,1),
+	(34,83.89,'2013-01-30 15:56:56',6,43,6,15,22,1),
+	(34,82,'2013-01-29 13:24:38',5,3,0,0,3,1),
+	(34,60.4846,'2013-01-30 14:10:04',10,22,6,16,0,1),
+	(31,85.9231,'2013-01-29 21:56:50',10,20,0,1,19,1),
+	(34,35.8333,'2013-01-31 19:17:06',7,15,1,1,13,1),
+	(38,81.6167,'2013-01-31 13:54:45',7,2,0,1,1,1),
+	(35,89.8333,'2013-01-31 19:20:30',7,12,0,1,11,1),
+	(40,79.9,'2013-02-05 05:58:31',6,22,0,1,21,1),
+	(40,79,'2013-02-05 05:58:31',5,3,0,0,3,1),
+	(40,45.9385,'2013-02-05 06:27:40',10,1,0,1,0,1);
 
 /*!40000 ALTER TABLE `ascores_l2` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -254,9 +399,9 @@ VALUES
 	(4,50,'0000-00-00 00:00:00',30,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',31,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',32,0,0,0,0,1),
-	(4,49.5,'2013-01-21 10:47:06',33,39,0,1,38,1),
-	(4,52.5,'2013-01-21 11:17:58',34,131,5,23,103,1),
-	(4,52.5,'2013-01-21 11:26:15',35,165,5,30,130,1),
+	(4,50,'2013-01-24 16:54:22',33,47,0,4,43,1),
+	(4,44.7,'2013-02-02 10:25:39',34,184,8,39,137,1),
+	(4,53.8,'2013-02-02 10:25:56',35,219,11,40,168,1),
 	(4,50,'0000-00-00 00:00:00',36,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',37,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',38,0,0,0,0,1),
@@ -265,10 +410,10 @@ VALUES
 	(4,50,'0000-00-00 00:00:00',41,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',42,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',43,0,0,0,0,1),
-	(4,44.5,'2013-01-21 10:03:06',44,48,0,18,30,1),
-	(4,46,'2013-01-21 10:03:06',45,46,0,1,45,1),
-	(4,74,'2013-01-21 10:03:06',46,46,12,1,33,1),
-	(4,48,'2013-01-21 10:03:06',47,46,0,0,46,1),
+	(4,41,'2013-02-02 10:23:18',44,52,0,22,30,1),
+	(4,43,'2013-02-02 10:23:18',45,49,0,4,45,1),
+	(4,71,'2013-02-02 10:23:18',46,49,12,4,33,1),
+	(4,50,'2013-02-02 10:23:18',47,49,1,2,46,1),
 	(4,50,'0000-00-00 00:00:00',48,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',49,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',50,0,0,0,0,1),
@@ -282,9 +427,9 @@ VALUES
 	(4,50,'0000-00-00 00:00:00',58,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',59,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',60,0,0,0,0,1),
-	(4,46,'2013-01-21 11:01:30',61,80,0,15,65,1),
-	(4,50,'2013-01-21 11:01:30',62,55,0,9,46,1),
-	(4,50,'2013-01-21 11:01:30',63,89,0,9,80,1),
+	(4,48,'2013-02-02 10:23:56',61,108,3,25,80,1),
+	(4,61,'2013-02-02 10:23:56',62,75,4,14,57,1),
+	(4,39,'2013-02-02 10:23:56',63,121,1,24,96,1),
 	(4,50,'0000-00-00 00:00:00',64,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',65,0,0,0,0,1),
 	(4,50,'0000-00-00 00:00:00',66,0,0,0,0,1),
@@ -430,9 +575,9 @@ VALUES
 	(7,36,'2013-01-18 16:17:02',30,0,0,0,0,1),
 	(7,22,'2013-01-18 16:17:02',31,0,0,0,0,1),
 	(7,40,'2013-01-18 16:17:02',32,0,0,0,0,1),
-	(7,80,'2013-01-21 05:01:35',33,3,0,0,3,1),
-	(7,76,'2013-01-21 05:01:35',34,13,1,1,11,1),
-	(7,42,'2013-01-21 05:01:35',35,9,0,1,8,1),
+	(7,80,'2013-01-24 18:57:46',33,15,0,0,15,1),
+	(7,83,'2013-01-24 18:57:47',34,81,17,21,43,1),
+	(7,58.5,'2013-01-24 18:57:46',35,84,8,12,64,1),
 	(7,24,'2013-01-18 16:17:02',36,0,0,0,0,1),
 	(7,64,'2013-01-18 16:17:02',37,0,0,0,0,1),
 	(7,37,'2013-01-18 16:17:02',38,0,0,0,0,1),
@@ -441,10 +586,10 @@ VALUES
 	(7,80,'2013-01-18 16:17:02',41,0,0,0,0,1),
 	(7,53,'2013-01-18 16:17:02',42,0,0,0,0,1),
 	(7,25,'2013-01-18 16:17:02',43,0,0,0,0,1),
-	(7,74,'2013-01-18 16:17:02',44,0,0,0,0,1),
-	(7,23,'2013-01-18 16:17:02',45,0,0,0,0,1),
-	(7,43,'2013-01-18 16:17:02',46,0,0,0,0,1),
-	(7,58,'2013-01-18 16:17:02',47,0,0,0,0,1),
+	(7,75.2,'2013-01-31 15:37:32',44,5,1,4,0,1),
+	(7,24.5,'2013-01-22 14:54:27',45,4,1,3,0,1),
+	(7,45,'2013-01-22 14:54:27',46,3,1,2,0,1),
+	(7,60,'2013-01-22 14:54:27',47,3,1,2,0,1),
 	(7,42,'2013-01-18 16:17:02',48,0,0,0,0,1),
 	(7,28,'2013-01-18 16:17:02',49,0,0,0,0,1),
 	(7,52,'2013-01-18 16:17:02',50,0,0,0,0,1),
@@ -458,9 +603,9 @@ VALUES
 	(7,67,'2013-01-18 16:17:02',58,0,0,0,0,1),
 	(7,73,'2013-01-18 16:17:02',59,0,0,0,0,1),
 	(7,31,'2013-01-18 16:17:02',60,0,0,0,0,1),
-	(7,82,'2013-01-18 17:33:34',61,7,0,1,6,1),
-	(7,76,'2013-01-18 17:33:34',62,5,0,0,5,1),
-	(7,52,'2013-01-18 17:33:34',63,8,0,0,8,1),
+	(7,72.4,'2013-01-24 18:56:38',61,27,0,13,14,1),
+	(7,77,'2013-01-24 12:28:58',62,19,2,4,13,1),
+	(7,57.5,'2013-01-24 12:28:58',63,29,3,4,22,1),
 	(7,72,'2013-01-18 16:17:02',64,0,0,0,0,1),
 	(7,58,'2013-01-18 16:17:02',65,0,0,0,0,1),
 	(7,75,'2013-01-18 16:17:02',66,0,0,0,0,1),
@@ -573,7 +718,168 @@ VALUES
 	(7,62,'2013-01-18 16:17:02',173,0,0,0,0,1),
 	(7,88,'2013-01-18 16:17:02',174,0,0,0,0,1),
 	(7,44,'2013-01-18 16:17:02',175,0,0,0,0,1),
-	(7,78,'2013-01-18 16:17:02',176,0,0,0,0,1);
+	(7,78,'2013-01-18 16:17:02',176,0,0,0,0,1),
+	(8,58.5,'2013-01-21 13:19:17',34,9,3,6,0,1),
+	(8,27.5,'2013-01-21 13:19:13',35,11,0,11,0,1),
+	(9,91,'2013-01-21 14:14:35',61,7,2,4,1,1),
+	(9,22,'2013-01-21 14:14:35',63,8,2,6,0,1),
+	(9,57,'2013-01-21 14:14:34',62,5,2,2,1,1),
+	(11,63.5,'2013-01-21 14:15:16',61,1,0,1,0,1),
+	(10,60,'2013-01-21 14:15:49',61,7,0,4,3,1),
+	(10,71,'2013-01-21 14:15:50',63,8,1,1,6,1),
+	(10,70,'2013-01-21 14:15:49',62,5,1,2,2,1),
+	(11,42,'2013-01-21 14:21:10',63,2,0,2,0,1),
+	(9,78,'2013-01-21 14:34:27',34,28,4,9,15,1),
+	(9,26,'2013-01-21 14:34:27',35,31,1,15,15,1),
+	(9,89,'2013-01-21 14:34:11',33,6,1,1,4,1),
+	(11,20,'2013-01-21 14:22:26',34,13,0,0,13,1),
+	(11,87,'2013-01-21 14:22:26',35,9,0,0,9,1),
+	(11,37,'2013-01-21 14:22:26',33,3,0,0,3,1),
+	(10,34,'2013-01-21 14:25:31',34,8,0,2,6,1),
+	(10,79,'2013-01-21 14:25:03',35,11,0,0,11,1),
+	(10,90,'2013-01-21 14:25:03',33,3,0,0,3,1),
+	(9,59,'2013-01-21 14:27:13',44,3,1,1,1,1),
+	(9,77,'2013-01-21 14:27:13',45,3,0,1,2,1),
+	(9,76,'2013-01-21 14:27:13',46,3,0,2,1,1),
+	(9,50,'2013-01-21 14:27:13',47,3,0,2,1,1),
+	(10,68,'2013-01-21 14:30:15',44,3,1,1,1,1),
+	(10,19,'2013-01-21 14:30:15',45,3,0,2,1,1),
+	(10,41,'2013-01-21 14:30:15',46,3,1,1,1,1),
+	(10,66,'2013-01-21 14:30:15',47,3,2,0,1,1),
+	(12,39,'2013-01-21 14:49:06',44,3,0,3,0,1),
+	(12,67,'2013-01-21 14:49:06',45,3,1,2,0,1),
+	(12,53,'2013-01-21 14:49:06',46,3,0,3,0,1),
+	(12,53,'2013-01-21 14:49:06',47,3,1,2,0,1),
+	(12,86.5,'2013-01-21 15:12:22',61,7,1,5,1,1),
+	(12,39,'2013-01-21 15:12:36',63,8,3,4,1,1),
+	(12,47,'2013-01-21 15:12:11',62,5,1,4,0,1),
+	(12,87,'2013-01-22 14:05:50',34,5,1,4,0,1),
+	(12,32,'2013-01-22 14:05:36',35,7,1,6,0,1),
+	(13,64.5,'2013-01-22 16:55:43',44,1,0,1,0,1),
+	(13,33.5,'2013-01-22 16:55:57',45,1,0,1,0,1),
+	(13,50,'2013-01-22 17:21:58',61,14,1,6,7,1),
+	(13,65,'2013-01-22 17:21:58',63,16,1,6,9,1),
+	(13,31,'2013-01-22 17:21:58',62,10,1,2,7,1),
+	(13,31,'2013-01-22 17:05:55',34,22,2,3,17,1),
+	(13,69.5,'2013-01-22 17:15:45',35,26,3,7,16,1),
+	(13,58,'2013-01-22 17:05:11',33,3,0,0,3,1),
+	(14,61.5,'2013-01-22 17:35:56',61,1,0,1,0,1),
+	(14,23,'2013-01-22 17:46:12',35,31,1,1,29,1),
+	(14,68,'2013-01-22 17:46:12',34,28,0,2,26,1),
+	(14,77,'2013-01-22 17:45:37',33,6,0,0,6,1),
+	(15,25.5,'2013-02-01 14:31:48',61,2,0,1,1,1),
+	(15,92,'2013-01-22 18:14:58',44,3,1,2,0,1),
+	(15,46,'2013-01-22 18:14:58',45,3,1,2,0,1),
+	(15,84,'2013-01-22 18:14:58',46,3,1,2,0,1),
+	(15,23,'2013-01-22 18:14:58',47,3,0,2,1,1),
+	(15,80,'2013-01-23 10:48:38',34,28,6,18,4,1),
+	(15,21,'2013-01-23 10:48:34',35,31,2,23,6,1),
+	(15,34.5,'2013-01-22 18:22:14',33,6,0,3,3,1),
+	(16,56,'2013-01-22 18:24:20',61,3,1,2,0,1),
+	(16,37,'2013-01-22 18:23:58',63,2,0,2,0,1),
+	(17,66.5,'2013-01-22 19:47:18',61,7,2,5,0,1),
+	(17,63,'2013-01-22 19:47:35',63,8,0,8,0,1),
+	(17,42.5,'2013-01-22 19:47:12',62,5,0,5,0,1),
+	(18,58,'2013-01-22 19:50:23',34,13,2,4,7,1),
+	(18,88,'2013-01-22 19:50:22',35,9,0,0,9,1),
+	(18,31,'2013-01-22 19:50:22',33,3,0,1,2,1),
+	(17,70.5,'2013-01-22 20:03:11',44,3,0,3,0,1),
+	(17,25,'2013-01-22 20:03:15',45,3,1,2,0,1),
+	(17,31,'2013-01-22 20:03:19',46,3,1,2,0,1),
+	(17,53,'2013-01-22 20:03:24',47,3,1,2,0,1),
+	(17,37,'2013-01-22 20:13:44',34,28,1,7,20,1),
+	(17,25,'2013-01-22 20:13:44',35,31,0,4,27,1),
+	(17,86,'2013-01-22 20:10:52',33,6,0,1,5,1),
+	(19,23,'2013-01-22 20:17:29',34,13,1,1,11,1),
+	(19,63,'2013-01-22 20:17:29',35,9,0,0,9,1),
+	(19,20,'2013-01-22 20:17:29',33,3,0,0,3,1),
+	(19,84,'2013-01-22 20:20:12',61,7,0,1,6,1),
+	(19,50,'2013-01-22 20:20:12',63,8,0,1,7,1),
+	(19,50,'2013-01-22 20:20:12',62,5,0,0,5,1),
+	(19,57,'2013-01-22 21:06:53',44,6,0,3,3,1),
+	(19,74,'2013-01-22 21:06:53',45,6,0,1,5,1),
+	(19,41,'2013-01-22 21:06:53',46,6,0,0,6,1),
+	(19,31,'2013-01-22 21:06:53',47,6,0,2,4,1),
+	(18,36,'2013-01-28 10:01:40',61,14,4,5,5,1),
+	(18,62,'2013-01-28 10:01:40',63,16,4,6,6,1),
+	(18,87,'2013-01-28 10:01:40',62,10,2,3,5,1),
+	(20,35.3,'2013-01-23 19:03:12',44,1,0,1,0,1),
+	(20,21.5,'2013-01-23 19:03:16',45,1,0,1,0,1),
+	(20,18.7,'2013-01-23 19:03:33',46,1,0,1,0,1),
+	(20,28.7,'2013-01-23 19:03:54',47,1,0,1,0,1),
+	(20,63,'2013-01-23 19:09:48',61,7,0,1,6,1),
+	(20,54,'2013-01-23 19:09:49',63,8,1,0,7,1),
+	(20,56,'2013-01-23 19:09:48',62,5,0,0,5,1),
+	(21,61,'2013-01-23 19:34:23',34,13,1,2,10,1),
+	(21,46,'2013-01-23 19:34:22',35,9,2,2,5,1),
+	(21,23,'2013-01-23 19:34:22',33,3,0,0,3,1),
+	(21,41.6,'2013-01-23 19:43:09',61,4,0,3,1,1),
+	(21,40.7,'2013-01-23 19:43:12',63,4,1,3,0,1),
+	(21,79.9,'2013-01-23 19:43:15',62,3,0,3,0,1),
+	(21,29,'2013-01-23 19:44:21',44,3,0,2,1,1),
+	(21,48,'2013-01-23 19:44:21',45,3,1,1,1,1),
+	(21,46,'2013-01-23 19:44:21',46,3,0,1,2,1),
+	(21,64,'2013-01-23 19:44:21',47,3,0,2,1,1),
+	(22,81,'2013-01-23 22:48:39',61,7,0,2,5,1),
+	(22,82,'2013-01-23 22:48:39',63,8,0,2,6,1),
+	(22,24,'2013-01-23 22:48:39',62,5,0,1,4,1),
+	(23,49.7,'2013-01-24 10:12:12',44,1,0,1,0,1),
+	(23,36.6,'2013-01-24 10:12:25',45,1,0,1,0,1),
+	(23,68.4,'2013-01-24 10:12:35',46,1,1,0,0,1),
+	(23,46,'2013-01-24 10:14:15',61,7,0,1,6,1),
+	(23,62,'2013-01-24 10:14:15',63,8,0,3,5,1),
+	(23,28,'2013-01-24 10:14:14',62,5,1,1,3,1),
+	(23,36.7,'2013-01-24 10:27:51',35,26,3,15,8,1),
+	(23,90,'2013-01-24 10:27:51',34,23,5,3,15,1),
+	(23,20,'2013-01-24 10:24:04',33,3,0,0,3,1),
+	(24,70.7,'2013-01-24 10:56:18',44,1,0,1,0,1),
+	(24,65.7,'2013-01-24 10:56:24',45,1,0,1,0,1),
+	(24,26,'2013-01-24 10:56:51',61,7,0,1,6,1),
+	(24,28,'2013-01-24 10:56:51',63,8,1,3,4,1),
+	(24,46,'2013-01-24 10:56:51',62,5,0,0,5,1),
+	(24,49,'2013-01-24 10:57:32',34,13,1,1,11,1),
+	(24,29,'2013-01-24 10:57:31',35,9,0,1,8,1),
+	(24,42,'2013-01-24 10:57:32',33,3,0,0,3,1),
+	(25,30.9,'2013-01-24 11:20:39',44,1,0,1,0,1),
+	(25,86.2,'2013-01-24 11:20:42',45,1,0,1,0,1),
+	(25,63,'2013-01-24 11:58:55',61,14,2,1,11,1),
+	(25,75,'2013-01-24 11:58:55',63,16,0,5,11,1),
+	(25,52,'2013-01-24 11:58:55',62,10,0,0,10,1),
+	(25,68,'2013-01-24 11:57:47',34,22,1,4,17,1),
+	(25,72.8,'2013-01-24 11:57:47',35,22,0,5,17,1),
+	(25,61,'2013-01-24 11:33:19',33,3,0,0,3,1),
+	(31,58.9,'2013-01-29 14:58:05',34,23,0,2,21,1),
+	(31,77,'2013-01-24 13:15:22',35,20,0,0,20,1),
+	(31,81,'2013-01-24 13:12:07',33,3,0,0,3,1),
+	(31,54.1,'2013-01-29 16:11:59',44,2,0,1,1,1),
+	(31,24,'2013-01-24 13:14:43',45,1,0,0,1,1),
+	(33,29.2,'2013-01-28 18:18:11',61,4,1,3,0,1),
+	(33,64.8,'2013-01-28 18:18:44',63,4,1,3,0,1),
+	(33,68.9,'2013-01-28 18:18:35',62,2,0,2,0,1),
+	(34,36,'2013-01-30 15:56:56',34,22,3,4,15,1),
+	(34,88.9,'2013-01-30 15:56:56',35,21,3,11,7,1),
+	(34,24,'2013-01-29 13:24:38',33,3,0,0,3,1),
+	(34,77.9,'2013-01-30 14:10:04',61,8,2,6,0,1),
+	(31,72,'2013-01-29 21:56:50',61,7,0,1,6,1),
+	(31,27,'2013-01-29 21:56:50',63,8,0,0,8,1),
+	(31,60,'2013-01-29 21:56:50',62,5,0,0,5,1),
+	(34,87,'2013-01-31 19:17:05',44,4,0,1,3,1),
+	(34,69,'2013-01-31 19:17:05',45,4,0,0,4,1),
+	(34,45,'2013-01-31 19:17:06',46,4,1,0,3,1),
+	(34,82.4,'2013-01-30 14:10:04',63,9,2,7,0,1),
+	(34,60,'2013-01-30 14:10:04',62,5,2,3,0,1),
+	(38,36.7,'2013-01-31 13:54:42',44,1,0,1,0,1),
+	(38,76,'2013-01-31 13:54:45',45,1,0,0,1,1),
+	(34,46,'2013-01-31 19:17:06',47,3,0,0,3,1),
+	(35,69,'2013-01-31 19:20:30',44,3,0,1,2,1),
+	(35,48,'2013-01-31 19:20:30',45,3,0,0,3,1),
+	(35,28,'2013-01-31 19:20:30',46,3,0,0,3,1),
+	(35,22,'2013-01-31 19:20:30',47,3,0,0,3,1),
+	(15,38,'2013-02-01 14:31:58',63,2,0,0,2,1),
+	(40,35,'2013-02-05 05:58:31',34,13,0,1,12,1),
+	(40,80,'2013-02-05 05:58:31',35,9,0,0,9,1),
+	(40,63,'2013-02-05 05:58:31',33,3,0,0,3,1),
+	(40,67.2,'2013-02-05 06:27:40',61,1,0,1,0,1);
 
 /*!40000 ALTER TABLE `ascores_l3` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -677,10 +983,13 @@ LOCK TABLES `faculty` WRITE;
 /*!40000 ALTER TABLE `faculty` DISABLE KEYS */;
 INSERT INTO `faculty` (`l1Ids`,`l2Ids`,`specialization`,`bioShort`,`bio`,`experience`,`education`,`streamIds`,`totalQuizzes`,`rec`,`subscribers`,`accountId`,`earlyLife`,`teachingJourney`)
 VALUES
-	('3','','Physical Chemistry','Physical Chemistry Specialist; B. Tech, IIT Guwahati','Himanshu is a specialist in Physical Chemistry. He completed his B.Tech. from IIT Guwahati in Chemical Engineering. With a combined coaching experience of 3 years, multiple All India Ranks (AIR) under 100 have had the  opportunity to study key physical chemistry concepts with him','Physical Chemistry - 3 years','B. Tech., IIT Guwahati, 2009','1',0,0,0,1,'Himanshu did his schooling from Delhi - he was a topper throughout his school years. Having obtained a rank of 2000 in the IIT JEE, he opted for a course in Chemical Engineering at IIT Madras. At the institute, he was a prolific performer.\n','Not satisfied with a corporate career, Himanshu returned to his roots to take up teaching. As a teacher of engineering entrance, he specializes in chemistry - with a focus on physical chemistry. \nHe is presently with VMC classes. His aptitude and sincerity for teaching and mentoring students has to be seen to be believed.'),
-	('2','','Mechanics','Physics Faculty at Kartikkey Classes;  IIT Madras','Ashwin is a B. Tech. from IIT Madras. He specializes in Physics and is a founding member at Kartikkey classes. His unique approach to teaching physics has got him excellent reviews from all students','Co-founder, Physics faculty - Kartikkey Classes','B. Tech., IIT Madras, 2010','1',0,0,0,2,'Ashwin did his schooling primarily in Chennai itself - he was a topper throughout his school years. Having obtained a rank of 700 in the IIT JEE, he opted for a course in Electrical Engineering at IIT Madras. At the institute, he was a prolific performer and published 2 papers in his final year','Not satisfied with a corporate career, Ashwin returned to his roots to take up teaching. As a teacher of engineering entrance, he specializes in physics - with a focus on mechanics and electricity. \nHe co-founded Kartikkey classes with Prof Vinod Aagrawal and Prof Rajesh Ramrakhyani and was the head of physics there. His aptitude and sincerity for teaching and mentoring students has to be seen to be believed.'),
-	('2','','Electricity, Magnetism','Physics Faculty at Rise Institute','Tanuj Bhojwani is an IIT Bombay alumnus, and has co-founded the first IIT-JEE training institute in Kashmir: Rise Institute. Though he is a chemical engineer, his area of expertise is physics','Co-founder, Rise Institute','B. Tech., IIT Bombay, 2010','1',0,0,0,3,'Tanuj did his schooling primarily in Chennai itself - he was a topper throughout his school years. Having obtained a rank of 600 in the IIT JEE, he opted for a course in Chemical Engineering at IIT Bombay. At the institute, he was a prolific performer and published 2 papers in his final year\n\n','Not satisfied with a corporate career, Tanuj returned to his roots to take up teaching. As a teacher of engineering entrance, he specializes in physics - with a focus on mechanics and electricity. \nHe co-founded RISE institute and was the head of physics there. His aptitude and sincerity for teaching and mentoring students has to be seen to be believed.'),
-	('2','','Newton Laws','Physics Faculty at Education Helpline',NULL,NULL,'B. Tech., IIT Delhi, 2010','1',0,0,0,6,'Anirban did his schooling primarily in Chennai itself - he was a topper throughout his school years. Having obtained a rank of 700 in the IIT JEE, he opted for a course in Electrical Engineering at IIT Delhi. At the institute, he was a prolific performer.','Not satisfied with a corporate career, Anirban returned to his roots to take up teaching. As a teacher of engineering entrance, he specializes in physics - with a focus on mechanics and electricity. \nHe co-founded Education Helpline and was the head of physics there. His aptitude and sincerity for teaching and mentoring students has to be seen to be believed.');
+	('3','','Physical Chemistry','Physical Chemistry Specialist; B. Tech, IIT Guwahati','Himanshu is a specialist in Physical Chemistry. He completed his B.Tech. from IIT Guwahati in Chemical Engineering. With a combined coaching experience of 3 years, multiple All India Ranks (AIR) under 100 have had the  opportunity to study key physical chemistry concepts with him','Physical Chemistry - 3 years','B. Tech., IIT Guwahati, 2009','1',1,10,0,1,'Himanshu did his schooling from Delhi - he was a topper throughout his school years. Having obtained a rank of 2000 in the IIT JEE, he opted for a course in Chemical Engineering at IIT Madras. At the institute, he was a prolific performer.\n','Not satisfied with a corporate career, Himanshu returned to his roots to take up teaching. As a teacher of engineering entrance, he specializes in chemistry - with a focus on physical chemistry. \nHe is presently with VMC classes. His aptitude and sincerity for teaching and mentoring students has to be seen to be believed.'),
+	('2','','Mechanics','Physics Faculty at Kartikkey Classes;  IIT Madras','Ashwin is a B. Tech. from IIT Madras. He specializes in Physics and is a founding member at Kartikkey classes. His unique approach to teaching physics has got him excellent reviews from all students','Co-founder, Physics faculty - Kartikkey Classes','B. Tech., IIT Madras, 2010','1',2,20,0,2,'Ashwin did his schooling primarily in Chennai itself - he was a topper throughout his school years. Having obtained a rank of 700 in the IIT JEE, he opted for a course in Electrical Engineering at IIT Madras. At the institute, he was a prolific performer and published 2 papers in his final year','Not satisfied with a corporate career, Ashwin returned to his roots to take up teaching. As a teacher of engineering entrance, he specializes in physics - with a focus on mechanics and electricity. \nHe co-founded Kartikkey classes with Prof Vinod Aagrawal and Prof Rajesh Ramrakhyani and was the head of physics there. His aptitude and sincerity for teaching and mentoring students has to be seen to be believed.'),
+	('2','','Electricity, Magnetism','Physics Faculty at Rise Institute','Tanuj Bhojwani is an IIT Bombay alumnus, and has co-founded the first IIT-JEE training institute in Kashmir: Rise Institute. Though he is a chemical engineer, his area of expertise is physics','Co-founder, Rise Institute','B. Tech., IIT Bombay, 2010','1',1,15,0,3,'Tanuj did his schooling primarily in Chennai itself - he was a topper throughout his school years. Having obtained a rank of 600 in the IIT JEE, he opted for a course in Chemical Engineering at IIT Bombay. At the institute, he was a prolific performer and published 2 papers in his final year\n\n','Not satisfied with a corporate career, Tanuj returned to his roots to take up teaching. As a teacher of engineering entrance, he specializes in physics - with a focus on mechanics and electricity. \nHe co-founded RISE institute and was the head of physics there. His aptitude and sincerity for teaching and mentoring students has to be seen to be believed.'),
+	('2','','Newton Laws','Physics Faculty at Education Helpline','Anirban always had a fascination for mechanics and electric circuits. A mechanical engineering graduate of IIT Delhi, he gave up the opportunities of a promising corporate career to pursue his passion for teaching. In 2011, he co-founded Education Helpline and is a physics HOD since then','4 yrs of Teaching Exp.','B. Tech., IIT Delhi, 2010','1',2,25,0,6,'Anirban always had a fascination for mechanics and electric circuits. A mechanical engineering graduate of IIT Delhi, he gave up the opportunities of a promising corporate career to pursue his passion for teaching. In 2011, he co-founded Education Helpline and is a physics HOD since then','Not satisfied with a corporate career, Anirban returned to his roots to take up teaching. As a teacher of engineering entrance, he specializes in physics - with a focus on mechanics and electricity. \nHe co-founded Education Helpline and was the head of physics there. His aptitude and sincerity for teaching and mentoring students has to be seen to be believed.'),
+	('3',NULL,'Physical Chemistry','Ex-Head of Chemisrty at FIITJEE','Prof Vinod Agrawal, popularly known as VA Sir, is a Ph.D. in Chemistry from Jaipur. He is regarded by many as the best chemistry teacher in India. \nHe has taught several all India rank 1\'s during his 14 years of experience.','FIITJEE - 15 yrs','PhD in Chemistry','1',3,0,0,27,'Prof Vinod Agrawal, popularly known as VA Sir, is a Ph.D. in Chemistry from Jaipur. He is regarded by many as the best chemistry teacher in India. \nHe has taught several all India rank 1\'s during his 14 years of experience.',NULL),
+	('1',NULL,'Calculus','Excellent Calculus Teacher','Gaurav (also known to his students as GT sir) has experience teaching in multiple coaching classes in Kota. He currently teaches in Rise Academy as a maths faculty. Gaurav has a B. Tech. degree from IIT Delhi in Civil Engineering.','4 years at Rise Academy, Kota','B. Tech IIT Delhi, 2009','1',0,0,0,28,'Gaurav (also known to his students as GT sir) has experience teaching in multiple coaching classes in Kota. He currently teaches in Rise Academy as a maths faculty. Gaurav has a B. Tech. degree from IIT Delhi in Civil Engineering. Originally hailing from Kota, he passed out of IIT with flying colours and decided to inspire kids like him to get the college of their dreams',NULL),
+	('3',NULL,'Organic Chemistry','Organic Chemistry Specialist','inny Marwaha is the main founding member of Education Helpline in Delhi - she has experience teaching in FIITJEE as a Chemistry teacher for many years. Her specialization is Organic Chemistry','10 yrs at FIITJEE, 3 yrs at Education Helpline','PhD in Chemistry','1',0,0,0,29,'Binny Marwaha is the main founding member of Education Helpline in Delhi - she has experience teaching in FIITJEE as a Chemistry teacher for many years. Her specialization is Organic Chemistry',NULL);
 
 /*!40000 ALTER TABLE `faculty` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -779,18 +1088,18 @@ DROP TABLE IF EXISTS `packages`;
 
 CREATE TABLE `packages` (
   `id` int(11) DEFAULT NULL,
-  `name` varchar(50) DEFAULT NULL,
-  `details` text,
-  `poolId` int(11) DEFAULT NULL,
+  `displayName` text,
+  `number` int(11) DEFAULT NULL,
   `price` int(11) DEFAULT NULL,
   `streamId` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `packages` WRITE;
 /*!40000 ALTER TABLE `packages` DISABLE KEYS */;
-INSERT INTO `packages` (`id`,`name`,`details`,`poolId`,`price`,`streamId`)
+INSERT INTO `packages` (`id`,`displayName`,`number`,`price`,`streamId`)
 VALUES
-	(1,'All Tests','5|:2',1,500,1);
+	(1,'JEE MAINS',5,500,1),
+	(2,'JEE ADVANCED',10,2000,1);
 
 /*!40000 ALTER TABLE `packages` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -824,26 +1133,6 @@ VALUES
 UNLOCK TABLES;
 
 
-# Dump of table pool
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `pool`;
-
-CREATE TABLE `pool` (
-  `id` int(11) DEFAULT NULL,
-  `quizIds` text
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-LOCK TABLES `pool` WRITE;
-/*!40000 ALTER TABLE `pool` DISABLE KEYS */;
-INSERT INTO `pool` (`id`,`quizIds`)
-VALUES
-	(1,'1|:2|:3');
-
-/*!40000 ALTER TABLE `pool` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
 # Dump of table purchases
 # ------------------------------------------------------------
 
@@ -855,6 +1144,27 @@ CREATE TABLE `purchases` (
   `purchasedOn` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+LOCK TABLES `purchases` WRITE;
+/*!40000 ALTER TABLE `purchases` DISABLE KEYS */;
+INSERT INTO `purchases` (`accountId`,`packageId`,`purchasedOn`)
+VALUES
+	(4,1,'2013-02-06 13:32:02'),
+	(4,1,'2013-02-06 13:39:31'),
+	(4,2,'2013-02-06 13:44:31'),
+	(4,1,'2013-02-06 13:44:36'),
+	(4,2,'2013-02-06 13:44:38'),
+	(4,1,'2013-02-06 14:01:56'),
+	(4,2,'2013-02-06 14:01:59'),
+	(4,1,'2013-02-06 14:02:00'),
+	(4,1,'2013-02-06 14:19:17'),
+	(4,2,'2013-02-06 14:19:29'),
+	(4,2,'2013-02-06 14:19:45'),
+	(4,2,'2013-02-06 14:20:11'),
+	(4,1,'2013-02-06 14:22:52'),
+	(4,2,'2013-02-06 14:23:05');
+
+/*!40000 ALTER TABLE `purchases` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table question_tags
@@ -1086,25 +1396,33 @@ CREATE TABLE `quizzes` (
   `rec` int(11) NOT NULL DEFAULT '0',
   `typeId` int(11) DEFAULT NULL,
   `facultyId` int(11) DEFAULT NULL,
-  `available` int(1) DEFAULT NULL,
+  `available` int(1) DEFAULT '1',
   `mobileFlag` int(1) DEFAULT NULL,
   `addedOn` datetime DEFAULT NULL,
   `totalAttempts` int(11) NOT NULL DEFAULT '0',
   `streamId` int(11) DEFAULT NULL,
   `maxScore` int(11) DEFAULT '100',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `quizzes` WRITE;
 /*!40000 ALTER TABLE `quizzes` DISABLE KEYS */;
 INSERT INTO `quizzes` (`id`,`questionIds`,`description`,`descriptionShort`,`conceptsTested`,`tags`,`l3Ids`,`l2Ids`,`questionCount`,`allotedTime`,`difficulty`,`ratings`,`rec`,`typeId`,`facultyId`,`available`,`mobileFlag`,`addedOn`,`totalAttempts`,`streamId`,`maxScore`)
 VALUES
-	(1,'1|:2|:3|:4|:5|:6|:7|:8|:9|:10|:11|:12','Questions on Electricity & Magnetism from the last 4 years IIT-JEE papers','Advanced questions on Electricity and Magnetism','Electricity & Magnetism','IIT JEE','44|:45|:46|:47','7',12,3600,2,NULL,0,2,3,NULL,NULL,NULL,0,1,36),
-	(2,'13|:14|:15|:16|:17|:18|:19|:20|:21|:22|:23|:24|:25|:26|:27|:28|:29|:30|:31|:32','Covers Redox Reactions , Stoichiometry, Chemical and Ionic Equilibrium','Advanced questions on Physical Chemistry','Physical Chemistry','','61|:62|:63','10',20,3600,2,NULL,0,2,1,NULL,NULL,NULL,0,1,80),
-	(3,'33|:34|:35|:36|:37|:38|:39|:40|:41|:42|:43|:44|:45|:46|:47|:48|:49|:50|:51|:52|:53|:54|:55|:56|:57','Medium difficulty question to strengthen the key topics of Kinematics and Collisions','Practice on Kinematics and Collisions','Mechanics','','34|:35','6',25,3600,2,NULL,0,2,2,NULL,NULL,NULL,0,1,80),
-	(4,'58|:59|:60|:61|:62|:63|:64|:65|:66|:67|:68|:69|:70|:71|:72|:73|:74|:75|:76|:77','JEE advanced level question to strengthen the key topics of Kinematics and Collisions','Advanced problems on Kinematics and Collisions','Mechanics','','34|:35','6',20,3600,2,NULL,0,2,2,NULL,NULL,NULL,0,1,80),
-	(5,'78|:79|:80|:81|:82|:83|:84|:85|:86|:87|:88|:89|:90|:91|:92|:93|:94|:95|:96|:97','The set includes easy to medium questions on the topics of Relatve Velocity','Basic Question on Kinematics','Mechanics','','34|:35','6',20,3600,2,NULL,0,2,6,NULL,NULL,NULL,0,1,80),
-	(6,'98|:99|:100|:101|:102|:103|:104|:105|:106|:107|:108|:109|:110|:111|:112|:113|:114|:115|:116|:117','The set includes easy to medium questions on AC circuits. This test is for students comfortable with DC circuits but looking to practice the topic of AC','Basic Question on Alternating Currents / Circuits','Electricity & Magnetism','','45|:46','7',20,3600,2,NULL,0,2,6,NULL,NULL,NULL,0,1,80);
+	(1,'1|:2|:3|:4|:5|:6|:7|:8|:9|:10|:11|:12','Questions on Electricity & Magnetism from the last 4 years IIT-JEE papers','Advanced questions on Electricity and Magnetism','Electricity & Magnetism','IIT JEE','44|:45|:46|:47','7',12,3600000,1,NULL,0,2,3,1,NULL,NULL,0,1,36),
+	(2,'13|:14|:15|:16|:17|:18|:19|:20|:21|:22|:23|:24|:25|:26|:27|:28|:29|:30|:31|:32','Covers Redox Reactions , Stoichiometry, Chemical and Ionic Equilibrium','Advanced questions on Physical Chemistry','Physical Chemistry','','61|:62|:63','10',20,3600000,2,NULL,0,2,1,1,NULL,NULL,0,1,80),
+	(3,'33|:34|:35|:36|:37|:38|:39|:40|:41|:42|:43|:44|:45|:46|:47|:48|:49|:50|:51|:52|:53|:54|:55|:56|:57','Medium difficulty question to strengthen the key topics of Kinematics and Collisions','Practice on Kinematics and Collisions','Mechanics','','34|:35','6',25,3600000,3,NULL,0,2,2,1,NULL,NULL,0,1,80),
+	(4,'58|:59|:60|:61|:62|:63|:64|:65|:66|:67|:68|:69|:70|:71|:72|:73|:74|:75|:76|:77','JEE advanced level question to strengthen the key topics of Kinematics and Collisions','Advanced problems on Kinematics and Collisions','Mechanics','','34|:35','6',20,3600000,2,NULL,0,2,2,1,NULL,NULL,0,1,80),
+	(5,'78|:79|:80|:81|:82|:83|:84|:85|:86|:87|:88|:89|:90|:91|:92|:93|:94|:95|:96|:97','The set includes easy to medium questions on the topics of Relatve Velocity','Basic Question on Kinematics','Mechanics','','34|:35','6',20,3600000,1,NULL,0,2,6,1,NULL,NULL,0,1,80),
+	(6,'98|:99|:100|:101|:102|:103|:104|:105|:106|:107|:108|:109|:110|:111|:112|:113|:114|:115|:116|:117','The set includes easy to medium questions on AC circuits. This test is for students comfortable with DC circuits but looking to practice the topic of AC','Basic Question on Alternating Currents / Circuits','Electricity & Magnetism','','45|:46','7',20,3600000,2,NULL,0,2,6,1,NULL,NULL,0,1,80),
+	(7,'1|:2|:3|:4|:5|:6|:7|:8|:9|:10|:11|:12','Questions on Calculus with lengthy calculations','Advanced questions on Calculus','Calculus','','44|:45|:46|:47','4',12,3600000,1,NULL,0,2,3,0,NULL,NULL,0,1,36),
+	(8,'13|:14|:15|:16|:17|:18|:19|:20|:21|:22|:23|:24|:25|:26|:27|:28|:29|:30|:31|:32','Questions on Trigonometry from the last 4 years AIEEE papers','Target IIT Mains - Trigonometry','Trigonometry','IIT JEE','44|:45|:46|:47','1',12,3600000,1,NULL,0,2,28,0,NULL,NULL,0,1,36),
+	(9,'33|:34|:35|:36|:37|:38|:39|:40|:41|:42|:43|:44|:45|:46|:47|:48|:49|:50|:51|:52|:53|:54|:55|:56|:57','Questions on Electricity & Magnetism from the last 4 years IIT-JEE papers','Organic Chemistry Concepts','Organic Chemistry','IIT JEE','44|:45|:46|:47','12',12,3600000,1,NULL,0,2,29,0,NULL,NULL,0,1,36),
+	(10,'58|:59|:60|:61|:62|:63|:64|:65|:66|:67|:68|:69|:70|:71|:72|:73|:74|:75|:76|:77','Questions on Electricity & Magnetism from the last 4 years IIT-JEE papers','Inorganic Chemistry Fundamentals','Inorganic Chemistry','IIT JEE','44|:45|:46|:47','11',12,3600000,1,NULL,0,2,27,0,NULL,NULL,0,1,36),
+	(11,'78|:79|:80|:81|:82|:83|:84|:85|:86|:87|:88|:89|:90|:91|:92|:93|:94|:95|:96|:97','Questions on Electricity & Magnetism from the last 4 years IIT-JEE papers','Advanced Physical Chemistry','Physical Chemistry','IIT JEE','44|:45|:46|:47','10',12,3600000,1,NULL,0,2,27,0,NULL,NULL,0,1,36),
+	(12,'98|:99|:100|:101|:102|:103|:104|:105|:106|:107|:108|:109|:110|:111|:112|:113|:114|:115|:116|:117','Questions on Electricity & Magnetism from the last 4 years IIT-JEE papers','Basics of Modern Physics','Modern Physics','IIT JEE','44|:45|:46|:47','9',12,3600000,1,NULL,0,2,2,0,NULL,NULL,0,1,36),
+	(13,'1|:2|:3|:4|:5|:6|:7|:8|:9|:10|:11|:12','Questions on Electricity & Magnetism from the last 4 years IIT-JEE papers','Practice Questions on Co-ordinate Geometry','Coordinate Geometry','IIT JEE','44|:45|:46|:47','3',12,3600000,1,NULL,0,2,28,0,NULL,NULL,0,1,36),
+	(14,'58|:59|:60|:61|:62|:63|:64|:65|:66|:67|:68|:69|:70|:71|:72|:73|:74|:75|:76|:77','Questions on Electricity & Magnetism from the last 4 years IIT-JEE papers','Basic Algebra','Algebra','IIT JEE','44|:45|:46|:47','1',12,3600000,1,NULL,0,2,28,0,NULL,NULL,0,1,36);
 
 /*!40000 ALTER TABLE `quizzes` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -1149,19 +1467,6 @@ VALUES
 UNLOCK TABLES;
 
 
-# Dump of table redeem
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `redeem`;
-
-CREATE TABLE `redeem` (
-  `purchaseId` int(11) DEFAULT NULL,
-  `remaining` text,
-  `date` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-
 # Dump of table resources
 # ------------------------------------------------------------
 
@@ -1192,59 +1497,6 @@ CREATE TABLE `responses` (
   `status` varchar(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-LOCK TABLES `responses` WRITE;
-/*!40000 ALTER TABLE `responses` DISABLE KEYS */;
-INSERT INTO `responses` (`accountId`,`questionId`,`optionSelected`,`timeTaken`,`abilityScoreBefore`,`delta`,`timeStamp`,`status`)
-VALUES
-	(4,13,'',1531,47,0,'2013-01-21 11:01:30','4'),
-	(4,14,'',907,50,0,'2013-01-21 11:01:30','4'),
-	(4,15,'',0,50,0,'2013-01-21 11:01:30','4'),
-	(4,16,'',0,47,0,'2013-01-21 11:01:30','4'),
-	(4,17,'',0,47,0,'2013-01-21 11:01:30','4'),
-	(4,18,'',0,50,0,'2013-01-21 11:01:30','4'),
-	(4,19,'',0,50,0,'2013-01-21 11:01:30','4'),
-	(4,20,'',0,50,0,'2013-01-21 11:01:30','4'),
-	(4,21,'|:5',141670,47,-1,'2013-01-21 11:01:30','2'),
-	(4,22,'',0,50,0,'2013-01-21 11:01:30','4'),
-	(4,23,'',0,50,0,'2013-01-21 11:01:30','4'),
-	(4,24,'',0,46,0,'2013-01-21 11:01:30','4'),
-	(4,25,'',0,50,0,'2013-01-21 11:01:30','4'),
-	(4,26,'',0,50,0,'2013-01-21 11:01:30','4'),
-	(4,27,'',0,50,0,'2013-01-21 11:01:30','4'),
-	(4,28,'',0,46,0,'2013-01-21 11:01:30','4'),
-	(4,29,'',0,46,0,'2013-01-21 11:01:30','4'),
-	(4,30,'',0,50,0,'2013-01-21 11:01:30','4'),
-	(4,31,'',0,50,0,'2013-01-21 11:01:30','4'),
-	(4,32,'',0,50,0,'2013-01-21 11:01:30','4'),
-	(4,78,'',1969,53,0,'2013-01-21 11:17:58','4'),
-	(4,79,'',1104,53,0,'2013-01-21 11:17:58','4'),
-	(4,80,'',1537,53,0,'2013-01-21 11:17:58','4'),
-	(4,81,'',799,53,0,'2013-01-21 11:17:58','4'),
-	(4,82,'',0,53,0,'2013-01-21 11:17:58','4'),
-	(4,83,'',0,53,0,'2013-01-21 11:17:58','4'),
-	(4,84,'',522,53,0,'2013-01-21 11:17:58','4'),
-	(4,85,'',658,53,0,'2013-01-21 11:17:58','4'),
-	(4,86,'',1238,53,0,'2013-01-21 11:17:58','4'),
-	(4,87,'',668,53,0,'2013-01-21 11:17:58','4'),
-	(4,88,'',572,53,0,'2013-01-21 11:17:58','4'),
-	(4,89,'',1016,53,0,'2013-01-21 11:17:58','4'),
-	(4,90,'5',25375,53,-1,'2013-01-21 11:17:58','2'),
-	(4,91,'',0,53,0,'2013-01-21 11:17:58','4'),
-	(4,92,'',0,53,0,'2013-01-21 11:17:58','4'),
-	(4,93,'',0,52,0,'2013-01-21 11:17:58','4'),
-	(4,94,'',0,52,0,'2013-01-21 11:17:58','4'),
-	(4,95,'',0,52,0,'2013-01-21 11:17:58','4'),
-	(4,96,'',0,52,0,'2013-01-21 11:17:58','4'),
-	(4,97,'',0,53,0,'2013-01-21 11:17:58','4'),
-	(4,58,'1',2799,52,-1,'2013-01-21 11:20:29','2'),
-	(4,59,'2',2833,51,-1,'2013-01-21 11:20:36','2'),
-	(4,59,'',16316,51,0,'2013-01-21 11:21:03','3'),
-	(4,60,'',2290,51,0,'2013-01-21 11:26:04','3'),
-	(4,61,'',1766,51,0,'2013-01-21 11:26:09','4'),
-	(4,62,'1',3864,51,2,'2013-01-21 11:26:15','1');
-
-/*!40000 ALTER TABLE `responses` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table results
@@ -1273,9 +1525,7 @@ LOCK TABLES `results` WRITE;
 /*!40000 ALTER TABLE `results` DISABLE KEYS */;
 INSERT INTO `results` (`quizId`,`accountId`,`selectedAnswers`,`score`,`timePerQuestion`,`timeTaken`,`data`,`timestamp`,`attemptedAs`,`startTime`,`endTime`,`state`,`numCorrect`,`numIncorrect`)
 VALUES
-	(2,4,'[\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"|:5\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\"]',-1,'[1531,907,0,0,0,0,0,0,141670,0,0,0,0,0,0,0,0,0,0,0]',NULL,'[{\"t\":\"1358746146341\",\"e\":\"10\"},{\"t\":\"1358746146392\",\"e\":\"3\",\"q\":\"13\"},{\"t\":\"1358746147923\",\"e\":\"4\",\"q\":\"13\"},{\"t\":\"1358746147927\",\"e\":\"3\",\"q\":\"14\"},{\"t\":\"1358746148834\",\"e\":\"4\",\"q\":\"14\"},{\"t\":\"1358746148928\",\"e\":\"3\",\"q\":\"21\"},{\"t\":\"1358746252299\",\"e\":\"0\",\"q\":\"21\",\"o\":\"\"},{\"t\":\"1358746256850\",\"e\":\"0\",\"q\":\"21\",\"o\":\"\"},{\"t\":\"1358746262233\",\"e\":\"0\",\"q\":\"21\",\"o\":\"5\"},{\"t\":\"1358746278673\",\"e\":\"0\",\"q\":\"21\",\"o\":\"\"},{\"t\":\"1358746284097\",\"e\":\"0\",\"q\":\"21\",\"o\":\"5\"},{\"t\":\"1358746290598\",\"e\":\"4\",\"q\":\"21\"},{\"t\":\"1358746290598\",\"e\":\"8\"}]','2013-01-21 11:01:30',1,'2013-01-21 10:59:05',NULL,20,0,1),
-	(5,4,'[\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"5\",\"\",\"\",\"\",\"\",\"\",\"\",\"\"]',-1,'[1969,1104,1537,799,0,0,522,658,1238,668,572,1016,25375,0,0,0,0,0,0,0]',NULL,'[{\"t\":\"1358747242782\",\"e\":\"10\"},{\"t\":\"1358747242828\",\"e\":\"3\",\"q\":\"78\"},{\"t\":\"1358747244797\",\"e\":\"4\",\"q\":\"78\"},{\"t\":\"1358747244806\",\"e\":\"3\",\"q\":\"79\"},{\"t\":\"1358747245910\",\"e\":\"4\",\"q\":\"79\"},{\"t\":\"1358747245915\",\"e\":\"3\",\"q\":\"80\"},{\"t\":\"1358747247452\",\"e\":\"4\",\"q\":\"80\"},{\"t\":\"1358747247461\",\"e\":\"3\",\"q\":\"81\"},{\"t\":\"1358747248260\",\"e\":\"4\",\"q\":\"81\"},{\"t\":\"1358747248266\",\"e\":\"3\",\"q\":\"84\"},{\"t\":\"1358747248788\",\"e\":\"4\",\"q\":\"84\"},{\"t\":\"1358747248794\",\"e\":\"3\",\"q\":\"85\"},{\"t\":\"1358747249452\",\"e\":\"4\",\"q\":\"85\"},{\"t\":\"1358747249460\",\"e\":\"3\",\"q\":\"86\"},{\"t\":\"1358747250698\",\"e\":\"4\",\"q\":\"86\"},{\"t\":\"1358747250704\",\"e\":\"3\",\"q\":\"87\"},{\"t\":\"1358747251372\",\"e\":\"4\",\"q\":\"87\"},{\"t\":\"1358747251379\",\"e\":\"3\",\"q\":\"88\"},{\"t\":\"1358747251951\",\"e\":\"4\",\"q\":\"88\"},{\"t\":\"1358747251956\",\"e\":\"3\",\"q\":\"89\"},{\"t\":\"1358747252972\",\"e\":\"4\",\"q\":\"89\"},{\"t\":\"1358747252981\",\"e\":\"3\",\"q\":\"90\"},{\"t\":\"1358747274572\",\"e\":\"0\",\"q\":\"90\",\"o\":\"5\"},{\"t\":\"1358747278356\",\"e\":\"4\",\"q\":\"90\"},{\"t\":\"1358747278356\",\"e\":\"8\"}]','2013-01-21 11:17:58',1,'2013-01-21 11:17:21',NULL,20,0,1),
-	(4,4,'[\"1\",\"\",\"\",\"\",\"1\"]',2,'[2799,16316,2290,1766,3864]',NULL,'[{\"t\":\"1358747771357\",\"e\":\"3\",\"q\":\"62\"},{\"t\":\"1358747774067\",\"e\":\"0\",\"q\":\"62\",\"o\":\"1\"},{\"t\":\"1358747775221\",\"e\":\"4\",\"q\":\"62\"}]','2013-01-21 11:26:15',2,'2013-01-21 11:20:25',NULL,4,1,2);
+	(1,4,NULL,0,NULL,NULL,NULL,NULL,NULL,'2013-02-06 14:25:30',NULL,NULL,0,0);
 
 /*!40000 ALTER TABLE `results` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -1628,16 +1878,46 @@ CREATE TABLE `students` (
   `quizzesAttempted` text,
   `accountId` int(11) DEFAULT NULL,
   `streamId` int(11) DEFAULT NULL,
+  `quizzesRemaining` int(11) NOT NULL DEFAULT '0',
   KEY `accountId` (`accountId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `students` WRITE;
 /*!40000 ALTER TABLE `students` DISABLE KEYS */;
-INSERT INTO `students` (`ascoreL1`,`ascoreL2`,`quizzesAttempted`,`accountId`,`streamId`)
+INSERT INTO `students` (`ascoreL1`,`ascoreL2`,`quizzesAttempted`,`accountId`,`streamId`,`quizzesRemaining`)
 VALUES
-	(0,0,'[\"2\",\"5\",\"4\"]',4,1),
-	(0,0,NULL,5,1),
-	(0,0,'[\"1\",\"2\",\"3\"]',7,1);
+	(0,0,'[\"1\"]',4,1,49),
+	(0,0,NULL,5,1,0),
+	(0,0,NULL,7,1,0),
+	(0,0,'[\"5\"]',8,1,0),
+	(0,0,'[\"2\",\"3\",\"1\",\"4\",\"5\"]',9,1,0),
+	(0,0,'[\"2\",\"3\",\"4\",\"1\"]',10,1,0),
+	(0,0,'[\"2\",\"3\"]',11,1,0),
+	(0,0,'[\"1\",\"2\",\"3\",\"4\"]',12,1,0),
+	(0,0,'[\"1\",\"2\",\"3\",\"5\",\"4\",\"6\"]',13,1,0),
+	(0,0,'[\"2\",\"4\",\"3\",\"5\"]',14,1,0),
+	(0,0,'[\"2\",\"1\",\"3\",\"4\",\"5\",\"6\"]',15,1,0),
+	(0,0,'[\"2\"]',16,1,0),
+	(0,0,'[\"2\",\"1\",\"3\",\"4\",\"5\"]',17,1,0),
+	(0,0,'[\"3\",\"1\",\"2\",\"4\",\"5\",\"6\"]',18,1,0),
+	(0,0,'[\"3\",\"2\",\"1\"]',19,1,0),
+	(0,0,'[\"1\",\"2\"]',20,1,0),
+	(0,0,'[\"3\",\"2\",\"1\",\"4\",\"5\"]',21,1,0),
+	(0,0,'[\"2\"]',22,1,0),
+	(0,0,'[\"1\",\"2\",\"4\",\"3\",\"5\"]',23,1,0),
+	(0,0,'[\"1\",\"2\",\"3\"]',24,1,0),
+	(0,0,'[\"1\",\"2\",\"3\",\"4\",\"5\",\"6\"]',25,1,0),
+	(0,0,'[\"1\"]',26,1,0),
+	(0,0,'[\"9\",\"1\",\"2\"]',31,1,0),
+	(0,0,NULL,32,1,0),
+	(0,0,'[\"8\",\"2\"]',33,1,0),
+	(0,0,'[\"3\",\"2\",\"1\",\"4\",\"6\",\"5\",\"7\",\"8\"]',34,1,0),
+	(0,0,'[\"1\"]',35,1,0),
+	(0,0,NULL,36,1,0),
+	(0,0,NULL,37,1,0),
+	(0,0,'[\"1\"]',38,1,0),
+	(0,0,NULL,39,1,0),
+	(0,0,'[\"3\",\"2\"]',40,1,0);
 
 /*!40000 ALTER TABLE `students` ENABLE KEYS */;
 UNLOCK TABLES;
