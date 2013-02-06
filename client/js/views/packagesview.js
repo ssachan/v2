@@ -34,10 +34,18 @@ window.PackagesView = Backbone.View.extend({
 
 window.PackageItemView = Backbone.View.extend({
 	tagName : "li",
-
+	
 	className : "span4",
 	
 	initialize: function () {
+	},
+	
+	events : {
+		'click #purchase' : 'purchase',
+	},
+	
+	purchase : function(){
+		this.model.purchase();
 	},
 	
 	render : function() {

@@ -78,7 +78,7 @@ window.ReviewView = Backbone.View.extend({
 				model : questions[i]
 			}).render().el);
 		}
-        var math = document.getElementById('quiz-view');
+        var math = document.getElementById('q-list');
         MathJax.Hub.Queue(["Typeset", MathJax.Hub, math]);
 	}
 });

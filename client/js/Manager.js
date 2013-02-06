@@ -359,18 +359,31 @@ window.Manager = {
     },
 
     getPackagesByStreamId: function (streamId) {
-        var url = Config.serverUrl + 'packagesByStreamId/' + streamId;
+        var url = Config.serverUrl + 'packagesByStreamId';
         return $.ajax({
             url: url,
+            data:{streamId:streamId},
             dataType: "json",
             success: function (data) {
-                packages.reset(data);
+                if (data.status == STATUS.SUCCESS) {
+                    console.log("faculty fetched: " + data);
+                    packages.reset(data.data); // facDirectory.reset(data);
+                    var packagesView = new PackagesView({
+                        collection: packages,
+                    });
+                    app.showView('#content', packagesView);
+                    packagesView.onRender();
+                } else { // If not, show error
+                    helper.processStatus(data);
+                }
+                /*packages.reset(data);
                 packages.add(new Package());
                 var packagesView = new PackagesView({
                     collection: packages,
                 });
                 app.showView('#content', packagesView);
                 packagesView.onRender();
+                */
             }
         });
     },
@@ -393,7 +406,26 @@ window.Manager = {
             }
         });
     },
-
+    
+    purchasePackage: function (id) {
+        var url = Config.serverUrl + 'purchase';
+        return $.ajax({
+            url: url,
+            data: {
+                accountId: account.get('id'),
+                packageId: id
+            },
+            dataType: "json",
+            success: function (data) {
+                if (data.status == STATUS.SUCCESS) {
+                    attemptedQuestions.reset(data.data); // facDirectory.reset(data);
+                } else { // If not, show error
+                    helper.processStatus(data);
+                }
+            }
+        });
+    },
+    
     questionsExist: function (quiz) {
         var exists = true;
         var qArray = quiz.get('questionIdsArray');
@@ -429,9 +461,6 @@ window.Manager = {
                 if (data.status == STATUS.SUCCESS) {
                     activeQuiz = new Quiz(data.data.quiz);
                     quizQuestions.reset(data.data.questions);
-                    if (!account.get('quizzesAttemptedArray')) {
-                        account.set('quizzesAttemptedArray', []);
-                    }
                     if ($.inArray(activeQuiz.get('id'), account.get('quizzesAttemptedArray')) == -1) {
                         quizHistory.unshift(activeQuiz);
                         account.get('quizzesAttemptedArray').unshift(
@@ -458,21 +487,6 @@ window.Manager = {
                     collection: quizHistory
                 });
                 activeView.switchView(mySetsView);
-            }
-        });
-    },
-
-    purchasePackage: function (id) {
-        var url = Config.serverUrl + 'package/';
-        return $.ajax({
-            url: url,
-            type: "POST",
-            data: {
-                packageId: id
-            }, // gotta strinigfy the entire hash
-            dataType: "json",
-            success: function (data) {
-                console.log("packages fetched: " + data.length);
             }
         });
     },

@@ -183,7 +183,7 @@ var AppRouter = Backbone.Router.extend({
 			signUpView.onRender();
 		} 
 	},
-
+	
 	showView : function(selector, view) {
 		$('.alert').hide();
 		mView.close();
