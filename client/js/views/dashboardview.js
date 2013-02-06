@@ -37,7 +37,7 @@ window.DashboardView = Backbone.View.extend({
 	},
 
 	onRender : function() {
-
+		//$('a').tooltip({placement:'bottom'});
 	}
 
 });
