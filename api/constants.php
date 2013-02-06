@@ -4,26 +4,26 @@ class bases{
 
  public static $values = array(
     "UNSEEN"            => 0,
-    "CORRECT_L_1"       => 5,
-    "CORRECT_L_2"       => 4,
-    "CORRECT_L_3"       => 3,
-    "CORRECT_L_4"       => 2,
-    "CORRECT_L_5"       => 1,
-    "INCORRECT_L_1"     => -5,
-    "INCORRECT_L_2"     => -4,
-    "INCORRECT_L_3"     => -3,
-    "INCORRECT_L_4"     => -2,
-    "INCORRECT_L_5"     => -1,
-    "SKIPPED_ABOVE_L_1" => 2.5,
-    "SKIPPED_ABOVE_L_2" => 2.0,
-    "SKIPPED_ABOVE_L_3" => 1.5,
-    "SKIPPED_ABOVE_L_4" => 1.0,
-    "SKIPPED_ABOVE_L_5" => 0.5,
-    "SKIPPED_BELOW_L_1" => 2.5,
-    "SKIPPED_BELOW_L_2" => 2,
-    "SKIPPED_BELOW_L_3" => 1.5,
-    "SKIPPED_BELOW_L_4" => 1,
-    "SKIPPED_BELOW_L_5" => 0.5,
+    "CORRECT_L_1"       => 2.5,
+    "CORRECT_L_2"       => 2,
+    "CORRECT_L_3"       => 1.5,
+    "CORRECT_L_4"       => 1,
+    "CORRECT_L_5"       => 0.5,
+    "INCORRECT_L_1"     => -2.5,
+    "INCORRECT_L_2"     => -2,
+    "INCORRECT_L_3"     => -1.5,
+    "INCORRECT_L_4"     => -1,
+    "INCORRECT_L_5"     => -0.5,
+    "SKIPPED_ABOVE_L_1" => 1.25,
+    "SKIPPED_ABOVE_L_2" => 1.0,
+    "SKIPPED_ABOVE_L_3" => 0.75,
+    "SKIPPED_ABOVE_L_4" => 0.50,
+    "SKIPPED_ABOVE_L_5" => 0.25,
+    "SKIPPED_BELOW_L_1" => -1.25,
+    "SKIPPED_BELOW_L_2" => -0.5,
+    "SKIPPED_BELOW_L_3" => -0.75,
+    "SKIPPED_BELOW_L_4" => -0.5,
+    "SKIPPED_BELOW_L_5" => -0.25,
     "L_1"               => 20,
     "L_2"               => 40,
     "L_3"               => 60,
@@ -43,14 +43,14 @@ class bases{
 
 class timeRanges {
     public static $values = array(
-        "CORRECT_HIGH"       => 0.5,
-        "CORRECT_LOW"        => 2,
-        "INCORRECT_HIGH"     => 0.5,
-        "INCORRECT_LOW"      => 2,
-        "SKIPPED_ABOVE_HIGH" => 0.5,
-        "SKIPPED_ABOVE_LOW"  => 2,
-        "SKIPPED_BELOW_HIGH" => 2,
-        "SKIPPED_BELOW_LOW"  => 0.5 );
+        "CORRECT_HIGH"       => 1,
+        "CORRECT_LOW"        => 1,
+        "INCORRECT_HIGH"     => 1,
+        "INCORRECT_LOW"      => 1,
+        "SKIPPED_ABOVE_HIGH" => 1,
+        "SKIPPED_ABOVE_LOW"  => 1,
+        "SKIPPED_BELOW_HIGH" => 1,
+        "SKIPPED_BELOW_LOW"  => 1 );
 
     public static function set($key, $value, $default = null)
     {
@@ -65,8 +65,8 @@ class timeRanges {
 
 class abilityFactors{
     public static $values= array(
-    "M1" => 0.2,
-    "M2" => 0.01 );
+    "M1" => 0.03,
+    "M2" => 0.0075 );
 
     public static function set($key, $value, $default = null){
         self::$values[$key] = is_null($value) ? $default : $value;
@@ -124,10 +124,10 @@ class deltaCalculator{
         else{
             switch($state){
                 case analConst::CORRECT :
-                    return (1 - ($tmp->get("M2") * $x));
+                    return (1 + ($tmp->get("M2") * $x));
                 break;
                 case analConst::INCORRECT :
-                    return (($tmp->get("M1") * $x) + 1)/2;
+                    return (1-($tmp->get("M1") * $x))/2;
                 break;
                 default:
                    return 1; 
