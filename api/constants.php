@@ -3,32 +3,24 @@
 class bases{
 
  public static $values = array(
-    "UNSEEN"            => 0,
-    "CORRECT_L_1"       => 2.5,
-    "CORRECT_L_2"       => 2,
-    "CORRECT_L_3"       => 1.5,
-    "CORRECT_L_4"       => 1,
-    "CORRECT_L_5"       => 0.5,
-    "INCORRECT_L_1"     => -2.5,
-    "INCORRECT_L_2"     => -2,
-    "INCORRECT_L_3"     => -1.5,
-    "INCORRECT_L_4"     => -1,
-    "INCORRECT_L_5"     => -0.5,
-    "SKIPPED_ABOVE_L_1" => 1.25,
-    "SKIPPED_ABOVE_L_2" => 1.0,
-    "SKIPPED_ABOVE_L_3" => 0.75,
-    "SKIPPED_ABOVE_L_4" => 0.50,
-    "SKIPPED_ABOVE_L_5" => 0.25,
-    "SKIPPED_BELOW_L_1" => -1.25,
-    "SKIPPED_BELOW_L_2" => -0.5,
-    "SKIPPED_BELOW_L_3" => -0.75,
-    "SKIPPED_BELOW_L_4" => -0.5,
-    "SKIPPED_BELOW_L_5" => -0.25,
-    "L_1"               => 20,
-    "L_2"               => 40,
-    "L_3"               => 60,
-    "L_4"               => 80,
-    "L_5"               => 100 );
+    "UNSEEN"                   => 0,
+    "CORRECT_LOW_LEVEL"        => 20,
+    "CORRECT_LOW_VAL"          => 3,
+    "CORRECT_HIGH_LEVEL"       => 80,
+    "CORRECT_HIGH_VAL"         => 1,
+    "INCORRECT_LOW_LEVEL"      => 20,
+    "INCORRECT_LOW_VAL"        => -1,
+    "INCORRECT_HIGH_LEVEL"     => 80,
+    "INCORRECT_HIGH_VAL"       => -3,
+    "SKIPPED_ABOVE_LOW_LEVEL"  => 20,
+    "SKIPPED_ABOVE_LOW_VAL"    => 1.5,
+    "SKIPPED_ABOVE_HIGH_LEVEL" => 80,
+    "SKIPPED_ABOVE_HIGH_VAL"   => 0.5,
+    "SKIPPED_BELOW_LOW_LEVEL"  => 20,
+    "SKIPPED_BELOW_LOW_VAL"    => -0.5,
+    "SKIPPED_BELOW_HIGH_LEVEL" => 80,
+    "SKIPPED_BELOW_HIGH_VAL"   => -1.5,
+     );
 
     public static function set($key, $value, $default = null)
     {
@@ -43,14 +35,14 @@ class bases{
 
 class timeRanges {
     public static $values = array(
-        "CORRECT_HIGH"       => 1,
-        "CORRECT_LOW"        => 1,
-        "INCORRECT_HIGH"     => 1,
-        "INCORRECT_LOW"      => 1,
-        "SKIPPED_ABOVE_HIGH" => 1,
-        "SKIPPED_ABOVE_LOW"  => 1,
-        "SKIPPED_BELOW_HIGH" => 1,
-        "SKIPPED_BELOW_LOW"  => 1 );
+        "CORRECT_HIGH"       => 0.5,
+        "CORRECT_LOW"        => 2,
+        "INCORRECT_HIGH"     => 2,
+        "INCORRECT_LOW"      => 0.5,
+        "SKIPPED_ABOVE_HIGH" => 0.5,
+        "SKIPPED_ABOVE_LOW"  => 2,
+        "SKIPPED_BELOW_HIGH" => 2,
+        "SKIPPED_BELOW_LOW"  => 0.5 );
 
     public static function set($key, $value, $default = null)
     {
@@ -80,11 +72,10 @@ class abilityFactors{
 class deltaCalculator{
     
     public static function calculate($state, $score, $qScore, $timeTaken, $avgTime, $sigmaTime){
-        $tmp = new bases;
-        $base = $tmp->get(self::getBase($state,$score,$qScore)."_".self::getLevel($score));
+        $base = self::getBaseScore($state,$score,$qScore);
         $timeFactor = self::timeFactor($state, $timeTaken, $avgTime, $sigmaTime, $score, $qScore);
         $abilityFactor = self::abilityFactor($score, $qScore, $state );
-        
+
         return round($base * $timeFactor * $abilityFactor,2);
     }
     public static function getBase($state,$score,$qScore)
@@ -95,7 +86,19 @@ class deltaCalculator{
     			$base .= "_ABOVE";
     		else
     			$base .="_BELOW";
-    	return $base;
+
+        return $base;
+    }
+    public static function getBaseScore($state,$score,$qScore)
+   {
+        $base = self::getBase($state,$score,$qScore);
+        $tmp = new bases;
+        if($score <= $tmp->get($base."_LOW_LEVEL"))
+            return $tmp->get($base."_LOW_VAL");
+        elseif($score >= $tmp->get($base."_HIGH_LEVEL"))
+            return $tmp->get($base."_HIGH_VAL");
+        else
+            return ($score - $tmp->get($base."_LOW_LEVEL")) /($tmp->get($base."_HIGH_LEVEL")-$tmp->get($base."_LOW_LEVEL"))*($tmp->get($base."_HIGH_VAL")-$tmp->get($base."_LOW_VAL"))+$tmp->get($base."_LOW_VAL");   
     }
     public static function timeFactor($state, $value, $mu, $sigma, $score, $qScore){
         $tmp = new timeRanges;
@@ -137,27 +140,6 @@ class deltaCalculator{
     }
     public static function getPercentile($value, $mu, $sigma){
         return self::cdf(($value-$mu)/$sigma)*100;
-    }
-    public static function getLevel($score){
-    	$tmp = new bases;
-        switch($score)
-        {
-            case ($score < $tmp->get("L_1")):
-                return "L_1";
-            break;
-            case ($score < $tmp->get("L_2")):
-                return "L_2";
-            break;
-            case ($score < $tmp->get("L_3")):
-                return "L_3";
-            break;
-            case ($score < $tmp->get("L_4")):
-                return "L_4";
-            break;
-            case ($score < $tmp->get("L_5")):
-                return "L_5";
-            break;
-        }
     }
     static function erf($x) { 
         $pi = 3.1415927; 
@@ -206,8 +188,7 @@ function testDelta()
           $score         = $vars[5];
           $state         = $vars[0]; $qScore = $vars[1]; $timeTaken = $vars[2]; $avgTime = $vars[3]; $sigmaTime = $vars[4];
           $delta         = deltaCalculator::calculate($state, $score, $qScore, $timeTaken, $avgTime, $sigmaTime);
-          $tmp           = new bases;
-          $base          = $tmp->get(deltaCalculator::getBase($state,$score,$qScore)."_".deltaCalculator::getLevel($score));
+          $base          = round(deltaCalculator::getBaseScore($state,$score,$qScore),2);
           $timeFactor    = deltaCalculator::timeFactor($state, $timeTaken, $avgTime, $sigmaTime, $score, $qScore);
           $abilityFactor = deltaCalculator::abilityFactor($score, $qScore, $state);
           $vars[]        = $delta; $vars[] = $base; $vars[] = $timeFactor; $vars[] = $abilityFactor;
@@ -221,8 +202,7 @@ function testDelta()
         $vars          = explode(",",$currentLine);
         $state         = $vars[0]; $qScore = $vars[1]; $timeTaken = $vars[2]; $avgTime = $vars[3]; $sigmaTime = $vars[4];
         $delta         = deltaCalculator::calculate($state, $score, $qScore, $timeTaken, $avgTime, $sigmaTime);
-        $tmp           = new bases;
-        $base          = $tmp->get(deltaCalculator::getBase($state,$score,$qScore)."_".deltaCalculator::getLevel($score));
+        $base          = round(deltaCalculator::getBaseScore($state,$score,$qScore),2);
         $timeFactor    = deltaCalculator::timeFactor($state, $timeTaken, $avgTime, $sigmaTime, $score, $qScore);
         $abilityFactor = deltaCalculator::abilityFactor($score, $qScore, $state);
         $vars[]        = $score;
