@@ -271,14 +271,14 @@ $app->post("/signup", function () use ($app) {
             $account = new stdClass();
             $account->id = createAccount($firstName, $lastName, $email, $password);
             insertStudent($account->id, $streamId);
-            $account->firstName = $firstName;
-            $account->lastName = $lastName;
-            $account->email = $email;
-            $account->streamId = $streamId;
-            $account->ascore = 0;
+            $account = getStudentByAccountId($id, $streamId);
+            if (file_exists(DP_PATH . $account->id . '.jpg')) {
+                $account->dp = true;
+            } else {
+                $account->dp = false;
+            }
             $_SESSION['user'] = $account->id;
             $_SESSION['type'] = CUSTOM;
-            $account->dp='0';
             $response["status"] = SUCCESS;
             $response["data"] = $account;
         }
@@ -310,7 +310,7 @@ $app->post("/signup", function () use ($app) {
             if (fbAccountExists($account->id) == 0) {
                 insertFb($account->id);
             }
-            $account = getStudentByAccountId($account->id, 1);
+            $account = getStudentByAccountId($account->id, $streamId);
         } else {
             // create account
             $account->id = createAccount($firstName, $lastName, $email);
@@ -318,19 +318,14 @@ $app->post("/signup", function () use ($app) {
             insertFb($account->id);
             // push into students
             insertStudent($account->id, $streamId);
-            $account->firstName = $firstName;
-            $account->lastName = $lastName;
-            $account->email = $email;
-            $account->streamId = $streamId;
-            //$account->streamId = $streamId;
-            $account->ascore = 0;
+            $account = getStudentByAccountId($account->id, 1);
         }
         $_SESSION['user'] = $account->id;
         $_SESSION['type'] = FB;
-        if (file_exists(DP_PATH.$account->id)) {
-            $account->dp='1';
-        }else{
-            $account->dp='0';
+        if (file_exists(DP_PATH . $account->id)) {
+            $account->dp = '1';
+        } else {
+            $account->dp = '0';
         }
         $response["status"] = SUCCESS;
         $response["data"] = $account;
@@ -361,7 +356,25 @@ $app->post("/login", function () use ($app) {
     $email = $app->request()->post('email');
     $password = $app->request()->post('password');
     $streamId = $app->request()->post('streamId');
-    $sql = "SELECT a.id as id,a.email,a.firstName,a.lastName,s.ascoreL1 as ascore,s.quizzesAttempted from accounts a,students s where a.email='"
+    $account = getAccountByEmail($email);
+    if ($account->password == $password) {
+        // account exists
+        $account = getStudentByAccountId($account->id, $streamId);
+        if (file_exists(DP_PATH . $account->id . '.jpg')) {
+            $account->dp = true;
+        } else {
+            $account->dp = false;
+        }
+        $response["status"] = SUCCESS;
+        $response["data"] = $account;
+        $_SESSION['user'] = $account->id;
+        $_SESSION['type'] = CUSTOM;
+    }else{
+        $response["status"] = FAIL;
+        $response["data"] = "Email and Password don't match.";
+    }
+
+    /*$sql = "SELECT a.id as id,a.email,a.firstName,a.lastName,s.ascoreL1 as ascore,s.quizzesAttempted from accounts a,students s where a.email='"
             . $email . "' AND a.password='" . $password . "' AND s.streamId='"
             . $streamId . "' AND a.id=s.accountId";
     try {
@@ -372,10 +385,10 @@ $app->post("/login", function () use ($app) {
         if ($record != null && $record->id != null) {
             $record->type = CUSTOM;
             $response["status"] = SUCCESS;
-            if (file_exists(DP_PATH.$record->id.'.jpg')) {
-                $record->dp=true;
-            }else{
-                $record->dp=false;
+            if (file_exists(DP_PATH . $record->id . '.jpg')) {
+                $record->dp = true;
+            } else {
+                $record->dp = false;
             }
             $response["data"] = $record;
             $_SESSION['user'] = $record->id;
@@ -388,7 +401,7 @@ $app->post("/login", function () use ($app) {
         $response["status"] = ERROR;
         $response["data"] = EXCEPTION_MSG;
         phpLog($e->getMessage());
-    }
+    }*/
     sendResponse($response);
 });
 
@@ -398,10 +411,10 @@ $app->get("/isAuth", function () use ($app) {
     if (isset($_SESSION['user'])) {
         $id = $_SESSION['user'];
         $account = getStudentByAccountId($id, 1);
-        if (file_exists(DP_PATH.$account->id.'.jpg')) {
-            $account->dp=true;
-        }else{
-            $account->dp=false;
+        if (file_exists(DP_PATH . $account->id . '.jpg')) {
+            $account->dp = true;
+        } else {
+            $account->dp = false;
         }
         $account->type = $_SESSION['type'];
         $response["status"] = SUCCESS;
@@ -474,11 +487,12 @@ $app->post("/uploadImage", $authenticate($app), function () use ($app) {
             $response["status"] = FAIL;
             $response["data"] = $_FILES["file"]["error"];
         } else {
-            if (file_exists(DP_PATH . $_SESSION['user'].'.jpg')) {
+            if (file_exists(DP_PATH . $_SESSION['user'] . '.jpg')) {
                 // rename the file and create a back-up
-               // move_uploaded_file($_FILES["file"]["tmp_name"], DP_PATH.$_FILES["file"]["name"]);
+                // move_uploaded_file($_FILES["file"]["tmp_name"], DP_PATH.$_FILES["file"]["name"]);
             }
-            if(move_uploaded_file($_FILES["file"]["tmp_name"], DP_PATH.$_SESSION['user'].'.jpg')){
+            if (move_uploaded_file($_FILES["file"]["tmp_name"], DP_PATH
+                    . $_SESSION['user'] . '.jpg')) {
                 $response["status"] = SUCCESS;
                 $response["data"] = "";
             }
