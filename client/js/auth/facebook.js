@@ -2,7 +2,7 @@ window.fbAsyncInit = function() {
 
 	console.info('FB jssdk loaded');
 	FB.init({
-		appId : '345218642220354', // App ID
+		appId : '471575209563142', // App ID
 		status : true, // check login status
 		cookie : true, // enable cookies to allow the server to access
 		xfbml : true
@@ -22,7 +22,7 @@ window.fbAsyncInit = function() {
 				user.attributes.type=2;
 				user.attributes.streamId=streamId;
 				account.signUp(user.attributes);
-				account.setAttribute('dp',user.get('pictures').square);
+				account.set('dp',user.get('pictures').square);
 		}
 	});
 
@@ -38,7 +38,7 @@ window.fbAsyncInit = function() {
 				user.attributes.type=2;
 				user.attributes.streamId=streamId;
 				account.signUp(user.attributes);
-				account.setAttribute('dp',user.get('pictures').square);
+				account.set('dpUrl',user.get('pictures').square);
 		}
 		
 		/*var table = $('.table tbody').empty();
@@ -61,8 +61,3 @@ window.fbAsyncInit = function() {
 	
 	//user.updateLoginStatus();
 };
-
-/*$('#login').click(function(){ user.login(); });
-
-$('#logout').click(function(){ user.logout(); });
-*/

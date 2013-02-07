@@ -68,12 +68,17 @@ window.ReviewView = Backbone.View.extend({
     	
     	var questions = this.filtered.models;
         var len = questions.length;
+		if (len == 0) {
+			$('#q-list', this.el).html('<h3>No questions found. Try again...</h3>');
+			return;
+		}
+		$('#q-list', this.el).html('');
     	for ( var i = 0; i < len; i++) {
 			$('#q-list', this.el).append(new QuestionItemView({
 				model : questions[i]
 			}).render().el);
 		}
-        var math = document.getElementById('quiz-view');
+        var math = document.getElementById('q-list');
         MathJax.Hub.Queue(["Typeset", MathJax.Hub, math]);
 	}
 });
@@ -81,7 +86,6 @@ window.ReviewView = Backbone.View.extend({
 window.QuestionItemView = Backbone.View.extend({
 	tagName :'tr',
 	initialize : function() {
-		this.render();
 	},
 
 	render : function() {
@@ -89,4 +93,22 @@ window.QuestionItemView = Backbone.View.extend({
 		return this;
 	},
 
+});
+
+window.ReviewQuestionView = Backbone.View.extend({
+	className :'container reviewq',
+	initialize : function() {
+		this.qView = new QuizQuestionView();
+	},
+
+	render : function() {
+		$(this.el).html(this.template(this.model.toJSON()));
+		return this;
+	},
+	
+	onRender : function(){
+		this.qView.model = this.model;
+		$('#r-question').html(this.qView.render().el);
+		this.qView.onRender();
+	}
 });

@@ -66,7 +66,7 @@ window.Manager = {
                             break;
                     }
                 } else { // If not, send them back to the home page
-                    helper.showError(data.data);
+                    helper.processStatus(data);
                 }
             }
         });
@@ -81,7 +81,7 @@ window.Manager = {
                 if (data.status == STATUS.SUCCESS) {
                     account.set('ascore', data.data);
                 } else { // If not, send them back to the home page
-                    helper.showError(data.data);
+                    helper.processStatus(data);
                 }
             }
         });
@@ -116,7 +116,7 @@ window.Manager = {
                             break;
                     }
                 } else { // If not, send them back to the home page
-                    helper.showError(data.data);
+                    helper.processStatus(data);
                 }
             }
         });
@@ -186,7 +186,7 @@ window.Manager = {
                     app.showView('#content', quizLibraryView);
                     quizLibraryView.onRender();
                 } else { // If not, send them back to the home page
-                    helper.showError(data.data);
+                    helper.processStatus(data);
                 }
             }
         });
@@ -205,7 +205,7 @@ window.Manager = {
                 if (data.status == STATUS.SUCCESS) {
                     quizHistory.reset(data.data);
                 } else { // If not, send them back to the home page
-                    helper.showError(data.data);
+                    helper.processStatus(data);
                 }
             }
         });
@@ -225,7 +225,7 @@ window.Manager = {
                     app.showView('#content', facDirectoryView);
                     facDirectoryView.onRender();
                 } else { // If not, send them back to the home page
-                    helper.showError(data.data);
+                    helper.processStatus(data);
                 }
             }
         });
@@ -244,13 +244,13 @@ window.Manager = {
                 if (data.status == STATUS.SUCCESS) {
                 	question.set(data.data);
                 	question.set('hasAttempted',true);
-                	var qView = new QuizQuestionView({
+                	var qView = new ReviewQuestionView({
                         model: question,
                     });
                     app.showView('#content', qView);
                     qView.onRender();
                 } else { // If not, send them back to the home page
-                    helper.showError(data.data);
+                    helper.processStatus(data);
                 }
             }
         });	
@@ -319,7 +319,7 @@ window.Manager = {
                     console.log("faculty fetched: " + data);
                     fac.set(data.data);
                 } else { // If not, show error
-                    helper.showError(data.data);
+                    helper.processStatus(data);
                 }
             }
         });
@@ -335,42 +335,9 @@ window.Manager = {
                     console.log("faculty fetched: " + data);
                     facQuizzes.reset(data.data); // facDirectory.reset(data);
                 } else { // If not, show error
-                    helper.showError(data.data);
+                    helper.processStatus(data);
                 }
             }
-        });
-    },
-
-    getRSquareData: function () {
-        var dfd = [];
-        dfd.push(this.getDashboardData());
-        $.when.apply(null, dfd)
-            .then(
-
-        function (data) {
-            activeView.switchMenu('rsquare');
-            $('#main-content').append('<div class="row-fluid"><div class="page-title"><h2>Results Square</h2></div><br></div>');
-            var html = [];
-            html.push('<div class="row-fluid"><div class="center span3">');
-            html.push('<strong>How to understand this chart</strong></div>');
-            html.push('<div class="span7 center">');
-            html.push('<div class="span3" style="background: #C4DDDA">Not Started</div>');
-            html.push('<div class="span3" style="background: #FFFDC7">');
-            html.push('Getting There</div>');
-            html.push('<div class="span3" style="background: #FFB58B">Needs Improvement</div>');
-            html.push('<div class="span3" style="background: #B7E6A8">Achiever!</div></div>');
-            html.push('<div class="span1"></div></div>');
-            $('#main-content').append(html.join(''));
-            var l1 = sectionL1.models;
-            var len = l1.length;
-            for (var i = 0; i < len; i++) {
-                var pView = new PerformanceView({
-                    model: l1[i]
-                });
-                $('#main-content').append(pView.render().el);
-                pView.onRender();
-            }
-            
         });
     },
 
@@ -392,18 +359,31 @@ window.Manager = {
     },
 
     getPackagesByStreamId: function (streamId) {
-        var url = Config.serverUrl + 'packagesByStreamId/' + streamId;
+        var url = Config.serverUrl + 'packagesByStreamId';
         return $.ajax({
             url: url,
+            data:{streamId:streamId},
             dataType: "json",
             success: function (data) {
-                console.log("questions fetched: " + data.length);
-                packages.reset(data);
+                if (data.status == STATUS.SUCCESS) {
+                    console.log("faculty fetched: " + data);
+                    packages.reset(data.data); // facDirectory.reset(data);
+                    var packagesView = new PackagesView({
+                        collection: packages,
+                    });
+                    app.showView('#content', packagesView);
+                    packagesView.onRender();
+                } else { // If not, show error
+                    helper.processStatus(data);
+                }
+                /*packages.reset(data);
+                packages.add(new Package());
                 var packagesView = new PackagesView({
                     collection: packages,
                 });
                 app.showView('#content', packagesView);
                 packagesView.onRender();
+                */
             }
         });
     },
@@ -419,15 +399,33 @@ window.Manager = {
             dataType: "json",
             success: function (data) {
                 if (data.status == STATUS.SUCCESS) {
-                    console.log("review questions fetched: " + data);
                     attemptedQuestions.reset(data.data); // facDirectory.reset(data);
                 } else { // If not, show error
-                    helper.showError(data.data);
+                    helper.processStatus(data);
                 }
             }
         });
     },
-
+    
+    purchasePackage: function (id) {
+        var url = Config.serverUrl + 'purchase';
+        return $.ajax({
+            url: url,
+            data: {
+                accountId: account.get('id'),
+                packageId: id
+            },
+            dataType: "json",
+            success: function (data) {
+                if (data.status == STATUS.SUCCESS) {
+                    attemptedQuestions.reset(data.data); // facDirectory.reset(data);
+                } else { // If not, show error
+                    helper.processStatus(data);
+                }
+            }
+        });
+    },
+    
     questionsExist: function (quiz) {
         var exists = true;
         var qArray = quiz.get('questionIdsArray');
@@ -463,9 +461,6 @@ window.Manager = {
                 if (data.status == STATUS.SUCCESS) {
                     activeQuiz = new Quiz(data.data.quiz);
                     quizQuestions.reset(data.data.questions);
-                    if (!account.get('quizzesAttemptedArray')) {
-                        account.set('quizzesAttemptedArray', []);
-                    }
                     if ($.inArray(activeQuiz.get('id'), account.get('quizzesAttemptedArray')) == -1) {
                         quizHistory.unshift(activeQuiz);
                         account.get('quizzesAttemptedArray').unshift(
@@ -473,7 +468,7 @@ window.Manager = {
                     }
                     that.loadQuiz2(activeQuiz);
                 } else { // If not, send them back to the home page
-                    helper.showError(data.data);
+                    helper.processStatus(data);
                 }
             },
         });
@@ -496,21 +491,6 @@ window.Manager = {
         });
     },
 
-    purchasePackage: function (id) {
-        var url = Config.serverUrl + 'package/';
-        return $.ajax({
-            url: url,
-            type: "POST",
-            data: {
-                packageId: id
-            }, // gotta strinigfy the entire hash
-            dataType: "json",
-            success: function (data) {
-                console.log("packages fetched: " + data.length);
-            }
-        });
-    },
-
     /**
      * ensure all questions are loaded in the quizQuestions collection
      * 
@@ -520,9 +500,6 @@ window.Manager = {
     getDataForQuizLibrary: function (streamId) {
         var dfd = [];
         if (sectionL1.length == 0 || sectionL2.length == 0) {
-            // what if the data is already is being fetched???I think jquery
-            // makes sure with promises that it is not fetched again
-            // @ssachan You can check on the status of a promise - tanujb
             dfd.push(this.getSubjectsByStreamId(streamId));
         }
         var that = this;
@@ -543,6 +520,7 @@ window.Manager = {
         if (quiz != null) {
             switch (quiz.get('status')) {
                 case quiz.STATUS_NOTSTARTED:
+                	account.set('quizzesRemaining',parseInt(account.get('quizzesRemaining'))-1);
                     this.showInstructions(quiz);
                     break;
                 case quiz.STATUS_INPROGRESS:
@@ -560,31 +538,7 @@ window.Manager = {
             window.location = '#library';
         }
     },
-
-    getDataForQuiz2: function (quizId) {
-        var quiz = null;
-        quiz = quizHistory.get(quizId) == null ? quizLibrary.get(quizId) : quizHistory.get(quizId);
-        if (quiz != null) {
-            switch (quiz.get('status')) {
-                case quiz.STATUS_NOTSTARTED:
-                    this.showInstructions(quiz);
-                    break;
-                case quiz.STATUS_INPROGRESS:
-                    this.showResume(quiz);
-                    break;
-                case quiz.STATUS_INTERRUPTED:
-                    this.showInstructions(quiz);
-                    break;
-                case quiz.STATUS_COMPLETED:
-                    this.showResults(quiz);
-                    break;
-            }
-        } else {
-            // for now redirect to the quiz library page
-            window.location = '#library';
-        }
-    },
-
+    
     getDataForReview: function () {
         var dfd = [];
         if (!(activeView instanceof DashboardView)) {

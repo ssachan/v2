@@ -59,6 +59,7 @@ window.ResumeView = Backbone.View.extend({
 });
 
 window.QuizView = Backbone.View.extend({
+	className : 'container quizview',
 
 	initialize : function() {
 		var context = this;
@@ -165,8 +166,7 @@ window.QuizView = Backbone.View.extend({
 		}
 		this.question.set('hasAttempted', false);
 		this.questionView.model = this.question;
-		this.questionView.el=$('#question');
-		//$('#question').html(this.questionView.render().el);
+		$('#question').html(this.questionView.render().el);
 		this.questionView.render();
 		this.questionView.onRender();
 		$("#qnum").html((parseInt(this.index) + 1));
@@ -183,7 +183,7 @@ window.QuizView = Backbone.View.extend({
 });
 
 window.PracticeView = Backbone.View.extend({
-
+	className : 'container quizview',
 	initialize : function() {
 		var context = this;
 		this.index = this.options.index;

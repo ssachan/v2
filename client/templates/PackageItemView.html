@@ -1,9 +1,23 @@
-<th><%=name%></th>
-<% var detail = details.split("|:");%>
-<th><%= detail[0] %></th>
-<th><%= detail[1] %></th>
-<th>Yes</th>
-<th>Yes</th>
-<th>Yes</th>
-<th>Rs. <%=price %></th>
-<th><button type="submit" class="btn">BUY</button></th>
+<div class="thumbnail box package-box">
+    <div class="row-fluid">
+        <div>
+            <h2 class="center"><%=displayName%></h2>
+            <h4>Ideal for revision with 4-6 weeks to go</h4>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="font-h4 bold center"
+            style="margin-top: 20px; margin-bottom: 16px; color: #31859C; font-size: 20px; line-height: 30px;">
+            <%=number%> PrepSets</div>
+    </div>
+    <div class="row-fluid">
+        <div class="center" style="line-height: 20px">
+            <strong>Features include: </strong> <br> <span>Powerful Study Planner</span> <br>
+            <span>Tests by the Best Teachers</span> <br> <span>Video Solutions to each
+                question</span> <br> <span>Personalized Feedback</span> <br>
+        </div>
+    </div>
+    <div class="row-fluid center">
+        <a class="btn btn orange-btn" id="purchase"> Purchase for Rs <%=price%></a>
+    </div>
+</div>

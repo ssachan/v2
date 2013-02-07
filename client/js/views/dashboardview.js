@@ -37,7 +37,7 @@ window.DashboardView = Backbone.View.extend({
 	},
 
 	onRender : function() {
-
+		//$('a').tooltip({placement:'bottom'});
 	}
 
 });
@@ -46,6 +46,9 @@ window.OverView = Backbone.View.extend({
 	className : "overall",
 
 	initialize : function() {
+		_.bindAll(this, "render");
+		this.model.bind('change', this.render);
+		this.model.bind('change', this.onRender);
 	},
 
 	uploadImage : function() {
@@ -85,7 +88,7 @@ window.OverView = Backbone.View.extend({
 	},
 
 	onRender : function() {
-		// this.uploadImage();
+		//this.uploadImage();
 		$('#result-square').empty();
 		var l1 = sectionL1.models;
         var len = l1.length;
@@ -109,10 +112,20 @@ window.PerformanceView = Backbone.View.extend({
 	},
 
 	events : {
+		'click .l1' : 'onL1Click',
 		'click .l2 li' : 'onL2Click',
 		'click .l3 li' : 'onL3Click',
 	},
-
+	
+	onL1Click : function(e) {
+		$('#' + this.activel2Id + '-l2').removeClass('active');
+		this.activel2Id = '0';
+		$('.l3', this.el).empty();
+		$('.l3-stats', this.el).hide();
+		this.activel3Id = '0';
+		this.renderL1Stats();
+	},
+	
 	onL2Click : function(e) {
 		$('.l3', this.el).empty();
 		$('.l3-stats', this.el).hide();
@@ -137,7 +150,6 @@ window.PerformanceView = Backbone.View.extend({
 
 	render : function() {
 		$(this.el).html(this.template(this.model.toJSON()));
-		$('.l3-stats', this.el).hide();
 		return this;
 	},
 
@@ -165,20 +177,17 @@ window.PerformanceView = Backbone.View.extend({
 				$('#'+l2[i].get('id') + '-l2>a', this.el).addClass('bg-grey');
 			}
 		}
+		this.renderL1Stats();
 	},
 	
-	renderL2Stats : function (){
-		var context = this;
-		var thisL2Score = scoreL2.get(context.activel2Id);
-		var l2Name = (sectionL2.get(context.activel2Id)).get('displayName');
-		$('.l3-stats #topic', this.el).html(l2Name);
-		if(thisL2Score!=null){
-			$('.l3-stats #bar', this.el).html('<div class="bar bar-warning" style="width:'+parseInt(thisL2Score.get('score'))+'%"></div>');
-			$('.l3-stats #pts', this.el).html(thisL2Score.get('score'));
-			$('.l3-stats #total', this.el).html(thisL2Score.get('numQuestions'));
-			$('.l3-stats #correct', this.el).html(thisL2Score.get('numCorrect'));
-			$('.l3-stats #incorrect', this.el).html(thisL2Score.get('numIncorrect'));
-			$('.l3-stats #unattempted', this.el).html(thisL2Score.get('numUnattempted'));
+	renderStats : function (score){
+		if(score!=null){
+			$('.l3-stats #bar', this.el).html('<div class="bar bar-warning" style="width:'+parseInt(score.get('score'))+'%"></div>');
+			$('.l3-stats #pts', this.el).html(parseInt(score.get('score')));
+			$('.l3-stats #total', this.el).html(parseInt(score.get('numQuestions')));
+			$('.l3-stats #correct', this.el).html(parseInt(score.get('numCorrect')));
+			$('.l3-stats #incorrect', this.el).html(parseInt(score.get('numIncorrect')));
+			$('.l3-stats #unattempted', this.el).html(parseInt(score.get('numUnattempted')));
 		}else{
 			$('.l3-stats #bar', this.el).html('<div class="bar bar-warning" style="width:'+parseInt('0')+'%"></div>');
 			$('.l3-stats #pts', this.el).html('0');
@@ -188,6 +197,21 @@ window.PerformanceView = Backbone.View.extend({
 			$('.l3-stats #unattempted', this.el).html('0');
 		}
 		$('.l3-stats', this.el).show();
+	},
+	
+	renderL1Stats : function (){
+		var thisL1Score = scoreL1.get(this.model.get('id'));
+		var l1Name = this.model.get('displayName');
+		$('.l3-stats #topic', this.el).html(l1Name);
+		this.renderStats(thisL1Score);
+	},
+	
+	renderL2Stats : function (){
+		var context = this;
+		var thisL2Score = scoreL2.get(context.activel2Id);
+		var l2Name = (sectionL2.get(context.activel2Id)).get('displayName');
+		$('.l3-stats #topic', this.el).html(l2Name);
+		this.renderStats(thisL2Score);
 	},
 	
 	renderL3 : function() {
@@ -223,22 +247,7 @@ window.PerformanceView = Backbone.View.extend({
 		var thisL3Score = scoreL3.get(context.activel3Id);
 		var l3Name = (sectionL3.get(context.activel3Id)).get('displayName');
 		$('.l3-stats #topic', this.el).html(l3Name);
-		if(thisL3Score!=null){
-			$('.l3-stats #bar', this.el).html('<div class="bar bar-warning" style="width:'+parseInt(thisL3Score.get('score'))+'%"></div>');
-			$('.l3-stats #pts', this.el).html(thisL3Score.get('score'));
-			$('.l3-stats #total', this.el).html(thisL3Score.get('numQuestions'));
-			$('.l3-stats #correct', this.el).html(thisL3Score.get('numCorrect'));
-			$('.l3-stats #incorrect', this.el).html(thisL3Score.get('numIncorrect'));
-			$('.l3-stats #unattempted', this.el).html(thisL3Score.get('numUnattempted'));
-		}else{
-			$('.l3-stats #bar', this.el).html('<div class="bar bar-warning" style="width:'+parseInt('0')+'%"></div>');
-			$('.l3-stats #pts', this.el).html('0');
-			$('.l3-stats #total', this.el).html('0');
-			$('.l3-stats #correct', this.el).html('0');
-			$('.l3-stats #incorrect', this.el).html('0');
-			$('.l3-stats #unattempted', this.el).html('0');
-		}
-		$('.l3-stats', this.el).show();
+		this.renderStats(thisL3Score);
 	},
 	
 });
@@ -255,6 +264,9 @@ window.ActivityView = Backbone.View.extend({
 	},
 
 	onRender : function() {
+		if(account.get('quizzesAttemptedArray').length==0){
+			$('#insight').html('Looks like you have not taken any tests. Take one and return to this section');
+		}
 		 drawDonutChart('donut');
          $("tspan:contains('Highcharts.com')").hide();
 	}

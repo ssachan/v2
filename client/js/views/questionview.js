@@ -116,6 +116,7 @@ window.QuizQuestionView = Backbone.View.extend({
 
     render: function () {
     	$(this.el).html(this.template(this.model.toJSON()));
+    	this.delegateEvents();
         return this;
     },
     
@@ -359,7 +360,7 @@ window.QuizQuestionView = Backbone.View.extend({
         $('#solution').show();
         $('#q-video')
             .html(
-            '<video id="analysis_video" class="video-js vjs-default-skin" controls preload="none" width="640" height="264" data-setup="{}"><source src="../../video/q' + this.model.get('id') + 'vid1.mp4" type="video/mp4" /> </video>');
+            '<video id="analysis_video" class="video-js vjs-default-skin" controls preload="none" width="720" height="360" data-setup="{}"><source src="../../video/q' + this.model.get('id') + 'vid1.mp4" type="video/mp4" /> </video>');
 
         $('#time').html(helper.formatTime(this.model.get('timeTaken')));
         $('#submit').hide();

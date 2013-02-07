@@ -87,6 +87,11 @@ window.FacDirectoryView = Backbone.View.extend({
     	} 
     	var facs = this.filtered.models;
         var len = facs.length;
+		if (len == 0) {
+			$('#fac-list', this.el).html('<h3>No faculty found. Try again...</h3>');
+			return;
+		}
+		$('#fac-list', this.el).html('');
     	for ( var i = 0; i < len; i++) {
 			$('#fac-list', this.el).append(new FacItemView({
 				model : facs[i]
