@@ -341,6 +341,8 @@ class questionObject{
         public $unattemptedScore;
         public $mobileFlag;
         public $availableFlag;
+        public $sigmaTime;
+        public $qScore;
         public $videoSrc;
         public $posterSrc;
         //Following are not in SQL
@@ -402,8 +404,8 @@ class questionEvalution{
         $this->getTotalTime();
         $this->evaluateQuestion();
         //$this->adjustDelta(); //needs UserAbility and attempted as
-        $this->delta = 1;    //temp
-        //$this->insertIntoResponsesTable();
+        //$this->delta = 1;    //temp
+        //$this->insertIntoResponsesTable(); //I think this is being taken care of by mass inserts
     }
     public function setAbilityScoreBefore($score){
         $this->abilityScoreBefore = $score;
@@ -414,8 +416,8 @@ class questionEvalution{
         $this->qDetails  = new questionObject($this->qid);
         
         $this->evaluateAsUnseen();
-        $this->delta = 0;    //temp
-     //   $this->adjustDelta(); //needs UserAbility and attempted as
+        //$this->delta = 0;    //temp
+        //$this->adjustDelta(); //needs UserAbility and attempted as
         //$this->insertIntoResponsesTable();
     }
     function constructFromDatabase($row)
@@ -544,12 +546,12 @@ class questionEvalution{
                 $this->score += $this->qDetails->optionInCorrectScore;
         }
     }
-    function adjustDelta($userAbility,$attemptedAs){
+    public function adjustDelta($attemptedAs){
         
         $state =& $this->state;
-        $aScore =& $this->userAbility->score;
+        $aScore =& $this->abilityScoreBefore;
         $timeTaken =& $this->timeTaken;
-        //$qScore =& $this->qDetails->qScore;
+        $qScore =& $this->qDetails->qScore;
         switch($attemptedAs)
         {
 
@@ -558,19 +560,19 @@ class questionEvalution{
             {
                 case analConst::CORRECT : 
                     $avgTime =& $this->qDetails->averageTimeCorrect;
-                    //$sigmaTime =& $this->qDetails->sigmaTimeCorrect;
+                    $sigmaTime =& $this->qDetails->sigmaTimeCorrect;
                 break;
                 case analConst::INCORRECT :
                     $avgTime =& $this->qDetails->averageTimeIncorrect;
-                    //$sigmaTime =& $this->qDetails->sigmaTimeIncorrect;
+                    $sigmaTime =& $this->qDetails->sigmaTimeIncorrect;
                 break;
                 case analConst::SKIPPED :
                     $avgTime =& $this->qDetails->averageTimeUnattempted;
-                    //$sigmaTime =& $this->qDetails->sigmaTimeUnattempted;
+                    $sigmaTime =& $this->qDetails->sigmaTimeUnattempted;
                 break;
                 case analConst::UNSEEN :
                     $avgTime =& $this->qDetails->averageTimeUnattempted;
-                    //$sigmaTime =& $this->qDetails->sigmaTimeUnattempted;
+                    $sigmaTime =& $this->qDetails->sigmaTimeUnattempted;
                 break;
             }
             return deltaCalculator::calculate($state, $aScore, $qScore, $timeTaken, $avgTime, $sigmaTime);
@@ -906,6 +908,7 @@ function updateResultsForPractice(){
     $qEvaluated =& $quiz->qEvaluated[$quiz->questionIds[$quiz->state]];
         $aScores->addL3($qEvaluated->qDetails->l3Id);
         $qEvaluated->setAbilityScoreBefore($aScores->getScoresOf("l3",$qEvaluated->qDetails->l3Id));
+        $qEvaulated->adjustDelta(analConst::ATTEMPTED_AS_PRACTICE);
         $aScores->addAnswer($qEvaluated->state,$qEvaluated->qDetails->l3Id,$qEvaluated->delta);
 
     $qEvaluated->insertIntoResponsesTable();
@@ -924,6 +927,7 @@ function updateResultsForTest(){
     foreach ($quiz->qEvaluated as $qid => &$qEvaulated){
         $aScores->addL3($qEvaulated->qDetails->l3Id);
         $qEvaluated->setAbilityScoreBefore($aScores->getScoresOf("l3",$qEvaulated->qDetails->l3Id));
+        $qEvaulated->adjustDelta(analConst::ATTEMPTED_AS_TIMED_TEST);
         $aScores->addAnswer($qEvaulated->state,$qEvaulated->qDetails->l3Id,$qEvaulated->delta);
     }
     
