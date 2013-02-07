@@ -70,7 +70,7 @@ window.Account = Backbone.Model.extend({
 					account.set(data.data);
 					window.location = '#';
 				} else {
-					helper.showError(data.data);
+					helper.processStatus(data);
 				}
 			}
 		});

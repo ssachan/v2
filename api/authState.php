@@ -357,51 +357,27 @@ $app->post("/login", function () use ($app) {
     $password = $app->request()->post('password');
     $streamId = $app->request()->post('streamId');
     $account = getAccountByEmail($email);
-    if ($account->password == $password) {
-        // account exists
-        $account = getStudentByAccountId($account->id, $streamId);
-        if (file_exists(DP_PATH . $account->id . '.jpg')) {
-            $account->dp = true;
-        } else {
-            $account->dp = false;
-        }
-        $response["status"] = SUCCESS;
-        $response["data"] = $account;
-        $_SESSION['user'] = $account->id;
-        $_SESSION['type'] = CUSTOM;
-    }else{
-        $response["status"] = FAIL;
-        $response["data"] = "Email and Password don't match.";
-    }
-
-    /*$sql = "SELECT a.id as id,a.email,a.firstName,a.lastName,s.ascoreL1 as ascore,s.quizzesAttempted from accounts a,students s where a.email='"
-            . $email . "' AND a.password='" . $password . "' AND s.streamId='"
-            . $streamId . "' AND a.id=s.accountId";
-    try {
-        $db = getConnection();
-        $stmt = $db->query($sql);
-        $record = $stmt->fetch(PDO::FETCH_OBJ);
-        $db = null;
-        if ($record != null && $record->id != null) {
-            $record->type = CUSTOM;
-            $response["status"] = SUCCESS;
-            if (file_exists(DP_PATH . $record->id . '.jpg')) {
-                $record->dp = true;
+    if ($account) {
+        if ($account->password == $password) {
+            // account exists
+            $account = getStudentByAccountId($account->id, $streamId);
+            if (file_exists(DP_PATH . $account->id . '.jpg')) {
+                $account->dp = true;
             } else {
-                $record->dp = false;
+                $account->dp = false;
             }
-            $response["data"] = $record;
-            $_SESSION['user'] = $record->id;
-            $_SESSION['type'] = $record->type;
+            $response["status"] = SUCCESS;
+            $response["data"] = $account;
+            $_SESSION['user'] = $account->id;
+            $_SESSION['type'] = CUSTOM;
         } else {
             $response["status"] = FAIL;
             $response["data"] = "Email and Password don't match.";
         }
-    } catch (PDOException $e) {
-        $response["status"] = ERROR;
-        $response["data"] = EXCEPTION_MSG;
-        phpLog($e->getMessage());
-    }*/
+    } else {
+        $response["status"] = FAIL;
+        $response["data"] = "Email doesn't exist. Please sign-up";
+    }
     sendResponse($response);
 });
 
