@@ -139,9 +139,21 @@ function insertStudent($accountId, $streamId) {
 function insertFb($accountId) {
     $date = date("Y-m-d H:i:s", time());
     $sql = "INSERT INTO accounts_fb (accountId,facebookId, linkedOn, bio, education, firstName, gender, lastName, link,locale, timezone, username,pictures,work) VALUES (:accountId,:facebookId,:linkedOn, :bio,:education, :firstName, :gender, :lastName, :link,:locale,:timezone,:username,:pics,:work)";
-    $edu = json_encode($_POST['education']);
-    $work = json_encode($_POST['work']);
-    $pics = json_encode($_POST['pictures']);
+    if(array_key_exists('education',$_POST)){
+        $edu = json_encode($_POST['education']);
+    }else{
+        $edu = NULL;
+    }
+    if(array_key_exists('work',$_POST)){
+        $work = json_encode($_POST['work']);
+    }else{
+        $work = NULL;
+    }
+    if(array_key_exists('pictures',$_POST)){
+        $pictures = json_encode($_POST['pictures']);
+    }else{
+        $pictures = NULL;
+    }
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
@@ -155,7 +167,7 @@ function insertFb($accountId) {
         $stmt->bindParam("lastName", $_POST['last_name']);
         $stmt->bindParam("link", $_POST['link']);
         $stmt->bindParam("locale", $_POST['locale']);
-        $stmt->bindParam("pics", $pics);
+        $stmt->bindParam("pics", $pictures);
         //$stmt->bindParam("quotes", $_POST['quotes']);
         $stmt->bindParam("timezone", $_POST['timezone']);
         $stmt->bindParam("username", $_POST['username']);
