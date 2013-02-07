@@ -38,12 +38,12 @@ window.ReviewView = Backbone.View.extend({
 	
 	render : function() {
 		$(this.el).html(this.template());
-		this.renderQuestionItems();
 		return this;
 	},
 	
 	onRender : function (){
 		$('.selectpicker').selectpicker();
+		this.renderQuestionItems();
 	},
 	
 	renderQuestionItems : function (){
