@@ -91,6 +91,7 @@ window.Account = Backbone.Model.extend({
 						user.clear();
 					}
 					account.reset();
+					account.get('quizzesAttemptedArray').length=0;
 					var signUpView = new SignUpView({
 						model : account
 					});
