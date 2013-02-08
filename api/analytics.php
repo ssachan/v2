@@ -419,7 +419,7 @@ class questionEvalution{
     }
     function constructFromDatabase($row)
     {
-        $vars = array("accountId", "questionId", "timeTaken", "delta", "status", "abilityScoreBefore", "optionSelected");
+        $vars = array("accountId", "questionId", "timeTaken", "delta", "score", "status", "abilityScoreBefore", "optionSelected");
 
         foreach ($vars as $value)
             $this->{$key} = $row[$key];
@@ -589,7 +589,8 @@ class questionEvalution{
             "ascore" => $this->abilityScoreBefore,
             "delta"  => $this->delta,
             "sts"    => $this->state,
-            "SQL"    => "INSERT INTO responses (accountId, questionID, optionSelected, timeTaken, abilityScoreBefore, delta, status, timestamp) VALUES (:acid,:qid,:otxt,:ttk,:ascore,:delta,:sts,:tstmp)"
+            "scr"    => $this->score,
+            "SQL"    => "INSERT INTO responses (accountId, questionID, optionSelected, timeTaken, abilityScoreBefore, delta, score, status, timestamp) VALUES (:acid,:qid,:otxt,:ttk,:ascore,:delta, :scr, :sts,:tstmp)"
             );
 
         doSQL($query,false);
@@ -603,7 +604,8 @@ class questionEvalution{
             ("ascore".$this->qid) => $this->abilityScoreBefore,
             ("delta" .$this->qid) => $this->delta,
             ("sts"   .$this->qid) => $this->state,
-            "INSERT"              => "(:acid".$this->qid.",:qid".$this->qid.",:otxt".$this->qid.",:ttk".$this->qid.",:ascore".$this->qid.",:delta".$this->qid.",:sts".$this->qid.",:tstmp)"
+            ("scr"   .$this->qid) => $this->score,
+            "INSERT"              => "(:acid".$this->qid.",:qid".$this->qid.",:otxt".$this->qid.",:ttk".$this->qid.",:ascore".$this->qid.",:delta".$this->qid.",:scr".$this->qid.",:sts".$this->qid.",:tstmp)"
             );
     }
 }
@@ -786,7 +788,7 @@ class quizResponseDetails{
             $valuesString = $valuesString . ($valuesString == "" ? "" : ", ") . array_pop($tmpArray);
             $query        = array_merge($query,$tmpArray);
         }
-        $query[] = "INSERT INTO responses (accountId, questionID, optionSelected, timeTaken, abilityScoreBefore, delta, status, timestamp) VALUES " . $valuesString;
+        $query[] = "INSERT INTO responses (accountId, questionID, optionSelected, timeTaken, abilityScoreBefore, delta, score, status, timestamp) VALUES " . $valuesString;
         
         
         doSQL($query, false);
