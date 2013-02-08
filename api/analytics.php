@@ -358,9 +358,8 @@ class questionObject{
             "qid" => $qid,
             "SQL" => "SELECT * FROM questions WHERE id=:qid");
         $results =  doSQL($query, true);
-        foreach ($results as $key => $value) {
+        foreach ($results as $key => $value)
             $this->{$key} = $value;
-        }
         $this->optionLength = count(explode("|:",$this->options));
         $this->correctArray = getOptionArrayFromText($this->correctAnswer,$this->optionLength);
     }
@@ -372,7 +371,7 @@ class questionEvalution{
         public $qid;
         public $qDetails; //not available when retrieving from DB??
         public $optionArray;
-        public $optionText;
+        public $optionSelected;
         public $optionLength;
         public $timeTaken;
         public $logs;  //not available when retrieving from DB
@@ -403,8 +402,7 @@ class questionEvalution{
         $this->getOptionTextFromArray();
         $this->getTotalTime();
         $this->evaluateQuestion();
-        //$this->adjustDelta(); //needs UserAbility and attempted as
-        //$this->delta = 1;    //temp
+        
         //$this->insertIntoResponsesTable(); //I think this is being taken care of by mass inserts
     }
     public function setAbilityScoreBefore($score){
@@ -416,18 +414,15 @@ class questionEvalution{
         $this->qDetails  = new questionObject($this->qid);
         
         $this->evaluateAsUnseen();
-        //$this->delta = 0;    //temp
-        //$this->adjustDelta(); //needs UserAbility and attempted as
+
         //$this->insertIntoResponsesTable();
     }
     function constructFromDatabase($row)
     {
-        $vars = array("accountId", "questionId", "timeTaken", "delta", "status", "abilityScoreBefore");
+        $vars = array("accountId", "questionId", "timeTaken", "delta", "status", "abilityScoreBefore", "optionSelected");
 
         foreach ($vars as $value)
             $this->{$key} = $row[$key];
-
-        $this->optionText = $row["optionSelected"];
     }
 
     function getFinalOptionArray(){
@@ -457,7 +452,7 @@ class questionEvalution{
                 $optionText[]=$key;
 
         $optionText = implode("|:",$optionText);
-        $this->optionText = $optionText;
+        $this->optionSelected = $optionText;
     }
 
     public function set($key, $value){
@@ -486,14 +481,14 @@ class questionEvalution{
     public function evaluateQuestion(){
         //Code here to calculate scores based on certain factors.
         //First check if attempted or not
-        if($this->optionText == "")
+        if($this->optionSelected == "")
         {   //If not attempted see if any time was spent on the question
             $this->score = $this->qDetails->unattemptedScore;
             if($this->timeTaken <= analConst::UNSEEN_TOLERANCE) //question went unseen. Code that way
                 $this->state = analConst::UNSEEN; 
             else                                                //seen but skipped in $timeTaken seconds
                 $this->state = analConst::SKIPPED;
-        }elseif($this->optionText == $this->qDetails->correctAnswer){//everything correct exactly
+        }elseif($this->optionSelected == $this->qDetails->correctAnswer){//everything correct exactly
             $this->score = $this->qDetails->correctScore;
             $this->state = analConst::CORRECT;
         }else{
@@ -509,19 +504,19 @@ class questionEvalution{
                     //tanujb:TODO: following code may or may not work. needs unit tests.
 
                    /* $tmpOption = explode("|:|:",$qDetails->options);
-                    $originalOptionText = $this->optionText;
+                    $originalOptionText = $this->optionSelected;
                     $originalCorrectAnswer = $this->qDetails->correctAnswer;
-                    $optionSuperArray =  getOptionArrayFromText($this->optionText,$this->optionLength);
+                    $optionSuperArray =  getOptionArrayFromText($this->optionSelected,$this->optionLength);
                     $correctSuperArray = getOptionArrayFromText($this->qDetails->correctAnswer,$this->optionLength);
                     
                     foreach ($correctSuperArray as $k => $v) {
 
                         $this->qDetails->correctAnswer = $v;
-                        $this->optionText = $optionSuperArray[$k];
+                        $this->optionSelected = $optionSuperArray[$k];
                         $this->evalOption();
                     }
                     $this->qDetails->correctArray = $originalCorrectAnswer;
-                    $this->optionText = $originalOptionText;
+                    $this->optionSelected = $originalOptionText;
                     */
                 break;
                 case questionType::INTEGER_TYPE:
@@ -532,7 +527,7 @@ class questionEvalution{
         }
     }
     function evaluateAsUnseen(){
-        $this->optionText  = "";
+        $this->optionSelected  = "";
         $this->optionArray = array();
         $this->timeTaken   = 0;
         $this->score       = $this->qDetails->unattemptedScore;
@@ -554,7 +549,6 @@ class questionEvalution{
         $qScore =& $this->qDetails->qScore;
         switch($attemptedAs)
         {
-
         case analConst::ATTEMPTED_AS_TIMED_TEST :    
             switch ($state)
             {
@@ -578,7 +572,8 @@ class questionEvalution{
             return deltaCalculator::calculate($state, $aScore, $qScore, $timeTaken, $avgTime, $sigmaTime);
         break;
         case analConst::ATTEMPTED_AS_PRACTICE :
-            //tanujb : TODO : Make adjustDelta function for practice
+            return deltaCalculator::calculate($state,$aScore,$qScore,$timeTaken,$timeTaken,$timeTaken/5);
+            //setting avgTime to timeTaken, sigmaTime to 1/5th time taken to ensure timeFactor = 1.25
         break;
         }
     }
@@ -589,7 +584,7 @@ class questionEvalution{
             "acid"   => $this->accountId,
             "qid"    => $this->qid,
             "tstmp"  => $date,
-            "otxt"   => $this->optionText,
+            "otxt"   => $this->optionSelected,
             "ttk"    => $this->timeTaken,
             "ascore" => $this->abilityScoreBefore,
             "delta"  => $this->delta,
@@ -603,7 +598,7 @@ class questionEvalution{
         return array(
             ("acid"  .$this->qid) => $this->accountId,
             ("qid"   .$this->qid) => $this->qid,
-            ("otxt"  .$this->qid) => $this->optionText,
+            ("otxt"  .$this->qid) => $this->optionSelected,
             ("ttk"   .$this->qid) => $this->timeTaken,
             ("ascore".$this->qid) => $this->abilityScoreBefore,
             ("delta" .$this->qid) => $this->delta,
@@ -676,7 +671,7 @@ class quizResponseDetails{
         $score = $maxScore = $numCorrect = $numIncorrect = $delta = $timeTaken = 0;
 
         foreach ($this->qEvaluated as $qid => $q) {
-            $selectedAnswers[]  = $q->optionText;
+            $selectedAnswers[]  = $q->optionSelected;
             $timePerQuestion[]  = $q->timeTaken;
             $delta             += $q->delta; 
             $score             += $q->score;
@@ -732,7 +727,7 @@ class quizResponseDetails{
         $this->testScore                            += $this->qEvaluated[$qid]->score;
         $this->selectedAnswers                       = json_decode($this->selectedAnswers);
         $this->timePerQuestion                       = json_decode($this->timePerQuestion);
-        $this->selectedAnswers[intval($this->state)] = $this->qEvaluated[$qid]->optionText;
+        $this->selectedAnswers[intval($this->state)] = $this->qEvaluated[$qid]->optionSelected;
         $this->timePerQuestion[intval($this->state)] = $this->qEvaluated[$qid]->timeTaken;
         $this->selectedAnswers                       = json_encode($this->selectedAnswers);
         $this->timePerQuestion                       = json_encode($this->timePerQuestion);
