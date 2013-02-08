@@ -265,7 +265,7 @@ window.ActivityView = Backbone.View.extend({
 
 	onRender : function() {
 		if(account.get('quizzesAttemptedArray').length==0){
-			$('#insight').html('Looks like you have not taken any tests. Take one and return to this section');
+			$('#insight').html('Please take a test and return to this section');
 		}
 		 drawDonutChart('donut');
          $("tspan:contains('Highcharts.com')").hide();
