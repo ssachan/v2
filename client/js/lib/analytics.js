@@ -19,7 +19,6 @@
 }).call(this);
 */
 
-(function () {
         var instance = null;
 
         var GoogleAnalyticsWrapper = (function () {
@@ -41,6 +40,3 @@
             return GoogleAnalytics;
         })();
         window.GA = GoogleAnalyticsWrapper.getInstance();
-
-        return window.GA;
-}).call(this);
