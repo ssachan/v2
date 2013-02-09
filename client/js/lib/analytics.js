@@ -19,7 +19,7 @@
 }).call(this);
 */
 
-(function ($, App) {
+(function () {
         var instance = null;
 
         var GoogleAnalyticsWrapper = (function () {
@@ -40,7 +40,7 @@
             };
             return GoogleAnalytics;
         })();
-        App.GA = GoogleAnalyticsWrapper.getInstance();
+        window.GA = GoogleAnalyticsWrapper.getInstance();
 
-        return App.GA;
+        return window.GA;
 }).call(this);
