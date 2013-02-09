@@ -59,6 +59,10 @@ var AppRouter = Backbone.Router.extend({
 	},
 
 	initialize : function() {
+		window._gaq = window._gaq || [];  
+		window._gaq.push(['_setAccount', 'UA-38361771-1']);  
+		window._gaq.push(['_setDomainName', 'prepsquare.com']);  
+		return this.bind('all', this._trackPageview);  
 		// fetch all the initial data here
 		Manager.getSubjectsByStreamId(streamId);
 		this.headerView = new HeaderView({
@@ -201,7 +205,13 @@ var AppRouter = Backbone.Router.extend({
 		}
 		activeMenu = newMenu;
 		$('#' + activeMenu).addClass('active');
-	}
+	},
+	
+	_trackPageview: function() {  
+	    var url;  
+	    url = Backbone.history.getFragment();  
+	    window._gaq.push(['_trackPageview', "/" + url]);  
+	}  
 });
 
 Backbone.View.prototype.close = function() {
