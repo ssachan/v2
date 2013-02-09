@@ -62,7 +62,7 @@ var AppRouter = Backbone.Router.extend({
 		window._gaq = window._gaq || [];  
 		window._gaq.push(['_setAccount', 'UA-38361771-1']);  
 		window._gaq.push(['_setDomainName', 'prepsquare.com']);  
-		return this.bind('all', this._trackPageview);  
+		this.bind('all', this._trackPageview);  
 		// fetch all the initial data here
 		Manager.getSubjectsByStreamId(streamId);
 		this.headerView = new HeaderView({
