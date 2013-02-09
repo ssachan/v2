@@ -377,7 +377,7 @@ class questionEvalution{
         public $logs;  //not available when retrieving from DB
         public $delta;
         public $state; 
-        public $score; //not available when retrieving from DB
+        public $score;
         public $abilityScoreBefore;
     // } Declarations End    
 
