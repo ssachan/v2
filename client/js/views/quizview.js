@@ -96,7 +96,7 @@ window.QuizView = Backbone.View.extend({
 	},
 
 	updateQuizTimer : function(context) {
-		$('#time').html(helper.formatTime((timer.count * 1000)));
+		$('#time').html(helper.formatTime(parseInt(context.model.get('allotedTime')) -parseInt(timer.count * 1000)));
 		var qtimer = context.question.get('timeTaken');
 		qtimer++;
 		context.question.set('timeTaken', qtimer);
