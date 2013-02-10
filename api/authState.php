@@ -264,6 +264,11 @@ $app->post("/signup", function () use ($app) {
             $response["data"] = "Please enter a valid password";
             break;
         }
+        if ($_POST['password'] != $_POST['cPassword']) {
+            $response["status"] = FAIL;
+            $response["data"] = "Passwords entered do not match";
+            break;
+        }
         $firstName = $_POST['firstName'];
         $lastName = $_POST['lastName'];
         $email = $_POST['email'];

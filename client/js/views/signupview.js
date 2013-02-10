@@ -71,6 +71,7 @@ window.SignUpBox = Backbone.View.extend({
     	var formValues = {
     			email : $('#email-su').val(),
     			password :  $('#pass-su').val(),
+    			cPassword :  $('#passcon-su').val(),
     			firstName : $('#fname-su').val(),
     			lastName : 'dummy',
     			type : 1,
