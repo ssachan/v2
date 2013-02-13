@@ -37,6 +37,7 @@ window.InstructionsView = Backbone.View.extend({
 window.ResumeView = Backbone.View.extend({
 
 	initialize : function() {
+		
 	},
 
 	events : {
@@ -69,6 +70,12 @@ window.QuizView = Backbone.View.extend({
 		this.questionIds = this.model.get('questionIdsArray');
 		this.totalQuestions = this.questionIds.length;
 		timer.setUpdateFunction(context.updateQuizTimer, [ context ]);
+		this.warning = true;
+		window.onbeforeunload = function() {
+		  if (context.warning) {
+		    return '';
+		  }
+		};
 	},
 
 	events : {
@@ -155,6 +162,10 @@ window.QuizView = Backbone.View.extend({
 		return this;
 	},
 
+	onRender : function() {
+		$('#topic-head').html(this.model.get('l1DisplayName')+' : '+this.model.get('descriptionShort'));
+	},
+	
 	/**
 	 * TODO:video - just store the reference of the current video
 	 */
@@ -179,6 +190,11 @@ window.QuizView = Backbone.View.extend({
 			$('#next').hide();
 		}
 		return null;
+	},
+	
+	close : function(){
+		window.onbeforeunload = null;
+		Backbone.View.prototype.close.call(this);
 	}
 });
 
@@ -193,6 +209,12 @@ window.PracticeView = Backbone.View.extend({
 		this.totalQuestions = this.questionIds.length;
 		this.setUp();
 		timer.setUpdateFunction(context.updateQuizTimer, [ context ]);
+		this.warning = true;
+		window.onbeforeunload = function() {
+		  if (context.warning) {
+		    return '';
+		  }
+		};
 	},
 
 	setUp : function() {
@@ -325,6 +347,7 @@ window.PracticeView = Backbone.View.extend({
 				}
 			}
 		}
+		$('#topic-head').html(this.model.get('l1DisplayName')+' : '+this.model.get('descriptionShort'));
 	},
 
 	/**
@@ -353,5 +376,10 @@ window.PracticeView = Backbone.View.extend({
 		$("#qnum").html((parseInt(this.index) + 1));
 		$("#qtotal").html((this.totalQuestions));
 		return null;
+	},
+	
+	close : function(){
+		window.onbeforeunload = null;
+		Backbone.View.prototype.close.call(this);
 	}
 });

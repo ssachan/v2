@@ -1,11 +1,12 @@
 window.LandingView = Backbone.View.extend({
-	
+	className : 'container landing',
 	initialize : function() {
 		this.render();
 	},
 
 	render : function() {
 		$(this.el).html(this.template());
+		return this;
 		//$('#sign-up').append((new SignUpView({model:account})).el);
 	}
 });

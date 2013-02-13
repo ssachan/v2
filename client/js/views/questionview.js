@@ -12,7 +12,7 @@ window.QuizQuestionView = Backbone.View.extend({
         'click #single-type button': 'handleSingleType',
         'click #multiple-type button': 'handleMultipleType',
         'keypress #integer-type': 'checkIntegerType',
-        'keyup #integer-type': 'handleIntegerType',
+        'change #integer-type': 'handleIntegerType',
         'click #matrix-type input': 'handleMatrixType',
     },
 

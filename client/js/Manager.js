@@ -292,6 +292,7 @@ window.Manager = {
                 index: 0,
             });
             app.showView('#content', qView);
+            qView.onRender();
             qView.startQuiz();
         }
     },

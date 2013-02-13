@@ -1,4 +1,4 @@
-/*
+/**
  * THE GLOBALS
  */
 var app = null;
@@ -75,9 +75,8 @@ var AppRouter = Backbone.Router.extend({
 	},
 
 	landing : function() {
-		new LandingView({
-			el : $('#content')
-		});
+		var lView = new LandingView({});
+		this.showView('#content',lView);
 		return;
 	},
 
@@ -191,6 +190,15 @@ var AppRouter = Backbone.Router.extend({
 	showView : function(selector, view) {
 		$('.alert').hide();
 		mView.close();
+		if(view instanceof QuizView || view instanceof PracticeView ){
+			$('#test-header').show();
+			$('#menu-header').hide();
+			$('footer').hide();
+		}else{
+			$('#test-header').hide();
+			$('#menu-header').show();
+			$('footer').show();
+		}
 		if (activeView)
 			activeView.close();
 		$(selector).html(view.render().el);
@@ -207,11 +215,11 @@ var AppRouter = Backbone.Router.extend({
 		$('#' + activeMenu).addClass('active');
 	},
 	
-	_trackPageview: function() {  
-	    var url;  
-	    url = Backbone.history.getFragment();  
+	_trackPageview: function() {
+		var url;  
+		url = Backbone.history.getFragment();  
 	    window._gaq.push(['_trackPageview', "/" + url]);  
-	}  
+	}
 });
 
 Backbone.View.prototype.close = function() {
