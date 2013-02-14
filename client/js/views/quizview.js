@@ -92,6 +92,8 @@ window.QuizView = Backbone.View.extend({
 	},
 
 	submitQuiz : function() {
+		if (confirm('Are you sure we want to submit')) { 
+				 // do things if OK
 		timer.stop();
 		logs.addEntry("QUESTION_CLOSE", this.question.get('id'));
 		logs.addEntry("TEST_SUBMIT");
@@ -100,6 +102,7 @@ window.QuizView = Backbone.View.extend({
 		this.model.set('state', this.totalQuestions);
 		//this.model.set('status', this.model.STATUS_COMPLETED);
 		this.model.submitQuiz();
+		}
 	},
 
 	updateQuizTimer : function(context) {
