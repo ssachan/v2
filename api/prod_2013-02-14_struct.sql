@@ -4,7 +4,7 @@
 #
 # Host: localhost (MySQL 5.5.9)
 # Database: prod
-# Generation Time: 2013-02-14 19:41:01 +0530
+# Generation Time: 2013-02-14 20:04:39 +0530
 # ************************************************************
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -309,7 +309,7 @@ CREATE TABLE `para` (
   `difficulty` int(1) DEFAULT NULL,
   `mobileFlag` int(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 
 
@@ -388,8 +388,12 @@ CREATE TABLE `questions` (
   `availableFlag` int(1) DEFAULT '0',
   `videoSrc` varchar(30) DEFAULT NULL,
   `posterSrc` varchar(30) DEFAULT NULL,
+  `qScore` int(3) NOT NULL DEFAULT '0',
+  `sigmaTimeCorrect` int(5) NOT NULL DEFAULT '0',
+  `sigmaTimeIncorrect` int(5) NOT NULL DEFAULT '0',
+  `sigmaTimeUnattempted` int(5) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=201 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=376 DEFAULT CHARSET=utf8;
 
 
 
@@ -421,7 +425,7 @@ CREATE TABLE `quizzes` (
   `streamId` int(11) DEFAULT NULL,
   `maxScore` int(11) DEFAULT '100',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 
 
@@ -480,7 +484,8 @@ CREATE TABLE `responses` (
   `optionSelected` text,
   `timeTaken` int(11) DEFAULT NULL,
   `abilityScoreBefore` int(11) DEFAULT NULL,
-  `delta` int(11) DEFAULT NULL,
+  `delta` float DEFAULT NULL,
+  `score` float DEFAULT NULL,
   `timeStamp` timestamp NULL DEFAULT NULL,
   `status` varchar(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
