@@ -222,7 +222,7 @@ window.Quiz = Backbone.Model.extend({
                 if (data.status == STATUS.SUCCESS) {
 
                 } else {
-                    helper.showError(data.data);
+					helper.processStatus(data);
                 }
             },
             error: function (data) {
@@ -259,7 +259,7 @@ window.Quiz = Backbone.Model.extend({
                     that.set('status', that.STATUS_COMPLETED);
                     app.quiz(that.get('id'));
                 } else {
-                    helper.showError(data.data);
+					helper.processStatus(data);
                 }
             },
             error: function (data) {
@@ -277,6 +277,7 @@ window.Quiz = Backbone.Model.extend({
         var url = Config.serverUrl + 'submitQuiz';
         var that = this;
         $.ajax({
+        	//context:this,
             url: url,
             type: 'POST',
             dataType: "json",
@@ -295,7 +296,7 @@ window.Quiz = Backbone.Model.extend({
                     that.set('status', that.STATUS_COMPLETED);
                     app.quiz(that.get('id'));
                 } else {
-                    helper.showError(data.data);
+					helper.processStatus(data);
                 }
             },
             error: function (data) {

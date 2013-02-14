@@ -37,6 +37,7 @@ window.InstructionsView = Backbone.View.extend({
 window.ResumeView = Backbone.View.extend({
 
 	initialize : function() {
+		
 	},
 
 	events : {
@@ -69,6 +70,12 @@ window.QuizView = Backbone.View.extend({
 		this.questionIds = this.model.get('questionIdsArray');
 		this.totalQuestions = this.questionIds.length;
 		timer.setUpdateFunction(context.updateQuizTimer, [ context ]);
+		this.warning = true;
+		window.onbeforeunload = function() {
+		  if (context.warning) {
+		    return '';
+		  }
+		};
 	},
 
 	events : {
@@ -85,18 +92,20 @@ window.QuizView = Backbone.View.extend({
 	},
 
 	submitQuiz : function() {
-		timer.stop();
-		logs.addEntry("QUESTION_CLOSE", this.question.get('id'));
-		logs.addEntry("TEST_SUBMIT");
-		logs.sort();
-		this.model.set('timeTaken', timer.count);
-		this.model.set('state', this.totalQuestions);
-		//this.model.set('status', this.model.STATUS_COMPLETED);
-		this.model.submitQuiz();
+		if (confirm('Are you sure you want to submit')) { 
+			timer.stop();
+			logs.addEntry("QUESTION_CLOSE", this.question.get('id'));
+			logs.addEntry("TEST_SUBMIT");
+			logs.sort();
+			this.model.set('timeTaken', timer.count);
+			this.model.set('state', this.totalQuestions);
+			//this.model.set('status', this.model.STATUS_COMPLETED);
+			this.model.submitQuiz();
+		}
 	},
 
 	updateQuizTimer : function(context) {
-		$('#time').html(helper.formatTime((timer.count * 1000)));
+		$('#time').html(helper.formatTime(parseInt(context.model.get('allotedTime')) -parseInt(timer.count * 1000)));
 		var qtimer = context.question.get('timeTaken');
 		qtimer++;
 		context.question.set('timeTaken', qtimer);
@@ -155,6 +164,10 @@ window.QuizView = Backbone.View.extend({
 		return this;
 	},
 
+	onRender : function() {
+		$('#topic-head').html(this.model.get('l1DisplayName')+' : '+this.model.get('descriptionShort'));
+	},
+	
 	/**
 	 * TODO:video - just store the reference of the current video
 	 */
@@ -179,6 +192,11 @@ window.QuizView = Backbone.View.extend({
 			$('#next').hide();
 		}
 		return null;
+	},
+	
+	close : function(){
+		window.onbeforeunload = null;
+		Backbone.View.prototype.close.call(this);
 	}
 });
 
@@ -193,6 +211,12 @@ window.PracticeView = Backbone.View.extend({
 		this.totalQuestions = this.questionIds.length;
 		this.setUp();
 		timer.setUpdateFunction(context.updateQuizTimer, [ context ]);
+		this.warning = true;
+		window.onbeforeunload = function() {
+		  if (context.warning) {
+		    return '';
+		  }
+		};
 	},
 
 	setUp : function() {
@@ -325,6 +349,7 @@ window.PracticeView = Backbone.View.extend({
 				}
 			}
 		}
+		$('#topic-head').html(this.model.get('l1DisplayName')+' : '+this.model.get('descriptionShort'));
 	},
 
 	/**
@@ -353,5 +378,10 @@ window.PracticeView = Backbone.View.extend({
 		$("#qnum").html((parseInt(this.index) + 1));
 		$("#qtotal").html((this.totalQuestions));
 		return null;
+	},
+	
+	close : function(){
+		window.onbeforeunload = null;
+		Backbone.View.prototype.close.call(this);
 	}
 });

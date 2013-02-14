@@ -139,9 +139,21 @@ function insertStudent($accountId, $streamId) {
 function insertFb($accountId) {
     $date = date("Y-m-d H:i:s", time());
     $sql = "INSERT INTO accounts_fb (accountId,facebookId, linkedOn, bio, education, firstName, gender, lastName, link,locale, timezone, username,pictures,work) VALUES (:accountId,:facebookId,:linkedOn, :bio,:education, :firstName, :gender, :lastName, :link,:locale,:timezone,:username,:pics,:work)";
-    $edu = json_encode($_POST['education']);
-    $work = json_encode($_POST['work']);
-    $pics = json_encode($_POST['pictures']);
+    if(array_key_exists('education',$_POST)){
+        $edu = json_encode($_POST['education']);
+    }else{
+        $edu = NULL;
+    }
+    if(array_key_exists('work',$_POST)){
+        $work = json_encode($_POST['work']);
+    }else{
+        $work = NULL;
+    }
+    if(array_key_exists('pictures',$_POST)){
+        $pictures = json_encode($_POST['pictures']);
+    }else{
+        $pictures = NULL;
+    }
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
@@ -155,7 +167,7 @@ function insertFb($accountId) {
         $stmt->bindParam("lastName", $_POST['last_name']);
         $stmt->bindParam("link", $_POST['link']);
         $stmt->bindParam("locale", $_POST['locale']);
-        $stmt->bindParam("pics", $pics);
+        $stmt->bindParam("pics", $pictures);
         //$stmt->bindParam("quotes", $_POST['quotes']);
         $stmt->bindParam("timezone", $_POST['timezone']);
         $stmt->bindParam("username", $_POST['username']);
@@ -252,6 +264,11 @@ $app->post("/signup", function () use ($app) {
             $response["data"] = "Please enter a valid password";
             break;
         }
+        if ($_POST['password'] != $_POST['cPassword']) {
+            $response["status"] = FAIL;
+            $response["data"] = "Passwords entered do not match";
+            break;
+        }
         $firstName = $_POST['firstName'];
         $lastName = $_POST['lastName'];
         $email = $_POST['email'];
@@ -271,7 +288,7 @@ $app->post("/signup", function () use ($app) {
             $account = new stdClass();
             $account->id = createAccount($firstName, $lastName, $email, $password);
             insertStudent($account->id, $streamId);
-            $account = getStudentByAccountId($id, $streamId);
+            $account = getStudentByAccountId($account->id, $streamId);
             if (file_exists(DP_PATH . $account->id . '.jpg')) {
                 $account->dp = true;
             } else {
@@ -357,51 +374,27 @@ $app->post("/login", function () use ($app) {
     $password = $app->request()->post('password');
     $streamId = $app->request()->post('streamId');
     $account = getAccountByEmail($email);
-    if ($account->password == $password) {
-        // account exists
-        $account = getStudentByAccountId($account->id, $streamId);
-        if (file_exists(DP_PATH . $account->id . '.jpg')) {
-            $account->dp = true;
-        } else {
-            $account->dp = false;
-        }
-        $response["status"] = SUCCESS;
-        $response["data"] = $account;
-        $_SESSION['user'] = $account->id;
-        $_SESSION['type'] = CUSTOM;
-    }else{
-        $response["status"] = FAIL;
-        $response["data"] = "Email and Password don't match.";
-    }
-
-    /*$sql = "SELECT a.id as id,a.email,a.firstName,a.lastName,s.ascoreL1 as ascore,s.quizzesAttempted from accounts a,students s where a.email='"
-            . $email . "' AND a.password='" . $password . "' AND s.streamId='"
-            . $streamId . "' AND a.id=s.accountId";
-    try {
-        $db = getConnection();
-        $stmt = $db->query($sql);
-        $record = $stmt->fetch(PDO::FETCH_OBJ);
-        $db = null;
-        if ($record != null && $record->id != null) {
-            $record->type = CUSTOM;
-            $response["status"] = SUCCESS;
-            if (file_exists(DP_PATH . $record->id . '.jpg')) {
-                $record->dp = true;
+    if ($account) {
+        if ($account->password == $password) {
+            // account exists
+            $account = getStudentByAccountId($account->id, $streamId);
+            if (file_exists(DP_PATH . $account->id . '.jpg')) {
+                $account->dp = true;
             } else {
-                $record->dp = false;
+                $account->dp = false;
             }
-            $response["data"] = $record;
-            $_SESSION['user'] = $record->id;
-            $_SESSION['type'] = $record->type;
+            $response["status"] = SUCCESS;
+            $response["data"] = $account;
+            $_SESSION['user'] = $account->id;
+            $_SESSION['type'] = CUSTOM;
         } else {
             $response["status"] = FAIL;
             $response["data"] = "Email and Password don't match.";
         }
-    } catch (PDOException $e) {
-        $response["status"] = ERROR;
-        $response["data"] = EXCEPTION_MSG;
-        phpLog($e->getMessage());
-    }*/
+    } else {
+        $response["status"] = FAIL;
+        $response["data"] = "Email doesn't exist. Please sign-up";
+    }
     sendResponse($response);
 });
 

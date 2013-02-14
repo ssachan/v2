@@ -70,7 +70,7 @@ window.Account = Backbone.Model.extend({
 					account.set(data.data);
 					window.location = '#';
 				} else {
-					helper.showError(data.data);
+					helper.processStatus(data);
 				}
 			}
 		});
@@ -91,6 +91,8 @@ window.Account = Backbone.Model.extend({
 						user.clear();
 					}
 					account.reset();
+					account.get('quizzesAttemptedArray').length=0;
+					activeQuiz = null;
 					var signUpView = new SignUpView({
 						model : account
 					});
