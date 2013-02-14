@@ -441,6 +441,12 @@ window.Manager = {
     },
 
     processQuiz: function (quizId) {
+        // check if this is same as the activeQuiz then skip.
+        if (activeQuiz != null && (activeQuiz.get('id') == quizId && this.questionsExist(activeQuiz))) {
+            // already loaded
+            this.loadQuiz2(activeQuiz);
+            return;
+        }
         var that = this;
         var url = Config.serverUrl + 'processQuiz/';
         return $.ajax({
