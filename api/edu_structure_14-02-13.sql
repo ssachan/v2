@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.25)
 # Database: edu_anal_test
-# Generation Time: 2013-02-14 14:03:09 +0000
+# Generation Time: 2013-02-14 17:14:48 +0000
 # ************************************************************
 
 
@@ -40,6 +40,12 @@ CREATE TABLE `accounts` (
   `suspendedOn` datetime DEFAULT NULL,
   `resetsentOn` datetime DEFAULT NULL,
   `pics` varchar(50) DEFAULT NULL,
+  `address` text,
+  `city` text,
+  `state` text,
+  `postalCode` int(11) DEFAULT NULL,
+  `country` text,
+  `phone` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -146,21 +152,6 @@ CREATE TABLE `ascores_l3` (
   `numIncorrect` int(11) DEFAULT NULL,
   `numUnattempted` int(11) DEFAULT NULL,
   `streamId` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-
-# Dump of table creditHistory
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `creditHistory`;
-
-CREATE TABLE `creditHistory` (
-  `accountId` int(11) DEFAULT NULL,
-  `refilledOn` timestamp NULL DEFAULT NULL,
-  `creditsAdded` int(11) DEFAULT NULL,
-  KEY `accountId` (`accountId`),
-  CONSTRAINT `credithistory_ibfk_1` FOREIGN KEY (`accountId`) REFERENCES `accounts` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -310,27 +301,18 @@ CREATE TABLE `para` (
 
 
 
-# Dump of table pool
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `pool`;
-
-CREATE TABLE `pool` (
-  `id` int(11) DEFAULT NULL,
-  `quizIds` text
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-
 # Dump of table purchases
 # ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `purchases`;
 
 CREATE TABLE `purchases` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `accountId` int(11) NOT NULL,
   `packageId` int(11) NOT NULL,
-  `purchasedOn` datetime NOT NULL
+  `purchasedOn` datetime NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -392,10 +374,12 @@ CREATE TABLE `questions` (
   `unattemptedScore` int(2) DEFAULT '0',
   `mobileFlag` int(1) DEFAULT '0',
   `availableFlag` int(1) DEFAULT '0',
-  `sigmaTime` int(5) DEFAULT '0',
-  `qScore` int(3) DEFAULT NULL,
   `videoSrc` varchar(30) DEFAULT NULL,
   `posterSrc` varchar(30) DEFAULT NULL,
+  `qScore` int(3) NOT NULL DEFAULT '0',
+  `sigmaTimeCorrect` int(5) NOT NULL DEFAULT '0',
+  `sigmaTimeIncorrect` int(5) NOT NULL DEFAULT '0',
+  `sigmaTimeUnattempted` int(5) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -459,19 +443,6 @@ DROP TABLE IF EXISTS `quizzes_type`;
 CREATE TABLE `quizzes_type` (
   `id` int(11) DEFAULT NULL,
   `type` varchar(30) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-
-# Dump of table redeem
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `redeem`;
-
-CREATE TABLE `redeem` (
-  `purchaseId` int(11) DEFAULT NULL,
-  `remaining` text,
-  `date` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -625,7 +596,8 @@ CREATE TABLE `students` (
   `accountId` int(11) DEFAULT NULL,
   `streamId` int(11) DEFAULT NULL,
   `quizzesRemaining` int(11) NOT NULL DEFAULT '0',
-  KEY `accountId` (`accountId`)
+  KEY `accountId` (`accountId`),
+  KEY `streamId` (`streamId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
