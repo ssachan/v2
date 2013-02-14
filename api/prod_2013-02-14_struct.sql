@@ -4,7 +4,7 @@
 #
 # Host: localhost (MySQL 5.5.9)
 # Database: prod
-# Generation Time: 2013-02-11 11:56:28 +0530
+# Generation Time: 2013-02-14 19:41:01 +0530
 # ************************************************************
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -37,8 +37,14 @@ CREATE TABLE `accounts` (
   `suspendedOn` datetime DEFAULT NULL,
   `resetsentOn` datetime DEFAULT NULL,
   `pics` varchar(50) DEFAULT NULL,
+  `address` text,
+  `city` text,
+  `state` text,
+  `postalCode` int(11) DEFAULT NULL,
+  `country` text,
+  `phone` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8;
 
 
 
@@ -313,10 +319,13 @@ CREATE TABLE `para` (
 DROP TABLE IF EXISTS `purchases`;
 
 CREATE TABLE `purchases` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `accountId` int(11) NOT NULL,
   `packageId` int(11) NOT NULL,
-  `purchasedOn` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `purchasedOn` datetime NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
 
 
 
@@ -380,7 +389,7 @@ CREATE TABLE `questions` (
   `videoSrc` varchar(30) DEFAULT NULL,
   `posterSrc` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=118 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=201 DEFAULT CHARSET=utf8;
 
 
 
