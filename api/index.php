@@ -39,7 +39,7 @@ $app->get('/getVideos/', $authenticate($app), 'videoList');
 $app->post('/submitQuiz', 'updateResultsForTest');
 $app->post('/submitPractice', 'processPractice');
 
-$app->get('/testcode', 'testCode');
+$app->get('/testcode/:a1/:a2/:a3/:a4/:a5/:a6', 'testCode');
 
 $app->get('/attemptedQuestions/', 'getAttemptedQuestions');
 
