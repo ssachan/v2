@@ -92,7 +92,7 @@ window.QuizView = Backbone.View.extend({
 	},
 
 	submitQuiz : function() {
-		if (confirm('Are you sure we want to submit')) { 
+		if (confirm('Are you sure you want to submit')) { 
 			timer.stop();
 			logs.addEntry("QUESTION_CLOSE", this.question.get('id'));
 			logs.addEntry("TEST_SUBMIT");
