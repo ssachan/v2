@@ -79,11 +79,10 @@ window.ResultAnalysisView = Backbone.View.extend({
 			"techOrder": ["flash"],
 			"playlist" : videoResults
 		};
+		
 		console.log(videoOptions);
 		var myPlayer = _V_("results_video", videoOptions);
-		myPlayer.ready(function(){
-			myPlayer.playlist.play(1);
-		});
+		
 		myPlayer.addEvent("ended", function() {
 
 			myPlayer.playlist.next()
