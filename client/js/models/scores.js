@@ -32,6 +32,20 @@ window.ScoreL2Collection = Backbone.Collection.extend({
     url: Config.serverUrl+'l2/'
 });
 
+window.ScoreL3 = Backbone.Model.extend({
+
+    urlRoot: Config.serverUrl+'l3/',
+    initialize: function () {}
+
+});
+
+window.ScoreL3Collection = Backbone.Collection.extend({
+    model: ScoreL3,
+    url: Config.serverUrl+'l3/'
+});
+
 var scoreL1 = new ScoreL1Collection();
 
 var scoreL2 = new ScoreL2Collection();
+
+var scoreL3 = new ScoreL3Collection();

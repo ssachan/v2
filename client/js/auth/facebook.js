@@ -2,9 +2,9 @@ window.fbAsyncInit = function() {
 
 	console.info('FB jssdk loaded');
 	FB.init({
-		appId : '345218642220354', // App ID
+		appId : '471575209563142', // App ID
 		status : true, // check login status
-		cookie : true, // enable cookies to allow the server to access the
+		cookie : true, // enable cookies to allow the server to access
 		xfbml : true
 	});
 
@@ -16,21 +16,33 @@ window.fbAsyncInit = function() {
 
 	user.on('facebook:connected', function(model, response) {
 		console.info('facebook:connected');
+		if(account.get('type')=='2' && account.get('id')==null && user.attributes.id!=null){
+			// this is a sign-up using facebook
+				account.set('type',2);
+				user.attributes.type=2;
+				user.attributes.streamId=streamId;
+				account.signUp(user.attributes);
+				account.set('dp',user.get('pictures').square);
+		}
 	});
 
 	user.on('facebook:disconnected', function(model, response) {
 		console.info('facebook:disconnected');
-		$('#loginstatus').text(response.status);
-		$('#login').attr('disabled', false);
-		$('#logout').attr('disabled', true);
 	});
 
 	user.on('change', function() {
 		console.info('change');
-		console.log(user.attributes);
-		app.menu();
-		var table = $('.table tbody').empty();
-
+		if(account.get('type')=='2' && account.get('id')==null){
+			// this is a sign-up using facebook
+				account.set('type',2);
+				user.attributes.type=2;
+				user.attributes.streamId=streamId;
+				account.signUp(user.attributes);
+				account.set('dpUrl',user.get('pictures').square);
+		}
+		
+		/*var table = $('.table tbody').empty();
+		
 		_(user.attributes).each(
 				function(value, attribute) {
 					if (typeof value !== 'string')
@@ -44,12 +56,8 @@ window.fbAsyncInit = function() {
 					tr.append(attr).append(val).appendTo(table);
 				}, this);
 		user.get('pictures').square;
+		*/
 	});
 	
-	user.updateLoginStatus();
+	//user.updateLoginStatus();
 };
-
-$('#login').click(function(){ user.login(); });
-
-$('#logout').click(function(){ user.logout(); });
-

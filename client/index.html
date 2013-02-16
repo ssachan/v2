@@ -3,13 +3,17 @@
 <head>
 <title>PrepSquare</title>
 <meta name="viewport" content="width=320; user-scalable=no" />
-<script src="js/lib/jquery-1.8.2.min.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-<link href="http://fonts.googleapis.com/css?family=Merriweather" rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet" type="text/css">
+<script src="js/lib/jquery-1.8.3.js"></script>
+
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="css/bootstrap-responsive.min.css">
+<link rel="stylesheet" href="css/extras.css" >
 <link rel="stylesheet" href="css/style.css" >
+<link rel="stylesheet" href="css/bselect.css" >
+
 <!-- video.js changes begin-->
 <link href="css/video-js.min.css" rel="stylesheet" type="text/css">
 <link href="css/playlist.css" rel="stylesheet" type="text/css">
@@ -22,29 +26,32 @@
 <script src="config.js"></script>
  
 <script src="js/lib/bootstrap.min.js"></script>
-<script src="js/lib/bootstrap-contextmenu.js"></script>
-
 <!-- The Scripts -->
 <script src="js/lib/underscore-min.js"></script>
 <script src="js/lib/backbone.js"></script>
+<script src="js/lib/upload.js"></script>
 
-<script src="js/lib/highcharts.js"></script>
-<script src="js/lib/highcharts-more.js"></script>
-<script src="js/lib/exporting.js"></script>
+<script src="js/lib/FacebookUser.js"></script>
+<script src="js/lib/analytics.js"></script>
 
 <script src="js/helper.js"></script>
 <script src="js/utils/timer.js"></script>
 <script src="js/utils/charts.js"></script>
-<script src="js/utils/insights.js"></script>
+<script src="js/utils/bselect.js"></script>
+
+<script src="js/auth/facebook.js"></script>
+<script src="js/auth/google.js"></script>
+<!-- <script type='text/javascript' src='/js/lib/backbone-oauth.js'></script> -->
 
 <script src="js/models/accounts.js"></script>
 <script src="js/models/streams.js"></script>
 <script src="js/models/questions.js"></script>
 <script src="js/models/quizzes.js"></script>
 <script src="js/models/fac.js"></script>
+<script src="js/models/packages.js"></script>
 <script src="js/models/sections.js"></script>
 <script src="js/models/scores.js"></script>
-<script src="js/models/responses.js"></script>
+<script src="js/models/logs.js"></script>
 <script>
 
 var views = [
@@ -52,24 +59,51 @@ var views = [
               "landingview",
               "dashboardview",
               "quizview",
+              "questionview",
               "quizlibraryview",
               'facdirectoryview',
-              'modalview'
+              'modalview',
+              'signupview',
+              'packagesview',
+              'facview',
+              'faccontactview',
+              'reviewview',
+              'resultsview',
+              'mysetsview',
             ];
 
 _.each(views,function(item){
   document.write('<script src="js/views/'+item+'.js"></' + 'script>');  
 });
-
 </script>
 
 <script src="js/router.js"></script>
 <script src="js/Manager.js"></script>
-
-<script src="js/main.js"></script>
 </head>
 <body>
+  <div id="fb-root"></div>
   <header></header>
-  <div id="content"></div>
+    <div class="alert" style="display:none;" >
+        <button type="button" class="close" data-dismiss="alert">x</button>
+        <p>test</p>
+  </div>
+    <div id="loading" style="display:none;">
+        <img src='img/loading.gif' style="position:absolute;top:50%;left:50%;height:50px;width:50px">
+    </div>
+    <!-- <div id="loading" ><img src="img/loader.gif" ></div> -->
+    <div id="content"></div>
+    <footer class="footer"></footer>
+    <script src="js/lib/highcharts.js"></script>
+<script src="js/lib/highcharts-more.js"></script>
+<script src="js/lib/exporting.js"></script>
+    
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+      displayAlign: "left",
+  tex2jax: {inlineMath: [["~~","~~"],["\\(","\\)"]]}
+});
+</script>
+<script type="text/javascript" src="../../mathjax/MathJax.js?config=TeX-AMS_HTML-full"></script>
 </body>
+
 </html>

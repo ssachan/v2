@@ -1,4 +1,40 @@
-<div class="container fac-view">
-    
-    <%= firstName%> <%= firstName%>
+<div class="row-fluid">
+    <div class="box card">
+        <div class="media">
+            <a class="pull-left" href="#"> <img class="media-object" data-src="holder.js/64x64"
+                alt="64x64" style="width: 240px; height: 480px;" src="<%=dpUrlL%>">
+            </a>
+            <div class="media-body">
+                <div class="row-fluid">
+                    <div class="span8">
+                        <div class="media-heading">
+                            <h3><%=firstName %> <%=lastName %></h3>
+                        </div>
+                        <p><%=bio %></p>
+
+                        <h3>The Early Years</h3>
+                        <p><%=earlyLife %></p>
+
+                        <h3>Teaching Journey</h3>
+                        <p><%=teachingJourney %></p>
+                    </div>
+                    <div class="span4">
+                        <ul class="stats">
+                            <li><i class="icon-signal"></i><%=rec%> Recommenders</li>
+                            <li><i class="icon-th-list"></i><%=totalQuizzes%> Tests</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<br>
+<div class="row-fluid">
+    <div class="page-title">
+        <h3>Quizzes prepared</h3>
+    </div>
+    <br>
+    <div id="quizzes"></div>
 </div>

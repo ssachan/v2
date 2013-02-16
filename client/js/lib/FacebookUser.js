@@ -23,7 +23,9 @@
     _loginStatus: null,
 
     login: function(){
-      FB.login(function(){}, { scope: 'email'}); //this.options.scope.join(',') }
+		FB.login(function(){}, { scope: 'email'}); //this.options.scope.join(',') }
+    	//FB.getLoginStatus(this.onLoginStatusChange);
+    	//user.updateLoginStatus();
     },
 
     logout: function(){
@@ -31,14 +33,12 @@
     },
 
     updateLoginStatus: function(){
-      FB.getLoginStatus(this.onLoginStatusChange);
+    	FB.getLoginStatus(this.onLoginStatusChange);
     },
 
     onLoginStatusChange: function(response) {
-      if(this._loginStatus === response.status) return false;
-
+     //if(this._loginStatus === response.status) return false;
       var event;
-
       if(response.status === 'not_authorized') {
         event = 'facebook:unauthorized';
       } else if (response.status === 'connected') {
@@ -47,9 +47,8 @@
       } else {
         event = 'facebook:disconnected';
       }
-
       this.trigger(event, this, response);
-      this._loginStatus = response.status;
+      //this._loginStatus = response.status;
     },
 
     parse: function(response) {
@@ -62,7 +61,6 @@
 
     sync: function(method, model, options) {
       if(method !== 'read') throw new Error('FacebookUser is a readonly model, cannot perform ' + method);
-
       var callback = function(response) {
         if(response.error) {
           options.error(response);

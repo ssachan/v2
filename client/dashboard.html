@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>PrepSquare</title>
+<meta name="viewport" content="width=320; user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+<script src="js/lib/jquery-1.8.3.js"></script>
+
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/bootstrap-responsive.min.css">
+<link rel="stylesheet" href="css/extras.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/style_raghav.css">
+<link rel="stylesheet" href="css/bselect.css">
+
+<!-- video.js changes begin-->
+<link href="css/video-js.min.css" rel="stylesheet" type="text/css">
+<link href="css/playlist.css" rel="stylesheet" type="text/css">
+<script src="js/lib/video.min.js"></script>
+<script src="js/lib/playlist.js"></script>
+<script src="js/lib/bootstrap.min.js"></script>
+<!-- The Scripts -->
+<script src="js/lib/underscore-min.js"></script>
+<script src="js/lib/backbone.js"></script>
+<script src="js/utils/bselect.js"></script>
+
+</head>
+<body>
+    <header>
+        <div class="container">
+            <!--start: Row -->
+            <div class="row">
+                <!--start: Logo -->
+                <div class="logo span3">
+                    <a class="brand" href="#"> <img src="img/logo.png"
+                        style="width: 85px; margin-top: -13px;">
+                    </a>
+                </div>
+                <!--end: Logo -->
+                <!--start: Navigation -->
+                <div class="span9">
+                    <div class="navbar navbar-inverse">
+                        <div class="navbar-inner">
+                            <a class="btn btn-navbar" data-toggle="collapse"
+                                data-target=".nav-collapse"> <span class="icon-bar"></span> <span
+                                class="icon-bar"></span> <span class="icon-bar"></span>
+                            </a>
+                            <div class="nav-collapse collapse">
+                                <ul class="nav">
+                                    <li id="hiw-menu"><a href="#learn/tests">How It Works</a></li>
+                                    <li id="lib-menu"><a href="#library">Practice</a></li>
+                                    <li id="fac-menu"><a href="#facs">Faculty</a></li>
+                                    <li id="packages-menu"><a href="#packages">Purchase</a></li>
+                                    <li id="dash-menu" class="dropdown"><a href="#"
+                                        class="dropdown-toggle" data-toggle="dropdown"> <img
+                                            src="img/profile.jpg" width="20px"> First Name<b
+                                            class="caret"></b>
+                                    </a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="#">Dashboard</a></li>
+                                            <li><a href="#signup">Log Out</a></li>
+                                        </ul></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--end: Navigation -->
+            </div>
+            <!--end: Row -->
+        </div>
+        <!--end: Container-->
+    </header>
+    <div class="alert" style="display: none;">
+        <button type="button" class="close" data-dismiss="alert">x</button>
+        <p>test</p>
+    </div>
+    <div id="loading" style="display: none;">
+        <img src='img/loading.gif'
+            style="position: absolute; top: 50%; left: 50%; height: 50px; width: 50px">
+    </div>
+    <!-- <div id="loading" ><img src="img/loader.gif" ></div> -->
+    <div id="content">
+        <div class="container dashboard">
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="sidebar-nav">
+                        <ul class="nav nav-stacked left-menu">
+                            <li id="overall-nav"><a href="#"> <span> <i
+                                        class="icon-home"></i>
+                                </span> <span class="hidden-tablet hidden-phone">Dashboard</span>
+                            </a></li>
+                            <li id="activity-nav"><a href="#activity"> <span> <i
+                                        class="icon-home"></i>
+                                </span> <span class="hidden-tablet hidden-phone">Activity</span>
+                            </a></li>
+                            <li id="myprepsets-nav"><a href="#myprepsets"> <span> <i
+                                        class="icon-home"></i>
+                                </span> <span class="hidden-tablet hidden-phone">My PrepSets</span>
+                            </a></li>
+                            <li id="review-nav"><a href="#review"> <span> <i
+                                        class="icon-home"></i>
+                                </span> <span class="hidden-tablet hidden-phone">Review Questions</span>
+                            </a></li>
+                            <!--        <li id="packages-nav"><a href="#mypackages"> <span> <i
+                            class="icon-home"></i>
+                    </span> <span class="hidden-tablet hidden-phone">My Packages</span>
+                </a></li>
+                 -->
+                        </ul>
+                    </div>
+                    <div class="container-fluid content-wrapper">
+                        <div id="main-content" style="position: relative">
+                            <div class="row-fluid">
+                                <div class="page-title">
+                                    <h3>Dashboard</h3>
+                                </div>
+                                <br>
+                            </div>
+                            <div class="well">
+                                <div class="row-fluid">
+                                    <div class="span2">
+                                        <div class="rounded center"
+                                            style="padding: 10px; min-height: 50px; background: #F4763E">
+                                            <h1 class="blue bold" style="color: white">49</h1>
+                                        </div>
+                                    </div>
+                                    <div class="span4">
+                                        <img class="dp" alt="" src="img/profile.jpg"
+                                            style="float: left; margin-right: 15px">
+                                        <h3>Firstname</h3>
+                                    </div>
+                                    <div class="span2 rounded stat-gradient center"
+                                        style="margin-top: 5px; padding: 10px; min-height: 50px;">
+                                        <h2 class="blue bold">250</h2>
+                                        <p>Questions Attempted</p>
+                                    </div>
+                                    <div class="span2 rounded stat-gradient center"
+                                        style="margin-top: 5px; padding: 10px; min-height: 80px;">
+                                        <h2 class="blue bold">5</h2>
+                                        <p>Problem Sets Remaining</p>
+                                    </div>
+                                    <div class="span2 rounded stat-gradient center"
+                                        style="margin-top: 5px; padding: 10px; min-height: 80px;">
+                                        <h2 class="blue bold">250</h2>
+                                        <p>
+                                            Days since last attempt<br>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <table
+                                style="position: absolute; top: 9px; right: 9px;; font-size: smaller; color: #545454; border: 1px solid #ccc">
+                                <tbody>
+                                    <tr>
+                                        <td class="legendColorBox"><div
+                                                style="border: 1px solid #ccc; padding: 1px">
+                                                <div
+                                                    style="width: 4px; height: 0; border: 5px solid rgb(73, 175, 205); overflow: hidden"></div>
+                                            </div></td>
+                                        <td class="legendLabel">Data set 1</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="legendColorBox"><div
+                                                style="border: 1px solid #ccc; padding: 1px">
+                                                <div
+                                                    style="width: 4px; height: 0; border: 5px solid rgb(255, 99, 71); overflow: hidden"></div>
+                                            </div></td>
+                                        <td class="legendLabel">Data set 2</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="legendColorBox"><div
+                                                style="border: 1px solid #ccc; padding: 1px">
+                                                <div
+                                                    style="width: 4px; height: 0; border: 5px solid rgb(56, 132, 154); overflow: hidden"></div>
+                                            </div></td>
+                                        <td class="legendLabel">Data set 3</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div id="result-square">
+                                <div class="subject">
+                                    <div class="header l1">
+                                        <h3>
+                                            <a>Maths <span class="pull-right"
+                                                style="position: relative; bottom: 8px"> <img
+                                                    src="img/star-icon.png" height="27px"> <img
+                                                    src="img/star-icon.png" height="27px"> <img
+                                                    src="img/star-icon.png" height="27px">
+                                            </span></a>
+                                        </h3>
+                                    </div>
+                                    <div class="content">
+                                        <div class="row-fluid">
+                                            <div class="span4">
+                                                <ul class="nav c-list l2">
+                                                    <li class="bg-yellow"><a>Sub 1</a></li>
+                                                    <li><a>Sub 1</a></li>
+                                                    <li><a>Sub 1</a></li>
+                                                    <li><a>Sub 1</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="span4">
+                                                <ul class="nav c-list l3">
+                                                    <li class="bg-yellow"><a>Sub 1</a></li>
+                                                    <li><a>Sub 1</a></li>
+                                                    <li><a>Sub 1</a></li>
+                                                    <li><a>Sub 1</a></li>
+                                                </ul>
+                                            </div>
+                                            <!--Detailed Info -->
+                                            <div class="span4">
+                                                <ul class="stats l3-stats">
+                                                    <li>
+                                                        <h3 class="zero-margin">
+                                                            <span id="topic"></span> :<span id="pts"></span>
+                                                            pts
+                                                        </h3>
+                                                    </li>
+                                                    <li>
+                                                        <div class="level">
+                                                            <div class="progress" id="bar">
+                                                                <div class="bar bar-warning"
+                                                                    style="width: 56%"></div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li><span class="key">Total
+                                                            Questions</span> <span class="value" id="total"></span></li>
+                                                    <li><span class="key">Correct</span> <span
+                                                        class="value" id="correct"></span></li>
+                                                    <li><span class="key">Incorrect</span> <span
+                                                        class="value" id="incorrect"></span></li>
+                                                    <li><span class="key">Unattempted</span> <span
+                                                        class="value" id="unattempted"></span></li>
+                                                    <li><span class="key"> <a
+                                                            class="btn blue-btn" href="#review"
+                                                            id="2"> <span class="">Review</span>
+                                                        </a>
+                                                    </span> <span class="value"> <a
+                                                            class="btn orange-btn" href="#library"
+                                                            id="1"> <span class="">Take
+                                                                    Quiz</span>
+                                                        </a>
+                                                    </span></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="subject">
+
+                                    <div class="header l1">
+                                        <h3>
+                                            <a>Physics <span class="pull-right"
+                                                style="position: relative; bottom: 8px"> <img
+                                                    src="img/star-icon.png" height="27px"> <img
+                                                    src="img/star-icon.png" height="27px"> <img
+                                                    src="img/star-icon.png" height="27px">
+                                            </span></a>
+                                        </h3>
+                                    </div>
+                                    <div class="content">
+                                        <div class="row-fluid">
+                                            <div class="span4">
+                                                <ul class="nav c-list l2">
+                                                    <li class="bg-yellow"><a>Sub 1</a></li>
+                                                    <li><a>Sub 1</a></li>
+                                                    <li><a>Sub 1</a></li>
+                                                    <li><a>Sub 1</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="span4">
+                                                <ul class="nav c-list l3">
+                                                    <li class="bg-yellow"><a>Sub 1</a></li>
+                                                    <li><a>Sub 1</a></li>
+                                                    <li><a>Sub 1</a></li>
+                                                    <li><a>Sub 1</a></li>
+                                                </ul>
+                                            </div>
+                                            <!--Detailed Info -->
+                                            <div class="span4">
+                                                <ul class="stats l3-stats">
+                                                    <li>
+                                                        <h3 class="zero-margin">
+                                                            <span id="topic"></span> :<span id="pts"></span>
+                                                            pts
+                                                        </h3>
+                                                    </li>
+                                                    <li>
+                                                        <div class="level">
+                                                            <div class="progress" id="bar">
+                                                                <div class="bar bar-warning"
+                                                                    style="width: 56%"></div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li><span class="key">Total
+                                                            Questions</span> <span class="value" id="total"></span></li>
+                                                    <li><span class="key">Correct</span> <span
+                                                        class="value" id="correct"></span></li>
+                                                    <li><span class="key">Incorrect</span> <span
+                                                        class="value" id="incorrect"></span></li>
+                                                    <li><span class="key">Unattempted</span> <span
+                                                        class="value" id="unattempted"></span></li>
+                                                    <li><span class="key"> <a
+                                                            class="btn blue-btn" href="#review"
+                                                            id="2"> <span class="">Review</span>
+                                                        </a>
+                                                    </span> <span class="value"> <a
+                                                            class="btn orange-btn" href="#library"
+                                                            id="1"> <span class="">Take
+                                                                    Quiz</span>
+                                                        </a>
+                                                    </span></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="subject">
+
+                                    <div class="header l1">
+                                        <h3>
+                                            <a>Chemistry <span class="pull-right"
+                                                style="position: relative; bottom: 8px"> <img
+                                                    src="img/star-icon.png" height="27px"> <img
+                                                    src="img/star-icon.png" height="27px"> <img
+                                                    src="img/star-icon.png" height="27px">
+                                            </span></a>
+                                        </h3>
+                                    </div>
+                                    <div class="content">
+                                        <div class="row-fluid">
+                                            <div class="span4">
+                                                <ul class="nav c-list l2">
+                                                    <li class="bg-yellow"><a>Sub 1</a></li>
+                                                    <li><a>Sub 1</a></li>
+                                                    <li><a>Sub 1</a></li>
+                                                    <li><a>Sub 1</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="span4">
+                                                <ul class="nav c-list l3">
+                                                    <li class="bg-yellow"><a>Sub 1</a></li>
+                                                    <li><a>Sub 1</a></li>
+                                                    <li><a>Sub 1</a></li>
+                                                    <li><a>Sub 1</a></li>
+                                                </ul>
+                                            </div>
+                                            <!--Detailed Info -->
+                                            <div class="span4">
+                                                <ul class="stats l3-stats">
+                                                    <li>
+                                                        <h3 class="zero-margin">
+                                                            <span id="topic"></span> :<span id="pts"></span>
+                                                            pts
+                                                        </h3>
+                                                    </li>
+                                                    <li>
+                                                        <div class="level">
+                                                            <div class="progress" id="bar">
+                                                                <div class="bar bar-warning"
+                                                                    style="width: 56%"></div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li><span class="key">Total
+                                                            Questions</span> <span class="value" id="total"></span></li>
+                                                    <li><span class="key">Correct</span> <span
+                                                        class="value" id="correct"></span></li>
+                                                    <li><span class="key">Incorrect</span> <span
+                                                        class="value" id="incorrect"></span></li>
+                                                    <li><span class="key">Unattempted</span> <span
+                                                        class="value" id="unattempted"></span></li>
+                                                    <li><span class="key"> <a
+                                                            class="btn blue-btn" href="#review"
+                                                            id="2"> <span class="">Review</span>
+                                                        </a>
+                                                    </span> <span class="value"> <a
+                                                            class="btn orange-btn" href="#library"
+                                                            id="1"> <span class="">Take
+                                                                    Quiz</span>
+                                                        </a>
+                                                    </span></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <ul class="footer-links">
+                <li><a href="">About</a></li>
+                <li class="muted">&middot;</li>
+                <li><a href="">Blog</a></li>
+                <li class="muted">&middot;</li>
+                <li><a href="">Terms</a></li>
+                <li class="muted">&middot;</li>
+                <li><a href="">Contact</a></li>
+                <li class="muted">&middot;</li>
+                <li><a href="">Privacy</a></li>
+            </ul>
+        </div>
+    </footer>
+</body>
+
+</html>

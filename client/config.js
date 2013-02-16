@@ -1,7 +1,8 @@
 var SEPARATOR = '|:';
+var DP_PATH = '../api/resources/accounts/';
 
 var Config = {
-    serverUrl : 'http://localhost/code/api/',
+    serverUrl : '../api/',
     edition : '1',
     editionName : 'web',
     assetPath : '',
@@ -10,15 +11,38 @@ var Config = {
     viewsArray : [  
                     'HeaderView',
                     'LandingView',
+                    'LoginBox',
+                    'SignUpBox',
+                    'SignUpView',
                     'QuizView',
                     'QuizQuestionView',
-                    'QuizResultsView',
                     'DashboardView',
                     'QuizLibraryView',
                     'QuizItemView',
                     'FacDirectoryView',
                     'FacItemView',
-                    'DashboardView',
-                    'ModalView'
-                ]
+                    'FacView',
+                    'ModalView',
+                    'MySetsView',
+                    'InstructionsView',
+                    'PackagesView',
+                    'PackageItemView',
+                    'PracticeView',
+                    'ForgotPassView',
+                    'ChangePassView',
+                    'ReviewView',
+                    'ReviewQuestionView',
+                    'ResultsView',
+                    'ResumeView',
+                    'ResultAnalysisView',
+                    'ResultGraphsView',
+                    'SolutionsView',
+                    'QuestionItemView',
+                    'PerformanceView',
+                    'FacContactView',
+                    'FooterView',
+                    'OverView',
+                    'LearnMoreView',
+                    'ActivityView'
+                  ]
 };

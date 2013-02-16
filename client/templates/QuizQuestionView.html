@@ -1,32 +1,38 @@
-<div class="row-fluid detail-unit"
-	style="min-height: 100%; height: 100%">
-	<div class="heading">
-		<h2>
-			Question <span id="qnum"></span> of <span id="qtotal"></span>
-		</h2>
-	</div>
-	<div class="content">
-		<p><%= text %></p>
-	</div>
-	<div class="row-fluid">
-		<div class="span10">
-			<div class="option-box">
-				<ol type="A">
-					<% var opts = options.split("|:"); for (opt in opts){ %>
-					<li><%= opts[opt] %></li> <% } %>
-				</ol>
-			</div>
-		</div>
-		<div class="span2 btn-group" data-toggle="buttons-radio" id="but">
-			<% var len = opts.length; for(var i=0; i
-			<len; i++){
-		%>
-			<button type="button" data-toggle="button" name="option"
-				value="<%=i%>"<% if(optionSelected!=null &&
-				optionSelected==i) {%> <%='class="btn btn-large btn-block active"'%>
-				<% } else {%> <%='class="btn btn-large btn-block"'%> <% }%>
-				><%=(i+1) %></button>
-			<% } %> 
-		</div>
-	</div>
+<div id="status" class="yellow-box">
+    <div class="row-fluid">
+        <div class="span7">
+            <div class="media" id="stathead">
+            </div>
+        </div>
+        <div class="span5">
+            <div class="g-stats">
+                DIFFICULTY : <span class="blue" id="diff"></span>
+            </div>
+            <div class="g-stats">
+                <div class="stat">
+                    Average Accuracy<br> <span class="blue" id="avgAcc"></span>
+                </div>
+                <div class="stat">
+                    Average Time<br> <span class="blue" id="avgTime"></span>
+                </div>
+            </div>
+            <div class="g-stats">
+                <span class="val">JEE 2012, JEE 2013</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="q-video" class="center">
+</div>
+<div class="qtext">
+    <% if(paraId){ %>
+    <h3>Paragraph :</h3>
+    <%= para %> <br>
+    <hr class="soften">
+    <br> <%}%> <%= text %>
+</div>
+<div class="row-fluid" id="options"></div>
+<div id="solution">
+    <h3>Solution</h3>
+    <p id="solutionText"></p>
 </div>
