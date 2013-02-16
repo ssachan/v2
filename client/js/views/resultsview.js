@@ -79,13 +79,15 @@ window.ResultAnalysisView = Backbone.View.extend({
 			"techOrder": ["flash"],
 			"playlist" : videoResults
 		};
-		
+
 		console.log(videoOptions);
 		var myPlayer = _V_("results_video", videoOptions);
-		
+
+		myPlayer.src(firstVideo.sources);
+
 		myPlayer.addEvent("ended", function() {
 
-			myPlayer.playlist.next()
+			myPlayer.playlist.next();
 
 		}); // enables autoplay of next
 
