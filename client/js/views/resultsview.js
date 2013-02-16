@@ -129,7 +129,7 @@ window.ResultAnalysisView = Backbone.View.extend({
 	},
 	
 	onRender : function(){
-		$("#video").html('<video id="results_video" class="video-js atlantis" controls preload="none" width="640" height="264" data-setup="{}"></video>');
+		$("#video").html('<video id="results_video" class="video-js tube-css" controls preload="none" width="640" height="264" data-setup="{}"></video>');
 		var videoResults = this.calculateVideoArray(this.model.get('videoArray'));
 		this.setUpPlaylist(videoResults);
 		var l3GraphData = this.model.get('l3GraphData');
