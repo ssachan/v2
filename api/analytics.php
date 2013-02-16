@@ -1,7 +1,6 @@
 <?php
 /** Comments:
 Tanujb : Matrix type questions, code not tested.
-adjustDelta needs to be modified.
 */
 /*
 set_include_path("..:.");
