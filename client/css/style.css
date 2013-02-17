@@ -1517,3 +1517,8 @@ padding:10px
     display: inline;
     padding: 0 2px;
 }
+
+[class^="icon-"], [class*=" icon-"] {
+    margin-top:9px;
+    margin-left:10px
+}
