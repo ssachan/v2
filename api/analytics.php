@@ -68,6 +68,7 @@ abstract class analConst {
 }
 
 include ('constants.php');
+include ('reco.php');
 
 class lscoreDataObject{
     public $lId;

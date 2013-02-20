@@ -40,6 +40,7 @@ $app->post('/submitQuiz', 'updateResultsForTest');
 $app->post('/submitPractice', 'processPractice');
 
 $app->get('/testcode/:a1/:a2/:a3/:a4/:a5/:a6', 'testCode');
+$app->get('/testcode1', 'testcode1');
 
 $app->get('/attemptedQuestions/', 'getAttemptedQuestions');
 
