@@ -75,3 +75,8 @@ function getQ($id){
         echo '{"error":{"text":' . $e->getMessage() . '}}';
     }
 }
+
+$app->get("/pull", function () use ($app) {
+    $output = shell_exec('git pull');
+    echo "<pre>$output</pre>";
+});
