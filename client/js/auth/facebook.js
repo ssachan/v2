@@ -21,7 +21,7 @@ window.fbAsyncInit = function() {
 				account.set('type',2);
 				user.attributes.type=2;
 				user.attributes.streamId=streamId;
-				account.signUp(user.attributes);
+				account.fblogin(user.attributes);
 				account.set('dp',user.get('pictures').square);
 		}
 	});
@@ -37,7 +37,7 @@ window.fbAsyncInit = function() {
 				account.set('type',2);
 				user.attributes.type=2;
 				user.attributes.streamId=streamId;
-				account.signUp(user.attributes);
+				account.fblogin(user.attributes);
 				account.set('dpUrl',user.get('pictures').square);
 		}
 		

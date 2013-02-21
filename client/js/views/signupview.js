@@ -34,7 +34,6 @@ window.LoginBox = Backbone.View.extend({
     fConnect : function() {
         this.model.set('type', 2);
 		user.login();
-		//also send the details to the server
 	},
 
 	gConnect : function() {
