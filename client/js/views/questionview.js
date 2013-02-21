@@ -359,9 +359,10 @@ window.QuizQuestionView = Backbone.View.extend({
         $('#avgTime').html(helper.formatTime(this.model.get('timeTaken')));
         $('#solutionText').html(this.model.get('explanation'));
         $('#solution').show();
+        var setup = "{'techOrder': ['flash']}";
         $('#q-video')
             .html(
-            '<video id="analysis_video" class="video-js atlantis" controls preload="none" width="720" height="360" data-setup="{}"><source src="../../video/q' + this.model.get('id') + 'vid1.mp4" type="video/mp4" /> </video>');
+            '<video id="analysis_video" class="video-js atlantis" controls preload="none" width="720" height="360" data-setup="'+setup+'"><source src="../../video/q' + this.model.get('id') + 'vid1.mp4" type="video/mp4" /> </video>');
 
         $('#time').html(helper.formatTime(this.model.get('timeTaken')));
         $('#submit').hide();
