@@ -263,6 +263,7 @@ $app->post("/fblogin", function () use ($app) {
     $email = $_POST['email'];
     $streamId = $_POST['streamId'];
     $account = getAccountByEmail($email);
+    echo $account;
     if ($account != null) {
         // email exists
         //check if fb account is linked
