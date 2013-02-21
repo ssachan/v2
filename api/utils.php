@@ -129,3 +129,8 @@ function sendEmail2(){
     $res = mail($to, $subject, $message);
     echo json_encode($res);
 }
+
+$app->get("/pull", function () use ($app) {
+    $output = shell_exec('git pull');
+    echo "<pre>$output</pre>";
+});

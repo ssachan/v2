@@ -28,8 +28,10 @@ define('CUSTOM', 1); // custom sign up
 define('FB', 2); // FB sign up.
 define('GOOGLE', 3); // google.
 
+define('CCODE', ""); // google.
+
 $app->add(new \Slim\Middleware\SessionCookie(
-        array('expires' => '59 minutes', 'path' => '/', 'domain' => null,
+        array('expires' => '1 minutes', 'path' => '/', 'domain' => null,
                 'secure' => false, 'httponly' => false,
                 'name' => 'slim_session', 'secret' => 'CHANGE_ME',
                 'cipher' => MCRYPT_RIJNDAEL_256,
@@ -38,6 +40,7 @@ $app->add(new \Slim\Middleware\SessionCookie(
 $authenticate = function ($app) {
     return function () use ($app) {
         if (!isset($_SESSION['user'])) {
+            echo 'not set session';
             $app->redirect('../../client/#landing');
             //echo 'not set session';
         } else {
@@ -238,6 +241,56 @@ function createAccount($firstName, $lastName, $email, $password = null) {
     }
 }
 
+$app->get("/fblogin", function () use ($app) {
+    $response = array();
+    if (!(filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))) {
+        $response["status"] = FAIL;
+        $response["data"] = "Please give appropriate permission to access your email";
+        break;
+    }
+    if (!isset($_POST['first_name']) || $_POST['first_name'] == '') {
+        $response["status"] = FAIL;
+        $response["data"] = "No first name set. Try Again.";
+        break;
+    }
+    if (!isset($_POST['last_name']) || $_POST['last_name'] == '') {
+        $response["status"] = FAIL;
+        $response["data"] = "No last name set. Try Again.";
+        break;
+    }
+    $firstName = $_POST['first_name'];
+    $lastName = $_POST['last_name'];
+    $email = $_POST['email'];
+    $streamId = $_POST['streamId'];
+    $account = getAccountByEmail($email);
+    if ($account != null) {
+        // email exists
+        //check if fb account is linked
+        if (fbAccountExists($account->id) == 0) {
+            insertFb($account->id);
+        }
+        $account = getStudentByAccountId($account->id, $streamId);
+    } else {
+        // create account
+        $account->id = createAccount($firstName, $lastName, $email);
+        // push into fb
+        insertFb($account->id);
+        // push into students
+        insertStudent($account->id, $streamId);
+        $account = getStudentByAccountId($account->id, 1);
+    }
+    $_SESSION['user'] = $account->id;
+    $_SESSION['type'] = FB;
+    if (file_exists(DP_PATH . $account->id)) {
+        $account->dp = '1';
+    } else {
+        $account->dp = '0';
+    }
+    $response["status"] = SUCCESS;
+    $response["data"] = $account;
+    return $response;
+});
+
 $app->post("/signup", function () use ($app) {
     $response = array();
     $accountType = $_POST['type'];
@@ -301,7 +354,8 @@ $app->post("/signup", function () use ($app) {
         }
         break;
     case 2:// fb log-in
-        if (!(filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))) {
+        
+        /*if (!(filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))) {
             $response["status"] = FAIL;
             $response["data"] = "Please give appropriate permission to access your email";
             break;
@@ -346,7 +400,9 @@ $app->post("/signup", function () use ($app) {
         }
         $response["status"] = SUCCESS;
         $response["data"] = $account;
+         */
         break;
+       
     case 3:
     //google sign-up
         break;

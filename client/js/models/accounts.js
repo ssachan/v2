@@ -106,7 +106,30 @@ window.Account = Backbone.Model.extend({
 			},
 		});
 	},
-
+	
+	fblogin : function(inputValues) {
+		// Do a POST to /login and send the creds
+		var url = Config.serverUrl + 'fblogin';
+		console.log('fb up... ');
+		$.ajax({
+			url : url,
+			type : 'POST',
+			dataType : "json",
+			data : inputValues,
+			success : function(data) {
+				if (data.status == STATUS.SUCCESS) {
+					account.set(data.data);
+					window.location = '#';
+				} else {
+					helper.processStatus(data);
+				}
+			},
+			error : function(data) {
+				console.log(data);
+			},
+		});
+	},
+	
 	signUp : function(inputValues) {
 		// Do a POST to /login and send the creds
 		var url = Config.serverUrl + 'signup';
@@ -125,7 +148,7 @@ window.Account = Backbone.Model.extend({
 				}
 			},
 			error : function(data) {
-				// console.log([ "error: ", data ]);
+				console.log(data);
 			},
 		});
 	},
@@ -147,7 +170,10 @@ window.Account = Backbone.Model.extend({
 				} else {
 					helper.processStatus(data);
 				}
-			}
+			},
+			error : function(data) {
+				console.log(data);
+			},
 		});
 	},
 
