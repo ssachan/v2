@@ -48,6 +48,8 @@ window.LoginBox = Backbone.View.extend({
        //$('.alert-error').hide(); // Hide any errors on a new submit        
     },
     
+    
+    
 });
 
 window.SignUpBox = Backbone.View.extend({
@@ -58,6 +60,7 @@ window.SignUpBox = Backbone.View.extend({
 
     events: {
         "click #signupButton": "signup",
+        "click #inviteButton": "invite",
     },
 
     render:function () {
@@ -76,9 +79,8 @@ window.SignUpBox = Backbone.View.extend({
     			type : 1,
     			streamId : streamId,
     		};
-        this.model.signUp(formValues);
-        this.model.set('type', 1);
-
+        this.model.ccSignUp(formValues);
+        //this.model.set('type', 1);
         /*
          //Test type 2 auth
          var formValues = {
@@ -102,6 +104,17 @@ window.SignUpBox = Backbone.View.extend({
         this.model.signUp(formValues);
         */
     },
+    
+    invite:function (event) {
+        event.preventDefault(); // Don't let this button submit the form
+    	var formValues = {
+    			email : $('#email-iu').val(),
+    			firstName : $('#fname-iu').val(),
+    			lastName : 'dummy',
+    			streamId : streamId,
+    		};
+        this.model.invite(formValues);
+    }
 
 });
 

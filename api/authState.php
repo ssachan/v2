@@ -28,10 +28,10 @@ define('CUSTOM', 1); // custom sign up
 define('FB', 2); // FB sign up.
 define('GOOGLE', 3); // google.
 
-define('CCODE', ""); // google.
+define('CCODE', "Test2"); // google.
 
 $app->add(new \Slim\Middleware\SessionCookie(
-        array('expires' => '1 minutes', 'path' => '/', 'domain' => null,
+        array('expires' => '120 minutes', 'path' => '/', 'domain' => null,
                 'secure' => false, 'httponly' => false,
                 'name' => 'slim_session', 'secret' => 'CHANGE_ME',
                 'cipher' => MCRYPT_RIJNDAEL_256,
@@ -142,19 +142,19 @@ function insertStudent($accountId, $streamId) {
 function insertFb($accountId) {
     $date = date("Y-m-d H:i:s", time());
     $sql = "INSERT INTO accounts_fb (accountId,facebookId, linkedOn, bio, education, firstName, gender, lastName, link,locale, timezone, username,pictures,work) VALUES (:accountId,:facebookId,:linkedOn, :bio,:education, :firstName, :gender, :lastName, :link,:locale,:timezone,:username,:pics,:work)";
-    if(array_key_exists('education',$_POST)){
+    if (array_key_exists('education', $_POST)) {
         $edu = json_encode($_POST['education']);
-    }else{
+    } else {
         $edu = NULL;
     }
-    if(array_key_exists('work',$_POST)){
+    if (array_key_exists('work', $_POST)) {
         $work = json_encode($_POST['work']);
-    }else{
+    } else {
         $work = NULL;
     }
-    if(array_key_exists('pictures',$_POST)){
+    if (array_key_exists('pictures', $_POST)) {
         $pictures = json_encode($_POST['pictures']);
-    }else{
+    } else {
         $pictures = NULL;
     }
     try {
@@ -200,27 +200,6 @@ function insertFb($accountId) {
      */
 }
 
-/*function createStudentAccount($firstName, $lastName, $email, $password) {
-    $sql = "INSERT INTO accounts (firstName,lastName,email,password, createdOn) VALUES (:firstName, :lastName, :email, :password, :createdOn)";
-    try {
-        $db = getConnection();
-        $stmt = $db->prepare($sql);
-        $stmt->bindParam("firstName", $firstName);
-        $stmt->bindParam("lastName", $lastName);
-        $stmt->bindParam("email", $email);
-        $stmt->bindParam("password", $password);
-        $stmt->bindParam("createdOn", date("Y-m-d H:i:s", time()));
-        $stmt->execute();
-        $id = $db->lastInsertId();
-        $db = null;
-        return $id;
-    } catch (PDOException $e) {
-        error_log($e->getMessage(), 3, '/var/tmp/php.log');
-        echo '{"error":{"text":' . $e->getMessage() . '}}';
-    }
-
-}*/
-
 function createAccount($firstName, $lastName, $email, $password = null) {
     $date = date("Y-m-d H:i:s", time());
     $sql = "INSERT INTO accounts (firstName,lastName,email,password, createdOn) VALUES (:firstName, :lastName, :email, :password, :createdOn)";
@@ -263,7 +242,6 @@ $app->post("/fblogin", function () use ($app) {
     $email = $_POST['email'];
     $streamId = $_POST['streamId'];
     $account = getAccountByEmail($email);
-    echo $account;
     if ($account != null) {
         // email exists
         //check if fb account is linked
@@ -288,126 +266,118 @@ $app->post("/fblogin", function () use ($app) {
     }
     $response["status"] = SUCCESS;
     $response["data"] = $account;
-    return $response;
+    sendResponse($response);
+});
+
+function signUp() {
+    $response = array();
+    if (!(filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))) {
+        $response["status"] = FAIL;
+        $response["data"] = "Please enter a valid email address";
+        break;
+    }
+    if (!isset($_POST['firstName']) || $_POST['firstName'] == '') {
+        $response["status"] = FAIL;
+        $response["data"] = "Please enter your first name";
+        break;
+    }
+    if (!isset($_POST['lastName']) || $_POST['lastName'] == '') {
+        $response["status"] = FAIL;
+        $response["data"] = "Please enter your last name";
+        break;
+    }
+    if (!isset($_POST['password']) || $_POST['password'] == '') {
+        $response["status"] = FAIL;
+        $response["data"] = "Please enter a valid password";
+        break;
+    }
+    if ($_POST['password'] != $_POST['cPassword']) {
+        $response["status"] = FAIL;
+        $response["data"] = "Passwords entered do not match";
+        break;
+    }
+    $firstName = $_POST['firstName'];
+    $lastName = $_POST['lastName'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $streamId = $_POST['streamId'];
+    $account = getAccountByEmail($email);
+    if ($account != null) {
+        // account exists
+        if ($account->password == null) {
+            $response["status"] = FAIL;
+            $response["data"] = "You have either logged in through FB or Google. To create a custom account, log in through the account and set a password";
+        } else {
+            $response["status"] = FAIL;
+            $response["data"] = "Email already exists. you should probably try forgot password";
+        }
+    } else {
+        $account = new stdClass();
+        $account->id = createAccount($firstName, $lastName, $email, $password);
+        insertStudent($account->id, $streamId);
+        $account = getStudentByAccountId($account->id, $streamId);
+        if (file_exists(DP_PATH . $account->id . '.jpg')) {
+            $account->dp = true;
+        } else {
+            $account->dp = false;
+        }
+        $account->type=CUSTOM;
+        $_SESSION['user'] = $account->id;
+        $_SESSION['type'] = CUSTOM;
+        $response["status"] = SUCCESS;
+        $response["data"] = $account;
+    }
+    sendResponse($response);
+}
+
+$app->post("/invite", function () use ($app) {
+    $response = array();
+    if (!(filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))) {
+        $response["status"] = FAIL;
+        $response["data"] = "Please enter a valid email address";
+        break;
+    }
+    if (!isset($_POST['firstName']) || $_POST['firstName'] == '') {
+        $response["status"] = FAIL;
+        $response["data"] = "Please enter your first name";
+        break;
+    }
+    if (!isset($_POST['lastName']) || $_POST['lastName'] == '') {
+        $response["status"] = FAIL;
+        $response["data"] = "Please enter your last name";
+        break;
+    }
+    $firstName = $_POST['firstName'];
+    $lastName = $_POST['lastName'];
+    $email = $_POST['email'];
+    $streamId = $_POST['streamId'];
+    $account = getAccountByEmail($email);
+    if ($account != null) {
+        // account exists
+        $response["status"] = FAIL;
+        $response["data"] = "Your email is registered with us.";
+    } else {
+        $account = new stdClass();
+        $account->id = createAccount($firstName, $lastName, $email, null);
+        $response["status"] = SUCCESS;
+        $response["data"] = "Thanks for your interest. We will send you an invite very soon.";
+    }
+    sendResponse($response);
+});
+
+$app->post("/ccsignup", function () use ($app) {
+    if($_POST['ccode'] == CCODE){
+        signUp();
+    }else{
+        $response = array();
+        $response["status"] = FAIL;
+        $response["data"] = "Your Coupon Code doesn't match.";
+        sendResponse($response);
+    }
 });
 
 $app->post("/signup", function () use ($app) {
-    $response = array();
-    $accountType = $_POST['type'];
-    switch ($accountType) {
-    case 1: //our custom sign-up
-    //validate inputs
-        if (!(filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))) {
-            $response["status"] = FAIL;
-            $response["data"] = "Please enter a valid email address";
-            break;
-        }
-        if (!isset($_POST['firstName']) || $_POST['firstName'] == '') {
-            $response["status"] = FAIL;
-            $response["data"] = "Please enter your first name";
-            break;
-        }
-        if (!isset($_POST['lastName']) || $_POST['lastName'] == '') {
-            $response["status"] = FAIL;
-            $response["data"] = "Please enter your last name";
-            break;
-        }
-        if (!isset($_POST['password']) || $_POST['password'] == '') {
-            $response["status"] = FAIL;
-            $response["data"] = "Please enter a valid password";
-            break;
-        }
-        if ($_POST['password'] != $_POST['cPassword']) {
-            $response["status"] = FAIL;
-            $response["data"] = "Passwords entered do not match";
-            break;
-        }
-        $firstName = $_POST['firstName'];
-        $lastName = $_POST['lastName'];
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-        $streamId = $_POST['streamId'];
-        $account = getAccountByEmail($email);
-        if ($account != null) {
-            // account exists
-            if ($account->password == null) {
-                $response["status"] = FAIL;
-                $response["data"] = "You have either logged in through FB or Google. To create a custom account, log in through the account and set a password";
-            } else {
-                $response["status"] = FAIL;
-                $response["data"] = "Email already exists. you should probably try forgot password";
-            }
-        } else {
-            $account = new stdClass();
-            $account->id = createAccount($firstName, $lastName, $email, $password);
-            insertStudent($account->id, $streamId);
-            $account = getStudentByAccountId($account->id, $streamId);
-            if (file_exists(DP_PATH . $account->id . '.jpg')) {
-                $account->dp = true;
-            } else {
-                $account->dp = false;
-            }
-            $_SESSION['user'] = $account->id;
-            $_SESSION['type'] = CUSTOM;
-            $response["status"] = SUCCESS;
-            $response["data"] = $account;
-        }
-        break;
-    case 2:// fb log-in
-        
-        /*if (!(filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))) {
-            $response["status"] = FAIL;
-            $response["data"] = "Please give appropriate permission to access your email";
-            break;
-        }
-        if (!isset($_POST['first_name']) || $_POST['first_name'] == '') {
-            $response["status"] = FAIL;
-            $response["data"] = "No first name set. Try Again.";
-            break;
-        }
-        if (!isset($_POST['last_name']) || $_POST['last_name'] == '') {
-            $response["status"] = FAIL;
-            $response["data"] = "No last name set. Try Again.";
-            break;
-        }
-        $firstName = $_POST['first_name'];
-        $lastName = $_POST['last_name'];
-        $email = $_POST['email'];
-        $streamId = $_POST['streamId'];
-        $account = getAccountByEmail($email);
-        if ($account != null) {
-            // email exists
-            //check if fb account is linked 
-            if (fbAccountExists($account->id) == 0) {
-                insertFb($account->id);
-            }
-            $account = getStudentByAccountId($account->id, $streamId);
-        } else {
-            // create account
-            $account->id = createAccount($firstName, $lastName, $email);
-            // push into fb
-            insertFb($account->id);
-            // push into students
-            insertStudent($account->id, $streamId);
-            $account = getStudentByAccountId($account->id, 1);
-        }
-        $_SESSION['user'] = $account->id;
-        $_SESSION['type'] = FB;
-        if (file_exists(DP_PATH . $account->id)) {
-            $account->dp = '1';
-        } else {
-            $account->dp = '0';
-        }
-        $response["status"] = SUCCESS;
-        $response["data"] = $account;
-         */
-        break;
-       
-    case 3:
-    //google sign-up
-        break;
-    }
-    sendResponse($response);
+    signUp();
 });
 
 $app->get("/logout", function () use ($app) {

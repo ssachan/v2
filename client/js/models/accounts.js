@@ -3,34 +3,37 @@ window.Account = Backbone.Model.extend({
 	defaults : {
 		id : null,
 		quizzesAttempted : null,
-		dpUrl : DP_PATH+'avatar.jpg'
+		dpUrl : DP_PATH + 'avatar.jpg'
 	},
 
 	urlRoot : ' ',
-	
+
 	initialize : function() {
 		if (!this.get('quizzesAttemptedArray')) {
 			this.set({
 				quizzesAttemptedArray : new Array()
 			});
 		}
-		
-		this.on('change:quizzesAttempted', function(model){
-			model.get('quizzesAttemptedArray').length=0;
-			if(model.get('quizzesAttempted')!=null && model.get('quizzesAttemptedArray')){
-				model.get('quizzesAttemptedArray').push.apply(this.get('quizzesAttemptedArray'), JSON.parse(model.get('quizzesAttempted')));
+
+		this.on('change:quizzesAttempted', function(model) {
+			model.get('quizzesAttemptedArray').length = 0;
+			if (model.get('quizzesAttempted') != null
+					&& model.get('quizzesAttemptedArray')) {
+				model.get('quizzesAttemptedArray').push.apply(this
+						.get('quizzesAttemptedArray'), JSON.parse(model
+						.get('quizzesAttempted')));
 			}
-        });
-		
-		this.on('change:dp', function(model){
-			if(model.get('dp')==true){
-				model.set('dpUrl', DP_PATH+model.get('id')+'.jpg');
-			}else{
-				model.set('dpUrl', DP_PATH+'avatar.jpg');				
+		});
+
+		this.on('change:dp', function(model) {
+			if (model.get('dp') == true) {
+				model.set('dpUrl', DP_PATH + model.get('id') + '.jpg');
+			} else {
+				model.set('dpUrl', DP_PATH + 'avatar.jpg');
 			}
-        });
-		
-		//var that = this;
+		});
+
+		// var that = this;
 		// Hook into jquery
 		// The server must allow this through response headers
 		/*
@@ -86,12 +89,12 @@ window.Account = Backbone.Model.extend({
 			success : function(data) {
 				if (data.status == STATUS.SUCCESS) {
 					console.log('log out');
-					//window.location.replace('#landing');
-					if(user){
+					// window.location.replace('#landing');
+					if (user) {
 						user.clear();
 					}
 					account.reset();
-					account.get('quizzesAttemptedArray').length=0;
+					account.get('quizzesAttemptedArray').length = 0;
 					activeQuiz = null;
 					var signUpView = new SignUpView({
 						model : account
@@ -106,11 +109,52 @@ window.Account = Backbone.Model.extend({
 			},
 		});
 	},
-	
+
+	invite : function(inputValues) {
+		// Do a POST to /login and send the creds
+		var url = Config.serverUrl + 'invite';
+		console.log('invite up... ');
+		$.ajax({
+			url : url,
+			type : 'POST',
+			dataType : "json",
+			data : inputValues,
+			success : function(data) {
+				helper.processStatus(data);
+			},
+			error : function(data) {
+				console.log(data);
+			},
+		});
+	},
+
 	fblogin : function(inputValues) {
 		// Do a POST to /login and send the creds
 		var url = Config.serverUrl + 'fblogin';
 		console.log('fb up... ');
+		$.ajax({
+			url : url,
+			type : 'POST',
+			dataType : "json",
+			data : inputValues,
+			success : function(data) {
+				if (data.status == STATUS.SUCCESS) {
+					account.set(data.data);
+					window.location = '#';
+				} else {
+					helper.processStatus(data);
+				}
+			},
+			error : function(data) {
+				console.log(data);
+			},
+		});
+	},
+	
+	ccSignUp : function(inputValues) {
+		// Do a POST to /login and send the creds
+		var url = Config.serverUrl + 'ccsignup';
+		console.log('signing up... ');
 		$.ajax({
 			url : url,
 			type : 'POST',
@@ -211,6 +255,7 @@ window.Account = Backbone.Model.extend({
 			}
 		});
 	},
+
 });
 
 var account = new Account();
