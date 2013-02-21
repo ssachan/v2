@@ -266,10 +266,9 @@ $app->post("/fblogin", function () use ($app) {
     if ($account != null) {
         // email exists
         //check if fb account is linked
-        if (fbAccountExists($account->id) == 0) {
+        if (!fbAccountExists($account->id)) {
             insertFb($account->id);
         }
-        $account = getStudentByAccountId($account->id, $streamId);
     } else {
         // create account
         $account->id = createAccount($firstName, $lastName, $email);
@@ -277,8 +276,8 @@ $app->post("/fblogin", function () use ($app) {
         insertFb($account->id);
         // push into students
         insertStudent($account->id, $streamId);
-        $account = getStudentByAccountId($account->id, 1);
     }
+    $account = getStudentByAccountId($account->id, 1);
     $_SESSION['user'] = $account->id;
     $_SESSION['type'] = FB;
     if (file_exists(DP_PATH . $account->id)) {
