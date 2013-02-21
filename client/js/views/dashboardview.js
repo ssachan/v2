@@ -204,6 +204,7 @@ window.PerformanceView = Backbone.View.extend({
 		var l1Name = this.model.get('displayName');
 		$('.l3-stats #topic', this.el).html(l1Name);
 		this.renderStats(thisL1Score);
+		$('#btns').show();
 	},
 	
 	renderL2Stats : function (){
@@ -212,6 +213,7 @@ window.PerformanceView = Backbone.View.extend({
 		var l2Name = (sectionL2.get(context.activel2Id)).get('displayName');
 		$('.l3-stats #topic', this.el).html(l2Name);
 		this.renderStats(thisL2Score);
+		$('#btns').show();
 	},
 	
 	renderL3 : function() {
@@ -248,6 +250,7 @@ window.PerformanceView = Backbone.View.extend({
 		var l3Name = (sectionL3.get(context.activel3Id)).get('displayName');
 		$('.l3-stats #topic', this.el).html(l3Name);
 		this.renderStats(thisL3Score);
+		$('#btns').hide();
 	},
 	
 });

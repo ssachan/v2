@@ -14,7 +14,8 @@ window.Question = Backbone.Model.extend({
         'hasAttempted':false,
         'optionSelected':null,
         'isCorrect':null,
-        'videoData' : null //am adding this to load video for each question
+        'videoData' : null, //am adding this to load video for each question
+        'typeString':''
     },
     
     STATUS_NOTSTARTED: 1, // when the quiz is fresh from the library
@@ -33,6 +34,23 @@ window.Question = Backbone.Model.extend({
         }
         if (this.get('optionSelected')) {
         	this.set('isCorrect',this.isOptionSelectedCorrect(this.get('optionSelected')));
+        }
+        if(this.get('typeId')){
+        	var type = this.get('typeId');
+        	switch(type){
+        		case "1":
+        			this.set('typeString','');
+        			break;
+        		case "2":
+        			this.set('typeString','Multiple Choice');
+        			break;
+        		case "3":
+        			this.set('typeString','Integer Type');
+        			break;
+        		case "4":
+        			this.set('typeString','Matrix Type');
+        			break;
+        	}
         }
     },
 	

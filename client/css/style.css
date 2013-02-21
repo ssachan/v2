@@ -360,7 +360,9 @@ margin:0px auto;
     padding-top: 30px;
     padding-bottom: 30px;
     font-size: 16px;
+    min-height:230px
 }
+
 
 .feature-row h2 {
     margin-bottom: 40px
@@ -1516,4 +1518,9 @@ padding:10px
 .legend li {
     display: inline;
     padding: 0 2px;
+}
+
+.arrow {
+    margin-top:9px;
+    margin-left:10px
 }
