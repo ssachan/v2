@@ -59,7 +59,7 @@ window.SignUpBox = Backbone.View.extend({
     },
 
     events: {
-        "click #signupButton": "signup",
+        "click #signupButton": "ccSignUp",
         "click #inviteButton": "invite",
     },
 
@@ -67,7 +67,21 @@ window.SignUpBox = Backbone.View.extend({
         $(this.el).html(this.template());
         return this;
     },
-
+    
+    ccSignUp:function (event) {
+        event.preventDefault(); // Don't let this button submit the form
+    	var formValues = {
+    			email : $('#email-su').val(),
+    			password :  $('#pass-su').val(),
+    			cPassword :  $('#passcon-su').val(),
+    			firstName : $('#fname-su').val(),
+    			lastName : 'dummy',
+    			ccode : $('#ccode').val(),
+    			streamId : streamId,
+    		};
+        this.model.ccSignUp(formValues);
+    },
+    
     signup:function (event) {
         event.preventDefault(); // Don't let this button submit the form
     	var formValues = {
@@ -79,7 +93,7 @@ window.SignUpBox = Backbone.View.extend({
     			type : 1,
     			streamId : streamId,
     		};
-        this.model.ccSignUp(formValues);
+        this.model.signup(formValues);
         //this.model.set('type', 1);
         /*
          //Test type 2 auth
