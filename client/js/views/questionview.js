@@ -140,6 +140,9 @@ window.QuizQuestionView = Backbone.View.extend({
              e.preventDefault();
          });
          var math = document.getElementById('quiz-view');
+         _V_("analysis_video", {
+            techOrder: {"flash"}});
+})
          MathJax.Hub.Queue(["Typeset", MathJax.Hub, math]);
     },
     
