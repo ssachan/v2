@@ -241,7 +241,7 @@ function createAccount($firstName, $lastName, $email, $password = null) {
     }
 }
 
-$app->get("/fblogin", function () use ($app) {
+$app->post("/fblogin", function () use ($app) {
     $response = array();
     if (!(filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))) {
         $response["status"] = FAIL;
