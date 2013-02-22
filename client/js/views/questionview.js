@@ -321,9 +321,12 @@ window.QuizQuestionView = Backbone.View.extend({
                     html.push(dummy.join(','));
                     html.push('</h3>');
                     html.push('<h3>CORRECT OPTION ');
+                    var dummy = [];
                     for(var i = 0; i<correctAnswerArray.length;i++){
-                    	html.push(String.fromCharCode(65 + parseInt(correctAnswerArray[i]))+',');
+                    	dummy.push(String.fromCharCode(65 + parseInt(correctAnswerArray[i])));
+                    	//html.push(String.fromCharCode(65 + parseInt(correctAnswerArray[i]))+',');
                     }
+                    html.push(dummy.join(','));
                     html.push('</h3></div>');
                 }
             }
