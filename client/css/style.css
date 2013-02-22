@@ -1054,6 +1054,7 @@ margin:0px auto;
 
 .fac-item {
     border-top: 2px solid #F6F6F6;
+	margin: 15px;
 }
 
 .fac-item:hover {
@@ -1062,7 +1063,7 @@ margin:0px auto;
 
 .fac-item img {
     height: 90px;
-    width: 90px;
+
     border: 1px solid #E3E3E3;
     background: white;
     padding: 3px;
