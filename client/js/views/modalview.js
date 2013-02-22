@@ -31,7 +31,7 @@ window.ModalView = Backbone.View.extend({
 			if(parseInt(account.get('quizzesRemaining'))>0){
 				$('#take-btn').append('<a href="#quiz/'+this.model.get('id')+'" class="btn blue-btn">START TEST</a>');
 			}else{
-				$('#take-btn').append('<a href="#packages">You need to purchase a package to take this quiz. Click Here</a>');
+				$('#take-btn').append('<a href="#packages" class="btn blue-btn">You need to purchase a package to take this quiz.CLICK</a>');
 			}
 		}else{
 			$('#take-btn').append('<a href="#signup" class="btn blue-btn">Log-In/Sign-Up to take Test</a>');

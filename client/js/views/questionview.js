@@ -314,9 +314,11 @@ window.QuizQuestionView = Backbone.View.extend({
                     html.push('<img class="media-object pull-left" src="img/cross.png">');
                     html.push('<div class="media-body">');
                     html.push('<h3>YOU MARKED OPTION ');
+                    var dummy = [];
                     for(var i = 0; i<optionSelectedArray.length;i++){
-                    	html.push(String.fromCharCode(65 + parseInt(optionSelectedArray[i]))+',');
+                        dummy.push(String.fromCharCode(65 + parseInt(optionSelectedArray[i])));
                     }
+                    html.push(dummy.join(','));
                     html.push('</h3>');
                     html.push('<h3>CORRECT OPTION ');
                     for(var i = 0; i<correctAnswerArray.length;i++){
@@ -350,8 +352,43 @@ window.QuizQuestionView = Backbone.View.extend({
             }
         	break;
         case "4":
-        	break;
-        	
+        	 // matrix type
+            var options = this.model.get('options');
+            var optionSelected = this.model.get('optionSelected');
+        	var status = this.model.get('status');
+            if (status == null) {
+                html.push('<h3>YOU ANSWERED NONE</h3>');
+            } else {
+                if (status == true) {
+                    html.push('<h3>YOU ANSWERED CORRECTLY</h3>');
+                } else if(status==false) {
+                    html.push('<h3>YOU ANSWERED INCORRECTLY</h3>');
+                }
+            }
+            var optionsArray = options.split(SEPARATOR + SEPARATOR);
+            var leftList = optionsArray[0].split(SEPARATOR);
+            var rightList = optionsArray[1].split(SEPARATOR);
+            var lLen = leftList.length;
+            var rLen = rightList.length;
+            var optionSelectedArray = optionSelected.split(SEPARATOR + SEPARATOR);
+            // create the left right table
+            htmlOpt.push('<div class="span6">');
+            htmlOpt.push('<table class="table"><tr><td>');
+            htmlOpt.push('<ol type="1">');
+            for (var i = 0; i < lLen; i++) {
+                htmlOpt.push('<li>' + leftList[i] + '-');
+                var correctOptArray = optionSelectedArray[i].split(SEPARATOR);
+                var len = correctOptArray.length;
+                var dummy = [];
+                for(var i = 0; i< len; i++){
+                	dummy.push(String.fromCharCode(65 + correctOptArray[i]));
+                }
+                htmlOpt.push(dummy.join(','));                
+                htmlOpt.push('</li>');
+            }
+            htmlOpt.push('</ol></td></tr></table>');
+            htmlOpt.push('</div>');
+            break;        	
         }
         $('#stathead').html(html.join(' '));
         $('#diff').html(this.model.get('difficulty'));
