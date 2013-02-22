@@ -77,6 +77,8 @@ function getQ($id){
 }
 
 $app->get("/pull", function () use ($app) {
-    $output = shell_exec('git pull');
+    $output = shell_exec('sudo -u root -S git pull < DamnIt!');
+    
+    //$output = shell_exec('git pull');
     echo "<pre>$output</pre>";
 });
