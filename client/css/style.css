@@ -695,7 +695,7 @@ margin:0px auto;
     color: #fff;
     font-weight: bold;
     background: #31859C;
-    filter: alpha(opacity =         50);
+    filter: alpha(opacity = 50);
     overflow: hidden;
     white-space: nowrap;
     word-wrap: normal;
@@ -720,6 +720,7 @@ margin:0px auto;
 
 .quiz-box .l1 .media-body {
     padding-top: 5px;
+	margin-left: 10px;
 }
 
 .quiz-box .topic {
@@ -731,7 +732,7 @@ margin:0px auto;
     background: linear-gradient(#6D7685, #434E60);
     border-top: 1px solid #9AA0AB;
     color: white;
-    font-size: 15px;
+    font-size: 14px;
     height: 48px;
     line-height: 22px;
     padding: 8px 0px;
