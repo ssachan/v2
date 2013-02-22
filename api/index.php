@@ -383,7 +383,7 @@ function processQuiz() {
     $quizId = $_GET['quizId'];
     $streamId = $_GET['streamId'];
     $date = date("Y-m-d H:i:s", time());
-    // for now just return the questions from the quiz if quiz is not a part of the history.
+    //check if the quiz has already been taken. 
     $sql = "SELECT count(*) as count FROM results where quizId=:quizId and accountId=:accountId";
     try {
         $db = getConnection();
@@ -399,8 +399,8 @@ function processQuiz() {
         phpLog($e->getMessage());
     }
     if ($count->count == 0) {
-        // this quiz hasn't been taken.
-        // logic for package redemption at this point its null.
+        // this quiz hasn't been purchased.
+        // check if that account has credits by reading the quizzesRemaining.
         $sql = "SELECT quizzesRemaining from students where accountId=:accountId and streamId=:streamId";
         try {
             $db = getConnection();
@@ -411,11 +411,13 @@ function processQuiz() {
             $record = $stmt->fetch(PDO::FETCH_OBJ);
             $quizzesRemaining = intval($record->quizzesRemaining);
             if($quizzesRemaining <= 0 ){
+                // there are no credits
                 $response["status"] = FAIL;
                 $response["data"] = "You don't have enough credits. Please purchase a package from the purchase page";
                 sendResponse($response);
                 return;
             }
+            // credit = credit -1
             $quizzesRemaining -=1;
             $sql = "UPDATE students SET quizzesRemaining=:quizzesRemaining where accountId=:accountId and streamId=:streamId";
             try {
@@ -505,6 +507,7 @@ function processQuiz() {
             phpLog($e->getMessage());
         }
     } else {
+        // this quiz has been purchased before. It either is an ongoing or completed
         $sql = "select r.selectedAnswers,r.timePerQuestion,r.score,r.startTime,r.state, r.attemptedAs, r.numCorrect, r.numIncorrect, q.*,a.id as fid, a.firstName,a.lastName,f.bioShort from results r,quizzes q,accounts a,faculty f where r.accountId=:accountId and q.streamId=:streamId and r.quizId=q.id and q.facultyId=a.id and f.accountId=a.id and r.quizId=:quizId";
         try {
             $db = getConnection();
