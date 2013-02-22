@@ -510,7 +510,8 @@ class questionEvalution{
                 case questionType::MATRIX_MATCH:
                     //tanujb:TODO: following code may or may not work. needs unit tests.
 
-                   /* $tmpOption = explode("|:|:",$qDetails->options);
+                    //$tmpOption = explode("|:|:",$qDetails->options);
+                
                     $originalOptionText = $this->optionSelected;
                     $originalCorrectAnswer = $this->qDetails->correctAnswer;
                     $optionSuperArray =  getOptionArrayFromText($this->optionSelected,$this->optionLength);
@@ -524,7 +525,7 @@ class questionEvalution{
                     }
                     $this->qDetails->correctArray = $originalCorrectAnswer;
                     $this->optionSelected = $originalOptionText;
-                    */
+                    
                 break;
                 case questionType::INTEGER_TYPE:
                     $this->score = $this->qDetails->incorrectScore;
