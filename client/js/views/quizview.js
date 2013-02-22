@@ -333,7 +333,7 @@ window.PracticeView = Backbone.View.extend({
 	},
 
 	onRender : function() {
-		for ( var i = 0; i <= this.index; i++) {
+		/*for ( var i = 0; i <= this.index; i++) {
 			var question = quizQuestions.get(this.questionIds[i]);
 			if (this.getTimeTakenPerQuestion[i] != null) {
 				switch (question.get('status')) {
@@ -348,7 +348,8 @@ window.PracticeView = Backbone.View.extend({
 					break;
 				}
 			}
-		}
+		}*/
+		$('#side-nav').hide();
 		$('#topic-head').html(this.model.get('l1DisplayName')+' : '+this.model.get('descriptionShort'));
 	},
 
