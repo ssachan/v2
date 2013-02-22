@@ -653,8 +653,7 @@ margin:0px auto;
 }
 
 .activty-chart{
-    border-right: 8px solid #eee;
-    min-height: 600px;
+   
 }
 
 /* Activity
@@ -792,6 +791,12 @@ margin:0px auto;
 
 #rec-quizzes .quiz-box {
     width: 90%;
+	
+}
+
+#rec-quizzes{
+ border-right: 8px solid #eee;
+    min-height: 600px;
 }
 
 /* Analytics View 
