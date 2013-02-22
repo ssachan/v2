@@ -1100,6 +1100,9 @@ margin:0px auto;
     color: grey;
 }
 
+.fac-item media-body{
+margin-left:50px;}
+
 .fac-item p {
     color: #4D4D4D;
     margin-bottom: 2px;
