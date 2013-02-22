@@ -27,7 +27,12 @@ window.ModalView = Backbone.View.extend({
 		myPlayer = _V_("intro-vid-"+this.model.get('id'), { "techOrder": ["flash"]});
 		myPlayer.src({ type: "video/mp4", src: "http://prod.prepsquare.com/video/s"+this.model.get('id')+"video.mp4" });
 		if(account.get('id')!=null){
-			$('#take-btn').append('<a href="#quiz/'+this.model.get('id')+'" class="btn blue-btn">START TEST</a>');
+			// check if credits exist
+			if(parseInt(account.get('quizzesRemaining'))>0){
+				$('#take-btn').append('<a href="#quiz/'+this.model.get('id')+'" class="btn blue-btn">START TEST</a>');
+			}else{
+				$('#take-btn').append('<a href="#packages">You need to purchase a package to take this quiz. Click Here</a>');
+			}
 		}else{
 			$('#take-btn').append('<a href="#signup" class="btn blue-btn">Log-In/Sign-Up to take Test</a>');
 		}
