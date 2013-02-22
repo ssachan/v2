@@ -5,9 +5,9 @@ class bases{
  public static $values = array(
     "UNSEEN"                   => 0,
     "CORRECT_LOW_LEVEL"        => 20,
-    "CORRECT_LOW_VAL"          => 3,
+    "CORRECT_LOW_VAL"          => 6,
     "CORRECT_HIGH_LEVEL"       => 80,
-    "CORRECT_HIGH_VAL"         => 1,
+    "CORRECT_HIGH_VAL"         => 2,
     "INCORRECT_LOW_LEVEL"      => 20,
     "INCORRECT_LOW_VAL"        => -1,
     "INCORRECT_HIGH_LEVEL"     => 80,
@@ -75,8 +75,12 @@ class deltaCalculator{
         $base = self::getBaseScore($state,$score,$qScore);
         $timeFactor = self::timeFactor($state, $timeTaken, $avgTime, $sigmaTime, $score, $qScore);
         $abilityFactor = self::abilityFactor($score, $qScore, $state );
-
-        return round($base * $timeFactor * $abilityFactor,2);
+        $delta = round($base * $timeFactor * $abilityFactor,2);
+        if($score + $delta > 100)
+            $delta = (100-$score);
+        elseif ($score - $delta < 0)
+            $delta = $score;
+        return $delta;
     }
     public static function getBase($state,$score,$qScore)
     {

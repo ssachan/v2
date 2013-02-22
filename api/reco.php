@@ -16,10 +16,16 @@ class quizData
 		$this->questionIds       = $this->getQuestionIds();
 		$this->averageQScore     = $this->getAverageQScore();
 		$this->averageDifficulty = $this->getAverageDifficulty();
-
+		$this->l3Ids = $this->getL3Ids();
 	}
 
-	function getAverageQScore()
+	private function getQuestionIds(){
+        $query = array(
+            "id"=>$this->quizid,
+            "SQL"=>"SELECT questionIds FROM quizzes WHERE id=:id ");
+        return explode("|:",doSQL($query, true)->questionIds);
+    }
+    function getAverageQScore()
 	{
 		return doSQL(array(
 			"id"=>$this->quizid,
@@ -33,11 +39,9 @@ class quizData
 			"SQL"=>"SELECT avg(difficulty) as q FROM questions WHERE id IN (".implode(",",$this->questionIds).")"
 			),true)->q;
 	}
-	private function getQuestionIds(){
-        $query = array(
-            "id"=>$this->quizid,
-            "SQL"=>"SELECT questionIds FROM quizzes WHERE id=:id ");
-        return explode("|:",doSQL($query, true)->questionIds);
+    private function getL3Ids()
+    {
+    	
     }
     
 }

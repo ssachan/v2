@@ -189,7 +189,7 @@ class abilityScoreObject{
         $streamId = 1;
         $date = date("Y-m-d H:i:s", time());
         //$defaultScore = analConst::ABILITY_DEFAULT_SCORE;
-        $defaultScore = rand(20,90); //tanuj:TODO:change this
+        $defaultScore = 30; //tanuj:TODO:change this
          $sql = "INSERT INTO ascores_".$this->level." (accountId, score, updatedOn, ".$this->level."id, numQuestions, numCorrect, numIncorrect, numUnattempted, streamId) VALUES (:acid,:score,:timeStamp,:id,0,0,0,0,:streamId)";
             $query = array(
             "acid"      => $this->accountId,
