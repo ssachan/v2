@@ -578,40 +578,8 @@ function getPackagesByStreamId() {
     sendResponse($response);
 }
 
-function purchasePackage() {
+function updateQuizzesRemaining($number, $accountId, $streamId){
     $response = array();
-    $date = date("Y-m-d H:i:s", time());
-    $streamId = $_POST['streamId'];
-    $accountId = $_POST['accountId'];
-    $sql = "INSERT INTO purchases (accountId, packageId, purchasedOn) VALUES (:accountId, :packageId, :purchasedOn);";
-    try {
-        $db = getConnection();
-        $stmt = $db->prepare($sql);
-        $stmt->bindParam("accountId", $accountId);
-        $stmt->bindParam("packageId", $_POST['packageId']);
-        $stmt->bindParam("purchasedOn", $date);
-        $stmt->execute();
-        $db = null;
-    } catch (PDOException $e) {
-        $response["status"] = ERROR;
-        $response["data"] = EXCEPTION_MSG;
-        phpLog($e->getMessage());
-    }
-    // get the number to be added
-    $sql = "SELECT number from packages where id=:packageId";
-    try {
-        $db = getConnection();
-        $stmt = $db->prepare($sql);
-        $stmt->bindParam("packageId", $_POST['packageId']);
-        $stmt->execute();
-        $record = $stmt->fetch(PDO::FETCH_OBJ);
-        $number = intval($record->number);
-    } catch (PDOException $e) {
-        $response["status"] = ERROR;
-        $response["data"] = EXCEPTION_MSG;
-        phpLog($e->getMessage());
-    }
-    // get the current number of packages
     $sql = "SELECT quizzesRemaining from students where accountId=:accountId and streamId=:streamId";
     try {
         $db = getConnection();
@@ -622,7 +590,6 @@ function purchasePackage() {
         $record = $stmt->fetch(PDO::FETCH_OBJ);
         $quizzesRemaining = intval($record->quizzesRemaining);
         $quizzesRemaining += $number;
-        
         $sql = "UPDATE students SET quizzesRemaining=:quizzesRemaining where accountId=:accountId and streamId=:streamId";
         try {
             $db = getConnection();
@@ -646,6 +613,46 @@ function purchasePackage() {
         $response["status"] = SUCCESS;
         $response["data"] = $quizzesRemaining;
     }
+    return $response;
+}
+
+function purchasePackage() {
+    $response = array();
+    $date = date("Y-m-d H:i:s", time());
+    $streamId = $_POST['streamId'];
+    $accountId = $_POST['accountId'];
+    $sql = "INSERT INTO purchases (accountId, packageId, purchasedOn) VALUES (:accountId, :packageId, :purchasedOn);";
+    try {
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("accountId", $accountId);
+        $stmt->bindParam("packageId", $_POST['packageId']);
+        $stmt->bindParam("purchasedOn", $date);
+        $stmt->execute();
+        $db = null;
+    } catch (PDOException $e) {
+        $response["status"] = ERROR;
+        $response["data"] = EXCEPTION_MSG;
+        phpLog($e->getMessage());
+        sendResponse($response);
+    }
+    // get the number to be added
+    $sql = "SELECT number from packages where id=:packageId";
+    try {
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("packageId", $_POST['packageId']);
+        $stmt->execute();
+        $record = $stmt->fetch(PDO::FETCH_OBJ);
+        $number = intval($record->number);
+    } catch (PDOException $e) {
+        $response["status"] = ERROR;
+        $response["data"] = EXCEPTION_MSG;
+        phpLog($e->getMessage());
+        sendResponse($response);
+    }
+    $response = updateQuizzesRemaining($number, $accountId, $streamId);
+    // get the current number of packages
     sendResponse($response);
 }
 

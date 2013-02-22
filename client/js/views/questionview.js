@@ -400,12 +400,7 @@ window.QuizQuestionView = Backbone.View.extend({
         $('#solutionText').html(this.model.get('explanation'));
         $('#solution').show();
 		myPlayer = _V_("analysis_video", { "techOrder": ["flash"]});
-		myPlayer.src({ type: "video/mp4", src: '"../../video/q' + this.model.get('id') + 'vid1.mp4"' });
-        /*var setup = "{'techOrder': ['flash']}";
-        $('#q-video')
-            .html(
-            '<video id="analysis_video" class="video-js atlantis" controls preload="none" width="720" height="360" data-setup="'+setup+'"><source src="../../video/q' + this.model.get('id') + 'vid1.mp4" type="video/mp4" /> </video>');
-		*/
+		myPlayer.src('"../../video/q' + this.model.get('id') + 'vid1.mp4"');
         $('#time').html(helper.formatTime(this.model.get('timeTaken')));
         $('#submit').hide();
     }

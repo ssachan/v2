@@ -28,7 +28,8 @@ define('CUSTOM', 1); // custom sign up
 define('FB', 2); // FB sign up.
 define('GOOGLE', 3); // google.
 
-define('CCODE', "Test2"); // google.
+define('CCODE', "Test2"); // ccode.
+define('FREE_TESTS', 9); // free tests.
 
 $app->add(new \Slim\Middleware\SessionCookie(
         array('expires' => '120 minutes', 'path' => '/', 'domain' => null,
@@ -367,13 +368,71 @@ $app->post("/invite", function () use ($app) {
 
 $app->post("/ccsignup", function () use ($app) {
     if($_POST['ccode'] == CCODE){
-        signUp();
+        $response = array();
+        if (!(filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))) {
+            $response["status"] = FAIL;
+            $response["data"] = "Please enter a valid email address";
+            break;
+        }
+        if (!isset($_POST['firstName']) || $_POST['firstName'] == '') {
+            $response["status"] = FAIL;
+            $response["data"] = "Please enter your first name";
+            break;
+        }
+        if (!isset($_POST['lastName']) || $_POST['lastName'] == '') {
+            $response["status"] = FAIL;
+            $response["data"] = "Please enter your last name";
+            break;
+        }
+        if (!isset($_POST['password']) || $_POST['password'] == '') {
+            $response["status"] = FAIL;
+            $response["data"] = "Please enter a valid password";
+            break;
+        }
+        if ($_POST['password'] != $_POST['cPassword']) {
+            $response["status"] = FAIL;
+            $response["data"] = "Passwords entered do not match";
+            break;
+        }
+        $firstName = $_POST['firstName'];
+        $lastName = $_POST['lastName'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $streamId = $_POST['streamId'];
+        $account = getAccountByEmail($email);
+        if ($account != null) {
+            // account exists
+            if ($account->password == null) {
+                $response["status"] = FAIL;
+                $response["data"] = "You have either logged in through FB or Google. To create a custom account, log in through the account and set a password";
+            } else {
+                $response["status"] = FAIL;
+                $response["data"] = "Email already exists. you should probably try forgot password";
+            }
+        } else {
+            $account = new stdClass();
+            $account->id = createAccount($firstName, $lastName, $email, $password);
+            insertStudent($account->id, $streamId);
+            updateQuizzesRemaining(FREE_TESTS,$account->id, $account->id);
+            $account = getStudentByAccountId($account->id, $streamId);
+            if (file_exists(DP_PATH . $account->id . '.jpg')) {
+                $account->dp = true;
+            } else {
+                $account->dp = false;
+            }
+            $account->type=CUSTOM;
+            $_SESSION['user'] = $account->id;
+            $_SESSION['type'] = CUSTOM;
+            $response["status"] = SUCCESS;
+            $response["data"] = $account;
+        }
     }else{
         $response = array();
         $response["status"] = FAIL;
         $response["data"] = "Your Coupon Code doesn't match.";
-        sendResponse($response);
     }
+    sendResponse($response);
+    
 });
 
 $app->post("/signup", function () use ($app) {
