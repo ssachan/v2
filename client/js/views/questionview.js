@@ -42,7 +42,7 @@ window.QuizQuestionView = Backbone.View.extend({
         if (optionSelected != null) {
             var temp = (optionSelected).split(SEPARATOR); // (SEPARATOR.SEPARATOR);
             for (var j = 0; j < optionLength; j++) {
-                optionSelectedArray[j] = (temp.indexOf(j) != -1) ? 1 : 0;
+                optionSelectedArray[j] = (temp.indexOf(''+j) != -1) ? 1 : 0;
             }
         } else {
             // fill all the fields with null
