@@ -413,7 +413,7 @@ $app->post("/ccsignup", function () use ($app) {
             $account = new stdClass();
             $account->id = createAccount($firstName, $lastName, $email, $password);
             insertStudent($account->id, $streamId);
-            updateQuizzesRemaining(FREE_TESTS,$account->id, $account->id);
+            updateQuizzesRemaining(FREE_TESTS,$account->id, $streamId);
             $account = getStudentByAccountId($account->id, $streamId);
             if (file_exists(DP_PATH . $account->id . '.jpg')) {
                 $account->dp = true;
