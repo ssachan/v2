@@ -1,6 +1,13 @@
 <div class="row-fluid">
-    <div class="span4 rounded center stat-gradient"
-        style="margin-top: 20px; min-height: 135px;">
+<div class="span3 offset2 blue"> Graph Analysis <i class="icon-chevron-right"></i> </div>
+<div class="span3 offset3 btn blue-btn" style="position: relative; bottom: 4px"> Go back to dashboard </div>
+
+</div>
+<br>
+
+<div class="row-fluid">
+    <div class="span5 offset1 rounded center stat-gradient"
+        style="margin-top: 5px; min-height: 90px;">
         <h2 class="bold red"><%= score %>/<%=maxScore%></h2>
         was your score
         <p>
@@ -8,34 +15,25 @@
             Correct <strong class="red"><%=incorrect %></strong> Incorrect
         </p>
     </div>
-    <div class="span4 rounded center stat-gradient"
-        style="margin-top: 20px; min-height: 135px;">
+    <div class="span5 rounded center stat-gradient"
+        style="margin-top: 5px; min-height: 90px;">
         <h2 class="bold blue center"><%=timeTaken %></h2>
         was the time you took
         <p>
             Others finished this in <span class="blue bold"> 25 minutes </span>
         </p>
     </div>
-    <div class="span4 rounded center stat-gradient"
-        style="margin-top: 20px; min-height: 135px;">
-        <h2 class="red orange bold">80 percentile</h2>
-        of people who gave this set
-        <p>
-            Average Set Score was <strong class="orange"> 75</strong>
-        </p>
-    </div>
+    
 </div>
 <br>
-<h3>Video</h3>
-<hr class="soften">
-<br>
+<h3 class=" blue bold">Video</h3>
+
 <div id="video">
     
 </div>
 <br>
 <div id="topic-performance">
-    <h3>Topic-wise performance</h3>
-    <hr class="soften">
-    <br>
+    <h3 class="bold blue">Topic-wise performance</h3>
+
     <div id="topic-wise"></div>
 </div>

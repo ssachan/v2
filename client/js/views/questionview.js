@@ -42,7 +42,7 @@ window.QuizQuestionView = Backbone.View.extend({
         if (optionSelected != null) {
             var temp = (optionSelected).split(SEPARATOR); // (SEPARATOR.SEPARATOR);
             for (var j = 0; j < optionLength; j++) {
-                optionSelectedArray[j] = (temp.indexOf(j) != -1) ? 1 : 0;
+                optionSelectedArray[j] = (temp.indexOf(''+j) != -1) ? 1 : 0;
             }
         } else {
             // fill all the fields with null
@@ -321,9 +321,12 @@ window.QuizQuestionView = Backbone.View.extend({
                     html.push(dummy.join(','));
                     html.push('</h3>');
                     html.push('<h3>CORRECT OPTION ');
+                    var dummy = [];
                     for(var i = 0; i<correctAnswerArray.length;i++){
-                    	html.push(String.fromCharCode(65 + parseInt(correctAnswerArray[i]))+',');
+                    	dummy.push(String.fromCharCode(65 + parseInt(correctAnswerArray[i])));
+                    	//html.push(String.fromCharCode(65 + parseInt(correctAnswerArray[i]))+',');
                     }
+                    html.push(dummy.join(','));
                     html.push('</h3></div>');
                 }
             }
@@ -396,11 +399,8 @@ window.QuizQuestionView = Backbone.View.extend({
         $('#avgTime').html(helper.formatTime(this.model.get('timeTaken')));
         $('#solutionText').html(this.model.get('explanation'));
         $('#solution').show();
-        var setup = "{'techOrder': ['flash']}";
-        $('#q-video')
-            .html(
-            '<video id="analysis_video" class="video-js atlantis" controls preload="none" width="720" height="360" data-setup="'+setup+'"><source src="../../video/q' + this.model.get('id') + 'vid1.mp4" type="video/mp4" /> </video>');
-
+		myPlayer = _V_("analysis_video", { "techOrder": ["flash"]});
+		myPlayer.src('"../../video/q' + this.model.get('id') + 'vid1.mp4"');
         $('#time').html(helper.formatTime(this.model.get('timeTaken')));
         $('#submit').hide();
     }

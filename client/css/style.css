@@ -16,7 +16,7 @@ html,body,.container {
 
 body {
     position: relative;
-    font-size: 14px;
+    font-size: 13px;
     line-height: 20px;
     background: white url(../img/fbg.jpg);
     color: #444;
@@ -52,23 +52,23 @@ h2,h3,h4,h5 {
 }
 
 h1 {
-    font-size: 4.5em;
-    line-height: 1.1em;
+    font-size: 3.5em;
+    line-height: 0.9em;
     font-weight: 200;
 }
 
 h2 {
-    font-size: 27px;
+    font-size: 24px;
     font-weight: 200;
 }
 
 h3 {
-    font-size: 20px;
+    font-size: 18px;
     line-height: 30px;
 }
 
 h4 {
-    font-size: 15px;
+    font-size: 13px;
 }
 
 h5 {
@@ -322,7 +322,7 @@ margin:0px auto;
 }
 
 .banner {
-    background: url('../img/landing.jpg') no-repeat center;
+    background: url('../img/landing01.jpg') no-repeat center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -333,17 +333,17 @@ margin:0px auto;
 }
 
 .banner h1 {
-    color: white;
+    
     margin-bottom: 20px;
     margin-top: 0px;
-    text-align: right;
-    margin-right: 50px;
+    text-align: left;
+    margin-left: 50px;
 }
 
 .banner h2 {
-    color: white;
-    text-align: right;
-    margin-right: 50px;
+    color: #;
+    text-align: left;
+    margin-left: 50px;
 }
 
 .banner a {
@@ -653,8 +653,7 @@ margin:0px auto;
 }
 
 .activty-chart{
-    border-right: 8px solid #eee;
-    min-height: 600px;
+   
 }
 
 /* Activity
@@ -695,7 +694,7 @@ margin:0px auto;
     color: #fff;
     font-weight: bold;
     background: #31859C;
-    filter: alpha(opacity =         50);
+    filter: alpha(opacity = 50);
     overflow: hidden;
     white-space: nowrap;
     word-wrap: normal;
@@ -720,6 +719,7 @@ margin:0px auto;
 
 .quiz-box .l1 .media-body {
     padding-top: 5px;
+	margin-left: 10px;
 }
 
 .quiz-box .topic {
@@ -731,7 +731,7 @@ margin:0px auto;
     background: linear-gradient(#6D7685, #434E60);
     border-top: 1px solid #9AA0AB;
     color: white;
-    font-size: 15px;
+    font-size: 14px;
     height: 48px;
     line-height: 22px;
     padding: 8px 0px;
@@ -791,6 +791,11 @@ margin:0px auto;
 
 #rec-quizzes .quiz-box {
     width: 90%;
+	
+}
+
+#rec-quizzes{
+
 }
 
 /* Analytics View 
@@ -1040,9 +1045,7 @@ margin:0px auto;
     width: 90%;
 }
 
-.fac-dir .box{
-    min-height: 600px;
-}
+
 
 .well {
     margin-bottom: 0px;
@@ -1050,6 +1053,7 @@ margin:0px auto;
 
 .fac-item {
     border-top: 2px solid #F6F6F6;
+	margin: 15px;
 }
 
 .fac-item:hover {
@@ -1094,6 +1098,9 @@ margin:0px auto;
     font-size: 15px;
     color: grey;
 }
+
+.fac-item media-body{
+margin-left:50px;}
 
 .fac-item p {
     color: #4D4D4D;

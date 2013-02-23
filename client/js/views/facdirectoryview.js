@@ -102,7 +102,7 @@ window.FacDirectoryView = Backbone.View.extend({
 
 window.FacItemView = Backbone.View.extend({
 	tagName :'li',
-	className : 'fac-item',
+	className : 'fac-item box',
 	initialize : function() {
 		this.render();
 	},
