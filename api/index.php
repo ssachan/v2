@@ -441,9 +441,6 @@ function processQuiz() {
         $sqlArray = array("accountId"=>$accountId, "streamId"=>$streamId, "quizId"=>$quizId );
         $sqlArray["SQL"] = "select r.selectedAnswers,r.timePerQuestion,r.score,r.startTime,r.state, r.attemptedAs, r.numCorrect, r.numIncorrect, q.*,a.id as fid, a.firstName,a.lastName,f.bioShort from results r,quizzes q,accounts a,faculty f where r.accountId=:accountId and q.streamId=:streamId and r.quizId=q.id and q.facultyId=a.id and f.accountId=a.id and r.quizId=:quizId";
         $sucessData['quiz'] = doSQL($sqlArray,true);
-            
-        //
-        
         // you have already taken this quiz, this seems to be a call for fetching questions 
         // for the results
     }
@@ -460,7 +457,6 @@ function processQuiz() {
         $response["status"] = "fail";
         $response["data"] = "Something went wrong! Please drop in an email to admin@prepsquare.com";
     }
-
     sendResponse($response);
 }
 

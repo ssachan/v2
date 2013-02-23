@@ -28,7 +28,7 @@ define('CUSTOM', 1); // custom sign up
 define('FB', 2); // FB sign up.
 define('GOOGLE', 3); // google.
 
-define('CCODE', "Test2"); // ccode.
+//define('CCODE', "Test2"); // ccode.
 define('FREE_TESTS', 9); // free tests.
 
 $app->add(new \Slim\Middleware\SessionCookie(
@@ -322,7 +322,7 @@ function signUp() {
         } else {
             $account->dp = false;
         }
-        $account->type=CUSTOM;
+        $account->type = CUSTOM;
         $_SESSION['user'] = $account->id;
         $_SESSION['type'] = CUSTOM;
         $response["status"] = SUCCESS;
@@ -367,33 +367,39 @@ $app->post("/invite", function () use ($app) {
 });
 
 $app->post("/ccsignup", function () use ($app) {
-    if($_POST['ccode'] == CCODE){
-        $response = array();
-        if (!(filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))) {
-            $response["status"] = FAIL;
-            $response["data"] = "Please enter a valid email address";
-            break;
-        }
-        if (!isset($_POST['firstName']) || $_POST['firstName'] == '') {
-            $response["status"] = FAIL;
-            $response["data"] = "Please enter your first name";
-            break;
-        }
-        if (!isset($_POST['lastName']) || $_POST['lastName'] == '') {
-            $response["status"] = FAIL;
-            $response["data"] = "Please enter your last name";
-            break;
-        }
-        if (!isset($_POST['password']) || $_POST['password'] == '') {
-            $response["status"] = FAIL;
-            $response["data"] = "Please enter a valid password";
-            break;
-        }
-        if ($_POST['password'] != $_POST['cPassword']) {
-            $response["status"] = FAIL;
-            $response["data"] = "Passwords entered do not match";
-            break;
-        }
+    $ccodeArray = array("test1", "test2", "test3", "test4");
+    $response = array();
+    if (!(filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))) {
+        $response["status"] = FAIL;
+        $response["data"] = "Please enter a valid email address";
+        break;
+    }
+    if (!isset($_POST['ccode']) || $_POST['ccode'] == '') {
+        $response["status"] = FAIL;
+        $response["data"] = "Please enter a coupon code";
+        break;
+    }
+    if (!isset($_POST['firstName']) || $_POST['firstName'] == '') {
+        $response["status"] = FAIL;
+        $response["data"] = "Please enter your first name";
+        break;
+    }
+    if (!isset($_POST['lastName']) || $_POST['lastName'] == '') {
+        $response["status"] = FAIL;
+        $response["data"] = "Please enter your last name";
+        break;
+    }
+    if (!isset($_POST['password']) || $_POST['password'] == '') {
+        $response["status"] = FAIL;
+        $response["data"] = "Please enter a valid password";
+        break;
+    }
+    if ($_POST['password'] != $_POST['cPassword']) {
+        $response["status"] = FAIL;
+        $response["data"] = "Passwords entered do not match";
+        break;
+    }
+    if (in_array($_POST['ccode'], $ccodeArray)) {
         $firstName = $_POST['firstName'];
         $lastName = $_POST['lastName'];
         $email = $_POST['email'];
@@ -413,26 +419,26 @@ $app->post("/ccsignup", function () use ($app) {
             $account = new stdClass();
             $account->id = createAccount($firstName, $lastName, $email, $password);
             insertStudent($account->id, $streamId);
-            updateQuizzesRemaining(FREE_TESTS,$account->id, $streamId);
+            updateQuizzesRemaining(FREE_TESTS, $account->id, $streamId);
             $account = getStudentByAccountId($account->id, $streamId);
             if (file_exists(DP_PATH . $account->id . '.jpg')) {
                 $account->dp = true;
             } else {
                 $account->dp = false;
             }
-            $account->type=CUSTOM;
+            $account->type = CUSTOM;
             $_SESSION['user'] = $account->id;
             $_SESSION['type'] = CUSTOM;
             $response["status"] = SUCCESS;
             $response["data"] = $account;
         }
-    }else{
+    } else {
         $response = array();
         $response["status"] = FAIL;
         $response["data"] = "Your Coupon Code doesn't match.";
     }
     sendResponse($response);
-    
+
 });
 
 $app->post("/signup", function () use ($app) {
