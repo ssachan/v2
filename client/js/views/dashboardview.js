@@ -188,9 +188,19 @@ window.PerformanceView = Backbone.View.extend({
 			$('.l3-stats #correct', this.el).html(parseInt(score.get('numCorrect')));
 			$('.l3-stats #incorrect', this.el).html(parseInt(score.get('numIncorrect')));
 			$('.l3-stats #unattempted', this.el).html(parseInt(score.get('numUnattempted')));
+			var scoreVal = parseInt(score.get('score'));
+			if(scoreVal>80){
+				$('.l3-stats #pts', this.el).html('Expert');
+			}else if(scoreVal>40 && scoreVal<=80){
+				$('.l3-stats #pts', this.el).html('Getting There');
+			}else if(scoreVal<=40 && scoreVal>0){
+				$('.l3-stats #pts', this.el).html('Struggling');
+			}else if(scoreVal==0){
+				$('.l3-stats #pts', this.el).html('Not Started');
+			}
 		}else{
 			$('.l3-stats #bar', this.el).html('<div class="bar bar-warning" style="width:'+parseInt('0')+'%"></div>');
-			$('.l3-stats #pts', this.el).html('0');
+			$('.l3-stats #pts', this.el).html('Not Started');
 			$('.l3-stats #total', this.el).html('0');
 			$('.l3-stats #correct', this.el).html('0');
 			$('.l3-stats #incorrect', this.el).html('0');
