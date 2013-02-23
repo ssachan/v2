@@ -63,7 +63,7 @@ function copyImage($url) {
 function getStudentByAccountId($accountId, $streamId) {
     $sql = "SELECT a.id as id,a.email,a.firstName,a.lastName,s.ascoreL1 as ascore,s.quizzesAttempted,s.quizzesRemaining from accounts a,students s where a.id='"
             . $accountId . "' AND s.streamId='" . $streamId
-            . "' AND a.id=s.accountId";
+            . "' AND a.id=s.accountId AND a.flag=1";
     try {
         $db = getConnection();
         $stmt = $db->query($sql);
@@ -201,9 +201,9 @@ function insertFb($accountId) {
      */
 }
 
-function createAccount($firstName, $lastName, $email, $password = null) {
+function createAccount($firstName, $lastName, $email, $password = null, $flag=1) {
     $date = date("Y-m-d H:i:s", time());
-    $sql = "INSERT INTO accounts (firstName,lastName,email,password, createdOn) VALUES (:firstName, :lastName, :email, :password, :createdOn)";
+    $sql = "INSERT INTO accounts (firstName,lastName,email,password, createdOn, flag) VALUES (:firstName, :lastName, :email, :password, :createdOn, :flag)";
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
@@ -212,6 +212,7 @@ function createAccount($firstName, $lastName, $email, $password = null) {
         $stmt->bindParam("email", $email);
         $stmt->bindParam("password", $password);
         $stmt->bindParam("createdOn", $date);
+        $stmt->bindParam("flag", $flag);
         $stmt->execute();
         $id = $db->lastInsertId();
         $db = null;
@@ -359,7 +360,7 @@ $app->post("/invite", function () use ($app) {
         $response["data"] = "Your email is registered with us.";
     } else {
         $account = new stdClass();
-        $account->id = createAccount($firstName, $lastName, $email, null);
+        $account->id = createAccount($firstName, $lastName, $email, null, 0);
         $response["status"] = SUCCESS;
         $response["data"] = "Thanks for your interest. We will send you an invite very soon.";
     }
