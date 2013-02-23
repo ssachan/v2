@@ -1040,6 +1040,6 @@ function doSQL($params,$returnsData,$fetchAs = "obj",$callBack = ""){   /*
     }
     catch (PDOException $e) {
         //phpLog("doSqlError:".$sql.$e->getMessage());
-        //echo("doSqlError:".$sql.$e->getMessage());
+        echo("doSqlError:".$sql.$e->getMessage());
     }
 }

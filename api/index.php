@@ -386,16 +386,14 @@ function processQuiz() {
     $date = date("Y-m-d H:i:s", time());
     //check if the quiz has already been taken. 
     
-    $sqlArray = array("quizId"=>$quizId, "accountId"=>$accountId,
-                    "streamId" => $streamId, "startTime"=>$date, "SQL" => "");
+    $sqlArray = array("accountId"=>$accountId, "quizId"=>$quizId );
 
     $sqlArray["SQL"] = "SELECT count(*) as count FROM results where quizId=:quizId and accountId=:accountId";
     $count = doSQL($sqlArray,true);
-
     if ($count->count == 0) {
         // this quiz hasn't been purchased.
         // check if that account has credits by reading the quizzesRemaining.
-        
+        $sqlArray = array("accountId"=>$accountId, "streamId"=>$streamId );        
         $sqlArray["SQL"] = "SELECT quizzesRemaining from students where accountId=:accountId and streamId=:streamId";
         $record = doSQL($sqlArray,true);
 
@@ -411,11 +409,13 @@ function processQuiz() {
         $sqlArray["SQL"] = "UPDATE students SET quizzesRemaining=(quizzesRemaining-1) where accountId=:accountId and streamId=:streamId";    
         doSQL($sqlArray,false);
 
+        $sqlArray = array("accountId"=>$accountId, "startTime" => $date, "quizId"=>$quizId );
         $sqlArray["SQL"] = "INSERT INTO results (accountId, quizId, startTime) VALUES (:accountId, :quizId, :startTime)";
         doSQL($sqlArray,false);
         
         // update auizzesAttempted 
         // tanujb:TODO: quizzes attempted should come from elsewhere?
+        $sqlArray = array("accountId"=>$accountId, "streamId"=>$streamId);
         $sqlArray["SQL"] = "SELECT quizzesAttempted from students where accountId=:accountId and streamId=:streamId";
         $record = doSQL($sqlArray,true);
             if ($record->quizzesAttempted == null)
@@ -432,20 +432,22 @@ function processQuiz() {
             $sqlArray["SQL"] = "UPDATE students SET quizzesAttempted=:quizzesAttempted where accountId=:accountId and streamId=:streamId";
             doSQL($sqlArray,false);
         
+            $sqlArray = array("streamId"=>$streamId, "quizId"=>$quizId );
             $sqlArray["SQL"] = "select q.id,q.questionIds,q.description,q.descriptionShort,q.difficulty,q.allotedTime,q.maxScore,q.rec,q.conceptsTested, q.l2Ids, q.l3Ids, q.typeId, a.id as fid, a.firstName,a.lastName,f.bioShort from quizzes q, accounts a, faculty f where q.facultyId=a.id and q.streamId=:streamId and f.accountId=a.id and q.id=:quizId";
             $sucessData['quiz'] = doSQL($sqlArray,true);
     } 
     else {
         // this quiz has been purchased before. It either is an ongoing or completed
+        $sqlArray = array("accountId"=>$accountId, "streamId"=>$streamId, "quizId"=>$quizId );
         $sqlArray["SQL"] = "select r.selectedAnswers,r.timePerQuestion,r.score,r.startTime,r.state, r.attemptedAs, r.numCorrect, r.numIncorrect, q.*,a.id as fid, a.firstName,a.lastName,f.bioShort from results r,quizzes q,accounts a,faculty f where r.accountId=:accountId and q.streamId=:streamId and r.quizId=q.id and q.facultyId=a.id and f.accountId=a.id and r.quizId=:quizId";
         $sucessData['quiz'] = doSQL($sqlArray,true);
             
-            //$response["status"] = SUCCESS;
-            //$response["data"]["quiz"] = $record;
+        //
         
         // you have already taken this quiz, this seems to be a call for fetching questions 
         // for the results
     }
+    $sqlArray = array("quizId"=>$quizId );
     $sqlArray["SQL"] = "SELECT questionIds FROM quizzes where id=:quizId";
     $questionIds = doSQL($sqlArray,true)->questionIds;
 
