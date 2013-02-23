@@ -73,7 +73,7 @@ window.ResultAnalysisView = Backbone.View.extend({
 
 	setUpPlaylist : function(videoResults) {
 
-		var firstVideo = videoResults[0];
+		var firstVideo = videoResults[0] || {thumb_url : "../../video/poster.png"};
 
 		var videoOptions = {
 			"techOrder": ["flash"],

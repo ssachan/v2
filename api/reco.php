@@ -171,10 +171,11 @@ class recoObject
 	}
 	public function toJSON()
 	{
-		return {
-			"qid" => $this->recoQuizId;
-			"reason" =>$this->reasonText;
-		}
+		$temp = array(
+			"qid" => $this->recoQuizId,
+			"reason"=>$this->reasonText
+			);
+		return (object) $temp;
 	}
 }
 

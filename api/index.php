@@ -385,173 +385,80 @@ function processQuiz() {
     $streamId = $_GET['streamId'];
     $date = date("Y-m-d H:i:s", time());
     //check if the quiz has already been taken. 
-    $sql = "SELECT count(*) as count FROM results where quizId=:quizId and accountId=:accountId";
-    try {
-        $db = getConnection();
-        $stmt = $db->prepare($sql);
-        $stmt->bindParam("quizId", $quizId);
-        $stmt->bindParam("accountId", $accountId);
-        $stmt->execute();
-        $count = $stmt->fetchObject();
-        $db = null;
-    } catch (PDOException $e) {
-        $response["status"] = ERROR;
-        $response["data"] = EXCEPTION_MSG;
-        phpLog($e->getMessage());
-    }
+    
+    $sqlArray = array("quizId"=>$quizId, "accountId"=>$accountId,
+                    "streamId" => $streamId, "startTime"=>$date, "SQL" => "");
+
+    $sqlArray["SQL"] = "SELECT count(*) as count FROM results where quizId=:quizId and accountId=:accountId";
+    $count = doSQL($sqlArray,true);
+
     if ($count->count == 0) {
         // this quiz hasn't been purchased.
         // check if that account has credits by reading the quizzesRemaining.
-        $sql = "SELECT quizzesRemaining from students where accountId=:accountId and streamId=:streamId";
-        try {
-            $db = getConnection();
-            $stmt = $db->prepare($sql);
-            $stmt->bindParam("accountId", $accountId);
-            $stmt->bindParam("streamId", $streamId);
-            $stmt->execute();
-            $record = $stmt->fetch(PDO::FETCH_OBJ);
-            $quizzesRemaining = intval($record->quizzesRemaining);
-            if($quizzesRemaining <= 0 ){
-                // there are no credits
-                $response["status"] = FAIL;
-                $response["data"] = "You don't have enough credits. Please purchase a package from the purchase page";
-                sendResponse($response);
-                return;
-            }
-            // credit = credit -1
-            $quizzesRemaining -=1;
-            $sql = "UPDATE students SET quizzesRemaining=:quizzesRemaining where accountId=:accountId and streamId=:streamId";
-            try {
-                $db = getConnection();
-                $stmt = $db->prepare($sql);
-                $stmt->bindParam("quizzesRemaining", $quizzesRemaining);
-                $stmt->bindParam("accountId", $accountId);
-                $stmt->bindParam("streamId", $streamId);
-                $stmt->execute();
-                $db = null;
-            } catch (PDOException $e) {
-                $response["status"] = ERROR;
-                $response["data"] = EXCEPTION_MSG;
-                phpLog($e->getMessage());
-            }
-        } catch (PDOException $e) {
-            $response["status"] = ERROR;
-            $response["data"] = EXCEPTION_MSG;
-            phpLog($e->getMessage());
-        }
         
-        $sql = "INSERT INTO results (accountId, quizId, startTime) VALUES (:accountId, :quizId, :startTime)";
-        try {
-            $db = getConnection();
-            $stmt = $db->prepare($sql);
-            $stmt->bindParam("accountId", $accountId);
-            $stmt->bindParam("quizId", $quizId);
-            $stmt->bindParam("startTime", $date);
-            $stmt->execute();
-            $db = null;
-        } catch (PDOException $e) {
-            $response["status"] = ERROR;
-            $response["data"] = EXCEPTION_MSG;
-            phpLog($e->getMessage());
+        $sqlArray["SQL"] = "SELECT quizzesRemaining from students where accountId=:accountId and streamId=:streamId";
+        $record = doSQL($sqlArray,true);
+
+        $quizzesRemaining = intval($record->quizzesRemaining);
+        if($quizzesRemaining <= 0 ){
+            // there are no credits
+            $response["status"] = FAIL;
+            $response["data"] = "You don't have enough credits. Please purchase a package from the purchase page";
+            sendResponse($response);
+            return;
         }
+            
+        $sqlArray["SQL"] = "UPDATE students SET quizzesRemaining=(quizzesRemaining-1) where accountId=:accountId and streamId=:streamId";    
+        doSQL($sqlArray,false);
+
+        $sqlArray["SQL"] = "INSERT INTO results (accountId, quizId, startTime) VALUES (:accountId, :quizId, :startTime)";
+        doSQL($sqlArray,false);
+        
         // update auizzesAttempted 
         // tanujb:TODO: quizzes attempted should come from elsewhere?
-        $sql = "SELECT quizzesAttempted from students where accountId=:accountId and streamId=:streamId";
-        try {
-            $db = getConnection();
-            $stmt = $db->prepare($sql);
-            $stmt->bindParam("accountId", $accountId);
-            $stmt->bindParam("streamId", $streamId);
-            $stmt->execute();
-            $record = $stmt->fetch(PDO::FETCH_OBJ);
-            if ($record->quizzesAttempted == null) {
+        $sqlArray["SQL"] = "SELECT quizzesAttempted from students where accountId=:accountId and streamId=:streamId";
+        $record = doSQL($sqlArray,true);
+            if ($record->quizzesAttempted == null)
                 $quizzesAttempted = array();
-            } else {
+            else
                 $quizzesAttempted = json_decode($record->quizzesAttempted);
-            }
-            if (!(in_array($quizId, $quizzesAttempted))) {
+
+            if (!(in_array($quizId, $quizzesAttempted)))
                 array_push($quizzesAttempted, $quizId);
-            }
+
             $quizzesAttemptedJson = json_encode($quizzesAttempted);
-            $sql = "UPDATE students SET quizzesAttempted=:quizzesAttempted where accountId=:accountId and streamId=:streamId";
-            try {
-                $db = getConnection();
-                $stmt = $db->prepare($sql);
-                $stmt->bindParam("quizzesAttempted", $quizzesAttemptedJson);
-                $stmt->bindParam("accountId", $accountId);
-                $stmt->bindParam("streamId", $streamId);
-                $stmt->execute();
-                $db = null;
-            } catch (PDOException $e) {
-                $response["status"] = ERROR;
-                $response["data"] = EXCEPTION_MSG;
-                phpLog($e->getMessage());
-            }
-        } catch (PDOException $e) {
-            $response["status"] = ERROR;
-            $response["data"] = EXCEPTION_MSG;
-            phpLog($e->getMessage());
-        }
-        $sql = "select q.id,q.questionIds,q.description,q.descriptionShort,q.difficulty,q.allotedTime,q.maxScore,q.rec,q.conceptsTested, q.l2Ids, q.l3Ids, q.typeId, a.id as fid, a.firstName,a.lastName,f.bioShort from quizzes q, accounts a, faculty f where q.facultyId=a.id and q.streamId=:streamId and f.accountId=a.id and q.id=:quizId";
-        try {
-            $db = getConnection();
-            $stmt = $db->prepare($sql);
-            $stmt->bindParam("streamId", $streamId);
-            $stmt->bindParam("quizId", $quizId);
-            $stmt->execute();
-            $record = $stmt->fetch(PDO::FETCH_OBJ);
-            $db = null;
-            $sucessData['quiz'] = $record;
-        } catch (PDOException $e) {
-            $response["status"] = ERROR;
-            $response["data"] = EXCEPTION_MSG;
-            phpLog($e->getMessage());
-        }
-    } else {
+            array_pop($sqlArray);
+            $sqlArray["quizzesAttempted"] = $quizzesAttemptedJson;
+            $sqlArray["SQL"] = "UPDATE students SET quizzesAttempted=:quizzesAttempted where accountId=:accountId and streamId=:streamId";
+            doSQL($sqlArray,false);
+        
+            $sqlArray["SQL"] = "select q.id,q.questionIds,q.description,q.descriptionShort,q.difficulty,q.allotedTime,q.maxScore,q.rec,q.conceptsTested, q.l2Ids, q.l3Ids, q.typeId, a.id as fid, a.firstName,a.lastName,f.bioShort from quizzes q, accounts a, faculty f where q.facultyId=a.id and q.streamId=:streamId and f.accountId=a.id and q.id=:quizId";
+            $sucessData['quiz'] = doSQL($sqlArray,true);
+    } 
+    else {
         // this quiz has been purchased before. It either is an ongoing or completed
-        $sql = "select r.selectedAnswers,r.timePerQuestion,r.score,r.startTime,r.state, r.attemptedAs, r.numCorrect, r.numIncorrect, q.*,a.id as fid, a.firstName,a.lastName,f.bioShort from results r,quizzes q,accounts a,faculty f where r.accountId=:accountId and q.streamId=:streamId and r.quizId=q.id and q.facultyId=a.id and f.accountId=a.id and r.quizId=:quizId";
-        try {
-            $db = getConnection();
-            $stmt = $db->prepare($sql);
-            $stmt->bindParam("accountId", $accountId);
-            $stmt->bindParam("streamId", $streamId);
-            $stmt->bindParam("quizId", $quizId);
-            $stmt->execute();
-            $record = $stmt->fetch(PDO::FETCH_OBJ);
-            $db = null;
-            $sucessData['quiz'] = $record;
+        $sqlArray["SQL"] = "select r.selectedAnswers,r.timePerQuestion,r.score,r.startTime,r.state, r.attemptedAs, r.numCorrect, r.numIncorrect, q.*,a.id as fid, a.firstName,a.lastName,f.bioShort from results r,quizzes q,accounts a,faculty f where r.accountId=:accountId and q.streamId=:streamId and r.quizId=q.id and q.facultyId=a.id and f.accountId=a.id and r.quizId=:quizId";
+        $sucessData['quiz'] = doSQL($sqlArray,true);
+            
             //$response["status"] = SUCCESS;
             //$response["data"]["quiz"] = $record;
-        } catch (PDOException $e) {
-            $response["status"] = ERROR;
-            $response["data"] = EXCEPTION_MSG;
-            phpLog($e->getMessage());
-        }
+        
         // you have already taken this quiz, this seems to be a call for fetching questions 
         // for the results
     }
-    $sql = "SELECT questionIds FROM quizzes where id=:id";
-    try {
-        $db = getConnection();
-        $stmt = $db->prepare($sql);
-        $stmt->bindParam("id", $quizId);
-        $stmt->execute();
-        $questionIds = $stmt->fetchObject();
-        $db = null;
-        if ($questionIds->questionIds != null) {
-            $questions = getQuestions($questionIds->questionIds);
-            $sucessData["questions"] = $questions;
-            $response["status"] = "success";
-            $response["data"] = $sucessData;
-        } else {
-            $response["status"] = "fail";
-            $response["data"] = "Something went wrong! Please drop in an email to admin@ps.com";
-        }
-    } catch (PDOException $e) {
-        $response["status"] = ERROR;
-        $response["data"] = EXCEPTION_MSG;
-        phpLog($e->getMessage());
+    $sqlArray["SQL"] = "SELECT questionIds FROM quizzes where id=:quizId";
+    $questionIds = doSQL($sqlArray,true)->questionIds;
+
+    if ($questionIds != null) {
+        $questions = getQuestions($questionIds);
+        $sucessData["questions"] = $questions;
+        $response["status"] = "success";
+        $response["data"] = $sucessData;
+    } else {
+        $response["status"] = "fail";
+        $response["data"] = "Something went wrong! Please drop in an email to admin@prepsquare.com";
     }
+
     sendResponse($response);
 }
 
