@@ -78,8 +78,8 @@ class deltaCalculator{
         $delta = round($base * $timeFactor * $abilityFactor,2);
         if($score + $delta > 100)
             $delta = (100-$score);
-        elseif ($score - $delta < 0)
-            $delta = $score;
+        elseif ($score + $delta < 0)
+            $delta = -$score;
         return $delta;
     }
     public static function getBase($state,$score,$qScore)

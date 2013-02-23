@@ -204,23 +204,28 @@ class abilityScoreObject{
     public function getScore(){
         return $this->score;
     }
-    public function addCorrect($deltaForQuestion){
-        $this->numCorrect +=1;
+    public function addQuestion($deltaForQuestion){
         $this->numQuestions += 1;
+        
+        if(($this->score + $deltaForQuestion) > 100)
+            $deltaForQuestion = 100 - $this->score;
+        elseif(($this->score + $deltaForQuestion) < 0)
+            $deltaForQuestion = -$score;
+        
         $this->delta += $deltaForQuestion;
         $this->score += $deltaForQuestion;
+    }
+    public function addCorrect($deltaForQuestion){
+        $this->numCorrect +=1;
+        $this->addQuestion($deltaForQuestion);
     }
     public function addIncorrect($deltaForQuestion){
         $this->numIncorrect +=1;
-        $this->numQuestions += 1;
-        $this->delta += $deltaForQuestion;
-        $this->score += $deltaForQuestion;
+        $this->addQuestion($deltaForQuestion);
     }
     public function addUnattempted($deltaForQuestion){
         $this->numUnattempted +=1;
-        $this->numQuestions += 1;
-        $this->delta += $deltaForQuestion;
-        $this->score += $deltaForQuestion;
+        $this->addQuestion($deltaForQuestion);
     }
     public function updateScore(){
         $this->currentDate = date("Y-m-d H:i:s", time());
