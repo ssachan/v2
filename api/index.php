@@ -31,7 +31,7 @@ $app->get('/historyById/', $authenticate($app), 'getQuizzesHistory');
 $app->get('/pq/:id', $authenticate($app), 'getPQ');
 
 //quiz
-$app->post('/attemptedAs/', 'updateAttemptedAs');
+$app->post('/attemptedAs/', 'updateAttemptedAs'); 
 $app->get('/processQuiz/', $authenticate($app), 'processQuiz');
 $app->get('/getVideos/', $authenticate($app), 'videoList');
 
@@ -46,6 +46,7 @@ $app->get('/attemptedQuestions/', 'getAttemptedQuestions');
 
 //testing
 $app->get('/testDelta', 'testDelta');
+$app->post('/reco/', 'makeRecos');
 
 //packages
 $app->get('/packagesByStreamId', 'getPackagesByStreamId');

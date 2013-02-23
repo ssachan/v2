@@ -511,7 +511,7 @@ class questionEvalution{
                     //tanujb:TODO: following code may or may not work. needs unit tests.
 
                     //$tmpOption = explode("|:|:",$qDetails->options);
-                
+
                     $originalOptionText = $this->optionSelected;
                     $originalCorrectAnswer = $this->qDetails->correctAnswer;
                     $optionSuperArray =  getOptionArrayFromText($this->optionSelected,$this->optionLength);
@@ -1033,8 +1033,10 @@ function doSQL($params,$returnsData,$fetchAs = "obj",$callBack = ""){   /*
                 return $stmt->fetch(PDO::FETCH_OBJ);
             elseif($fetchAs === "all_array")
                 return $stmt->fetchAll();
-            elseif($fetchAS === "all_func")
+            elseif($fetchAs === "all_func")
                 return $stmt->fetchAll(PDO::FETCH_FUNC,$callBack);
+            elseif($fetchAs === "all_class")
+                return $stmt->fetchAll(PDO::FETCH_CLASS,$callBack);
     }
     catch (PDOException $e) {
         //phpLog("doSqlError:".$sql.$e->getMessage());
