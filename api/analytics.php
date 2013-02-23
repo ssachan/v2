@@ -207,6 +207,10 @@ class abilityScoreObject{
     public function addCorrect($deltaForQuestion){
         $this->numCorrect +=1;
         $this->numQuestions += 1;
+        if(($this->score + $deltaForQuestion) > 100)
+            $deltaForQuestion = 100 - $this->score;
+        elseif(($this->score + $deltaForQuestion) < 0)
+            $deltaForQuestion = -$score;
         $this->delta += $deltaForQuestion;
         $this->score += $deltaForQuestion;
     }
