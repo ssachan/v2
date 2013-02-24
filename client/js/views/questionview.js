@@ -399,7 +399,8 @@ window.QuizQuestionView = Backbone.View.extend({
         $('#avgTime').html(helper.formatTime(this.model.get('timeTaken')));
         $('#solutionText').html(this.model.get('explanation'));
         $('#solution').show();
-		myPlayer = _V_("analysis_video", { "techOrder": ["flash"], "poster": '../../video/q' + this.model.get('id') + 'thumb.png'});
+		//myPlayer = _V_("analysis_video", { "techOrder": ["flash"], "poster": '../../video/q' + this.model.get('id') + 'thumb.png'});
+        myPlayer = _V_("analysis_video");
 		myPlayer.src({ type: "video/mp4", src:this.model.get('videoUrl')});
         $('#time').html(helper.formatTime(this.model.get('timeTaken')));
         $('#submit').hide();
