@@ -20,18 +20,17 @@
                     <div class="nav-collapse collapse" id="header-nav">
                         <ul class="nav">
                             <% if(!id){%>
-                            <li id="hiw-menu"><a href="#learn/tests">Learn More</a></li> <%
-                            }else{%>
+                            <li id="hiw-menu"><a href="#learn/tests">Learn More</a></li> <% }else{%>
                             <li id="dashboard-menu"><a href="#">Dashboard</a></li> <% }%>
                             <li id="lib-menu"><a href="#library">Practice</a></li>
                             <li id="fac-menu"><a href="#facs">Faculty</a></li>
                             <!--<li><a href="../api/PHP/pay.html">Test</a></li> -->
-                            
+
                             <!--                             <li id="lib-menu"><a href="#library">Practice</a></li>
                             <li id="fac-menu"><a href="#facs">Faculty</a></li>
                              -->
-                            <li id="packages-menu"><a href="#packages">Purchase</a></li>
-                            
+                            <!--<li id="packages-menu"><a href="#packages">Purchase</a></li>-->
+
                             <li id="dash-menu" class="dropdown"><% if(id){%> <a href="#"
                                 class="dropdown-toggle" data-toggle="dropdown"> <img
                                     src="<%=dpUrl%>" width="20px"> <%=firstName %><b
@@ -40,8 +39,12 @@
                                     <li><a href="#">Dashboard</a></li>
                                     <li><a href="#signup">Log Out</a></li>
                                 </ul> <% }else{%> <a href="#signup">Sign-Up</a> <% }%>
-								        
-                            </li>                                
+                            </li>
+                            <% if(id){%>
+                            <a class="pull-right rounded"
+                                style="padding: 10px; margin-right: 0px; position: absolute; top: 4px; background: #F4763E; color: white">
+                                <%=quizzesRemaining%> sets remaining </a> 
+                            <% }%>
                         </ul>
                     </div>
                 </div>

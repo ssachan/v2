@@ -138,7 +138,21 @@ window.Quiz = Backbone.Model.extend({
         this.on('change:state', function (model) {
             model.setStatus();
         });
-
+        
+        if(this.get('difficulty')){
+        	var diff = this.get('difficulty');
+        	switch(diff){
+        		case "1":
+        			this.set('difficultyString','Easy');
+        			break;
+        		case "2":
+        			this.set('difficultyString','Medium');
+        			break;
+        		case "3":
+        			this.set('difficultyString','Hard');
+        			break;
+        	}
+        }
     },
 
     setTimeTaken: function () {
@@ -313,3 +327,4 @@ window.QuizCollection = Backbone.Collection.extend({
 
 var quizLibrary = new QuizCollection();
 var quizHistory = new QuizCollection();
+var quizRecommendation = new QuizCollection();

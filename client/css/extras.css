@@ -622,10 +622,10 @@ Carousel
 
 #myCarousel .content-left{margin:35px 0 0 100px;color:#fff;}
 #myCarousel .content-left h2{color:#98bf21;padding:10px;font-size:29px;font-size:2.9rem;}
-#myCarousel .content-left p{line-height:16px;padding:10px;}
+#myCarousel .content-left p{line-height:16px;}
 #myCarousel .content-right{margin:35px 100px 0 0;color:#fff;}
 #myCarousel .content-right h2{color:#98bf21;padding:10px;font-size:29px;font-size:2.9rem;}
-#myCarousel .content-right p{line-height:16px;padding:10px;}
+#myCarousel .content-right p{line-height:16px;}
 .carousel-control{background:none;border:none;font-size:24px;font-size:2.4rem;}
 .carousel{position:relative;margin-bottom:1px;line-height:1;}
 .carousel-inner{overflow:hidden;width:100%;position:relative;}
