@@ -368,7 +368,7 @@ $app->post("/invite", function () use ($app) {
 });
 
 $app->post("/ccsignup", function () use ($app) {
-    $ccodeArray = array("test1", "test2", "test3", "test4");
+    $ccodeArray = array("EDU01", "test2", "test3", "test4");
     $response = array();
     if (!(filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))) {
         $response["status"] = FAIL;
