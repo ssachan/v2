@@ -51,7 +51,7 @@ abstract class questionType {
 
 abstract class analConst {
     const ABILITY_DEFAULT_SCORE   = 50;
-    const UNSEEN_TOLERANCE        = 2000;
+    const UNSEEN_TOLERANCE        = 5000;
     const CORRECT                 = 1;
     const INCORRECT               = 2;
     const SKIPPED                 = 3;
