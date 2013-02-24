@@ -327,3 +327,4 @@ window.QuizCollection = Backbone.Collection.extend({
 
 var quizLibrary = new QuizCollection();
 var quizHistory = new QuizCollection();
+var quizRecommendation = new QuizCollection();
