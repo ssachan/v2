@@ -19,6 +19,7 @@ class quizRecoModel
 	public $l3Ids;
 	public $l2Ids;
 	public $l1Ids;
+	public $facultyId;
 	public $isAttempted; // omit?
 
 	function __construct($quizid, $dataSet = null)
@@ -71,7 +72,7 @@ class quizRecoCollection
 		$this->unattemptedQuizzes = $this->getQuizData();
 		$this->attemptedQuizzes = array();
 		$this->markAttemptedQuizzes();
-		$this->getFacultyRecommendations();
+		$this->getRecommendations();
 	}
 
 	private function getQuizData()
@@ -108,6 +109,13 @@ class quizRecoCollection
 		$j = 0;
 		for($i=0;$i<count($recos) && $j <= 3;$i++)
 			$temp[$j++]=$recos[$i]->toJSON();
+	}
+	function getRecommendations()
+	{
+		$attemptCount = count($this->attemptedQuizzes)
+		foreach ($this->attemptedQuizzes as $key => $quiz) {
+			$this->getFacultyRecos($quiz->facultyId);
+		}
 	}
 
 }
