@@ -84,6 +84,7 @@ var AppRouter = Backbone.Router.extend({
 		// check if authenticated move to dashboard page, else move to landing
 		// page
 		if(account.get('id')!=null){
+			mixpanel.track("Dashboard "+account.get('id'));
 			Manager.getDashboardData();
 		}else{
 			window.location = '#landing';
