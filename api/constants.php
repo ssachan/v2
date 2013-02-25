@@ -5,9 +5,9 @@ class bases{
  public static $values = array(
     "UNSEEN"                   => 0,
     "CORRECT_LOW_LEVEL"        => 20,
-    "CORRECT_LOW_VAL"          => 4.5,
+    "CORRECT_LOW_VAL"          => 3,
     "CORRECT_HIGH_LEVEL"       => 80,
-    "CORRECT_HIGH_VAL"         => 1.5,
+    "CORRECT_HIGH_VAL"         => 1,
     "INCORRECT_LOW_LEVEL"      => 20,
     "INCORRECT_LOW_VAL"        => -1,
     "INCORRECT_HIGH_LEVEL"     => 80,

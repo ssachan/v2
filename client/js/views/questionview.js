@@ -402,7 +402,7 @@ window.QuizQuestionView = Backbone.View.extend({
 		//myPlayer = _V_("analysis_video", { "techOrder": ["flash"], "poster": '../../video/q' + this.model.get('id') + 'thumb.png'});
         //myPlayer = _V_("analysis_video");
 		//myPlayer.src({ type: "video/mp4", src:this.model.get('videoUrl')});
-        myPlayer = _V_("analysis_video", { "techOrder": ["flash"]}, function(){
+        _V_("analysis-video-"+this.model.get('id'), { "techOrder": ["flash"]}, function(){
 			  // Player (this) is initialized and ready.
 		});
         $('#time').html(helper.formatTime(this.model.get('timeTaken')));
