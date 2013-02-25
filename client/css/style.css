@@ -749,7 +749,7 @@ margin:0px auto;
     font-weight: normal;
     font-size: 15px;
     padding: 8px 7px;
-    height: 52px;
+    height: 110px;
     margin: 0;
     background: #f8f9fa;
     background: -moz-linear-gradient(#f8f9fa, #f0f3f6);
@@ -1150,8 +1150,8 @@ margin-left:50px;}
 
 .card img {
     border: 2px solid #31859C;
-    height: 90px;
-    width: 90px;
+
+    width: 300px;
     background: white;
     padding: 3px;
     -moz-box-shadow: rgba(0, 0, 0, 0.1) 0 0 2px 0px;
