@@ -22,12 +22,12 @@ class quizRecoModel
 	public $facultyId;
 	public $isAttempted; // omit?
 
-	function __construct($quizid, $dataSet = null)
+	/*function __construct($quizid, $dataSet = null)
 	{
 		echo "in constructor";
 		$this->quizid = $quizid;
 		$this->loadData($dataSet);
-	}
+	}*/
 
 	private function loadData($temp = null){
 		if(is_null($temp))
@@ -70,35 +70,37 @@ class quizRecoCollection
 	{
 		$this->accountId = $uid;
 		$this->unattemptedQuizzes = $this->getQuizData();
+
 		$this->attemptedQuizzes = $this->recos = array();
+		
 		$this->markAttemptedQuizzes();
+
 		$this->getRecommendations();
 	}
 
 	private function getQuizData()
 	{
 		return doSQL(array("id"=> 1,
-			"SQL"=>"SELECT quizId, descriptionShort, averageQScore, questionIds, averageDifficulty, l3Ids, l2Ids, l1Ids, facultyId FROM quizzes"),
+			"SQL"=>"SELECT id as quizid, descriptionShort, averageQScore, questionIds, averageDifficulty, l3Ids, l2Ids, l1Ids, facultyId FROM quizzes"),
 			true,"all_class","quizRecoModel");
 	}
 
 	private function markAttemptedQuizzes()
 	{
 		$data = doSQL(array("id"=> $this->accountId,
-			"SQL"=>"SELECT quizId, score, attemptedAs, timeStamp FROM responses WHERE accountId = :id ORDER BY timeStamp DESC"),
+			"SQL"=>"SELECT quizId, score, attemptedAs, timeStamp FROM results WHERE accountId = :id ORDER BY timeStamp DESC"),
 			true,"all_array");
 		foreach ($data as $key => $row)
-			$this->moveToAttempted($row->quizId, $row);
+			$this->moveToAttempted($row["quizId"], $row);
 	}
 	private function moveToAttempted($qid, $row)
 	{
 		foreach ($this->unattemptedQuizzes as $key => $quiz)
-			if($quiz->quizId == $qid)
+			if($quiz->quizid == $qid)
 			{	
 				$quiz->addAttemptData($row);
 				$this->attemptedQuizzes[] = $quiz;
-				$this->unattemptedQuizzes
-					= array_splice($this->unattemptedQuizzes, $key, 1);
+				array_splice($this->unattemptedQuizzes, $key, 1);
 				break;
 			}
 	}
@@ -107,8 +109,9 @@ class quizRecoCollection
 		usort($this->recos,'cmp');
 		$temp = array();
 		$j = 0;
-		for($i=0;$i<count($recos) && $j <= 3;$i++)
-			$temp[$j++]=$recos[$i]->toJSON();
+		for($i=0;$i<count($this->recos) && $j <= 3;$i++)
+			$temp[$j++]=$this->recos[$i]->toJSON();
+		return $temp;
 	}
 	function getRecommendations()
 	{
@@ -116,17 +119,21 @@ class quizRecoCollection
 		$recoByQuizId = array();
 
 
-
+		$i = 20;
 		foreach ($this->attemptedQuizzes as $key => $aquiz) {
 			foreach ($this->unattemptedQuizzes as $key => $uquiz) {
 				if($aquiz->facultyId == $uquiz->facultyId)
 					{
-						$this->recos[] = new recoObject($aquiz->quizid,$aquiz->timeStamp,$aquiz->)
+						$this->recos[] = new recoObject($aquiz->quizid,$aquiz->timeStamp,$aquiz->descriptionShort);
+						$kee = count($this->recos)-1;
+						$this->recos[$kee]->setFacultyRecommendation($uquiz->quizid, $aquiz->facultyId, 20 +$i);
+						$recoByQuizId[$uquiz->quizid][] = $kee;
 					}
-			}	
+				 //if()
+			}
+			$i -= $i>0 ? 10 : 0;	
 		}
 	}
-
 }
 
 class recoObject
@@ -212,8 +219,18 @@ function makeRecos()
 {
 	$accountId = $_POST['accountId'];
 	$temp = new quizRecoCollection($accountId);
+	$temp = $temp->listRecos();
+	$data = array();
+	foreach ( $temp as $key => &$item) {
+		$dataobj = (object) doSQL(array("id"=>$item->qid,
+		"SQL" => "select q.id,q.questionIds,q.description,q.descriptionShort,q.difficulty,q.allotedTime,q.maxScore,q.rec,q.conceptsTested, q.l2Ids, q.l3Ids, q.typeId, a.id as fid, a.firstName,a.lastName,f.bioShort from quizzes q, accounts a, faculty f where q.facultyId=a.id and f.accountId=a.id and q.available=1 and q.id = :id"
+			),true);
+		$dataobj->id = $item->qid;
+		$dataobj->reason = $item->reason;
+		$data[] = $dataobj;
+	}
 
-	$response["data"] = $temp->listRecos();
+	$response["data"] = $data;
 	$response["success"] = "SUCCESS";
 
 	sendResponse($response);
