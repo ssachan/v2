@@ -50,7 +50,7 @@ abstract class questionType {
 }
 
 abstract class analConst {
-    const ABILITY_DEFAULT_SCORE   = 50;
+    const ABILITY_DEFAULT_SCORE   = 30;
     const UNSEEN_TOLERANCE        = 2000;
     const CORRECT                 = 1;
     const INCORRECT               = 2;
@@ -188,8 +188,8 @@ class abilityScoreObject{
     function abilityScoreNotFound(){
         $streamId = 1;
         $date = date("Y-m-d H:i:s", time());
-        //$defaultScore = analConst::ABILITY_DEFAULT_SCORE;
-        $defaultScore = 30; //tanuj:TODO:change this
+        $defaultScore = analConst::ABILITY_DEFAULT_SCORE;
+        //$defaultScore = 30; //tanuj:TODO:change this
          $sql = "INSERT INTO ascores_".$this->level." (accountId, score, updatedOn, ".$this->level."id, numQuestions, numCorrect, numIncorrect, numUnattempted, streamId) VALUES (:acid,:score,:timeStamp,:id,0,0,0,0,:streamId)";
             $query = array(
             "acid"      => $this->accountId,

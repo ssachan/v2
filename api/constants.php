@@ -76,9 +76,9 @@ class deltaCalculator{
         $timeFactor = self::timeFactor($state, $timeTaken, $avgTime, $sigmaTime, $score, $qScore);
         $abilityFactor = self::abilityFactor($score, $qScore, $state );
         $delta = round($base * $timeFactor * $abilityFactor,2);
-        if($score + $delta > 100)
+        if(($score + $delta) > 100)
             $delta = (100-$score);
-        elseif ($score + $delta < 0)
+        elseif (($score + $delta) < 0)
             $delta = -$score;
         return $delta;
     }

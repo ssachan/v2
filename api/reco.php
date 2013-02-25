@@ -70,7 +70,7 @@ class quizRecoCollection
 	{
 		$this->accountId = $uid;
 		$this->unattemptedQuizzes = $this->getQuizData();
-		$this->attemptedQuizzes = array();
+		$this->attemptedQuizzes = $this->recos = array();
 		$this->markAttemptedQuizzes();
 		$this->getRecommendations();
 	}
@@ -112,9 +112,18 @@ class quizRecoCollection
 	}
 	function getRecommendations()
 	{
-		$attemptCount = count($this->attemptedQuizzes)
-		foreach ($this->attemptedQuizzes as $key => $quiz) {
-			$this->getFacultyRecos($quiz->facultyId);
+		$attemptCount = count($this->attemptedQuizzes);
+		$recoByQuizId = array();
+
+
+
+		foreach ($this->attemptedQuizzes as $key => $aquiz) {
+			foreach ($this->unattemptedQuizzes as $key => $uquiz) {
+				if($aquiz->facultyId == $uquiz->facultyId)
+					{
+						$this->recos[] = new recoObject($aquiz->quizid,$aquiz->timeStamp,$aquiz->)
+					}
+			}	
 		}
 	}
 
