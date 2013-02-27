@@ -373,31 +373,31 @@ $app->post("/ccsignup", function () use ($app) {
     if (!(filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))) {
         $response["status"] = FAIL;
         $response["data"] = "Please enter a valid email address";
+        sendResponse($response);
         break;
     }
     if (!isset($_POST['ccode']) || $_POST['ccode'] == '') {
         $response["status"] = FAIL;
         $response["data"] = "Please enter a coupon code";
+        sendResponse($response);
         break;
     }
     if (!isset($_POST['firstName']) || $_POST['firstName'] == '') {
         $response["status"] = FAIL;
         $response["data"] = "Please enter your first name";
-        break;
-    }
-    if (!isset($_POST['lastName']) || $_POST['lastName'] == '') {
-        $response["status"] = FAIL;
-        $response["data"] = "Please enter your last name";
+        sendResponse($response);
         break;
     }
     if (!isset($_POST['password']) || $_POST['password'] == '') {
         $response["status"] = FAIL;
         $response["data"] = "Please enter a valid password";
+        sendResponse($response);
         break;
     }
     if ($_POST['password'] != $_POST['cPassword']) {
         $response["status"] = FAIL;
         $response["data"] = "Passwords entered do not match";
+        sendResponse($response);
         break;
     }
     if (in_array($_POST['ccode'], $ccodeArray)) {
