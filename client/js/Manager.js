@@ -192,6 +192,25 @@ window.Manager = {
         });
     },
 
+    makeRecos: function () {
+        var url = Config.serverUrl + 'reco/';
+        return $.ajax({
+            url: url,
+			type : 'POST',
+            data: {
+                accountId: account.get('id'),
+            },
+            dataType: "json",
+            success: function (data) {
+                if (data.status == STATUS.SUCCESS) {
+                    quizReco.reset(data.data);
+                } else { // If not, send them back to the home page
+                    helper.processStatus(data);
+                }
+            }
+        });
+    },
+    
     getHistoryById: function () {
         var url = Config.serverUrl + 'historyById/';
         return $.ajax({
@@ -565,12 +584,12 @@ window.Manager = {
         if (!(activeView instanceof DashboardView)) {
             dfd.push(this.getDashboardData());
         }
-        dfd.push(this.getAttemptedQuestions());
+        dfd.push(this.makeRecos());
         $.when.apply(null, dfd)
             .then(
         function (data) {
             activeView.switchMenu('activity');
-            var activityView = new ActivityView({});
+            var activityView = new ActivityView({collection:quizReco});
             activeView.switchView(activityView);
         });
     }

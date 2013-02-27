@@ -280,7 +280,16 @@ window.ActivityView = Backbone.View.extend({
 		if(account.get('quizzesAttemptedArray').length==0){
 			$('#insight').html('Please take a test and come back to this section');
 		}
-		 drawDonutChart('donut');
-         $("tspan:contains('Highcharts.com')").hide();
+		var quizzes = this.collection.models;
+		var len = quizzes.length;
+		$("#rec-quizzes").html('');
+		for ( var i = 0; i <len; i++) {
+			$(".thumbnails").append(new QuizItemView({
+				model : quizzes[i], className:'span12'
+			}).render().el);
+			i++;
+		}
+		drawDonutChart('donut');
+        $("tspan:contains('Highcharts.com')").hide();
 	}
 });
