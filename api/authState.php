@@ -337,16 +337,13 @@ $app->post("/invite", function () use ($app) {
     if (!(filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))) {
         $response["status"] = FAIL;
         $response["data"] = "Please enter a valid email address";
+        sendResponse($response);
         break;
     }
     if (!isset($_POST['firstName']) || $_POST['firstName'] == '') {
         $response["status"] = FAIL;
         $response["data"] = "Please enter your first name";
-        break;
-    }
-    if (!isset($_POST['lastName']) || $_POST['lastName'] == '') {
-        $response["status"] = FAIL;
-        $response["data"] = "Please enter your last name";
+        sendResponse($response);
         break;
     }
     $firstName = $_POST['firstName'];

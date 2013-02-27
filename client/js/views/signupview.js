@@ -121,8 +121,8 @@ window.SignUpBox = Backbone.View.extend({
     invite:function (event) {
         event.preventDefault(); // Don't let this button submit the form
     	var formValues = {
-    			email : $('#email-iu').val(),
-    			firstName : $('#fname-iu').val(),
+    			email : $('#email-su').val(),
+    			firstName : $('#fname-su').val(),
     			lastName : 'dummy',
     			streamId : streamId,
     		};
