@@ -32,7 +32,6 @@
     </div>
 </div>
 <%}%>
-
 <div class="row-fluid pstats">
     <div class="span6 center">
         <i class="icon-thumbs-up" /> </i> <%=rec%> recommenders
@@ -42,3 +41,6 @@
     </div>
 </div>
 </div>
+<% if(reason){ %>
+<div>Recommended because : <%=reason%></div>
+<%}%>
