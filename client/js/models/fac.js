@@ -19,12 +19,18 @@ window.Fac = Backbone.Model.extend({
 				model.set('dpUrlL', DP_PATH + 'avatar.jpg');
 			}
 		});
+		
+		if (this.get('l1Ids') != null) {
+	        this.set('l1DisplayName', (sectionL1.get(this.get('l1Ids')))
+	            .get('displayName'));
+	    }
 	},
 	
 	defaults : {
 		dpUrl : DP_PATH + 'avatar.jpg',
 		dpUrlL : DP_PATH + 'avatar.jpg',
 	}
+	
 });
 
 window.FacCollection = Backbone.Collection.extend({

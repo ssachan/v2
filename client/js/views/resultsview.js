@@ -140,11 +140,17 @@ window.ResultAnalysisView = Backbone.View.extend({
 				var l3Data = l3GraphData[i];
 				
 				html.push('<div class="grey-box"><div class="row-fluid"><div class="span8">');
-				html.push('<h3><span class="blue">'+(sectionL3.get(l3Data.lId)).get('displayName')+'</span><i class="icon-stop"></i><span style="font-h3  orange">'+l3Data.delta+'</span> </h3><hr>');
+				html.push('<h3><span class="blue">'+(sectionL3.get(l3Data.lId)).get('displayName')+'</span><span style="orange"> : '+(parseInt(l3Data.scoreBefore)+parseInt(l3Data.delta))+'</span>');
+				if(parseInt(l3Data.delta)>0){
+					html.push('<span style="float:right"> +'+parseInt(l3Data.delta)+'</span>');
+				}else{
+					html.push('<span style="float:right"> +'+parseInt(l3Data.delta)+'</span>');
+				}
+				html.push('</h3><hr>');
 				html.push('<div class="progress outline">');
 				if(parseInt(l3Data.delta)>0){
-				html.push('<div class="bar bar-warning" style="width:'+parseInt(l3Data.scoreBefore)+'%"></div>');
-				html.push('<div class="bar bar-success" style="width:'+parseInt(l3Data.delta)+'%"></div>');
+					html.push('<div class="bar bar-warning" style="width:'+parseInt(l3Data.scoreBefore)+'%"></div>');
+					html.push('<div class="bar bar-success" style="width:'+parseInt(l3Data.delta)+'%"></div>');
 				}else{
 					var val = parseInt(l3Data.scoreBefore)+parseInt(l3Data.delta);
 					html.push('<div class="bar bar-warning" style="width:'+val+'%"></div>');
