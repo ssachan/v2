@@ -133,8 +133,7 @@ function insertStudent($accountId, $streamId) {
         $stmt = $db->prepare($sql);
         $stmt->bindParam("accountId", $accountId);
         $stmt->bindParam("streamId", $streamId);
-        $stmt->execute();
-        return $db->lastInsertId();
+        return $stmt->execute();
     } catch (PDOException $e) {
         phpLog($e->getMessage());
     }
@@ -258,6 +257,7 @@ $app->post("/fblogin", function () use ($app) {
         // push into fb
         insertFb($account->id);
         // push into students
+        echo $streamId;
         insertStudent($account->id, $streamId);
     }
     echo $account->id;
