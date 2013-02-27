@@ -246,11 +246,13 @@ $app->post("/fblogin", function () use ($app) {
     $account = getAccountByEmail($email);
     if ($account != null) {
         // email exists
+        echo '1';
         //check if fb account is linked
         if (!fbAccountExists($account->id)) {
             insertFb($account->id);
         }
     } else {
+        echo '2';
         // create account
         $account->id = createAccount($firstName, $lastName, $email);
         // push into fb
