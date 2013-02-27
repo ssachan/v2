@@ -258,6 +258,7 @@ $app->post("/fblogin", function () use ($app) {
         // push into students
         insertStudent($account->id, $streamId);
     }
+    echo $account->id;
     $account = getStudentByAccountId($account->id, 1);
     $_SESSION['user'] = $account->id;
     $_SESSION['type'] = FB;
