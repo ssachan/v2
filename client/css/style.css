@@ -327,9 +327,9 @@ margin:0px auto;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    padding: 20px 0px 20px 0px;
-    min-height: 500px;
-    margin-right: 50px;
+    padding: 20px 0px 60px 0px;
+    min-height: 400px;
+    margin-right: 50px;   
 }
 
 .banner h1 {
