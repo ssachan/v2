@@ -245,22 +245,19 @@ $app->post("/fblogin", function () use ($app) {
     $account = getAccountByEmail($email);
     if ($account != null) {
         // email exists
-        echo '1';
         //check if fb account is linked
         if (!fbAccountExists($account->id)) {
             insertFb($account->id);
         }
     } else {
-        echo '2';
         // create account
+        $account = new stdClass();
         $account->id = createAccount($firstName, $lastName, $email);
         // push into fb
         insertFb($account->id);
         // push into students
-        echo $streamId;
         insertStudent($account->id, $streamId);
     }
-    echo $account->id;
     $account = getStudentByAccountId($account->id, 1);
     $_SESSION['user'] = $account->id;
     $_SESSION['type'] = FB;
