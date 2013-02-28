@@ -29,7 +29,7 @@ define('FB', 2); // FB sign up.
 define('GOOGLE', 3); // google.
 
 //define('CCODE', "Test2"); // ccode.
-define('FREE_TESTS', 9); // free tests.
+define('FREE_TESTS', 6); // free tests.
 
 $app->add(new \Slim\Middleware\SessionCookie(
         array('expires' => '120 minutes', 'path' => '/', 'domain' => null,
