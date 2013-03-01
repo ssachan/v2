@@ -108,7 +108,7 @@ window.Account = Backbone.Model.extend({
 				helper.processStatus(data);
 			},
 			error : function(data) {
-				helper.processStatus(data);
+				helper.processStatus(data.responseText);
 			},
 		});
 	},
@@ -126,7 +126,7 @@ window.Account = Backbone.Model.extend({
 				helper.processStatus(data);
 			},
 			error : function(data) {
-				helper.processStatus(data);
+				helper.processStatus(data.responseText);
 			},
 		});
 	},
@@ -149,7 +149,7 @@ window.Account = Backbone.Model.extend({
 				}
 			},
 			error : function(data) {
-				helper.processStatus(data);
+				helper.processStatus(data.responseText);
 			},
 		});
 	},
@@ -172,7 +172,7 @@ window.Account = Backbone.Model.extend({
 				}
 			},
 			error : function(data) {
-				helper.processStatus(data);
+				helper.processStatus(data.responseText);
 			},
 		});
 	},
@@ -195,7 +195,7 @@ window.Account = Backbone.Model.extend({
 				}
 			},
 			error : function(data) {
-				helper.processStatus(data);
+				helper.processStatus(data.responseText);
 			},
 		});
 	},
