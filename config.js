@@ -1,8 +1,8 @@
 var SEPARATOR = '|:';
-var DP_PATH = '../api/resources/accounts/';
+var DP_PATH = 'resources/accounts/';
 
 var Config = {
-    serverUrl : '../api/',
+    serverUrl : 'api/',
     edition : '1',
     editionName : 'web',
     assetPath : '',
