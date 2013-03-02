@@ -1,5 +1,6 @@
 api/xkcd.php
 api/.DS_Store
 .DS_Store
-client/config.js
-v2.sublime-workspace
+config.js
+resources/
+videos/
