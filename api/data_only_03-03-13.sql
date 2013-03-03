@@ -5,9 +5,9 @@
 # http://www.sequelpro.com/
 # http://code.google.com/p/sequel-pro/
 #
-# Host: 127.0.0.1 (MySQL 5.1.66)
+# Host: 127.0.0.1 (MySQL 5.5.29-0ubuntu0.12.04.1)
 # Database: ps_data
-# Generation Time: 2013-03-02 20:14:07 +0000
+# Generation Time: 2013-03-03 07:09:57 +0000
 # ************************************************************
 
 
@@ -22,33 +22,6 @@
 
 # Dump of table accounts
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `accounts`;
-
-CREATE TABLE `accounts` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(20) CHARACTER SET ascii DEFAULT NULL,
-  `password` varchar(20) CHARACTER SET ascii DEFAULT NULL,
-  `firstName` varchar(20) CHARACTER SET ascii DEFAULT NULL,
-  `lastName` varchar(20) CHARACTER SET ascii DEFAULT NULL,
-  `email` varchar(40) CHARACTER SET ascii DEFAULT NULL,
-  `roles` text,
-  `createdOn` datetime DEFAULT NULL,
-  `verifiedOn` datetime DEFAULT NULL,
-  `lastsignedinOn` datetime DEFAULT NULL,
-  `deletedOn` datetime DEFAULT NULL,
-  `suspendedOn` datetime DEFAULT NULL,
-  `resetsentOn` datetime DEFAULT NULL,
-  `pics` varchar(50) DEFAULT NULL,
-  `address` text,
-  `city` text,
-  `state` text,
-  `postalCode` int(11) DEFAULT NULL,
-  `country` text,
-  `phone` int(11) DEFAULT NULL,
-  `flag` int(1) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `accounts` WRITE;
 /*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
@@ -109,7 +82,8 @@ VALUES
 	(156,NULL,'aloochat','Shubh','dummy','bansal.shubh@gmail.com',NULL,'2013-03-02 12:02:49',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1),
 	(157,NULL,NULL,'Nitish','Bhushan','bhushan.nitish@gmail.com',NULL,'2013-03-02 13:07:04',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1),
 	(158,NULL,'ankit042','Ankit','dummy','ankitatbits@gmail.com',NULL,'2013-03-02 21:21:46',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1),
-	(159,NULL,NULL,'Vipinesh','Singh','cs1070190@cse.iitd.ernet.in',NULL,'2013-03-02 23:12:57',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1);
+	(159,NULL,NULL,'Vipinesh','Singh','cs1070190@cse.iitd.ernet.in',NULL,'2013-03-02 23:12:57',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1),
+	(160,NULL,NULL,'Ankit','Goyal','ankitgoyal86@gmail.com',NULL,'2013-03-03 02:31:26',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1);
 
 /*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -117,27 +91,6 @@ UNLOCK TABLES;
 
 # Dump of table accounts_fb
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `accounts_fb`;
-
-CREATE TABLE `accounts_fb` (
-  `accountId` int(11) NOT NULL,
-  `facebookId` bigint(20) DEFAULT NULL,
-  `linkedOn` datetime DEFAULT NULL,
-  `bio` varchar(120) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `education` text,
-  `firstName` varchar(120) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `gender` varchar(120) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `lastName` varchar(120) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `link` varchar(120) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `locale` varchar(120) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `pictures` text,
-  `quotes` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `timezone` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `username` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `work` text,
-  PRIMARY KEY (`accountId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `accounts_fb` WRITE;
 /*!40000 ALTER TABLE `accounts_fb` DISABLE KEYS */;
@@ -153,7 +106,8 @@ VALUES
 	(152,1711181669,'2013-03-01 18:23:26',NULL,NULL,'Ayush','male','Pateria','https://www.facebook.com/MostGenius','en_US','{\"square\":\"http:\\/\\/graph.facebook.com\\/1711181669\\/picture?type=square\",\"small\":\"http:\\/\\/graph.facebook.com\\/1711181669\\/picture?type=small\",\"normal\":\"http:\\/\\/graph.facebook.com\\/1711181669\\/picture?type=normal\",\"large\":\"http:\\/\\/graph.facebook.com\\/1711181669\\/picture?type=large\"}',NULL,'5.5','MostGenius',NULL),
 	(154,811390152,'2013-03-01 23:18:14',NULL,'[{\"school\":{\"id\":\"110647995629901\",\"name\":\"Army Public School\"},\"type\":\"High School\"},{\"school\":{\"id\":\"108227709205373\",\"name\":\"Indian Institute of Technology Delhi\"},\"year\":{\"id\":\"138383069535219\",\"name\":\"2005\"},\"concentration\":[{\"id\":\"110127455680567\",\"name\":\"Civil Engineering\"}],\"type\":\"College\"},{\"school\":{\"id\":\"108227709205373\",\"name\":\"Indian Institute of Technology Delhi\"},\"type\":\"Graduate School\"}]','Anshul','male','Chaturvedi','https://www.facebook.com/anshul.chaturvedi.904','en_US','{\"square\":\"http:\\/\\/graph.facebook.com\\/811390152\\/picture?type=square\",\"small\":\"http:\\/\\/graph.facebook.com\\/811390152\\/picture?type=small\",\"normal\":\"http:\\/\\/graph.facebook.com\\/811390152\\/picture?type=normal\",\"large\":\"http:\\/\\/graph.facebook.com\\/811390152\\/picture?type=large\"}',NULL,'-5','anshul.chaturvedi.904','[{\"employer\":{\"id\":\"113965265282236\",\"name\":\"Opera Solutions\"},\"location\":{\"id\":\"106517799384578\",\"name\":\"New Delhi, India\"},\"position\":{\"id\":\"140148106020130\",\"name\":\"Associate\"},\"start_date\":\"2011-01\"},{\"employer\":{\"id\":\"111966422175049\",\"name\":\"Opera Solutions\"},\"position\":{\"id\":\"105763692790962\",\"name\":\"Business Analyst\"},\"start_date\":\"2009-11\",\"end_date\":\"2010-12\"}]'),
 	(157,688645480,'2013-03-02 13:07:04',NULL,NULL,'Nitish','male','Bhushan','http://www.facebook.com/nitish.bhushan.54','en_US','{\"square\":\"http:\\/\\/graph.facebook.com\\/688645480\\/picture?type=square\",\"small\":\"http:\\/\\/graph.facebook.com\\/688645480\\/picture?type=small\",\"normal\":\"http:\\/\\/graph.facebook.com\\/688645480\\/picture?type=normal\",\"large\":\"http:\\/\\/graph.facebook.com\\/688645480\\/picture?type=large\"}',NULL,'5.5','nitish.bhushan.54',NULL),
-	(159,1046637779,'2013-03-02 23:12:57',NULL,'[{\"school\":{\"id\":\"139457399400151\",\"name\":\"St. Joseph\'s English Medium School, Valsad\"},\"year\":{\"id\":\"116962635018500\",\"name\":\"1996\"},\"type\":\"High School\"},{\"school\":{\"id\":\"130529956988661\",\"name\":\"padampat singhania public school, kota\"},\"year\":{\"id\":\"140617569303679\",\"name\":\"2007\"},\"type\":\"High School\"},{\"school\":{\"id\":\"134731639883909\",\"name\":\"Kendriya Vidyalaya - Junagadh\"},\"year\":{\"id\":\"138383069535219\",\"name\":\"2005\"},\"type\":\"High School\"},{\"school\":{\"id\":\"131313586902202\",\"name\":\"Seventh Day Adventists School\"},\"year\":{\"id\":\"144560162276732\",\"name\":\"1998\"},\"type\":\"High School\"},{\"school\":{\"id\":\"110561342298393\",\"name\":\"padampat singhania school,kota,raj,india\"},\"type\":\"High School\",\"classes\":[{\"id\":\"193485474014826\",\"name\":\"XI IPA 1\",\"with\":[{\"id\":\"1761536022\",\"name\":\"Kashif Hasnain\"}],\"from\":{\"id\":\"1761536022\",\"name\":\"Kashif Hasnain\"}}]},{\"school\":{\"id\":\"141889845823787\",\"name\":\"Seventhday Adventist School\"},\"type\":\"High School\",\"classes\":[{\"id\":\"186843471350511\",\"name\":\"7th\",\"with\":[{\"id\":\"593282314\",\"name\":\"Riddham Manna\"}],\"from\":{\"id\":\"593282314\",\"name\":\"Riddham Manna\"}}]},{\"school\":{\"id\":\"108227709205373\",\"name\":\"Indian Institute of Technology Delhi\"},\"concentration\":[{\"id\":\"115294748484748\",\"name\":\"Computer Science and Engineering\"}],\"type\":\"College\"}]','Vipinesh','male','Singh','https://www.facebook.com/vipinesh','en_US','{\"square\":\"http:\\/\\/graph.facebook.com\\/1046637779\\/picture?type=square\",\"small\":\"http:\\/\\/graph.facebook.com\\/1046637779\\/picture?type=small\",\"normal\":\"http:\\/\\/graph.facebook.com\\/1046637779\\/picture?type=normal\",\"large\":\"http:\\/\\/graph.facebook.com\\/1046637779\\/picture?type=large\"}',NULL,'5.5','vipinesh','[{\"employer\":{\"id\":\"192040674155155\",\"name\":\"One97\"},\"location\":{\"id\":\"130646063637019\",\"name\":\"Noida, India\"},\"position\":{\"id\":\"144200605597789\",\"name\":\"Product Engineer\"},\"start_date\":\"2013-04\",\"end_date\":\"0000-00\"}]');
+	(159,1046637779,'2013-03-02 23:12:57',NULL,'[{\"school\":{\"id\":\"139457399400151\",\"name\":\"St. Joseph\'s English Medium School, Valsad\"},\"year\":{\"id\":\"116962635018500\",\"name\":\"1996\"},\"type\":\"High School\"},{\"school\":{\"id\":\"130529956988661\",\"name\":\"padampat singhania public school, kota\"},\"year\":{\"id\":\"140617569303679\",\"name\":\"2007\"},\"type\":\"High School\"},{\"school\":{\"id\":\"134731639883909\",\"name\":\"Kendriya Vidyalaya - Junagadh\"},\"year\":{\"id\":\"138383069535219\",\"name\":\"2005\"},\"type\":\"High School\"},{\"school\":{\"id\":\"131313586902202\",\"name\":\"Seventh Day Adventists School\"},\"year\":{\"id\":\"144560162276732\",\"name\":\"1998\"},\"type\":\"High School\"},{\"school\":{\"id\":\"110561342298393\",\"name\":\"padampat singhania school,kota,raj,india\"},\"type\":\"High School\",\"classes\":[{\"id\":\"193485474014826\",\"name\":\"XI IPA 1\",\"with\":[{\"id\":\"1761536022\",\"name\":\"Kashif Hasnain\"}],\"from\":{\"id\":\"1761536022\",\"name\":\"Kashif Hasnain\"}}]},{\"school\":{\"id\":\"141889845823787\",\"name\":\"Seventhday Adventist School\"},\"type\":\"High School\",\"classes\":[{\"id\":\"186843471350511\",\"name\":\"7th\",\"with\":[{\"id\":\"593282314\",\"name\":\"Riddham Manna\"}],\"from\":{\"id\":\"593282314\",\"name\":\"Riddham Manna\"}}]},{\"school\":{\"id\":\"108227709205373\",\"name\":\"Indian Institute of Technology Delhi\"},\"concentration\":[{\"id\":\"115294748484748\",\"name\":\"Computer Science and Engineering\"}],\"type\":\"College\"}]','Vipinesh','male','Singh','https://www.facebook.com/vipinesh','en_US','{\"square\":\"http:\\/\\/graph.facebook.com\\/1046637779\\/picture?type=square\",\"small\":\"http:\\/\\/graph.facebook.com\\/1046637779\\/picture?type=small\",\"normal\":\"http:\\/\\/graph.facebook.com\\/1046637779\\/picture?type=normal\",\"large\":\"http:\\/\\/graph.facebook.com\\/1046637779\\/picture?type=large\"}',NULL,'5.5','vipinesh','[{\"employer\":{\"id\":\"192040674155155\",\"name\":\"One97\"},\"location\":{\"id\":\"130646063637019\",\"name\":\"Noida, India\"},\"position\":{\"id\":\"144200605597789\",\"name\":\"Product Engineer\"},\"start_date\":\"2013-04\",\"end_date\":\"0000-00\"}]'),
+	(160,665840124,'2013-03-03 02:31:26',NULL,NULL,'Ankit','male','Goyal','https://www.facebook.com/ankitgoyal.I','en_US','{\"square\":\"http:\\/\\/graph.facebook.com\\/665840124\\/picture?type=square\",\"small\":\"http:\\/\\/graph.facebook.com\\/665840124\\/picture?type=small\",\"normal\":\"http:\\/\\/graph.facebook.com\\/665840124\\/picture?type=normal\",\"large\":\"http:\\/\\/graph.facebook.com\\/665840124\\/picture?type=large\"}',NULL,'5.5','ankitgoyal.I',NULL);
 
 /*!40000 ALTER TABLE `accounts_fb` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -162,41 +116,10 @@ UNLOCK TABLES;
 # Dump of table accounts_google
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `accounts_google`;
-
-CREATE TABLE `accounts_google` (
-  `accountId` int(11) DEFAULT NULL,
-  `googleId` int(25) DEFAULT NULL,
-  `familyName` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `gender` varchar(1) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `givenName` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `link` varchar(300) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `locale` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `name` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `picture` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `verifiedEmail` int(1) DEFAULT NULL,
-  `linkedOn` datetime DEFAULT NULL,
-  KEY `accountId` (`accountId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 
 # Dump of table ascores_l1
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `ascores_l1`;
-
-CREATE TABLE `ascores_l1` (
-  `accountId` int(11) DEFAULT NULL,
-  `score` float DEFAULT '0',
-  `updatedOn` datetime DEFAULT NULL,
-  `l1Id` int(11) DEFAULT NULL,
-  `numQuestions` int(11) DEFAULT NULL,
-  `numCorrect` int(11) DEFAULT NULL,
-  `numIncorrect` int(11) DEFAULT NULL,
-  `numUnattempted` int(11) DEFAULT NULL,
-  `streamId` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `ascores_l1` WRITE;
 /*!40000 ALTER TABLE `ascores_l1` DISABLE KEYS */;
@@ -379,20 +302,6 @@ UNLOCK TABLES;
 
 # Dump of table ascores_l2
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `ascores_l2`;
-
-CREATE TABLE `ascores_l2` (
-  `accountId` int(11) DEFAULT NULL,
-  `score` float DEFAULT '0',
-  `updatedOn` datetime DEFAULT NULL,
-  `l2Id` int(11) DEFAULT NULL,
-  `numQuestions` int(11) DEFAULT NULL,
-  `numCorrect` int(11) DEFAULT NULL,
-  `numIncorrect` int(11) DEFAULT NULL,
-  `numUnattempted` int(11) DEFAULT NULL,
-  `streamId` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `ascores_l2` WRITE;
 /*!40000 ALTER TABLE `ascores_l2` DISABLE KEYS */;
@@ -699,20 +608,6 @@ UNLOCK TABLES;
 
 # Dump of table ascores_l3
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `ascores_l3`;
-
-CREATE TABLE `ascores_l3` (
-  `accountId` int(11) NOT NULL,
-  `score` float NOT NULL,
-  `updatedOn` datetime DEFAULT NULL,
-  `l3id` int(11) DEFAULT NULL,
-  `numQuestions` int(11) DEFAULT NULL,
-  `numCorrect` int(11) DEFAULT NULL,
-  `numIncorrect` int(11) DEFAULT NULL,
-  `numUnattempted` int(11) DEFAULT NULL,
-  `streamId` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `ascores_l3` WRITE;
 /*!40000 ALTER TABLE `ascores_l3` DISABLE KEYS */;
@@ -1639,47 +1534,15 @@ UNLOCK TABLES;
 # Dump of table creditHistory
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `creditHistory`;
-
-CREATE TABLE `creditHistory` (
-  `accountId` int(11) DEFAULT NULL,
-  `refilledOn` timestamp NULL DEFAULT NULL,
-  `creditsAdded` int(11) DEFAULT NULL,
-  KEY `accountId` (`accountId`),
-  CONSTRAINT `credithistory_ibfk_1` FOREIGN KEY (`accountId`) REFERENCES `accounts` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 
 # Dump of table devices
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `devices`;
-
-CREATE TABLE `devices` (
-  `accountId` int(11) DEFAULT NULL,
-  `deviceId` varchar(300) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `deviceName` varchar(300) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `devicePlatform` varchar(300) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `deviceVersion` varchar(300) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `lastLogin` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 
 # Dump of table exams
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `exams`;
-
-CREATE TABLE `exams` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `displayName` varchar(50) DEFAULT NULL,
-  `fullName` varchar(200) DEFAULT NULL,
-  `streamId` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `streamId` (`streamId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `exams` WRITE;
 /*!40000 ALTER TABLE `exams` DISABLE KEYS */;
@@ -1695,41 +1558,10 @@ UNLOCK TABLES;
 # Dump of table fac_contact
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `fac_contact`;
-
-CREATE TABLE `fac_contact` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `firstName` varchar(20) NOT NULL,
-  `lastName` varchar(20) NOT NULL,
-  `email` varchar(40) NOT NULL,
-  `phoneNumber` varchar(20) NOT NULL,
-  `about` text NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 
 # Dump of table faculty
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `faculty`;
-
-CREATE TABLE `faculty` (
-  `l1Ids` text,
-  `l2Ids` text,
-  `specialization` varchar(40) DEFAULT NULL,
-  `bioShort` text,
-  `bio` text,
-  `experience` text,
-  `education` text,
-  `streamIds` varchar(50) DEFAULT NULL,
-  `totalQuizzes` int(5) DEFAULT '0',
-  `rec` int(11) DEFAULT '0',
-  `subscribers` int(11) DEFAULT '0',
-  `accountId` int(11) DEFAULT NULL,
-  `earlyLife` text,
-  `teachingJourney` text
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `faculty` WRITE;
 /*!40000 ALTER TABLE `faculty` DISABLE KEYS */;
@@ -1749,13 +1581,6 @@ UNLOCK TABLES;
 # Dump of table insight_type
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `insight_type`;
-
-CREATE TABLE `insight_type` (
-  `id` int(11) DEFAULT NULL,
-  `type` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 LOCK TABLES `insight_type` WRITE;
 /*!40000 ALTER TABLE `insight_type` DISABLE KEYS */;
 
@@ -1771,15 +1596,6 @@ UNLOCK TABLES;
 
 # Dump of table insights
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `insights`;
-
-CREATE TABLE `insights` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `text` text NOT NULL,
-  `typeId` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `insights` WRITE;
 /*!40000 ALTER TABLE `insights` DISABLE KEYS */;
@@ -1816,13 +1632,6 @@ UNLOCK TABLES;
 # Dump of table package_type
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `package_type`;
-
-CREATE TABLE `package_type` (
-  `id` int(11) DEFAULT NULL,
-  `name` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 LOCK TABLES `package_type` WRITE;
 /*!40000 ALTER TABLE `package_type` DISABLE KEYS */;
 
@@ -1838,16 +1647,6 @@ UNLOCK TABLES;
 # Dump of table packages
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `packages`;
-
-CREATE TABLE `packages` (
-  `id` int(11) DEFAULT NULL,
-  `displayName` text,
-  `number` int(11) DEFAULT NULL,
-  `price` int(11) DEFAULT NULL,
-  `streamId` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 LOCK TABLES `packages` WRITE;
 /*!40000 ALTER TABLE `packages` DISABLE KEYS */;
 
@@ -1862,20 +1661,6 @@ UNLOCK TABLES;
 
 # Dump of table para
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `para`;
-
-CREATE TABLE `para` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `text` text,
-  `questionIds` varchar(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'question ids separated by ||',
-  `questionCount` int(2) DEFAULT NULL,
-  `resources` varchar(40) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `l3Id` int(11) DEFAULT NULL,
-  `difficulty` int(1) DEFAULT NULL,
-  `mobileFlag` int(1) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `para` WRITE;
 /*!40000 ALTER TABLE `para` DISABLE KEYS */;
@@ -1908,28 +1693,10 @@ UNLOCK TABLES;
 # Dump of table pool
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `pool`;
-
-CREATE TABLE `pool` (
-  `id` int(11) DEFAULT NULL,
-  `quizIds` text
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 
 # Dump of table purchases
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `purchases`;
-
-CREATE TABLE `purchases` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `accountId` int(11) NOT NULL,
-  `packageId` int(11) NOT NULL,
-  `purchasedOn` datetime NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `purchases` WRITE;
 /*!40000 ALTER TABLE `purchases` DISABLE KEYS */;
@@ -2033,14 +1800,6 @@ UNLOCK TABLES;
 # Dump of table question_tags
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `question_tags`;
-
-CREATE TABLE `question_tags` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 LOCK TABLES `question_tags` WRITE;
 /*!40000 ALTER TABLE `question_tags` DISABLE KEYS */;
 
@@ -2055,14 +1814,6 @@ UNLOCK TABLES;
 
 # Dump of table question_type
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `question_type`;
-
-CREATE TABLE `question_type` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `type` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `question_type` WRITE;
 /*!40000 ALTER TABLE `question_type` DISABLE KEYS */;
@@ -2080,43 +1831,6 @@ UNLOCK TABLES;
 
 # Dump of table questions
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `questions`;
-
-CREATE TABLE `questions` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `text` text,
-  `options` text COMMENT 'options separated by ''||''',
-  `correctAnswer` varchar(100) DEFAULT NULL,
-  `explanation` text COMMENT 'information on options separated by ''||''',
-  `l3Id` int(11) DEFAULT NULL,
-  `typeId` int(11) DEFAULT NULL,
-  `tagIds` varchar(30) DEFAULT NULL,
-  `difficulty` int(1) DEFAULT '0',
-  `paraId` int(11) DEFAULT NULL,
-  `resources` text,
-  `averageTimeCorrect` int(2) DEFAULT '0',
-  `averageTimeIncorrect` int(2) DEFAULT '0',
-  `averageTimeUnattempted` int(2) DEFAULT '0',
-  `averageCorrect` int(11) DEFAULT '0',
-  `averageIncorrect` int(11) DEFAULT '0',
-  `averageUnattempted` int(11) DEFAULT '0',
-  `allotedTime` int(3) DEFAULT '0',
-  `correctScore` int(2) DEFAULT '1',
-  `incorrectScore` int(2) DEFAULT '0',
-  `optionInCorrectScore` int(2) DEFAULT '0',
-  `optionCorrectScore` int(2) DEFAULT '0',
-  `unattemptedScore` int(2) DEFAULT '0',
-  `mobileFlag` int(1) DEFAULT '0',
-  `availableFlag` int(1) DEFAULT '0',
-  `videoSrc` varchar(30) DEFAULT NULL,
-  `posterSrc` varchar(30) DEFAULT NULL,
-  `qScore` int(3) NOT NULL DEFAULT '0',
-  `sigmaTimeCorrect` int(5) NOT NULL DEFAULT '0',
-  `sigmaTimeIncorrect` int(5) NOT NULL DEFAULT '0',
-  `sigmaTimeUnattempted` int(5) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `questions` WRITE;
 /*!40000 ALTER TABLE `questions` DISABLE KEYS */;
@@ -2436,16 +2150,16 @@ VALUES
 	(311,'<p style=\"text-align: left;\"> The solution set of ~~(log_5 x)2 + log_5 x + 1 = \\frac{7}{log_5x - 1}~~ contains: </p> <br><br> ','~~(1,3)~~|:~~5~~|:~~{25}~~|:~~{1,25}~~','2','	 <p style=\"text-align: left;\"> Put ~~log_5x = t,~~ we get ~~t^2 + t + 1 = \\frac{7}{(t-1)}~~ <br><br> ~~(t-1)(t^2 + t + 1) = 7 \\Rightarrow t^3 + t^2 + t - t - 1~~ <br>~~ = 7 \\Rightarrow t^3 - 8 = 0~~ <br><br> Now, ~~t = log_5 x~~, so ~~log_5 x = 2~~<br><br> ~~x = 5^2 \\Rightarrow \\;\\; x = 25~~ <br><br> </p><br> ',2,1,'',1,NULL,NULL,150000,120000,30000,0,0,0,0,3,-1,0,0,0,0,0,'videos/s16q1vid1.mp4','videos/q311thumb.png',30,20000,15000,10000),
 	(312,' <p style=\"text-align: left;\"> If ~~sin^4\\alpha cos^2\\alpha = \\sum_{k=0}^{3}C_k cos2k\\alpha~~ , and <br> ~~C_1 + C_3 = x, \\;\\; C_0 + C_2 = y,\\;\\;C_1 + C_2 + C_3 + C_0 = z~~, <br><br> then the value of ~~(x,y,z)~~ is - <br> </p> <br> ','(0,1,2)|:(0,0,0)|:(0,2,3)|:(0,-1,2)','1','<p style=\"text-align: left;\">\n							~~sin^4\\alpha = C_0 + C_1 cos(2\\alpha) + C_2 cos(4 \\alpha) + C_3 cos(6 \\alpha)~~ <br><br>\n							Put ~~\\alpha = 0~~, then ~~C_0 + C_1 + C_2 + C_3 = 0 \\;\\;\\;\\; ...(i)~~ <br><br>\n							Put ~~\\alpha = \\pi/2~~, then ~~C_0 - C_1 + C_2 - C_3 = 0 \\;\\;\\;\\; ...(ii)~~ <br><br>\n							From equations (i) and (ii), <br>\n							~~C_1 + C_3 = C_0 + C_2 = 0~~<br><br>\n							\n							\n							</p>\n						</div>',11,1,'',3,NULL,NULL,210000,180000,60000,0,0,0,0,3,-1,0,0,0,0,0,'videos/s16q2vid1.mp4','videos/q312thumb.png',90,40000,25000,20000),
 	(313,' <p style=\"text-align: left;\"> The number of integral roots of the equation ~~x^4 + \\sqrt{(x^4 + 20)} = 22~~ are </p> ','0|:2|:4|:8','1','	 <p style=\"text-align: left;\"> Put ~~x^4 = y~~ and write: <br><br> ~~y + 20 = (22 - y)^2~~ <br><br> ~~\\Rightarrow y = 16,29~~ But y = 29 is not possible and ~~x^4 = y = 16~~ <br><br> ~~x = \\pm 2~~ as x is an integer <br><br> </p> ',1,1,'',2,NULL,NULL,180000,150000,45000,0,0,0,0,3,-1,0,0,0,0,0,'videos/s16q3vid1.mp4','videos/q313thumb.png',60,30000,20000,15000),
-	(314,' <p style=\"text-align: left;\"> If the numbers a,b,c,d,e form an A.P., then the values of (a - 4b + 6c - 4d + e) is. <br><br></p> ',' 1|:2|:0|:None of these','2','	 <p style=\"text-align: left;\"> a - 4b + 6c - 4d + e <br><br> = a - 4(a + d) + 6(a + 2d) - 4 (a + 3d) + (a + 4d) <br><br> = 0 <br><br> </p> ',4,1,'',1,NULL,NULL,150000,120000,30000,0,0,0,0,3,-1,0,0,0,0,0,'videos/s16q4vid1.mp4','videos/q314thumb.png',30,20000,15000,10000);
-
-INSERT INTO `questions` (`id`, `text`, `options`, `correctAnswer`, `explanation`, `l3Id`, `typeId`, `tagIds`, `difficulty`, `paraId`, `resources`, `averageTimeCorrect`, `averageTimeIncorrect`, `averageTimeUnattempted`, `averageCorrect`, `averageIncorrect`, `averageUnattempted`, `allotedTime`, `correctScore`, `incorrectScore`, `optionInCorrectScore`, `optionCorrectScore`, `unattemptedScore`, `mobileFlag`, `availableFlag`, `videoSrc`, `posterSrc`, `qScore`, `sigmaTimeCorrect`, `sigmaTimeIncorrect`, `sigmaTimeUnattempted`)
-VALUES
+	(314,' <p style=\"text-align: left;\"> If the numbers a,b,c,d,e form an A.P., then the values of (a - 4b + 6c - 4d + e) is. <br><br></p> ',' 1|:2|:0|:None of these','2','	 <p style=\"text-align: left;\"> a - 4b + 6c - 4d + e <br><br> = a - 4(a + d) + 6(a + 2d) - 4 (a + 3d) + (a + 4d) <br><br> = 0 <br><br> </p> ',4,1,'',1,NULL,NULL,150000,120000,30000,0,0,0,0,3,-1,0,0,0,0,0,'videos/s16q4vid1.mp4','videos/q314thumb.png',30,20000,15000,10000),
 	(315,' <p style=\"text-align: left;\"> If r&gt;1 and $$x = a + \\frac{a}{r} + \\frac{a}{r^2} +...+ \\infty,$$ $$y = b - \\frac{b}{r} + \\frac{b}{r^2}...+ \\infty$$  and $$z = c + \\frac{c}{r^2} + \\frac{c}{r^4} +...+ \\infty,$$ then $$\\frac{xy}{z}$$ is equal to: </p> ','ab/c|:ac/b|:bc/a|:None of these','0',' <p style=\"text-align: left;\"> ~~x = \\frac{a}{(1-\\frac{1}{r})} = \\frac{ar}{r-1}~~<br><br> ~~y = \\frac{b}{(1+\\frac{1}{r})} = \\frac{br}{r+1}~~<br><br> ~~z = \\frac{c}{(1-\\frac{1}{r^2})} = \\frac{cr^2}{r^2-1}~~ <br><br> ~~\\therefore \\frac{xy}{z} = \\frac{ab}{c}~~<br><br> </p> ',4,1,'',2,NULL,NULL,180000,150000,45000,0,0,0,0,3,-1,0,0,0,0,0,'videos/s16q5vid1.mp4','videos/q315thumb.png',60,30000,20000,15000),
 	(316,'<p style=\"text-align: left;\"> If ~~x = rsin(\\theta)cos(\\phi)~~, ~~y = rsin(\\theta)sin(\\phi)~~ and ~~z = rcos(\\theta)~~<br> then ~~(x^2 + y^2 + z^2)~~ will be independent of:<br> </p> ','~~r~~|:~~\\theta~~ and ~~\\phi~~|:~~\\theta~~ and ~~r~~|:None of these','1',' <p style=\"text-align: left;\"> ~~x^2 + y^2 + z^2~~<br> ~~= r^2 sin^2(\\theta)(cos^2\\phi + sin^2\\phi) + r^2 cos^2(\\theta)~~ <br> ~~= r^2(sin^2\\theta +cos^2\\theta)~~<br> = ~~r^2~~<br><br> ~~\\therefore~~ it is independent of ~~\\theta~~ and ~~\\phi~~<br><br> </p> ',11,1,'',1,NULL,NULL,150000,120000,30000,0,0,0,0,3,-1,0,0,0,0,0,'videos/s16q6vid1.mp4','videos/q316thumb.png',30,20000,15000,10000),
 	(317,' <p style=\"text-align: left;\"> If ~~cos(25^o) + sin(25^o) = k~~ then ~~cos(20^o)~~ is equal to: </p> ','~~ \\frac{k}{\\sqrt{2}}~~|:~~ -\\frac{k}{\\sqrt{2}}~~|:~~ \\frac{k}{2}~~|:None of these','0','	 <p style=\"text-align: left;\"> We are given that - <br> ~~cos(25^o) + sin(25^o) = k~~ then ~~cos(20^o)~~<br> ~~sin(65^o) + sin(25^o) = k~~ <br><br><br><br> ~~cos(20^o) = \\frac{k}{\\sqrt{2}}~~ <br><br></p> ',11,1,'',2,NULL,NULL,180000,150000,45000,0,0,0,0,3,-1,0,0,0,0,0,'videos/s16q7vid1.mp4','videos/q317thumb.png',60,30000,20000,15000),
 	(318,' <p style=\"text-align: left;\"> If ~~\\left | 4sinx - 1 \\right | &lt; \\sqrt{5}	~~ and ~~x \\in (-\\pi, \\pi)~~ then all such ~~x~~ lie in the interval <br><br> </p> ','~~(-\\frac{\\pi}{10}, \\frac{3\\pi}{10})~~|: ~~(\\frac{\\pi}{10}, \\frac{3\\pi}{10})~~ |: ~~(\\frac{-3\\pi}{10}, \\frac{\\pi}{10})~~ |:None of these','0',' <p style=\"text-align: left;\"> ~~\\left | 4sinx - 1 \\right | &lt; \\sqrt{5} ~~ <br><br> ~~\\Rightarrow - \\sqrt{5} &lt; 4sinx - 1 &lt; \\sqrt{5}~~ <br><br> ~~\\frac{1 - \\sqrt{5}}{4} &lt; sinx &lt; \\frac{1 + \\sqrt{5}}{4}~~ <br><br> ~~\\Rightarrow x \\in (-\\frac{\\pi}{10}, \\frac{3\\pi}{10}).~~ </p> ',11,1,'',2,NULL,NULL,180000,150000,45000,0,0,0,0,3,-1,0,0,0,0,0,'videos/s16q8vid1.mp4','videos/q318thumb.png',60,30000,20000,15000),
 	(319,' <p style=\"text-align: left;\"> Let ~~x_1~~ and ~~x_2~~ are the solutions of the equation ~~secx = 1 + cosx + cos^2x + cos^3x + ... + \\infty~~ <br> where ~~x_1, x_2 \\in (0,2\\pi) - \\left \\{ \\pi \\right \\} ~~.<br><br> The value of ~~\\left | x_1 - x_2 \\right |~~ is <br> <br> </p> <div class=\"option\"> <p style=\"text-align: left;\"> A. <span class=\"otext\"><img src=\"\"> ~~4\\pi /3~~ </span> </p> <p style=\"text-align: left;\"> B. <span class=\"otext\"><img src=\"\"> ~~2\\pi /3~~</span> </p> <p style=\"text-align: left;\"> C. <span class=\"otext\"> ~~\\pi /3~~</span> </p> <p style=\"text-align: left;\"> D. <span class=\"otext\">~~\\pi~~</span> </p> </div> ','<img src=\"\"> ~~4\\pi /3~~ |:<img src=\"\"> ~~2\\pi /3~~|: ~~\\pi /3~~|:~~\\pi~~','1','	 <p style=\"text-align: left;\"> We have ~~secx = 1 + cosx + cos^2x + cos^3x + ... + \\infty~~ <br> ~~\\therefore secx = \\frac{1}{1-cosx}~~<br><br> ~~ \\Rightarrow secx (1 - cosx) = 1~~<br><br> ~~ \\Rightarrow cosx = \\frac{1}{2}~~<br><br> ~~ \\Rightarrow x \\in \\left \\{\\frac{\\pi}{3}, \\frac{5\\pi}{3} \\right \\}~~ <br><br> </p> ',11,1,'',2,NULL,NULL,180000,150000,45000,0,0,0,0,3,-1,0,0,0,0,0,'videos/s16q9vid1.mp4','videos/q319thumb.png',60,30000,20000,15000),
-	(320,' <p style=\"text-align: left;\"> If ~~ax + by~~ = 1, ~~cx^2 + dy^2~~ = 1 have only one solution, then <br><br> </p> ','<img src=\"\"> ~~\\frac{a^2}{c} + \\frac{b^2}{d} = 1~~|:<img src=\"\"> ~~x = \\frac{a}{c}~~ |: ~~y = \\frac{b}{d}~~ |:None of these','0|:1|:2','	 <p style=\"text-align: left;\"> ~~ ax + by = 1; \\;\\; \\Rightarrow y = \\frac{1-ax}{b}~~ <br><br> Putting this value in second equation, we get - <br> ~~cx^2 + \\frac{d}{b^2}(1-ax)^2~~ <br><br> ~~= 1 \\Rightarrow (b^2c + a^2d)x^2 - 2abx + d - b^2 = 0;~~<br><br> Equation will have equal roots, if - <br><br> ~~D = 4a^2d^2 - 4(b^2c + a^2d)(d-b^2) = 0~~ <br><br> ~~b^2[b^2c + a^2d - cd] = 0~~ <br><br> </p> <p style=\"text-align: left;\"> ~~\\frac{b^2}{d} + \\frac{a^2}{c} = 1~~ <br><br> Also in this case - <br><br> ~~x = \\frac{2ad}{2(b^2c + a^2d)} = \\frac{a}{c}~~ <br><br> ~~y = \\frac{1-ax}{b)} = \\frac{1}{b} (1 - \\frac{a^2}{c} ) = \\frac{b}{d}~~<br><br> </p> ',1,2,'',3,NULL,NULL,210000,180000,60000,0,0,0,0,4,0,0,0,0,0,0,'videos/s16q10vid1.mp4','videos/q320thumb.png',90,40000,25000,20000),
+	(320,' <p style=\"text-align: left;\"> If ~~ax + by~~ = 1, ~~cx^2 + dy^2~~ = 1 have only one solution, then <br><br> </p> ','<img src=\"\"> ~~\\frac{a^2}{c} + \\frac{b^2}{d} = 1~~|:<img src=\"\"> ~~x = \\frac{a}{c}~~ |: ~~y = \\frac{b}{d}~~ |:None of these','0|:1|:2','	 <p style=\"text-align: left;\"> ~~ ax + by = 1; \\;\\; \\Rightarrow y = \\frac{1-ax}{b}~~ <br><br> Putting this value in second equation, we get - <br> ~~cx^2 + \\frac{d}{b^2}(1-ax)^2~~ <br><br> ~~= 1 \\Rightarrow (b^2c + a^2d)x^2 - 2abx + d - b^2 = 0;~~<br><br> Equation will have equal roots, if - <br><br> ~~D = 4a^2d^2 - 4(b^2c + a^2d)(d-b^2) = 0~~ <br><br> ~~b^2[b^2c + a^2d - cd] = 0~~ <br><br> </p> <p style=\"text-align: left;\"> ~~\\frac{b^2}{d} + \\frac{a^2}{c} = 1~~ <br><br> Also in this case - <br><br> ~~x = \\frac{2ad}{2(b^2c + a^2d)} = \\frac{a}{c}~~ <br><br> ~~y = \\frac{1-ax}{b)} = \\frac{1}{b} (1 - \\frac{a^2}{c} ) = \\frac{b}{d}~~<br><br> </p> ',1,2,'',3,NULL,NULL,210000,180000,60000,0,0,0,0,4,0,0,0,0,0,0,'videos/s16q10vid1.mp4','videos/q320thumb.png',90,40000,25000,20000);
+
+INSERT INTO `questions` (`id`, `text`, `options`, `correctAnswer`, `explanation`, `l3Id`, `typeId`, `tagIds`, `difficulty`, `paraId`, `resources`, `averageTimeCorrect`, `averageTimeIncorrect`, `averageTimeUnattempted`, `averageCorrect`, `averageIncorrect`, `averageUnattempted`, `allotedTime`, `correctScore`, `incorrectScore`, `optionInCorrectScore`, `optionCorrectScore`, `unattemptedScore`, `mobileFlag`, `availableFlag`, `videoSrc`, `posterSrc`, `qScore`, `sigmaTimeCorrect`, `sigmaTimeIncorrect`, `sigmaTimeUnattempted`)
+VALUES
 	(321,' <p style=\"text-align: left;\"> If real numbers x and y satisfy ~~(x+5)^2 + (y-12)^2 = (14)^2~~, then the minimum value of ~~\\sqrt{x^2 + y^2}~~ is <br></p> ','<img src=\"\"> Rational|:<img src=\"\">Irrational |: Integral |: Prime','0|:2','	 <p style=\"text-align: left;\"> ~~x + 5 = 14 cos\\theta~~<br><br> ~~y - 12 = 14 sin\\theta~~<br><br> ~~\\therefore x^2 + y^2 = (14cos\\theta - 5)^2 + (14sin\\theta + 12)^2~~<br> ~~=196 + 25 + 144 + 28(12sin\\theta - 5cos\\theta)~~<br> ~~= 365 + 28(12sin\\theta - 5cos\\theta)~~<br><br> ~~\\sqrt{x^2 + y^2}|_{min} = \\sqrt{365 - (28 \\times 13)} = 1~~ <br><br> </p> ',11,2,'',2,NULL,NULL,180000,150000,45000,0,0,0,0,4,0,0,0,0,0,0,'videos/s16q11vid1.mp4','videos/q321thumb.png',60,30000,20000,15000),
 	(322,' <p style=\"text-align: left;\"> In ~~\\Delta ABC, \\angle C = 2\\angle A~~ and ~~AC= 2BC~~, then which of the following is/are TRUE? <br><br> </p> ','<img src=\"\"> Angles A, B, C are in arithmetic progression|:<img src=\"\">Angles A, C, B are in arithmetic progression |: ~~\\Delta ABC~~ is a right angled isosceles triangle |: sin A + sin B + cos C = 2','1|:3',' <p style=\"text-align: left;\"> We know that - ~~\\angle A + \\angle B + \\angle C = \\pi~~ and ~~\\angle C = 2 \\angle A~~ (given) <br> ~~\\Rightarrow \\angle B = \\pi - 3A~~ <br><br> 0 &lt; C &lt; ~~ \\pi \\Rightarrow 0 &lt; 2A &lt; \\pi \\Rightarrow 0 &lt; A &lt; \\pi /2~~ <br><br> By sine rule, ~~\\frac{a}{sinA} = \\frac{b}{sinB} \\Rightarrow \\frac{a}{sinA} = \\frac{2a}{sin(\\pi - 3A)}~~ <br><br> ~~\\Rightarrow \\frac{a}{1} = \\frac{2a}{3 - 4sin^2A}~~<br><br> ~~\\Rightarrow 3 - 4sin^2A = 2 \\Rightarrow = sin^2A = \\frac{1}{4}~~<br><br> ~~\\Rightarrow A = \\frac{\\pi}{6} or \\frac{5\\pi}{6} ~~ </p> <p style=\"text-align: left;\"> But ~~0 &lt; A &lt; \\frac{\\pi}{2} \\Rightarrow \\angle A = \\frac{\\pi}{6}~~, <br> ~~\\angle B = \\frac{\\pi}{2}~~ and ~~\\angle B = \\frac{\\pi}{2}~~ <br><br> Since angle A, C and B are in A.P. <br><br>~~\\Rightarrow~~ (B) is correct and (A) is incorrect Also, ~~\\Delta~~ ABC is right angled but not isosceles<br><br> ~~\\Rightarrow~~ (C) is incorrect <br><br> sin A + sin B + cos C = 1/2 + 1 + 1/2 = 2<br> ~~\\Rightarrow~~ (D) is correct <br></p> ',12,2,'',2,NULL,NULL,180000,150000,45000,0,0,0,0,4,0,0,0,0,0,0,'videos/s16q12vid1.mp4','videos/q322thumb.png',60,30000,20000,15000),
 	(323,' <p style=\"text-align: left;\"> Which of the following statements are true?  </p> ','<img src=\"\"> ~~cos(-\\theta) = cos(\\theta)~~ for all angles ~~\\theta~~|:<img src=\"\"> ~~sin(-\\theta) = sin(\\theta)~~ for all angles ~~\\theta~~ |: ~~cos(-\\theta) = cos(\\theta)~~ not for all values of ~~\\theta~~|: ~~sin(-\\theta) = sin(\\theta)~~ not for all angles ~~\\theta~~','2|:3',' <p style=\"text-align: left;\"> ~~cos(\\theta) = cos(-\\theta) \\forall \\theta \\in R~~ <br><br> ~~cos(\\theta) = cos(-\\theta) \\forall \\theta = n\\pi~~ <br> <br></p> ',11,2,'',1,NULL,NULL,150000,120000,30000,0,0,0,0,4,0,0,0,0,0,0,'videos/s16q13vid1.mp4','videos/q323thumb.png',30,20000,15000,10000),
@@ -2549,37 +2263,6 @@ UNLOCK TABLES;
 # Dump of table quizzes
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `quizzes`;
-
-CREATE TABLE `quizzes` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `questionIds` varchar(200) DEFAULT NULL COMMENT 'string of question_list_ids separated by ||',
-  `description` text,
-  `descriptionShort` varchar(100) DEFAULT NULL,
-  `conceptsTested` text,
-  `tags` text,
-  `l3Ids` varchar(50) DEFAULT NULL,
-  `l2Ids` varchar(50) DEFAULT NULL,
-  `questionCount` int(3) DEFAULT NULL,
-  `allotedTime` int(11) DEFAULT NULL,
-  `difficulty` int(1) DEFAULT NULL,
-  `ratings` varchar(10) DEFAULT NULL,
-  `rec` int(11) NOT NULL DEFAULT '0',
-  `typeId` int(11) DEFAULT NULL,
-  `facultyId` int(11) DEFAULT NULL,
-  `available` int(1) DEFAULT '1',
-  `mobileFlag` int(1) DEFAULT NULL,
-  `addedOn` datetime DEFAULT NULL,
-  `totalAttempts` int(11) NOT NULL DEFAULT '0',
-  `streamId` int(11) DEFAULT NULL,
-  `maxScore` int(11) DEFAULT '100',
-  `averageTime` int(11) NOT NULL DEFAULT '0',
-  `averageQScore` int(3) DEFAULT '0',
-  `averageDifficulty` float DEFAULT '1',
-  `l1Ids` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 LOCK TABLES `quizzes` WRITE;
 /*!40000 ALTER TABLE `quizzes` DISABLE KEYS */;
 
@@ -2613,30 +2296,10 @@ UNLOCK TABLES;
 # Dump of table quizzes_queue
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `quizzes_queue`;
-
-CREATE TABLE `quizzes_queue` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `accountId` int(11) NOT NULL,
-  `quizId` int(11) NOT NULL,
-  `deviceId` int(11) NOT NULL,
-  `syncTimeStamp` bigint(20) NOT NULL,
-  `optionsSelected` varchar(200) DEFAULT NULL,
-  `timeTaken` varchar(200) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 
 # Dump of table quizzes_type
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `quizzes_type`;
-
-CREATE TABLE `quizzes_type` (
-  `id` int(11) DEFAULT NULL,
-  `type` varchar(30) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `quizzes_type` WRITE;
 /*!40000 ALTER TABLE `quizzes_type` DISABLE KEYS */;
@@ -2653,33 +2316,10 @@ UNLOCK TABLES;
 # Dump of table resources
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `resources`;
-
-CREATE TABLE `resources` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `fileName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `location` varchar(120) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 
 # Dump of table responses
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `responses`;
-
-CREATE TABLE `responses` (
-  `accountId` int(11) DEFAULT NULL,
-  `questionId` int(11) DEFAULT NULL,
-  `optionSelected` text,
-  `timeTaken` int(11) DEFAULT NULL,
-  `abilityScoreBefore` int(11) DEFAULT NULL,
-  `delta` float DEFAULT NULL,
-  `score` float DEFAULT NULL,
-  `timeStamp` timestamp NULL DEFAULT NULL,
-  `status` varchar(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `responses` WRITE;
 /*!40000 ALTER TABLE `responses` DISABLE KEYS */;
@@ -3029,25 +2669,6 @@ UNLOCK TABLES;
 # Dump of table results
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `results`;
-
-CREATE TABLE `results` (
-  `quizId` int(11) DEFAULT NULL,
-  `accountId` int(11) DEFAULT NULL,
-  `selectedAnswers` text,
-  `score` int(11) DEFAULT '0',
-  `timePerQuestion` text,
-  `timeTaken` text,
-  `data` text,
-  `timestamp` datetime DEFAULT NULL,
-  `attemptedAs` int(11) DEFAULT NULL,
-  `startTime` datetime DEFAULT NULL,
-  `endTime` datetime DEFAULT NULL,
-  `state` int(10) DEFAULT NULL,
-  `numCorrect` int(11) DEFAULT '0',
-  `numIncorrect` int(11) DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 LOCK TABLES `results` WRITE;
 /*!40000 ALTER TABLE `results` DISABLE KEYS */;
 
@@ -3110,14 +2731,6 @@ UNLOCK TABLES;
 # Dump of table roles
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `roles`;
-
-CREATE TABLE `roles` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(20) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 LOCK TABLES `roles` WRITE;
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
 
@@ -3133,16 +2746,6 @@ UNLOCK TABLES;
 
 # Dump of table section_l1
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `section_l1`;
-
-CREATE TABLE `section_l1` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `displayName` varchar(30) DEFAULT NULL,
-  `longName` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `streamId` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `section_l1` WRITE;
 /*!40000 ALTER TABLE `section_l1` DISABLE KEYS */;
@@ -3162,19 +2765,6 @@ UNLOCK TABLES;
 
 # Dump of table section_l2
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `section_l2`;
-
-CREATE TABLE `section_l2` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `displayName` varchar(30) DEFAULT NULL,
-  `longName` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `l1Id` int(11) DEFAULT NULL,
-  `streamId` int(11) DEFAULT NULL,
-  `weightage` float DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `l1Id` (`l1Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `section_l2` WRITE;
 /*!40000 ALTER TABLE `section_l2` DISABLE KEYS */;
@@ -3219,18 +2809,6 @@ UNLOCK TABLES;
 
 # Dump of table section_l3
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `section_l3`;
-
-CREATE TABLE `section_l3` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `displayName` varchar(50) DEFAULT NULL,
-  `longName` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `l2Id` int(11) DEFAULT NULL,
-  `streamId` int(11) DEFAULT NULL,
-  `weightage` float DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `section_l3` WRITE;
 /*!40000 ALTER TABLE `section_l3` DISABLE KEYS */;
@@ -3417,18 +2995,6 @@ UNLOCK TABLES;
 # Dump of table streams
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `streams`;
-
-CREATE TABLE `streams` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `displayName` varchar(50) DEFAULT NULL,
-  `topFacultyIds` varchar(100) DEFAULT NULL,
-  `basicInfo` text,
-  `quizIds` text,
-  `sampleQuizIds` text,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 LOCK TABLES `streams` WRITE;
 /*!40000 ALTER TABLE `streams` DISABLE KEYS */;
 
@@ -3445,19 +3011,6 @@ UNLOCK TABLES;
 
 # Dump of table students
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `students`;
-
-CREATE TABLE `students` (
-  `ascoreL1` int(1) DEFAULT '0',
-  `ascoreL2` int(1) DEFAULT '0',
-  `quizzesAttempted` text,
-  `accountId` int(11) DEFAULT NULL,
-  `streamId` int(11) DEFAULT NULL,
-  `quizzesRemaining` int(11) NOT NULL DEFAULT '0',
-  KEY `accountId` (`accountId`),
-  KEY `streamId` (`streamId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `students` WRITE;
 /*!40000 ALTER TABLE `students` DISABLE KEYS */;
@@ -3506,7 +3059,8 @@ VALUES
 	(0,0,'[\"5\"]',156,1,5),
 	(0,0,NULL,157,1,0),
 	(0,0,'[\"12\"]',158,1,5),
-	(0,0,NULL,159,1,0);
+	(0,0,NULL,159,1,0),
+	(0,0,NULL,160,1,0);
 
 /*!40000 ALTER TABLE `students` ENABLE KEYS */;
 UNLOCK TABLES;
