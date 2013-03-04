@@ -81,7 +81,7 @@ class quizRecoCollection
 	private function getQuizData()
 	{
 		return doSQL(array("id"=> 1,
-			"SQL"=>"SELECT id as quizid, descriptionShort, averageQScore, questionIds, averageDifficulty, l3Ids, l2Ids, l1Ids, facultyId FROM quizzes"),
+			"SQL"=>"SELECT id as quizid, descriptionShort, averageQScore, questionIds, averageDifficulty, l3Ids, l2Ids, l1Ids, facultyId FROM quizzes WHERE available = 1"),
 			true,"all_class","quizRecoModel");
 	}
 

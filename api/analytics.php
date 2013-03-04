@@ -83,7 +83,7 @@ class lscoreDataObject{
     function __construct($scoreObj){
         $this->lId            = $scoreObj->id;
         $this->lType          = $scoreObj->level;
-        $this->scoreBefore    = $scoreObj->score;
+        $this->scoreBefore    = $scoreObj->score-$scoreObj->delta;
         $this->numQ           = $scoreObj->numQuestions;
         $this->numCorrect     = $scoreObj->numCorrect;
         $this->numIncorrect   = $scoreObj->numIncorrect;
