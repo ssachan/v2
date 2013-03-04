@@ -108,6 +108,9 @@ window.QuizItemView = Backbone.View.extend({
 	},
 
 	onQuizItemClick : function() {
+		if(this.model.get('available') == '2'){
+			return;
+		}
 		if (this.model.get('hasAttempted') == true) {
 			return;
 			// alert('quiz purchased. Access it from My PrepSets space');
