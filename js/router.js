@@ -81,6 +81,7 @@ var AppRouter = Backbone.Router.extend({
 	},
 
 	dashboard : function() {
+		this.changeMenu('dashboard-menu');
 		// check if authenticated move to dashboard page, else move to landing
 		// page
 		if(account.get('id')!=null){
