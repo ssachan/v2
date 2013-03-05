@@ -22,6 +22,7 @@ window.InstructionsView = Backbone.View.extend({
 		// logs resetting
 		logs.reset();
 		logs.addEntry("TEST_START");
+		helper.track('mode',{'id':attemptedAs,'accountId':account.get('id')});
 	},
 
 	render : function() {
