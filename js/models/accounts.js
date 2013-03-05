@@ -166,6 +166,9 @@ window.Account = Backbone.Model.extend({
 			success : function(data) {
 				if (data.status == STATUS.SUCCESS) {
 					account.set(data.data);
+					helper.track("csup",{"id":account.get('id'),
+				        "ccode": inputValues.ccode,
+				    });
 					window.location = '#';
 				} else {
 					helper.processStatus(data);

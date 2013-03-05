@@ -120,5 +120,17 @@ window.helper = {
 		}
 		return formattedTime;
 	},
+	
+	track : function(event, obj){
+		var e = event;
+		for (var prop in obj) {
+		if (obj.hasOwnProperty(prop)) { 
+		  // or if (Object.prototype.hasOwnProperty.call(obj,prop)) for safety...
+			e = e + ':'+obj[prop];
+		    //alert("prop: " + prop + " value: " + obj[prop])
+		  }
+		}
+		mixpanel.track(e);
+	},
 
 };
