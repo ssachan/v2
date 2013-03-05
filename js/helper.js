@@ -130,7 +130,7 @@ window.helper = {
 		    //alert("prop: " + prop + " value: " + obj[prop])
 		  }
 		}*/
-		mixpanel.track(e, obj);
+		mixpanel.track(event, obj);
 	},
 
 };
