@@ -824,6 +824,7 @@ class quizResponseDetails{
     public function generateVideoArray(){
         $videoArray = array();
         $deltas = $this->getDeltas();
+        var_dump($deltas);
         asort($deltas);
         $count = 0;
         foreach ($deltas as $qid => $value) {
