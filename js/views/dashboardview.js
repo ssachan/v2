@@ -193,7 +193,7 @@ window.PerformanceView = Backbone.View.extend({
 				$('.l3-stats #pts', this.el).html('Expert');
 			}else if(scoreVal>40 && scoreVal<=80){
 				$('.l3-stats #pts', this.el).html('Getting There');
-			}else if(scoreVal<=40 && scoreVal>0){
+			}else if(scoreVal<=30 && scoreVal>0){
 				$('.l3-stats #pts', this.el).html('Struggling');
 			}else if(scoreVal==0){
 				$('.l3-stats #pts', this.el).html('Not Started');
