@@ -121,13 +121,14 @@ class quizRecoCollection
 		if($attemptCount == 0)
 		{
 			foreach ($this->unattemptedQuizzes as $key => $uquiz) {
-						$this->recos[] = new recoObject($aquiz->quizid,$aquiz->timeStamp,$aquiz->descriptionShort);
+						$this->recos[] = new recoObject();
 						$kee = count($this->recos)-1;
-						$this->recos[$kee]->setFacultyRecommendation($uquiz->quizid, $aquiz->facultyId, 20 +$i);
+						$this->recos[$kee]->setDefaultRecommendation($uquiz->quizid, 20 +$i);
 						$recoByQuizId[$uquiz->quizid][] = $kee;
+						$i -= $i>0 ? 10 : 0;
 					}
-				$i -= $i>0 ? 10 : 0;
-			}
+				
+
 		}
 		$i = 20;
 		foreach ($this->attemptedQuizzes as $key => $aquiz) {
@@ -139,7 +140,6 @@ class quizRecoCollection
 						$this->recos[$kee]->setFacultyRecommendation($uquiz->quizid, $aquiz->facultyId, 20 +$i);
 						$recoByQuizId[$uquiz->quizid][] = $kee;
 					}
-				 //if()
 			}
 			$i -= $i>0 ? 10 : 0;	
 		}
@@ -155,11 +155,17 @@ class recoObject
 	public $reasonText;
 	public $confidence;
 
-	function __construct($sourceQuizId, $sourceQuizDate, $sourceQuizDescription)
+	function __construct($sourceQuizId = 1, $sourceQuizDate = null, $sourceQuizDescription ="no quizzes attempted")
 	{
 		$this->sourceQuizId = $sourceQuizId;
 		$this->sourceQuizDate = $sourceQuizDate;
 		$this->sourceQuizDescription = $sourceQuizDescription;
+	}
+	function setDefaultRecommendation($recoQuizId, $confidence)
+	{
+		$this->reasonText = "Since you haven't taken any tests, we recommend starting with this test.";
+		$this->recoQuizId = $recoQuizId;
+		$this->confidence = $confidence;
 	}
 
 	function setFacultyRecommendation($recoQuizId, $facultyId, $confidence)
@@ -179,7 +185,7 @@ class recoObject
 		$this->recoQuizId = $recoQuizId;
 		$this->confidence = $confidence;	
 	}
-	function setLongTimeRecommendation($recoQuizId, $lid, $attemptTime)
+	function setLongTimeRecommendation($recoQuizId, $lid, $attemptTime, $confidence)
 	{
 		$this->reasonText = "Recommended because you haven't attempted a test on ".getTopicName("l1",$lid)
 							."since ".date("d-M",$attemptTime);
@@ -214,10 +220,27 @@ class recoObject
 }
 
 
-function testcode1()
+function testcode1($accountId)
 {
-	$a = new quizData(1);
-	var_dump($a);
+	//$accountId = $_POST['accountId'];
+	$temp = new quizRecoCollection($accountId);
+	$temp = $temp->listRecos();
+	echo "\n\nDumping : quizRecoCollection";
+	var_dump($temp);
+	$data = array();
+	foreach ( $temp as $key => &$item) {
+		$dataobj = (object) doSQL(array("id"=>$item->qid,
+		"SQL" => "select q.id,q.questionIds,q.description,q.descriptionShort,q.difficulty,q.allotedTime,q.maxScore,q.rec,q.conceptsTested, q.l2Ids, q.l3Ids, q.typeId, a.id as fid, a.firstName,a.lastName,f.bioShort,f.education from quizzes q, accounts a, faculty f where q.facultyId=a.id and f.accountId=a.id and q.available=1 and q.id = :id"
+			),true);
+		$dataobj->id = $item->qid;
+		$dataobj->reason = $item->reason;
+		$data[] = $dataobj;
+	}
+
+	$response["data"] = $data;
+	$response["status"] = SUCCESS;
+
+	sendResponse($response);
 }
 
 function cmp($a, $b)
