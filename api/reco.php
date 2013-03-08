@@ -226,7 +226,7 @@ function testcode1($accountId)
 	$temp = new quizRecoCollection($accountId);
 	$temp = $temp->listRecos();
 	echo "\n\nDumping : quizRecoCollection";
-	var_dump($temp);
+	
 	$data = array();
 	foreach ( $temp as $key => &$item) {
 		$dataobj = (object) doSQL(array("id"=>$item->qid,
@@ -236,7 +236,7 @@ function testcode1($accountId)
 		$dataobj->reason = $item->reason;
 		$data[] = $dataobj;
 	}
-
+	var_dump($data);
 	$response["data"] = $data;
 	$response["status"] = SUCCESS;
 
