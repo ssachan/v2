@@ -254,7 +254,7 @@ function makeRecos()
 	$data = array();
 	foreach ( $temp as $key => &$item) {
 		$dataobj = (object) doSQL(array("id"=>$item->qid,
-		"SQL" => "select q.id,q.questionIds,q.description,q.descriptionShort,q.difficulty,q.allotedTime,q.maxScore,q.rec,q.conceptsTested, q.l2Ids, q.l3Ids, q.typeId, a.id as fid, a.firstName,a.lastName,f.bioShort,f.education from quizzes q, accounts a, faculty f where q.facultyId=a.id and f.accountId=a.id and q.available=1 and q.id = :id"
+		"SQL" => "select q.*, a.id as fid, a.firstName,a.lastName,f.bioShort,f.education from quizzes q, accounts a, faculty f where q.facultyId=a.id and f.accountId=a.id and q.available<>0 and q.id = :id"
 			),true);
 		$dataobj->id = $item->qid;
 		$dataobj->reason = $item->reason;
