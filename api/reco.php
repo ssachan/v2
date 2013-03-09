@@ -117,19 +117,6 @@ class quizRecoCollection
 	{
 		$attemptCount = count($this->attemptedQuizzes);
 		$recoByQuizId = array();
-		$i =30;
-		if($attemptCount == 0)
-		{
-			foreach ($this->unattemptedQuizzes as $key => $uquiz) {
-						$this->recos[] = new recoObject();
-						$kee = count($this->recos)-1;
-						$this->recos[$kee]->setDefaultRecommendation($uquiz->quizid, 20 +$i);
-						$recoByQuizId[$uquiz->quizid][] = $kee;
-						$i -= $i>0 ? 10 : 0;
-					}
-				
-
-		}
 		$i = 20;
 		foreach ($this->attemptedQuizzes as $key => $aquiz) {
 			foreach ($this->unattemptedQuizzes as $key => $uquiz) {
@@ -142,6 +129,17 @@ class quizRecoCollection
 					}
 			}
 			$i -= $i>0 ? 10 : 0;	
+		}
+		$i =30;
+		if($attemptCount == 0 || count($this->recos) == 0)
+		{
+			foreach ($this->unattemptedQuizzes as $key => $uquiz) {
+						$this->recos[] = new recoObject();
+						$kee = count($this->recos)-1;
+						$this->recos[$kee]->setDefaultRecommendation($uquiz->quizid, 20 +$i);
+						$recoByQuizId[$uquiz->quizid][] = $kee;
+						$i -= $i>0 ? 10 : 0;
+					}
 		}
 	}
 }
