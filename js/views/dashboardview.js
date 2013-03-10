@@ -166,9 +166,9 @@ window.PerformanceView = Backbone.View.extend({
 				var score = parseInt(l2Score.get('score'));
 				if(score>80){
 					$('#'+l2[i].get('id') + '-l2>a', this.el).addClass('bg-green');
-				}else if(score>40 && score<=80){
+				}else if(score>=30 && score<=80){
 					$('#'+l2[i].get('id') + '-l2>a', this.el).addClass('bg-yellow');
-				}else if(score<=40 && score>0){
+				}else if(score<30 && score>0){
 					$('#'+l2[i].get('id') + '-l2>a', this.el).addClass('bg-red');
 				}else if(score==0){
 					$('#'+l2[i].get('id') + '-l2>a', this.el).addClass('bg-grey');
@@ -191,7 +191,7 @@ window.PerformanceView = Backbone.View.extend({
 			var scoreVal = parseInt(score.get('score'));
 			if(scoreVal>80){
 				$('.l3-stats #pts', this.el).html('Expert');
-			}else if(scoreVal>40 && scoreVal<=80){
+			}else if(scoreVal>=30 && scoreVal<=80){
 				$('.l3-stats #pts', this.el).html('Getting There');
 			}else if(scoreVal<=30 && scoreVal>0){
 				$('.l3-stats #pts', this.el).html('Struggling');

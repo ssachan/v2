@@ -356,8 +356,14 @@ window.QuizQuestionView = Backbone.View.extend({
         	break;
         case "4":
         	 // matrix type
+        	var htmlOpt = [];
             var options = this.model.get('options');
-            var optionSelected = this.model.get('optionSelected');
+            if(this.model.get('optionSelected')!=null){
+        		optionSelectedArray = (this.model.get('optionSelected')).split(SEPARATOR + SEPARATOR);
+        	}
+            if(this.model.get('correctAnswer')!=null){
+            	correctAnswerArray = (this.model.get('correctAnswer')).split(SEPARATOR + SEPARATOR);
+        	}
         	var status = this.model.get('status');
             if (status == null) {
                 html.push('<h3>YOU ANSWERED NONE</h3>');
@@ -373,24 +379,35 @@ window.QuizQuestionView = Backbone.View.extend({
             var rightList = optionsArray[1].split(SEPARATOR);
             var lLen = leftList.length;
             var rLen = rightList.length;
-            var optionSelectedArray = optionSelected.split(SEPARATOR + SEPARATOR);
             // create the left right table
-            htmlOpt.push('<div class="span6">');
-            htmlOpt.push('<table class="table"><tr><td>');
-            htmlOpt.push('<ol type="1">');
+            html.push('<div class="span12">');
+            html.push('<table class="table">');
+            html.push('<tr><th>Option</th><th>Selected</th><th>Correct</th></tr>');
+            //html.push('<ol type="1">');
             for (var i = 0; i < lLen; i++) {
-                htmlOpt.push('<li>' + leftList[i] + '-');
-                var correctOptArray = optionSelectedArray[i].split(SEPARATOR);
+                html.push('<tr><td>' + leftList[i]+'</td>');
+                if (status != null){
+                	var selectedOptArray = optionSelectedArray[i].split(SEPARATOR);
+                	var len = selectedOptArray.length;
+                	var dummy = [];
+                	for(var j = 0; j< len; j++){
+                		dummy.push(String.fromCharCode(65 + parseInt(selectedOptArray[j])));
+                	}
+                	html.push('<td>' + dummy.join(',') + '</td>');                
+                }else{
+                	html.push('<td>None</td>');
+                }
+                var correctOptArray = correctAnswerArray[i].split(SEPARATOR);
                 var len = correctOptArray.length;
                 var dummy = [];
-                for(var i = 0; i< len; i++){
-                	dummy.push(String.fromCharCode(65 + correctOptArray[i]));
+                for(var j = 0; j< len; j++){
+                	dummy.push(String.fromCharCode(65 + parseInt(correctOptArray[j])));
                 }
-                htmlOpt.push(dummy.join(','));                
-                htmlOpt.push('</li>');
+                html.push('<td>'+dummy.join(',')+'</td>');
+                html.push('</tr>');
             }
-            htmlOpt.push('</ol></td></tr></table>');
-            htmlOpt.push('</div>');
+            html.push('</table>');
+            html.push('</div>');
             break;        	
         }
         $('#stathead').html(html.join(' '));
