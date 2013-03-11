@@ -77,7 +77,7 @@ window.Account = Backbone.Model.extend({
 				}
 			},
 			error : function(data) {
-				helper.processStatus(data);
+				helper.processStatus(data.responseText);
 			}
 		});
 	},

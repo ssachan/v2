@@ -191,7 +191,7 @@ function getQuizzesByStreamId($id) {
 
 function getFacByStreamId($id) {
     $response = array();
-    $sql = "select a.id as id, a.firstName,a.lastName,f.* from faculty f,accounts a where (f.streamIds like '%"
+    $sql = "select a.id as id, a.firstName,a.lastName,f.*,(select count(*) as count from fac_recos where facId=a.id) as rec,(select count(*) as count from quizzes where facultyId=a.id) as totalQuizzes  from faculty f,accounts a where (f.streamIds like '%"
             . $id . "' or f.streamIds like '" . $id
             . "%' or f.streamIds like '%|:" . $id
             . "|:%') and a.id=f.accountId and a.roles='3'";
@@ -217,7 +217,7 @@ function getFacByStreamId($id) {
 
 function getFac($id) {
     $response = array();
-    $sql = "select a.id as id,a.firstName,a.lastName,f.* from faculty f, accounts a where a.id=:id and a.id=f.accountId";
+    $sql = "select a.id as id,a.firstName,a.lastName,f.*,(select count(*) as count from fac_recos where facId=a.id) as rec,(select count(*) as count from quizzes where facultyId=a.id) as totalQuizzes from faculty f, accounts a where a.id=:id and a.id=f.accountId";
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
@@ -594,9 +594,27 @@ function addQuizReco(){
 }
 
 function addFacReco(){
-    $sqlArray = array("accountId"=>$_POST[accountId], "facId"=>$_POST[facId] );
-    $sqlArray["SQL"] = "INSERT INTO fac_recos (facId, accountId) VALUES (:facId, :accountId)";
-    doSQL($sqlArray,false);
+    $response = array();
+    $sqlArray = array("accountId"=>$_POST['accountId'], "facId"=>$_POST['facId'] );
+    $sqlArray["SQL"] = "select count(*) as count FROM fac_recos where facId=:facId and accountId=:accountId";
+    doSQL($sqlArray,true);
+    $count = doSQL($sqlArray,true);
+    if ($count->count == 0) {
+        // not recommended before
+        $sqlArray = array("accountId"=>$_POST['accountId'], "facId"=>$_POST['facId']);
+        $sqlArray["SQL"] = "INSERT INTO fac_recos (facId, accountId) VALUES (:facId, :accountId)";
+        doSQL($sqlArray,false);
+        /*$sqlArray = array("accountId"=>$_POST[accountId], "quizId"=>$_POST[quizId] );
+         $sqlArray["SQL"] = "INSERT INTO quiz_recos (quizId, accountId) VALUES (:quizId, :accountId)";
+        doSQL($sqlArray,false);*/
+        $response["status"] = SUCCESS;
+        $response["data"] = "Thanks for recommending this faculty.";
+    }else{
+        // aready recommended
+        $response["status"] = FAIL;
+        $response["data"] = "Already recommended by you.";
+    }
+    sendResponse($response);
 }
 
 function facContact() {
