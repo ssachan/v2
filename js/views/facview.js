@@ -12,7 +12,15 @@ window.FacView = Backbone.View.extend({
 	initialize : function() {
 		this.render();
 	},
-
+	
+	events : {
+		'click #recommendFac' : 'recommendFac'
+	},
+	
+	recommendFac : function (){
+		this.model.addReco();
+	},
+	
 	render : function() { 
 		$(this.el).html(this.template(this.model.toJSON()));
 		return this;
@@ -35,5 +43,5 @@ window.FacView = Backbone.View.extend({
         		i++;
         	}
         }
-	}
+	},
 });

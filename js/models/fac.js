@@ -5,7 +5,14 @@
  * 
  */
 window.Fac = Backbone.Model.extend({
+	
+	defaults : {
+		dpUrl : DP_PATH + 'avatar.jpg',
+		dpUrlL : DP_PATH + 'avatar.jpg',
+	},
+	
 	urlRoot : Config.serverUrl + 'fac/',
+
 	initialize : function() {
 		if (this.get('id') != null) {
 			this.set('dpUrl', DP_PATH + this.get('id') + '.jpg');
@@ -26,10 +33,28 @@ window.Fac = Backbone.Model.extend({
 	    }
 	},
 	
-	defaults : {
-		dpUrl : DP_PATH + 'avatar.jpg',
-		dpUrlL : DP_PATH + 'avatar.jpg',
-	}
+    addReco: function () {
+        var url = Config.serverUrl + 'addFacReco';
+        var that = this;
+        $.ajax({
+        	//context:this,
+            url: url,
+            type: 'POST',
+            dataType: "json",
+            data: {
+                accountId: account.get('id'),
+                facId: this.get('id'),
+            },
+            success: function (data) {
+                if (data.status) {
+                	helper.processStatus(data);
+                }
+            },
+            error: function (data) {
+                console.log(data);
+            },
+        });
+    }
 	
 });
 
