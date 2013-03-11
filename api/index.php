@@ -535,6 +535,8 @@ function purchasePackage() {
         $stmt->bindParam("packageId", $_POST['packageId']);
         $stmt->bindParam("purchasedOn", $date);
         $stmt->execute();
+        echo 'here2';
+        echo $app->render('pay.php', array('id' => '1'));
         $db = null;
     } catch (PDOException $e) {
         $response["status"] = ERROR;
@@ -543,7 +545,7 @@ function purchasePackage() {
         sendResponse($response);
     }
     // get the number to be added
-    $sql = "SELECT number from packages where id=:packageId";
+    /*$sql = "SELECT number from packages where id=:packageId";
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
@@ -560,6 +562,7 @@ function purchasePackage() {
     $response = updateQuizzesRemaining($number, $accountId, $streamId);
     // get the current number of packages
     sendResponse($response);
+    */
 }
 
 function facContact() {
