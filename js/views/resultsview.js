@@ -6,8 +6,13 @@ window.ResultsView = Backbone.View.extend({
 	
 	events : {
 		'click .resnav>li' : 'onNavClick',
+		'click #recommendQuiz' : 'recommendQuiz'
 	},
-
+	
+	recommendQuiz : function (){
+		this.model.addReco();
+	},
+	
 	render : function() {
 		$(this.el).html(this.template());
 		return this;
