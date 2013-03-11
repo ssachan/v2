@@ -10,7 +10,8 @@ window.FacView = Backbone.View.extend({
 	className : "container fac-profile",
 	
 	initialize : function() {
-		this.render();
+		_.bindAll(this, "render");
+		this.model.bind('change', this.render);
 	},
 	
 	events : {
@@ -21,8 +22,14 @@ window.FacView = Backbone.View.extend({
 		this.model.addReco();
 	},
 	
-	render : function() { 
-		$(this.el).html(this.template(this.model.toJSON()));
+	render : function() {
+		if(account.get('id')){
+			this.model.set('loggedIn',true);
+			$(this.el).html(this.template(this.model.toJSON()));
+		}else{
+			this.model.set('loggedIn',false);
+			$(this.el).html(this.template(this.model.toJSON()));
+		}
 		return this;
 	},
 	
