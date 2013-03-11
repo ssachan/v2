@@ -21,8 +21,14 @@ window.FacView = Backbone.View.extend({
 		this.model.addReco();
 	},
 	
-	render : function() { 
-		$(this.el).html(this.template(this.model.toJSON()));
+	render : function() {
+		if(account.get('id')){
+			this.model.set('loggedIn',true);
+			$(this.el).html(this.template(this.model.toJSON()));
+		}else{
+			this.model.set('loggedIn',false);
+			$(this.el).html(this.template(this.model.toJSON()));
+		}
 		return this;
 	},
 	
