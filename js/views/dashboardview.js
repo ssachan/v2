@@ -241,9 +241,9 @@ window.PerformanceView = Backbone.View.extend({
 			var score = parseInt(l3Score.get('score'));
 			if(score>80){
 				$('#'+l3[i].get('id') + '-l3>a', this.el).addClass('bg-green');
-			}else if(score>40 && score<=80){
+			}else if(score>=30 && score<=80){
 				$('#'+l3[i].get('id') + '-l3>a', this.el).addClass('bg-yellow');
-			}else if(score<=40 && score>0){
+			}else if(score<30 && score>0){
 				$('#'+l3[i].get('id') + '-l3>a', this.el).addClass('bg-red');
 			}else if(score==0){
 				$('#'+l3[i].get('id') + '-l3>a', this.el).addClass('bg-grey');
