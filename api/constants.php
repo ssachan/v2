@@ -9,9 +9,9 @@ class bases{
     "CORRECT_HIGH_LEVEL"       => 80,
     "CORRECT_HIGH_VAL"         => 1,
     "INCORRECT_LOW_LEVEL"      => 20,
-    "INCORRECT_LOW_VAL"        => -1,
+    "INCORRECT_LOW_VAL"        => -3,
     "INCORRECT_HIGH_LEVEL"     => 80,
-    "INCORRECT_HIGH_VAL"       => -3,
+    "INCORRECT_HIGH_VAL"       => -1,
     "SKIPPED_ABOVE_LOW_LEVEL"  => 20,
     "SKIPPED_ABOVE_LOW_VAL"    => 1.5,
     "SKIPPED_ABOVE_HIGH_LEVEL" => 80,
@@ -57,7 +57,7 @@ class timeRanges {
 
 class abilityFactors{
     public static $values= array(
-    "M1" => 0.03,
+    "M1" => 0.015,
     "M2" => 0.0075 );
 
     public static function set($key, $value, $default = null){
@@ -121,7 +121,7 @@ class deltaCalculator{
                     return (($tmp->get("M1") * $x) + 1);
                 break;
                 case analConst::INCORRECT :
-                    return (1 - ($tmp->get("M2") * $x))/2;
+                    return (1 - ($tmp->get("M2") * $x));
                 break;
                 default:
                    return 1; 
@@ -134,7 +134,7 @@ class deltaCalculator{
                     return (1 + ($tmp->get("M2") * $x));
                 break;
                 case analConst::INCORRECT :
-                    return (1-($tmp->get("M1") * $x))/2;
+                    return (1-($tmp->get("M1") * $x));
                 break;
                 default:
                    return 1; 
