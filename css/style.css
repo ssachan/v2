@@ -1334,6 +1334,10 @@ margin-left:50px;}
     margin-top: 20px;
 }
 
+#solutions-div > .quizview{
+    width:100%
+}
+
 .video-js {
     margin: 0px auto;
 }
