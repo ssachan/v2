@@ -318,6 +318,34 @@ window.Quiz = Backbone.Model.extend({
                 console.log(data);
             },
         });
+    },
+    
+    /**
+     * addQuizReco
+     * 
+     * @param quiz
+     */
+    addReco: function () {
+        var url = Config.serverUrl + 'addQuizReco';
+        var that = this;
+        $.ajax({
+        	//context:this,
+            url: url,
+            type: 'POST',
+            dataType: "json",
+            data: {
+                accountId: account.get('id'),
+                quizId: this.get('id'),
+            },
+            success: function (data) {
+                if (data.status) {
+                	helper.processStatus(data);
+                }
+            },
+            error: function (data) {
+                console.log(data);
+            },
+        });
     }
 });
 

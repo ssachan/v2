@@ -52,6 +52,10 @@ $app->post('/reco/', 'makeRecos');
 $app->get('/packagesByStreamId', 'getPackagesByStreamId');
 $app->post('/purchase', 'purchasePackage');
 
+// add recos for quizzes and faculty
+$app->post('/addQuizReco', 'addQuizReco');
+$app->post('/addFacReco', 'addFacReco');
+
 define('SUCCESS', "success"); // returns the requested data.
 define('FAIL', "fail"); // logical error.
 define('ERROR', "error"); // system error.
@@ -139,7 +143,7 @@ function getQuizzesHistory() {
     $response = array();
     $accountId = $_GET['accountId'];
     $streamId = $_GET['streamId'];
-    $sql = "select r.selectedAnswers,r.timePerQuestion,r.score,r.startTime,r.state, r.attemptedAs,r.numCorrect,r.numIncorrect, q.*,a.id as fid, a.firstName,a.lastName,f.bioShort,f.education from results r,quizzes q,accounts a,faculty f where r.accountId=:accountId and q.streamId=:streamId and r.quizId=q.id and q.facultyId=a.id and q.available<>0 and f.accountId=a.id order by timestamp";
+    $sql = "select r.selectedAnswers,r.timePerQuestion,r.score,r.startTime,r.state, r.attemptedAs,r.numCorrect,r.numIncorrect, q.*, (select count(*) as count from quiz_recos where quizId=q.id) as rec, a.id as fid, a.firstName,a.lastName,f.bioShort,f.education from results r,quizzes q,accounts a,faculty f where r.accountId=:accountId and q.streamId=:streamId and r.quizId=q.id and q.facultyId=a.id and q.available<>0 and f.accountId=a.id order by timestamp";
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
@@ -163,7 +167,7 @@ function getQuizzesHistory() {
 //
 function getQuizzesByStreamId($id) {
     $response = array();
-    $sql = "select q.*, a.id as fid, a.firstName,a.lastName,f.bioShort,f.education from quizzes q, accounts a, faculty f where q.facultyId=a.id and q.streamId=:id and f.accountId=a.id and q.available<>0 order by q.available,q.id";
+    $sql = "select q.*, (select count(*) as count from quiz_recos where quizId=q.id) as rec, a.id as fid, a.firstName,a.lastName,f.bioShort,f.education from quizzes q, accounts a, faculty f where q.facultyId=a.id and q.streamId=:id and f.accountId=a.id and q.available<>0 order by q.available,q.id";
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
@@ -239,7 +243,7 @@ function getFac($id) {
 function getQuizzesByFac($id) {
     $response = array();
     $ids = explode("|", $id);
-    $sql = "select q.* from quizzes q where q.facultyId=:facId and q.streamId=:streamId order by q.available,q.id";
+    $sql = "select q.*,(select count(*) as count from quiz_recos where quizId=q.id) as rec from quizzes q where q.facultyId=:facId and q.streamId=:streamId order by q.available,q.id";
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
@@ -535,6 +539,8 @@ function purchasePackage() {
         $stmt->bindParam("packageId", $_POST['packageId']);
         $stmt->bindParam("purchasedOn", $date);
         $stmt->execute();
+        echo 'here2';
+        echo $app->render('pay.php', array('id' => '1'));
         $db = null;
     } catch (PDOException $e) {
         $response["status"] = ERROR;
@@ -543,7 +549,7 @@ function purchasePackage() {
         sendResponse($response);
     }
     // get the number to be added
-    $sql = "SELECT number from packages where id=:packageId";
+    /*$sql = "SELECT number from packages where id=:packageId";
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
@@ -560,6 +566,37 @@ function purchasePackage() {
     $response = updateQuizzesRemaining($number, $accountId, $streamId);
     // get the current number of packages
     sendResponse($response);
+    */
+}
+
+function addQuizReco(){
+    $response = array();
+    $sqlArray = array("accountId"=>$_POST['accountId'], "quizId"=>$_POST['quizId'] );
+    $sqlArray["SQL"] = "select count(*) as count FROM quiz_recos where quizId=:quizId and accountId=:accountId";
+    doSQL($sqlArray,true);
+    $count = doSQL($sqlArray,true);
+    if ($count->count == 0) {
+        // not recommended before
+        $sqlArray = array("accountId"=>$_POST['accountId'], "quizId"=>$_POST['quizId']);
+        $sqlArray["SQL"] = "INSERT INTO quiz_recos (quizId, accountId) VALUES (:quizId, :accountId)";        
+        doSQL($sqlArray,false);
+        /*$sqlArray = array("accountId"=>$_POST[accountId], "quizId"=>$_POST[quizId] );
+        $sqlArray["SQL"] = "INSERT INTO quiz_recos (quizId, accountId) VALUES (:quizId, :accountId)";
+        doSQL($sqlArray,false);*/
+        $response["status"] = SUCCESS;
+        $response["data"] = "Thanks for recommending this quiz.";
+    }else{
+        // aready recommended
+        $response["status"] = FAIL;
+        $response["data"] = "Already recommended by you.";        
+    }
+    sendResponse($response);
+}
+
+function addFacReco(){
+    $sqlArray = array("accountId"=>$_POST[accountId], "facId"=>$_POST[facId] );
+    $sqlArray["SQL"] = "INSERT INTO fac_recos (facId, accountId) VALUES (:facId, :accountId)";
+    doSQL($sqlArray,false);
 }
 
 function facContact() {
