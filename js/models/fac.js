@@ -47,6 +47,9 @@ window.Fac = Backbone.Model.extend({
             },
             success: function (data) {
                 if (data.status) {
+                	if(data.status == STATUS.SUCCESS){
+                		that.set('rec',parseInt(that.get('rec'))+1);
+                	}
                 	helper.processStatus(data);
                 }
             },

@@ -10,7 +10,8 @@ window.FacView = Backbone.View.extend({
 	className : "container fac-profile",
 	
 	initialize : function() {
-		this.render();
+		_.bindAll(this, "render");
+		this.model.bind('change', this.render);
 	},
 	
 	events : {
