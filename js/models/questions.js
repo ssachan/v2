@@ -17,12 +17,7 @@ window.Question = Backbone.Model.extend({
         'videoData' : null, //am adding this to load video for each question
         'typeString':''
     },
-    
-    STATUS_NOTSTARTED: 1, // when the quiz is fresh from the library
-    STATUS_COMPLETED: 2, // when the quiz is completed
-    STATUS_INPROGRESS: 3, // when the attemptedAs is set and the quiz is in progress
-    STATUS_INTERRUPTED: 4, // when the attemptedAs is not set
-    
+        
     initialize: function () {
       var l3Id=this.get('l3Id');
         if (l3Id) {

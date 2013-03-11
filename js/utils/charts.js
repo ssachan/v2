@@ -96,7 +96,7 @@ window.drawTimeChart = function(quiz) {
 	chart = new Highcharts.Chart(options);
 };
 
-window.getObjectByL2 = function(series, l2) {
+window.getObjectByL3 = function(series, l2) {
 	for ( var i = 0; i < series.length; i++) {
 		if (series[i].name == l2) {
 			return series[i];
@@ -233,17 +233,16 @@ window.drawDifficultyChart = function(quiz) {
 
 	var series = [];
 	var questionIds = quiz.get('questionIdsArray');;
-	var answers = quiz.get('selectedAnswersArray');
 	var len = questionIds.length;
 	for ( var i = 0; i < len; i++) {
 		var question = quizQuestions.get(questionIds[i]);
 		var l3 = sectionL3.get(question.get('l3Id'));
-		var l2 = sectionL2.get(l3.get('l2Id'));
+		//var l2 = sectionL2.get(l3.get('l2Id'));
 		var difficulty = question.get('difficulty');
-		var obj = getObjectByL2(series, l2.get('displayName'));
+		var obj = getObjectByL3(series, l3.get('displayName'));
 		if (obj == null) {
 			obj = {
-				name : l2.get('displayName'),
+				name : l3.get('displayName'),
 				data : []
 			};
 			series.push(obj);
@@ -262,7 +261,7 @@ window.drawDifficultyChart = function(quiz) {
 				}
 			}
 		};
-		var status = question.isOptionSelectedCorrect(answers[i]);
+		var status = question.get('status');
 		if (status == true) {
 			marker.fillColor = correctCode;
 			marker.states.hover.fillColor = correctCode;
