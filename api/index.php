@@ -437,7 +437,7 @@ function processQuiz() {
             doSQL($sqlArray,false);
         
             $sqlArray = array("streamId"=>$streamId, "quizId"=>$quizId );
-            $sqlArray["SQL"] = "select q.id,q.questionIds,q.description,q.descriptionShort,q.difficulty,q.allotedTime,q.maxScore,q.rec,q.conceptsTested, q.l2Ids, q.l3Ids, q.typeId, a.id as fid, a.firstName,a.lastName,f.bioShort from quizzes q, accounts a, faculty f where q.facultyId=a.id and q.streamId=:streamId and f.accountId=a.id and q.id=:quizId";
+            $sqlArray["SQL"] = "select q.id,q.questionIds,q.description,q.descriptionShort,q.difficulty,q.allotedTime,q.maxScore,q.conceptsTested, q.l2Ids, q.l3Ids, q.typeId, a.id as fid, a.firstName,a.lastName,f.bioShort from quizzes q, accounts a, faculty f where q.facultyId=a.id and q.streamId=:streamId and f.accountId=a.id and q.id=:quizId";
             $sucessData['quiz'] = doSQL($sqlArray,true);
     } 
     else {
