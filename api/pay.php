@@ -2,9 +2,47 @@
 $hash = "ebskey"."|".$_POST['account_id']."|".$_POST['amount']."|".$_POST['reference_no']."|".$_POST['return_url']."|".$_POST['mode'];
 
 $secure_hash = md5($hash);
-
+$packageId = $_GET['id'];
+$date = date("Y-m-d H:i:s", time());
+$streamId = $_POST['streamId'];
+$accountId = $_POST['accountId'];
+$sql = "INSERT INTO purchases (accountId, packageId, purchasedOn) VALUES (:accountId, :packageId, :purchasedOn);";
+try {
+    $db = getConnection();
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam("accountId", $accountId);
+    $stmt->bindParam("packageId", $_POST['packageId']);
+    $stmt->bindParam("purchasedOn", $date);
+    $stmt->execute();
+    $db = null;
+} catch (PDOException $e) {
+    $response["status"] = ERROR;
+    $response["data"] = EXCEPTION_MSG;
+    phpLog($e->getMessage());
+}
+// get the number to be added
+/*$sql = "SELECT number from packages where id=:packageId";
+ try {
+$db = getConnection();
+$stmt = $db->prepare($sql);
+$stmt->bindParam("packageId", $_POST['packageId']);
+$stmt->execute();
+$record = $stmt->fetch(PDO::FETCH_OBJ);
+$number = intval($record->number);
+} catch (PDOException $e) {
+$response["status"] = ERROR;
+$response["data"] = EXCEPTION_MSG;
+phpLog($e->getMessage());
+sendResponse($response);
+}
+$response = updateQuizzesRemaining($number, $accountId, $streamId);
+// get the current number of packages
+sendResponse($response);
+*/
+include 'xkcd.php';
 
 ?>
+
 <form  method="post" action="https://secure.ebs.in/pg/ma/sale/pay" name="frmTransaction" id="frmTransaction" onSubmit="return validate()">
 <input name="account_id" type="hidden" value="<?echo $_POST['account_id'] ?>">
     <input name="return_url" type="hidden" size="60" value="<? echo $_POST['return_url'] ?>" />

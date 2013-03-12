@@ -6,6 +6,35 @@
 
 $app->get('/mail', 'testMail');
 
+
+function doSQL($params,$returnsData,$fetchAs = "obj",$callBack = ""){   /*
+    $firephp = FirePHP::getInstance(true);
+    $firephp->log($params, "SQL:");*/
+    $sql = array_pop($params);
+    try{
+        $db   = getConnection();
+        $stmt = $db->prepare($sql);
+        foreach ($params as $key => $value) {
+            $stmt->bindValue(":".$key,$value);
+        }
+        $stmt->execute();
+        $db = null;
+        if($returnsData === true)
+            if($fetchAs === "obj")
+            return $stmt->fetch(PDO::FETCH_OBJ);
+        elseif($fetchAs === "all_array")
+        return $stmt->fetchAll();
+        elseif($fetchAs === "all_func")
+        return $stmt->fetchAll(PDO::FETCH_FUNC,$callBack);
+        elseif($fetchAs === "all_class")
+        return $stmt->fetchAll(PDO::FETCH_CLASS,$callBack);
+    }
+    catch (PDOException $e) {
+        //phpLog("doSqlError:".$sql.$e->getMessage());
+        echo("doSqlError:".$sql.$e->getMessage());
+    }
+}
+
 function sendEmail($to, $subject, $message) {
     $res = mail($to, $subject, $message);
     return $res;
