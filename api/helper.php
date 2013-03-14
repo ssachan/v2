@@ -36,6 +36,7 @@ function doSQL($params,$returnsData,$fetchAs = "obj",$callBack = ""){   /*
 }
 
 function sendEmail($to, $subject, $message) {
+    echo $to;
     $sendgrid = new SendGrid('admin@prepsquare.com', 'Ptol3my1234');
     $mail = new SendGrid\Mail();
     $mail->
