@@ -831,14 +831,11 @@ class quizResponseDetails{
         $deltas = $this->getDeltas();
         asort($deltas);
         $count = 0;
-        echo "hey!";
         foreach ($deltas as $qid => $value) {
             $videoObject = new stdClass();
                 $videoObject->videoSrc  = $this->qEvaluated[$qid]->qDetails->videoSrc;
                 $videoObject->posterSrc = $this->qEvaluated[$qid]->qDetails->posterSrc;
-                echo "How's this ?";
                 $videoObject->title = "Video Solution for Question ".getQuestionNumberFromId($qid);
-                echo "and this?";
                 $temp = "";
                 if($this->qEvaluated[$qid]->state == analConst::INCORRECT)
                     $temp = "you got this question incorrect.";
@@ -847,7 +844,6 @@ class quizResponseDetails{
                 else
                     $temp = "this is an important question.";
                 $videoObject->desc = "Recommended Video since ".$temp;
-                "
             $videoArray[] = $videoObject;
             $count += 1;
             if($count == 5 || $value > 0)
