@@ -688,7 +688,7 @@ class quizResponseDetails{
         return explode("|:",doSQL($query, true)->questionIds);
     }
     public function getQuestionNumberFromId($qid){
-        for($i=-;$i<count($this->questionIds);$i++)
+        for($i=0;$i<count($this->questionIds);$i++)
             if($this->questionIds[$i] == $qid)
                 return ($i+1);
     }
@@ -840,9 +840,9 @@ class quizResponseDetails{
                 if($this->qEvaluated[$qid] == analConst::INCORRECT)
                     $temp = "you got this question incorrect.";
                 elseif($this->qEvaluated[$qid] == analConst::UNSEEN || analConst::SKIPPED)
-                    $temp = "you did not attempt this question."
+                    $temp = "you did not attempt this question.";
                 else
-                    $temp = "this is an important question."
+                    $temp = "this is an important question.";
                 $videoObject->desc = "Recommended Video since ".$temp;
 
             $videoArray[] = $videoObject;
