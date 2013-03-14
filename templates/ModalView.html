@@ -25,10 +25,13 @@
         </div>
         <div class="center">
             <div id="video">
-                <video id="intro-vid-<%=id%>" class="video-js atlantis" controls
-                    preload="none" width="480" height="270" data-setup="{}" poster = 'img/introvid.png'>
-                    <source src="videos/s<%=id%>introvid1.mp4" type="video/mp4" />
-                </video>
+                <div id="intro-vid-<%=id%>"></div>
+                <script>
+                    jwplayer("intro-vid-<%=id%>").setup({
+                        file: "videos/s<%=id%>introvid1.mp4",
+                        image: "img/introvid.png"
+                    });
+                </script>        
             </div> <!-- //::video:: -->
             <p style="text-align: left; margin-top: 25px; padding: 10px 0px; margin-bottom: 20px; background-color: #ECECEC">
                 <strong>Description: </strong><%= description %>
