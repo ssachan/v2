@@ -29,7 +29,7 @@ window.ModalView = Backbone.View.extend({
          jwplayer("intro-vid-"+this.model.get('id')).setup({
                         file: "videos/s"+this.model.get('id')+"introvid1.mp4",
                         image: "img/introvid.png",
-                        startparam: "starttime",
+                        startparam: "start",
                         height : 180,
                         width: 320,
                         autostart : true,
