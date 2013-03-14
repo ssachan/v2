@@ -55,7 +55,7 @@ window.ResultAnalysisView = Backbone.View.extend({
 	initialize : function() {
 	},
 
-	calculateVideoArray : function(options) {
+	calculateVideoArray : function(options) { //::video::
 
 		var videoResults = [];
 		
@@ -76,7 +76,7 @@ window.ResultAnalysisView = Backbone.View.extend({
 		return videoResults;
 	},
 
-	setUpPlaylist : function(videoResults) {
+	setUpPlaylist : function(videoResults) { //::video::
 
 		var firstVideo = videoResults[0] || {thumb_url : "../../video/poster.png"};
 
@@ -135,8 +135,9 @@ window.ResultAnalysisView = Backbone.View.extend({
 	
 	onRender : function(){
 		$("#video").html('<video id="results_video" class="video-js atlantis" controls preload="none" width="640" height="264" data-setup="{}"></video>');
-		var videoResults = this.calculateVideoArray(this.model.get('videoArray'));
-		this.setUpPlaylist(videoResults);
+		//::video::
+		var videoResults = this.calculateVideoArray(this.model.get('videoArray')); //::video::
+		this.setUpPlaylist(videoResults); //::video::
 		var l3GraphData = this.model.get('l3GraphData');
 		if(l3GraphData){
 			var html=[];

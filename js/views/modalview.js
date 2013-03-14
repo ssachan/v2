@@ -24,7 +24,7 @@ window.ModalView = Backbone.View.extend({
 	show : function() {
 		this.state = true;
 		$(document.body).append(this.render().el);
-		myPlayer = _V_("intro-vid-"+this.model.get('id'), { "techOrder": ["flash"]});
+		myPlayer = _V_("intro-vid-"+this.model.get('id'), { "techOrder": ["flash"]}); //::video::
 		if(account.get('id')!=null){
 			// check if credits exist
 			if(parseInt(account.get('quizzesRemaining'))>0){
@@ -44,11 +44,9 @@ window.ModalView = Backbone.View.extend({
 		}
 		$('#modal').modal('hide');
 		this.state =false;
-		myPlayer = _V_("intro-vid-"+this.model.get('id'));
-		myPlayer.pause();
-		myPlayer.src("");
+		myPlayer = _V_("intro-vid-"+this.model.get('id')); //::video::
+		myPlayer.pause(); //::video::
+		myPlayer.src(""); //::video::
 		this.remove();
-		//$('video>source')[0].setAttribute('src','');
-		//$('#intro-vid-'+this.model.get('id'))[0].setAttr('src','');
 	},
 });
