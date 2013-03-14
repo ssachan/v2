@@ -687,6 +687,11 @@ class quizResponseDetails{
             "SQL"=>"SELECT questionIds FROM quizzes WHERE id=:id ");
         return explode("|:",doSQL($query, true)->questionIds);
     }
+    public function getQuestionNumberFromId($qid){
+        for($i=-;$i<count($this->questionIds);$i++)
+            if($this->questionIds[$i] == $qid)
+                return ($i+1);
+    }
     public function getMaxScore(){
         $query = array(
             "SQL"=>"SELECT SUM(correctScore) as s FROM questions WHERE id IN (".implode(",",$this->questionIds).")");
@@ -830,6 +835,16 @@ class quizResponseDetails{
             $videoObject = new stdClass();
                 $videoObject->videoSrc  = $this->qEvaluated[$qid]->qDetails->videoSrc;
                 $videoObject->posterSrc = $this->qEvaluated[$qid]->qDetails->posterSrc;
+                $videoObject->title = "Video Solution for Question ".getQuestionNumberFromId($qid);
+                $temp = "";
+                if($this->qEvaluated[$qid] == analConst::INCORRECT)
+                    $temp = "you got this question incorrect.";
+                elseif($this->qEvaluated[$qid] == analConst::UNSEEN || analConst::SKIPPED)
+                    $temp = "you did not attempt this question."
+                else
+                    $temp = "this is an important question."
+                $videoObject->desc = "Recommended Video since ".$temp;
+
             $videoArray[] = $videoObject;
             $count += 1;
             if($count == 5 || $value > 0)

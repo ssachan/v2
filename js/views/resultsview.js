@@ -87,7 +87,7 @@ window.ResultAnalysisView = Backbone.View.extend({
                         playlist: videoResults,
                         //skin : "",
                         listbar: {
-							        position: 'bottom',
+							        position: 'right',
 							        size: 180
 							     }
                     });
