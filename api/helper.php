@@ -35,8 +35,7 @@ function doSQL($params,$returnsData,$fetchAs = "obj",$callBack = ""){   /*
     }
 }
 
-function sendEmail($to, $subject, $message) {
-    echo $to;
+function sendMail($to, $subject, $message) {
     $sendgrid = new SendGrid('admin@prepsquare.com', 'Ptol3my1234');
     $mail = new SendGrid\Mail();
     $mail->
@@ -48,7 +47,7 @@ function sendEmail($to, $subject, $message) {
 
 function testMail(){
     echo 'hi';
-    sendEmail('shikhar.sachan@gmail.com',SIGN_UP_SUB, SIGN_UP_MSG);
+    sendMail('shikhar.sachan@gmail.com',SIGN_UP_SUB, SIGN_UP_MSG);
 }
 
 $app->get('/getQ/:id', 'getQ');
