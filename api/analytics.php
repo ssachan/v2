@@ -839,7 +839,7 @@ class quizResponseDetails{
                 $temp = "";
                 if($this->qEvaluated[$qid]->state == analConst::INCORRECT)
                     $temp = "you got this question incorrect.";
-                elseif($this->qEvaluated[$qid]->state == analConst::UNSEEN || analConst::SKIPPED)
+                elseif($this->qEvaluated[$qid]->state == analConst::UNSEEN || $this->qEvaluated[$qid]->state == analConst::SKIPPED)
                     $temp = "you did not attempt this question.";
                 else
                     $temp = "this is an important question.";
