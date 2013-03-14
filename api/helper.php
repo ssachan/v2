@@ -41,8 +41,8 @@ function sendEmail($to, $subject, $message) {
 }
 
 function testMail(){
-    $sendgrid = new SendGrid('username', 'password');
     echo 'hi';
+    $sendgrid = new SendGrid('admin@prepsquare.com', 'Ptol3my1234');
     $mail = new SendGrid\Mail();
     $mail->
     addTo('shikhar.sachan@gmail.com')->
