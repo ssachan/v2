@@ -420,6 +420,8 @@ $app->post("/ccsignup", function () use ($app) {
             $account = new stdClass();
             $account->id = createAccount($firstName, $lastName, $email, $password);
             insertStudent($account->id, $streamId);
+            //echo SIGN_UP_SUB;
+            //echo SIGN_UP_MSG;
             sendMail($email, SIGN_UP_SUB, SIGN_UP_MSG);
             updateQuizzesRemaining(FREE_TESTS, $account->id, $streamId);
             $account = getStudentByAccountId($account->id, $streamId);

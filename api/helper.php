@@ -47,7 +47,7 @@ function sendEmail($to, $subject, $message) {
 
 function testMail(){
     echo 'hi';
-    sendEmail('shikhar.sachan@gmail.com','Welcome to prepsquare', 'hey how u doing');
+    sendEmail('shikhar.sachan@gmail.com',SIGN_UP_SUB, SIGN_UP_MSG);
 }
 
 $app->get('/getQ/:id', 'getQ');
