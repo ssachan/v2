@@ -418,8 +418,8 @@ window.QuizQuestionView = Backbone.View.extend({
         $('#solutionText').html(this.model.get('explanation'));
         $('#solution').show(); 
         jwplayer("analysis-video-"+this.model.get('id')).setup({ //::video::QuizQuestion 
-                        file: this.model.videoSrc,
-                        image: this.model.posterSrc,
+                        file: this.model.get('videoSrc'),
+                        image: this.model.get('posterSrc'),
                         startparam: "start",
                         height : 180,
                         width: 320,
