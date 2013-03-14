@@ -836,7 +836,6 @@ class quizResponseDetails{
                 $videoObject->videoSrc  = $this->qEvaluated[$qid]->qDetails->videoSrc;
                 $videoObject->posterSrc = $this->qEvaluated[$qid]->qDetails->posterSrc;
                 $videoObject->title = "Video Solution for Question ". $this->getQuestionNumberFromId($qid);
-                echo "howd!";
                 $temp = "";
                 if($this->qEvaluated[$qid]->state == analConst::INCORRECT)
                     $temp = "you got this question incorrect.";
