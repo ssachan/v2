@@ -831,11 +831,13 @@ class quizResponseDetails{
         $deltas = $this->getDeltas();
         asort($deltas);
         $count = 0;
+        echo "hey!";
         foreach ($deltas as $qid => $value) {
             $videoObject = new stdClass();
                 $videoObject->videoSrc  = $this->qEvaluated[$qid]->qDetails->videoSrc;
                 $videoObject->posterSrc = $this->qEvaluated[$qid]->qDetails->posterSrc;
                 $videoObject->title = "Video Solution for Question ".getQuestionNumberFromId($qid);
+                echo "howd!";
                 $temp = "";
                 if($this->qEvaluated[$qid]->state == analConst::INCORRECT)
                     $temp = "you got this question incorrect.";
