@@ -30,6 +30,8 @@ define('GOOGLE', 3); // google.
 
 //define('CCODE', "Test2"); // ccode.
 define('FREE_TESTS', 6); // free tests.
+define('SIGN_UP_SUB', 'Welcome to PrepSquare'); // free tests
+define('SIGN_UP_MSG', 'Congratulations!!!<br>You are now a registered user. We are really exited to have you with us.'); // free tests
 
 $app->add(new \Slim\Middleware\SessionCookie(
         array('expires' => '120 minutes', 'path' => '/', 'domain' => null,
@@ -257,6 +259,7 @@ $app->post("/fblogin", function () use ($app) {
         insertFb($account->id);
         // push into students
         insertStudent($account->id, $streamId);
+        sendEmail($email, $subject, $message);
     }
     $account = getStudentByAccountId($account->id, 1);
     $_SESSION['user'] = $account->id;
@@ -417,6 +420,7 @@ $app->post("/ccsignup", function () use ($app) {
             $account = new stdClass();
             $account->id = createAccount($firstName, $lastName, $email, $password);
             insertStudent($account->id, $streamId);
+            sendMail($email, SIGN_UP_SUB, SIGN_UP_MSG);
             updateQuizzesRemaining(FREE_TESTS, $account->id, $streamId);
             $account = getStudentByAccountId($account->id, $streamId);
             if (file_exists(DP_PATH . $account->id . '.jpg')) {
