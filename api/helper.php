@@ -1,11 +1,12 @@
 <?php
+include 'resources/sendgrid-php/SendGrid_loader.php';
+$sendgrid = new SendGrid('username', 'password');
 
 /**
  * Helper functions
  */
 
 $app->get('/mail', 'testMail');
-
 
 function doSQL($params,$returnsData,$fetchAs = "obj",$callBack = ""){   /*
     $firephp = FirePHP::getInstance(true);
@@ -42,7 +43,14 @@ function sendEmail($to, $subject, $message) {
 
 function testMail(){
     echo 'hi';
-    echo sendEmail('shikhar.sachan@gmail.com', "Welcome to PrepSquare-ll", "An amazing sign-up message");
+    $mail = new SendGrid\Mail();
+    $mail->
+    addTo('shikhar.sachan@gmail.com')->
+    setFrom('admin@prepsquare.com')->
+    setSubject('Test Email')->
+    setText('Hello World!')->
+    setHtml('<strong>Hello World!</strong>');
+    $sendgrid->smtp->send($mail);
 }
 
 function sendEmailSMTP() {
