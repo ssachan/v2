@@ -417,7 +417,7 @@ window.QuizQuestionView = Backbone.View.extend({
         $('#tags').html(this.model.get('tagIds'));
         $('#solutionText').html(this.model.get('explanation'));
         $('#solution').show();
-        _V_("analysis-video-"+this.model.get('id'), { "techOrder": ["flash"]});
+        _V_("analysis-video-"+this.model.get('id'), { "techOrder": ["flash"]}); //::video::
         $('#time').html(helper.formatTime(this.model.get('timeTaken')));
         $('#submit').hide();
     }

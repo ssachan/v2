@@ -24,7 +24,11 @@ window.ModalView = Backbone.View.extend({
 	show : function() {
 		this.state = true;
 		$(document.body).append(this.render().el);
-		myPlayer = _V_("intro-vid-"+this.model.get('id'), { "techOrder": ["flash"]}); //::video::
+		//myPlayer = _V_("intro-vid-"+this.model.get('id'), { "techOrder": ["flash"]}); //::video:
+         jwplayer("intro-vid-"+this.model.get('id')).setup({
+                        file: "videos/s<%=id%>introvid1.mp4",
+                        image: "img/introvid.png"
+                    });
 		if(account.get('id')!=null){
 			// check if credits exist
 			if(parseInt(account.get('quizzesRemaining'))>0){
