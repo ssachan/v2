@@ -26,13 +26,14 @@
         <div class="center">
             <div id="video">
                 <div id="intro-vid-<%=id%>"></div>
-                <script>
-                    jwplayer("#intro-vid-<%=id%>").setup({
+                
+            </div> <!-- //::video:: -->
+            <script>
+                    jwplayer("video").setup({
                         file: "videos/s<%=id%>introvid1.mp4",
                         image: "img/introvid.png"
                     });
-                </script>        
-            </div> <!-- //::video:: -->
+            </script>        
             <p style="text-align: left; margin-top: 25px; padding: 10px 0px; margin-bottom: 20px; background-color: #ECECEC">
                 <strong>Description: </strong><%= description %>
             </p>
