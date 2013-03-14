@@ -31,7 +31,7 @@ $app->get('/historyById/', $authenticate($app), 'getQuizzesHistory');
 $app->get('/pq/:id', $authenticate($app), 'getPQ');
 
 //quiz
-$app->post('/attemptedAs/', 'updateAttemptedAs'); 
+$app->post('/attemptedAs/', 'updateAttemptedAs');
 $app->get('/processQuiz/', $authenticate($app), 'processQuiz');
 $app->get('/getVideos/', $authenticate($app), 'videoList');
 
@@ -62,8 +62,6 @@ define('ERROR', "error"); // system error.
 define('EXCEPTION_MSG', "Something went wrong. Please send an email to ..."); // system error.
 
 define('DP_PATH', "../resources/accounts/"); // DP PATH.
-
-
 
 /**
  * All responses routed through this function
@@ -161,7 +159,6 @@ function getQuizzesHistory() {
     }
     sendResponse($response);
 }
-
 //
 // The quiz library page
 //
@@ -389,68 +386,69 @@ function processQuiz() {
     $streamId = $_GET['streamId'];
     $date = date("Y-m-d H:i:s", time());
     //check if the quiz has already been taken. 
-    
-    $sqlArray = array("accountId"=>$accountId, "quizId"=>$quizId );
+
+    $sqlArray = array("accountId" => $accountId, "quizId" => $quizId);
 
     $sqlArray["SQL"] = "SELECT count(*) as count FROM results where quizId=:quizId and accountId=:accountId";
-    $count = doSQL($sqlArray,true);
+    $count = doSQL($sqlArray, true);
     if ($count->count == 0) {
         // this quiz hasn't been purchased.
         // check if that account has credits by reading the quizzesRemaining.
-        $sqlArray = array("accountId"=>$accountId, "streamId"=>$streamId );        
+        $sqlArray = array("accountId" => $accountId, "streamId" => $streamId);
         $sqlArray["SQL"] = "SELECT quizzesRemaining from students where accountId=:accountId and streamId=:streamId";
-        $record = doSQL($sqlArray,true);
+        $record = doSQL($sqlArray, true);
 
         $quizzesRemaining = intval($record->quizzesRemaining);
-        if($quizzesRemaining <= 0 ){
+        if ($quizzesRemaining <= 0) {
             // there are no credits
             $response["status"] = FAIL;
             $response["data"] = "You don't have enough credits. Please purchase a package from the purchase page";
             sendResponse($response);
             return;
         }
-            
-        $sqlArray["SQL"] = "UPDATE students SET quizzesRemaining=(quizzesRemaining-1) where accountId=:accountId and streamId=:streamId";    
-        doSQL($sqlArray,false);
 
-        $sqlArray = array("accountId"=>$accountId, "startTime" => $date, "quizId"=>$quizId );
+        $sqlArray["SQL"] = "UPDATE students SET quizzesRemaining=(quizzesRemaining-1) where accountId=:accountId and streamId=:streamId";
+        doSQL($sqlArray, false);
+
+        $sqlArray = array("accountId" => $accountId, "startTime" => $date,
+                "quizId" => $quizId);
         $sqlArray["SQL"] = "INSERT INTO results (accountId, quizId, startTime) VALUES (:accountId, :quizId, :startTime)";
-        doSQL($sqlArray,false);
-        
+        doSQL($sqlArray, false);
+
         // update auizzesAttempted 
         // tanujb:TODO: quizzes attempted should come from elsewhere?
-        $sqlArray = array("accountId"=>$accountId, "streamId"=>$streamId);
+        $sqlArray = array("accountId" => $accountId, "streamId" => $streamId);
         $sqlArray["SQL"] = "SELECT quizzesAttempted from students where accountId=:accountId and streamId=:streamId";
-        $record = doSQL($sqlArray,true);
-            if ($record->quizzesAttempted == null)
-                $quizzesAttempted = array();
-            else
-                $quizzesAttempted = json_decode($record->quizzesAttempted);
+        $record = doSQL($sqlArray, true);
+        if ($record->quizzesAttempted == null)
+            $quizzesAttempted = array();
+        else
+            $quizzesAttempted = json_decode($record->quizzesAttempted);
 
-            if (!(in_array($quizId, $quizzesAttempted)))
-                array_push($quizzesAttempted, $quizId);
+        if (!(in_array($quizId, $quizzesAttempted)))
+            array_push($quizzesAttempted, $quizId);
 
-            $quizzesAttemptedJson = json_encode($quizzesAttempted);
-            array_pop($sqlArray);
-            $sqlArray["quizzesAttempted"] = $quizzesAttemptedJson;
-            $sqlArray["SQL"] = "UPDATE students SET quizzesAttempted=:quizzesAttempted where accountId=:accountId and streamId=:streamId";
-            doSQL($sqlArray,false);
-        
-            $sqlArray = array("streamId"=>$streamId, "quizId"=>$quizId );
-            $sqlArray["SQL"] = "select q.id,q.questionIds,q.description,q.descriptionShort,q.difficulty,q.allotedTime,q.maxScore,q.conceptsTested, q.l2Ids, q.l3Ids, q.typeId, a.id as fid, a.firstName,a.lastName,f.bioShort from quizzes q, accounts a, faculty f where q.facultyId=a.id and q.streamId=:streamId and f.accountId=a.id and q.id=:quizId";
-            $sucessData['quiz'] = doSQL($sqlArray,true);
-    }
-    else {
+        $quizzesAttemptedJson = json_encode($quizzesAttempted);
+        array_pop($sqlArray);
+        $sqlArray["quizzesAttempted"] = $quizzesAttemptedJson;
+        $sqlArray["SQL"] = "UPDATE students SET quizzesAttempted=:quizzesAttempted where accountId=:accountId and streamId=:streamId";
+        doSQL($sqlArray, false);
+
+        $sqlArray = array("streamId" => $streamId, "quizId" => $quizId);
+        $sqlArray["SQL"] = "select q.id,q.questionIds,q.description,q.descriptionShort,q.difficulty,q.allotedTime,q.maxScore,q.conceptsTested, q.l2Ids, q.l3Ids, q.typeId, a.id as fid, a.firstName,a.lastName,f.bioShort from quizzes q, accounts a, faculty f where q.facultyId=a.id and q.streamId=:streamId and f.accountId=a.id and q.id=:quizId";
+        $sucessData['quiz'] = doSQL($sqlArray, true);
+    } else {
         // this quiz has been purchased before. It either is an ongoing or completed
-        $sqlArray = array("accountId"=>$accountId, "streamId"=>$streamId, "quizId"=>$quizId );
+        $sqlArray = array("accountId" => $accountId, "streamId" => $streamId,
+                "quizId" => $quizId);
         $sqlArray["SQL"] = "select r.selectedAnswers,r.timePerQuestion,r.score,r.startTime,r.state, r.attemptedAs, r.numCorrect, r.numIncorrect, q.*,a.id as fid, a.firstName,a.lastName,f.bioShort from results r,quizzes q,accounts a,faculty f where r.accountId=:accountId and q.streamId=:streamId and r.quizId=q.id and q.facultyId=a.id and f.accountId=a.id and r.quizId=:quizId";
-        $sucessData['quiz'] = doSQL($sqlArray,true);
+        $sucessData['quiz'] = doSQL($sqlArray, true);
         // you have already taken this quiz, this seems to be a call for fetching questions 
         // for the results
     }
-    $sqlArray = array("quizId"=>$quizId );
+    $sqlArray = array("quizId" => $quizId);
     $sqlArray["SQL"] = "SELECT questionIds FROM quizzes where id=:quizId";
-    $questionIds = doSQL($sqlArray,true)->questionIds;
+    $questionIds = doSQL($sqlArray, true)->questionIds;
 
     if ($questionIds != null) {
         $questions = getQuestions($questionIds);
@@ -488,7 +486,7 @@ function getPackagesByStreamId() {
     sendResponse($response);
 }
 
-function updateQuizzesRemaining($number, $accountId, $streamId){
+function updateQuizzesRemaining($number, $accountId, $streamId) {
     $response = array();
     $sql = "SELECT quizzesRemaining from students where accountId=:accountId and streamId=:streamId";
     try {
@@ -519,7 +517,7 @@ function updateQuizzesRemaining($number, $accountId, $streamId){
         $response["data"] = EXCEPTION_MSG;
         phpLog($e->getMessage());
     }
-    if(array_key_exists("status",$response)!=ERROR){
+    if (array_key_exists("status", $response) != ERROR) {
         $response["status"] = SUCCESS;
         $response["data"] = $quizzesRemaining;
     }
@@ -566,50 +564,54 @@ function purchasePackage() {
     $response = updateQuizzesRemaining($number, $accountId, $streamId);
     // get the current number of packages
     sendResponse($response);
-    */
+     */
 }
 
-function addQuizReco(){
+function addQuizReco() {
     $response = array();
-    $sqlArray = array("accountId"=>$_POST['accountId'], "quizId"=>$_POST['quizId'] );
+    $sqlArray = array("accountId" => $_POST['accountId'],
+            "quizId" => $_POST['quizId']);
     $sqlArray["SQL"] = "select count(*) as count FROM quiz_recos where quizId=:quizId and accountId=:accountId";
-    doSQL($sqlArray,true);
-    $count = doSQL($sqlArray,true);
+    doSQL($sqlArray, true);
+    $count = doSQL($sqlArray, true);
     if ($count->count == 0) {
         // not recommended before
-        $sqlArray = array("accountId"=>$_POST['accountId'], "quizId"=>$_POST['quizId']);
-        $sqlArray["SQL"] = "INSERT INTO quiz_recos (quizId, accountId) VALUES (:quizId, :accountId)";        
-        doSQL($sqlArray,false);
+        $sqlArray = array("accountId" => $_POST['accountId'],
+                "quizId" => $_POST['quizId']);
+        $sqlArray["SQL"] = "INSERT INTO quiz_recos (quizId, accountId) VALUES (:quizId, :accountId)";
+        doSQL($sqlArray, false);
         /*$sqlArray = array("accountId"=>$_POST[accountId], "quizId"=>$_POST[quizId] );
         $sqlArray["SQL"] = "INSERT INTO quiz_recos (quizId, accountId) VALUES (:quizId, :accountId)";
         doSQL($sqlArray,false);*/
         $response["status"] = SUCCESS;
         $response["data"] = "Thanks for recommending this quiz.";
-    }else{
+    } else {
         // aready recommended
         $response["status"] = FAIL;
-        $response["data"] = "Already recommended by you.";        
+        $response["data"] = "Already recommended by you.";
     }
     sendResponse($response);
 }
 
-function addFacReco(){
+function addFacReco() {
     $response = array();
-    $sqlArray = array("accountId"=>$_POST['accountId'], "facId"=>$_POST['facId'] );
+    $sqlArray = array("accountId" => $_POST['accountId'],
+            "facId" => $_POST['facId']);
     $sqlArray["SQL"] = "select count(*) as count FROM fac_recos where facId=:facId and accountId=:accountId";
-    doSQL($sqlArray,true);
-    $count = doSQL($sqlArray,true);
+    doSQL($sqlArray, true);
+    $count = doSQL($sqlArray, true);
     if ($count->count == 0) {
         // not recommended before
-        $sqlArray = array("accountId"=>$_POST['accountId'], "facId"=>$_POST['facId']);
+        $sqlArray = array("accountId" => $_POST['accountId'],
+                "facId" => $_POST['facId']);
         $sqlArray["SQL"] = "INSERT INTO fac_recos (facId, accountId) VALUES (:facId, :accountId)";
-        doSQL($sqlArray,false);
+        doSQL($sqlArray, false);
         /*$sqlArray = array("accountId"=>$_POST[accountId], "quizId"=>$_POST[quizId] );
          $sqlArray["SQL"] = "INSERT INTO quiz_recos (quizId, accountId) VALUES (:quizId, :accountId)";
         doSQL($sqlArray,false);*/
         $response["status"] = SUCCESS;
         $response["data"] = "Thanks for recommending this faculty.";
-    }else{
+    } else {
         // aready recommended
         $response["status"] = FAIL;
         $response["data"] = "Already recommended by you.";
@@ -666,6 +668,58 @@ function facContact() {
     }
     sendResponse($response);
 }
+
+$app->get('/test/:id', function ($id) use ($app) {
+    // insert to get the purchaseId
+    $response = array();
+    $date = date("Y-m-d H:i:s", time());
+    $streamId = '1';
+    $accountId = $_SESSION['user'];
+    $packageId = $id;
+    // first get the account information and the price of the package
+    $sql = "select * from account where id=:id";
+    // first get the amount and the number 
+
+    $sql = "INSERT INTO purchases (accountId, packageId, purchasedOn) VALUES (:accountId, :packageId, :purchasedOn);";
+    try {
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("accountId", $accountId);
+        $stmt->bindParam("packageId", $packageId);
+        $stmt->bindParam("purchasedOn", $date);
+        $stmt->execute();
+        $referenceNo = $db->lastInsertId();
+        $db = null;
+    } catch (PDOException $e) {
+        $response["status"] = ERROR;
+        $response["data"] = EXCEPTION_MSG;
+        phpLog($e->getMessage());
+        sendResponse($response);
+    }
+
+    $sql = "SELECT number,price from packages where id=:packageId";
+    try {
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("packageId", $_POST['packageId']);
+        $stmt->execute();
+        $record = $stmt->fetch(PDO::FETCH_OBJ);
+        $number = intval($record->number);
+        $amount = intval($record->price);
+     } catch (PDOException $e) {
+        $response["status"] = ERROR;
+        $response["data"] = EXCEPTION_MSG;
+        phpLog($e->getMessage());
+        sendResponse($response);
+    }
+    //$response = updateQuizzesRemaining($number, $accountId, $streamId);
+    // get the current number of packages
+    //sendResponse($response);
+    $app->render('pay.php', array('reference_no' => $referenceNo,
+            'account_id' => $accountId,'amount' =>$amount));
+    // now fetch the name address and phno for the 
+    //    $app->render('pay.php', array('id' => '1'));
+});
 
 include 'xkcd.php';
 include 'analytics.php';

@@ -1,17 +1,17 @@
 <?
-$hash = "ebskey"."|".$_POST['account_id']."|".$_POST['amount']."|".$_POST['reference_no']."|".$_POST['return_url']."|".$_POST['mode'];
-
-$secure_hash = md5($hash);
 $packageId = $_GET['id'];
 $date = date("Y-m-d H:i:s", time());
-$streamId = $_POST['streamId'];
-$accountId = $_POST['accountId'];
+$streamId = '1';
+echo $streamId;
+echo $_SESSION['user'];
+$accountId = $_SESSION['user'];
+echo $accountId;
 $sql = "INSERT INTO purchases (accountId, packageId, purchasedOn) VALUES (:accountId, :packageId, :purchasedOn);";
 try {
     $db = getConnection();
     $stmt = $db->prepare($sql);
     $stmt->bindParam("accountId", $accountId);
-    $stmt->bindParam("packageId", $_POST['packageId']);
+    $stmt->bindParam("packageId", $packageId);
     $stmt->bindParam("purchasedOn", $date);
     $stmt->execute();
     $db = null;
@@ -20,6 +20,9 @@ try {
     $response["data"] = EXCEPTION_MSG;
     phpLog($e->getMessage());
 }
+
+$hash = "ebskey"."|".$_POST['account_id']."|".$_POST['amount']."|".$_POST['reference_no']."|".$_POST['return_url']."|".$_POST['mode'];
+$secure_hash = md5($hash);
 // get the number to be added
 /*$sql = "SELECT number from packages where id=:packageId";
  try {
