@@ -24,10 +24,28 @@ window.ModalView = Backbone.View.extend({
 	show : function() {
 		this.state = true;
 		$(document.body).append(this.render().el);
-		//myPlayer = _V_("intro-vid-"+this.model.get('id'), { "techOrder": ["flash"]}); //::video:
+		//myPlayer = _V_("intro-vid-"+this.model.get('id'), { "techOrder": ["flash"]});
+		//::video:
          jwplayer("intro-vid-"+this.model.get('id')).setup({
                         file: "videos/s"+this.model.get('id')+"introvid1.mp4",
-                        image: "img/introvid.png"
+                        image: "img/introvid.png",
+                        startparam: "starttime",
+                        height : 180,
+                        width: 320,
+                        autostart : true,
+                        fallback : false,
+                        primary: "flash" //,
+                        /*playlist: [{
+                        	title: "",
+                        	description: "",
+                        	image: "",
+							sources : [{file: "", label: "360p"}]
+                        }],*/
+                        //skin : "",
+                        /*listbar: {
+							        position: 'bottom',
+							        size: 180
+							     },*/
                     });
 		if(account.get('id')!=null){
 			// check if credits exist
@@ -48,9 +66,8 @@ window.ModalView = Backbone.View.extend({
 		}
 		$('#modal').modal('hide');
 		this.state =false;
-		myPlayer = _V_("intro-vid-"+this.model.get('id')); //::video::
-		myPlayer.pause(); //::video::
-		myPlayer.src(""); //::video::
+		//::video::
+		jwplayer("intro-vid-"+this.model.get('id')).remove();
 		this.remove();
 	},
 });
