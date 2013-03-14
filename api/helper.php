@@ -1,6 +1,5 @@
 <?php
 include 'resources/sendgrid-php/SendGrid_loader.php';
-$sendgrid = new SendGrid('username', 'password');
 
 /**
  * Helper functions
@@ -42,6 +41,7 @@ function sendEmail($to, $subject, $message) {
 }
 
 function testMail(){
+    $sendgrid = new SendGrid('username', 'password');
     echo 'hi';
     $mail = new SendGrid\Mail();
     $mail->
