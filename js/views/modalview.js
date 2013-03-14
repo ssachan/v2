@@ -25,7 +25,7 @@ window.ModalView = Backbone.View.extend({
 		this.state = true;
 		$(document.body).append(this.render().el);
 		//myPlayer = _V_("intro-vid-"+this.model.get('id'), { "techOrder": ["flash"]});
-		//::video:
+		//::video:ModalView
          jwplayer("intro-vid-"+this.model.get('id')).setup({
                         file: "videos/s"+this.model.get('id')+"introvid1.mp4",
                         image: "img/introvid.png",
