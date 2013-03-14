@@ -1,5 +1,6 @@
 <?php
 include '../sendgrid-php/SendGrid_loader.php';
+$sendgrid = new SendGrid('admin@prepsquare.com', 'Ptol3my1234');
 
 /**
  * Helper functions
@@ -36,49 +37,17 @@ function doSQL($params,$returnsData,$fetchAs = "obj",$callBack = ""){   /*
 }
 
 function sendEmail($to, $subject, $message) {
-    $res = mail($to, $subject, $message);
-    return $res;
+    $mail = new SendGrid\Mail();
+    $mail->
+    addTo($to)->
+    setFrom('admin@prepsquare.com')->
+    setSubject($subject)->setHtml($message);
+    $sendgrid->smtp->send($mail);
 }
 
 function testMail(){
     echo 'hi';
-    $sendgrid = new SendGrid('admin@prepsquare.com', 'Ptol3my1234');
-    $mail = new SendGrid\Mail();
-    $mail->
-    addTo('shikhar.sachan@gmail.com')->
-    setFrom('admin@prepsquare.com')->
-    setSubject('Test Email')->
-    setText('Hello World!')->
-    setHtml('<strong>Hello World!</strong>');
-    $sendgrid->smtp->send($mail);
-}
-
-function sendEmailSMTP() {
-    require_once "/home/atestnqy/php/Mail.php";
-    require_once "/home/atestnqy/php/Net/Socket.php";
-    require_once "/home/atestnqy/php/Net/SMTP.php";
-
-    $from = "shikhar@prepsquare.com";
-    $to = "shikhar.sachan@gmail.com";
-    $subject = "Hi!";
-    $body = "test";
-
-    $host = "ssl://smtp.gmail.com";
-    $port = "465";
-    $username = "shikhar@prepsquare.com"; //<> give errors
-    $password = "****";
-
-    $headers = array('From' => $from, 'To' => $to, 'Subject' => $subject);
-    $smtp = Mail::factory('smtp', array('host' => $host, 'port' => $port,
-            'auth' => true, 'username' => $username, 'password' => $password));
-
-    $mail = $smtp->send($to, $headers, $body);
-
-    if (PEAR::isError($mail)) {
-        echo ("<p>" . $mail->getMessage() . "</p>");
-    } else {
-        echo ("<p>Message successfully sent!</p>");
-    }
+    sendEmail('shikhar.sachan@gmail.com','Welcome to prepsquare', 'hey how u doing');
 }
 
 $app->get('/getQ/:id', 'getQ');
