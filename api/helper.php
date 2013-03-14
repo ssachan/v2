@@ -1,5 +1,5 @@
 <?php
-include 'resources/sendgrid-php/SendGrid_loader.php';
+include '../sendgrid-php/SendGrid_loader.php';
 
 /**
  * Helper functions
