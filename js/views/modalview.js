@@ -67,7 +67,7 @@ window.ModalView = Backbone.View.extend({
 		$('#modal').modal('hide');
 		this.state =false;
 		//::video::
-		jwplayer("intro-vid-"+this.model.get('id')).remove();
+		jwplayer("intro-vid-"+this.model.get('id')).onReady(function(){jwplayer("intro-vid-"+this.model.get('id')).remove();});
 		this.remove();
 	},
 });
