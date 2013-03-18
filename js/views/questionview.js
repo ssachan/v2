@@ -416,8 +416,28 @@ window.QuizQuestionView = Backbone.View.extend({
         $('#avgTime').html(helper.formatTime(this.model.get('timeTaken')));
         $('#tags').html(this.model.get('tagIds'));
         $('#solutionText').html(this.model.get('explanation'));
-        $('#solution').show();
-        _V_("analysis-video-"+this.model.get('id'), { "techOrder": ["flash"]});
+        $('#solution').show(); 
+        jwplayer("analysis-video-"+this.model.get('id')).setup({ //::video::QuizQuestion 
+                        file: this.model.get('videoSrc'),
+                        image: this.model.get('posterSrc'),
+                        startparam: "start",
+                        height : 180,
+                        width: 320,
+                        autostart : true,
+                        fallback : false,
+                        primary: "flash" //,
+                        /*playlist: [{
+                            title: "",
+                            description: "",
+                            image: "",
+                            sources : [{file: "", label: "360p"}]
+                        }],*/
+                        //skin : "",
+                        /*listbar: {
+                                    position: 'bottom',
+                                    size: 180
+                                 },*/
+                    });
         $('#time').html(helper.formatTime(this.model.get('timeTaken')));
         $('#submit').hide();
     }

@@ -55,48 +55,50 @@ window.ResultAnalysisView = Backbone.View.extend({
 	initialize : function() {
 	},
 
-	calculateVideoArray : function(options) {
+	calculateVideoArray : function(options) { //::video::
 
 		var videoResults = [];
 		
 		_.each(options,function(item)
 		{
-			videoResultObject = {
-				thumb_url : item.posterSrc,
-				poster_url : item.posterSrc,
-				sources : [ {
-					src : item.videoSrc,
-					type : "video/mp4",
-					title : (item.title || ""),
-					media : ''
-				} ]
-			};
+			videoResultObject = 
+			{
+	        	title: (item.title || ""),
+	        	description: (item.desc || ""),
+	        	image: item.posterSrc,
+				sources : [{file: item.videoSrc, label: "360p"}]
+	        }
+
 			videoResults.push(videoResultObject);
 		});
 		return videoResults;
 	},
 
-	setUpPlaylist : function(videoResults) {
+	setUpPlaylist : function(videoResults) { //::video::
 
-		var firstVideo = videoResults[0] || {thumb_url : "../../video/poster.png"};
+		//::video::Playlist
+		jwplayer("results_video").setup({
+                        startparam: "start",
+                        height : 640,
+                        width: 720,
+                        autostart : true,
+                        fallback : false,
+                        primary: "flash",
+                        playlist: videoResults,
+                        //skin : "",
+                        listbar: {
+							        position: 'right',
+							        size: 180
+							     }
+                    });
 
-		var videoOptions = {
-			"techOrder": ["flash"],
-			"poster" : firstVideo.thumb_url,
-			"playlist" : videoResults
-		};
-
-		console.log(videoOptions);
-		var myPlayer = _V_("results_video", videoOptions);
-
-		myPlayer.src(firstVideo.sources);
-
+/*
 		myPlayer.addEvent("ended", function() {
 
 			myPlayer.playlist.next();
 
 		}); // enables autoplay of next
-
+*/
 	},
 
 	render : function() {
@@ -135,6 +137,7 @@ window.ResultAnalysisView = Backbone.View.extend({
 	
 	onRender : function(){
 		$("#video").html('<video id="results_video" class="video-js atlantis" controls preload="none" width="640" height="264" data-setup="{}"></video>');
+		//::video::
 		var videoResults = this.calculateVideoArray(this.model.get('videoArray'));
 		this.setUpPlaylist(videoResults);
 		var l3GraphData = this.model.get('l3GraphData');
