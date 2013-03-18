@@ -202,7 +202,7 @@ function insertFb($accountId) {
      */
 }
 
-function createAccount($firstName, $lastName, $email, $password = null, $flag=1) {
+function createAccount($firstName, $lastName, $email, $password = null, $flag = 1) {
     $date = date("Y-m-d H:i:s", time());
     $sql = "INSERT INTO accounts (firstName,lastName,email,password, createdOn, flag) VALUES (:firstName, :lastName, :email, :password, :createdOn, :flag)";
     try {
@@ -368,7 +368,8 @@ $app->post("/invite", function () use ($app) {
 });
 
 $app->post("/ccsignup", function () use ($app) {
-    $ccodeArray = array("EDU01", "PSQ01", "PSQ02", "PSQ03", "PSQ04", "PSQ05", "PSQ06", "PSQ07", "PSQ08", "PSQ09", "PSQ10","TEST01");
+    $ccodeArray = array("EDU01", "PSQ01", "PSQ02", "PSQ03", "PSQ04", "PSQ05",
+            "PSQ06", "PSQ07", "PSQ08", "PSQ09", "PSQ10", "TEST01");
     $response = array();
     if (!(filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))) {
         $response["status"] = FAIL;
@@ -514,50 +515,38 @@ $app->get("/isAuth", function () use ($app) {
     sendResponse($response);
 });
 
-$app->post("/forgotpass", function () use ($app) {
-    $email = $_POST['email'];
-    $status = "OK";
-    $msg = "";
-    //error_reporting(E_ERROR | E_PARSE | E_CORE_ERROR);
-    // You can supress the error message by un commenting the above line
-    if (!stristr($email, "@") OR !stristr($email, ".")) {
-        $msg = 'email address is not correct';
-        echo '{"error":{"text":' . $msg . '}}';
-        $status = "NOTOK";
-    }
-    if ($status == "OK") { // validation passed now we will check the tables
-        $sql = "SELECT email,password FROM accounts WHERE email = '$email'";
-        try {
-            $db = getConnection();
-            $stmt = $db->query($sql);
-            $account = $stmt->fetch(PDO::FETCH_OBJ);
-            $db = null;
-        } catch (PDOException $e) {
-            echo '{"error":{"text":' . $e->getMessage() . '}}';
-        }
-        if ($account == NULL) { // No records returned, so no email address in our table
-        // let us show the error message
-            $msg = "Your email doesn't exist. You can signup and login to use our site";
-            echo '{"error":{"text":' . $msg . '}}';
-        }
-        sendMail($email, "your password is " . $account->password . "");
-    }
+function updatePassword($password, $accountId) {
+    $sql = "UPDATE accounts SET password=:password WHERE id=:accountId";
+    $sqlArray = array("accountId" => $accountId, "password" => $password);
+    $sqlArray["SQL"] = "UPDATE accounts SET password=:password WHERE id=:accountId";
+    doSQL($sqlArray, true);
+}
+
+$app->post("/forgotpass", $authenticate($app), function () use ($app) {
+    // generate a new password
+    
+    
+    
+    
 });
 
 $app->post("/changepass", $authenticate($app), function () use ($app) {
+    $response = array();
     $oldpassword = $_POST['oldpassword'];
     $newpassword = $_POST['newpassword'];
-    $sql = "UPDATE accounts SET password=:newpassword WHERE password=:oldpassword and id=:accountId";
-    try {
-        $db = getConnection();
-        $stmt = $db->prepare($sql);
-        $stmt->bindParam("newpassword", $newpassword);
-        $stmt->bindParam("oldpassword", $oldpassword);
-        $stmt->execute();
-        $db = null;
-        echo json_encode(true);
-    } catch (PDOException $e) {
-        phpLog($e->getMessage());
+    $accountId = $_POST['accountId'];
+    $sqlArray = array("accountId" => $accountId, "password" => $oldpassword);
+    $sqlArray["SQL"] = "SELECT count(*) as count FROM accounts where id=:accountId and password=:password";
+    $count = doSQL($sqlArray, true);
+    if ($count->count == 0) {
+        // record exists change the password
+        updatePassword($newpassword, $accountId);
+        $response["status"] = SUCCESS;
+        $response["data"] = "Password successfully changed!";
+    } else {
+        //oldpassword doesn't match
+        $response["status"] = FAIL;
+        $response["data"] = "Old Passwords don't match, try again!";
     }
 });
 
@@ -591,3 +580,5 @@ $app->post("/uploadImage", $authenticate($app), function () use ($app) {
     }
     sendResponse($response);
 });
+
+

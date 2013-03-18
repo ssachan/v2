@@ -669,6 +669,27 @@ function facContact() {
     sendResponse($response);
 }
 
+/*$app->get("/response", function () use ($app) {
+    $secret_key = "ebskey";	 // Your Secret Key
+    if(isset($_GET['DR'])) {
+        require('pay/Rc43.php');
+        $DR = preg_replace("/\s/","+",$_GET['DR']);
+    
+        $rc4 = new Crypt_RC4($secret_key);
+        $QueryString = base64_decode($DR);
+        $rc4->decrypt($QueryString);
+        $QueryString = split('&',$QueryString);
+    
+        $response = array();
+        foreach($QueryString as $param){
+            $param = split('=',$param);
+            $response[$param[0]] = urldecode($param[1]);
+            echo $response[$param[0]];
+        }
+    }
+});
+*/    
+    
 $app->get('/pay/:id', function ($id) use ($app) {
     // insert to get the purchaseId
     $response = array();
@@ -678,7 +699,7 @@ $app->get('/pay/:id', function ($id) use ($app) {
     $ebsAccountId = '5880'; // payment gateway accountID 12274
     $key ='240827f49a38d4bd4444323d55ebcc58';
     $packageId = $id;
-    $returnUrl = 'http://yourdomain.com/response.php?DR={DR}';
+    $returnUrl = 'http://localhost/master/api/response.php?DR={DR}';
     $mode = 'TEST';
     // first get the account information and the price of the package
     $sql = "select * from account where id=:id";

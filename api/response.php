@@ -1,5 +1,6 @@
 <?php
-	 $secret_key = "ebskey";	 // Your Secret Key
+include 'xkcd.php';
+$secret_key = "ebskey";	 // Your Secret Key
 if(isset($_GET['DR'])) {
 	 require('pay/Rc43.php');
 	 $DR = preg_replace("/\s/","+",$_GET['DR']);
@@ -14,11 +15,31 @@ if(isset($_GET['DR'])) {
 	 	$param = split('=',$param);
 		$response[$param[0]] = urldecode($param[1]);
 	 }
+	 $sql = "update purchases set status=:status, billingPhone=:billingPhone, paymentId=:paymentId, transactionId=:transactionId, paymentMethod=:paymentMethod where id=:id";
+	 try {
+	     $db = getConnection();
+	     $stmt = $db->prepare($sql);
+	     $stmt->bindParam("status", $response['ResponseCode']);
+	     $stmt->bindParam("billingPhone", $response['BillingPhone']);
+	     $stmt->bindParam("paymentId", $response['PaymentID']);
+	     $stmt->bindParam("transactionId", $response['TransactionID']);
+	     $stmt->bindParam("paymentMethod", $response['PaymentMethod']);
+	     $stmt->bindParam("id", $response['MerchantRefNo']);
+	     $stmt->execute();
+	     $db = null;
+	     //$response["status"] = SUCCESS;
+	     //$response["data"] = $attemptedAs;
+	 } catch (PDOException $e) {
+	     //$response["status"] = ERROR;
+	     //$response["data"] = EXCEPTION_MSG;
+	     phpLog($e->getMessage());
+	 }
 }
+
 ?>
 <HTML>
 <HEAD>
-<TITLE>E-Billing Solutions Pvt Ltd - Payment Page</TITLE>
+<TITLE>PREPSQUARE PAYMENT STATUS PAGE</TITLE>
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <style>
 	h1       { font-family:Arial,sans-serif; font-size:24pt; color:#08185A; font-weight:100; margin-bottom:0.1em}
@@ -33,9 +54,9 @@ if(isset($_GET['DR'])) {
 </HEAD>
 <BODY LEFTMARGIN=0 TOPMARGIN=0 MARGINWIDTH=0 MARGINHEIGHT=0 bgcolor="#ECF1F7">
 <center>
-   <table width='100%' cellpadding='0' cellspacing="0" ><tr><th width='90%'><h2 class='co'>&nbsp;EBS Payment Integration Page - Version 2</h2></th></tr></table>
-     <center><h1>PHP Example</H1></center>
-	<center><h3>Response</H3></center>
+   <table width='100%' cellpadding='0' cellspacing="0" ><tr><th width='90%'><h2 class='co'>&nbsp;PrepSquare</h2></th></tr></table>
+     <center><h1>Payment Status</H1></center>
+	<center><h3></H3></center>
     <table width="600" cellpadding="2" cellspacing="2" border="0">
         <tr>
             <th colspan="2">Transaction Details</th>
