@@ -215,11 +215,7 @@ window.Account = Backbone.Model.extend({
 			dataType : "json",
 			data : formValues,
 			success : function(data) {
-				if (data.status == STATUS.SUCCESS) {
-					account.set(data.data);
-				} else {
-					helper.processStatus(data);
-				}
+				helper.processStatus(data);
 			},
 			error : function(data) {
 				helper.processStatus(data.responseText);

@@ -227,7 +227,7 @@ $app->post("/fblogin", function () use ($app) {
     $response = array();
     if (!(filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))) {
         $response["status"] = FAIL;
-        $response["data"] = "Please give appropriate permission to access your email";
+        $response["data"] = "Email not valid. Try Again.";
         break;
     }
     if (!isset($_POST['first_name']) || $_POST['first_name'] == '') {
@@ -555,11 +555,11 @@ function generatePassword ($length = 8)
     return $password;
 }
 
-$app->post("/forgotpass", $authenticate($app), function () use ($app) {
+$app->post("/forgotpass", $app, function () use ($app) {
     $response = array();
     if (!(filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))) {
         $response["status"] = FAIL;
-        $response["data"] = "Please give appropriate permission to access your email";
+        $response["data"] = "Not a valid email";
         break;
     }
     // generate a new password
@@ -567,7 +567,7 @@ $app->post("/forgotpass", $authenticate($app), function () use ($app) {
     $pass = generatePassword();
     $account = getAccountByEmail($email);
     if($account){
-        updatePassword($pass, $accountId);
+        updatePassword($pass, $account->id);
         sendMail($email, 'Password Successfully Changed', 'Your new password is '.$pass);
         $response["status"] = SUCCESS;
         $response["data"] = "Password successfully changed! Check your email.";
