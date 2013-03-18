@@ -699,7 +699,7 @@ $app->get('/pay/:id', function ($id) use ($app) {
     $ebsAccountId = '5880'; // payment gateway accountID 12274
     $key ='240827f49a38d4bd4444323d55ebcc58';
     $packageId = $id;
-    $returnUrl = 'http://dev.prepsquare.com/master/api/response.php?DR={DR}';
+    $returnUrl = 'http://dev.prepsquare.com/api/response.php?DR={DR}';
     $mode = 'TEST';
     // first get the account information and the price of the package
     $sql = "select * from account where id=:id";
