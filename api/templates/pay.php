@@ -166,36 +166,30 @@ Array.prototype.inArray = function (value)
 <BODY LEFTMARGIN=0 TOPMARGIN=0 MARGINWIDTH=0 MARGINHEIGHT=0 >
 <center>
 
- <table width='100%' cellpadding='0' cellspacing="0" ><tr><th width='90%'><h2 class='co'>&nbsp;EBS Payment Integration Page - Version 2</h2></th></tr></table>
+ <table width='100%' cellpadding='0' cellspacing="0" ><tr><th width='90%'><h2 class='co'>&nbsp;</h2></th></tr></table>
      <center>
-       <h1> Example</H1>
+       <h1> PREPSQUARE PACKAGE PAYMENT</H1>
      </center>
   <center>
 	   <table width="2" height="28" border="0" cellpadding="2" cellspacing="2">
        </table>
-	   <h3> EBS Required Details</H3>
 	   <table width="600" border="0" cellpadding="2" cellspacing="2">
          <tr>
-           <th colspan="2"><span class="style2">FOR ANY QUERIES,KINDLY BROWSE</span> <span class="style2">OUR KNOWLEDGEBASE </span><span class="style10"><a href="http://support.ebs.in/index.php?_m=knowledgebase&_a=view" target="_ blank" class="style11" >CLICK HERE</a></span></th>
+           <th colspan="2"><span class="style2">FOR ANY QUERIES,KINDLY CALL</span> <span class="style2">+91 956089111 </span></th>
          </tr>
        </table>
        <p>&nbsp;</p>
-       <table width="600" height="35" border="0" cellpadding="2" cellspacing="2">
-         <tr>
-           <th height="53" colspan="2"><div align="center"><span class="style2">Account Details</span></div></th>
-         </tr>
-       </table>
   </center>
 <form  method="post" action="https://secure.ebs.in/pg/ma/sale/pay" name="frmTransaction" id="frmTransaction" onSubmit="return validate()">
+  <input name="account_id" type="hidden" value="<?echo $account_id ?>" />
+  <input name="return_url" type="hidden" size="60" value="http://yourdomain.com/response.php?DR={DR}" />
+  <input name="reference_no" type="hidden" value="<?echo $reference_no ?>" />
+  <input name="amount" type="hidden" value="<?echo $amount ?>" />
+  <input name="description" type="hidden" value="<?echo $description ?>" />
+  
   <table width="600" cellpadding="2" cellspacing="2" border="0">
   <tr>
-    <td class="fieldName" width="100%"><span class="error">*</span>Account Id</td>
-    <td  align="left" width="100%"><input name="account_id" type="hidden" value="<?echo $account_id ?>">
-      <a href="https://support.ebs.in/index.php?_m=knowledgebase&_a=viewarticle&kbarticleid=15&nav=0,5,2" target="_blank "></a></td>
-  </tr>
-    <tr>
-    <td class="fieldName"><span class="error">*</span>Return Url</td>
-    <td align="left"><input name="return_url" type="hidden" size="60" value="http://yourdomain.com/response.php?DR={DR}" /></td>
+    <th colspan="2"><div align="center"><span class="style2">Transaction Details</span></div></th>
   </tr>
   <tr>
     <td class="fieldName"><span class="error">*</span>Mode</td>
@@ -205,23 +199,24 @@ Array.prototype.inArray = function (value)
     </select></td>
   </tr>
   <tr>
-    <th colspan="2"><div align="center"><span class="style2">Transaction Details</span></div></th>
-  </tr>
-  <tr>
-    <td class="fieldName" width="100%"><span class="error">*</span>Reference No</td>
-    <td  align="left" width="100%"><input name="reference_no" type="hidden" value="<?echo $reference_no ?>" /></td>
+    <td class="fieldName" width="100%"><span class="error"></span>Your Name</td>
+    <td  align="left" width="100%"><?echo $name ?></td>
   </tr>
   <tr title="Enter the Price of the product that is offered for sale">
-    <td class="fieldName" width="100%"><span class="error">*</span>Sale Amount</td>
-    <td  align="left" width="100%"><input name="amount" type="hidden" value="<?echo $amount ?>" />
+    <td class="fieldName" width="100%"><span class="error"></span>Sale Amount</td>
+    <td  align="left" width="100%">
       <strong>INR <?echo $amount ?></strong></td>
   </tr>
   <tr  title="Displays the description of the selected / ordered product.">
-    <td class="fieldName" width="100%"><span class="error">*</span>Description</td>
-    <td  align="left" width="100%"><input name="description" type="text" /> </td>
+    <td class="fieldName" width="100%"><span class="error"></span>Description</td>
+    <td  align="left" width="100%"><strong><?echo $description ?></strong> </td>
+  </tr>
+   <tr  title="Displays the description of the selected / ordered product.">
+    <td class="fieldName" width="100%"><span class="error"></span>Total Tests</td>
+    <td  align="left" width="100%"><strong><?echo $number ?></strong> </td>
   </tr>
   <tr>
-    <th colspan="2"><span class="style2">Billing Address</span></th>
+    <th colspan="2"><span class="style2">Billing Details</span></th>
   </tr>
   <tr>
     <td class="fieldName"><span class="error">*</span>Name</td>
@@ -505,6 +500,8 @@ Array.prototype.inArray = function (value)
     <td align="left"><input name="phone" type="text" maxlength="20"/></td>
   </tr>
     </table>
+    <input name="secure_hash" type="hidden" size="60" value="<? echo $secure_hash;?>" />
+    <input name="submitted" value="Submit" type="submit" />
 </form>
 </center>
 </table>

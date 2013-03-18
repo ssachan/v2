@@ -669,17 +669,19 @@ function facContact() {
     sendResponse($response);
 }
 
-$app->get('/test/:id', function ($id) use ($app) {
+$app->get('/pay/:id', function ($id) use ($app) {
     // insert to get the purchaseId
     $response = array();
     $date = date("Y-m-d H:i:s", time());
     $streamId = '1';
     $accountId = $_SESSION['user'];
+    $ebsAccountId = ''; // payment gateway accountID
     $packageId = $id;
+    $returnUrl = '';
+    $mode = 'TEST';
     // first get the account information and the price of the package
     $sql = "select * from account where id=:id";
     // first get the amount and the number 
-
     $sql = "INSERT INTO purchases (accountId, packageId, purchasedOn) VALUES (:accountId, :packageId, :purchasedOn);";
     try {
         $db = getConnection();
@@ -696,29 +698,46 @@ $app->get('/test/:id', function ($id) use ($app) {
         phpLog($e->getMessage());
         sendResponse($response);
     }
-
-    $sql = "SELECT number,price from packages where id=:packageId";
+    //get the package details
+    $sql = "SELECT * from packages where id=:packageId";
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
-        $stmt->bindParam("packageId", $_POST['packageId']);
+        $stmt->bindParam("packageId", $packageId);
         $stmt->execute();
         $record = $stmt->fetch(PDO::FETCH_OBJ);
-        $number = intval($record->number);
+        $numQuizzes = intval($record->number);
         $amount = intval($record->price);
+        $description = $record->displayName;
      } catch (PDOException $e) {
         $response["status"] = ERROR;
         $response["data"] = EXCEPTION_MSG;
         phpLog($e->getMessage());
         sendResponse($response);
     }
+    
+    $sql = "SELECT firstName from accounts where id=:accountId";
+    try {
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam("accountId", $accountId);
+        $stmt->execute();
+        $record = $stmt->fetch(PDO::FETCH_OBJ);
+        $name = $record->firstName;
+    } catch (PDOException $e) {
+        $response["status"] = ERROR;
+        $response["data"] = EXCEPTION_MSG;
+        phpLog($e->getMessage());
+        sendResponse($response);
+    }
+    // get the account
+    $hash = "ebskey"."|".$ebsAccountId."|".$amount."|".$referenceNo."|".$returnUrl."|".$mode;
+    $secure_hash = md5($hash);
     //$response = updateQuizzesRemaining($number, $accountId, $streamId);
     // get the current number of packages
     //sendResponse($response);
-    $app->render('pay.php', array('reference_no' => $referenceNo,
-            'account_id' => $accountId,'amount' =>$amount));
-    // now fetch the name address and phno for the 
-    //    $app->render('pay.php', array('id' => '1'));
+    $app->render('pay.php', array('reference_no' => $referenceNo, 'description'=>$description, 'number'=>$numQuizzes,
+            'account_id' => $ebsAccountId,'amount' =>$amount, 'secure_hash'=>$secure_hash,'return_url'=>$returnUrl,'name'=>$name));
 });
 
 include 'xkcd.php';
