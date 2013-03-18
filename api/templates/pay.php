@@ -182,7 +182,7 @@ Array.prototype.inArray = function (value)
   </center>
 <form  method="post" action="https://secure.ebs.in/pg/ma/sale/pay" name="frmTransaction" id="frmTransaction" onSubmit="return validate()">
   <input name="account_id" type="hidden" value="<?echo $account_id ?>" />
-  <input name="return_url" type="hidden" size="60" value="http://yourdomain.com/response.php?DR={DR}" />
+  <input name="return_url" type="hidden" size="60" value="<?echo return_url ?>" />
   <input name="reference_no" type="hidden" value="<?echo $reference_no ?>" />
   <input name="amount" type="hidden" value="<?echo $amount ?>" />
   <input name="description" type="hidden" value="<?echo $description ?>" />

@@ -1,7 +1,7 @@
 <?php
 	 $secret_key = "ebskey";	 // Your Secret Key
 if(isset($_GET['DR'])) {
-	 require('Rc43.php');
+	 require('pay/Rc43.php');
 	 $DR = preg_replace("/\s/","+",$_GET['DR']);
 
 	 $rc4 = new Crypt_RC4($secret_key);
