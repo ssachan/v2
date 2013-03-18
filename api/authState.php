@@ -519,13 +519,11 @@ function updatePassword($password, $accountId) {
     $sql = "UPDATE accounts SET password=:password WHERE id=:accountId";
     $sqlArray = array("accountId" => $accountId, "password" => $password);
     $sqlArray["SQL"] = "UPDATE accounts SET password=:password WHERE id=:accountId";
-    doSQL($sqlArray, true);
+    doSQL($sqlArray, false);
 }
 
 $app->post("/forgotpass", $authenticate($app), function () use ($app) {
     // generate a new password
-    
-    
     
     
 });
@@ -538,7 +536,7 @@ $app->post("/changepass", $authenticate($app), function () use ($app) {
     $sqlArray = array("accountId" => $accountId, "password" => $oldpassword);
     $sqlArray["SQL"] = "SELECT count(*) as count FROM accounts where id=:accountId and password=:password";
     $count = doSQL($sqlArray, true);
-    if ($count->count == 0) {
+    if ($count->count > 0) {
         // record exists change the password
         updatePassword($newpassword, $accountId);
         $response["status"] = SUCCESS;
@@ -548,6 +546,7 @@ $app->post("/changepass", $authenticate($app), function () use ($app) {
         $response["status"] = FAIL;
         $response["data"] = "Old Passwords don't match, try again!";
     }
+    sendResponse($response);
 });
 
 $app->post("/uploadImage", $authenticate($app), function () use ($app) {

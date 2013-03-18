@@ -222,7 +222,7 @@ window.Account = Backbone.Model.extend({
 				}
 			},
 			error : function(data) {
-				console.log(data);
+				helper.processStatus(data.responseText);
 			},
 		});
 	},
@@ -236,11 +236,15 @@ window.Account = Backbone.Model.extend({
 			dataType : "json",
 			data : {
 				oldpassword : oldpassword,
-				newpassword : newpassword
+				newpassword : newpassword,
+				accountId : this.get('id')
 			},
 			success : function(data) {
-
-			}
+				helper.processStatus(data);
+			},
+			error : function(data) {
+				helper.processStatus(data.responseText);
+			},
 		});
 	},
 
