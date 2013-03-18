@@ -570,7 +570,7 @@ $app->post("/forgotpass", $app, function () use ($app) {
         updatePassword($pass, $account->id);
         sendMail($email, 'Password Successfully Changed', 'Your new password is '.$pass);
         $response["status"] = SUCCESS;
-        $response["data"] = "Password successfully changed! Check your email.";
+        $response["data"] = "Password successfully reset! Check your email for the new password.";
     }else{
         $response["status"] = FAIL;
         $response["data"] = "Account with this email doesn't exist. Please sign-up!";
