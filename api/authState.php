@@ -575,7 +575,7 @@ $app->post("/forgotpass", $app, function () use ($app) {
         $response["status"] = FAIL;
         $response["data"] = "Account with this email doesn't exist. Please sign-up!";
     }
-    
+    sendResponse($response);
 });
 
 $app->post("/changepass", $authenticate($app), function () use ($app) {
