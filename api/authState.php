@@ -228,16 +228,19 @@ $app->post("/fblogin", function () use ($app) {
     if (!(filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))) {
         $response["status"] = FAIL;
         $response["data"] = "Email not valid. Try Again.";
+        sendResponse($response);
         break;
     }
     if (!isset($_POST['first_name']) || $_POST['first_name'] == '') {
         $response["status"] = FAIL;
         $response["data"] = "No first name set. Try Again.";
+        sendResponse($response);
         break;
     }
     if (!isset($_POST['last_name']) || $_POST['last_name'] == '') {
         $response["status"] = FAIL;
         $response["data"] = "No last name set. Try Again.";
+        sendResponse($response);
         break;
     }
     $firstName = $_POST['first_name'];
