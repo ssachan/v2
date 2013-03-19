@@ -59,7 +59,7 @@ window.SignUpBox = Backbone.View.extend({
     },
 
     events: {
-        "click #signupButton": "ccSignUp",
+        "click #signupButton": "signup",
         "click #inviteButton": "invite",
     },
 
@@ -92,7 +92,7 @@ window.SignUpBox = Backbone.View.extend({
     			lastName : 'dummy',
     			streamId : streamId,
     		};
-        this.model.signup(formValues);
+        this.model.signUp(formValues);
         //this.model.set('type', 1);
         /*
          //Test type 2 auth
