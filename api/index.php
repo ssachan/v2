@@ -755,7 +755,7 @@ $app->get('/pay/:id', function ($id) use ($app) {
         sendResponse($response);
     }
     // get the account
-    $hash = "ebskey"."|".EBS_ACC_ID."|".$amount."|".$referenceNo."|".$returnUrl."|".$mode;
+    $hash = "ebskey"."|".EBS_ACC_ID."|".$amount."|".$referenceNo."|".EBS_RETURN_URL."|".$mode;
     $secure_hash = md5($hash);
     //$response = updateQuizzesRemaining($number, $accountId, $streamId);
     // get the current number of packages
