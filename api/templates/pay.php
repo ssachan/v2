@@ -505,5 +505,12 @@ Array.prototype.inArray = function (value)
 </form>
 </center>
 </table>
+<b>Delivery Policy<b/>
+<br>With respect to services purchased through the Site, you acknowledge and agree that upon making such services available to you (or to their intended authorized recipients), Apeirogon will have fully satisfied its obligation to deliver or otherwise provide such services, regardless of any failure or inability to use such services.
+
+<b>Refund Policy</b>
+<br>All sales made by Apeirogon Ventures will be considered final and will not be applicable for any form of refund or cancellation. 
+In case Apeirogon Ventures is unable to deliver the mentioned services an appropriate refund pro-rated based on the services already delivered by Aperiogon Ventures will be paid to the user. 
+
 </body>
 </html>
