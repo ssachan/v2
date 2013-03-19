@@ -262,7 +262,7 @@ $app->post("/fblogin", function () use ($app) {
         insertFb($account->id);
         // push into students
         insertStudent($account->id, $streamId);
-        sendMail($email, $subject, $message);
+        sendMail($email, SIGN_UP_SUB, SIGN_UP_MSG);
     }
     $account = getStudentByAccountId($account->id, 1);
     $_SESSION['user'] = $account->id;
