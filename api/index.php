@@ -66,7 +66,7 @@ define('DP_PATH', "../resources/accounts/"); // DP PATH.
 
 define('EBS_ACC_ID', '5880'); // free tests
 define('EBS_KEY', '240827f49a38d4bd4444323d55ebcc58'); // free tests
-define('EBS_RETURN_URL', 'http://dev.prepsquare.com/api/response.php?DR={DR}'); // free tests
+define('EBS_RETURN_URL', 'http://localhost/master/api/response.php?DR={DR}'); // free tests
 
 /**
  * All responses routed through this function

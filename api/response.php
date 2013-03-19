@@ -38,7 +38,7 @@ if (isset($_GET['DR'])) {
     //if it was a success add the packages
     if ($response['ResponseCode'] == '0') {
         // get the account id
-        $sql = "SELECT * from purchases where id=:id";
+        $sql = "SELECT p.accountId, pa.number as number from purchases p,packages pa where p.packageId=pa.id and p.id=:id";
         try {
             $db = getConnection();
             $stmt = $db->prepare($sql);
@@ -46,6 +46,7 @@ if (isset($_GET['DR'])) {
             $stmt->execute();
             $record = $stmt->fetch(PDO::FETCH_OBJ);
             $accountId = $record->accountId;
+            $number = intval($record->number);
         } catch (PDOException $e) {
             phpLog($e->getMessage());
         }
@@ -78,6 +79,8 @@ if (isset($_GET['DR'])) {
             $response["data"] = EXCEPTION_MSG;
             phpLog($e->getMessage());
         }
+    }else{
+        echo 'Something went wrong try again.';
     }
 }
 
