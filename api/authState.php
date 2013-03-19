@@ -325,6 +325,7 @@ function signUp() {
         $account = new stdClass();
         $account->id = createAccount($firstName, $lastName, $email, $password);
         insertStudent($account->id, $streamId);
+        sendMail($email, SIGN_UP_SUB, SIGN_UP_MSG);
         $account = getStudentByAccountId($account->id, $streamId);
         if (file_exists(DP_PATH . $account->id . '.jpg')) {
             $account->dp = true;
