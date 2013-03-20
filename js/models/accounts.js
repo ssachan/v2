@@ -192,6 +192,8 @@ window.Account = Backbone.Model.extend({
 			success : function(data) {
 				if (data.status == STATUS.SUCCESS) {
 					account.set(data.data);
+					helper.track("sup",{"id":account.get('id'),'email':account.get('email')
+				    });
 					window.location = '#';
 				} else {
 					helper.processStatus(data);

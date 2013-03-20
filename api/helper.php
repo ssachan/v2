@@ -40,7 +40,7 @@ function sendMail($to, $subject, $message) {
     $mail = new SendGrid\Mail();
     $mail->
     addTo($to)->
-    setFrom('admin@prepsquare.com')->
+    setFrom('tanuj@prepsquare.com')->
     setSubject($subject)->setHtml($message);
     $sendgrid->smtp->send($mail);
 }

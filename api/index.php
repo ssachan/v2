@@ -63,6 +63,11 @@ define('EXCEPTION_MSG', "Something went wrong. Please send an email to ..."); //
 
 define('DP_PATH', "../resources/accounts/"); // DP PATH.
 
+
+define('EBS_ACC_ID', '5880'); // free tests
+define('EBS_KEY', '240827f49a38d4bd4444323d55ebcc58'); // free tests
+define('EBS_RETURN_URL', 'http://localhost/master/api/response.php?DR={DR}'); // free tests
+
 /**
  * All responses routed through this function
  * @param Object $response
@@ -696,10 +701,7 @@ $app->get('/pay/:id', function ($id) use ($app) {
     $date = date("Y-m-d H:i:s", time());
     $streamId = '1';
     $accountId = $_SESSION['user'];
-    $ebsAccountId = '5880'; // payment gateway accountID 12274
-    $key ='240827f49a38d4bd4444323d55ebcc58';
     $packageId = $id;
-    $returnUrl = 'http://dev.prepsquare.com/api/response.php?DR={DR}';
     $mode = 'TEST';
     // first get the account information and the price of the package
     $sql = "select * from account where id=:id";
@@ -753,13 +755,13 @@ $app->get('/pay/:id', function ($id) use ($app) {
         sendResponse($response);
     }
     // get the account
-    $hash = "ebskey"."|".$ebsAccountId."|".$amount."|".$referenceNo."|".$returnUrl."|".$mode;
+    $hash = "ebskey"."|".EBS_ACC_ID."|".$amount."|".$referenceNo."|".EBS_RETURN_URL."|".$mode;
     $secure_hash = md5($hash);
     //$response = updateQuizzesRemaining($number, $accountId, $streamId);
     // get the current number of packages
     //sendResponse($response);
     $app->render('pay.php', array('reference_no' => $referenceNo, 'description'=>$description, 'number'=>$numQuizzes,
-            'account_id' => $ebsAccountId,'amount' =>$amount, 'secure_hash'=>$secure_hash,'return_url'=>$returnUrl,'name'=>$name));
+            'account_id' => EBS_ACC_ID,'amount' =>$amount, 'secure_hash'=>$secure_hash,'return_url'=>EBS_RETURN_URL,'name'=>$name));
 });
 
 include 'xkcd.php';
