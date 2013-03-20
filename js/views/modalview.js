@@ -34,14 +34,13 @@ window.ModalView = Backbone.View.extend({
                         width : 480,
                         autostart : true,
                         fallback : false,
-                        primary: "flash",
+                        primary: "flash"
                         /*playlist: [{
                         	title: "",
                         	description: "",
                         	image: "",
 							sources : [{file: "", label: "360p"}]
                         }],*/
-                        skin : "js/lib/jwplayer/skins/whotube/whotube.xml"
                         /*listbar: {
 							        position: 'bottom',
 							        size: 180
