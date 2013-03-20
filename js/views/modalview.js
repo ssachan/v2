@@ -30,8 +30,8 @@ window.ModalView = Backbone.View.extend({
                         file: "videos/s"+this.model.get('id')+"introvid1.mp4",
                         image: "img/introvid.png",
                         startparam: "start",
-                        height : 180,
-                        width: 320,
+                        height : 270,
+                        width : 480,
                         autostart : true,
                         fallback : false,
                         primary: "flash" //,
@@ -41,7 +41,7 @@ window.ModalView = Backbone.View.extend({
                         	image: "",
 							sources : [{file: "", label: "360p"}]
                         }],*/
-                        //skin : "",
+                        skin : "js/lib/jwplayer/skins/whotube/whotube.xml",
                         /*listbar: {
 							        position: 'bottom',
 							        size: 180
