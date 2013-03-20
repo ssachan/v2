@@ -262,6 +262,7 @@ $app->post("/fblogin", function () use ($app) {
         insertFb($account->id);
         // push into students
         insertStudent($account->id, $streamId);
+        updateQuizzesRemaining(FREE_TESTS, $account->id, $streamId);
         sendMail($email, SIGN_UP_SUB, SIGN_UP_MSG);
     }
     $account = getStudentByAccountId($account->id, 1);
@@ -328,6 +329,7 @@ function signUp() {
         $account = new stdClass();
         $account->id = createAccount($firstName, $lastName, $email, $password);
         insertStudent($account->id, $streamId);
+        updateQuizzesRemaining(FREE_TESTS, $account->id, $streamId);
         sendMail($email, SIGN_UP_SUB, SIGN_UP_MSG);
         $account = getStudentByAccountId($account->id, $streamId);
         if (file_exists(DP_PATH . $account->id . '.jpg')) {
@@ -432,8 +434,8 @@ $app->post("/ccsignup", function () use ($app) {
             insertStudent($account->id, $streamId);
             //echo SIGN_UP_SUB;
             //echo SIGN_UP_MSG;
-            sendMail($email, SIGN_UP_SUB, SIGN_UP_MSG);
             updateQuizzesRemaining(FREE_TESTS, $account->id, $streamId);
+            sendMail($email, SIGN_UP_SUB, SIGN_UP_MSG);
             $account = getStudentByAccountId($account->id, $streamId);
             if (file_exists(DP_PATH . $account->id . '.jpg')) {
                 $account->dp = true;
