@@ -29,7 +29,7 @@ define('FB', 2); // FB sign up.
 define('GOOGLE', 3); // google.
 
 //define('CCODE', "Test2"); // ccode.
-define('FREE_TESTS', 6); // free tests.
+define('FREE_TESTS', 3); // free tests.
 define('SIGN_UP_SUB', 'Welcome to PrepSquare'); // free tests
 define('SIGN_UP_MSG', 'Congratulations!!!<br>You are now a registered user. We are really excited to have you with us.'); // free tests
 
