@@ -36,11 +36,11 @@ function doSQL($params,$returnsData,$fetchAs = "obj",$callBack = ""){   /*
 }
 
 function sendMail($to, $subject, $message) {
-    $sendgrid = new SendGrid('tanuj@prepsquare.com', 'Ptol3my1234');
+    $sendgrid = new SendGrid('admin@prepsquare.com', 'Ptol3my1234');
     $mail = new SendGrid\Mail();
     $mail->
     addTo($to)->
-    setFrom('admin@prepsquare.com')->
+    setFrom('tanuj@prepsquare.com')->
     setSubject($subject)->setHtml($message);
     $sendgrid->smtp->send($mail);
 }
