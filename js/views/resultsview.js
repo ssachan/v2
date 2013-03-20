@@ -79,8 +79,8 @@ window.ResultAnalysisView = Backbone.View.extend({
 		//::video::Playlist
 		jwplayer("results_video").setup({
                         startparam: "start",
-                        height : 640,
-                        width: 720,
+                        height : (640+210),
+                        width: 360,
                         autostart : true,
                         fallback : false,
                         primary: "flash",
@@ -88,7 +88,7 @@ window.ResultAnalysisView = Backbone.View.extend({
                         //skin : "",
                         listbar: {
 							        position: 'right',
-							        size: 180
+							        size: 210
 							     }
                     });
 
