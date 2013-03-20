@@ -30,18 +30,17 @@ window.ModalView = Backbone.View.extend({
                         file: "videos/s"+this.model.get('id')+"introvid1.mp4",
                         image: "img/introvid.png",
                         startparam: "start",
-                        height : 180,
-                        width: 320,
+                        height : 270,
+                        width : 480,
                         autostart : true,
                         fallback : false,
-                        primary: "flash" //,
+                        primary: "flash"
                         /*playlist: [{
                         	title: "",
                         	description: "",
                         	image: "",
 							sources : [{file: "", label: "360p"}]
                         }],*/
-                        //skin : "",
                         /*listbar: {
 							        position: 'bottom',
 							        size: 180
