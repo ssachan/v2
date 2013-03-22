@@ -382,7 +382,7 @@ window.QuizQuestionView = Backbone.View.extend({
             // create the left right table
             html.push('<div class="span12">');
             html.push('<table class="table">');
-            html.push('<tr><th>Option</th><th>Selected</th><th>Correct</th></tr>');
+            html.push('<tr><th>Option</th><th>Selected</th><th>Correct</th><th></th></tr>');
             //html.push('<ol type="1">');
             for (var i = 0; i < lLen; i++) {
                 html.push('<tr><td>' + leftList[i]+'</td>');
@@ -404,6 +404,11 @@ window.QuizQuestionView = Backbone.View.extend({
                 	dummy.push(String.fromCharCode(65 + parseInt(correctOptArray[j])));
                 }
                 html.push('<td>'+dummy.join(',')+'</td>');
+                if(optionSelectedArray[i]==correctAnswerArray[i]){
+                	html.push('<td><img class="media-object pull-left" src="img/tick.png"></td>');
+                }else{
+                	html.push('<td><img class="media-object pull-left" src="img/cross.png"></td>');
+                }
                 html.push('</tr>');
             }
             html.push('</table>');
