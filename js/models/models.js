@@ -267,84 +267,7 @@ window.Account = Backbone.Model.extend({
 });
 
 var account = new Account();
-/**
- * The faculty Model
- * 
- * @author ssachan
- * 
- */
-window.Fac = Backbone.Model.extend({
-	
-	defaults : {
-		dpUrl : DP_PATH + 'avatar.jpg',
-		dpUrlL : DP_PATH + 'avatar.jpg',
-	},
-	
-	urlRoot : Config.serverUrl + 'fac/',
-
-	initialize : function() {
-		if (this.get('id') != null) {
-			this.set('dpUrl', DP_PATH + this.get('id') + '.jpg');
-		}
-		this.on('change:id', function(model) {
-			if (model.get('id') != null && model.get('id')!='') {
-				model.set('dpUrl', DP_PATH + model.get('id') + '.jpg');
-				model.set('dpUrlL', DP_PATH + model.get('id') + '-l.jpg');
-			}else{
-				model.set('dpUrl', DP_PATH + 'avatar.jpg');
-				model.set('dpUrlL', DP_PATH + 'avatar.jpg');
-			}
-		});
-		
-		if (this.get('l1Ids') != null) {
-	        this.set('l1DisplayName', (sectionL1.get(this.get('l1Ids')))
-	            .get('displayName'));
-	    }
-	},
-	
-    addReco: function () {
-        var url = Config.serverUrl + 'addFacReco';
-        var that = this;
-        $.ajax({
-        	//context:this,
-            url: url,
-            type: 'POST',
-            dataType: "json",
-            data: {
-                accountId: account.get('id'),
-                facId: this.get('id'),
-            },
-            success: function (data) {
-                if (data.status) {
-                	if(data.status == STATUS.SUCCESS){
-                		that.set('rec',parseInt(that.get('rec'))+1);
-                	}
-                	helper.processStatus(data);
-                }
-            },
-            error: function (data) {
-                console.log(data);
-            },
-        });
-    }
-	
-});
-
-window.FacCollection = Backbone.Collection.extend({
-	model : Fac,
-	url : Config.serverUrl + 'fac/',
-	search : function(letters){
-		if(letters == "") return this;
- 
-		var pattern = new RegExp(letters,'gi');
-		return _(this.filter(function(data) {
-		  	return pattern.test(data.get('firstName'));
-			
-		}));
-	},
-});
-
-window.Insight = Backbone.Model.extend({
+window.Stream = Backbone.Model.extend({
 
     urlRoot: Config.serverUrl+'streams/',
 
@@ -353,106 +276,12 @@ window.Insight = Backbone.Model.extend({
     },
 });
 
-window.InsightCollection = Backbone.Collection.extend({
-    model: Insight,
+window.StreamCollection = Backbone.Collection.extend({
+    model: Stream,
     url: Config.serverUrl+'streams/',
 });
 
-var insights = new InsightCollection();
-
-window.Log = Backbone.Model.extend({
-
-	urlRoot : ' ',
-
-	
-	initialize : function(attr, eid, questionid, optionid) {
-		this.set('t',new Date().getTime());
-		this.set('e',eid);
-		this.set('q',questionid);
-		this.set('o',optionid);
-	},
-
-	defaults : {
-		t : null,
-		e : null,
-		q : null,
-		o : null
-	}
-
-});
-
-window.LogCollection = Backbone.Collection.extend({
-	model : Log,
-
-	eventids : {	
-	OPTION_SELECT : 0,
-	OPTION_DESELECT : 1,
-	QUESTION_OPEN :3,
-	QUESTION_CLOSE :4,
-	QUESTION_MARK : 5,
-	QUESTION_UNMARK: 6,
-	QUESTION_SUBMIT: 7,
-	TEST_SUBMIT: 8,
-	TEST_PAUSE: 9,
-	TEST_START: 10 },
-
-	addEntry: function(eventname, questionid, optionid)
-	{
-		this.add(new Log("",this.eventids[eventname],questionid,optionid));
-	},
-
-	comparator: function(logEntry)
-	{
-		return logEntry.get("t");
-	}
-});
-
-var logs = new LogCollection();
-/**
- * The Package Model
- * @author ssachan 
- * 
- **/
-window.Package = Backbone.Model.extend({
-		
-    defaults: {
-    },
-
-    urlRoot: Config.serverUrl+'packages/',
-
-    initialize: function () {
-    	
-    },
-    
-    purchase: function () {
-        var url = Config.serverUrl + 'purchase';
-        $.ajax({
-            url: url,
-            type: "POST",
-            data: {
-                packageId: this.get('id'),
-                accountId : account.get('id'),
-                streamId : streamId
-            },
-            dataType: "json",
-            success: function (data) {
-                if (data.status == STATUS.SUCCESS) {
-                	account.set('quizzesRemaining',data.data);
-                    data.data = 'Added package. Your account now has '+data.data+' tests.';
-                	helper.processStatus(data);
-                }
-            }
-        });
-    },
-});
-
-window.PackageCollection = Backbone.Collection.extend({
-    model: Package,
-    url: Config.serverUrl+'packages/'
-});
-
-var packages = new PackageCollection();
-
+var streams = new StreamCollection();
 /**
  * The Question Model
  * @author ssachan 
@@ -617,7 +446,6 @@ window.QuestionCollection = Backbone.Collection.extend({
 var quizQuestions = new QuestionCollection();
 var attemptedQuestions = new QuestionCollection();
 var question = new Question();
-
 /**
  * The Quiz Model
  * 
@@ -976,77 +804,129 @@ window.QuizCollection = Backbone.Collection.extend({
 
 var quizLibrary = new QuizCollection();
 var quizHistory = new QuizCollection();
-var quizReco = new QuizCollection();
+var quizReco = new QuizCollection();/**
+ * The faculty Model
+ * 
+ * @author ssachan
+ * 
+ */
+window.Fac = Backbone.Model.extend({
+	
+	defaults : {
+		dpUrl : DP_PATH + 'avatar.jpg',
+		dpUrlL : DP_PATH + 'avatar.jpg',
+	},
+	
+	urlRoot : Config.serverUrl + 'fac/',
 
-window.Resource = Backbone.RelationalModel.extend({
+	initialize : function() {
+		if (this.get('id') != null) {
+			this.set('dpUrl', DP_PATH + this.get('id') + '.jpg');
+		}
+		this.on('change:id', function(model) {
+			if (model.get('id') != null && model.get('id')!='') {
+				model.set('dpUrl', DP_PATH + model.get('id') + '.jpg');
+				model.set('dpUrlL', DP_PATH + model.get('id') + '-l.jpg');
+			}else{
+				model.set('dpUrl', DP_PATH + 'avatar.jpg');
+				model.set('dpUrlL', DP_PATH + 'avatar.jpg');
+			}
+		});
+		
+		if (this.get('l1Ids') != null) {
+	        this.set('l1DisplayName', (sectionL1.get(this.get('l1Ids')))
+	            .get('displayName'));
+	    }
+	},
+	
+    addReco: function () {
+        var url = Config.serverUrl + 'addFacReco';
+        var that = this;
+        $.ajax({
+        	//context:this,
+            url: url,
+            type: 'POST',
+            dataType: "json",
+            data: {
+                accountId: account.get('id'),
+                facId: this.get('id'),
+            },
+            success: function (data) {
+                if (data.status) {
+                	if(data.status == STATUS.SUCCESS){
+                		that.set('rec',parseInt(that.get('rec'))+1);
+                	}
+                	helper.processStatus(data);
+                }
+            },
+            error: function (data) {
+                console.log(data);
+            },
+        });
+    }
+	
+});
 
-    urlRoot: Config.serverUrl + 'resources',
+window.FacCollection = Backbone.Collection.extend({
+	model : Fac,
+	url : Config.serverUrl + 'fac/',
+	search : function(letters){
+		if(letters == "") return this;
+ 
+		var pattern = new RegExp(letters,'gi');
+		return _(this.filter(function(data) {
+		  	return pattern.test(data.get('firstName'));
+			
+		}));
+	},
+});
+
+var facDirectory = new FacCollection();
+var facQuizzes = new QuizCollection();
+var fac = new Fac();/**
+ * The Package Model
+ * @author ssachan 
+ * 
+ **/
+window.Package = Backbone.Model.extend({
+		
+    defaults: {
+    },
+
+    urlRoot: Config.serverUrl+'packages/',
 
     initialize: function () {
     	
     },
     
+    purchase: function () {
+        var url = Config.serverUrl + 'purchase';
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: {
+                packageId: this.get('id'),
+                accountId : account.get('id'),
+                streamId : streamId
+            },
+            dataType: "json",
+            success: function (data) {
+                if (data.status == STATUS.SUCCESS) {
+                	account.set('quizzesRemaining',data.data);
+                    data.data = 'Added package. Your account now has '+data.data+' tests.';
+                	helper.processStatus(data);
+                }
+            }
+        });
+    },
 });
 
-window.ResourceCollection = Backbone.Collection.extend({
-	model: Resource,
-	url: Config.serverUrl + 'resources'	
+window.PackageCollection = Backbone.Collection.extend({
+    model: Package,
+    url: Config.serverUrl+'packages/'
 });
 
-var resources = new ResourceCollection();
-
-/**
- * The ScoreL1 model
- * @author ssachan 
- * 
- **/
-window.ScoreL1 = Backbone.Model.extend({
-
-    urlRoot: Config.serverUrl+'l1/',
-    initialize: function () {}
-
-});
-
-window.ScoreL1Collection = Backbone.Collection.extend({
-    model: ScoreL1,
-    url: Config.serverUrl+'l1/'
-});
-
-/**
- * The ScoreL2 model
- * @author ssachan 
- * 
- **/
-window.ScoreL2 = Backbone.Model.extend({
-
-    urlRoot: Config.serverUrl+'l2/',
-    initialize: function () {}
-
-});
-
-window.ScoreL2Collection = Backbone.Collection.extend({
-    model: ScoreL2,
-    url: Config.serverUrl+'l2/'
-});
-
-window.ScoreL3 = Backbone.Model.extend({
-
-    urlRoot: Config.serverUrl+'l3/',
-    initialize: function () {}
-
-});
-
-window.ScoreL3Collection = Backbone.Collection.extend({
-    model: ScoreL3,
-    url: Config.serverUrl+'l3/'
-});
-
-var scoreL1 = new ScoreL1Collection();
-
-var scoreL2 = new ScoreL2Collection();
-
-var scoreL3 = new ScoreL3Collection();
-
+var packages = new PackageCollection();
 /**
  * The SectionL1 Model
  * @author ssachan 
@@ -1102,22 +982,101 @@ var sectionL1 = new SectionL1Collection();
 
 var sectionL2 = new SectionL2Collection();
 
-var sectionL3 = new SectionL3Collection();
-window.Stream = Backbone.Model.extend({
+var sectionL3 = new SectionL3Collection();/**
+ * The ScoreL1 model
+ * @author ssachan 
+ * 
+ **/
+window.ScoreL1 = Backbone.Model.extend({
 
-    urlRoot: Config.serverUrl+'streams/',
+    urlRoot: Config.serverUrl+'l1/',
+    initialize: function () {}
 
-    initialize: function () {
-    	
-    },
 });
 
-window.StreamCollection = Backbone.Collection.extend({
-    model: Stream,
-    url: Config.serverUrl+'streams/',
+window.ScoreL1Collection = Backbone.Collection.extend({
+    model: ScoreL1,
+    url: Config.serverUrl+'l1/'
 });
 
-var streams = new StreamCollection();
-var facDirectory = new FacCollection();
-var facQuizzes = new QuizCollection();
-var fac = new Fac();
+/**
+ * The ScoreL2 model
+ * @author ssachan 
+ * 
+ **/
+window.ScoreL2 = Backbone.Model.extend({
+
+    urlRoot: Config.serverUrl+'l2/',
+    initialize: function () {}
+
+});
+
+window.ScoreL2Collection = Backbone.Collection.extend({
+    model: ScoreL2,
+    url: Config.serverUrl+'l2/'
+});
+
+window.ScoreL3 = Backbone.Model.extend({
+
+    urlRoot: Config.serverUrl+'l3/',
+    initialize: function () {}
+
+});
+
+window.ScoreL3Collection = Backbone.Collection.extend({
+    model: ScoreL3,
+    url: Config.serverUrl+'l3/'
+});
+
+var scoreL1 = new ScoreL1Collection();
+
+var scoreL2 = new ScoreL2Collection();
+
+var scoreL3 = new ScoreL3Collection();window.Log = Backbone.Model.extend({
+
+	urlRoot : ' ',
+
+	
+	initialize : function(attr, eid, questionid, optionid) {
+		this.set('t',new Date().getTime());
+		this.set('e',eid);
+		this.set('q',questionid);
+		this.set('o',optionid);
+	},
+
+	defaults : {
+		t : null,
+		e : null,
+		q : null,
+		o : null
+	}
+
+});
+
+window.LogCollection = Backbone.Collection.extend({
+	model : Log,
+
+	eventids : {	
+	OPTION_SELECT : 0,
+	OPTION_DESELECT : 1,
+	QUESTION_OPEN :3,
+	QUESTION_CLOSE :4,
+	QUESTION_MARK : 5,
+	QUESTION_UNMARK: 6,
+	QUESTION_SUBMIT: 7,
+	TEST_SUBMIT: 8,
+	TEST_PAUSE: 9,
+	TEST_START: 10 },
+
+	addEntry: function(eventname, questionid, optionid)
+	{
+		this.add(new Log("",this.eventids[eventname],questionid,optionid));
+	},
+
+	comparator: function(logEntry)
+	{
+		return logEntry.get("t");
+	}
+});
+
+var logs = new LogCollection();
