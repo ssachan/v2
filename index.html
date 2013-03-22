@@ -66,31 +66,8 @@
 <script type='text/javascript' src='js/lib/jquery.hoverdir.js'></script>
 <script type='text/javascript' src='js/lib/modernizr.custom.js'></script>
 <script type="text/javascript" src="js/lib/main.js"></script>
-<script>
 
-
-var views = [
-              "headerview",
-              "landingview",
-              "dashboardview",
-              "quizview",
-              "questionview",
-              "quizlibraryview",
-              'facdirectoryview',
-              'modalview',
-              'signupview',
-              'packagesview',
-              'facview',
-              'faccontactview',
-              'reviewview',
-              'resultsview',
-              'mysetsview',
-            ];
-
-_.each(views,function(item){
-  document.write('<script src="js/views/'+item+'.js"></' + 'script>');  
-});
-</script>
+<script type="text/javascript" src="js/views/view.min.js"></script>
 
 <script src="js/router.js"></script>
 <script src="js/Manager.js"></script>
