@@ -263,7 +263,7 @@ $app->post("/fblogin", function () use ($app) {
         // push into students
         insertStudent($account->id, $streamId);
         updateQuizzesRemaining(FREE_TESTS, $account->id, $streamId);
-        sendMail($email, SIGN_UP_SUB, SIGN_UP_MSG);
+        sendMail($email, SIGN_UP_SUB, file_get_contents('templates/signup.php'));
     }
     $account = getStudentByAccountId($account->id, 1);
     $_SESSION['user'] = $account->id;
@@ -432,10 +432,8 @@ $app->post("/ccsignup", function () use ($app) {
             $account = new stdClass();
             $account->id = createAccount($firstName, $lastName, $email, $password);
             insertStudent($account->id, $streamId);
-            //echo SIGN_UP_SUB;
-            //echo SIGN_UP_MSG;
             updateQuizzesRemaining(FREE_TESTS, $account->id, $streamId);
-            sendMail($email, SIGN_UP_SUB, SIGN_UP_MSG);
+            sendMail($email, SIGN_UP_SUB, file_get_contents('templates/signup.php'));
             $account = getStudentByAccountId($account->id, $streamId);
             if (file_exists(DP_PATH . $account->id . '.jpg')) {
                 $account->dp = true;
