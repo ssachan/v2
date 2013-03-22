@@ -431,6 +431,7 @@ window.QuizQuestionView = Backbone.View.extend({
                         autostart : true,
                         fallback : false,
                         primary: "flash" //,
+                        	
                         /*playlist: [{
                             title: "",
                             description: "",
