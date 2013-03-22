@@ -81,9 +81,9 @@
 <h3 style="display:block;font-family:Helvetica;font-size:16px;font-style:italic;font-weight:normal;line-height:100%;letter-spacing:normal;margin:0;text-align:left;color:#606060!important">
 	&nbsp;</h3>
 <h3 style="display:block;font-family:Helvetica;font-size:16px;font-style:italic;font-weight:normal;line-height:100%;letter-spacing:normal;margin:0;text-align:left;color:#606060!important">
-	<strong>Today is your lucky day - you have received free access to 3 tests!<br>
+	<strong>To get you started on PrepSquare we give you access to 3 tests absolutely free!<br>
 	<br>
-	Click on the button below to check out our extensive library of problem sets</strong></h3>
+	Click on the button below to check out our extensive library</strong></h3>
 <p>
 	<span style="font-size:8.5pt;font-family:Arial,sans-serif"></span></p>
 
@@ -105,7 +105,62 @@
                     <tbody>
                         <tr>
                             <td align="center" valign="middle" style="color:#ffffff;font-family:Arial;font-size:16px;padding:15px;border-collapse:collapse">
-                                <a title="Check out our library" style="font-weight:bold;letter-spacing:-0.5px;line-height:100%;text-align:center;text-decoration:none;color:#ffffff;font-family:Arial;font-size:16px;padding:15px;word-wrap:break-word!important">Check out our library</a>
+                                <a href="https://www.prepsquare.com/#library" title="Check out our library" style="font-weight:bold;letter-spacing:-0.5px;line-height:100%;text-align:center;text-decoration:none;color:#ffffff;font-family:Arial;font-size:16px;padding:15px;word-wrap:break-word!important">Check out our library</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse">
+    <tbody>
+        <tr>
+            <td valign="top" style="border-collapse:collapse">
+
+                <table align="left" border="0" cellpadding="0" cellspacing="0" width="600" style="border-collapse:collapse">
+                    <tbody><tr>
+
+                        <td style="padding-top:9px;padding-left:18px;padding-bottom:9px;padding-right:18px;border-collapse:collapse">
+
+                            <table border="0" cellpadding="18" cellspacing="0" width="100%" style="border:1px solid #ffffff;border-collapse:collapse">
+                                <tbody><tr>
+                                    <td valign="top" style="color:#31859c;border-collapse:collapse;font-family:Helvetica;font-size:14px;line-height:150%;text-align:left">
+                                        <h3 style="display:block;font-family:Helvetica;font-size:16px;font-style:italic;font-weight:normal;line-height:100%;letter-spacing:normal;margin:0;text-align:left;color:#606060!important">
+	&nbsp;</h3>
+<h2 style="display:block;font-family:Helvetica;font-size:20px;font-style:normal;font-weight:bold;line-height:100%;letter-spacing:normal;margin:0;text-align:left;color:#404040!important">
+	<em>We are thrilled to have you on PrepSquare!</em></h2>
+<h3 style="display:block;font-family:Helvetica;font-size:16px;font-style:italic;font-weight:normal;line-height:100%;letter-spacing:normal;margin:0;text-align:left;color:#606060!important">
+	&nbsp;</h3>
+<h3 style="display:block;font-family:Helvetica;font-size:16px;font-style:italic;font-weight:normal;line-height:100%;letter-spacing:normal;margin:0;text-align:left;color:#606060!important">
+	&nbsp;</h3>
+<h3 style="display:block;font-family:Helvetica;font-size:16px;font-style:italic;font-weight:normal;line-height:100%;letter-spacing:normal;margin:0;text-align:left;color:#606060!important">
+	<strong>Love PrepSquare !<br>
+	<br>
+	Get the complete set at an introductory 40% discount; pay only 2999 to get complete access</strong></h3>
+<p>
+	<span style="font-size:8.5pt;font-family:Arial,sans-serif"></span></p>
+
+                                    </td>
+                                </tr>
+                            </tbody></table>
+                        </td>
+                    </tr>
+                </tbody></table>
+
+            </td>
+        </tr>
+    </tbody>
+</table><table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse">
+    <tbody>
+        <tr>
+            <td style="padding-top:0;padding-right:18px;padding-bottom:18px;padding-left:18px;border-collapse:collapse" valign="top" align="center">
+                <table border="0" cellpadding="0" cellspacing="0" width="" style="border-top-left-radius:5px;border-top-right-radius:5px;border-bottom-right-radius:5px;border-bottom-left-radius:5px;background-color:#f4763e;border-collapse:collapse">
+                    <tbody>
+                        <tr>
+                            <td align="center" valign="middle" style="color:#ffffff;font-family:Arial;font-size:16px;padding:15px;border-collapse:collapse">
+                                <a href="https://www.prepsquare.com/#packages" title="Check out our library" style="font-weight:bold;letter-spacing:-0.5px;line-height:100%;text-align:center;text-decoration:none;color:#ffffff;font-family:Arial;font-size:16px;padding:15px;word-wrap:break-word!important">Buy Here</a>
                             </td>
                         </tr>
                     </tbody>
@@ -114,6 +169,8 @@
         </tr>
     </tbody>
 </table></td>
+
+
                                                     </tr>
                                                 </tbody></table>
                                             </td>
