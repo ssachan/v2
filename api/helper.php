@@ -45,8 +45,11 @@ function sendMail($to, $subject, $message) {
 
 $app->get('/mail', function () use ($app) {
     //echo 'hi';
-    _var_dump_to_string($var,$app->render('signup.php'));
-    sendMail('shikhar.sachan@gmail.com','sub',$var);
+    $var = 'hello';
+    $file = file_get_contents('templates/signup.php', true);
+    //_var_dump_to_string($var,$app->render('signup.php'));
+    //echo $file;
+    sendMail('shikhar.sachan@gmail.com','sub',$file);
 });
 
 $app->get('/getQ/:id', 'getQ');
