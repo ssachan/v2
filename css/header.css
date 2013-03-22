@@ -2,7 +2,7 @@
 /* ========================= Header ========================= */
 
 #header {
-    position:fixed;
+    position: relative;
     width:100%;
     z-index:999;
     background-color:#FFF;
