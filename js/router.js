@@ -70,7 +70,7 @@ var AppRouter = Backbone.Router.extend({
 			model : account
 		});
 		this.footerView = new FooterView({
-			el : $('footer'),
+			el : $('#footer'),
 		});
 	},
 
@@ -195,11 +195,11 @@ var AppRouter = Backbone.Router.extend({
 		if(view instanceof QuizView || view instanceof PracticeView ){
 			$('#test-header').show();
 			$('#menu-header').hide();
-			$('footer').hide();
+			$('#footer').hide();
 		}else{
 			$('#test-header').hide();
 			$('#menu-header').show();
-			$('footer').show();
+			$('#footer').show();
 		}
 		if (activeView)
 			activeView.close();
