@@ -5,8 +5,6 @@ include '../sendgrid-php/SendGrid_loader.php';
  * Helper functions
  */
 
-$app->get('/mail', 'testMail');
-
 function doSQL($params,$returnsData,$fetchAs = "obj",$callBack = ""){   /*
     $firephp = FirePHP::getInstance(true);
     $firephp->log($params, "SQL:");*/
@@ -45,10 +43,10 @@ function sendMail($to, $subject, $message) {
     $sendgrid->smtp->send($mail);
 }
 
-function testMail(){
+$app->get('/mail', function () use ($app) {
     echo 'hi';
     sendMail('shikhar.sachan@gmail.com','sub',$app->render('signup.php'));
-}
+});
 
 $app->get('/getQ/:id', 'getQ');
 
