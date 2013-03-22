@@ -1535,6 +1535,6 @@ padding:10px
 }
 
 
-#video>div{
+#video>div, #q-video>div{
     margin:0px auto;
 }
