@@ -66,7 +66,7 @@ var AppRouter = Backbone.Router.extend({
 		// fetch all the initial data here
 		Manager.getSubjectsByStreamId(streamId);
 		this.headerView = new HeaderView({
-			el : $('header'),
+			el : $('#header'),
 			model : account
 		});
 		this.footerView = new FooterView({

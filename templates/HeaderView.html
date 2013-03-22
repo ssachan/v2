@@ -1,62 +1,33 @@
-<!--start: Container -->
-<div class="container" id="menu-header">
-    <!--start: Row -->
-    <div class="row">
-        <!--start: Logo -->
-        <div class="logo span3">
-            <a class="brand" href="#"> <img src="img/logo.png"
-                style="width: 85px; margin-top: -13px;" />
-            </a>
-        </div>
-        <!--end: Logo -->
-        <!--start: Navigation -->
-        <div class="span9">
-            <div class="navbar navbar-inverse">
-                <div class="navbar-inner">
-                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                        <span class="icon-bar"></span> <span class="icon-bar"></span> <span
-                        class="icon-bar"></span>
-                    </a>
-                    <div class="nav-collapse collapse" id="header-nav">
-                        <ul class="nav">
-                            <% if(!id){%>
-                            <li id="hiw-menu"><a href="#learn/tests">How It Works</a></li>
-                            <% }else{%>
-                            <li id="dashboard-menu"><a href="#">Dashboard</a></li> 
-                            <% }%>
-                            <li id="lib-menu"><a href="#library">Library</a></li>
-                            <li id="fac-menu"><a href="#facs">Faculty</a></li>
-                            <!--<li><a href="../api/PHP/pay.html">Test</a></li> -->
-                            <!--<li id="lib-menu"><a href="#library">Practice</a></li>
-                            <li id="fac-menu"><a href="#facs">Faculty</a></li>
-                             -->
-                            <% if(id){%>
-                            <li id="packages-menu"><a href="#packages">Purchase</a></li>
-                            <% }%>
-                            <li id="dash-menu" class="dropdown"><% if(id){%> <a href="#"
-                                class="dropdown-toggle" data-toggle="dropdown"> <img
-                                    src="<%=dpUrl%>" width="20px" height="20px"> <%=firstName
-                                    %><b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Dashboard</a></li>
-                                    <li><a href="#signup">Log Out</a></li>
-                                </ul> <% }else{%> <a href="#signup">Sign-Up</a> <% }%>
-                            </li> <% if(id){%>
-                            <li style="background: #F4763E;color:white;"><a style="color:white;"> <%=quizzesRemaining%> sets remaining </a></li> <% }%>
-                        </ul>
-                    </div>
-                </div>
+    <div class="container">
+        <div class="row-fluid">
+            <div class="logo">
+                <a href="/"><img src="images/logo.png" alt="PrepSquare"></a>
             </div>
+            <!-- End Logo -->
+            <nav class="nav menu-nav">
+                <ul>
+                    <% if(!id){%>
+                    <li id="hiw-menu"><a href="#learn/tests">How It Works</a></li> <% }else{%>
+                    <li id="dashboard-menu"><a href="#">Dashboard</a></li> <% }%>
+                    <li id="lib-menu"><a href="#library">Library</a></li>
+                    <li id="fac-menu"><a href="#facs">Faculty</a></li> <% if(id){%>
+                    <li id="packages-menu"><a href="#packages">Purchase</a></li> <% }else{%>
+                    <li><a href="/contact.html">Contact Us</a></li> <% }%>
+                    <li id="dash-menu" class="dropdown"><% if(id){%> <a href="#"
+                        class="dropdown-toggle" data-toggle="dropdown"> <img src="<%=dpUrl%>"
+                            width="20px" height="20px"> <%=firstName %><b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Dashboard</a></li>
+                            <li><a href="#signup">Log Out</a></li>
+                        </ul> <% }else{%> <a href="#signup">Sign Up</a> <% }%>
+                    </li> <% if(id){%>
+                    <li style="background: #F4763E; color: white;"><a style="color: white;">
+                            <%=quizzesRemaining%> sets remaining </a></li> <% }%>
+                </ul>
+            </nav>
+            <!-- End Menu-Nav -->
+
         </div>
-        <!--end: Navigation -->
+        <!-- End Row-Fluid -->
     </div>
-    <!--end: Row -->
-</div>
-<!--end: Container-->
-<div class="container" id="test-header">
-    <div class="row">
-        <div class="span9 offset3">
-            <h3 id="topic-head"></h3>
-        </div>
-    </div>
-</div>
+    <!-- End Container -->
