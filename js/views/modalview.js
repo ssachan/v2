@@ -31,7 +31,7 @@ window.ModalView = Backbone.View.extend({
                         image: "img/introvid.png",
                         startparam: "start",
                         height : 270,
-                        width : 480,
+                        width : 520,
                         autostart : true,
                         fallback : false,
                         primary: "flash"
