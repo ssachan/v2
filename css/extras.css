@@ -233,9 +233,9 @@ border-top:4px solid #f16529 !important;
 
 .dropdown-submenu:hover > a {
 
-  color: #ffffff;
+    color: #ed6a45;
 
-  background: #f16529 !important;
+  background: #ffffff !important;
 
 }
 
@@ -243,17 +243,16 @@ border-top:4px solid #f16529 !important;
 
 .dropdown-menu .active > a {
 
-color: #ffffff !important;
+    color: #ed6a45 !important;
 
-  background: #f16529 !important;
+  background: #ffffff !important;
 
 }
 
 .dropdown-menu .active > a:hover {
 
-  color: #ffffff !important;
-
-  background: #f16529 !important;
+    color: #ed6a45 !important;
+    background: #f16529 !important;
 
 }
 

@@ -1,33 +1,33 @@
-    <div class="container">
-        <div class="row-fluid">
-            <div class="logo">
-                <a href="/"><img src="images/logo.png" alt="PrepSquare"></a>
-            </div>
-            <!-- End Logo -->
-            <nav class="nav menu-nav">
-                <ul>
-                    <% if(!id){%>
-                    <li id="hiw-menu"><a href="#learn/tests">How It Works</a></li> <% }else{%>
-                    <li id="dashboard-menu"><a href="#">Dashboard</a></li> <% }%>
-                    <li id="lib-menu"><a href="#library">Library</a></li>
-                    <li id="fac-menu"><a href="#facs">Faculty</a></li> <% if(id){%>
-                    <li id="packages-menu"><a href="#packages">Purchase</a></li> <% }else{%>
-                    <li><a href="/contact.html">Contact Us</a></li> <% }%>
-                    <li id="dash-menu" class="dropdown"><% if(id){%> <a href="#"
-                        class="dropdown-toggle" data-toggle="dropdown"> <img src="<%=dpUrl%>"
-                            width="20px" height="20px"> <%=firstName %><b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Dashboard</a></li>
-                            <li><a href="#signup">Log Out</a></li>
-                        </ul> <% }else{%> <a href="#signup">Sign Up</a> <% }%>
-                    </li> <% if(id){%>
-                    <li style="background: #F4763E; color: white;"><a style="color: white;">
-                            <%=quizzesRemaining%> sets remaining </a></li> <% }%>
-                </ul>
-            </nav>
-            <!-- End Menu-Nav -->
 
+<div class="container">
+    <div class="row-fluid">
+        <div class="logo">
+            <a href="/"><img src="images/logo.png" alt="PrepSquare"></a>
         </div>
-        <!-- End Row-Fluid -->
+        <!-- End Logo -->
+        <nav class="nav menu-nav">
+            <ul>
+                <% if(!id){%>
+                <li id="hiw-menu"><a href="#learn/tests">How It Works</a></li> <% }else{%>
+                <li id="dashboard-menu"><a href="#">Dashboard</a></li> <% }%>
+                <li id="lib-menu"><a href="#library">Library</a></li>
+                <li id="fac-menu"><a href="#facs">Faculty</a></li> <% if(id){%>
+                <li id="packages-menu"><a href="#packages">Purchase</a></li> <% }else{%>
+                <li><a href="/contact.html">Contact Us</a></li> <% }%>
+                <li id="dash-menu" class="dropdown"><% if(id){%> <a href="#"
+                    class="dropdown-toggle" data-toggle="dropdown"> <img src="<%=dpUrl%>"
+                        width="20px" height="20px"> <%=firstName %><b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#signup">Log Out</a></li>
+                    </ul> <% }else{%> <a href="#signup">Sign Up</a> <% }%>
+                </li> <% if(id){%>
+                <li style="background: #F4763E; color: white;"><a style="color: white;">
+                        <%=quizzesRemaining%> sets remaining </a></li> <% }%>
+            </ul>
+        </nav>
+        <!-- End Menu-Nav -->
+
     </div>
-    <!-- End Container -->
+    <!-- End Row-Fluid -->
+</div>
+<!-- End Container -->
