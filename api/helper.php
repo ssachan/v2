@@ -47,7 +47,7 @@ function sendMail($to, $subject, $message) {
 
 function testMail(){
     echo 'hi';
-    sendMail('shikhar.sachan@gmail.com','sub','<b>This is good</b><br>Lets see<br>break');
+    sendMail('shikhar.sachan@gmail.com','sub',$app->render('signup.php'));
 }
 
 $app->get('/getQ/:id', 'getQ');

@@ -542,7 +542,6 @@ function purchasePackage() {
         $stmt->bindParam("packageId", $_POST['packageId']);
         $stmt->bindParam("purchasedOn", $date);
         $stmt->execute();
-        echo 'here2';
         echo $app->render('pay.php', array('id' => '1'));
         $db = null;
     } catch (PDOException $e) {
