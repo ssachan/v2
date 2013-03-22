@@ -46,7 +46,7 @@ function sendMail($to, $subject, $message) {
 $app->get('/mail', function () use ($app) {
     //echo 'hi';
     $var = 'hello';
-    $file = file_get_contents('templates/signup.php', true);
+    $file = file_get_contents('templates/signup.php');
     //_var_dump_to_string($var,$app->render('signup.php'));
     //echo $file;
     sendMail('shikhar.sachan@gmail.com','sub',$file);
