@@ -344,10 +344,6 @@ window.FacCollection = Backbone.Collection.extend({
 	},
 });
 
-var facDirectory = new FacCollection();
-var facQuizzes = new QuizCollection();
-var fac = new Fac();
-
 window.Insight = Backbone.Model.extend({
 
     urlRoot: Config.serverUrl+'streams/',
@@ -1122,3 +1118,6 @@ window.StreamCollection = Backbone.Collection.extend({
 });
 
 var streams = new StreamCollection();
+var facDirectory = new FacCollection();
+var facQuizzes = new QuizCollection();
+var fac = new Fac();
