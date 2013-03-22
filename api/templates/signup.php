@@ -24,7 +24,7 @@
 
                         <td valign="top" style="padding:9px 0px 9px 18px;color:#31859c;font-family:Georgia,Times,'Times New Roman',serif;border-collapse:collapse;font-size:10px;line-height:150%;text-align:left">
 
-                            Use this area to offer a short preview of your email's content.
+                            
                         </td>
                     </tr>
                 </tbody></table>
