@@ -1,0 +1,36 @@
+a, a:visited { color:#ed6a45; }
+a:hover { color:#ba492a; }
+
+.btn, input[type="button"], input[type="submit"], input[type="reset"] {
+	background-color:#f1633b;
+	background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#f1633b), to(#e24e24));
+	background:-webkit-linear-gradient(top, #f1633b, #e24e24);
+	background:-moz-linear-gradient(top, #f1633b, #e24e24);
+	background:-o-linear-gradient(top, #f1633b, #e24e24);
+}
+.btn:hover, input[type="button"]:hover, input[type="submit"]:hover, input[type="reset"]:hover {
+	background-color:#e24e24;
+	background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#e24e24), to(#f1633b));
+	background:-webkit-linear-gradient(top, #e24e24, #f1633b);
+	background:-moz-linear-gradient(top, #e24e24, #f1633b);
+	background:-o-linear-gradient(top, #e24e24, #f1633b);
+}
+
+#header .menu-nav ul li.active a, #header .menu-nav ul li a:hover {
+	border-top:2px solid #ed6a45;
+	color:#ed6a45;	
+}
+
+#introduction .row-fluid { border-left: 5px solid #ed6a45; }
+
+#howto .step:hover .step-number .number {
+	background-color:#ed6a45;
+	border:5px solid #f8cdc2;
+}
+
+#main-tabs .tabs li a:hover, #main-tabs .tabs li.active a { background-color:#ed6a45; }
+
+#main-tabs .testimonials .item:hover .arrow { border-top:20px solid #ed6a45; }
+#main-tabs .testimonials .item:hover .name { background-color:#ed6a45; }
+
+.ie7 #main-tabs .testimonials .item:hover .arrow { background-color:#ed6a45; }
