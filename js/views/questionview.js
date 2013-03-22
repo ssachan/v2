@@ -405,9 +405,9 @@ window.QuizQuestionView = Backbone.View.extend({
                 }
                 html.push('<td>'+dummy.join(',')+'</td>');
                 if(optionSelectedArray[i]==correctAnswerArray[i]){
-                	html.push('<td><img class="media-object pull-left" src="img/tick.png"></td>');
+                	html.push('<td><img class="media-object pull-left" src="img/tick.png" style="margin:0px;width: 20px;"></td>');
                 }else{
-                	html.push('<td><img class="media-object pull-left" src="img/cross.png"></td>');
+                	html.push('<td><img class="media-object pull-left" src="img/cross.png" style="margin:0px;width: 20px;"></td>');
                 }
                 html.push('</tr>');
             }
