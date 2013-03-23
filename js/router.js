@@ -220,7 +220,7 @@ var AppRouter = Backbone.Router.extend({
 	_trackPageview: function() {
 		var url;  
 		url = Backbone.history.getFragment();  
-	    window._gaq.push(['_trackPageview', "/" + url]);  
+	    window._gaq.push(['_trackPageview', "/#" + url]);  
 	}
 });
 
