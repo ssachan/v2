@@ -108,7 +108,7 @@ window.QuizItemView = Backbone.View.extend({
 
 	tagName : "li",
 
-	className : "span3",
+	className : "span4",
 
 	initialize : function() {
 		this.render();

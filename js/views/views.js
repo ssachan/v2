@@ -1,4 +1,5 @@
 /**
+cat headerview.js landingview.js dashboardview.js quizview.js questionview.js quizlibraryview.js facdirectoryview.js modalview.js signupview.js packagesview.js facview.js faccontactview.js reviewview.js resultsview.js mysetsview.js > views.js
  * The header view
  * @author ssachan 
  * 
@@ -1319,7 +1320,7 @@ window.QuizItemView = Backbone.View.extend({
 
 	tagName : "li",
 
-	className : "span3",
+	className : "span4",
 
 	initialize : function() {
 		this.render();
