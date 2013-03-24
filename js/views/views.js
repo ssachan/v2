@@ -1207,7 +1207,10 @@ window.QuizQuestionView = Backbone.View.extend({
         $('#time').html(helper.formatTime(this.model.get('timeTaken')));
         $('#submit').hide();
     }
-});window.QuizLibraryView = Backbone.View.extend({
+});/**
+Quiz Library Views
+**/
+window.QuizLibraryView = Backbone.View.extend({
 	className : "container quiz-library",
 
 	initialize : function() {
@@ -1295,8 +1298,16 @@ window.QuizQuestionView = Backbone.View.extend({
 			}
 
 			var i = 0;
+			var firstchild = true;
 			while (i < len) {
-				$(subject[k]).append('<div class="item"><ul class="thumbnails lol"></ul></div>');
+				//if(firstchild)
+				//{
+				//	$(subject[k]).append('<div class="item active"><ul class="thumbnails lol"></ul></div>');
+				//	firstchild=false;
+				//}
+				//else
+					$(subject[k]).append('<div class="item"><ul class="thumbnails lol"></ul></div>');
+
 				for ( var j = 0; j < 3 && i < len; j++) {
 					$(".lol:last").append(
 					new QuizItemView({
@@ -1306,6 +1317,7 @@ window.QuizQuestionView = Backbone.View.extend({
 				}
 				$('.lol').removeClass('lol');
 			}
+			$(subject[k]+":first-child").addClass = "active";
 		}
 	}
 });
