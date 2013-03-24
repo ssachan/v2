@@ -94,7 +94,7 @@ window.QuizLibraryView = Backbone.View.extend({
 			while (i < len) {
 				$(subject[k]).append('<div class="item"><ul class="thumbnails"></ul></div>');
 				for ( var j = 0; j < 3 && i < len; j++) {
-					$(".thumbnails:last").append(new QuizItemView({
+					$(subject[k] + ":last-child").append(new QuizItemView({
 						model : quizzes[i]
 					}).render().el);
 					i++;
