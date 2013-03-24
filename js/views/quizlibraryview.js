@@ -53,7 +53,9 @@ window.QuizLibraryView = Backbone.View.extend({
 	},
 
 	renderQuizItems : function() {
-		$("#quizzes").empty();
+		$("#pCarousel").empty();
+		$("#cCarousel").empty();
+		$("#mCarousel").empty();
 		this.filtered.reset(this.collection.models);
 		if (this.l1 != '0') {
 			var filteredArray = this.filtered.where({
@@ -73,21 +75,30 @@ window.QuizLibraryView = Backbone.View.extend({
 			});
 			this.filtered.reset(sortedCollection);
 		}
-		var quizzes = this.filtered.models;
-		var len = quizzes.length;
-		if (len == 0) {
-			$("#quizzes").html('<h3>No quizzes found. Try again...</h3>');
-			return;
-		}
-		$("#quizzes").html('');
-		var i = 0;
-		while (i < len) {
-			$("#quizzes").append('<ul class="thumbnails"></ul>');
-			for ( var j = 0; j < 4 && i < len; j++) {
-				$(".thumbnails:last").append(new QuizItemView({
-					model : quizzes[i]
-				}).render().el);
-				i++;
+		var subject = array("#pCarousel","#cCarousel","#mCarousel");
+		for(var k = 0; k<3; k++)
+		{
+			var filteredArray = this.filtered.where({
+					l1 : k+1
+			});
+			this.filtered.reset(filteredArray);
+			
+			var quizzes = this.filtered.models;
+			var len = quizzes.length;
+			if (len == 0) {
+				$(subject[k]).html('<h3>No quizzes found. Try again...</h3>');
+				return;
+			}
+
+			var i = 0;
+			while (i < len) {
+				$(subject[k]).append('<div class="item"><ul class="thumbnails"></ul></div>');
+				for ( var j = 0; j < 3 && i < len; j++) {
+					$(".thumbnails:last").append(new QuizItemView({
+						model : quizzes[i]
+					}).render().el);
+					i++;
+				}
 			}
 		}
 	}
