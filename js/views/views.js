@@ -1303,10 +1303,10 @@ window.QuizLibraryView = Backbone.View.extend({
 			while (i < len) {
 				$(subject[k]).append('<div class="item"><ul class="thumbnails lol"></ul></div>');
 				for ( var j = 0; j < 3 && i < len; j++) {
-					$(".lol:last").append("<li> "+subject[k] + " "+ i +"</li>");
-					/*new QuizItemView({
+					$(".lol:last").append(
+					new QuizItemView({
 						model : quizzes[i]
-					}).render().el*/
+					}).render().el);
 					i++;
 				}
 				$('.lol').removeClass('lol');
