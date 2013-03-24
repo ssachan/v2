@@ -110,6 +110,7 @@ window.QuizLibraryView = Backbone.View.extend({
 			}
 			$(subject[k]+">div:first").addClass("active");
 		}
+		$('.carousel').carousel({interval:null});
 	}
 });
 
