@@ -7,7 +7,8 @@
         <!-- End Logo -->
         <nav class="nav menu-nav">
             <ul>
-                <% if(id){%>
+                <% if(!id){%>
+                <li id="hiw-menu"><a href="#learn/tests">How It Works</a></li> <% }else{%>
                 <li id="dashboard-menu"><a href="#">Dashboard</a></li> <% }%>
                 <li id="lib-menu"><a href="#library">Library</a></li>
                 <li id="fac-menu"><a href="#facs">Faculty</a></li> <% if(id){%>
