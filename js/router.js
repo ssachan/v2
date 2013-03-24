@@ -91,10 +91,10 @@ var AppRouter = Backbone.Router.extend({
 		// check if authenticated move to dashboard page, else move to landing
 		// page
 		if(account.get('id')!=null){
-			Manager.getDashboardData();
 			helper.loadScript('js/lib/highcharts.js');
 			helper.loadScript('js/lib/highcharts-more.js');
 			helper.loadScript('js/lib/exporting.js');
+			Manager.getDashboardData();
 		}else{
 			window.location = '#landing';
 		}
