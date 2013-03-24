@@ -235,9 +235,8 @@
                         <td valign="top" style="padding-top:9px;padding-right:18px;padding-bottom:9px;padding-left:18px;border-collapse:collapse;color:#808080;font-family:Helvetica;font-size:10px;line-height:150%;text-align:left">
 
                             <em>Copyright © 2013 Apeirogon Ventures, All rights reserved.</em>
-<br>
-    You are receiving this mail because you co-founded this website
-    <br><br>
+    <br>
+    <br>
     <strong>Our mailing address is:</strong>
     <br>
     <div><span>Apeirogon Ventures</span><div><div>4B Railway Board Officers Flats</div><div>Sarojini Nagar</div><span>New Delhi</span> <span>110023</span> <div>India</div><br><a href="http://prepsquare.us6.list-manage.com/vcard?u=d537202742&amp;id=859de85879" target="_blank">Add us to your address book</a></div>
