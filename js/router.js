@@ -72,6 +72,12 @@ var AppRouter = Backbone.Router.extend({
 		this.footerView = new FooterView({
 			el : $('#footer'),
 		});
+		if(account.get('id')!=null){
+			Manager.getDashboardData();
+			helper.loadScript('js/lib/highcharts.js');
+			helper.loadScript('js/lib/highcharts-more.js');
+			helper.loadScript('js/lib/exporting.js');
+		}
 	},
 
 	landing : function() {
@@ -85,6 +91,9 @@ var AppRouter = Backbone.Router.extend({
 		// check if authenticated move to dashboard page, else move to landing
 		// page
 		if(account.get('id')!=null){
+			helper.loadScript('js/lib/highcharts.js');
+			helper.loadScript('js/lib/highcharts-more.js');
+			helper.loadScript('js/lib/exporting.js');
 			Manager.getDashboardData();
 		}else{
 			window.location = '#landing';
@@ -138,13 +147,14 @@ var AppRouter = Backbone.Router.extend({
 	
 	quiz : function(id) {
 		if (account.get('id') != null) {
-			Manager.getDataForQuiz(id);
+			Manager.getDataForQuiz(id);			
 		} else {
 			window.location = '#quizLibrary';
 		}
 	},
 	
 	question : function (id){
+		//helper.loadScript('js/lib/jwplayer/jwplayer.js');
 		Manager.getDataForQuestion(id);
 	},
 	
@@ -155,7 +165,6 @@ var AppRouter = Backbone.Router.extend({
 			model : account
 		});
 		this.showView('#content',changePassView);
-		
 	},
 
 	forgotPass : function() {
