@@ -1309,6 +1309,7 @@ window.QuizLibraryView = Backbone.View.extend({
 					}).render().el*/
 					i++;
 				}
+				$('.lol').removeClass('lol');
 			}
 		}
 	}
