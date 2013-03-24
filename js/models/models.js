@@ -1039,11 +1039,8 @@ var scoreL3 = new ScoreL3Collection();window.Log = Backbone.Model.extend({
 	urlRoot : ' ',
 
 	
-	initialize : function(attr, eid, questionid, optionid) {
+	initialize : function() {
 		this.set('t',new Date().getTime());
-		this.set('e',eid);
-		this.set('q',questionid);
-		this.set('o',optionid);
 	},
 
 	defaults : {
@@ -1072,7 +1069,14 @@ window.LogCollection = Backbone.Collection.extend({
 
 	addEntry: function(eventname, questionid, optionid)
 	{
-		this.add(new Log("",this.eventids[eventname],questionid,optionid));
+		var obj = {
+			e : this.eventids[eventname]
+		};
+		if(questionid)
+			obj.q = questionid;
+		if(optionid)
+			obj.o = optionid
+		this.add(new Log(obj));
 	},
 
 	comparator: function(logEntry)
