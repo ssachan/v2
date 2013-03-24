@@ -1,15 +1,5 @@
 <!-- quiz items -->
 <div class="thumbnail box quiz-box <% if(hasAttempted || available=='2'){ %>dim<% }else{ %>alive<% } %>">
-    <!-- <div class="media l1">
-    <a> <img class="media-object"
-            style="width: 280px;" src="img/q<%=id%>.jpg">
-        </a>
-       <!--  <a class="pull-left"> <img class="media-object" alt="64x64"
-            style="width: 35px;" src="<%=logo%>">
-        </a>
-        <div class="media-body"><b style="text-transform: uppercase;"><%=l1DisplayName%></b></div>
-                
-    </div> -->
     <% if(available=='2'){ %>
     <div class="course-ribbon green"><b>PAID</b></div>
     <% }%>
@@ -21,7 +11,6 @@
             <div style="text-transform: uppercase; margin-left: 15px;"><%=descriptionShort%></div>
         </div>
     </div>
-    <!-- <%=descriptionShort%> -->
 <% if(fid){ %>
 
 <div class="media fac">
