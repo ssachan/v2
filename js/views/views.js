@@ -1,5 +1,4 @@
 /**
-cat headerview.js landingview.js dashboardview.js quizview.js questionview.js quizlibraryview.js facdirectoryview.js modalview.js signupview.js packagesview.js facview.js faccontactview.js reviewview.js resultsview.js mysetsview.js > views.js
  * The header view
  * @author ssachan 
  * 
@@ -1284,11 +1283,12 @@ window.QuizLibraryView = Backbone.View.extend({
 			});
 			this.filtered.reset(sortedCollection);
 		}
-		var subject = array("#pCarousel","#cCarousel","#mCarousel");
+		var subject = ["#mCarousel","#pCarousel","#cCarousel"];
 		for(var k = 0; k<3; k++)
 		{
+			this.filtered.reset(this.collection.models);
 			var filteredArray = this.filtered.where({
-					l1 : k+1
+					l1 : k+1+''
 			});
 			this.filtered.reset(filteredArray);
 			
