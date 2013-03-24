@@ -108,7 +108,7 @@ window.QuizLibraryView = Backbone.View.extend({
 				}
 				$('.lol').removeClass('lol');
 			}
-			$(subject[k]+":first-child").addClass = "active";
+			$(subject[k]+">div:first").addClass = "active";
 		}
 	}
 });
