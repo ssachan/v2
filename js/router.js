@@ -74,7 +74,6 @@ var AppRouter = Backbone.Router.extend({
 		});
 		if(account.get('id')!=null){
 			Manager.getDashboardData();
-			helper.loadScript('js/lib/jwplayer/jwplayer.js');
 			helper.loadScript('js/lib/highcharts.js');
 			helper.loadScript('js/lib/highcharts-more.js');
 			helper.loadScript('js/lib/exporting.js');
@@ -93,7 +92,6 @@ var AppRouter = Backbone.Router.extend({
 		// page
 		if(account.get('id')!=null){
 			Manager.getDashboardData();
-			helper.loadScript('js/lib/jwplayer/jwplayer.js');
 			helper.loadScript('js/lib/highcharts.js');
 			helper.loadScript('js/lib/highcharts-more.js');
 			helper.loadScript('js/lib/exporting.js');
