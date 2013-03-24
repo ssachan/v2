@@ -1,9 +1,6 @@
 /**
- * The quiz library view
- * 
- * @author ssachan
- * 
- */
+Quiz Library Views
+**/
 window.QuizLibraryView = Backbone.View.extend({
 	className : "container quiz-library",
 
@@ -75,11 +72,12 @@ window.QuizLibraryView = Backbone.View.extend({
 			});
 			this.filtered.reset(sortedCollection);
 		}
-		var subject = ["#pCarousel","#cCarousel","#mCarousel"];
+		var subject = ["#mCarousel","#pCarousel","#cCarousel"];
 		for(var k = 0; k<3; k++)
 		{
+			this.filtered.reset(this.collection.models);
 			var filteredArray = this.filtered.where({
-					l1 : k+1
+					l1 : k+1+''
 			});
 			this.filtered.reset(filteredArray);
 			
@@ -92,13 +90,15 @@ window.QuizLibraryView = Backbone.View.extend({
 
 			var i = 0;
 			while (i < len) {
-				$(subject[k]).append('<div class="item"><ul class="thumbnails"></ul></div>');
+				$(subject[k]).append('<div class="item"><ul class="thumbnails lol"></ul></div>');
 				for ( var j = 0; j < 3 && i < len; j++) {
-					$(subject[k] + ":last-child").append(new QuizItemView({
+					$(".lol:last").append(
+					new QuizItemView({
 						model : quizzes[i]
 					}).render().el);
 					i++;
 				}
+				$('.lol').removeClass('lol');
 			}
 		}
 	}

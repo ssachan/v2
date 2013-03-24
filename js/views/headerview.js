@@ -1,5 +1,6 @@
 /**
  * The header view
+ cat headerview.js landingview.js dashboardview.js quizview.js questionview.js quizlibraryview.js facdirectoryview.js modalview.js signupview.js packagesview.js facview.js faccontactview.js reviewview.js resultsview.js mysetsview.js > views.js
  * @author ssachan 
  * 
  **/

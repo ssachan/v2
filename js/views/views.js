@@ -1,6 +1,6 @@
 /**
-cat headerview.js landingview.js dashboardview.js quizview.js questionview.js quizlibraryview.js facdirectoryview.js modalview.js signupview.js packagesview.js facview.js faccontactview.js reviewview.js resultsview.js mysetsview.js > views.js
  * The header view
+ cat headerview.js landingview.js dashboardview.js quizview.js questionview.js quizlibraryview.js facdirectoryview.js modalview.js signupview.js packagesview.js facview.js faccontactview.js reviewview.js resultsview.js mysetsview.js > views.js
  * @author ssachan 
  * 
  **/
@@ -1207,13 +1207,7 @@ window.QuizQuestionView = Backbone.View.extend({
         $('#time').html(helper.formatTime(this.model.get('timeTaken')));
         $('#submit').hide();
     }
-});/**
- * The quiz library view
- * 
- * @author ssachan
- * 
- */
-window.QuizLibraryView = Backbone.View.extend({
+});window.QuizLibraryView = Backbone.View.extend({
 	className : "container quiz-library",
 
 	initialize : function() {
