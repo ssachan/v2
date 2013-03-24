@@ -1077,7 +1077,7 @@ window.LogCollection = Backbone.Collection.extend({
 		if(optionid)
 			obj.o = optionid
 		this.add(new Log(obj));
-	}
+	},
 
 	comparator: function(logEntry)
 	{
