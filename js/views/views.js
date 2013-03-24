@@ -1313,6 +1313,7 @@ window.QuizLibraryView = Backbone.View.extend({
 					new QuizItemView({
 						model : quizzes[i]
 					}).render().el);
+					$(".lol:last").append("<div class='span1'>&nbsp;</div>");
 					i++;
 				}
 				$('.lol').removeClass('lol');
@@ -1327,7 +1328,7 @@ window.QuizItemView = Backbone.View.extend({
 
 	tagName : "li",
 
-	className : "span4",
+	className : "span3",
 
 	initialize : function() {
 		this.render();
