@@ -75,7 +75,7 @@ window.QuizLibraryView = Backbone.View.extend({
 			});
 			this.filtered.reset(sortedCollection);
 		}
-		var subject = array("#pCarousel","#cCarousel","#mCarousel");
+		var subject = ["#pCarousel","#cCarousel","#mCarousel"];
 		for(var k = 0; k<3; k++)
 		{
 			var filteredArray = this.filtered.where({
