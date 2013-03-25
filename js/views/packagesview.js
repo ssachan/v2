@@ -21,9 +21,9 @@ window.PackagesView = Backbone.View.extend({
         var len = packages.length;
 		var i = 0;
 		while (i < len) {
-			$("#package-list").append('<ul class="thumbnails"></ul>');
+			$("#package-list").append('<div class="row-fluid"></div>');
 			for ( var j = 0; j < 3 && i < len; j++) {
-				$(".thumbnails:last").append(new PackageItemView({
+				$(".row-fluid:last").append(new PackageItemView({
 					model : packages[i]
 				}).render().el);
 				i++;
@@ -33,9 +33,9 @@ window.PackagesView = Backbone.View.extend({
 });
 
 window.PackageItemView = Backbone.View.extend({
-	tagName : "li",
+	tagName : "div",
 	
-	className : "span4",
+	className : "span3 item recommended",
 	
 	initialize: function () {
 	},
