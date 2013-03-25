@@ -69,7 +69,7 @@ window.ReviewView = Backbone.View.extend({
     	var questions = this.filtered.models;
         var len = questions.length;
 		if (len == 0) {
-			$('#q-list', this.el).html('<h3>No questions found. Try again...</h3>');
+			$('#q-list', this.el).html('<h3>You have not attempted any Tests! Please head to the <a href="/app/#library">Library</a> and take a test</h3>');
 			return;
 		}
 		$('#q-list', this.el).html('');
