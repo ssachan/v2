@@ -1,3 +1,4 @@
+//cat accounts.js streams.js questions.js quizzes.js fac.js packages.js sections.js scores.js logs.js > models.js
 window.Account = Backbone.Model.extend({
 
 	defaults : {

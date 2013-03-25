@@ -3,7 +3,7 @@ window.Log = Backbone.Model.extend({
 	urlRoot : ' ',
 
 	
-	initialize : function()) {
+	initialize : function() {
 		this.set('t',new Date().getTime());
 	},
 

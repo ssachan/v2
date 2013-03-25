@@ -28,7 +28,8 @@ window.Quiz = Backbone.Model.extend({
         'fdpURL': DP_PATH + 'avatar.jpg',
         'state': null,
         'startTime': null,
-        'reason':null
+        'reason':null,
+        'visible':false
     },
     
     urlRoot: Config.serverUrl + 'quizzes/',

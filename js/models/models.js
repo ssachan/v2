@@ -1,10 +1,10 @@
-// created using 
 //cat accounts.js streams.js questions.js quizzes.js fac.js packages.js sections.js scores.js logs.js > models.js
 window.Account = Backbone.Model.extend({
 
 	defaults : {
 		id : null,
 		quizzesAttempted : null,
+		paid : '0',
 		dpUrl : DP_PATH + 'avatar.jpg'
 	},
 
@@ -479,7 +479,7 @@ window.Quiz = Backbone.Model.extend({
         'state': null,
         'startTime': null,
         'reason':null,
-        'visible':false,
+        'visible':false
     },
     
     urlRoot: Config.serverUrl + 'quizzes/',
