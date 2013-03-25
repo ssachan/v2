@@ -95,7 +95,7 @@ var AppRouter = Backbone.Router.extend({
 			helper.loadScript('js/lib/exporting.js');
 			Manager.getDashboardData();
 		}else{
-			window.location = '#landing';
+			window.location = '../';
 		}
 	},
 
