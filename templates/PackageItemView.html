@@ -5,9 +5,9 @@
     <li><%=number%> Tests</li>
     <li>Video Solutions</li>
     <li>Personalized Feedback</li>
-    <li class="price">Rs. <%=price%></li>
+    <li class="price"><%=if(price=='0'){%>Free<%}else{%>Rs.<%=price%> <%}%></li>
 </ul>
-<a href="#" class="btn"><i class="icon-white icon-shopping-cart"></i> Buy Now </a>
+<button class="btn btn-orange disabled"><i class="icon-white icon-shopping-cart"></i> Buy Now </button>
 
 <!-- 
 <div class="thumbnail box package-box">
