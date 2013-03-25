@@ -80,7 +80,7 @@ window.ResultAnalysisView = Backbone.View.extend({
 		jwplayer("results_video").setup({
                         startparam: "start",
                         height : 360,
-                        width: (640+210),
+                        width: (640+310),
                         autostart : true,
                         fallback : false,
                         primary: "flash",
