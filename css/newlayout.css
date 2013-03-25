@@ -110,3 +110,80 @@
     width: 28px;
     height: 28px;
 }
+
+/* Pricing Tables */
+.pricing-tables {
+    text-align: center;
+}
+
+.pricing-tables .item {
+    padding: 20px 20px 30px;
+    background-color: #F6F6F6;
+    border: 1px solid #DADADA;
+    margin-bottom: 30px;
+    margin-top: 10px;
+}
+
+.pricing-tables h3 {
+    font-weight: bold;
+    font-size: 18px;
+    margin: 0px 0px 5px;
+}
+
+.pricing-tables ul {
+    margin: 0px 0px 20px 0px;
+}
+
+.pricing-tables ul li {
+    list-style-type: none;
+    padding: 12px 0px;
+    border-bottom: 1px dashed #E0E0E0;
+}
+
+.pricing-tables ul li.price {
+    border-bottom: 0px;
+    color: #222;
+    font-family: Nunito, Arial, sans-serif;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 25px 0px 5px;
+}
+
+.pricing-tables .item.recommended {
+    background-color: #313439;
+    border: 1px solid #000;
+    color: #e0e0e0;
+    margin-top: 1px;
+    padding: 30px 20px 40px;
+    position: relative;
+}
+
+.pricing-tables .item.recommended .pricing-badge {
+    width: 75px;
+    height: 75px;
+    position: absolute;
+    left: -2px;
+    top: -2px;
+    background: url(../images/pricing-badge.png) no-repeat top left;
+}
+
+.pricing-tables .item.recommended h3 {
+    color: #FFF;
+}
+
+.pricing-tables .item.recommended ul li {
+    border-bottom: 1px dashed #2a2a2a;
+}
+
+.pricing-tables .item.recommended ul li.price {
+    border-bottom: 0px;
+    color: #FFF;
+}
+
+/* ========================= Contact ========================= */
+
+.contact-info {
+        font-family:'PT Sans', Arial, sans-serif;
+        font-size:16px;
+    }
+            

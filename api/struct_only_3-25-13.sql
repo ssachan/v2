@@ -6,8 +6,8 @@
 # http://code.google.com/p/sequel-pro/
 #
 # Host: 127.0.0.1 (MySQL 5.5.29-0ubuntu0.12.04.1)
-# Database: ps_data
-# Generation Time: 2013-03-03 07:21:28 +0000
+# Database: ps_test
+# Generation Time: 2013-03-25 06:46:49 +0000
 # ************************************************************
 
 
@@ -22,8 +22,6 @@
 
 # Dump of table accounts
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `accounts`;
 
 CREATE TABLE `accounts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -55,8 +53,6 @@ CREATE TABLE `accounts` (
 # Dump of table accounts_fb
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `accounts_fb`;
-
 CREATE TABLE `accounts_fb` (
   `accountId` int(11) NOT NULL,
   `facebookId` bigint(20) DEFAULT NULL,
@@ -81,8 +77,6 @@ CREATE TABLE `accounts_fb` (
 # Dump of table accounts_google
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `accounts_google`;
-
 CREATE TABLE `accounts_google` (
   `accountId` int(11) DEFAULT NULL,
   `googleId` int(25) DEFAULT NULL,
@@ -103,8 +97,6 @@ CREATE TABLE `accounts_google` (
 # Dump of table ascores_l1
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `ascores_l1`;
-
 CREATE TABLE `ascores_l1` (
   `accountId` int(11) DEFAULT NULL,
   `score` float DEFAULT '0',
@@ -121,8 +113,6 @@ CREATE TABLE `ascores_l1` (
 
 # Dump of table ascores_l2
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `ascores_l2`;
 
 CREATE TABLE `ascores_l2` (
   `accountId` int(11) DEFAULT NULL,
@@ -141,8 +131,6 @@ CREATE TABLE `ascores_l2` (
 # Dump of table ascores_l3
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `ascores_l3`;
-
 CREATE TABLE `ascores_l3` (
   `accountId` int(11) NOT NULL,
   `score` float NOT NULL,
@@ -160,8 +148,6 @@ CREATE TABLE `ascores_l3` (
 # Dump of table creditHistory
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `creditHistory`;
-
 CREATE TABLE `creditHistory` (
   `accountId` int(11) DEFAULT NULL,
   `refilledOn` timestamp NULL DEFAULT NULL,
@@ -174,8 +160,6 @@ CREATE TABLE `creditHistory` (
 
 # Dump of table devices
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `devices`;
 
 CREATE TABLE `devices` (
   `accountId` int(11) DEFAULT NULL,
@@ -191,8 +175,6 @@ CREATE TABLE `devices` (
 # Dump of table exams
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `exams`;
-
 CREATE TABLE `exams` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `displayName` varchar(50) DEFAULT NULL,
@@ -207,8 +189,6 @@ CREATE TABLE `exams` (
 # Dump of table fac_contact
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `fac_contact`;
-
 CREATE TABLE `fac_contact` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `firstName` varchar(20) NOT NULL,
@@ -221,10 +201,18 @@ CREATE TABLE `fac_contact` (
 
 
 
-# Dump of table faculty
+# Dump of table fac_recos
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `faculty`;
+CREATE TABLE `fac_recos` (
+  `facId` int(11) unsigned NOT NULL,
+  `accountId` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+# Dump of table faculty
+# ------------------------------------------------------------
 
 CREATE TABLE `faculty` (
   `l1Ids` text,
@@ -235,8 +223,6 @@ CREATE TABLE `faculty` (
   `experience` text,
   `education` text,
   `streamIds` varchar(50) DEFAULT NULL,
-  `totalQuizzes` int(5) DEFAULT '0',
-  `rec` int(11) DEFAULT '0',
   `subscribers` int(11) DEFAULT '0',
   `accountId` int(11) DEFAULT NULL,
   `earlyLife` text,
@@ -248,8 +234,6 @@ CREATE TABLE `faculty` (
 # Dump of table insight_type
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `insight_type`;
-
 CREATE TABLE `insight_type` (
   `id` int(11) DEFAULT NULL,
   `type` varchar(20) DEFAULT NULL
@@ -259,8 +243,6 @@ CREATE TABLE `insight_type` (
 
 # Dump of table insights
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `insights`;
 
 CREATE TABLE `insights` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -274,8 +256,6 @@ CREATE TABLE `insights` (
 # Dump of table package_type
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `package_type`;
-
 CREATE TABLE `package_type` (
   `id` int(11) DEFAULT NULL,
   `name` varchar(20) DEFAULT NULL
@@ -285,8 +265,6 @@ CREATE TABLE `package_type` (
 
 # Dump of table packages
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `packages`;
 
 CREATE TABLE `packages` (
   `id` int(11) DEFAULT NULL,
@@ -300,8 +278,6 @@ CREATE TABLE `packages` (
 
 # Dump of table para
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `para`;
 
 CREATE TABLE `para` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -320,8 +296,6 @@ CREATE TABLE `para` (
 # Dump of table pool
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `pool`;
-
 CREATE TABLE `pool` (
   `id` int(11) DEFAULT NULL,
   `quizIds` text
@@ -332,14 +306,16 @@ CREATE TABLE `pool` (
 # Dump of table purchases
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `purchases`;
-
 CREATE TABLE `purchases` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `accountId` int(11) NOT NULL,
   `packageId` int(11) NOT NULL,
   `purchasedOn` datetime NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '0',
+  `status` int(11) DEFAULT NULL,
+  `billingPhone` varchar(12) DEFAULT NULL,
+  `paymentId` int(11) DEFAULT NULL,
+  `transactionId` int(11) DEFAULT NULL,
+  `paymentMethod` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -347,8 +323,6 @@ CREATE TABLE `purchases` (
 
 # Dump of table question_tags
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `question_tags`;
 
 CREATE TABLE `question_tags` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -361,8 +335,6 @@ CREATE TABLE `question_tags` (
 # Dump of table question_type
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `question_type`;
-
 CREATE TABLE `question_type` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `type` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -373,8 +345,6 @@ CREATE TABLE `question_type` (
 
 # Dump of table questions
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `questions`;
 
 CREATE TABLE `questions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -413,10 +383,18 @@ CREATE TABLE `questions` (
 
 
 
-# Dump of table quizzes
+# Dump of table quiz_recos
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `quizzes`;
+CREATE TABLE `quiz_recos` (
+  `quizId` int(11) unsigned NOT NULL,
+  `accountId` int(11) unsigned DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+# Dump of table quizzes
+# ------------------------------------------------------------
 
 CREATE TABLE `quizzes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -431,7 +409,6 @@ CREATE TABLE `quizzes` (
   `allotedTime` int(11) DEFAULT NULL,
   `difficulty` int(1) DEFAULT NULL,
   `ratings` varchar(10) DEFAULT NULL,
-  `rec` int(11) NOT NULL DEFAULT '0',
   `typeId` int(11) DEFAULT NULL,
   `facultyId` int(11) DEFAULT NULL,
   `available` int(1) DEFAULT '1',
@@ -452,8 +429,6 @@ CREATE TABLE `quizzes` (
 # Dump of table quizzes_queue
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `quizzes_queue`;
-
 CREATE TABLE `quizzes_queue` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `accountId` int(11) NOT NULL,
@@ -470,8 +445,6 @@ CREATE TABLE `quizzes_queue` (
 # Dump of table quizzes_type
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `quizzes_type`;
-
 CREATE TABLE `quizzes_type` (
   `id` int(11) DEFAULT NULL,
   `type` varchar(30) DEFAULT NULL
@@ -481,8 +454,6 @@ CREATE TABLE `quizzes_type` (
 
 # Dump of table resources
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `resources`;
 
 CREATE TABLE `resources` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -495,8 +466,6 @@ CREATE TABLE `resources` (
 
 # Dump of table responses
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `responses`;
 
 CREATE TABLE `responses` (
   `accountId` int(11) DEFAULT NULL,
@@ -514,8 +483,6 @@ CREATE TABLE `responses` (
 
 # Dump of table results
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `results`;
 
 CREATE TABLE `results` (
   `quizId` int(11) DEFAULT NULL,
@@ -539,8 +506,6 @@ CREATE TABLE `results` (
 # Dump of table roles
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `roles`;
-
 CREATE TABLE `roles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(20) DEFAULT NULL,
@@ -551,8 +516,6 @@ CREATE TABLE `roles` (
 
 # Dump of table section_l1
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `section_l1`;
 
 CREATE TABLE `section_l1` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -566,8 +529,6 @@ CREATE TABLE `section_l1` (
 
 # Dump of table section_l2
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `section_l2`;
 
 CREATE TABLE `section_l2` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -585,8 +546,6 @@ CREATE TABLE `section_l2` (
 # Dump of table section_l3
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `section_l3`;
-
 CREATE TABLE `section_l3` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `displayName` varchar(50) DEFAULT NULL,
@@ -602,8 +561,6 @@ CREATE TABLE `section_l3` (
 # Dump of table streams
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `streams`;
-
 CREATE TABLE `streams` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `displayName` varchar(50) DEFAULT NULL,
@@ -618,8 +575,6 @@ CREATE TABLE `streams` (
 
 # Dump of table students
 # ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `students`;
 
 CREATE TABLE `students` (
   `ascoreL1` int(1) DEFAULT '0',

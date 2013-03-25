@@ -1,6 +1,6 @@
 /**
+cat headerview.js landingview.js dashboardview.js quizview.js questionview.js quizlibraryview.js facdirectoryview.js modalview.js signupview.js packagesview.js facview.js faccontactview.js reviewview.js resultsview.js mysetsview.js > views.js
  * The header view
- cat headerview.js landingview.js dashboardview.js quizview.js questionview.js quizlibraryview.js facdirectoryview.js modalview.js signupview.js packagesview.js facview.js faccontactview.js reviewview.js resultsview.js mysetsview.js > views.js
  * @author ssachan 
  * 
  **/
@@ -30,6 +30,7 @@ window.FooterView = Backbone.View.extend({
 		$(this.el).html(this.template());
 		return this;
 	},
+
 
 });window.LandingView = Backbone.View.extend({
 	className : 'container landing',
@@ -1356,9 +1357,7 @@ window.QuizItemView = Backbone.View.extend({
 	render : function() {
 		$(this.el).html(this.template(this.model.toJSON()));
 		return this;
-	},
-});
-/**
+
  * The fac directory view
  * 
  * @author ssachan
@@ -1472,6 +1471,8 @@ window.FacItemView = Backbone.View.extend({
 		return this;
 	},
 
+});
+/**
 });
 /**
  * The modal view
@@ -1719,7 +1720,9 @@ window.ChangePassView = Backbone.View.extend({
         event.preventDefault(); // Don't let this button submit the form
     	this.model.changePass($('#currPassword').val(), $('#newPassword').val());
     }
-});/**
+});
+
+/**
  * The fac directory view
  * @author ssachan 
  * 
@@ -1728,35 +1731,35 @@ window.PackagesView = Backbone.View.extend({
 	
 	className : "container packages",
 
-    initialize: function () {
-    	this.render();
-    },
+   initialize: function () {
+   	this.render();
+   },
 
-    render: function () {
-        $(this.el).html(this.template());
-        return this;
-    },
-    
-    onRender : function (){
-     	var packages = this.collection.models;
-        var len = packages.length;
+   render: function () {
+       $(this.el).html(this.template());
+       return this;
+   },
+   
+   onRender : function (){
+    	var packages = this.collection.models;
+       var len = packages.length;
 		var i = 0;
 		while (i < len) {
-			$("#package-list").append('<ul class="thumbnails"></ul>');
+			$("#package-list").append('<div class="row-fluid"></div>');
 			for ( var j = 0; j < 3 && i < len; j++) {
-				$(".thumbnails:last").append(new PackageItemView({
+				$(".row-fluid:last").append(new PackageItemView({
 					model : packages[i]
 				}).render().el);
 				i++;
 			}
 		}
-    }
+   }
 });
 
 window.PackageItemView = Backbone.View.extend({
-	tagName : "li",
+	tagName : "div",
 	
-	className : "span4",
+	className : "span3 item",
 	
 	initialize: function () {
 	},
@@ -1773,8 +1776,8 @@ window.PackageItemView = Backbone.View.extend({
 		$(this.el).html(this.template(this.model.toJSON()));
 		return this;
 	},
-
 });
+
 /**
  * The fac profile view
  * 
@@ -1826,8 +1829,6 @@ window.FacView = Backbone.View.extend({
         		$(".thumbnails:last").append(new QuizItemView({model: quizzes[i]}).render().el);
         		i++;
         	}
-        }
-	},
 });window.FacContactView = Backbone.View.extend({
 
     initialize:function () {
@@ -1869,6 +1870,9 @@ window.FacView = Backbone.View.extend({
 		});
     }
 });
+    }
+});
+
 /**
  * The fac directory view
  * 

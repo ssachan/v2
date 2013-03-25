@@ -1,6 +1,6 @@
 <!-- quiz items -->
-<div class="thumbnail box quiz-box <% if(hasAttempted || available=='2'){ %>dim<% }else{ %>alive<% } %>">
-    <% if(available=='2'){ %>
+<div class="thumbnail box quiz-box <% if(hasAttempted || !visible){ %>dim<% }else{ %>alive<% } %>">
+    <% if(!visible){ %>
     <div class="course-ribbon green"><b>PAID</b></div>
     <% }%>
     <div class="topic">

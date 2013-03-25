@@ -3,6 +3,7 @@ window.Account = Backbone.Model.extend({
 	defaults : {
 		id : null,
 		quizzesAttempted : null,
+		paid : '0',
 		dpUrl : DP_PATH + 'avatar.jpg'
 	},
 

@@ -239,7 +239,8 @@
     <br>
     <strong>Our mailing address is:</strong>
     <br>
-    <div><span>Apeirogon Ventures</span><div><div>4B Railway Board Officers Flats</div><div>Sarojini Nagar</div><span>New Delhi</span> <span>110023</span> <div>India</div><br><a href="http://prepsquare.us6.list-manage.com/vcard?u=d537202742&amp;id=859de85879" target="_blank">Add us to your address book</a></div>
+    <div><span>Apeirogon Ventures</span><div><div>Times Center, FC - 6, 1st floor,
+    </div><div>Film City, Sector 16 A,</div><span>Noida </span> <span>201301</span> <div>India</div><br><a href="http://prepsquare.us6.list-manage.com/vcard?u=d537202742&amp;id=859de85879" target="_blank">Add us to your address book</a></div>
     <a href="http://prepsquare.us6.list-manage1.com/unsubscribe?u=d537202742&amp;id=859de85879&amp;e=&amp;c=9e6f4daa7f" style="color:#606060;font-weight:normal;text-decoration:underline;word-wrap:break-word!important" target="_blank">unsubscribe from this list</a>&nbsp;&nbsp;&nbsp;
     <a href="http://prepsquare.us6.list-manage2.com/profile?u=d537202742&amp;id=859de85879&amp;e=" style="color:#606060;font-weight:normal;text-decoration:underline;word-wrap:break-word!important" target="_blank">update subscription preferences</a>&nbsp;
     <br><br>

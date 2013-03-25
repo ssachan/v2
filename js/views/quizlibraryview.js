@@ -129,7 +129,7 @@ window.QuizItemView = Backbone.View.extend({
 	},
 
 	onQuizItemClick : function() {
-		if(this.model.get('available') == '2'){
+		if(this.model.get('visible') == false){
 			return;
 		}
 		if (this.model.get('hasAttempted') == true) {

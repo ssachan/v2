@@ -63,7 +63,7 @@ function copyImage($url) {
 }
 
 function getStudentByAccountId($accountId, $streamId) {
-    $sql = "SELECT a.id as id,a.email,a.firstName,a.lastName,s.ascoreL1 as ascore,s.quizzesAttempted,s.quizzesRemaining from accounts a,students s where a.id='"
+    $sql = "SELECT a.id as id,a.email,a.firstName,a.lastName,s.ascoreL1 as ascore,s.quizzesAttempted,s.quizzesRemaining,s.paid from accounts a,students s where a.id='"
             . $accountId . "' AND s.streamId='" . $streamId
             . "' AND a.id=s.accountId AND a.flag=1";
     try {

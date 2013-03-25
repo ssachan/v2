@@ -481,16 +481,16 @@ margin:0px auto;
 
 .fb-connect-button:before {
     content: '';
-    background: #698da9 url("../images/v3/sprites.png?v=9");
-    background: url("../images/v3/sprites.png?v=9"),
+    background: #698da9 url("../images/sprites.png?v=9");
+    background: url("../images/sprites.png?v=9"),
         -moz-linear-gradient(#698da9, #466b8b);
-    background: url("../images/v3/sprites.png?v=9"),
+    background: url("../images/sprites.png?v=9"),
         -webkit-linear-gradient(#698da9, #466b8b);
-    background: url("../images/v3/sprites.png?v=9"),
+    background: url("../images/sprites.png?v=9"),
         -o-linear-gradient(#698da9, #466b8b);
-    background: url("../images/v3/sprites.png?v=9"),
+    background: url("../images/sprites.png?v=9"),
         -ms-linear-gradient(#698da9, #466b8b);
-    background: url("../images/v3/sprites.png?v=9"),
+    background: url("../images/sprites.png?v=9"),
         linear-gradient(#698da9, #466b8b);
     width: 45px;
     height: 38px;
@@ -514,7 +514,6 @@ margin:0px auto;
     content: '';
     width: 100%;
     height: 100%;
-    background: url("../images/v3/noise.png");
     position: absolute;
     left: 0;
     top: 0;
