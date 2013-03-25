@@ -481,9 +481,9 @@ margin:0px auto;
 
 .fb-connect-button:before {
     content: '';
-    background: #698da9 url("../images/v3/sprites.png?v=9");
+/*    background: #698da9 url("../images/v3/sprites.png?v=9");
     background: url("../images/v3/sprites.png?v=9"),
-        -moz-linear-gradient(#698da9, #466b8b);
+*/        -moz-linear-gradient(#698da9, #466b8b);
     background: url("../images/v3/sprites.png?v=9"),
         -webkit-linear-gradient(#698da9, #466b8b);
     background: url("../images/v3/sprites.png?v=9"),
