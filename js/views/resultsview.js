@@ -88,7 +88,7 @@ window.ResultAnalysisView = Backbone.View.extend({
                         //skin : "",
                         listbar: {
 							        position: 'right',
-							        size: 210
+							        size: 310
 							     }
                     });
 
