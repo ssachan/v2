@@ -129,14 +129,10 @@ window.QuizItemView = Backbone.View.extend({
 	},
 
 	onQuizItemClick : function() {
-		if(this.model.get('visible') == false){
+		if (this.model.get('hasAttempted') == true || this.model.get('available')=='3') {
 			return;
 		}
-		if (this.model.get('hasAttempted') == true) {
-			return;
-			// alert('quiz purchased. Access it from My PrepSets space');
-			// window.location = '#quiz/' + this.model.get('id');
-		} else if (this.model.get('status') == this.model.STATUS_NOTSTARTED) {
+		if (this.model.get('status') == this.model.STATUS_NOTSTARTED) {
 			mView.model = this.model;
 			mView.show();
 		} else {

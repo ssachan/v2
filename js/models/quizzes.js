@@ -29,7 +29,7 @@ window.Quiz = Backbone.Model.extend({
         'state': null,
         'startTime': null,
         'reason':null,
-        'visible':false
+        'paid':false
     },
     
     urlRoot: Config.serverUrl + 'quizzes/',

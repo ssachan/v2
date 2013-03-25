@@ -48,10 +48,10 @@ window.ModalView = Backbone.View.extend({
                     });
 		if(account.get('id')!=null){
 			// check if credits exist
-			if(parseInt(account.get('quizzesRemaining'))>0){
+			if(this.model.get('available')=='1' || (this.model.get('available')=='2' && this.model.get('paid')==true)){
 				$('#take-btn').append('<a href="#quiz/'+this.model.get('id')+'" class="btn blue-btn">START TEST</a>');
 			}else{
-				$('#take-btn').append('<a href="#packages" class="btn blue-btn">You need to purchase a package to take this quiz.CLICK</a>');
+				$('#take-btn').append('<a href="#packages" class="btn blue-btn">Purchase Package</a>');
 			}
 		}else{
 			$('#take-btn').append('<a href="#signup" class="btn blue-btn">Log-In/Sign-Up to take Test</a>');

@@ -177,12 +177,8 @@ window.Manager = {
                             if ($.inArray(quiz.get('id'), account.get('quizzesAttemptedArray')) != -1) {
                                 quiz.set('hasAttempted', true);
                             }
-                            if(quiz.get('available')=='1'){
-                                    quiz.set('visible',true);
-                            }else{
-                                if(quiz.get('available')=='2' && account.get('paid')=='1'){
-                                    quiz.set('visible',true);
-                                }
+                            if(quiz.get('available')=='2' && account.get('paid')=='1'){
+                                quiz.set('paid',true);
                             }
                             quizLibrary.push(quiz);
                         }

@@ -1338,14 +1338,10 @@ window.QuizItemView = Backbone.View.extend({
 	},
 
 	onQuizItemClick : function() {
-		if(this.model.get('visible') == false){
+		if (this.model.get('hasAttempted') == true || this.model.get('available')=='3') {
 			return;
 		}
-		if (this.model.get('hasAttempted') == true) {
-			return;
-			// alert('quiz purchased. Access it from My PrepSets space');
-			// window.location = '#quiz/' + this.model.get('id');
-		} else if (this.model.get('status') == this.model.STATUS_NOTSTARTED) {
+		if (this.model.get('status') == this.model.STATUS_NOTSTARTED) {
 			mView.model = this.model;
 			mView.show();
 		} else {
@@ -1523,10 +1519,10 @@ window.ModalView = Backbone.View.extend({
                     });
 		if(account.get('id')!=null){
 			// check if credits exist
-			if(parseInt(account.get('quizzesRemaining'))>0){
+			if(this.model.get('available')=='1' || (this.model.get('available')=='2' && this.model.get('paid')==true)){
 				$('#take-btn').append('<a href="#quiz/'+this.model.get('id')+'" class="btn blue-btn">START TEST</a>');
 			}else{
-				$('#take-btn').append('<a href="#packages" class="btn blue-btn">You need to purchase a package to take this quiz.CLICK</a>');
+				$('#take-btn').append('<a href="#packages" class="btn blue-btn">Purchase Package</a>');
 			}
 		}else{
 			$('#take-btn').append('<a href="#signup" class="btn blue-btn">Log-In/Sign-Up to take Test</a>');
@@ -1545,6 +1541,7 @@ window.ModalView = Backbone.View.extend({
 		this.remove();
 	},
 });
+
 window.SignUpView = Backbone.View.extend({
 
     initialize:function () {
