@@ -74,8 +74,6 @@ var AppRouter = Backbone.Router.extend({
 		});
 		if(account.get('id')!=null){
 			helper.loadScript('js/lib/highcharts.js');
-			helper.loadScript('js/lib/highcharts-more.js');
-			helper.loadScript('js/lib/exporting.js');
 		}
 	},
 
@@ -90,9 +88,7 @@ var AppRouter = Backbone.Router.extend({
 		// check if authenticated move to dashboard page, else move to landing
 		// page
 		if(account.get('id')!=null){
-			helper.loadScript('js/lib/highcharts.js');
-			helper.loadScript('js/lib/highcharts-more.js');
-			helper.loadScript('js/lib/exporting.js');
+			helper.loadScript('js/lib/high.js');
 			Manager.getDashboardData();
 		}else{
 			window.location = '../';
