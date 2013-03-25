@@ -35,7 +35,7 @@ window.PackagesView = Backbone.View.extend({
 window.PackageItemView = Backbone.View.extend({
 	tagName : "div",
 	
-	className : "span3 item recommended",
+	className : "span3 item",
 	
 	initialize: function () {
 	},

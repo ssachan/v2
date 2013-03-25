@@ -1719,8 +1719,7 @@ window.ChangePassView = Backbone.View.extend({
         event.preventDefault(); // Don't let this button submit the form
     	this.model.changePass($('#currPassword').val(), $('#newPassword').val());
     }
-});
-/**
+});/**
  * The fac directory view
  * @author ssachan 
  * 
@@ -2066,8 +2065,8 @@ window.ResultAnalysisView = Backbone.View.extend({
 		//::video::Playlist
 		jwplayer("results_video").setup({
                         startparam: "start",
-                        height : (640+210),
-                        width: 360,
+                        height : 360,
+                        width: (640+210),
                         autostart : true,
                         fallback : false,
                         primary: "flash",
