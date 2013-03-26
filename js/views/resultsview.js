@@ -25,11 +25,12 @@ window.ResultsView = Backbone.View.extend({
 		analysisView.onRender();
 		var graphsView = new ResultGraphsView({model:this.model});
 		$('#graphs-div').html(graphsView.render().el);
-		graphsView.onRender();
+		//graphsView.onRender();
 		var solutionView = new SolutionsView({model:this.model, index : 0,});
 		$('#solutions-div').html(solutionView.render().el);
 		solutionView.onRender();
 		solutionView.renderQuestion();
+		graphsView.onRender();
 		$('#analysis-div').hide();
 		$('#graphs-div').hide();
 		$('#solutions-div').hide();
