@@ -55,7 +55,11 @@ window.ResumeView = Backbone.View.extend({
 	},
 
 	render : function() {
-		$(this.el).html(this.template(this.model.toJSON()));
+		$(this.el).html(this.template({
+			'totalQuestions' : this.model.get('questionIdsArray').length,
+			'totalTime' : helper.formatTime(this.model.get('allotedTime')),
+			'descriptionShort' : this.model.get('descriptionShort'),
+		}));
 		return this;
 	}
 });

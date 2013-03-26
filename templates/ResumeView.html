@@ -1,15 +1,14 @@
 <div class="row-fluid">
-    <div class="span6 offset3 center">
-        <h2 class="blue"><%=descriptionShort%></h2>
-        <h3 class="blue">Resume Quiz</h3>
-
+    <div class="span6 offset3">
+        <h2 class="blue center"><%=descriptionShort%></h2>
         <hr class="soften">
+        <h3 class="blue center">Resume Quiz</h3>
 		<br>
-        <ul class="left">
-            <li>This problem set consists of <strong>20 questions</strong></li>
+        <ul>
+            <li>This problem set consists of <strong><%=totalQuestions %> questions</strong></li>
             <li><strong>Practice</strong> mode gives you the solution after you solve every
                 question, while test mode is a timed test in which your strategy is tested</li>
-            <li>We estimate these questions should take about <strong>1 hour</strong></li>
+            <li>We estimate these questions should take about <strong><%=totalTime%></strong></li>
             <li>There are <strong>4 marks</strong> for correct answer and <strong>-1</strong>
                 for wrong answer
             </li>
@@ -20,14 +19,7 @@
         </ul>
 		<br><br>
 
-        <button class="btn blue-btn" id="resume-quiz">Resume Quiz</button>
-        
-        <!--   <a class="btn btn-large blue-btn span6"> <span class="font-h3">Practice Mode</span><br>
-            <span class="font-h4">Learn concepts as you practice</span>
-        </a> <a class="btn btn-large orange-btn span5"> <span class="font-h3">Test Mode</span><br>
-            <span class="font-h4">Test your exam strategy</span>
-        </a>
-        -->
+        <button class="btn btn-large blue-btn span6 offset3" id="resume-quiz">Resume Quiz</button>
     </div>
 </div>
 
