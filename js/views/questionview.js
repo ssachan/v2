@@ -415,8 +415,6 @@ window.QuizQuestionView = Backbone.View.extend({
             break;        	
         }
         $('#stathead').html(html.join(' '));
-        $('#diff').html(this.model.get('difficulty'));
-        $('#avgAcc').html(this.model.get('averageCorrect'));
         $('#avgTime').html(helper.formatTime(this.model.get('timeTaken')));
         $('#tags').html(this.model.get('tagIds'));
         $('#solutionText').html(this.model.get('explanation'));

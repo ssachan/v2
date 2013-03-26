@@ -6,11 +6,19 @@
         </div>
         <div class="span5">
             <div class="g-stats">
-                DIFFICULTY : <span class="blue" id="diff"></span>
+                DIFFICULTY : <span class="blue"> 
+<% 
+switch(difficulty){
+    case '1' : print('Easy');break;
+    case '2' : print('Medium');break;
+    case '3' : print('Hard');break;
+}
+%>
+</span>
             </div>
             <div class="g-stats">
                 <div class="stat">
-                    Average Accuracy<br> <span class="blue" id="avgAcc"></span>
+                    Average Accuracy<br> <span class="blue"><%=averageCorrect%></span>
                 </div>
                 <div class="stat">
                     Average Time<br> <span class="blue" id="avgTime"></span>
