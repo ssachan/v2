@@ -356,7 +356,25 @@ window.Manager = {
             success: function (data) {
                 if (data.status == STATUS.SUCCESS) {
                     console.log("faculty fetched: " + data);
-                    facQuizzes.reset(data.data); // facDirectory.reset(data);
+                    if (account.get('id') == null) {
+                        // just load the library
+                        facQuizzes.reset(data.data);
+                    } else {
+                        // set the hasAttempted flag to true.
+                        facQuizzes.reset();
+                        var len = data.data.length;
+                        for (var i = 0; i < len; i++) {
+                            var quiz = new Quiz(data.data[i]);
+                            if ($.inArray(quiz.get('id'), account.get('quizzesAttemptedArray')) != -1) {
+                                quiz.set('hasAttempted', true);
+                            }
+                            if(quiz.get('available')=='2' && account.get('paid')=='1'){
+                                quiz.set('paid',true);
+                            }
+                            facQuizzes.push(quiz);
+                        }
+                    }
+                    //facQuizzes.reset(data.data); // facDirectory.reset(data);
                 } else { // If not, show error
                     helper.processStatus(data);
                 }
