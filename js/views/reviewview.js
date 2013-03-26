@@ -63,7 +63,7 @@ window.ReviewView = Backbone.View.extend({
     	} else if(this.status=='2'){
     		var filteredArray = this.filtered.where({isCorrect: false});
 			this.filtered.reset(filteredArray);	
-    	} else{
+    	} else if(this.status=='3'){
     		var filteredArray = this.filtered.where({isCorrect: null});
 			this.filtered.reset(filteredArray);	
     	}
