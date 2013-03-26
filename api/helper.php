@@ -19,13 +19,13 @@ function doSQL($params,$returnsData,$fetchAs = "obj",$callBack = ""){   /*
         $db = null;
         if($returnsData === true)
             if($fetchAs === "obj")
-            return $stmt->fetch(PDO::FETCH_OBJ);
-        elseif($fetchAs === "all_array")
-        return $stmt->fetchAll();
-        elseif($fetchAs === "all_func")
-        return $stmt->fetchAll(PDO::FETCH_FUNC,$callBack);
-        elseif($fetchAs === "all_class")
-        return $stmt->fetchAll(PDO::FETCH_CLASS,$callBack);
+                return $stmt->fetch(PDO::FETCH_OBJ);
+            elseif($fetchAs === "all_array")
+                return $stmt->fetchAll();
+            elseif($fetchAs === "all_func")
+                return $stmt->fetchAll(PDO::FETCH_FUNC,$callBack);
+            elseif($fetchAs === "all_class")
+                return $stmt->fetchAll(PDO::FETCH_CLASS,$callBack);
     }
     catch (PDOException $e) {
         //phpLog("doSqlError:".$sql.$e->getMessage());

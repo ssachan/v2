@@ -7,7 +7,8 @@ set_include_path("..:.");
 require_once('FirePHPCore/FirePHP.class.php');
 ob_start();
 $firephp=null;
-//Debugging code =>
+*/
+/*//Debugging code =>
 $firephp = FirePHP::getInstance(true);
 $firephp->log($var, "Message");
 */
@@ -657,6 +658,7 @@ class quizResponseDetails{
         $this->logsByQuestion = $this->splitLogsByQuestion();
         $this->qEvaluated     = array();
         $this->getEvaluatedQuestions(); //tanujb: this fails when evaluated wuestions already exist.
+
         $this->evaluateQuestions();
         if($attemptedAs == analConst::ATTEMPTED_AS_TIMED_TEST)
         {
@@ -749,11 +751,12 @@ class quizResponseDetails{
     }
     function getEvaluatedQuestions()
     {
-        $result = doSQL(array(
+        $ar = array(
             "acid"=>$this->accountId,
-            "qids" => implode(",",$this->questionIds),
-            "SQL" => "SELECT * FROM responses WHERE accountId = :acid AND questionId IN (:qids)"
-            ),true,"all_array");
+            "SQL" => "SELECT * FROM responses WHERE accountId = :acid AND questionId IN (".implode(",",$this->questionIds).")"
+            );
+        $result = doSQL($ar,true,"all_array");
+
         if(!is_null($result))
             foreach ($result as $row)
                 $this->qEvaluated[$row["questionId"]] = new questionEvalution($row);
@@ -877,15 +880,18 @@ class quizResponseDetails{
     }
 }
 //>> FRONT-FACING Functions
-function testCode($a1,$a2,$a3,$a4,$a5,$a6){
-   /* $result = doSQL(array(
-            "acid"=>4,
-            "qids" => "78,79,80,81",
-            "SQL" => "SELECT * FROM responses WHERE accountId = :acid AND questionId IN (:qids)"
-            ),true);
-    var_dump($result);*/
-    echo "In test code with $a1 $a2 $a3 $a4 $a5 $a6";
-    echo "delta : " . deltaCalculator::calculate($a1,$a2,$a3,$a4,$a5,$a6);
+function testCode(){
+    
+    
+
+    $accountId = 245;
+    $quizId = 10;
+    $streamId = 1;
+    $state = 21;
+    $quiz = new quizResponseDetails($accountId, $quizId, array(), analConst::ATTEMPTED_AS_PRACTICE,1,1);
+
+    $quiz->generateVideoArray();
+    $quiz->sendResponse();
 }
 
 function processPractice(){
