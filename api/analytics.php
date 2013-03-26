@@ -666,7 +666,7 @@ class quizResponseDetails{
         }
         elseif($attemptedAs == analConst::ATTEMPTED_AS_PRACTICE)
         {
-            if(!$isResultsView){
+            if($isResultsView){
                 $this->state = $_POST['state'];
 
                 $this->getQuizSummary();
@@ -897,7 +897,7 @@ function processPractice(){
 function practiceResultsView(){
     $accountId = $_POST['accountId']; $quizId = $_POST['quizId'];
     
-    $quiz = new quizResponseDetails($accountId, $quizId, array(), analConst::ATTEMPTED_AS_PRACTICE,1);
+    $quiz = new quizResponseDetails($accountId, $quizId, array(), analConst::ATTEMPTED_AS_PRACTICE,1,1);
     $quiz->generateVideoArray();
     /*
     $maxScore = $numCorrect = $numIncorrect = 0;
