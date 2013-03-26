@@ -37,13 +37,13 @@ window.Question = Backbone.Model.extend({
         			this.set('typeString','');
         			break;
         		case "2":
-        			this.set('typeString','Multiple Choice');
+        			this.set('typeString','Multiple Answer Type');
         			break;
         		case "3":
         			this.set('typeString','Integer Type');
         			break;
         		case "4":
-        			this.set('typeString','Matrix Type');
+        			this.set('typeString','Match the Columns');
         			break;
         	}
         }
