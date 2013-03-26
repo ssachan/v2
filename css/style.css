@@ -674,7 +674,7 @@ margin:0px auto;
 }
 
 .alive:hover {
-    width: 100%;
+    width: 95%;
     box-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
     -moz-box-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
     -webkit-box-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
@@ -707,7 +707,7 @@ margin:0px auto;
 }
 
 .quiz-box {
-    width: 100%;
+    width: 95%;
     position: relative !important;
 }
 
