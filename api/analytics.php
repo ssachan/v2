@@ -752,7 +752,7 @@ class quizResponseDetails{
             "acid"=>$this->accountId,
             "qids" => implode(",",$this->questionIds),
             "SQL" => "SELECT * FROM responses WHERE accountId = :acid AND questionId IN (:qids)"
-            ),true);
+            ),true,"all_array");
         if(!is_null($result))
             foreach ($result as $row)
                 $this->qEvaluated[$row["questionId"]] = new questionEvalution($row);
