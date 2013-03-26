@@ -655,7 +655,7 @@ class quizResponseDetails{
         $this->questionIds    = $this->getQuestionIdsForQuiz();
         $this->logsByQuestion = $this->splitLogsByQuestion();
         $this->qEvaluated     = array();
-        //$this->getEvaluatedQuestions(); //tanujb: this fails when evaluated wuestions already exist.
+        $this->getEvaluatedQuestions(); //tanujb: this fails when evaluated wuestions already exist.
         $this->evaluateQuestions();
         if($attemptedAs == analConst::ATTEMPTED_AS_TIMED_TEST)
         {
@@ -666,9 +666,8 @@ class quizResponseDetails{
         }
         elseif($attemptedAs == analConst::ATTEMPTED_AS_PRACTICE)
         {
-            if($isResultsView){
+            if(!$isResultsView){
                 $this->state = $_POST['state'];
-
                 $this->getQuizSummary();
                 if($isLast == 0)
                     $this->updateQuizSummary();
@@ -676,7 +675,8 @@ class quizResponseDetails{
                     $this->generateVideoArray();
             }
             else{
-
+                $this->getQuizSummary();
+                $this->generateVideoArray();
             }
         }
         $this->updateResultsTable();
