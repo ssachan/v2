@@ -431,6 +431,7 @@ class questionEvalution{
         foreach ($vars as $value)
             $this->{$value} = $row[$value];
 
+        $this->qid = $this->questionId;
         $this->qDetails     = new questionObject($this->qid); //tanujb : Evaluate if this is necessary.
         $tmpOptions         = explode("|:|:",$this->qDetails->options);
         $this->optionLength = count(explode("|:",$tmpOptions[0]));
