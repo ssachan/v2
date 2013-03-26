@@ -435,7 +435,7 @@ class questionEvalution{
         $this->qDetails     = new questionObject($this->qid); //tanujb : Evaluate if this is necessary.
         $tmpOptions         = explode("|:|:",$this->qDetails->options);
         $this->optionLength = count(explode("|:",$tmpOptions[0]));
-        $this->optionArray  = getOptionArrayFromText($this->optionSelected);
+        $this->optionArray  = getOptionArrayFromText($this->optionSelected,$this->optionLength);
     }
 
     function getFinalOptionArray(){
