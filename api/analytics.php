@@ -521,15 +521,21 @@ class questionEvalution{
 
                     $originalOptionText = $this->optionSelected;
                     $originalCorrectAnswer = $this->qDetails->correctAnswer;
+                    echo "\n";
+                    var_dump($originalOptionText);
                     $optionSuperArray =  getOptionArrayFromText($this->optionSelected,$this->optionLength);
                     $correctSuperArray = getOptionArrayFromText($this->qDetails->correctAnswer,$this->optionLength);
-                    
+                    var_dump($optionSuperArray);
                     foreach ($correctSuperArray as $k => $v) {
 
                         $this->qDetails->correctAnswer = $v;
                         $this->optionSelected = $optionSuperArray[$k];
+                        echo "\n\nCorrect ".$v." and selected ".$this->optionSelected;
                         $this->evalOption();
+                        echo "\n\nScore after ".$k." is ".$this->score;
+
                     }
+
                     $this->qDetails->correctArray = $originalCorrectAnswer;
                     $this->optionSelected = $originalOptionText;
                     
@@ -906,40 +912,6 @@ function practiceResultsView(){
     
     $quiz = new quizResponseDetails($accountId, $quizId, array(), analConst::ATTEMPTED_AS_PRACTICE,1,1);
     $quiz->generateVideoArray();
-    /*
-    $maxScore = $numCorrect = $numIncorrect = 0;
-    $delta = $delta2 = $state = $state2 = $aScoreRecord = $qDetails = array();
-    $l3GraphData = null;
-
-    foreach($questionIds as $key=>$qid)
-    {
-        $qDetails[$qid]        = getQuestionDetails($qid);
-        $maxScore             += intval($qDetails[$qid]->correctScore);
-        $qrecord               = getQuestionResponse($accountId, $qid);   
-        $delta[$qid]           = $qrecord->d;
-        $state[$qid]           = $qrecord->s;
-        $currentState          = $qrecord->s;
-        $aScoreBefore          = new stdClass();
-        $aScoreBefore->l3score = $qrecord->a;
-        $aScoreRecord[$qid]    = $aScoreBefore;
-    }
-
-    $l3GraphData     = getL3GraphData($accountId, $qDetails, $state, $delta, $aScoreRecord);
-    $videoArray      = getVideoArray($accountId, $qDetails, $delta);
-    $temp            = getUserResponseFromResultsTable($accountId, $quizId);
-    $selectedAnswers = $temp[0];
-    $timePerQuestion = $temp[1];
-    $testScore       = $temp[2];
-    $numCorrect      = $temp[3];
-    $numIncorrect    = $temp[4];
-
-    foreach ($questionIds as $key => $value) {
-        
-        $delta2[] = $delta[$value];
-        $state2[] = $state[$value];
-
-    }
-    */
 
     $quiz->sendResponse();
 }
