@@ -153,7 +153,7 @@ window.QuizQuestionView = Backbone.View.extend({
             logs.addEntry("OPTION_SELECT",this.model.get('id'),x*height+y);
         else
             logs.addEntry("OPTION_DESELECT",this.model.get('id'),x*height+y);
-    }
+    },
 
     render: function () {
     	$(this.el).html(this.template(this.model.toJSON()));
