@@ -90,6 +90,7 @@ window.QuizQuestionView = Backbone.View.extend({
         // tanujb:TODO:add logs
         var optionSelectedArray = [];
         var optionSelected = this.model.get('optionSelected');
+        var optionSelectedOld = optionSelected;
         if (optionSelected != null) {
             optionSelectedArray = (optionSelected).split(SEPARATOR + SEPARATOR); // (SEPARATOR.SEPARATOR);
         } else {
@@ -112,7 +113,47 @@ window.QuizQuestionView = Backbone.View.extend({
         }
         optionSelectedArray[index] = optionAtIndex.join(SEPARATOR);
         this.model.set('optionSelected', optionSelectedArray.join(SEPARATOR + SEPARATOR));
+        var height = this.model.get('correctAnswer').split(SEPARATOR+SEPARATOR).length;
+        this.addLogOfDifference(optionSelectedOld,this.model.get('optionSelected'),height,len);
     },
+
+    addLogOfDifference : function(old, new, height, length)
+    {
+        var oldArray=[];
+        if(old != null)
+        {
+            oldArray = old.split(SEPARATOR + SEPARATOR);
+            for(var i =0;i < height;i++)
+            {
+                temp = oldArray[i];
+                for (var j = 0; j < length; j++) {
+                    oldArray[j] = (temp.indexOf(''+j) != -1) ? 1 : 0;
+                }
+            }
+        }
+        var newArray =[];
+        if(new != null)
+        {
+            newArray = new.split(SEPARATOR + SEPARATOR);
+            for(var i =0;i < height;i++)
+            {
+                temp = newArray[i];
+                for (var j = 0; j < length; j++) {
+                    newArray[i][j] = (temp.indexOf(''+j) != -1) ? 1 : 0;
+                }
+            }
+        }
+        var x = y = null;
+        for(i=0;i<height;i++) 
+            for(j=0;j<length;j++)
+                if(oldArray[i][j] != newArray[i][j])
+                    { x=i;y=j;}
+
+        if(oldArray[x][y] == 0)
+            logs.addEntry("OPTION_SELECT",this.model.get('id'),x*height+y);
+        else
+            logs.addEntry("OPTION_DESELECT",this.model.get('id'),x*height+y);
+    }
 
     render: function () {
     	$(this.el).html(this.template(this.model.toJSON()));
