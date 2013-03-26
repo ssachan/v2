@@ -28,8 +28,7 @@ window.QuizQuestionView = Backbone.View.extend({
         } else {
             if (oldOptionSelected !== null) logs.addEntry("OPTION_DESELECT", this.model.get('id'),
             oldOptionSelected);
-            logs.addEntry("OPTION_SELECT", this.model.get('id'),
-            optionSelected);
+            logs.addEntry("OPTION_SELECT", this.model.get('id'),optionSelected);
             this.model.set('optionSelected', optionSelected);
         }
     },
@@ -117,7 +116,7 @@ window.QuizQuestionView = Backbone.View.extend({
         this.addLogOfDifference(optionSelectedOld,this.model.get('optionSelected'),height,len);
     },
 
-    addLogOfDifference : function(old, new, height, length)
+    addLogOfDifference : function(old, nw, height, length)
     {
         var oldArray=[];
         if(old != null)
@@ -131,22 +130,22 @@ window.QuizQuestionView = Backbone.View.extend({
                 }
             }
         }
-        var newArray =[];
-        if(new != null)
+        var nwArray =[];
+        if(nw != null)
         {
-            newArray = new.split(SEPARATOR + SEPARATOR);
+            nwArray = nw.split(SEPARATOR + SEPARATOR);
             for(var i =0;i < height;i++)
             {
-                temp = newArray[i];
+                temp = nwArray[i];
                 for (var j = 0; j < length; j++) {
-                    newArray[i][j] = (temp.indexOf(''+j) != -1) ? 1 : 0;
+                    nwArray[i][j] = (temp.indexOf(''+j) != -1) ? 1 : 0;
                 }
             }
         }
         var x = y = null;
         for(i=0;i<height;i++) 
             for(j=0;j<length;j++)
-                if(oldArray[i][j] != newArray[i][j])
+                if(oldArray[i][j] != nwArray[i][j])
                     { x=i;y=j;}
 
         if(oldArray[x][y] == 0)
