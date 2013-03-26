@@ -882,7 +882,6 @@ window.QuizQuestionView = Backbone.View.extend({
     
     onRender : function (){
     	 this.renderOptions();
-         $('#qtype').html(this.model.get('typeString'));
          $('#status').hide();
          $('#solution').hide();
          $('#q-video').hide();
