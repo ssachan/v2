@@ -429,7 +429,7 @@ class questionEvalution{
         $vars = array("accountId", "questionId", "timeTaken", "delta", "score", "status", "abilityScoreBefore", "optionSelected");
 
         foreach ($vars as $value)
-            $this->{$key} = $row[$key];
+            $this->{$value} = $row[$value];
 
         $this->qDetails     = new questionObject($this->qid); //tanujb : Evaluate if this is necessary.
         $tmpOptions         = explode("|:|:",$this->qDetails->options);
