@@ -675,8 +675,8 @@ class quizResponseDetails{
         }
         elseif($attemptedAs == analConst::ATTEMPTED_AS_PRACTICE)
         {
+            $this->state = $_POST['state'];
             if(!$isResultsView){
-                $this->state = $_POST['state'];
                 $this->getQuizSummary();
                 if($isLast == 0)
                     $this->updateQuizSummary();
