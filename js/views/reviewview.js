@@ -57,12 +57,14 @@ window.ReviewView = Backbone.View.extend({
     		var filteredArray = this.filtered.where({difficulty: this.tness});
 			this.filtered.reset(filteredArray);
     	}
-    	
     	if(this.status=='1'){
     		var filteredArray = this.filtered.where({isCorrect: true});
 			this.filtered.reset(filteredArray);
     	} else if(this.status=='2'){
     		var filteredArray = this.filtered.where({isCorrect: false});
+			this.filtered.reset(filteredArray);	
+    	} else{
+    		var filteredArray = this.filtered.where({isCorrect: null});
 			this.filtered.reset(filteredArray);	
     	}
     	
