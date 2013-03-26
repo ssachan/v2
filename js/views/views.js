@@ -2136,7 +2136,7 @@ window.ResultAnalysisView = Backbone.View.extend({
 				if(parseInt(l3Data.delta)>0){
 					html.push('<span style="float:right"> +'+parseInt(l3Data.delta)+'</span>');
 				}else{
-					html.push('<span style="float:right"> +'+parseInt(l3Data.delta)+'</span>');
+					html.push('<span style="float:right"> '+parseInt(l3Data.delta)+'</span>');
 				}
 				html.push('</h3><hr>');
 				html.push('<div class="progress outline">');
