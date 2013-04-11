@@ -330,7 +330,11 @@ function signUp() {
         $account->id = createAccount($firstName, $lastName, $email, $password);
         insertStudent($account->id, $streamId);
         updateQuizzesRemaining(FREE_TESTS, $account->id, $streamId);
-        //sendMail($email, SIGN_UP_SUB, file_get_contents('templates/signup.php'));
+        try {
+            sendMail($email, SIGN_UP_SUB, file_get_contents('templates/signup.php'));
+        } catch (phpmailerException $e) {
+            // do nothing
+        }
         $account = getStudentByAccountId($account->id, $streamId);
         if (file_exists(DP_PATH . $account->id . '.jpg')) {
             $account->dp = true;
