@@ -64,9 +64,9 @@ define('EXCEPTION_MSG', "Something went wrong. Please send an email to ..."); //
 define('DP_PATH', "../resources/accounts/"); // DP PATH.
 
 
-define('EBS_ACC_ID', '5880'); // free tests
+define('EBS_ACC_ID', '12274'); // free tests
 define('EBS_KEY', '240827f49a38d4bd4444323d55ebcc58'); // free tests
-define('EBS_RETURN_URL', 'http://localhost/master/api/response.php?DR={DR}'); // free tests
+define('EBS_RETURN_URL', 'http://prepsquare.com/app/api/response.php?DR={DR}'); // free tests
 
 /**
  * All responses routed through this function
@@ -754,7 +754,7 @@ $app->get('/pay/:id', function ($id) use ($app) {
         sendResponse($response);
     }
     // get the account
-    $hash = "ebskey"."|".EBS_ACC_ID."|".$amount."|".$referenceNo."|".EBS_RETURN_URL."|".$mode;
+    $hash = EBS_KEY."|".EBS_ACC_ID."|".$amount."|".$referenceNo."|".EBS_RETURN_URL."|".$mode;
     $secure_hash = md5($hash);
     //$response = updateQuizzesRemaining($number, $accountId, $streamId);
     // get the current number of packages
