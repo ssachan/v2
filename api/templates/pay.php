@@ -191,10 +191,9 @@ Array.prototype.inArray = function (value)
   <tr>
     <th colspan="2"><div align="center"><span class="style2">Transaction Details</span></div></th>
   </tr>
-  <tr>
+  <tr style="display:none">
     <td class="fieldName"><span class="error">*</span>Mode</td>
     <td align="left"><select name="mode" >
-      <option value="TEST">TEST</option>
       <option value="LIVE">LIVE</option>
     </select></td>
   </tr>
