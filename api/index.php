@@ -701,7 +701,7 @@ $app->get('/pay/:id', function ($id) use ($app) {
     $streamId = '1';
     $accountId = $_SESSION['user'];
     $packageId = $id;
-    $mode = 'TEST';
+    $mode = 'LIVE';
     // first get the account information and the price of the package
     $sql = "select * from account where id=:id";
     // first get the amount and the number 
