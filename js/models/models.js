@@ -73,6 +73,8 @@ window.Account = Backbone.Model.extend({
 			success : function(data) {
 				if (data.status == STATUS.SUCCESS) {
 					account.set(data.data);
+					helper.track("login",{"id":account.get('id'),'email':account.get('email'), 'name' : account.get('firstName')
+				    });	
 					window.location = '#';
 				} else {
 					helper.processStatus(data);
@@ -145,7 +147,9 @@ window.Account = Backbone.Model.extend({
 			success : function(data) {
 				if (data.status == STATUS.SUCCESS) {
 					account.set(data.data);
-					window.location = '#';
+					helper.track("login",{"id":account.get('id'),'email':account.get('email'), 'name' : account.get('firstName')
+				    });
+				    window.location = '#';
 				} else {
 					helper.processStatus(data);
 				}
@@ -194,7 +198,7 @@ window.Account = Backbone.Model.extend({
 			success : function(data) {
 				if (data.status == STATUS.SUCCESS) {
 					account.set(data.data);
-					helper.track("sup",{"id":account.get('id'),'email':account.get('email')
+					helper.track("sup",{"id":account.get('id'),'email':account.get('email'), 'name' : account.get('firstName')
 				    });
 					window.location = '#';
 				} else {
