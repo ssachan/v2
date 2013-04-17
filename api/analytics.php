@@ -506,7 +506,7 @@ class questionEvalution{
             $this->score = $this->qDetails->correctScore;
             $this->state = analConst::CORRECT;
         }else{
-            echo $this->qDetails->typeId. " . ".questionType::MATRIX_MATCH;
+            //echo $this->qDetails->typeId. " . ".questionType::MATRIX_MATCH;
             switch($this->qDetails->typeId)
             {
                 case questionType::SINGLE_CHOICE:
