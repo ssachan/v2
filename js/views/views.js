@@ -394,7 +394,10 @@ window.InstructionsView = Backbone.View.extend({
 		// logs resetting
 		logs.reset();
 		logs.addEntry("TEST_START");
-		helper.track('mode',{'id':attemptedAs,'accountId':account.get('id'),'email':account.get('email')});
+		new Date().
+		//helper.track('mode',{'id':attemptedAs,'accountId':account.get('id'),'email':account.get('email')});
+		helper.track('test',{'testId':this.model.get('id'),'accountId':account.get('id'),'email':account.get('email'),'attemptedAs':attemptedAs});
+
 	},
 
 	render : function() {
@@ -406,6 +409,7 @@ window.InstructionsView = Backbone.View.extend({
 		return this;
 	},
 });
+
 
 window.ResumeView = Backbone.View.extend({
 
