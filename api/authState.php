@@ -202,9 +202,15 @@ function insertFb($accountId) {
      */
 }
 
-function createAccount($firstName, $lastName, $email, $password = null, $flag = 1) {
+function createAccount($firstName, $lastName, $email, $password, $mobile, $flag = 1) {
+    if(!isset($password))
+        $password = null;
+
+    if(!isset($mobile))
+        $mobile = null;
+
     $date = date("Y-m-d H:i:s", time());
-    $sql = "INSERT INTO accounts (firstName,lastName,email,password, createdOn, flag) VALUES (:firstName, :lastName, :email, :password, :createdOn, :flag)";
+    $sql = "INSERT INTO accounts (firstName, lastName, email, password, createdOn, flag, phone) VALUES (:firstName, :lastName, :email, :password, :createdOn, :flag, :mobile)";
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
@@ -214,6 +220,7 @@ function createAccount($firstName, $lastName, $email, $password = null, $flag = 
         $stmt->bindParam("password", $password);
         $stmt->bindParam("createdOn", $date);
         $stmt->bindParam("flag", $flag);
+        $stmt->bindParam("mobile", $mobile);
         $stmt->execute();
         $id = $db->lastInsertId();
         $db = null;
@@ -298,6 +305,12 @@ function signUp() {
         sendResponse($response);
         break;
     }
+    if (!isset($_POST['mobile']) || $_POST['mobile'] == '') {
+        $response["status"] = FAIL;
+        $response["data"] = "Please enter A valid mobile number";
+        sendResponse($response);
+        break;
+    }
     if (!isset($_POST['password']) || $_POST['password'] == '') {
         $response["status"] = FAIL;
         $response["data"] = "Please enter a valid password";
@@ -315,6 +328,7 @@ function signUp() {
     $email = $_POST['email'];
     $password = $_POST['password'];
     $streamId = $_POST['streamId'];
+    $mobile = $_POST['mobile'];
     $account = getAccountByEmail($email);
     if ($account != null) {
         // account exists
@@ -327,7 +341,7 @@ function signUp() {
         }
     } else {
         $account = new stdClass();
-        $account->id = createAccount($firstName, $lastName, $email, $password);
+        $account->id = createAccount($firstName, $lastName, $email, $password, $mobile);
         insertStudent($account->id, $streamId);
         updateQuizzesRemaining(FREE_TESTS, $account->id, $streamId);
         try {

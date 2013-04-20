@@ -89,6 +89,7 @@ window.SignUpBox = Backbone.View.extend({
     			password :  $('#pass-su').val(),
     			cPassword :  $('#passcon-su').val(),
     			firstName : $('#fname-su').val(),
+                mobile : $('#mobile-su').val(),
     			lastName : 'dummy',
     			streamId : streamId,
     		};
