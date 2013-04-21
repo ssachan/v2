@@ -694,7 +694,7 @@ function facContact() {
 });
 */    
     
-$app->get('/pay/:id', function ($id) use ($app) {
+$app->get('/pay/:id', $authenticate($app) ,function ($id) use ($app) {
     // insert to get the purchaseId
     $response = array();
     $date = date("Y-m-d H:i:s", time());
