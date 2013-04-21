@@ -44,7 +44,7 @@ $authenticate = function ($app) {
     return function () use ($app) {
         if (!isset($_SESSION['user'])) {
             echo 'not set session';
-            $app->redirect('../../client/#landing');
+            $app->redirect('../../#signup');
             //echo 'not set session';
         } else {
             if (isset($_GET['accountId'])) {
