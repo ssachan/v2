@@ -81,7 +81,8 @@ window.Account = Backbone.Model.extend({
 				}
 			},
 			error : function(data) {
-				helper.processStatus(data.responseText);
+				eval('var obj='+data.responseText);
+				helper.processStatus(obj);
 			}
 		});
 	},
@@ -112,7 +113,8 @@ window.Account = Backbone.Model.extend({
 				helper.processStatus(data);
 			},
 			error : function(data) {
-				helper.processStatus(data.responseText);
+				eval('var obj='+data.responseText);
+				helper.processStatus(obj);
 			},
 		});
 	},
@@ -130,7 +132,8 @@ window.Account = Backbone.Model.extend({
 				helper.processStatus(data);
 			},
 			error : function(data) {
-				helper.processStatus(data.responseText);
+				eval('var obj='+data.responseText);
+				helper.processStatus(obj);
 			},
 		});
 	},
@@ -155,7 +158,8 @@ window.Account = Backbone.Model.extend({
 				}
 			},
 			error : function(data) {
-				helper.processStatus(data.responseText);
+				eval('var obj='+data.responseText);
+				helper.processStatus(obj);
 			},
 		});
 	},
@@ -181,7 +185,8 @@ window.Account = Backbone.Model.extend({
 				}
 			},
 			error : function(data) {
-				helper.processStatus(data.responseText);
+				eval('var obj='+data.responseText);
+				helper.processStatus(obj);
 			},
 		});
 	},
@@ -206,7 +211,8 @@ window.Account = Backbone.Model.extend({
 				}
 			},
 			error : function(data) {
-				helper.processStatus(data.responseText);
+				eval('var obj='+data.responseText);
+				helper.processStatus(obj);
 			},
 		});
 	},
@@ -226,7 +232,8 @@ window.Account = Backbone.Model.extend({
 				helper.processStatus(data);
 			},
 			error : function(data) {
-				helper.processStatus(data.responseText);
+				eval('var obj='+data.responseText);
+				helper.processStatus(obj);
 			},
 		});
 	},
@@ -247,7 +254,8 @@ window.Account = Backbone.Model.extend({
 				helper.processStatus(data);
 			},
 			error : function(data) {
-				helper.processStatus(data.responseText);
+				eval('var obj='+data.responseText);
+				helper.processStatus(obj);
 			},
 		});
 	},
