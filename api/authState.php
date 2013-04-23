@@ -202,13 +202,12 @@ function insertFb($accountId) {
      */
 }
 
-function createAccount($firstName, $lastName, $email, $password, $mobile, $flag = 1) {
+function createAccount($firstName, $lastName, $email, $password = null, $mobile = null, $flag = 1) {
     if(!isset($password))
         $password = null;
 
     if(!isset($mobile))
         $mobile = null;
-
     $date = date("Y-m-d H:i:s", time());
     $sql = "INSERT INTO accounts (firstName, lastName, email, password, createdOn, flag, phone) VALUES (:firstName, :lastName, :email, :password, :createdOn, :flag, :mobile)";
     try {
@@ -307,10 +306,17 @@ function signUp() {
     }
     if (!isset($_POST['mobile']) || $_POST['mobile'] == '') {
         $response["status"] = FAIL;
-        $response["data"] = "Please enter A valid mobile number";
+        $response["data"] = "Please enter A valid 10 digit mobile number";
         sendResponse($response);
         break;
     }
+   if(strlen($_POST['mobile']) != 10 || !(ctype_digit($_POST['mobile'])))
+    {
+        $response["status"] = FAIL;
+        $response["data"] = "Please enter A valid 10 digit mobile number";
+        sendResponse($response);
+        break;
+    } 
     if (!isset($_POST['password']) || $_POST['password'] == '') {
         $response["status"] = FAIL;
         $response["data"] = "Please enter a valid password";
